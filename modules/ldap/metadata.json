@@ -1,0 +1,35 @@
+{
+  "name": "torian-ldap",
+  "version": "0.2.2",
+  "source": "https://github.com/torian/puppet-ldap",
+  "author": "Emiliano Castagnari ecastag@gmail.com (aka Torian)",
+  "license": "Apache",
+  "summary": "OpenLDAP module for Puppet.",
+  "description": "Manage OpenLDAP clients and server via Puppet",
+  "project_page": "https://github.com/torian/puppet-ldap",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "CHANGELOG": "98ad7d86fef8276bdfa6e087f7cabb47",
+    "Gemfile": "65bca0327f6488e9bb4f1c459221cad8",
+    "Gemfile.lock": "b1440548addbba4bd7922f50fa2e4526",
+    "Modulefile": "3dbb4344f9e00557b34fc0c9a32d97e9",
+    "README.md": "1a2dc84b0ec06ef2d5866f091fdaf5bc",
+    "Rakefile": "3eb215ebea038cad3dc0e4df75b769d9",
+    "manifests/init.pp": "4c7e76256c5434fb79446c9162f472c5",
+    "manifests/params.pp": "c58741d8f89982825be331b1685d3b39",
+    "manifests/server/master.pp": "d4dfe9938d6dc11ec2c82042347007bc",
+    "manifests/server/slave.pp": "299b30d99638c363b1556c9864fca7e1",
+    "spec/classes/ldap_server_master_spec.rb": "f3579fdae889152ca377f006716fd255",
+    "spec/classes/ldap_server_slave_spec.rb": "d8a7403c758ae96608e85597b623716c",
+    "spec/classes/ldap_spec.rb": "45b3586f5ff59840616d118f50cb7f04",
+    "spec/fixtures/manifests/site.pp": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/spec_helper.rb": "792eeb7aa7edafb93e2bc1d27c5e75c5",
+    "templates/ldap.conf.erb": "df2bc4eb34b11b24677f604375055c14",
+    "templates/slapd.conf.erb": "faf6914a965b58e38b3bbd87ae52fe58"
+  }
+}

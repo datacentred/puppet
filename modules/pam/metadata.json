@@ -1,0 +1,41 @@
+{
+  "name": "torian-pam",
+  "version": "0.0.7",
+  "source": "https://github.com/torian/puppet-pam",
+  "author": "Emiliano Castagnari ecastag@gmail.com (aka Torian)",
+  "license": "Apache",
+  "summary": "PAM module for Puppet.",
+  "description": "Manage PAM configuration via Puppet",
+  "project_page": "https://github.com/torian/puppet-pam",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+  "checksums": {
+    "CHANGELOG": "473c32e67b461975e647f50d78318507",
+    "Modulefile": "32bcefec5261165cbbc126fcf09d0aea",
+    "README.md": "562562a01aaa0830e1ce09bfb002ee83",
+    "Rakefile": "3eb215ebea038cad3dc0e4df75b769d9",
+    "files/redhat/etc/pam.d/system-auth": "9fe1447776265fe12814931fea17f510",
+    "manifests/init.pp": "f4cdf8eba2e08e06edb0b92d456b1009",
+    "manifests/pamd/debian.pp": "90bff6644e60d065b52a4e8a26e035b3",
+    "manifests/pamd/redhat.pp": "cefd44f6d513f23352357647b2c12589",
+    "manifests/pamd/sles.pp": "cd357f70fe31f3a63b1e735b12ffcc6b",
+    "manifests/pamd.pp": "b185d755150f505f171fc52b2abac60e",
+    "manifests/params.pp": "4bb97b31a4188ee146635ea2ec966822",
+    "spec/classes/pam_pamd_debian_spec.rb": "ed0968ee178a1bc2a7b8ff6db3d73be7",
+    "spec/classes/pam_pamd_redhat_spec.rb": "d7a517deb401f2e02575c13f3f1fcd45",
+    "spec/classes/pam_pamd_spec.rb": "579d14dbd654acdaa252cd2832264de3",
+    "spec/classes/pam_spec.rb": "b88d8abb798735016c9f4929da78a094",
+    "spec/fixtures/manifests/site.pp": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/spec_helper.rb": "0a92a912f6b40edd1882e69d249e9f2d",
+    "templates/pam.d/common-account.erb": "c49734a6889a142b8d9e238e5d51f406",
+    "templates/pam.d/common-auth.erb": "1c24d5c41fc11e1a4ecb1651d73a903a",
+    "templates/pam.d/common-password.erb": "9b87df6479bdbd4686f5dbfe4f4e4530",
+    "templates/pam.d/common-session-noninteractive.erb": "893cb5f815f1e5341ff4cfffc068fa7a",
+    "templates/pam.d/common-session.erb": "d893e4d3141b74c0a8120ff3e38351e3",
+    "templates/pam.d/system-auth-ac.erb": "d3ba964953ec3e68a056d804b7fcb150"
+  }
+}
