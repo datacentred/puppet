@@ -10,6 +10,7 @@ class profile::localmirror {
 		location          => 'http://mirror.sal01.datacentred.co.uk:80/mirror/gb.archive.ubuntu.com/ubuntu',
 		release           => 'precise',
 		repos             => 'main restricted',
+		include_src	  => 'false',
 
 	}
 	
@@ -17,6 +18,7 @@ class profile::localmirror {
 		location          => 'http://mirror.sal01.datacentred.co.uk:80/mirror/gb.archive.ubuntu.com/ubuntu',
 		release           => 'precise-updates',
 		repos             => 'main restricted',
+		include_src	  => 'false',
 
 	}
 
