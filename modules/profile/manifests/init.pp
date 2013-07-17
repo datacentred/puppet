@@ -9,3 +9,9 @@ class profile::dev {
 	include profile::git
 
 }
+
+class profile::openstack {
+
+	include profile::cloudarchive
+
+}
