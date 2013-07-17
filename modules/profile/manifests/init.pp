@@ -1,7 +1,7 @@
 class profile::base {
 
 	include profile::vim
-	include profile::ntpconfig
+	include profile::ntpclient
 }
 
 class profile::dev {
