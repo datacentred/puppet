@@ -22,6 +22,3 @@ class profile::localrepo {
 
 }
 
-
-}
-
