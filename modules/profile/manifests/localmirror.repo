@@ -1,4 +1,4 @@
-class profile::localrepo {
+class profile::localmirror {
 
 	class { 'apt': 
 		purge_sources_list => true,

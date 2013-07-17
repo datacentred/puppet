@@ -2,7 +2,7 @@ class profile::base {
 
 	include profile::vim
 	include profile::ntpclient
-	include profile::localrepo
+	include profile::localmirror
 }
 
 class profile::dev {
