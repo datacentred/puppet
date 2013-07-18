@@ -1,7 +1,9 @@
 class profile::ntpclient {
-# FIXME Use hiera to define the IP	
+
+	$timeserver = hiera('timeserver')
+	
 	class { "ntp":
-		servers    => [ '10.1.5.10' ],
+		servers    => [ $timeserver ],
 		autoupdate => false,
     	}
 }
