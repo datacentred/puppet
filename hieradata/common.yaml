@@ -1,2 +1,5 @@
 timeservers: - '10.1.5.10'
              - 'uk.pool.ntp.org'
+
+ldap_base_dn: 'dc=sal01,dc=datacentred,dc=co,dc=uk'
+ldap-uri:     'ldap://10.1.5.10'
