@@ -13,6 +13,6 @@ class profile::dev {
 
 class profile::openstack {
 
-	include profile::cloudarchive
+	include profile::mysqlserver
 
 }
