@@ -1,0 +1,3 @@
+As much as is feasibly possible keep function definition in seperate modules at the level above and just declare here.
+Keep declarations in logically seperate pp files, and then include them into profiles in init.pp
+Don't apply profiles directly to nodes in Foreman, use the node module to define node roles and include profiles
