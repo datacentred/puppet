@@ -1,4 +1,4 @@
-class profile::git-master {
+class profile::gitmaster {
 
 	package { 'git' 
 		ensure => installed,
