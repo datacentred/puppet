@@ -3,3 +3,6 @@ timeservers: - '10.1.5.10'
 
 ldap_base_dn: 'dc=sal01,dc=datacentred,dc=co,dc=uk'
 ldap-uri:     'ldap://10.1.5.10'
+
+local_mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
+ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'

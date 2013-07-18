@@ -1,5 +1,11 @@
 class profile::localmirror {
 
+	$mirrorserver = hiera(ubuntu_mirror_server)
+	$mirrorpath = hiera(ubuntu_mirror_path)
+
+# FIXME convert to Hiera
+# Use seperate hiera values for mirror server and mirror path
+
 	class { 'apt': 
 		purge_sources_list => true,
 		purge_sources_list_d => true,
@@ -7,7 +13,7 @@ class profile::localmirror {
 
 
 	apt::source { 'local_precise_mirror':
-		location          => 'http://mirror.sal01.datacentred.co.uk:80/mirror/gb.archive.ubuntu.com/ubuntu',
+		location          => "$mirrorserver/$mirrorpath",
 		release           => 'precise',
 		repos             => 'main restricted',
 		include_src	  => false,
