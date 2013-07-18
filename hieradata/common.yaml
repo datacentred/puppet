@@ -1,1 +1,1 @@
-timeserver: '10.1.5.10'
+timeserver: 'pool.ntp.org'
