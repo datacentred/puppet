@@ -1,6 +1,6 @@
 class profile::mysqlserver {
 	
-	package { 'mysql-server'
+	package { 'mysql-server':
 		ensure => installed,
 	}
 

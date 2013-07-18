@@ -1,14 +1,14 @@
 class profile::oscompute {
 
-	package { 'nova-compute'
+	package { 'nova-compute':
 		ensure => installed,
 	}
 
-	package { 'genisoimage'
+	package { 'genisoimage':
 		ensure => installed,
 	}
 
-	package { 'quantum-plugin-openvswitch-agent'
+	package { 'quantum-plugin-openvswitch-agent':
 		ensure => installed,
 	}
 
