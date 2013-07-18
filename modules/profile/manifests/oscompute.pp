@@ -1,4 +1,4 @@
-class profile::os-compute {
+class profile::oscompute {
 
 	package { 'nova-compute'
 		ensure => installed,
