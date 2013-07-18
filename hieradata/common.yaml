@@ -1,2 +1,2 @@
-timeserver: 	'10.1.5.10'
-		'uk.pool.ntp.org'
+timeservers: - '10.1.5.10'
+            - 'uk.pool.ntp.org'
