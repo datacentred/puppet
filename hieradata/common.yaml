@@ -6,3 +6,5 @@ ldap-uri:     'ldap://10.1.5.10'
 
 ubuntu_mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
 ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
+
+mysql_root_pw: 'OithGec3'
