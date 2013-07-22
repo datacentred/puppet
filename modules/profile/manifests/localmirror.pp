@@ -27,7 +27,7 @@ class profile::localmirror {
 	}
 
 	apt::source { 'local_ubuntu_cloud_archive':
-		location          => '$mirrorserver/$cloudarchivemirrorpath',
+		location          => "$mirrorserver/$cloudarchivemirrorpath",
 		release           => 'precise-updates/grizzly',
 		repos             => 'main',
 		include_src	  => false,
