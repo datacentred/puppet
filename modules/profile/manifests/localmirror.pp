@@ -26,15 +26,14 @@ class profile::localmirror {
 
 	}
 
-	apt::source { 'local_ubuntu_cloud_archive':
-		location          => "$mirrorserver/$cloudarchivemirrorpath",
+	apt::source { 'ubuntu_cloud_archive':
+		location          => 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
 		release           => 'precise-updates/grizzly',
 		repos             => 'main',
-		include_src	  => false,
-	#	key        => 'EC4926EA',
-      	#	key_server => 'keyserver.ubuntu.com',
-
+		key        => 'EC4926EA',
+      		key_server => 'keyserver.ubuntu.com',
 	}
+
 
 
 }
