@@ -2,6 +2,7 @@ class profile::localmirror {
 
 	$mirrorserver = hiera(ubuntu_mirror_server)
 	$mirrorpath = hiera(ubuntu_mirror_path)
+	$cloudarchivemirrorpath = hiera(cloudarchive_mirror_path)
 
 	class { 'apt': 
 		purge_sources_list => true,
@@ -24,6 +25,17 @@ class profile::localmirror {
 		include_src	  => false,
 
 	}
+
+	apt::source { 'local_ubuntu_cloud_archive':
+		location          => '$mirrorserver/$cloudarchivemirrorpath',
+		release           => 'precise-updates/grizzly',
+		repos             => 'main',
+		include_src	  => false,
+	#	key        => 'EC4926EA',
+      	#	key_server => 'keyserver.ubuntu.com',
+
+	}
+
 
 }
 
