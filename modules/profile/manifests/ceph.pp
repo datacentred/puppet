@@ -1,4 +1,4 @@
-class ceph {
+class profile::ceph {
 
 	user { "cephadmin":
 		commend => 'This user was created by Puppet',
