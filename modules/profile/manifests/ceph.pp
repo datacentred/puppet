@@ -13,11 +13,4 @@ class profile::ceph {
 		mode => '0700',
 	}
 
-	file { "/etc/sudoers.d/ceph":
-		mode => 440,
-		owner => root,
-		group => root,
-		source => "puppet:///modules/profile/sudoers.ceph"
-	}
-
 }
