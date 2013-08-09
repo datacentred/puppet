@@ -1,7 +1,7 @@
 class profile::ceph {
 
 	user { "cephadmin":
-		commend => 'This user was created by Puppet',
+		comment => 'Ceph user created by Puppet',
 		ensure => 'present',
 		managed_home => 'true',
 	}
