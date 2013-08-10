@@ -13,10 +13,10 @@ class profile::ceph {
 		mode => '0700',
 	}
 
-	file { "/home/cephadmin/test":
+	file { "/etc/sudoers.d/ceph":
 		mode => 440,
 		owner => cephadmin,
-		source => "puppet:///modules/profile/test"
+		source => "puppet:///modules/profile/sudoers.ceph"
 	}
 
 }
