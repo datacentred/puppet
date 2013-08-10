@@ -1,6 +1,6 @@
 class profile::localmirror {
 
-	inlude profile::dpkg
+	include profile::dpkg
 
 	$mirrorserver = hiera(ubuntu_mirror_server)
 	$mirrorpath = hiera(ubuntu_mirror_path)
