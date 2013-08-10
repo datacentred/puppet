@@ -4,6 +4,7 @@ class profile::ceph {
 		comment => 'Ceph user created by Puppet',
 		ensure => 'present',
 		managehome => 'true',
+		shell => '/bin/bash',
 	}
 
 	file { "/home/cephadmin/.ssh":
