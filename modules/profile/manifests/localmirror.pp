@@ -3,6 +3,7 @@ class profile::localmirror {
 	$mirrorserver = hiera(ubuntu_mirror_server)
 	$mirrorpath = hiera(ubuntu_mirror_path)
 	$cloudarchivemirrorpath = hiera(cloudarchive_mirror_path)
+	$puppetmirrorpath = hiera(puppet_mirror_path)
 
 	class { 'apt': 
 		purge_sources_list => true,
@@ -32,6 +33,12 @@ class profile::localmirror {
 		repos             => 'main',
 		key        => 'EC4926EA',
       		key_server => 'keyserver.ubuntu.com',
+	}
+
+	apt::source { 'local_puppetlabs_mirror':
+		location	=> "$mirrorserver/$mirrorpath",
+		release		=> 'precise',
+		repos		=> 'main dependencies',
 	}
 
 

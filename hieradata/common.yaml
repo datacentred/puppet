@@ -7,5 +7,6 @@ ldap-uri:     'ldap://10.1.5.10'
 ubuntu_mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
 ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
 cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
+puppet_mirror_path: 'mirror/apt.puppetlabs.com'
 
 mysql_root_pw: 'OithGec3'
