@@ -2,7 +2,6 @@ class profile::localmirror {
 
 	$mirrorserver = hiera(ubuntu_mirror_server)
 	$mirrorpath = hiera(ubuntu_mirror_path)
-	$cloudarchivemirrorpath = hiera(cloudarchive_mirror_path)
 	$puppetmirrorpath = hiera(puppet_mirror_path)
 
 	class { 'apt': 
@@ -25,14 +24,6 @@ class profile::localmirror {
 		repos             => 'main restricted universe',
 		include_src	  => false,
 
-	}
-
-	apt::source { 'ubuntu_cloud_archive':
-		location          => 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-		release           => 'precise-updates/grizzly',
-		repos             => 'main',
-		key        => 'EC4926EA',
-      		key_server => 'keyserver.ubuntu.com',
 	}
 
 	apt::source { 'local_puppetlabs_mirror':
