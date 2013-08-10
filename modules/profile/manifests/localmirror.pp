@@ -27,7 +27,7 @@ class profile::localmirror {
 	}
 
 	apt::source { 'local_puppetlabs_mirror':
-		location	=> "$mirrorserver/$mirrorpath",
+		location	=> "$mirrorserver/$puppetmirrorpath",
 		release		=> 'precise',
 		repos		=> 'main dependencies',
 		include_src	=> false,
