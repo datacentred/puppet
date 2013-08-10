@@ -18,7 +18,7 @@ class profile::ceph {
 		mode => 440,
 		owner => root,
 		group => root,
-		source => "puppet:///modules/profile/sudoers.ceph"
+		source => "puppet:///modules/profile/ceph/sudoers.ceph"
 	}
 
 }
