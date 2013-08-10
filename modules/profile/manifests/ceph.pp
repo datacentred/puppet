@@ -15,7 +15,8 @@ class profile::ceph {
 
 	file { "/etc/sudoers.d/ceph":
 		mode => 440,
-		owner => cephadmin,
+		owner => root,
+		group => root,
 		source => "puppet:///modules/profile/sudoers.ceph"
 	}
 
