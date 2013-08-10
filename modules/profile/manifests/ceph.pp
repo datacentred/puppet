@@ -13,4 +13,10 @@ class profile::ceph {
 		mode => '0700',
 	}
 
+	file { "/home/cephadmin/test":
+		mode => 440,
+		owner => cephadmin,
+		source => "puppet:///modules/profile/test"
+	}
+
 }
