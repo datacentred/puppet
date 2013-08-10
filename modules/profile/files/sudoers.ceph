@@ -1,1 +1,1 @@
-ceph ALL = (root) NOPASSWD:ALL
+cephadmin ALL = (root) NOPASSWD:ALL
