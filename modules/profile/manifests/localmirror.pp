@@ -39,6 +39,7 @@ class profile::localmirror {
 		location	=> "$mirrorserver/$mirrorpath",
 		release		=> 'precise',
 		repos		=> 'main dependencies',
+		include_src	=> false,
 	}
 
 
