@@ -15,7 +15,7 @@ class profile::localmirror {
 	apt::source { 'local_precise_mirror':
 		location          => "$mirrorserver/$mirrorpath",
 		release           => 'precise',
-		repos             => 'main restricted universe',
+		repos             => 'main restricted universe multiverse',
 		include_src	  => false,
 
 	}
@@ -23,7 +23,7 @@ class profile::localmirror {
 	apt::source { 'local_precise_updates_mirror':
 		location          => "$mirrorserver/$mirrorpath",
 		release           => 'precise-updates',
-		repos             => 'main restricted universe',
+		repos             => 'main restricted universe multiverse',
 		include_src	  => false,
 
 	}
