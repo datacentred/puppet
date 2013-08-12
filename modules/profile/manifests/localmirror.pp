@@ -35,7 +35,13 @@ class profile::localmirror {
 		include_src	=> false,
 	}
 
+        apt::source { 'ceph':
+                location          => "http://ceph.com/debian-cuttlefish/",
+                release           => 'precise',
+                repos             => 'main',
+                include_src       => false,
 
+        }
 
 
 }
