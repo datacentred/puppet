@@ -1,3 +1,5 @@
+# This is the class containing the list of unrealized virtual users, don't use this class directly.
+
 class profile::userlist {
 
 include users-virtual
