@@ -1,0 +1,41 @@
+{
+  "project_page": "https://github.com/thias/puppet-bind",
+  "license": "Apache 2.0",
+  "source": "git://github.com/thias/puppet-bind",
+  "checksums": {
+    "files/named.empty": "825c08bd73c3b6a2c95f671477d69749",
+    "Rakefile": "7be5a0443dec2bd7222b7131647c4a0b",
+    "spec/spec_helper.rb": "447d455444cf2400408ac0593d98eeb2",
+    "ChangeLog": "4161219d4d8b236446998a0780aa9e7d",
+    "README.md": "c19b206185156b3afbc8fa25ef0e28be",
+    "spec/classes/bind_server_spec.rb": "6eb1f326c12e8d13336360058ba0d140",
+    "spec/defines/bind_server_file_spec.rb": "ae8f4bc408c691f1f26c0b1e34041ddd",
+    "manifests/params.pp": "68dd5613f5f612243e6c98ac4298c7c0",
+    "Gemfile": "d8fe7583719288dbe783680e70cd4c70",
+    "manifests/service.pp": "b7915def0499c7c6fa19ecc70c9214ed",
+    "manifests/server.pp": "ed8cb294edac91458e60ad762defc901",
+    "tests/server/file.pp": "5d04ed53f60d90d9f388c7e800341f81",
+    "tests/server.pp": "a0dc89ab7f2efb7798773182621cab3f",
+    "LICENSE": "99219472697a01561e7630d63aaecdc1",
+    "Modulefile": "4ee8844146b0464de88453cba0e7d66a",
+    "manifests/package.pp": "5f4d837b350e0ebb3d23df7aba09567a",
+    "tests/server/conf.pp": "24eb3ab3ea657c0624f837eb2d0b809f",
+    "manifests/server/conf.pp": "8cd5c97b766676738c64bcbf404d5691",
+    "manifests/init.pp": "a7c200465843dd2fa21770239e0c749a",
+    "Gemfile.lock": "209767e0c51549918ef3f1beaacba2b2",
+    "templates/named.conf.erb": "91f999c3faea6f122b871b6124e71c26",
+    "spec/defines/bind_server_conf_spec.rb": "75867c71d150c421330148d15b8096d4",
+    "manifests/server/file.pp": "94ad2de9b675ed164a43b7a2b9d93576"
+  },
+  "description": "Install and enable a BIND DNS server, create and manage DNS zone files.",
+  "version": "0.4.0",
+  "types": [
+
+  ],
+  "summary": "BIND DNS server module",
+  "name": "thias-bind",
+  "author": "Matthias Saou",
+  "dependencies": [
+
+  ]
+}
