@@ -7,13 +7,7 @@ include userlist
 		gid => 1000,
 	}
 
-	realize (
-		Users-virtual::Localuser["mattj"],
-	)
-
-	realize (
-		Users-virtual::Localuser["nick"],
-	)
+	User <| group == sysadmin |>
 	
 }
 
