@@ -1,7 +1,8 @@
-class profile::users {
+define profile::users (
 	
 	$shell = '/bin/blah'
 
+) {
 	group { "devops":
 		ensure => present,
 		gid => 1000,
