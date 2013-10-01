@@ -1,0 +1,26 @@
+$ORIGIN .
+$TTL 604800	; 1 week
+5.1.10.in-addr.arpa	IN SOA	devnode-01.sal01.datacentred.co.uk. root.devnode-01.sal01.datacentred.co.uk. (
+				48         ; serial
+				604800     ; refresh (1 week)
+				86400      ; retry (1 day)
+				2419200    ; expire (4 weeks)
+				604800     ; minimum (1 week)
+				)
+			NS	devnode-01.
+$ORIGIN 5.1.10.in-addr.arpa.
+10			PTR	devnode-01.sal01.datacentred.co.uk.
+2			PTR	pdu-01
+3			PTR	kvm-01
+4			PTR	sw-01
+$TTL 86400	; 1 day
+42			PTR	devnode-04.sal01.datacentred.co.uk.
+45			PTR	devblade-06.sal01.datacentred.co.uk.
+47			PTR	devnode-08.sal01.datacentred.co.uk.
+51			PTR	devnode-02.sal01.datacentred.co.uk.
+52			PTR	devblade-03.sal01.datacentred.co.uk.
+53			PTR	devnode-09.sal01.datacentred.co.uk.
+56			PTR	devnode-07.sal01.datacentred.co.uk.
+57			PTR	devnode-06.sal01.datacentred.co.uk.
+59			PTR	devnode-05.sal01.datacentred.co.uk.
+61			PTR	devnode-03.sal01.datacentred.co.uk.
