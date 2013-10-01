@@ -19,7 +19,7 @@ class profile::users {
 		managehome => true,
 		shell => '/bin/bash',
 		groups => devops,
-		uid => 1000,
+		uid => 1001,
 	}
 
 	user { "dariush":
