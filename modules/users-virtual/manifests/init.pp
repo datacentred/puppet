@@ -23,7 +23,7 @@ class users-virtual {
 			}
 		}
 
-		file { sshdir:
+		file { 'sshdir':
 			path 	=> "/home/$title/.ssh",
 			ensure 	=> directory,
 			owner	=> "$uid",
