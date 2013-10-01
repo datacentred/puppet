@@ -1,4 +1,4 @@
-define profile::users (
+class profile::users {
 
 include userlist
 
