@@ -7,8 +7,6 @@ include userlist
 		gid => 1000,
 	}
 	
-	realize (
-	User <| uid == 1001 |>
-	)
+	User <| uid=='1001' |>
 }
 
