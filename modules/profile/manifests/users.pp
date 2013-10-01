@@ -13,3 +13,5 @@ class profile::users {
 		uid => 1000;
 	}
 
+}
+
