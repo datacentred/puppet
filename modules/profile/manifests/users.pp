@@ -7,7 +7,7 @@ include userlist
 		gid => 1000,
 	}
 
-	User <| group == sysadmin |>
+	User <| group == 1000 |>
 	
 }
 
