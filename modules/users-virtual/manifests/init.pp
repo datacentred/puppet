@@ -10,6 +10,7 @@ class users-virtual {
 			comment 	=> $realname,
 			password	=> $pass,
 			managehome 	=> true,
+			before		=> File["/home/$title/.ssh"],
 		}
 
 		if ( $sshkey != "" ) {
