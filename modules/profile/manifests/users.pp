@@ -7,6 +7,6 @@ include userlist
 		gid => 1000,
 	}
 	
-	User <| uid=='1001' |>
+	Users-virtual::Localuser <| gid == '1000' |>
 }
 
