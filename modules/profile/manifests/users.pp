@@ -10,6 +10,10 @@ include userlist
 	realize (
 		Users-virtual::Localuser["mattj"],
 	)
+
+	realize (
+		Users-virtual::Localuser["nick"],
+	)
 	
 }
 
