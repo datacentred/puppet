@@ -10,3 +10,5 @@ cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
 puppet_mirror_path: 'mirror/apt.puppetlabs.com'
 
 mysql_root_pw: 'OithGec3'
+
+foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
