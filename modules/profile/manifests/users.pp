@@ -1,6 +1,6 @@
 class profile::users {
 
-include users
+include users::userlist
 
 	group { "sysadmin":
 		ensure => present,
