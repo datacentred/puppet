@@ -8,7 +8,7 @@ include userlist
 	}
 	
 	realize (
-	User <| uid == '1001' |>
+	User <| uid == 1001 |>
 	)
 }
 
