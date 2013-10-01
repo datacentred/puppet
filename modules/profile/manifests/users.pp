@@ -2,7 +2,7 @@ class profile::users {
 
 include userlist
 
-	group { "devops":
+	group { "sysadmin":
 		ensure => present,
 		gid => 1000,
 	}
