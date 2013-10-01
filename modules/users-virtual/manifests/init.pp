@@ -27,7 +27,7 @@ class users-virtual {
 			path 	=> "/home/$title/.ssh",
 			ensure 	=> directory,
 			owner	=> "$uid",
-			gid	=> "$gid",
+			group	=> "$gid",
 			mode	=> '0700',
 			require => User["$title"],
 		}
