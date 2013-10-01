@@ -14,6 +14,6 @@ class role::os-network-controller inherits role::generic {
 	include profile::os-network-controlller
 }
 
-class role::os-compute inherits role::generic
+class role::os-compute inherits role::generic {
 	include profile::os-compute
 }
