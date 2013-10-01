@@ -18,12 +18,12 @@ class users-virtual {
 				type	=> "ssh-rsa",
 				key	=> "$sshkey",
 				user	=> "$title",
-				require => File[sshdir],
+				require => File["/home/$title/.ssh"],
 				name	=> "$title",
 			}
 		}
 
-		file { 'sshdir':
+		file { "/home/$title/.ssh":
 			path 	=> "/home/$title/.ssh",
 			ensure 	=> directory,
 			owner	=> "$uid",
