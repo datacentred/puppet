@@ -1,12 +1,12 @@
 class profile::users {
 
-include userlist
+include users::userlist
 
 	group { "sysadmin":
 		ensure => present,
 		gid => 1000,
 	}
 	
-	Users-virtual::Localuser <| gid == '1000' |>
+	Users::Virtual::Account <| gid == '1000' |>
 }
 
