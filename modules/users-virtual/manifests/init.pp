@@ -1,5 +1,5 @@
 class users-virtual {
-	define localuser ($uid,$gid,$pass,$sshkey="") {
+	define localuser ($uid,$gid,$pass="",$sshkey="") {
 
 		user { $title:
 			ensure 		=> "present",
