@@ -7,7 +7,7 @@ include userlist
 		gid => 1000,
 	}
 
-	User <| group == 1000 |>
+	User <| gid == '1000' |>
 	
 }
 
