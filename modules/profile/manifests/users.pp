@@ -6,8 +6,9 @@ include userlist
 		ensure => present,
 		gid => 1000,
 	}
-
-	User <| uid == '1001' |>
 	
+	realize (
+	User <| uid == '1001' |>
+	)
 }
 
