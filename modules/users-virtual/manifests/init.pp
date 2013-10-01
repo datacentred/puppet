@@ -28,7 +28,7 @@ class users-virtual {
 			ensure 	=> directory,
 			owner	=> "$uid",
 			gid	=> "$gid",
-			mode	=> '0700'
+			mode	=> '0700',
 			require => User["$title"],
 		}
 	}
