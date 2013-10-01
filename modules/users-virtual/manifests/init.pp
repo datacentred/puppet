@@ -1,4 +1,4 @@
-class users::virtual {
+class users-virtual {
 	define localuser ($uid,$gid,$pass,$sshkey="") {
 
 		user { $title:
