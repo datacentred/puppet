@@ -8,6 +8,6 @@ class profile::mail {
 	class {'nullmailer':
     		adminaddr => "$sysmailaddress",
 		remoterelay => "$smarthost",
-		remoteopts => "--user=$smarthostuser --pass=$smarthostpass",
+		remoteopts => "--ssl --user=$smarthostuser --pass=$smarthostpass",
 	}
 }

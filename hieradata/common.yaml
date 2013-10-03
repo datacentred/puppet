@@ -15,5 +15,5 @@ foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
 
 smarthostuser: 'autobot@datacentred.co.uk'
 smarthostpass: 'horovAnVods5'
-smarthost: 'mail.datacentred.co.uk'
+smarthost: 'smtp.gmail.com'
 sysmailaddress: 'sysadmin@datacentred.co.uk'
