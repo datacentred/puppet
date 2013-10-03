@@ -1,6 +1,6 @@
 class profile::sudo {
 	
-	class { sudo: }
+include sudo
 
 #	sudo::conf { 'sysadmin':
 #		priority => 10,
