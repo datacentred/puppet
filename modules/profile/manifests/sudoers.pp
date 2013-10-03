@@ -1,5 +1,5 @@
 class profile::sudoers {
-	
+
 	class { sudo: }
 
 #	sudo::conf { 'sysadmin':
