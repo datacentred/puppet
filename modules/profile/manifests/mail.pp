@@ -6,8 +6,8 @@ class profile::mail {
 	sysmailaddress = hiera('sysmailaddress')
 
 	class {'nullmailer':
-    		adminaddr => "$sysmailaddress"
-		remoterelay => "$smarthost"
-		remoteopts => "--user=$smarthostuser --pass=$smarthostpass"
+    		adminaddr => "$sysmailaddress",
+		remoterelay => "$smarthost",
+		remoteopts => "--user=$smarthostuser --pass=$smarthostpass",
 	}
 }
