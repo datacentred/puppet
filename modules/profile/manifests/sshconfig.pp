@@ -3,6 +3,12 @@
 
 class profile::sshconfig {
 
+	service { sshd: 
+		ensure => true,
+		enable => true,
+		hasrestart => true
+	}
+
 	sshd_config { "AllowGroups":
 		ensure => present,
 		value => "sysadmin",
