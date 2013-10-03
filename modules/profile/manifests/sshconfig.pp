@@ -3,7 +3,7 @@
 
 class profile::sshconfig {
 
-	service { sshd: 
+	service { ssh: 
 		ensure => true,
 		enable => true,
 		hasrestart => true
@@ -12,13 +12,13 @@ class profile::sshconfig {
 	sshd_config { "AllowGroups":
 		ensure => present,
 		value => "sysadmin",
-		notify => Service["sshd"]
+		notify => Service["ssh"]
 	}
 
 	sshd_config { "AllowRootLogin":
 		ensure => present,
 		value => "no",
-		notify => Service["sshd"]
+		notify => Service["ssh"]
 	}
 
 
