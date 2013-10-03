@@ -1,9 +1,9 @@
 class profile::mail {
 
-	smarthostuser = hiera('smarthostuser')
-	smarthostpass = hiera('smarthostpass')
-	smarthost    = hiera('smarthost')
-	sysmailaddress = hiera('sysmailaddress')
+	$smarthostuser = hiera('smarthostuser')
+	$smarthostpass = hiera('smarthostpass')
+	$smarthost    = hiera('smarthost')
+	$sysmailaddress = hiera('sysmailaddress')
 
 	class {'nullmailer':
     		adminaddr => "$sysmailaddress",
