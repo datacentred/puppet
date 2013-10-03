@@ -13,4 +13,6 @@ class profile::sshconfig {
 		value => "no",
 	}
 
+	notify => Service["sshd"]
+
 }
