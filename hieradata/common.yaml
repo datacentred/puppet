@@ -12,3 +12,8 @@ puppet_mirror_path: 'mirror/apt.puppetlabs.com'
 mysql_root_pw: 'OithGec3'
 
 foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
+
+smarthostuser: 'autobot@datacentred.co.uk'
+smarthostpass: 'horovAnVods5'
+smarthost: 'mail.datacentred.co.uk'
+sysmailaddress: 'sysadmin@datacentred.co.uk'
