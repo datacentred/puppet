@@ -15,7 +15,7 @@ class profile::sshconfig {
 		notify => Service["ssh"]
 	}
 
-	sshd_config { "AllowRootLogin":
+	sshd_config { "PermitRootLogin":
 		ensure => present,
 		value => "no",
 		notify => Service["ssh"]
