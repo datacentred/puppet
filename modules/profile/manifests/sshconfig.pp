@@ -8,4 +8,9 @@ class profile::sshconfig {
 		value => "sysadmin",
 	}
 
+	sshd_config { "AllowRootLogin":
+		ensure => present,
+		value => "no",
+	}
+
 }
