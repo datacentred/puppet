@@ -12,13 +12,14 @@ class profile::sshconfig {
 	sshd_config { "AllowGroups":
 		ensure => present,
 		value => "sysadmin",
+		notify => Service["sshd"]
 	}
 
 	sshd_config { "AllowRootLogin":
 		ensure => present,
 		value => "no",
+		notify => Service["sshd"]
 	}
 
-	notify => Service["sshd"]
 
 }
