@@ -3,6 +3,7 @@ class profile::base {
 	include profile::vim
 	include profile::admins
 	include profile::ntpclient
+	include profile::localmirror
 	include profile::sudoers
 }
 
