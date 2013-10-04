@@ -1,4 +1,3 @@
-# FIXME fix version to use ssl
 class profile::mail {
 
 	$smarthostuser = hiera('smarthostuser')

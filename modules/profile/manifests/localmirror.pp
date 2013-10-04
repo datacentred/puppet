@@ -2,9 +2,9 @@ class profile::localmirror {
 
 	include profile::dpkg
 
-	$mirrorserver = hiera(ubuntu_mirror_server)
-	$mirrorpath = hiera(ubuntu_mirror_path)
-	$puppetmirrorpath = hiera(puppet_mirror_path)
+	$mirrorserver = hiera('ubuntu_mirror_server')
+	$ubuntumirrorpath = hiera('ubuntu_mirror_path')
+	$puppetmirrorpath = hiera('puppet_mirror_path')
 
 	class { 'apt': 
 		purge_sources_list => true,
@@ -13,7 +13,7 @@ class profile::localmirror {
 
 
 	apt::source { 'local_precise_mirror':
-		location          => "$mirrorserver/$mirrorpath",
+		location          => "$mirrorserver/$ubuntumirrorpath",
 		release           => 'precise',
 		repos             => 'main restricted universe multiverse',
 		include_src	  => false,
@@ -21,7 +21,7 @@ class profile::localmirror {
 	}
 	
 	apt::source { 'local_precise_updates_mirror':
-		location          => "$mirrorserver/$mirrorpath",
+		location          => "$mirrorserver/$ubuntumirrorpath",
 		release           => 'precise-updates',
 		repos             => 'main restricted universe multiverse',
 		include_src	  => false,
