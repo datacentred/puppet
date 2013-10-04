@@ -8,7 +8,7 @@ upstreamtimeservers: - '0.uk.pool.ntp.org'
 ldap_base_dn: 'dc=sal01,dc=datacentred,dc=co,dc=uk'
 ldap-uri:     'ldap://10.1.5.10'
 
-ubuntu_mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
+mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
 ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
 cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
 puppet_mirror_path: 'mirror/apt.puppetlabs.com'
