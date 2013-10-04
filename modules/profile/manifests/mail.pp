@@ -1,3 +1,4 @@
+# FIXME fix version
 class profile::mail {
 
 	$smarthostuser = hiera('smarthostuser')
