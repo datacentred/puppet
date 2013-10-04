@@ -1,6 +1,6 @@
 class profile::ntpclient {
 
-	$localtimeservers = hiera_array('localtimeservers')
+	$localtimeservers = hiera('localtimeservers')
 	
 	class { "ntp":
 		servers    => $localtimeservers,
