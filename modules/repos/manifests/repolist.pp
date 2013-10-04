@@ -9,7 +9,7 @@ include repos::virtual
 
 
 
-	@repos::virtual::repo { 'local_precise_mirror'
+	@repos::virtual::repo { 'local_precise_mirror':
 		location          => "$mirrorserver/$ubuntumirrorpath",
 		release           => 'precise',
 		repos             => 'main restricted universe multiverse',
@@ -32,7 +32,7 @@ include repos::virtual
 	@repos::virtual::repo { 'local_nullmailer_backports_mirror':
 		location	=> "$mirrorserver/$nullmailermirrorpath",
 		release		=> 'precise',
-		repos		=> 'main'
+		repos		=> 'main',
 	}
 
         @repos::virtual::repo { 'ceph':
