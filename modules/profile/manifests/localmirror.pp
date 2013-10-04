@@ -2,7 +2,7 @@ class profile::localmirror {
 
 	include profile::dpkg
 
-	$mirrorserver = hiera('ubuntu_mirror_server')
+	$mirrorserver = hiera('mirror_server')
 	$ubuntumirrorpath = hiera('ubuntu_mirror_path')
 	$puppetmirrorpath = hiera('puppet_mirror_path')
 
