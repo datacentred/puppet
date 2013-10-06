@@ -7,9 +7,15 @@ class repos::virtual {
                 	release           => "$release",
                 	repos             => "$repos",
                 	include_src       => false,
-			key		  => "$key",
-			key_server	  => "$key_server",
 		}
+
+		if ( $key != "" ) {
+			apt::key { "$title":
+				key	   => "$key",
+				key_server => "$key_server",
+			}
+		}
+			
 	}
 
 }
