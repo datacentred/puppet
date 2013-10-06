@@ -44,6 +44,8 @@ include repos::virtual
 		location	  => "$mirrorserver/$nullmailermirrorpath",
 		release		  => 'precise',
 		repos		  => 'main',
+		key		  => 'E8B30951'
+		key_server	  => 'keyserver.ubuntu.com'
 		tag		  => baserepos
 	}
 
