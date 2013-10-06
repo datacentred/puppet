@@ -54,7 +54,7 @@ include repos::virtual
                 release           => 'precise',
                 repos             => 'main',
 		key		  => '17ED316D',
-		key_server	  => 'keyserver.ubuntu.com'
+		key_server	  => 'keyserver.ubuntu.com',
         }
         
 	@repos::virtual::repo { 'ceph_d_mirror':
@@ -64,5 +64,4 @@ include repos::virtual
 		key		  => '17ED316D',
 		key_server	  => 'keyserver.ubuntu.com'
 	}
-
 }	
