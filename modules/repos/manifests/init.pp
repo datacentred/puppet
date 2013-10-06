@@ -7,8 +7,8 @@ class repos::virtual {
                 	release           => "$release",
                 	repos             => "$repos",
                 	include_src       => false,
-			key		  => $key,
-			key_server	  => $key_server,
+			key		  => "$key",
+			key_server	  => "$key_server",
 		}
 	}
 
