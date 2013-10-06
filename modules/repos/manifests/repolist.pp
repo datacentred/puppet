@@ -34,16 +34,16 @@ include repos::virtual
 	}
 
 	@repos::virtual::repo { 'local_puppetlabs_mirror':
-		location	=> "$mirrorserver/$puppetmirrorpath",
-		release		=> 'precise',
-		repos		=> 'main dependencies',
+		location	  => "$mirrorserver/$puppetmirrorpath",
+		release		  => 'precise',
+		repos		  => 'main dependencies',
 		tag		  => baserepos
 	}
 
 	@repos::virtual::repo { 'local_nullmailer_backports_mirror':
-		location	=> "$mirrorserver/$nullmailermirrorpath",
-		release		=> 'precise',
-		repos		=> 'main',
+		location	  => "$mirrorserver/$nullmailermirrorpath",
+		release		  => 'precise',
+		repos		  => 'main',
 		tag		  => baserepos
 	}
 
