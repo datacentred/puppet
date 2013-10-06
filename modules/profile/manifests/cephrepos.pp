@@ -6,4 +6,10 @@ class profile::cephrepos {
 
 	realize (Repos::Virtual::Repo['ceph_c_mirror'])
 
+        apt::key { 'ceph':
+		key        => '17ED316D',
+      		key_server => 'keyserver.ubuntu.com',
+    	}
+
+
 }	
