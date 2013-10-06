@@ -6,8 +6,8 @@ include repos::virtual
 	$ubuntumirrorpath = hiera(ubuntu_mirror_path)
 	$ubuntusecmirrorpath = hiera(ubuntu_security_mirror_path)
 	$puppetmirrorpath = hiera(puppet_mirror_path)
-	$cephcmirrorpath = hiera(cephc_mirror_path)
-	$cephdmirrorpath = hiera(cephd_mirror_path)
+	$cephcmirrorpath = hiera(ceph_c_mirror_path)
+	$cephdmirrorpath = hiera(ceph_d_mirror_path)
 	$nullmailermirrorpath = hiera(nullmailer_mirror_path)
 
 
