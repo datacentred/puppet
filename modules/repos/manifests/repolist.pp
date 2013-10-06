@@ -16,32 +16,35 @@ include repos::virtual
 		location          => "$mirrorserver/$ubuntumirrorpath",
 		release           => 'precise',
 		repos             => 'main restricted universe multiverse',
-
+		tag		  => baserepos
 	}
 	
 	@repos::virtual::repo { 'local_precise_updates_mirror':
 		location          => "$mirrorserver/$ubuntumirrorpath",
 		release           => 'precise-updates',
 		repos             => 'main restricted universe multiverse',
-
+		tag		  => baserepos
 	}
 
 	@repos::virtual::repo { 'local_precise_security_mirror':
 		location          => "$mirrorserver/$ubuntusecmirrorpath",
 		release           => 'precise-security',
 		repos             => 'main restricted universe',
+		tag		  => baserepos
 	}
 
 	@repos::virtual::repo { 'local_puppetlabs_mirror':
 		location	=> "$mirrorserver/$puppetmirrorpath",
 		release		=> 'precise',
 		repos		=> 'main dependencies',
+		tag		  => baserepos
 	}
 
 	@repos::virtual::repo { 'local_nullmailer_backports_mirror':
 		location	=> "$mirrorserver/$nullmailermirrorpath",
 		release		=> 'precise',
 		repos		=> 'main',
+		tag		  => baserepos
 	}
 
         @repos::virtual::repo { 'ceph_c_mirror':
