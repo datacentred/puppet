@@ -10,6 +10,7 @@ class profile::baserepos {
 
 	realize (Repos::Virtual::Repo['local_precise_mirror'])
 	realize (Repos::Virtual::Repo['local_precise_updates_mirror'])
+	realize (Repos::Virtual::Repo['local_precise_security_mirror'])
 	realize (Repos::Virtual::Repo['local_puppetlabs_mirror'])
 	realize (Repos::Virtual::Repo['local_nullmailer_backports_mirror'])
 
