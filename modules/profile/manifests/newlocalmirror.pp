@@ -10,5 +10,7 @@ class profile::newlocalmirror {
 
 	realize (Repos::Virtual::Repo['local_precise_mirror'])
 
+	realize (Repos::Virtual::Repo['local_precise_updates_mirror'])
+
 }
 
