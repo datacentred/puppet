@@ -7,9 +7,9 @@ class profile::base {
 	include profile::sudoers
 }
 
-class profile::dev {
+class profile::cephnode {
 
-	include profile::git
+	include profile::cephrepos
 
 }
 

@@ -2,8 +2,8 @@ class role::generic {
 	include profile::base
 }
 
-class role::dev inherits role::generic {
-	include profile::dev
+class role::cephnode inherits role::generic {
+	include profile::cephnode
 }
 
 class role::os-controller inherits role::generic {
