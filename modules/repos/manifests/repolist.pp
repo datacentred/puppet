@@ -4,6 +4,7 @@ include repos::virtual
 
 	$mirrorserver = hiera(mirror_server)
 	$ubuntumirrorpath = hiera(ubuntu_mirror_path)
+	$ubuntusecmirrorpath = hiera(ubuntu_security_mirror_path)
 	$puppetmirrorpath = hiera(puppet_mirror_path)
 	$nullmailermirrorpath = hiera(nullmailer_mirror_path)
 
@@ -21,6 +22,12 @@ include repos::virtual
 		release           => 'precise-updates',
 		repos             => 'main restricted universe multiverse',
 
+	}
+
+	@repos::virtual::repo { 'local_precise_security_mirror':
+		location          => "$mirrorserver/$ubuntusecmirrorpath",
+		release           => 'precise-security',
+		repos             => 'main restricted universe',
 	}
 
 	@repos::virtual::repo { 'local_puppetlabs_mirror':
