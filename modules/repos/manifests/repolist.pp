@@ -7,6 +7,7 @@ include repos::virtual
 	$ubuntusecmirrorpath = hiera(ubuntu_security_mirror_path)
 	$puppetmirrorpath = hiera(puppet_mirror_path)
 	$cephcmirrorpath = hiera(cephc_mirror_path)
+	$cephdmirrorpath = hiera(cephd_mirror_path)
 	$nullmailermirrorpath = hiera(nullmailer_mirror_path)
 
 
@@ -43,11 +44,17 @@ include repos::virtual
 		repos		=> 'main',
 	}
 
-        @repos::virtual::repo { 'ceph_cuttlefish_mirror':
+        @repos::virtual::repo { 'ceph_c_mirror':
                 location          => "$mirrorserver/$cephcmirrorpath",
                 release           => 'precise',
                 repos             => 'main',
 
         }
+        
+	@repos::virtual::repo { 'ceph_d_mirror':
+                location          => "$mirrorserver/$cephdmirrorpath",
+                release           => 'precise',
+                repos             => 'main',
+	}
 
 }	
