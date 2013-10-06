@@ -1,6 +1,6 @@
 class repos::virtual {
 	
-	define repo ("$location","$release","$repos") {
+	define repo ($location,$release,$repos) {
 
 		apt::source { "$title":
                 	location          => "$location",
