@@ -51,13 +51,16 @@ include repos::virtual
                 location          => "$mirrorserver/$cephcmirrorpath",
                 release           => 'precise',
                 repos             => 'main',
-
+		key		  => '17ED316D',
+		key_server	  => 'keyserver.ubuntu.com'
         }
         
 	@repos::virtual::repo { 'ceph_d_mirror':
                 location          => "$mirrorserver/$cephdmirrorpath",
                 release           => 'precise',
                 repos             => 'main',
+		key		  => '17ED316D',
+		key_server	  => 'keyserver.ubuntu.com'
 	}
 
 }	
