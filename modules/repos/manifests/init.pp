@@ -9,6 +9,8 @@ class repos::virtual {
                 	include_src       => false,
 		}
 
+# FIXME check for a supplied keyserver or use default
+
 		if ( $key != "" ) {
 			apt::key { "$title":
 				key	   => "$key",
