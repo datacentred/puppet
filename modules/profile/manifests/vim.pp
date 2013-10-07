@@ -1,5 +1,7 @@
 class profile::vim {
-    package { 'vim' :
-        ensure => installed
-    }
+
+  package { 'vim' :
+    ensure => installed
+  }
+
 }
