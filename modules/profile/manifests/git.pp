@@ -1,6 +1,7 @@
 class profile::git {
 
-	package { 'git':
-		ensure => installed,
-	}
+  package { 'git':
+    ensure => installed,
+  }
+
 }
