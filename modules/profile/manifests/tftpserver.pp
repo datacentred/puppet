@@ -1,9 +1,10 @@
 class profile::tftpserver {
 
-	$tftpdir = hiera('tftpdir')
-	
-	class tftp {
-		directory => "$tftpdir",
-		inetd     => false,
-	}
+  $tftpdir = hiera('tftpdir')
+
+  class { 'tftp':
+    directory => "$tftpdir",
+    inetd     => false,
+  }
+
 }
