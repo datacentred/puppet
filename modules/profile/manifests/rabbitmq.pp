@@ -1,7 +1,7 @@
 class profile::rabbitmq {
-	
-	package { 'rabbitmq-server'
-		ensure => installed
-	}
+
+  package { 'rabbitmq-server':
+    ensure => installed
+  }
 
 }
