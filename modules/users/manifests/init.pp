@@ -24,8 +24,8 @@ class users::virtual {
     }
 
     file { "/home/$title/.ssh":
-      path    => "/home/$title/.ssh",
       ensure  => directory,
+      path    => "/home/$title/.ssh",
       owner   => "$uid",
       group   => "$gid",
       mode    => '0700',
