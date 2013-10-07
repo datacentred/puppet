@@ -1,6 +1,6 @@
 class repos::virtual {
 
-  define repo ($location,$release,$repos,$key='undef',$key_server='undef') {
+  define repo ($location,$release,$repos,$key="",$key_server="") {
 
     apt::source { "$title":
       location          => "$location",
@@ -11,8 +11,8 @@ class repos::virtual {
 
 # Apt module uses keyserver.ubuntu.com by default
 
-    if ( $key != 'undef' ) {
-      if ( $keyserver != 'undef' ){
+    if ( $key != "" ) {
+      if ( $keyserver != "" ){
         apt::key { "$title":
           key        => "$key",
           key_server => "$key_server",
