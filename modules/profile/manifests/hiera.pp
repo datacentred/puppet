@@ -1,6 +1,8 @@
 class profile::hiera {
-	package { 'hiera' :
-		provider => gem,
-		ensure => installed,
-	}
+
+  package { 'hiera':
+    provider => gem,
+    ensure => installed,
+  }
+
 }
