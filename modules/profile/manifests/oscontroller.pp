@@ -1,7 +1,7 @@
 class profile::oscontroller {
 
-	package { 'python-mysqldb'
-		ensure => installed,
-	}
+  package { 'python-mysqldb':
+    ensure => installed,
+  }
 
 }
