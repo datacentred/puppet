@@ -9,6 +9,8 @@ class repos::virtual {
                 	include_src       => false,
 		}
 
+# Apt module uses keyserver.ubuntu.com by default
+
 		if ( $key != "" ) {
 			if ( $keyserver != "" ){
 				apt::key { "$title":
