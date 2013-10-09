@@ -10,3 +10,6 @@
 [submodule "modules/sudo"]
 	path = modules/sudo
 	url = git://github.com/saz/puppet-sudo.git
+[submodule "modules/ntp"]
+	path = modules/ntp
+	url = git://github.com/puppetlabs/puppetlabs-ntp.git
