@@ -1,6 +1,3 @@
-[submodule "modules/git"]
-	path = modules/git
-	url = git://github.com/puppetlabs/puppetlabs-git.git
 [submodule "modules/nullmailer"]
 	path = modules/nullmailer
 	url = git://github.com/akumria/puppet-nullmailer.git
