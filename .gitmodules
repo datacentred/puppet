@@ -19,3 +19,6 @@
 [submodule "modules/augeasproviders"]
 	path = modules/augeasproviders
 	url = git://github.com/hercules-team/augeasproviders
+[submodule "modules/mysql"]
+	path = modules/mysql
+	url = git://github.com/puppetlabs/puppetlabs-mysql.git
