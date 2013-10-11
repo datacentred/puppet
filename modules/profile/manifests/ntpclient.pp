@@ -3,7 +3,7 @@ class profile::ntpclient {
   $localtimeservers = hiera('localtimeservers')
 
   class { 'ntp':
-    servers    => $localtimeservers,
+    servers    => [ $localtimeservers ],
     autoupdate => false,
   }
 
