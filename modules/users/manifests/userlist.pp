@@ -18,7 +18,7 @@ include users::virtual
     sshkey => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ6MGX3NlmNNaLpTne6n9ZOxzpRJlT0pcBEXVl/S8iHvFdAyaoKsCRI+U5dAV6ONlpDBMqkUBalGf2LfssVIiFlGi7U2iOBG6q9T2XjwP7YCBlqguRkbTFXU4qDix/wBcGsgOG+wWq9OJhRdJRWG1mt7kZDBoBGrGrSjdmOlfP/CVfSUBCJTAhpneQ1gYjHLujS5Ee+sIBU8k7pgAzUYaGpmOYbqW80+hmYB7EwsBiI+wfz21ki1UfWI5gjB0No2BKVgiXWPj0+zcFiNjVguTj/KrrsVXpKsJDqc/8tEgHIU1qBSdKFVjEu93QlxLinLg7zWyujlt/q+i5Gt+FlJal',
   }
 
-  @users::virtual::acount { 'dariush':
+  @users::virtual::account { 'dariush':
     uid    => '1003',
     gid    => '1000',
     pass   => '$6$g8y7.8wJ$FvZbW4XqG3JuL./jQt3QAt.IKG7WMQzTSWyP6TTtjC1EcYgdqxV/gjlsnC.muiJH3OAcX1zGtNRsO1vWZMWme1',
