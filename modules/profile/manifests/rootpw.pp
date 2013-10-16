@@ -3,7 +3,7 @@ class profile::rootpw {
   $rpass = hiera('rpass')
 
   user { 'root':
-    ensure => present,
+    ensure   => present,
     password => "$rpass",
   }
 
