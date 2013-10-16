@@ -1,4 +1,4 @@
-class profile::admins {
+class profile::adminstest {
 
 include dc_users::userlist
 
