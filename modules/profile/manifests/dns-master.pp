@@ -1,6 +1,6 @@
 class profile::dns-master {
-	include bind
-	bind::server::conf { '/etc/bind/named.conf':
+	include dc_bind
+	dc_bind::server::conf { '/etc/bind/named.conf':
 	  directory     => '/var/cache/bind',
 	  listen_on_addr    => [ 'any' ],
 	  listen_on_v6_addr => [ 'any' ],
