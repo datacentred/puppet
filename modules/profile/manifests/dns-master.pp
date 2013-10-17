@@ -1,12 +1,19 @@
 class profile::dns-master {
+
+  $foremankey = hiera(foreman_secret_key)
+  $clientnets = hiera(client_networks)
+
   include dc_bind
+
   dc_bind::server::conf { '/etc/bind/named.conf':
     directory                 => '/var/cache/bind',
     listen_on_addr            => [ 'any' ],
     listen_on_v6_addr         => [ 'any' ],
     forwarders                => [ '8.8.8.8', '8.8.4.4' ],
-    allow_query               => [ 'localnets' ],
-    allow_recursion           => [ '10.0.1.0/24', '10.1.1.0/24', '10.1.10.0/24' ],
+    allow_query               => [ 'any' ],
+    allow_recursion           => [ 'clients'],
+    acls                      => { clients => [ $clientnets ], },
+    keys                      => { foreman => [ $foremankey ], },
     zones                     => {
     'sal01.datacentred.co.uk' => [
       'type master',
@@ -14,5 +21,11 @@ class profile::dns-master {
       'allow-update { key "foreman"; }'
     ]
     },
+  }
+  dc_bind::server::file { 'db.sal01.datacentred.co.uk':
+        source => 'puppet:///modules/dc_bind/db.sal01.datacentred.co.uk',
+  }
+  dc_bind::server::file { 'db.root':
+        source => 'puppet:///modules/dc_bind/db.root',
   }
 }

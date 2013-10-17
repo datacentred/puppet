@@ -21,6 +21,9 @@ mysql_root_pw: 'OithGec3'
 
 foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
 
+client_networks:
+- '10.0.0.0/16'
+
 smarthostuser: 'autobot@datacentred.co.uk'
 smarthostpass: 'horovAnVods5'
 smarthost: 'smtp.gmail.com'
