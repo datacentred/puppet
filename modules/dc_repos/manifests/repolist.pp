@@ -9,6 +9,7 @@ include dc_repos::virtual
   $cephcmirrorpath      = hiera(ceph_c_mirror_path)
   $cephdmirrorpath      = hiera(ceph_d_mirror_path)
   $nullmailermirrorpath = hiera(nullmailer_mirror_path)
+  $virtualboxmirrorpath = hiera(virtualbox_mirror_path)
 
 
 
@@ -63,5 +64,12 @@ include dc_repos::virtual
     repos      => 'main',
     key        => '17ED316D',
     key_server => 'keyserver.ubuntu.com'
+  }
+
+  @dc_repos::virtual::repo { 'local_virtualbox_mirror':
+    location   => "$mirrorserver/$virtualboxmirrorpath",
+    release    => 'precise',
+    repos      => 'contrib',
+    key_source => 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc',
   }
 }
