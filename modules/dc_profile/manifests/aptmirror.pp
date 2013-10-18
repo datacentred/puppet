@@ -4,7 +4,7 @@ class dc_profile::aptmirror {
 
   class { 'apt_mirror': }
 
-    Dc_mirrors::Virtual::Localmirror <| tag == basemirrors |>
+    Dc_mirrors::Virtual::Mirror <| tag == basemirrors |>
 
 }
 
