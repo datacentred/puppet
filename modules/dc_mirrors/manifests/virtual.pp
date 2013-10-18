@@ -1,6 +1,6 @@
 class dc_mirrors::virtual {
 
-  define localmirror ($mirrorurl,$os="",$release,$components) {
+  define mirror ($mirrorurl,$os="",$release,$components) {
 
     apt_mirror::mirror { "$title":
       mirror     => "$mirrorurl",
