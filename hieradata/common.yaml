@@ -1,13 +1,13 @@
+#ntp
+#
 localtimeservers: '10.1.5.10'
 timeservers:
  - '0.uk.pool.ntp.org'
  - '1.uk.pool.ntp.org'
  - '2.uk.pool.ntp.org'
  - '3.uk.pool.ntp.org'
-
-ldap_base_dn: 'dc=sal01,dc=datacentred,dc=co,dc=uk'
-ldap-uri:     'ldap://10.1.5.10'
-
+# repos
+#
 mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
 ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
 ubuntu_security_mirror_path: 'mirror/security.ubuntu.com/ubuntu'
@@ -23,7 +23,8 @@ foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
 
 client_networks:
 - '10.0.0.0/16'
-
+# nullmailer
+#
 smarthostuser: 'autobot@datacentred.co.uk'
 smarthostpass: 'horovAnVods5'
 smarthost: 'smtp.gmail.com'
@@ -32,3 +33,7 @@ sysmailaddress: 'sysadmin@datacentred.co.uk'
 tftpdir: '/var/tftpboot'
 
 rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
+
+# apt-mirror
+#
+ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
