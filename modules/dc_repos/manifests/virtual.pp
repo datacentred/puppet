@@ -1,6 +1,6 @@
 class dc_repos::virtual {
 
-  define repo ($location,$release,$repos,$key="",$key_server="") {
+  define repo ($location,$release,$repos,$key="",$key_server="",$key_source="") {
 
     apt::source { "$title":
       location          => "$location",
@@ -22,6 +22,11 @@ class dc_repos::virtual {
         apt::key { "$title":
           key => "$key",
         }
+      }
+    }
+    if ( $key_source != "" ) {
+      apt::key { "$title":
+        key_source => "$key_source",
       }
     }
   }
