@@ -7,7 +7,7 @@ include dc_mirrors::virtual
   @dc_mirrors::virtual::mirror { 'ubuntu_precise_mirror':
     mirrorurl  => "$ubuntu_mirror_url",
     release    => 'precise',
-    components => ['main', 'restricted', 'universe', 'multiverse'],
+    components => 'main,restricted,universe,multiverse',
     tag        => basemirrors
   }
 
