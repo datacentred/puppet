@@ -16,6 +16,7 @@ puppet_mirror_path: 'mirror/apt.puppetlabs.com'
 nullmailer_mirror_path: 'mirror/ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu'
 ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
 ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
+virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
 
 mysql_root_pw: 'OithGec3'
 
