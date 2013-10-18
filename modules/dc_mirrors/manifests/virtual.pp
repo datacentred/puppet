@@ -1,9 +1,9 @@
 class dc_mirrors::virtual {
 
-  define mirror ($location,$os="",$release,$components) {
+  define mirror ($mirrorurl,$os="",$release,$components) {
 
     apt_mirror::mirror { "$title":
-      location   => "$location",
+      mirror     => "$mirrorurl",
       os         => "$os",
       release    => "$release",
       components => "$components",
