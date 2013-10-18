@@ -27,7 +27,7 @@
 	url = git://github.com/puppetlabs/hiera-puppet.git
 [submodule "modules/dc_bind"]
 	path = modules/dc_bind
-	url = git@github.com:datacentred/dc-puppet-bind.git
+	url = git://github.com/datacentred/dc-puppet-bind.git
 [submodule "modules/apt_mirror"]
 	path = modules/apt_mirror
 	url = https://github.com/jtopjian/puppet-apt_mirror
