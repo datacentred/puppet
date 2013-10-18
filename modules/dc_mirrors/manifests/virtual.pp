@@ -6,7 +6,7 @@ class dc_mirrors::virtual {
       mirror     => "$mirrorurl",
       os         => "$os",
       release    => "$release",
-      components => split("$components",","),
+      components => $components,
     }
 
   }
