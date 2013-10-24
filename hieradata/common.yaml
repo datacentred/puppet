@@ -17,6 +17,7 @@ nullmailer_mirror_path: 'mirror/ppa.launchpad.net/mikko-red-innovation/ppa/ubunt
 ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
 ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
 virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
+hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
 
 mysql_root_pw: 'OithGec3'
 

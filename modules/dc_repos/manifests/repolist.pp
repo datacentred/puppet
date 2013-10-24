@@ -10,8 +10,7 @@ include dc_repos::virtual
   $cephdmirrorpath      = hiera(ceph_d_mirror_path)
   $nullmailermirrorpath = hiera(nullmailer_mirror_path)
   $virtualboxmirrorpath = hiera(virtualbox_mirror_path)
-
-
+  $hpsupportmirrorpath  = hiera(hpsupport_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "$mirrorserver/$ubuntumirrorpath",
@@ -71,5 +70,12 @@ include dc_repos::virtual
     release    => 'precise',
     repos      => 'contrib',
     key_source => 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc',
+  }
+
+  @dc_repos::virtual::repo { 'local_hpsupport_mirror':
+    location   => "$mirrorserver/$hpsupportmirrorpath",
+    release    => 'precise/current',
+    repos      => 'non-free',
+    key_source => 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp',
   }
 }
