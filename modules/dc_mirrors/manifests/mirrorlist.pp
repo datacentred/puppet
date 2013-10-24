@@ -2,8 +2,8 @@ class dc_mirrors::mirrorlist {
 
 include dc_mirrors::virtual
 
-  $ubuntu_mirror_url = hiera(ubuntu_mirror_url)
-  $ubuntumirrorscomponents = ['main', 'restricted', 'universe', 'multiverse']
+  $ubuntu_mirror_url              = hiera(ubuntu_mirror_url)
+  $ubuntumirrorscomponents        = ['main', 'restricted', 'universe', 'multiverse']
   $ubuntumirrorsdebinstcomponents = ['main/debian-installer', 'restricted/debian-installer', 'universe/debian-installer', 'multiverse/debian-installer']
 
   $ubuntumirrors = {
