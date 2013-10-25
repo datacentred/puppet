@@ -18,15 +18,16 @@ class dc_repos::virtual {
           key_server => "$key_server",
         }
       }
+      if ( $key_source != "" ){
+        apt::key { "$title":
+          key        => "$key",
+          key_source => "$key_source",
+        }
+      }
       else {
         apt::key { "$title":
           key => "$key",
         }
-      }
-    }
-    if ( $key_source != "" ) {
-      apt::key { "$title":
-        key_source => "$key_source",
       }
     }
   }
