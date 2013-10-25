@@ -42,7 +42,9 @@ ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
 
 # dhcpd for testing
 #
-pxeserver: '10.0.1.1'
+pxeserver: '10.0.1.250'
 nameservers:
 - '10.0.1.250'
 - '10.0.1.251'
+dhcpdmasterip: '10.0.1.250'
+dhcpdslaveip: '10.0.1.251'
