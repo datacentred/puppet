@@ -69,6 +69,7 @@ include dc_repos::virtual
     location   => "$mirrorserver/$virtualboxmirrorpath",
     release    => 'precise',
     repos      => 'contrib',
+    key        => '98AB5139',
     key_source => 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc',
   }
 
@@ -76,6 +77,7 @@ include dc_repos::virtual
     location   => "$mirrorserver/$hpsupportmirrorpath",
     release    => 'precise/current',
     repos      => 'non-free',
+    key        => '2689B887',
     key_source => 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp',
   }
 }

@@ -31,3 +31,12 @@
 [submodule "modules/concat"]
 	path = modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat
+[submodule "modules/puppetlabs-dhcp"]
+	path = modules/puppetlabs-dhcp
+	url = https://github.com/xaque208/puppetlabs-dhcp
+[submodule "modules/dns"]
+	path = modules/dns
+	url = https://github.com/theforeman/puppet-dns
+[submodule "modules/pupmod-concat"]
+	path = modules/pupmod-concat
+	url = https://github.com/onyxpoint/pupmod-concat
