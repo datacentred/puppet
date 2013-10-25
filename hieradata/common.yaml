@@ -39,3 +39,10 @@ rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
 # apt-mirror
 #
 ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
+
+# dhcpd for testing
+#
+pxeserver: '10.0.1.1'
+nameservers:
+- '10.0.1.250'
+- '10.0.1.251'
