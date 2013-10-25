@@ -31,6 +31,3 @@
 [submodule "modules/concat"]
 	path = modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat
-[submodule "puppetlabs-dhcp"]
-	path = modules/puppetlabs-dhcp
-	url = https://github.com/xaque208/puppetlabs-dhcp
