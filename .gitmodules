@@ -40,3 +40,6 @@
 [submodule "modules/dhcp"]
 	path = modules/dhcp
 	url = https://github.com/xaque208/puppetlabs-dhcp
+[submodule "modules/dns"]
+	path = modules/dns
+	url = https://github.com/datacentred/puppet-dns.git
