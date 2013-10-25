@@ -2,7 +2,7 @@ class dc_profile::dhcpdmaster {
 
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = hiera(nameservers)
-  $pxeserver        = hiera(pxeservers)
+  $pxeserver        = hiera(pxeserver)
   $slaveserver_ip   = hiera(dhcpdslaveip)
 
   class { 'dhcp':
@@ -10,7 +10,7 @@ class dc_profile::dhcpdmaster {
       'sal01.datacentred.co.uk',
       '0.0.10.in-addr.arpa',
       ],
-    nameservers  => ['10.0.1.20'],
+    nameservers  => ["$nameservers"],
     ntpservers   => ["$localtimeservers"],
     interfaces   => ['eth0'],
     #dnsupdatekey => "/etc/bind/keys.d/$ddnskeyname",
