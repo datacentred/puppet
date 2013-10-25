@@ -37,3 +37,6 @@
 [submodule "modules/pupmod-concat"]
 	path = modules/pupmod-concat
 	url = https://github.com/onyxpoint/pupmod-concat
+[submodule "modules/dhcp"]
+	path = modules/dhcp
+	url = https://github.com/xaque208/puppetlabs-dhcp
