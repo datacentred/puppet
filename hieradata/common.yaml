@@ -48,3 +48,8 @@ nameservers:
 - '10.0.1.251'
 dhcpdmasterip: '10.0.1.250'
 dhcpdslaveip: '10.0.1.251'
+
+# dns
+forwarders:
+- '8.8.8.8'
+- '8.8.4.4'
