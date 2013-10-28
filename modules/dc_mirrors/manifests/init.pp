@@ -1,0 +1,2 @@
+class dc_mirrors {
+}
