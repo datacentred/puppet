@@ -51,7 +51,7 @@ dhcpdslaveip: '10.0.1.251'
 forwarders:
 - '8.8.8.8'
 - '8.8.4.4'
-dns-masters:
+dnsmasters:
 - '10.1.5.50'
 nameservers:
 - '10.1.5.50'

@@ -1,4 +1,4 @@
-class dc_profile::dns-master {
+class dc_profile::dns_master {
 
   include dns
 
