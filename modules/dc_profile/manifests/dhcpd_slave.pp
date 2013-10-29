@@ -1,4 +1,4 @@
-class dc_profile::dhcpdslave {
+class dc_profile::dhcpd_slave {
 
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = hiera_array(nameservers)
