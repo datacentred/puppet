@@ -40,3 +40,6 @@
 [submodule "modules/dns"]
 	path = modules/dns
 	url = https://github.com/datacentred/puppet-dns.git
+[submodule "modules/foreman_proxy"]
+	path = modules/foreman_proxy
+	url = https://github.com/theforeman/puppet-foreman_proxy
