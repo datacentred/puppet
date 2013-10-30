@@ -17,3 +17,11 @@ class dc_role::os-network-controller inherits dc_role::generic {
 class dc_role::os-compute inherits dc_role::generic {
   include dc_profile::os-compute
 }
+
+class dc_role::dns_master inherits dc_role::generic {
+  include dc_profile::dns_master
+}
+
+class dc_role::dns_slave inherits dc_role::generic {
+  include dc_profile::dns_slave
+}
