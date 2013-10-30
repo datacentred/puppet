@@ -55,3 +55,6 @@ nameservers:
 - '10.1.5.50'
 - '10.1.5.58'
 
+# foreman
+#
+foreman_url: 'foreman'
