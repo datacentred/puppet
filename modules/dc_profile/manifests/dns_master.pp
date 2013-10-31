@@ -15,4 +15,11 @@ class dc_profile::dns_master {
     nameservers => hiera(nameservers),
   }
 
+  dns::zone {'192.10.10.in-addr.arpa':
+    soa         => "$fqdn",
+    soaip       => "$ipaddress",
+    reverse     => true,
+    nameservers => hiera(nameservers),
+  }
+
 }
