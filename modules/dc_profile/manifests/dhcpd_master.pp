@@ -23,11 +23,5 @@ class dc_profile::dhcpd_master {
     peer_address => $slaveserver_ip,
   }
 
-  dhcp::pool { 'test.sal01.datacentred.co.uk':
-    network => '10.0.1.0',
-    mask    => '255.255.255.0',
-    range   => '10.0.1.11 10.0.1.249',
-    gateway => '10.0.1.1',
-  }
-
+  realize Dc_dhcpdpools::Virtual::Dhcpdpool['platform-services']
 }
