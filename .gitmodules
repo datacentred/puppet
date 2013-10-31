@@ -40,3 +40,6 @@
 [submodule "modules/dns"]
 	path = modules/dns
 	url = https://github.com/datacentred/puppet-dns.git
+[submodule "modules/network"]
+	path = modules/network
+	url = https://github.com/attachmentgenie/puppet-module-network
