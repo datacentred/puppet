@@ -6,6 +6,7 @@ class dc_profile::f_proxy {
     trusted_hosts       => [],
     manage_sudoersd     => 'false',
     puppetca            => 'false',
+    puppetrun           => 'false',
     tftp                => 'false',
     dhcp                => 'false',
     dns                 => 'true',
