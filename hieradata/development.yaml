@@ -1,8 +1,11 @@
 #ntp
 #
-localtimeservers: 
- - '10.10.192.250'
- - '10.10.192.251'
+localtimeservers: '10.1.5.10'
+timeservers:
+ - '0.uk.pool.ntp.org'
+ - '1.uk.pool.ntp.org'
+ - '2.uk.pool.ntp.org'
+ - '3.uk.pool.ntp.org'
 # repos
 #
 mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
@@ -16,6 +19,12 @@ ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
 virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
 hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
 
+mysql_root_pw: 'OithGec3'
+
+foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
+
+client_networks:
+- '10.0.0.0/16'
 # nullmailer
 #
 smarthostuser: 'autobot@datacentred.co.uk'
@@ -33,9 +42,9 @@ ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
 
 # dhcpd for testing
 #
-pxeserver: '10.10.192.250'
-dhcpdmasterip: '10.10.192.250'
-dhcpdslaveip: '10.10.192.251'
+pxeserver: '10.0.1.250'
+dhcpdmasterip: '10.0.1.250'
+dhcpdslaveip: '10.0.1.251'
 
 # dns
 # 
@@ -43,10 +52,10 @@ forwarders:
 - '8.8.8.8'
 - '8.8.4.4'
 dnsmasters:
-- '10.10.192.250'
+- '10.1.5.50'
 nameservers:
-- '10.10.192.250'
-- '10.10.192.251'
+- '10.1.5.50'
+- '10.1.5.58'
 
 # foreman
 #
