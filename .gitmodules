@@ -49,3 +49,6 @@
 [submodule "modules/puppet"]
 	path = modules/puppet
 	url = https://github.com/theforeman/puppet-puppet
+[submodule "modules/foreman"]
+	path = modules/foreman
+	url = https://github.com/theforeman/puppet-foreman
