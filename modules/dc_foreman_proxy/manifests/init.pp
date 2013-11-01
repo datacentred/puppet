@@ -25,8 +25,8 @@ class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bi
   }
 
   file { '/etc/foreman-proxy/settings.yml':
-    owner   => root,
-    group   => root,
+    owner   => foreman-proxy,
+    group   => foreman-proxy,
     mode    => '0640',
     content => template('dc_foreman_proxy/settings.yml.erb');
   }
