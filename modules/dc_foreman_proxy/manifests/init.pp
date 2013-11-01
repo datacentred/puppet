@@ -11,11 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_foreman_proxy ( $use_dns = "", $use_dhcp = "", $dns_key= "") {
-
-  $use_dns  = false
-  $use_dhcp = false
-  $dns_key  = '/etc/bind/rndc.key'
+class dc_foreman_proxy ( $use_dns = "false", $use_dhcp = "false", $dns_key= "/etc/bind/rndc.key") {
 
   realize Dc_repos::Virtual::Repo['local_foreman_mirror']
 
