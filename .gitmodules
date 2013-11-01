@@ -43,3 +43,9 @@
 [submodule "modules/network"]
 	path = modules/network
 	url = https://github.com/attachmentgenie/puppet-module-network
+[submodule "modules/foreman_proxy"]
+	path = modules/foreman_proxy
+	url = https://github.com/theforeman/puppet-foreman_proxy
+[submodule "modules/puppet"]
+	path = modules/puppet
+	url = https://github.com/theforeman/puppet-puppet
