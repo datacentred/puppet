@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_foreman_proxy ( $use_dns = false, $use_dhcp = false, $dns_key= '/etc/bind/rndc.key') {
+class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bind/rndc.key') {
 
   validate_bool($use_dns)
   validate_bool($use_dhcp)
@@ -25,17 +25,17 @@ class dc_foreman_proxy ( $use_dns = false, $use_dhcp = false, $dns_key= '/etc/bi
   }
 
   file { '/etc/foreman-proxy/settings.yml':
-    owner   => root,
-    group   => root,
+    owner   => foreman-proxy,
+    group   => foreman-proxy,
     mode    => '0640',
     content => template('dc_foreman_proxy/settings.yml.erb');
   }
 
   if $use_dns == true {
-    file { '/etc/bind/rndc.key':
+    File <| title == $dns::params::rndckeypath |> {
       ensure  => present,
       require => Package['foreman-proxy'],
-      owner   => root,
+      owner   => bind,
       group   => foreman-proxy,
     }
   }
