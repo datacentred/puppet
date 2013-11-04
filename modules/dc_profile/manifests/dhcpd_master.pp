@@ -12,9 +12,7 @@ class dc_profile::dhcpd_master {
       ],
     nameservers  => ["$nameservers"],
     ntpservers   => ["$localtimeservers"],
-    interfaces   => ['eth0'],
-    #dnsupdatekey => "/etc/bind/keys.d/$ddnskeyname",
-    #require      => Bind::Key[ $ddnskeyname ],
+    interfaces   => ["$ipaddress"],
     pxeserver    => "$pxeserver",
     pxefilename  => 'pxelinux.0',
   }
