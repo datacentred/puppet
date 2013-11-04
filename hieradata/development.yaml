@@ -1,5 +1,6 @@
 #ntp
 #
+localtimeservers: '10.1.5.10'
 timeservers:
  - '0.uk.pool.ntp.org'
  - '1.uk.pool.ntp.org'
@@ -17,7 +18,13 @@ ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
 ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
 virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
 hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
-foreman_mirror_path: 'mirror/deb.theforeman.org'
+
+mysql_root_pw: 'OithGec3'
+
+foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
+
+client_networks:
+- '10.0.0.0/16'
 # nullmailer
 #
 smarthostuser: 'autobot@datacentred.co.uk'
@@ -27,7 +34,33 @@ sysmailaddress: 'sysadmin@datacentred.co.uk'
 
 tftpdir: '/var/tftpboot'
 
+rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
+
 # apt-mirror
 #
 ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
 
+# dhcpd for testing
+#
+pxeserver: '10.0.1.250'
+dhcpdmasterip: '10.0.1.250'
+dhcpdslaveip: '10.0.1.251'
+
+# dns
+# 
+forwarders:
+- '8.8.8.8'
+- '8.8.4.4'
+dnsmasters:
+- '10.1.5.50'
+nameservers:
+- '10.1.5.50'
+- '10.1.5.58'
+client_networks:
+- '10.10.192.0'
+- '10.5.10.0'
+- '10.1.1.0'
+
+# foreman
+#
+foreman_url: 'foreman'

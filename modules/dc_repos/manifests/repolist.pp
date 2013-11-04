@@ -11,6 +11,7 @@ include dc_repos::virtual
   $nullmailermirrorpath = hiera(nullmailer_mirror_path)
   $virtualboxmirrorpath = hiera(virtualbox_mirror_path)
   $hpsupportmirrorpath  = hiera(hpsupport_mirror_path)
+  $foremanmirrorpath    = hiera(foreman_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "$mirrorserver/$ubuntumirrorpath",
@@ -79,5 +80,13 @@ include dc_repos::virtual
     repos      => 'non-free',
     key        => '2689B887',
     key_source => 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp',
+  }
+
+  @dc_repos::virtual::repo { 'local_foreman_mirror':
+    location   => "$mirrorserver/$foremanmirrorpath",
+    release    => 'precise',
+    repos      => 'stable',
+    key        => 'E775FF07',
+    key_source => 'http://deb.theforeman.org/foreman.asc',
   }
 }
