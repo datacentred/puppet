@@ -10,11 +10,12 @@ class dc_profile::dhcpd_master {
       'sal01.datacentred.co.uk',
       '0.0.10.in-addr.arpa',
       ],
-    nameservers  => ["$nameservers"],
-    ntpservers   => ["$localtimeservers"],
-    interfaces   => ["$ipaddress"],
-    pxeserver    => "$pxeserver",
-    pxefilename  => 'pxelinux.0',
+    nameservers => ["$nameservers"],
+    ntpservers  => ["$localtimeservers"],
+    interfaces  => ["$ipaddress"],
+    pxeserver   => "$pxeserver",
+    pxefilename => 'pxelinux.0',
+    ddns        => false
   }
 
   class { dhcp::failover:
