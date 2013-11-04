@@ -12,10 +12,9 @@ class dc_profile::dhcpd_master {
       ],
     nameservers => ["$nameservers"],
     ntpservers  => ["$localtimeservers"],
-    interfaces  => ["$ipaddress"],
+    interfaces  => ['eth0'],
     pxeserver   => "$pxeserver",
     pxefilename => 'pxelinux.0',
-    ddns        => false
   }
 
   class { dhcp::failover:
