@@ -32,7 +32,7 @@ class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bi
   }
 
   if $use_dns == true {
-    File <| title == $dns_key |> {
+    File <| title == $dns::params::rndckeypath |> {
       ensure  => present,
       require => Package['foreman-proxy'],
       owner   => bind,
