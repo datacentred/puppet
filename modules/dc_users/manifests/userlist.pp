@@ -24,4 +24,11 @@ include dc_users::virtual
     pass   => '$6$g8y7.8wJ$FvZbW4XqG3JuL./jQt3QAt.IKG7WMQzTSWyP6TTtjC1EcYgdqxV/gjlsnC.muiJH3OAcX1zGtNRsO1vWZMWme1',
     sshkey => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQD1meqfHE5kqTp00XAqCFD3vqgRmYWTUK8FQ4Yt+VCKrtoUcjABsuk7tF3oqHdZaRCZAZaudW2bbqX3V3Sg45yoPgkBsC2StMSM8ZpsSdgBz9yqwCFctJCqqAjLJK9gSDT/iYAXzKgv5WTWtBb9b0sCfEgwPQBCGBh6ZJr6eqZF+cnADIVo7a6xJiOXV4uN8UozPLHNzrM4hnolfmVLAFHyTngfjicEQAXRP6z7S3c0wDmtqnvMg1lU+Gv+7Tit7jHE5yj0n3EJ1Z7dt4Nuj0i9Hv2SAVTvS8yMBMBKPb0EA/Ddj9tWY1ImEBZLILJPYAJusOUetR/NHDkLums405fZ',
   }
+
+  @dc_users::virtual::account { 'simon':
+    uid    => '1004',
+    gid    => '1000',
+    pass   => '$6$YhlSwKk4$BOaVDCkNXhLZvTSMbtsnoWtL5hK6cm/z0YBeFtc8TMLDqX1.Vlz/eYueN2gMdW03wE0xkcb4g1mRL/roFQUWi0',
+    sshkey => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDm3VdSIH5hhCvxW9JmipkubC3QV9HCTxALNL3BpS/Th4rYuMao5BxoEpXR6ITY6R1kfT/g03I4dSjmw+i+GDVydjCspxSMQR7ws4cfX+xFxs3CBszmfdGmwPO/ZN0vhPTJkPPrQKSg5Sb3r8xAzsQVW5IjnjD8LE+3cGwYANanrPgQSkYOdjVaw4K6zZfVVTOdT86FHDx0c8vez9J2AVd4YCqbMLgxSNKOjZ+2bEebYV8o5G9phUopZ7Rb8UfTwk+X2uCdH6p/LVBglTEFXAU6eYaZcAEzco+UcJ1nIhkPvUkzlx2u/maH1pp3pm4WuwZtWW60vY8A2Z6kpGZs3KPP',
+  }
 }
