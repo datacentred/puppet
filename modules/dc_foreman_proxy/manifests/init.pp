@@ -41,5 +41,11 @@ class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bi
     }
   }
 
-}
+  service { 'foreman-proxy':
+    require   => Package['foreman-proxy'],
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/etc/foreman-proxy/settings.yml']
+  }
 
+}
