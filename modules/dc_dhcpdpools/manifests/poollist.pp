@@ -9,7 +9,7 @@ include dc_dhcpdpools::virtual
 # Office
 # Platform Services
 
-  @dc_dhcpdpools::virtual::dhcpdpool { 'platform-services':
+  @dc_dhcpdpools::virtual::dhcpdpool { 'platform_services':
     network => '10.10.192.0',
     mask    => '255.255.255.0',
     range   => '10.10.192.16 10.10.192.247',
