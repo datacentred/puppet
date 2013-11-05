@@ -10,11 +10,13 @@ class dc_profile::dhcpd_master {
       'sal01.datacentred.co.uk',
       '0.0.10.in-addr.arpa',
       ],
-    nameservers => ["$nameservers"],
-    ntpservers  => ["$localtimeservers"],
-    interfaces  => ['bond0'],
-    pxeserver   => "$pxeserver",
-    pxefilename => 'pxelinux.0',
+    nameservers         => ["$nameservers"],
+    dnsupdatekey  => "/etc/bind/keys.d/test",
+    #require => Bind::Key[ $ddnskeyname ],
+    ntpservers          => ["$localtimeservers"],
+    interfaces          => ['bond0'],
+    pxeserver           => "$pxeserver",
+    pxefilename         => 'pxelinux.0',
   }
 
     dhcp::pool{ 'ops.dc1.example.net':
