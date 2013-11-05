@@ -17,10 +17,6 @@ class dc_profile::dhcpd_master {
     pxefilename => 'pxelinux.0',
   }
 
-  class { dhcp::failover:
-    peer_address => $slaveserver_ip,
-  }
-
     dhcp::pool{ 'ops.dc1.example.net':
       network => '10.0.1.0',
       mask    => '255.255.255.0',
