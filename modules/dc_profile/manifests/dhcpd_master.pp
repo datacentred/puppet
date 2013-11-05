@@ -11,8 +11,6 @@ class dc_profile::dhcpd_master {
       '0.0.10.in-addr.arpa',
       ],
     nameservers         => ["$nameservers"],
-    dnsupdatekey  => "/etc/bind/keys.d/test",
-    #require => Bind::Key[ $ddnskeyname ],
     ntpservers          => ["$localtimeservers"],
     interfaces          => ['bond0'],
     pxeserver           => "$pxeserver",
