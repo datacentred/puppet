@@ -14,6 +14,6 @@ include dc_dhcpdpools::virtual
     mask    => '255.255.255.0',
     range   => '10.10.192.16 10.10.192.247',
     gateway => '10.10.192.1',
-    tag     => 'vlan192'
+    tag     => vlan192
   }
 }
