@@ -1,6 +1,3 @@
-# This is the class containing the list of unrealized virtual dhcp pools
-# don't use this class directly.
-
 class dc_dhcpdpools::poollist {
 
 include dc_dhcpdpools::virtual
