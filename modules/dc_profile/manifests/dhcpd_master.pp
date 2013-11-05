@@ -24,6 +24,6 @@ class dc_profile::dhcpd_master {
       gateway => '10.0.1.1',
     }
 
-    realize Dc_dhcpd_pools::Virtual::Dhcpdpool['platform-services']
+    realize Dc_dhcpdpools::Virtual::Dhcpdpool['platform-services']
 
 }
