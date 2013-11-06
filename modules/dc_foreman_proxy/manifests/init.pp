@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bind/rndc.key') {
+class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bind/rndc.key', $omapi_key="", $omapi_secret="") {
 
   validate_bool($use_dns)
   validate_bool($use_dhcp)
@@ -39,11 +39,6 @@ class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bi
       owner   => bind,
       group   => foreman-proxy,
     }
-  }
-
-  if $use_dhcp == true {
-    $omapi_key    = hiera(omapi_key)
-    $omapi_secret = hiera(omapi_secret)
   }
 
   service { 'foreman-proxy':
