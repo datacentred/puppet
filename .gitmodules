@@ -37,3 +37,6 @@
 [submodule "modules/network"]
 	path = modules/network
 	url = https://github.com/attachmentgenie/puppet-module-network
+[submodule "modules/dhcp"]
+	path = modules/dhcp
+	url = https://github.com/datacentred/puppetlabs-dhcp
