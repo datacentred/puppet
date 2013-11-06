@@ -25,7 +25,7 @@ class dc_profile::dhcpd_master {
     range       => '10.10.192.16 10.10.192.247',
     gateway     => '10.10.192.1',
     pxefile     => 'pxelinux.0',
-    nextserver  => "$ipaddress",
+    nextserver  => $ipaddress,
   }
 
 }
