@@ -41,6 +41,21 @@ class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bi
     }
   }
 
+  if $use_tftp == true {
+    file { "$tftproot/boot":
+      ensure  => directory,
+      require => File["$tftproot"],
+      owner   => foreman-proxy,
+      group   => root,
+    }
+    file { "$tftproot/pxelinux.cfg":
+      ensure  => directory,
+      require => File["$tftproot"],
+      owner   => foreman-proxy,
+      group   => root,
+    }
+  }
+
   service { 'foreman-proxy':
     ensure    => running,
     require   => Package['foreman-proxy'],
