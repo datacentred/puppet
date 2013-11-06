@@ -40,3 +40,15 @@
 [submodule "modules/dhcp"]
 	path = modules/dhcp
 	url = https://github.com/datacentred/puppetlabs-dhcp
+[submodule "modules/puppet"]
+	path = modules/puppet
+	url = https://github.com/theforeman/puppet-puppet
+[submodule "modules/apache"]
+	path = modules/apache
+	url = https://github.com/theforeman/puppet-apache
+[submodule "modules/passenger"]
+	path = modules/passenger
+	url = https://github.com/theforeman/puppet-passenger
+[submodule "modules/foreman"]
+	path = modules/foreman
+	url = https://github.com/theforeman/puppet-foreman
