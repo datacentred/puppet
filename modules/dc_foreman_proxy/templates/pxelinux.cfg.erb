@@ -1,0 +1,14 @@
+PROMPT 0
+MENU TITLE PXE Menu
+TIMEOUT 200
+TOTALTIMEOUT 6000
+ONTIMEOUT discovery
+
+LABEL discovery
+MENU LABEL Boot Discovery
+TEXT HELP
+Boot the Foreman Discovery Image
+Use TAB to edit options for specific needs.
+ENDTEXT
+KERNEL /discovery_image/vmlinuz
+APPEND initrd=/discovery_image/initrd.gz foreman.ip=<% @foremanip:80 %> maxcpus=1
