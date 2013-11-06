@@ -51,8 +51,8 @@
 #:dhcp_leases: /var/lib/dhcpd/dhcpd.leases
 <% if @use_dhcp == true -%>
 :dhcp_vendor: isc
-:dhcp_config: /etc/dhcpd.conf
-:dhcp_leases: /var/lib/dhcpd/dhcpd.leases
+:dhcp_config: /etc/dhcp/dhcpd.conf
+:dhcp_leases: /var/lib/dhcp/dhcpd.leases
 :dhcp_key_name: <%= @omapi_key %>
 :dhcp_key_secret: <%= @omapi_secret %>
 <% end -%>
