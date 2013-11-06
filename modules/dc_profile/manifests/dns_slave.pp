@@ -1,8 +1,8 @@
 class dc_profile::dns_slave {
 
-  include dc_dns
+  include dc_dns::dnszone
   
-  Dc_dns::Virtual::Dnszone <| tag == sal01 |> {
+  Dc_dns::Virtual::Dnszone <| |> {
     zonetype => 'slave',
     masters  => hiera(dnsmasters)
   }
