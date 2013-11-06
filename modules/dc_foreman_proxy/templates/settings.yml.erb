@@ -29,14 +29,17 @@
 
 # Enable DNS management
 :dns: <%= @use_dns %>
+<% if @use_dns == 'true' -%>
 :dns_key: <%= @dns_key %>
+<% end -%>
+#:dns_key: /etc/bind/rndc.key
 # use this setting if you are managing a dns server which is not localhost though this proxy
 #:dns_server: dns.domain.com
 
 # Enable DHCP management
 :dhcp: <%= @use_dhcp %>
 # The vendor can be either isc or native_ms
-:dhcp_vendor: isc
+#:dhcp_vendor: isc
 # dhcp_subnets is a Native MS implementation setting. It restricts the subnets queried to a
 # subset, so as to reduce the query time.
 #:dhcp_subnets: [192.168.205.0/255.255.255.128, 192.168.205.128/255.255.255.128]
@@ -44,10 +47,15 @@
 #:dhcp_config: /etc/dhcp3/dhcpd.conf
 #:dhcp_leases: /var/lib/dhcp3/dhcpd.leases
 # Settings for Redhat ISC
+#:dhcp_config: /etc/dhcpd.conf
+#:dhcp_leases: /var/lib/dhcpd/dhcpd.leases
+<% if @use_dhcp == 'true' -%>
+:dhcp_vendor: isc
 :dhcp_config: /etc/dhcpd.conf
 :dhcp_leases: /var/lib/dhcpd/dhcpd.leases
-:dhcp_key_name: secret_key_name
-:dhcp_key_secret: secret_key
+:dhcp_key_name: <%= @omapi_key %>
+:dhcp_key_secret: <%= @omapi_secret %>
+<% end -%>
 
 # enable PuppetCA management
 :puppetca: false
