@@ -4,6 +4,7 @@ class dc_profile::dhcpd_master {
   $nameservers      = hiera(nameservers)
   $pxeserver        = hiera(pxeserver)
   $slaveserver_ip   = hiera(dhcpdslaveip)
+  $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)
 
 
