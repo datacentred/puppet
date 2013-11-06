@@ -1,15 +1,10 @@
 class dc_profile::dns_slave {
 
-  include dns
+  include dc_dns::dnszone
 
-  dns::zone {'sal01.datacentred.co.uk':
+  Dc_dns::Virtual::Dnszone <| |> {
     zonetype => 'slave',
-    masters => hiera(dnsmasters),
-  }
-
-  dns::zone {'5.1.10.in-addr.arpa':
-    zonetype => 'slave',
-    masters  => hiera(dnsmasters),
+    masters  => hiera(dnsmasters)
   }
 
 }
