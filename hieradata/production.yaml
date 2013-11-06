@@ -36,6 +36,7 @@ ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
 pxeserver: '10.10.192.250'
 dhcpdmasterip: '10.10.192.250'
 dhcpdslaveip: '10.10.192.251'
+omapi_key: 'omapi_key'
 omapi_secret: 'nad6wymAE9/qFnaUCMa52FWP/KgLYuPUTI0YUf16Zkn54b5uKOYGQ9IwiI+hfui2ZdmIwVHf+O2ExshChY7coA=='
 # dns
 # 

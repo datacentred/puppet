@@ -41,6 +41,11 @@ class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bi
     }
   }
 
+  if $use_dhcp == true {
+    $omapi_key    = hiera(omapi_key)
+    $omapi_secret = hiera(omapi_secret)
+  }
+
   service { 'foreman-proxy':
     ensure    => running,
     require   => Package['foreman-proxy'],
