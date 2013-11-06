@@ -23,7 +23,7 @@ smarthostpass: 'horovAnVods5'
 smarthost: 'smtp.gmail.com'
 sysmailaddress: 'sysadmin@datacentred.co.uk'
 
-tftpdir: '/var/tftpboot'
+tftproot: '/var/tftpboot'
 
 rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
 
