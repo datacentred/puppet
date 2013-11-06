@@ -1,25 +1,9 @@
 class dc_profile::dns_master {
 
   include dns
+  include dc_dns::dnszone
 
-  dns::zone { 'sal01.datacentred.co.uk':
-    soa         => "$fqdn",
-    soaip       => "$ipaddress",
-    nameservers => hiera(nameservers),
-  }
-
-  dns::zone {'5.1.10.in-addr.arpa':
-    soa         => "$fqdn",
-    soaip       => "$ipaddress",
-    reverse     => true,
-    nameservers => hiera(nameservers),
-  }
-
-  dns::zone {'192.10.10.in-addr.arpa':
-    soa         => "$fqdn",
-    soaip       => "$ipaddress",
-    reverse     => true,
-    nameservers => hiera(nameservers),
-  }
+  Dc_dns::Virtual::Dnszone <| tag == sal01 |>
+  Dc_dns::Virtual::Dnszone <| tag == "10.10.192" |>
 
 }
