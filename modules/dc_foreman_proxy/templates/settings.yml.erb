@@ -29,7 +29,7 @@
 
 # Enable DNS management
 :dns: <%= @use_dns %>
-<% if @use_dns == 'true' -%>
+<% if @use_dns == true -%>
 :dns_key: <%= @dns_key %>
 <% end -%>
 #:dns_key: /etc/bind/rndc.key
@@ -49,7 +49,7 @@
 # Settings for Redhat ISC
 #:dhcp_config: /etc/dhcpd.conf
 #:dhcp_leases: /var/lib/dhcpd/dhcpd.leases
-<% if @use_dhcp == 'true' -%>
+<% if @use_dhcp == true -%>
 :dhcp_vendor: isc
 :dhcp_config: /etc/dhcpd.conf
 :dhcp_leases: /var/lib/dhcpd/dhcpd.leases
