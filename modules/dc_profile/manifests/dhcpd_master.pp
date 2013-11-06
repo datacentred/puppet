@@ -17,13 +17,11 @@ class dc_profile::dhcpd_master {
     pxefilename         => 'pxelinux.0',
   }
 
-    dhcp::pool{ 'ops.dc1.example.net':
-      network => '10.0.1.0',
-      mask    => '255.255.255.0',
-      range   => '10.0.1.100 10.0.1.200',
-      gateway => '10.0.1.1',
-    }
-
-    realize (Dc_dhcpdpools::Virtual::Dhcpdpool['platform_services'])
+  dhcp::pool { 'platform-services':
+    network => '10.10.192.0',
+    mask    => '255.255.255.0',
+    range   => '10.10.192.16 10.10.192.247',
+    gateway => '10.10.192.1',
+  }
 
 }
