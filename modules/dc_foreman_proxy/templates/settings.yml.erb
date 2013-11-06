@@ -21,7 +21,10 @@
 :port: 8443
 
 # Enable TFTP management
-:tftp: false
+:tftp: <%= @use_tftp %>
+<% if @use_tftp == true -%>
+:tftproot: <%= @tftproot %>
+<% end -%>
 #:tftproot: /var/lib/tftpboot
 # Defines the TFTP Servername to use, overrides the name in the subnet declaration
 #:tftp_servername: tftp.domain.com
