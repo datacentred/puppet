@@ -15,17 +15,17 @@ class dc_profile::dhcpd_master {
     nameservers  => [$nameservers],
     ntpservers   => [$localtimeservers],
     interfaces   => ['bond0'],
-    pxeserver    => "$pxeserver",
-    pxefilename  => 'pxelinux.0',
     omapi_key    => 'omapi_key',
     omapi_secret => "$omapi_secret"
   }
 
   dhcp::pool { 'platform-services':
-    network => '10.10.192.0',
-    mask    => '255.255.255.0',
-    range   => '10.10.192.16 10.10.192.247',
-    gateway => '10.10.192.1',
+    network     => '10.10.192.0',
+    mask        => '255.255.255.0',
+    range       => '10.10.192.16 10.10.192.247',
+    gateway     => '10.10.192.1',
+    pxefilename => 'pxelinux.0',
+    nextserver  => "$ipaddress",
   }
 
 }
