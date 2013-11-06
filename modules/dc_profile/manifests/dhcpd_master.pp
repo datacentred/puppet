@@ -4,7 +4,6 @@ class dc_profile::dhcpd_master {
   $nameservers      = hiera(nameservers)
   $pxeserver        = hiera(pxeserver)
   $slaveserver_ip   = hiera(dhcpdslaveip)
-  $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)
 
 
@@ -18,7 +17,7 @@ class dc_profile::dhcpd_master {
     interfaces   => ['bond0'],
     pxeserver    => "$pxeserver",
     pxefilename  => 'pxelinux.0',
-    omapi_key    => "$omapi_key",
+    omapi_key    => 'omapi_key',
     omapi_secret => "$omapi_secret"
   }
 
