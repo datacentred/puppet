@@ -28,18 +28,15 @@
 [submodule "modules/concat"]
 	path = modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat
-[submodule "modules/puppetlabs-dhcp"]
-	path = modules/puppetlabs-dhcp
-	url = https://github.com/xaque208/puppetlabs-dhcp
 [submodule "modules/pupmod-concat"]
 	path = modules/pupmod-concat
 	url = https://github.com/onyxpoint/pupmod-concat
-[submodule "modules/dhcp"]
-	path = modules/dhcp
-	url = https://github.com/xaque208/puppetlabs-dhcp
 [submodule "modules/dns"]
 	path = modules/dns
 	url = https://github.com/datacentred/puppet-dns.git
 [submodule "modules/network"]
 	path = modules/network
 	url = https://github.com/attachmentgenie/puppet-module-network
+[submodule "modules/dhcp"]
+	path = modules/dhcp
+	url = https://github.com/datacentred/puppetlabs-dhcp
