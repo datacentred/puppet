@@ -24,12 +24,12 @@ class dc_puppetmaster {
   # root.  Maybe a bit agressive with the recursion
   # but what the hell, we're on a tight budget
 
-  file { '/var/lib/puppet/reports':
-    ensure  => directory,
-    owner   => 'puppet',
-    group   => 'puppet',
-    recurse => true,
-    require => Package['puppetmaster-passenger'],
-  }
+  #file { '/var/lib/puppet/reports':
+  #  ensure  => directory,
+  #  owner   => 'puppet',
+  #  group   => 'puppet',
+  #  recurse => true,
+  #  require => Package['puppetmaster-passenger'],
+  #}
 
 }
