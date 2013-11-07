@@ -29,4 +29,6 @@ class dc_profile::dhcpd_master {
     nextserver  => $ipaddress,
   }
 
+  Dhcp::Pool { failover => "dhcp-failover" }
+
 }
