@@ -1,7 +1,6 @@
 class dc_profile::puppet_master {
 
-       class { '::puppet':
-               server => true,
+       class { '::dc_puppetmaster':
        }
 
 }
