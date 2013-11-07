@@ -1,7 +1,9 @@
 class dc_profile::dhcpd_master {
 
+  include stdlib
+
   $localtimeservers = hiera(localtimeservers)
-  $nameservers      = hiera(nameservers)
+  $nameservers      = values(hiera(nameservers))
   $pxeserver        = hiera(pxeserver)
   $slaveserver_ip   = hiera(dhcpdslaveip)
   $omapi_key        = hiera(omapi_key)
