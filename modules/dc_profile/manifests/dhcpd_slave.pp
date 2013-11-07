@@ -3,7 +3,9 @@ class dc_profile::dhcpd_slave {
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = hiera_array(nameservers)
   $pxeserver        = hiera(pxeserver)
-  $masterserver_ip   = hiera(dhcpdmasterip)
+  $masterserver_ip  = hiera(dhcpdmasterip)
+  $omapi_key        = hiera(omapi_key)
+  $omapi_secret     = hiera(omapi_secret)
 
   class { 'dhcp':
     dnsdomain => [
@@ -12,18 +14,25 @@ class dc_profile::dhcpd_slave {
       ],
     nameservers  => [$nameservers],
     ntpservers   => ["$localtimeservers"],
-    interfaces   => ['eth0'],
-    #dnsupdatekey => "/etc/bind/keys.d/$ddnskeyname",
-    #require      => Bind::Key[ $ddnskeyname ],
-    pxeserver    => "$pxeserver",
-    pxefilename  => 'pxelinux.0',
+    interfaces   => ['bond0'],
+    omapi_key    => 'omapi_key',
+    omapi_secret => "$omapi_secret"
   }
 
   class { dhcp::failover:
-    role               => "secondary",
+    role         => "secondary",
     peer_address => $masterserver_ip,
   }
 
-  realize Dc_dhcpdpool::Virtual::dhcpdpool['platform-services']
+  dhcp::pool { 'platform-services':
+    network     => '10.10.192.0',
+    mask        => '255.255.255.0',
+    range       => '10.10.192.16 10.10.192.247',
+    gateway     => '10.10.192.1',
+    pxefile     => 'pxelinux.0',
+    nextserver  => $ipaddress,
+  }
+
+  Dhcp::Pool { failover => "dhcp-failover" }
 
 }
