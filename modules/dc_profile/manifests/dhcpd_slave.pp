@@ -32,7 +32,7 @@ class dc_profile::dhcpd_slave {
     range       => '10.10.192.16 10.10.192.247',
     gateway     => '10.10.192.1',
     pxefile     => 'pxelinux.0',
-    nextserver  => $ipaddress,
+    nextserver  => $masterserver_ip,
   }
 
   Dhcp::Pool { failover => "dhcp-failover" }
