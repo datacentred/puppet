@@ -15,7 +15,7 @@ class dc_profile::dhcpd_slave {
       '0.0.10.in-addr.arpa',
       ],
     nameservers  => [$nameservers],
-    ntpservers   => ["$localtimeservers"],
+    ntpservers   => [$localtimeservers],
     interfaces   => ['bond0'],
     omapi_key    => 'omapi_key',
     omapi_secret => "$omapi_secret"
