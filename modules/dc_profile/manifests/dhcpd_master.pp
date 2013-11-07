@@ -24,6 +24,7 @@ class dc_profile::dhcpd_master {
 
   class { dhcp::failover:
     peer_address => $slaveserver_ip,
+    load_split   => '255',
   }
 
   dhcp::pool { 'platform-services':
