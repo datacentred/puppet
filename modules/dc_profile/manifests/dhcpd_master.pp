@@ -20,6 +20,10 @@ class dc_profile::dhcpd_master {
     omapi_secret => "$omapi_secret"
   }
 
+  class { dhcp::failover:
+    peer_address => $slaveserver_ip,
+  }
+
   dhcp::pool { 'platform-services':
     network     => '10.10.192.0',
     mask        => '255.255.255.0',
