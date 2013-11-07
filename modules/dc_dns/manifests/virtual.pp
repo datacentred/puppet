@@ -5,8 +5,9 @@ class dc_dns::virtual {
   define dnszone ($soa,$soaip,$nameservers,$reverse,$isslave = false) {
     if $isslave {
       dns::zone {"$title":
-        zonetype => 'slave',
-        masters  => hiera(dnsmasters)
+        zonetype    => 'slave',
+        masters     => hiera(dnsmasters),
+        nameservers => $nameservers
       }
     }
     else {
