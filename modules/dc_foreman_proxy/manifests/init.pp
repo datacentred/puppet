@@ -11,10 +11,19 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_foreman_proxy ($use_dns = false, $use_dhcp = false, $dns_key = '/etc/bind/rndc.key', $omapi_key="", $omapi_secret="", $use_tftp = false, $tftproot="") {
+class dc_foreman_proxy (
+  $use_dns = false,
+  $use_dhcp = false,
+  $use_puppetca = false,
+  $use_puppet = false,
+  $dns_key = '/etc/bind/rndc.key',
+  $omapi_key="",
+  $omapi_secret="",
+  $use_tftp = false,
+  $tftproot=""
+) {
 
-  validate_bool($use_dns)
-  validate_bool($use_dhcp)
+  validate_bool($use_dns, $use_dhcp, $use_tftp, $use_puppetca, $use_puppet)
 
   realize Dc_repos::Virtual::Repo['local_foreman_mirror']
 
