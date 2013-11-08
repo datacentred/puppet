@@ -15,6 +15,12 @@
 #
 class dc_puppetmaster {
 
+  exec { 'puppet_master_clean_certs':
+    command => 'rm -rf /var/lib/puppet/ssl',
+    path    => '/bin',
+    before  => Package['puppetmaster-passenger'],
+  }
+
   package { 'puppetmaster-passenger':
     ensure  => present,
   }
@@ -24,12 +30,12 @@ class dc_puppetmaster {
   # root.  Maybe a bit agressive with the recursion
   # but what the hell, we're on a tight budget
 
-  #file { '/var/lib/puppet/reports':
-  #  ensure  => directory,
-  #  owner   => 'puppet',
-  #  group   => 'puppet',
-  #  recurse => true,
-  #  require => Package['puppetmaster-passenger'],
-  #}
+  file { '/var/lib/puppet/reports':
+    ensure  => directory,
+    owner   => 'puppet',
+    group   => 'puppet',
+    recurse => true,
+    require => Package['puppetmaster-passenger'],
+  }
 
 }
