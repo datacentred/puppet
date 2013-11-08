@@ -31,4 +31,11 @@ class dc_dns::dnszone {
     reverse     => true,
     tag         => '10.10.193'
   }
+  @dc_dns::virtual::dnszone { '5.1.10.in-addr.arpa':
+    soa         => "$fqdn",
+    soaip       => "$ipaddress",
+    nameservers => $nameservers,
+    reverse     => true,
+    tag         => '10.1.5'
+  }
 }
