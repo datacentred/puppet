@@ -44,11 +44,16 @@ class dc_puppetmaster {
     command     => 'rm -rf /var/lib/puppet/ssl',
     path        => '/bin',
     refreshonly => true,
-  } ~>
+  }
+
+  # The initial move is unconditional as we don't know if
+  # the install will happen or not, so we make the move
+  # back unconditional too, but only after the install and
+  # delete steps if executed
   exec { 'puppet_master_restore_agent_certs':
     command     => 'mv /var/lib/puppet/ssl.orig /var/lib/puppet/ssl',
     path        => '/bin',
-    refreshonly => true,
+    require     => Exec['puppet_master_delete_master_certs'],
   }
 
   # Seems to collapse due to not being able to chmod
