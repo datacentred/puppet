@@ -61,12 +61,21 @@
 <% end -%>
 
 # enable PuppetCA management
-:puppetca: false
+:puppetca: <%= @use_puppetca %>
+<% if @use_puppet_ca == true -%>
+:ssldir: /var/lib/puppet/ssl
+:puppetdir: /etc/puppet
+<% end -%>
+#:puppetca: false
 #:ssldir: /var/lib/puppet/ssl
 #:puppetdir: /etc/puppet
 
 # enable Puppet management
-:puppet: false
+
+:puppet: <%= @use_puppet %>
+<% if @use_puppet -%>
+:puppet_conf: /etc/puppet/puppet.conf
+<% end -%>    
 #:puppet_conf: /etc/puppet/puppet.conf
 
 # Where our proxy log files are stored
