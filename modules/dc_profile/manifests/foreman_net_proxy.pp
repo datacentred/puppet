@@ -1,4 +1,4 @@
-class dc_profile::foreman_proxy {
+class dc_profile::foreman_net_proxy {
 
   $omapi_key    = hiera(omapi_key)
   $omapi_secret = hiera(omapi_secret)
