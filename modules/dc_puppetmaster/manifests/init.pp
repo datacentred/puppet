@@ -27,6 +27,14 @@ class dc_puppetmaster {
     before  => Package['puppetmaster-passenger'],
   }
 
+  file { '/etc/puppet/puppet.conf':
+    ensure  => present,
+    content => template('dc_puppetmaster/puppet.conf'),
+    owner   => 'root',
+    group   => 'root',
+    before  => Package['puppetmaster-passenger'],
+  }
+
   # Install the packages
   package { 'puppetmaster-passenger':
     ensure  => present,
