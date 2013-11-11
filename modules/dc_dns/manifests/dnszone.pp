@@ -11,7 +11,7 @@ class dc_dns::dnszone {
     soaip       => "$ipaddress",
     nameservers => $nameservers,
     reverse     => false,
-    tag         => sal01
+    tag         => datacentred
   }
 
   # SAL01 top level
@@ -26,7 +26,7 @@ class dc_dns::dnszone {
 
   # Test subdomain
 
-  @dc_dns::virtual::dnszone { 'test.datacentred.co.uk':
+  @dc_dns::virtual::dnszone { 'test.sal01.datacentred.co.uk':
     soa         => "$fqdn",
     soaip       => "$ipaddress",
     nameservers => $nameservers,
