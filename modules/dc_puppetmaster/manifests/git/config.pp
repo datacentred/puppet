@@ -15,6 +15,7 @@ class dc_puppetmaster::git::config {
     gid         => 'git',
     home        => '/home/git',
     managehome  => true,
+    shell       => '/usr/bin/git-shell',
   }
 
   File {
@@ -58,20 +59,6 @@ class dc_puppetmaster::git::config {
     ensure  => present,
     content => template('dc_puppetmaster/authorized_keys.erb'),
   }
-
-#  file { '/etc/puppet/environments':
-#    ensure  => directory,
-#  }
-#
-#  exec { 'puppet_master_install_env_production':
-#    command => 'bash -c "cd /etc/puppet/environments; \
-#                git clone git@github.com:datacentred/puppet.git production; \
-#                cd production; \
-#                git checkout production; \
-#                git submodule init; \
-#                git submodule update;"',
-#    path    => ['/bin', '/usr/bin'],
-#  }
 
   Group['git'] ~>
   User['git'] ~>
