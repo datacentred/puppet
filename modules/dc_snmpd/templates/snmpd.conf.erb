@@ -1,0 +1,11 @@
+com2sec local     127.0.0.1/32          <%= @dc_snmp_community %> 
+com2sec local     <%= @snmp_allowed_net %>       <%= @dc_snmp_community %>
+#
+group localgroup v1         local
+group localgroup v2c        local
+group localgroup usm        local
+view all    included  .1                               80
+access localgroup "" any     noauth    exact  all    none   none
+#
+syslocation <%= @system_location %>
+syscontact Admin {<%= @sysadmin_email %>}
