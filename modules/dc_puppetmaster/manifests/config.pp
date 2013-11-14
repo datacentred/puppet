@@ -15,10 +15,14 @@ class dc_puppetmaster::config {
     recurse => true,
   }
 
+  # Set up our environments folder
   file { '/etc/puppet/environments':
     ensure  => directory,
+    mode    => '0777',
   }
 
+  # Copy over the master production branch at least
+  # from the repository
   exec { 'puppet_master_install_env_production':
     command => 'bash -c "cd /etc/puppet/environments; \
                 if [ ! -e production ]; then
@@ -29,6 +33,14 @@ class dc_puppetmaster::config {
                   git submodule update; \
                 fi"',
     path    => ['/bin', '/usr/bin'],
+  }
+
+  # Finally add in the post receive hooks which are responsible
+  # for creating new environments when new feature branches are
+  # created
+  file { '/home/git/puppet.git/hooks/post-receive':
+    mode    => '0777',
+    content => template('dc_puppetmaster/post-receive.erb'),
   }
 
   File['/etc/puppet/environments'] ~>
