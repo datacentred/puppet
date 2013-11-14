@@ -40,10 +40,14 @@ $stdin.each_line do |line|
   if newrev =~ /^0+$/
     # We've received a push with a null revision, something like 000000000000,
     # which means that we should delete the given branch.
-    puts "Deleting existing environment #{branchname}"
+    puts "[1;32m*[0m Deleting existing environment #{branchname}"
     if File.directory? environment_path
-      FileUtils.rm_rf environment_path, :secure => true
+      FileUtils.rm_rf environment_path
     end
+
+    # And kill the branch off in GitHub
+    puts "[1;32m*[0m Deleting branch from GitHub"
+    %x{git push --delete origin #{branchname}}
   else
     # We have been given a branch that needs to be created or updated. If the
     # environment exists, update it. Else, create it.
