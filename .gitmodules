@@ -52,3 +52,15 @@
 [submodule "modules/foreman"]
 	path = modules/foreman
 	url = https://github.com/theforeman/puppet-foreman
+[submodule "modules/puppetdb"]
+	path = modules/puppetdb
+	url = https://github.com/puppetlabs/puppetlabs-puppetdb.git
+[submodule "modules/inifile"]
+	path = modules/inifile
+	url = https://github.com/puppetlabs/puppetlabs-inifile
+[submodule "modules/postgresql"]
+	path = modules/postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql
+[submodule "modules/firewall"]
+	path = modules/firewall
+	url = https://github.com/puppetlabs/puppetlabs-firewall
