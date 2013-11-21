@@ -2,7 +2,7 @@ class dc_snmpd (
   $dc_snmp_community = hiera(dc_snmp_community),
   $snmp_allowed_net  = hiera(snmp_allowed_net),
   $system_location   = hiera(system_location),
-  $sysadmin_email    = hiera(sysadmin_email),
+  $sysadmin_email    = hiera(sysmailaddress),
 ){
 
   package { 'snmpd':
