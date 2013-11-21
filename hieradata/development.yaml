@@ -64,3 +64,7 @@ client_networks:
 # foreman
 #
 foreman_url: 'foreman'
+# snmpd
+dc_snmp_community: 'dcpub'
+snmp_allowed_net: '10.1.5.0/24'
+system_location: 'sal01'
