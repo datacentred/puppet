@@ -8,7 +8,7 @@ export MIBS=
 SNMPDRUN=yes
 
 # snmpd options (use syslog, close stdin/out/err).
-SNMPDOPTS=’-Lsd -Lf /dev/null -u snmp -I -smux -p /var/run/snmpd.pid -c /etc/snmp/snmpd.conf’
+SNMPDOPTS='-Lsd -Lf /dev/null -u snmp -I -smux -p /var/run/snmpd.pid -c /etc/snmp/snmpd.conf'
 #SNMPDOPTS='-Lsd -Lf /dev/null -u snmp -g snmp -I -smux -p /var/run/snmpd.pid'
 
 # snmptrapd control (yes means start daemon).  As of net-snmp version
