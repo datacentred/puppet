@@ -15,9 +15,15 @@ class dc_snmpd (
   }
 
   service {'snmpd':
-    ensure  => running,
-    enable  => true,
-    require => File['/etc/snmp/snmpd.conf'],
+    ensure    => running,
+    enable    => true,
+    require   => File['/etc/snmp/snmpd.conf'],
+    require   => File['/etc/default/snmpd'],
+    require   => File['/etc/snmp/snmp.conf'],
+    require   => Package['snmp-mibs-downloader'],
+    subscribe => File['/etc/snmp/snmpd.conf'],
+    subscribe => File['/etc/default/snmpd'],
+    subscribe => File['/etc/snmp/snmp.conf'],
   }
 
   file {'/etc/snmp/snmpd.conf':
@@ -27,7 +33,6 @@ class dc_snmpd (
     mode    => '0600',
     require => Package['snmpd'],
     content => template('dc_snmpd/snmpd.conf.erb'),
-    notify  => Service['snmpd']
   }
 
   file {'/etc/default/snmpd':
@@ -37,7 +42,6 @@ class dc_snmpd (
     mode    => '0600',
     require => Package['snmpd'],
     source  => 'puppet:///modules/dc_snmpd/snmpd',
-    notify  => Service['snmpd'],
   }
 
   file {'/etc/snmp/snmp.conf':
@@ -47,6 +51,5 @@ class dc_snmpd (
     mode    => '0600',
     require => Package['snmpd'],
     source  => 'puppet:///modules/dc_snmpd/snmp.conf',
-    notify  => Service['snmpd'],
   }
 }
