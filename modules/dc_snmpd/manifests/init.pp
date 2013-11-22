@@ -6,7 +6,12 @@ class dc_snmpd (
 ){
 
   package { 'snmpd':
-    ensure    => installed,
+    ensure  => installed,
+    require => Package['snmp-mibs-downloader']
+  }
+
+  package { 'snmp-mibs-downloader':
+    ensure  => installed,
   }
 
   service {'snmpd':
