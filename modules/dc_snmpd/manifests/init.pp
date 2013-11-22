@@ -31,7 +31,17 @@ class dc_snmpd (
     group   => 'root',
     mode    => '0600',
     require => Package['snmpd'],
-    content => template('dc_snmpd/snmpd.default.erb'),
+    source  => 'puppet:///modules/dc_snmpd/snmpd',
+    notify  => Service['snmpd'],
+  }
+
+  file {'/etc/snmp/snmp.conf':
+    path    => '/etc/snmp/snmp.conf',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
+    require => Package['snmpd'],
+    source  => 'puppet:///modules/dc_snmpd/snmp.conf',
     notify  => Service['snmpd'],
   }
 }
