@@ -17,13 +17,8 @@ class dc_snmpd (
   service {'snmpd':
     ensure    => running,
     enable    => true,
-    require   => File['/etc/snmp/snmpd.conf'],
-    require   => File['/etc/default/snmpd'],
-    require   => File['/etc/snmp/snmp.conf'],
-    require   => Package['snmp-mibs-downloader'],
-    subscribe => File['/etc/snmp/snmpd.conf'],
-    subscribe => File['/etc/default/snmpd'],
-    subscribe => File['/etc/snmp/snmp.conf'],
+    require   => [ File['/etc/snmp/snmpd.conf'], File['/etc/default/snmpd'], File['/etc/snmp/snmp.conf'], Package['snmp-mibs-downloader'] ],
+    subscribe => [ File['/etc/snmp/snmpd.conf'], File['/etc/default/snmpd'], File['/etc/snmp/snmp.conf'] ]
   }
 
   file {'/etc/snmp/snmpd.conf':
