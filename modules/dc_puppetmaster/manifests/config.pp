@@ -28,7 +28,6 @@ class dc_puppetmaster::config {
                 if [ ! -e production ]; then
                   git clone /home/git/puppet.git production; \
                   cd production; \
-                  git checkout production; \
                   git submodule init; \
                   git submodule update; \
                 fi"',
