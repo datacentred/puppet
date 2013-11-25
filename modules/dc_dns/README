@@ -1,0 +1,5 @@
+Module : dc_dns
+Author : nick
+
+Module for realizing DataCentred DNS zones.  Requires our fork of theforeman/dns module.
+

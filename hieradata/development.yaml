@@ -1,0 +1,70 @@
+#ntp
+#
+localtimeservers: '10.1.5.10'
+timeservers:
+ - '0.uk.pool.ntp.org'
+ - '1.uk.pool.ntp.org'
+ - '2.uk.pool.ntp.org'
+ - '3.uk.pool.ntp.org'
+# repos
+#
+mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
+ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
+ubuntu_security_mirror_path: 'mirror/security.ubuntu.com/ubuntu'
+cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
+puppet_mirror_path: 'mirror/apt.puppetlabs.com'
+nullmailer_mirror_path: 'mirror/ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu'
+ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
+ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
+virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
+hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
+
+mysql_root_pw: 'OithGec3'
+
+foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
+
+client_networks:
+- '10.0.0.0/16'
+# nullmailer
+#
+smarthostuser: 'autobot@datacentred.co.uk'
+smarthostpass: 'horovAnVods5'
+smarthost: 'smtp.gmail.com'
+sysmailaddress: 'sysadmin@datacentred.co.uk'
+
+tftpdir: '/var/tftpboot'
+
+rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
+
+# apt-mirror
+#
+ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
+
+# dhcpd for testing
+#
+pxeserver: '10.0.1.250'
+dhcpdmasterip: '10.0.1.250'
+dhcpdslaveip: '10.0.1.251'
+omapi_secret: 'nad6wymAE9/qFnaUCMa52FWP/KgLYuPUTI0YUf16Zkn54b5uKOYGQ9IwiI+hfui2ZdmIwVHf+O2ExshChY7coA=='
+# dns
+# 
+forwarders:
+- '8.8.8.8'
+- '8.8.4.4'
+dnsmasters:
+- '10.1.5.50'
+nameservers:
+  ns0.sal01.datacentred.co.uk: '10.1.5.50'
+  ns1.sal01.datacentred.co.uk: '10.1.5.58'
+client_networks:
+- '10.10.192.0'
+- '10.5.10.0'
+- '10.1.1.0'
+
+# foreman
+#
+foreman_url: 'foreman'
+# snmpd
+dc_snmp_community: 'dcpub'
+snmp_allowed_net: '10.1.5.0/24'
+system_location: 'sal01'
