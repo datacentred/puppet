@@ -51,7 +51,7 @@
 	url = https://github.com/theforeman/puppet-passenger
 [submodule "modules/foreman"]
 	path = modules/foreman
-	url = https://github.com/theforeman/puppet-foreman
+	url = https://github.com/datacentred/puppet-foreman
 [submodule "modules/puppetdb"]
 	path = modules/puppetdb
 	url = https://github.com/puppetlabs/puppetlabs-puppetdb.git
