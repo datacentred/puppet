@@ -42,6 +42,21 @@ class dc_puppetmaster::config {
     content => template('dc_puppetmaster/post-receive.erb'),
   }
 
+  # Install hiera configuration file and notify the apache/
+  # passenger service of the change to force a restart
+  file { '/etc/puppet/hiera.yaml':
+    mode    => '0644',
+    content => template('dc_puppetmaster/hiera.yaml'),
+  }
+
+  if ! defined(Service['apache2']) {
+    service { 'apache2':
+      ensure => running,
+    }
+  }
+
+  File['/etc/puppet/hiera.yaml'] ~> Service['apache2']
+
   File['/etc/puppet/environments'] ~>
   Exec['puppet_master_install_env_production']
 
