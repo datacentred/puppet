@@ -42,18 +42,6 @@ class dc_puppetmaster::config {
     content => template('dc_puppetmaster/post-receive.erb'),
   }
 
-  file { '/etc/puppet/puppetdb.conf':
-    ensure  => present,
-    mode    => '0644',
-    content => template('dc_puppetmaster/puppetdb.conf'),
-  }
-
-  file { '/etc/puppet/routes.yaml':
-    ensure  => present,
-    mode    => '0644',
-    content => template('dc_puppetmaster/routes.yaml'),
-  }
-
   File['/etc/puppet/environments'] ~>
   Exec['puppet_master_install_env_production']
 

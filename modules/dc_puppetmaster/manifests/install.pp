@@ -43,9 +43,4 @@ class dc_puppetmaster::install {
     require     => Package['puppetmaster-passenger'],
   }
 
-  # This plugin is required to talk to the puppetdb backend
-  package { 'puppetdb-terminus':
-    ensure => present,
-  }
-
 }
