@@ -57,9 +57,9 @@ nameservers:
   ns0.sal01.datacentred.co.uk: '10.1.5.50'
   ns1.sal01.datacentred.co.uk: '10.1.5.58'
 client_networks:
-- '10.10.192.0'
-- '10.5.10.0'
-- '10.1.1.0'
+- '10.10.192.0/24'
+- '10.5.10.0/24'
+- '10.1.1.0/24'
 
 # foreman
 #
