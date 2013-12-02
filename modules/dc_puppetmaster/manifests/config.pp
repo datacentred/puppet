@@ -55,6 +55,14 @@ class dc_puppetmaster::config {
     }
   }
 
+  # On a foreman node it needs access to the private key to
+  # interact with smart proxies over SSL.  It's part of the
+  # puppet group so just grant group read privilige
+  file { "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem":
+    ensure  => file,
+    mode    => '0640',
+  }
+
   File['/etc/puppet/hiera.yaml'] ~> Service['apache2']
 
   File['/etc/puppet/environments'] ~>
