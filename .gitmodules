@@ -67,3 +67,6 @@
 [submodule "modules/foreman_proxy"]
 	path = modules/foreman_proxy
 	url = https://github.com/theforeman/puppet-foreman_proxy
+[submodule "modules/logstash"]
+	path = modules/logstash
+	url = https://github.com/logstash/puppet-logstash
