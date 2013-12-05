@@ -1,0 +1,39 @@
+# Class:
+#
+# Installs the icinga client on a host
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+# class { icinga::client: }
+#
+class dc_icinga::client {
+
+  include dc_icinga::params
+  $cfg_path = $::dc_icinga::params::cfg_path
+
+  # Each client gets all the plugins on earth
+  package { 'nagios-plugins':
+    ensure => present,
+  }
+
+  # I am the current host, yes I am
+  @@nagios_host { $::hostname:
+    ensure          => present,
+    alias           => $::fqdn,
+    address         => $::ipaddress,
+    use             => 'dc_host_generic',
+    hostgroups      => 'dc_hostgroup_generic',
+    icon_image      => 'base/ubuntu.png',
+    icon_image_alt  => 'Ubuntu 12.04 LTS (precise)',
+    notes           => 'Ubuntu 12.04 LTS servers',
+    statusmap_image => 'base/ubuntu.gd2',
+    vrml_image      => 'ubuntu.png',
+  }
+
+}
