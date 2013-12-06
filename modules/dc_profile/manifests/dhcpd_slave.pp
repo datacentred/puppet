@@ -27,7 +27,7 @@ class dc_profile::dhcpd_slave {
     peer_address => $masterserver_ip,
   }
 
-  Dc_dhcppools::Virtual::Dhcpdpool <| |>
+  Dc_dhcpdpools::Virtual::Dhcpdpool <| |>
 
   Dhcp::Pool { failover => "dhcp-failover" }
 
