@@ -1,6 +1,7 @@
 class dc_profile::dhcpd_slave {
 
   include stdlib
+  include dc_dhcpdpools::poollist
 
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = values(hiera(nameservers))
