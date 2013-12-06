@@ -12,7 +12,7 @@ class dc_profile::dhcpd_master {
 
 
   class { 'dhcp':
-    dnsdomain => [
+    dnsdomain    => [
       'sal01.datacentred.co.uk',
       '0.0.10.in-addr.arpa',
       ],
@@ -24,18 +24,9 @@ class dc_profile::dhcpd_master {
   }
 
   class { dhcp::failover:
-    peer_address => $slaveserver_ip,
+    peer_address => "$slaveserver_ip",
     load_split   => '255',
   }
-
-  #  dhcp::pool { 'platform-services':
-  #  network     => '10.10.192.0',
-  #  mask        => '255.255.255.0',
-  #  range       => '10.10.192.16 10.10.192.247',
-  #  gateway     => '10.10.192.1',
-  #  pxefile     => 'pxelinux.0',
-  #  nextserver  => $ipaddress,
-  #}
 
   Dc_dhcpdpools::Virtual::Dhcpdpool <| |>
 
