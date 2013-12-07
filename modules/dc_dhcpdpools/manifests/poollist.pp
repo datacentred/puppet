@@ -20,7 +20,7 @@ include dc_dhcpdpools::virtual
 
   @dc_dhcpdpools::virtual::dhcpdpool { 'ipmi':
     network => '10.10.128.0',
-    mask    => '255.255.225.0',
+    mask    => '255.255.255.0',
     range   => '10.10.128.16 10.10.128.247',
     gateway => '10.10.128.1',
     tag     => vlan128
