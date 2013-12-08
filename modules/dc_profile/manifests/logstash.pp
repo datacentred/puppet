@@ -10,12 +10,13 @@ class dc_profile::logstash {
     jarfile      => 'http://mirror.sal01.datacentred.co.uk/misc/logstash/logstash-1.2.2-flatjar.jar',
   }
 
-  # Setup a syslog collector for JSON-formatted structured messages
-  logstash::input::syslog { 'logstash-syslog':
-    debug  => true,
-    type   => 'syslog',
-    port   => 55514,
+  # UDP listener
+  # This handles messages from rsyslog sent in formatted natively for Logstash's
+  # consumption using JSON.
+  logstash::input::udp { 'logstash-udp':
     format => 'json_event',
+    port   => 55514,
+    type   => 'rsyslog',
   }
  
   # Setup default embedded ElasticSearch instance
