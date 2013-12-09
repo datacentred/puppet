@@ -13,6 +13,8 @@ class dc_role::platformservices_master {
   include dc_profile::foreman_net_proxy
 }
 
-class dc_role::dns_slave inherits dc_role::generic {
+class dc_role::platformservices_slave {
   include dc_profile::dns_slave
+  include dc_profile::dhcpd_slave
+  include dc_profile::tftpserver
 }
