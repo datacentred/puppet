@@ -6,7 +6,7 @@ class dc_role::hpblade {
   include dc_profile::hpblade
 }
 
-class dc_role::platformservices_master inherits dc_role::generic {
+class dc_role::platformservices_master {
   include dc_profile::dns_master
   include dc_profile::dhcp_master
   include dc_profile::tftpserver
