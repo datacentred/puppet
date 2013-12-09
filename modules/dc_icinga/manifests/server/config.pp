@@ -17,16 +17,30 @@
 #
 class dc_icinga::server::config {
 
+  include dc_icinga::params
+  $cfg_path = $::dc_icinga::params::cfg_path
+
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
   exec { 'icinga_cgi_passwd':
     command     => '/usr/bin/htpasswd -c -b htpasswd.users icingaadmin icinga',
     cwd         => '/etc/icinga',
-    refreshonly => true,
   }
 
-  include dc_icinga::params
-  $cfg_path = $::dc_icinga::params::cfg_path
+  # We enable support for empty hostgroups, which in turn allows
+  # for services to be defined without any hosts.  Not good if a
+  # host disappears, it was the last service consumer and the
+  # whole shebang died!!
+  # Note: This is tied to the backported binaries in the install
+  #       phase
+  file { '/etc/icinga/icinga.cfg':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('dc_icinga/icinga.cfg.erb'),
+    notify  => Service['icinga'],
+  }
 
   ######################################################################
   # Pre configuration
@@ -273,57 +287,47 @@ class dc_icinga::server::config {
     service_description => 'SSH',
   }
 
-# *** BUG ALERT *****************************************************
-# You cannot define unused services, as when they are expanded to
-# find hosts directly or via hostgroups it returns NULL and has a
-# strop.  Being dynamic as we are if we kill off the last postgres
-# server, when puppet agent runs next to update the host definitions
-# we hit the same problem... in production.
-#
-# Fix in possibly 1.7  (https://dev.icinga.org/issues/949)
-# Fix in possibly 1.10 (https://dev.icinga.org/issues/3961)
-# *******************************************************************
+  nagios_service { 'check_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_http',
+    check_command       => 'check_http',
+    service_description => 'HTTP',
+  }
 
-#  nagios_service { 'check_http':
-#    use                 => 'dc_service_generic',
-#    hostgroup_name      => 'dc_hostgroup_http',
-#    check_command       => 'check_http',
-#    service_description => 'HTTP',
-#  }
+  nagios_service { 'check_https':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_https',
+    check_command       => 'check_https',
+    service_description => 'HTTPS',
+  }
 
-#  nagios_service { 'check_https':
-#    use                 => 'dc_service_generic',
-#    hostgroup_name      => 'dc_hostgroup_https',
-#    check_command       => 'check_https',
-#    service_description => 'HTTPS',
-#  }
+  nagios_service { 'check_pgsql':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_postgres',
+    check_command       => 'check_pgsql',
+    service_description => 'PostgreSQL',
+  }
 
-#  nagios_service { 'check_pgsql':
-#    use                 => 'dc_service_generic',
-#    hostgroup_name      => 'dc_hostgroup_postgres',
-#    check_command       => 'check_pgsql',
-#    service_description => 'PostgreSQL',
-#  }
+  nagios_service { 'check_dhcp':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_dhcp',
+    check_command       => 'check_dhcp',
+    service_description => 'DHCP',
+  }
 
-#  nagios_service { 'check_dhcp':
-#    use                 => 'dc_service_generic',
-#    hostgroup_name      => 'dc_hostgroup_dhcp',
-#    check_command       => 'check_dhcp',
-#    service_description => 'DHCP',
-#  }
-#  nagios_service { 'check_dns':
-#    use                 => 'dc_service_generic',
-#    hostgroup_name      => 'dc_hostgroup_dns',
-#    check_command       => 'check_dns',
-#    service_description => 'DNS',
-#  }
+  nagios_service { 'check_dns':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_dns',
+    check_command       => 'check_dns',
+    service_description => 'DNS',
+  }
 
-#  nagios_service { 'check_ntp':
-#    use                 => 'dc_service_generic',
-#    hostgroup_name      => 'dc_hostgroup_ntp',
-#    check_command       => 'check_ntp',
-#    service_description => 'NTP',
-#  }
+  nagios_service { 'check_ntp':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_ntp',
+    check_command       => 'check_ntp',
+    service_description => 'NTP',
+  }
 
   ######################################################################
   # Per client storeconfig data
