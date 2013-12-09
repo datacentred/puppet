@@ -4,9 +4,9 @@
 # if enabled, all communication would be verified via SSL
 # NOTE that both certificates need to be signed by the same CA in order for this to work
 # see http://theforeman.org/projects/smart-proxy/wiki/SSL for more information
-#:ssl_certificate: ssl/certs/fqdn.pem
-#:ssl_ca_file: ssl/certs/ca.pem
-#:ssl_private_key: ssl/private_keys/fqdn.key
+:ssl_ca_file: /var/lib/puppet/ssl/certs/ca.pem
+:ssl_certificate: /var/lib/puppet/ssl/certs/<%= @fqdn %>.pem
+:ssl_private_key: /var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem
 # the hosts which the proxy accepts connections from
 # commenting the following lines would mean every verified SSL connection allowed
 #:trusted_hosts:

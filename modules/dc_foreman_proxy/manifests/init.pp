@@ -65,6 +65,33 @@ class dc_foreman_proxy (
     }
   }
 
+  # The proxy will use the puppet certificates signed by the CA
+  user { 'foreman-proxy':
+    ensure  => present,
+    groups  => 'puppet',
+    require => Package['foreman-proxy'],
+    notify  => Service['foreman-proxy'],
+  }
+
+  # TODO: This will clash with puppet::server::config
+  # but I tend to use the community foreman_proxy module
+  # so not overly concerned for now - SM
+  file { "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem":
+    ensure => file,
+    owner  => 'puppet',
+    group  => 'puppet',
+    mode   => '0640',
+    notify => Service['foreman-proxy'],
+  }
+
+  file { '/var/lib/puppet/ssl/private_keys':
+    ensure => directory,
+    owner  => 'puppet',
+    group  => 'puppet',
+    mode   => '0750',
+    notify => Service['foreman-proxy'],
+  }
+
   service { 'foreman-proxy':
     ensure    => running,
     require   => Package['foreman-proxy'],
