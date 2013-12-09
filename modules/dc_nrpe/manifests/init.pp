@@ -43,7 +43,8 @@ class dc_nrpe (
   # SM: Annoyingly nagios-nrpe-plugin auto suggests the full
   # nagios stack so avoid starting it up and interfering
   service { 'nagios3':
-    ensure => $ensure_nagios,
+    ensure  => $ensure_nagios,
+    require => Package['nagios-nrpe-server'],
   }
 
   file { '/etc/xinetd.d/nrpe':

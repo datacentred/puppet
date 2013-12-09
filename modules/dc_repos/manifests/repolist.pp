@@ -12,6 +12,7 @@ include dc_repos::virtual
   $virtualboxmirrorpath = hiera(virtualbox_mirror_path)
   $hpsupportmirrorpath  = hiera(hpsupport_mirror_path)
   $foremanmirrorpath    = hiera(foreman_mirror_path)
+  $datacentredpath      = hiera(datacentred_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "$mirrorserver/$ubuntumirrorpath",
@@ -88,5 +89,13 @@ include dc_repos::virtual
     repos      => 'stable',
     key        => 'E775FF07',
     key_source => 'http://deb.theforeman.org/foreman.asc',
+  }
+
+  @dc_repos::virtual::repo { 'local_datacentred_backports':
+    location   => "${mirrorserver}/${datacentredpath}",
+    release    => 'precise',
+    repos      => 'universe',
+    key        => '7CCDE6B0',
+    key_source => "${mirrorserver}/${datacentredpath}/repo.gpg.key",
   }
 }
