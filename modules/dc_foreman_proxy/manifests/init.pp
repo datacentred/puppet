@@ -73,6 +73,9 @@ class dc_foreman_proxy (
     notify  => Service['foreman-proxy'],
   }
 
+  # TODO: This will clash with puppet::server::config
+  # but I tend to use the community foreman_proxy module
+  # so not overly concerned for now - SM
   file { "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem":
     ensure => file,
     owner  => 'puppet',
