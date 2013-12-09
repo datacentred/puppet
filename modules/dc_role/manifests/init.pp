@@ -8,7 +8,7 @@ class dc_role::hpblade {
 
 class dc_role::platformservices_master {
   include dc_profile::dns_master
-  include dc_profile::dhcp_master
+  include dc_profile::dhcpd_master
   include dc_profile::tftpserver
   include dc_profile::foreman_net_proxy
 }
