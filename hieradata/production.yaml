@@ -34,7 +34,7 @@ ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
 
 # dhcpd
 #
-pxeserver: '10.10.192.250'
+pxeserver: '10.1.5.10'
 dhcpdmasterip: '10.10.192.250'
 dhcpdslaveip: '10.10.192.251'
 omapi_key: 'omapi_key'

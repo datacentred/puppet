@@ -16,7 +16,7 @@ include dc_dhcpdpools::virtual
     mask        => '255.255.255.0',
     range       => '10.10.192.16 10.10.192.247',
     gateway     => '10.10.192.1',
-    pxeserver   => '10.1.5.10',
+    pxeserver   => hiera(pxeserver),
     pxefilename => '/pxelinux.0',
     options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
     parameters  => [ 'default-lease-time 86400', 'max-lease-time 172800',],
