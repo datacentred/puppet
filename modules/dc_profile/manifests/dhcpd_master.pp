@@ -16,11 +16,11 @@ class dc_profile::dhcpd_master {
       'sal01.datacentred.co.uk',
       '0.0.10.in-addr.arpa',
       ],
-    nameservers  => [$nameservers],
-    ntpservers   => [$localtimeservers],
-    interfaces   => ['bond0'],
-    omapi_key    => 'omapi_key',
-    omapi_secret => "$omapi_secret"
+    nameservers         => [$nameservers],
+    ntpservers          => [$localtimeservers],
+    interfaces          => ['bond0'],
+    omapi_key           => 'omapi_key',
+    omapi_secret        => "$omapi_secret",
   }
 
   class { dhcp::failover:
