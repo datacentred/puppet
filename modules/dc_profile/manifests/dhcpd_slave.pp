@@ -5,7 +5,6 @@ class dc_profile::dhcpd_slave {
 
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = values(hiera(nameservers))
-  $pxeserver        = hiera(pxeserver)
   $masterserver_ip  = hiera(dhcpdmasterip)
   $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)

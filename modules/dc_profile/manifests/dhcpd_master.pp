@@ -5,11 +5,9 @@ class dc_profile::dhcpd_master {
 
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = values(hiera(nameservers))
-  $pxeserver        = hiera(pxeserver)
   $slaveserver_ip   = hiera(dhcpdslaveip)
   $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)
-  $fragments        = { 'domain-search' => 'sal01.datacentred.co.uk' }
 
 
   class { 'dhcp':
