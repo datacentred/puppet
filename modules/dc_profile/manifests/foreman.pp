@@ -11,7 +11,7 @@ class dc_profile::foreman {
     ssl                   => true,
     db_manage             => false,
     db_type               => 'postgresql',
-    db_host               => 'postgres.sal01.datacentred.co.uk',
+    db_host               => 'db0.sal01.datacentred.co.uk',
     db_database           => 'foreman',
     db_username           => 'foreman',
     db_password           => $foreman_pw,
