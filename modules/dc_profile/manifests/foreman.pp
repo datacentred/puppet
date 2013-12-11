@@ -29,6 +29,7 @@ class dc_profile::foreman {
     user        => 'foreman',
     environment => 'HOME=/usr/share/foreman',
     logoutput   => 'on_failure',
+    depend      => Class['::foreman'],
   }
 
 }
