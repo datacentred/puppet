@@ -1,6 +1,5 @@
 class dc_dns::virtual {
 
-  include dns
 
   define dnszone ($soa,$soaip,$nameservers,$reverse,$isslave = false) {
     if $isslave {
