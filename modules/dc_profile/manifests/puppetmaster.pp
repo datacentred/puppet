@@ -17,6 +17,7 @@ class dc_profile::puppetmaster {
     dns                 => false,
     bmc                 => false,
     register_in_foreman => false,
+    use_sudoersd        => false,
   }
 
   class { '::puppetdb::master::config':
