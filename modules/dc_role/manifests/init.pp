@@ -1,7 +1,6 @@
 # TODO: this file is full of puppet style errors
 class dc_role::generic {
   include dc_profile::base
-  include dc_profile::puppet
 }
 
 class dc_role::hpblade {

@@ -3,6 +3,9 @@
 # proxies as they need access to the the host's private key
 class dc_profile::puppet {
 
-  class { '::puppet': }
+  # Puppet master will provide this so avoid duplication
+  if !defined(Class['::puppet']) {
+    class { '::puppet': }
+  }
 
 }
