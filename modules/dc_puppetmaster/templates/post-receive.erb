@@ -35,12 +35,20 @@ $stdin.each_line do |line|
     next
   end
 
-  environment_path = "#{ENVIRONMENT_BASEDIR}/#{branchname}"
+  # If we are operating on the master branch update the production
+  # environment
+  if branchname == "master"
+    environment_name = "production"
+  else
+    environment_name = branchname
+  end
+
+  environment_path = "#{ENVIRONMENT_BASEDIR}/#{environment_name}"
 
   if newrev =~ /^0+$/
     # We've received a push with a null revision, something like 000000000000,
     # which means that we should delete the given branch.
-    puts "[1;32m*[0m Deleting existing environment #{branchname}"
+    puts "[1;32m*[0m Deleting existing environment #{environment_name}"
     if File.directory? environment_path
       FileUtils.rm_rf environment_path
     end
@@ -56,27 +64,26 @@ $stdin.each_line do |line|
       # Update an existing environment. We do a fetch and then reset in the
       # case that someone did a force push to a branch.
 
-      puts "[1;32m*[0m Updating existing environment #{branchname} ..."
+      puts "[1;32m*[0m Updating existing environment #{environment_name} ..."
       Dir.chdir environment_path
       %x{git fetch --all}
       %x{git reset --hard "origin/#{branchname}"}
-
-      # We use submodules, should we constantly be updating them
-      # or do we just leave them be, probably better for testing
-      # if they stay immutable
     else
       # Instantiate a new environment from the current repository.
 
-      puts "[1;32m*[0m Creating new environment #{branchname} ..."
+      puts "[1;32m*[0m Creating new environment #{environment_name} ..."
       %x{git clone #{SOURCE_REPOSITORY} #{environment_path} --branch #{branchname}}
 
       # We use submodules, so initialise and update them post clone
       Dir.chdir environment_path
       puts "[1;32m*[0m Initializing submodules ..."
       %x{git submodule init}
-      puts "[1;32m*[0m Updating submodules ..."
-      %x{git submodule update}
     end
+
+    # Update submodules as the hash reference may have changed
+    puts "[1;32m*[0m Updating submodules ..."
+    Dir.chdir environment_path
+    %x{git submodule update}
 
     # Backup the branch to GitHub
     Dir.chdir SOURCE_REPOSITORY
