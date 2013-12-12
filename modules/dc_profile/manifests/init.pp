@@ -7,6 +7,7 @@ class dc_profile::base {
   include dc_profile::sudoers
   include dc_profile::rootpw
   include dc_profile::sshconfig
+  include dc_profile::puppet
 
 }
 
