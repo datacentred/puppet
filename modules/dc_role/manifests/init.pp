@@ -1,5 +1,7 @@
+# TODO: this file is full of puppet style errors
 class dc_role::generic {
   include dc_profile::base
+  include dc_profile::puppet
 }
 
 class dc_role::hpblade {
@@ -17,4 +19,20 @@ class dc_role::platformservices_slave {
   include dc_profile::dns_slave
   include dc_profile::dhcpd_slave
   include dc_profile::tftpserver
+}
+
+class dc_role::platformservices_puppetmaster {
+  include dc_profile::puppetmaster
+}
+
+class dc_role::platformservices_database {
+  include dc_profile::coredb
+}
+
+class dc_role::platformservices_puppetdb {
+  include dc_profle::puppetdb
+}
+
+class dc_role::platformservices_foreman {
+  include dc_profile::foreman
 }
