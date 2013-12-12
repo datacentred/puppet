@@ -30,7 +30,7 @@ class dc_role::platformservices_database {
 }
 
 class dc_role::platformservices_puppetdb {
-  include dc_profle::puppetdb
+  include dc_profile::puppetdb
 }
 
 class dc_role::platformservices_foreman {
