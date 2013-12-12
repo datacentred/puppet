@@ -1,9 +1,8 @@
 class dc_dns::dnszone {
 
-  include stdlib
   include dc_dns::virtual
 
-  $nameservers = values(hiera(nameservers))
+  $nameservers = hiera(nameservers)
 
   # DataCentred top level
 
