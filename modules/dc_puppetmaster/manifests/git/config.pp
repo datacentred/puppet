@@ -55,7 +55,7 @@ class dc_puppetmaster::git::config {
   # master
   exec { 'puppet_master_clone_git':
     command => 'bash -c "if [ ! -e /home/git/puppet.git ]; then \
-                  sudo -u git git clone \
+                  sudo -u git git clone --bare \
                     git@github.com:datacentred/puppet.git \
                     /home/git/puppet.git; \
                 fi"',

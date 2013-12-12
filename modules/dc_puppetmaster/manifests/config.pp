@@ -37,7 +37,7 @@ class dc_puppetmaster::config {
   # Finally add in the post receive hooks which are responsible
   # for creating new environments when new feature branches are
   # created
-  file { '/home/git/puppet.git/.git/hooks/post-receive':
+  file { '/home/git/puppet.git/hooks/post-receive':
     mode    => '0777',
     content => template('dc_puppetmaster/post-receive.erb'),
   }
