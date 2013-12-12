@@ -1,8 +1,9 @@
 class dc_dns::dnszone {
 
+  include stdlib
   include dc_dns::virtual
 
-  $nameservers = hiera(nameservers)
+  $nameservers = values(hiera(nameservers))
 
   # DataCentred top level
 
@@ -34,7 +35,7 @@ class dc_dns::dnszone {
     tag         => sal01
   }
 
-  # Reverse 
+  # Reverse
 
   @dc_dns::virtual::dnszone { '192.10.10.in-addr.arpa':
     soa         => "$fqdn",
