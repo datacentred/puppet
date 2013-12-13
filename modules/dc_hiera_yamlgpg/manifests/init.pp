@@ -6,6 +6,10 @@ class dc_hiera_yamlgpg (
   $key_dir = '/etc/puppet/keys',
 ) {
 
+  package { 'ruby-gpgme':
+    ensure => 'present',
+  }
+
   # Create the configuration
   file { '/etc/puppet/hiera.yaml':
     ensure  => file,

@@ -73,16 +73,15 @@ $stdin.each_line do |line|
 
       puts "[1;32m*[0m Creating new environment #{environment_name} ..."
       %x{git clone #{SOURCE_REPOSITORY} #{environment_path} --branch #{branchname}}
-
-      # We use submodules, so initialise and update them post clone
-      Dir.chdir environment_path
-      puts "[1;32m*[0m Initializing submodules ..."
-      %x{git submodule init}
     end
+
+    # We use submodules, so initialise any new ones
+    Dir.chdir environment_path
+    puts "[1;32m*[0m Initializing submodules ..."
+    %x{git submodule init}
 
     # Update submodules as the hash reference may have changed
     puts "[1;32m*[0m Updating submodules ..."
-    Dir.chdir environment_path
     %x{git submodule update}
 
     # Backup the branch to GitHub
