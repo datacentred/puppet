@@ -67,3 +67,6 @@
 [submodule "modules/foreman_proxy"]
 	path = modules/foreman_proxy
 	url = https://github.com/theforeman/puppet-foreman_proxy
+[submodule "modules/hiera_yamlgpg"]
+	path = modules/hiera_yamlgpg
+	url = https://github.com/compete/hiera_yamlgpg
