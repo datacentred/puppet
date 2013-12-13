@@ -4,8 +4,7 @@
 class dc_profile::puppet {
 
   # Puppet master will provide this so avoid duplication
-  if !defined(Class['::dc_role::platformservices_puppetmaster']) or
-     !defined(CLass['::dc_profile::puppetmaster']) {
+  if !defined(Class['::dc_profile::puppetmaster']) {
     class { '::puppet': }
   }
 
