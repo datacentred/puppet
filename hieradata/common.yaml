@@ -88,6 +88,24 @@ foreman_pw: |
   =GnVR
   -----END PGP MESSAGE-----
 
+# Bind
+#
+rndc_key: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQf/TPK1+BFPovZRrvdga99qcFz5CxGKFfwb1qHNAlgzXrzx
+  0msYqK0DaAWBOq9Z+fWp332x0WBrS3pQW3DMJF+fTIx7b0Vrdg/+zEYxwrfsuteN
+  bqU3CFNArrHUT4Lw/rHehi8G9LGFxOZAt+4jDhGkupUUVLw+UvYrvLnURNUSGwnv
+  amqe9+tMSSCYvm3C/Lh0QvHSN4KEjwx6t5TZAT+Zohph0raO5pGrPa4Vn3eL9dmf
+  B9fQeoPBahAaUfh7hopyOrkPf2Fm3Wl4WeJbMudqQHwJuC48855t9M2fBWGcQxkx
+  bvCIWTh4slZCoKvqah7KhunjjUAdKPhqRzegkqaJidKTAeqlWmGzIueDWGZA7Fok
+  OPQSrDPbJ0ZjaTwy6QeynqOwzEdrPD2ZO1rGZV2nawWYtVpMdPzgxHdXfNZfn/qz
+  aqnr2c69oMjmXCR4IlpidkMplSVNMC54veImQuYZtG3Sc80BG3opC7WeI6D6nluG
+  b4LF1vxUaCzcqrvedwjvL8l4kbO5vvMu6zr5cgxMdU4Xv/M4
+  =yGiL
+  -----END PGP MESSAGE-----
+
 # nrpe
 #
 nrpe_hosts: 'bigbrother.sal01.datacentred.co.uk'
