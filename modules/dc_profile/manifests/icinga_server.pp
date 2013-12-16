@@ -12,8 +12,6 @@
 #
 class dc_profile::icinga_server {
 
-  include dc_profile::icinga_client
-
   class { 'dc_icinga::server':
     require => Class['dc_profile::icinga_client'],
   }
