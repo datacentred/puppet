@@ -59,8 +59,34 @@ users:
 
 # database passwords
 #
-puppetdb_pw: 'oN1y_mY_M45t3r_c4N_p14Y'
-foreman_pw:  'tH1sI5ap45sW0rD'
+puppetdb_pw: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQgAz2R48+mvg2nclN2t7cnGbf66BY1YJX5jE2Z6m6Vs5Ii4
+  Dqa2FOGAfP04cktcc4dliWCy5YfPLFXkmVDZxcohdNbhrPS+g1hwkhG80PC/6byA
+  sei+uMUjqNiFhToHRhxapafXUZSFbylzAi17DN7hxM3+DIDRBvx1iVFbPTqpHd2A
+  6JPPYCmKag6N+Xnf0UrORvcHlVSRTQUx9Z23/TVXH+34mpLp/A9gPELFWk2a/2Qq
+  qthqSN+ib09uGSeOA3CC5cqvKcdwDOpPmzddYcaAuvhQA5xI/vqaP4yJH8eAi5tJ
+  QHWZqCIFteSzPw7j6INMZJRmIurb3xma/V9U8ZAnJNJSAc+rGdtQ/xW8kGTCg1cw
+  fe7/gAU7r81DJ7t2BucuQgqqLHInRhBltgZjkXMOFfqO5HhvbKxzuaeVy12qdqLl
+  LZVYy09+ifO5iwSlA9A1/pdu3Q==
+  =XA35
+  -----END PGP MESSAGE-----
+foreman_pw: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQgAnAalrKyEyO9K5reKJTtiz7QZCPKwlpOgm3JGyr4HKNjq
+  s3z7SmMzrnbvVrV62uKfn9GLMe9UZ0gYuPZ7AWMOLoxEy3nw8XEHVzdetlUqpWwr
+  2z/ctmd73CC6UhK73l7wZ3SGjha3ydQdZb5bLjFWxX28noNWqkOqC4r66QwBXBX0
+  fhvCk+ohGqcRUnnzXM6EpV3C4JjLYX0d4k9pdcqmim1NsFY3t0SeEqB+YAnBE27W
+  B3f7QQ8fMywIMKykKspGuTylJiCpZB8HWmDJsfQZg0dxnveegKHzJph/NKbWJnoZ
+  IfqlQZd9gSDxNOt1REYFLyApHJS39YywndKIxXIvDdJKAZDS86Uey1VgLaQha/Fq
+  0UaWJDXBT863dLgFNKtVzsdD1pe9inh7BbAlv/jM8MQLhleX49i6wk1VbHgCMPIV
+  88/OiH3Kqck9MTg=
+  =TqzZ
+  -----END PGP MESSAGE-----
 
 # nrpe
 #
