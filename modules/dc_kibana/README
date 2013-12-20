@@ -1,0 +1,5 @@
+Module : dc_kibana
+Author : nick
+
+Simple module to install Kibana and configure it against Elasticsearch.
+Default dashboard has been set to Logstash.
