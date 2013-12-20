@@ -3,8 +3,8 @@
 # Install, configure and ensure the service is running
 #
 class dc_rsyslog (
-  $logstash_server = hiera(logstash_server),
-  $logstash_port = 55514,
+  $logstash_server = '',
+  $logstash_port,
 ){
   class { 'dc_rsyslog::repo': } ~>
   class { 'dc_rsyslog::install': } ~> 
