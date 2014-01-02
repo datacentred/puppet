@@ -13,6 +13,7 @@ include dc_repos::virtual
   $hpsupportmirrorpath  = hiera(hpsupport_mirror_path)
   $foremanmirrorpath    = hiera(foreman_mirror_path)
   $datacentredpath      = hiera(datacentred_path)
+  $rsyslogmirrorpath    = hiera(rsyslog_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "$mirrorserver/$ubuntumirrorpath",
@@ -98,4 +99,13 @@ include dc_repos::virtual
     key        => '7CCDE6B0',
     key_source => "${mirrorserver}/${datacentredpath}/repo.gpg.key",
   }
+
+  @dc_repos::virtual::repo {'local_rsyslog_mirror':
+    location   => "$mirrorserver/$rsyslogmirrorpath/v8-devel",
+    release    => 'precise/',
+    repos      => '',
+    key        => 'AEF0CF8E',
+    key_server => 'keyserver.ubuntu.com'
+  }
+
 }

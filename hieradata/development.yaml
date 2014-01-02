@@ -19,6 +19,7 @@ ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
 virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
 hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
 datacentred_path: 'datacentred-backports'
+rsyslog_mirror_path: 'mirror/ubuntu.adiscon.com'
 
 mysql_root_pw: 'OithGec3'
 
@@ -69,3 +70,6 @@ foreman_url: 'foreman'
 dc_snmp_community: 'dcpub'
 snmp_allowed_net: '10.1.5.0/24'
 system_location: 'sal01'
+
+# logstash stuff
+logstash_server: 'logstash.sal01.datacentred.co.uk'
