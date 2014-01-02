@@ -47,6 +47,7 @@ ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
 pxeserver: '10.0.1.250'
 dhcpdmasterip: '10.0.1.250'
 dhcpdslaveip: '10.0.1.251'
+omapi_key: 'omapi_key'
 omapi_secret: 'nad6wymAE9/qFnaUCMa52FWP/KgLYuPUTI0YUf16Zkn54b5uKOYGQ9IwiI+hfui2ZdmIwVHf+O2ExshChY7coA=='
 # dns
 # 
@@ -73,3 +74,6 @@ system_location: 'sal01'
 
 # logstash stuff
 logstash_server: 'logstash.sal01.datacentred.co.uk'
+
+# rndc key
+test_rndc_key: 'testing'

@@ -28,7 +28,7 @@ include dc_dhcpdpools::virtual
     mask       => '255.255.255.0',
     range      => '10.10.128.16 10.10.128.247',
     gateway    => '10.10.128.1',
-    parameters => [ 'default-lease-time 86400', 'max-lease-time 172800',],
+    parameters => [ 'default-lease-time 86400', 'max-lease-time 172800', 'ddns-updates on', 'deny client-updates' ],
     tag        => vlan128
   }
 
