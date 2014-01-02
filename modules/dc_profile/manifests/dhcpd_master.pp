@@ -8,7 +8,7 @@ class dc_profile::dhcpd_master {
   $slaveserver_ip   = hiera(dhcpdslaveip)
   $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)
-  $rndc_key         = hiera(test_rndc_key)
+  $rndc_key         = hiera(rndc_key)
 
 
   class { 'dhcp':
