@@ -8,6 +8,7 @@ class dc_profile::dhcpd_slave {
   $masterserver_ip  = hiera(dhcpdmasterip)
   $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)
+  $rndc_key         = hiera(rndc_key)
 
   class { 'dhcp':
     dnsdomain => [
@@ -18,7 +19,12 @@ class dc_profile::dhcpd_slave {
     ntpservers   => [$localtimeservers],
     interfaces   => ['bond0'],
     omapi_key    => 'omapi_key',
-    omapi_secret => "$omapi_secret"
+    omapi_secret => "$omapi_secret",
+    ddns         => true,
+  }
+
+  class { dhcp::ddns:
+    key => "$rndc_key",
   }
 
   class { dhcp::failover:
