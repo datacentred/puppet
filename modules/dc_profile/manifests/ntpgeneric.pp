@@ -1,6 +1,6 @@
 class dc_profile::ntpgeneric {
 
-  if $ipaddress in $localtimeservers {
+  if $ipaddress in hiera(localtimeservers) {
     class { 'ntp':
       servers    => hiera(timeservers),
       autoupdate => false,
