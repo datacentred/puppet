@@ -1,7 +1,9 @@
 class dc_profile::hpblade {
 
   include hpilo
+  include stdlib
   include dc_profile::hpsupportrepo
+  $nameservers = values(hiera(nameservers))
 
   package { ['hpacucli', 'cciss-vol-status' ]:
     ensure  => installed,
@@ -9,8 +11,9 @@ class dc_profile::hpblade {
   }
 
   class { 'hpilo':
+    shared      => false,
     dhcp        => true,
-    dns         => hiera(dnsmaster),
+    dns         => $nameservers[0],
     ilouser     => 'admin',
     ilouserpass => 'password',
     autoip      => false,
