@@ -4,7 +4,6 @@ class dc_profile::ntpgeneric {
     class { 'ntp':
       servers    => hiera(timeservers),
       autoupdate => false,
-      restrict   => false,
     }
   }
   else {
