@@ -25,7 +25,8 @@ class dc_profile::dhcpd_master {
   }
 
   class { dhcp::ddns:
-    key => "$rndc_key",
+    key        => "$rndc_key",
+    zonemaster => '127.0.0.1'
   }
 
   class { dhcp::failover:

@@ -24,7 +24,8 @@ class dc_profile::dhcpd_slave {
   }
 
   class { dhcp::ddns:
-    key => "$rndc_key",
+    key        => "$rndc_key",
+    zonemaster => $nameservers[1],
   }
 
   class { dhcp::failover:
