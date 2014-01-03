@@ -73,6 +73,3 @@
 [submodule "modules/logstash"]
 	path = modules/logstash
 	url = https://github.com/logstash/puppet-logstash
-[submodule "modules/hpilo"]
-	path = modules/hpilo
-	url = https://github.com/datacentred/hpilo
