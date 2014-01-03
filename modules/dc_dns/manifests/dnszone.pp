@@ -36,6 +36,22 @@ class dc_dns::dnszone {
 
   # Reverse
 
+  @dc_dns::virtual::dnszone { '128.10.10.in-addr.arpa':
+    soa         => "$fqdn",
+    soaip       => "$ipaddress",
+    nameservers => $nameservers,
+    reverse     => true,
+    tag         => '10.10.128'
+  }
+
+  @dc_dns::virtual::dnszone { '32.10.10.in-addr.arpa':
+    soa         => "$fqdn",
+    soaip       => "$ipaddress",
+    nameservers => $nameservers,
+    reverse     => true,
+    tag         => '10.10.32'
+  }
+
   @dc_dns::virtual::dnszone { '192.10.10.in-addr.arpa':
     soa         => "$fqdn",
     soaip       => "$ipaddress",
