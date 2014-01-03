@@ -1,6 +1,5 @@
 class dc_profile::hpblade {
 
-  include hpilo
   include stdlib
   include dc_profile::hpsupportrepo
   $nameservers = values(hiera(nameservers))
