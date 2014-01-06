@@ -63,3 +63,6 @@ client_networks:
 # foreman
 #
 foreman_url: 'foreman'
+
+# logstash
+logstash_server: 'logstash.sal01.datacentred.co.uk'
