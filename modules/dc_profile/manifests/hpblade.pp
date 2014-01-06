@@ -6,5 +6,10 @@ class dc_profile::hpblade {
     ensure  => installed,
     require => Dc_repos::Virtual::Repo['local_hpsupport_mirror']
   }
+
+  class { 'hpilo':
+        dhcp => true,
+  }
+
 }
 
