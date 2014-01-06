@@ -105,7 +105,8 @@ include dc_repos::virtual
     release    => 'precise/',
     repos      => '',
     key        => 'AEF0CF8E',
-    key_server => 'keyserver.ubuntu.com'
+    key_server => 'keyserver.ubuntu.com',
+    tag        => baserepos
   }
 
 }
