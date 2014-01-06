@@ -35,3 +35,8 @@ class dc_role::platformservices_puppetdb {
 class dc_role::platformservices_foreman {
   include dc_profile::foreman
 }
+
+class dc_role::platformservices_logstash {
+  include dc_profile::kibana
+  include dc_profile::logstash
+}
