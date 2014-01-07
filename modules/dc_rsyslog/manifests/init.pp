@@ -6,7 +6,6 @@ class dc_rsyslog (
   $logstash_server = '',
   $logstash_port,
 ){
-  class { 'dc_rsyslog::repo': } ~>
   class { 'dc_rsyslog::install': } ~> 
   class { 'dc_rsyslog::config': } ~>
   class { 'dc_rsyslog::service': } ~>
