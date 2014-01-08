@@ -115,3 +115,65 @@ nrpe_commands:
  - 'command[check_total_procs]=/usr/lib/nagios/plugins/check_procs -w 150 -c 200'
  - 'command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w 20% -c 10%'
 
+# hipchat access rights
+#
+xmpp_jid: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQf9GcNNXE3g1i4CZnIx6iGq2ZINKbwLhMTxRW2gWbLq76GD
+  MK2v/itD67A9QRl1A6v/WEEVFXC6N6KLOBvCJzFf8oy8eWlBRhpzrxQcIEUUfj12
+  SujYnOCs777U4XveHopf4KvH+Lle/PVBurC2WFCUeFVDzinPsklHMINhkkoVqvfx
+  7rG1rBDg3o1b1go51r48c8w8HWqPOxtNCtd0sxqncmaMVsuLguz1lHot0h0JXov7
+  KPDfyQaowlIY1MbGC8uKGm7ah46MXHakmRoDQwNs1s9oR7aSkjPMKO3VqHxXnVqm
+  ho8Ip4Xos2+qEN3FABU0fd1VHQEbSdvNvx0txjYni9JVAfpFhvXq5C6dCmkYFNOM
+  9hPeoD4FwVR/hgy62lf1Fib77rjxjtzpSqn8IlIMpf9CTf5xs1zPHZy9VXBRAIVW
+  ZRYSo6z4AhJke7N37szOc1QxSFLDTg==
+  =ykWJ
+  -----END PGP MESSAGE-----
+
+xmpp_pass: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQgA17DF6j35IFlJ8y+lfLaTnfhcnaMxBhTBhkgg7NioKlU9
+  abQUP/O/haXjKy34vyjvAUKBEMeJMkZs7enb1IGWM9WkDchSuEnJeV1dZy7oglv4
+  G4FRx1dSXYqZ28oVP+S07nkocKwZHrPNVKJPwmA0ttVsZ4+gVvlH7ZCDvfv0+AJ2
+  q82n9igldzRhBzRgN0JanW1WFgj+4n6Pd2EprpbgKzCvBp3Y2M8SxEY0mtfab7/d
+  nq+sg6zY2uDy7NiLOIHcKuvVMDt2mFNeueB6mw5vDEIh1c+LjK8C25a7V1uK7IP/
+  YCT4TD6bq7/hWOJhYP/cUMuz6qNSy2yzditJ0aQtFdJBAVhL013z4RtRLtKVGrP1
+  7WAVkKKX5n1SpyMaH2KrbIAvIR/5NY5qpfhOTF9scccxJF09rsknjNdR9iQgOzFV
+  VP8=
+  =cXOZ
+  -----END PGP MESSAGE-----
+
+xmpp_room: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQf+P2zAR9+WCnSkBCaMYXxmb0hticysm7OG+z22ZdPtk4Mh
+  dqxU33Ngp87qZ90UGJP1bnZrmeK+TFYVwRLOixETHoS+2RgXm750z2ZWH9mo1WpR
+  NU6O3lm1F5XLgesrJGrOP5/79qvlOscklzEZEZX+uBt80eNTwETSfVvBkdeLd6Ka
+  rR79uNsdouODcLsSzkZ4TCyqRmNbyrQqSQrdoMtQHcMV9HWy3ECTznIqqoVcHcph
+  HhpRqtIiTGvZlmsW0VfjTMMnGmtlD3YSD6whTKljWYgaZIVOoTrPIjMHpUsJuc/o
+  8ocOxbQwxzEp9TvNYmbMbt02DCWddSSVM+RltPKn3dJdAR+MSAphGQZpb1hSa4+1
+  fhvswzevlQ7aq3a3Q5d91tlpVp5vURvcxxBKtZ95/3O5nhln3gZsJEiM7BjvFYnk
+  TkZX6jqNk/rZ+wDGC4Oy3n8nV+oCeh97PGKExI44
+  =/KJR
+  -----END PGP MESSAGE-----
+
+xmpp_name: |
+  -----BEGIN PGP MESSAGE-----
+  Version: GnuPG v1.4.14 (GNU/Linux)
+  
+  hQEMA0RHJ8uqU8yNAQf/W9zr+1OFvdLJohzmuA2DT9qZS9HyPmhJLUpnTYlgByXF
+  fYpGm5hbmUEuAIxr4ICiWKB5jDIHBQ+wSWg3pJALgfcqAE8lhH+g1no8CxwIsmc8
+  Cwn/xF9Pig+oF1cdfOE3I5mG9CTK0p3FlPaQdkca+80s/De6+w1XRw1noa4jrhAU
+  fyYw1pHlE83/fdV0p6YtknPTjiLL5Q68phyoR5eDmtyauZKBy0kCAWT2PYoQ4AuV
+  inHOpnTlHhPOg4KVlO1WH/zE6K48XDWrgxhOdc5cVwlhzwIe2QPkDRU9KwGeTTgC
+  tCLMdxR32eKjVm6GRBh6Ufbt19qx/H5iM8GqGSdQytJFAYKnNbfxiv+fgYaMd0PK
+  8Nn7UdW/DdH8TFGrUunnerlVMkL7hrSu608LiB5qbnZPVrAVdW8LXlkKYxHj+YqH
+  Y/JhcuzI
+  =ZmKx
+  -----END PGP MESSAGE-----
+
