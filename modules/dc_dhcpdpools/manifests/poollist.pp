@@ -11,6 +11,30 @@ include dc_dhcpdpools::virtual
     tag        => vlan40
   }
 
+  @dc_dhcpdpools::virtual::dhcpdpool { 'storage_internal':
+    network     => '10.10.96.0',
+    mask        => '255.255.255.0',
+    range       => '10.10.96.16 10.10.96.247',
+    gateway     => '10.10.96.1',
+    pxeserver   => hiera(pxeserver),
+    pxefilename => '/pxelinux.0',
+    options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
+    parameters  => [ 'default-lease-time 86400', 'max-lease-time 172800',],
+    tag         => vlan96
+  }
+
+  @dc_dhcpdpools::virtual::dhcpdpool { 'compute_internal':
+    network     => '10.10.160.0',
+    mask        => '255.255.255.0',
+    range       => '10.10.160.16 10.10.160.247',
+    gateway     => '10.10.160.1',
+    pxeserver   => hiera(pxeserver),
+    pxefilename => '/pxelinux.0',
+    options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
+    parameters  => [ 'default-lease-time 86400', 'max-lease-time 172800',],
+    tag         => vlan160
+  }
+
   @dc_dhcpdpools::virtual::dhcpdpool { 'platform_services':
     network     => '10.10.192.0',
     mask        => '255.255.255.0',
