@@ -1,179 +1,62 @@
-#ntp
-#
-timeservers:
- - '0.uk.pool.ntp.org'
- - '1.uk.pool.ntp.org'
- - '2.uk.pool.ntp.org'
- - '3.uk.pool.ntp.org'
-# repos
-#
-mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
-ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
-ubuntu_security_mirror_path: 'mirror/security.ubuntu.com/ubuntu'
-cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
-puppet_mirror_path: 'mirror/apt.puppetlabs.com'
-nullmailer_mirror_path: 'mirror/ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu'
-ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
-ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
-virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
-hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
-foreman_mirror_path: 'mirror/deb.theforeman.org'
-datacentred_path: 'datacentred-backports'
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-# nullmailer
-#
-smarthostuser: 'autobot@datacentred.co.uk'
-smarthostpass: 'horovAnVods5'
-smarthost: 'smtp.gmail.com'
-sysmailaddress: 'sysadmin@datacentred.co.uk'
-
-tftpdir: '/var/tftpboot'
-
-# apt-mirror
-#
-ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
-
-#users
-#
-users:
-  matt:
-    uid: '1001'
-    gid: '1000'
-    pass: '$6$qplx30n1$UyzxF3zIRuAm8cNtHtFL5V59HuezXzE3FStG8ermMrTsrowW5ACk6lGsn4GU2y0qTCcq0m13CYPltAY9X8v3i1'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCqHgq7htvOfOyNkZ8i505A6bEib9FiMNZGejce63jwo3SboRc1v25KQiXdRkuMIhLNZCgKM7aSErIZoPQoNxxHO1qvGsuOT3yld0jqXZHYp7L8To75y5gDp911N8enKVC3GMduPeXA8HH7RhNlPd6fUWmgmp4tBbd1iKnIZZDJ74P0mhKY47jbLV0SyvBli62WcqjKLH6DIgYPx73w31zti+HJCpPpUhzx19saJM2LbwGZ6HUL8FegXhIgcsV9vsB67tGZO/c2KFl+fRQgpYUTi6/17A19KbQP1GvYSiKb2uNhvYxwnU4D7zSZtlN7oXXiZ0xeI9MEExT24xd+sMmV'
-  nick:
-    uid: '1002'
-    gid: '1000'
-    pass: '$6$NPL/Pnap$nq67l3XdANH8HHY.z7C6CvJqTccDAE99yV2oxEx78gCdA1ofmTMIRvzfDG5FUZw80xz6eVMCoytzXO5L7Y/Ie/'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ6MGX3NlmNNaLpTne6n9ZOxzpRJlT0pcBEXVl/S8iHvFdAyaoKsCRI+U5dAV6ONlpDBMqkUBalGf2LfssVIiFlGi7U2iOBG6q9T2XjwP7YCBlqguRkbTFXU4qDix/wBcGsgOG+wWq9OJhRdJRWG1mt7kZDBoBGrGrSjdmOlfP/CVfSUBCJTAhpneQ1gYjHLujS5Ee+sIBU8k7pgAzUYaGpmOYbqW80+hmYB7EwsBiI+wfz21ki1UfWI5gjB0No2BKVgiXWPj0+zcFiNjVguTj/KrrsVXpKsJDqc/8tEgHIU1qBSdKFVjEu93QlxLinLg7zWyujlt/q+i5Gt+FlJal'
-  dariush:
-    uid: '1003'
-    gid: '1000'
-    pass: '$6$g8y7.8wJ$FvZbW4XqG3JuL./jQt3QAt.IKG7WMQzTSWyP6TTtjC1EcYgdqxV/gjlsnC.muiJH3OAcX1zGtNRsO1vWZMWme1'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQD1meqfHE5kqTp00XAqCFD3vqgRmYWTUK8FQ4Yt+VCKrtoUcjABsuk7tF3oqHdZaRCZAZaudW2bbqX3V3Sg45yoPgkBsC2StMSM8ZpsSdgBz9yqwCFctJCqqAjLJK9gSDT/iYAXzKgv5WTWtBb9b0sCfEgwPQBCGBh6ZJr6eqZF+cnADIVo7a6xJiOXV4uN8UozPLHNzrM4hnolfmVLAFHyTngfjicEQAXRP6z7S3c0wDmtqnvMg1lU+Gv+7Tit7jHE5yj0n3EJ1Z7dt4Nuj0i9Hv2SAVTvS8yMBMBKPb0EA/Ddj9tWY1ImEBZLILJPYAJusOUetR/NHDkLums405fZ'
-  simon:
-    uid: '1004'
-    gid: '1000'
-    pass: '$6$YhlSwKk4$BOaVDCkNXhLZvTSMbtsnoWtL5hK6cm/z0YBeFtc8TMLDqX1.Vlz/eYueN2gMdW03wE0xkcb4g1mRL/roFQUWi0'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDm3VdSIH5hhCvxW9JmipkubC3QV9HCTxALNL3BpS/Th4rYuMao5BxoEpXR6ITY6R1kfT/g03I4dSjmw+i+GDVydjCspxSMQR7ws4cfX+xFxs3CBszmfdGmwPO/ZN0vhPTJkPPrQKSg5Sb3r8xAzsQVW5IjnjD8LE+3cGwYANanrPgQSkYOdjVaw4K6zZfVVTOdT86FHDx0c8vez9J2AVd4YCqbMLgxSNKOjZ+2bEebYV8o5G9phUopZ7Rb8UfTwk+X2uCdH6p/LVBglTEFXAU6eYaZcAEzco+UcJ1nIhkPvUkzlx2u/maH1pp3pm4WuwZtWW60vY8A2Z6kpGZs3KPP'
-
-# database passwords
-#
-puppetdb_pw: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQf/XVWDnYEHoKKbvJQ3q4vNLKzN9VHbE7HKc1EDlIncZI0K
-  qeR8Q/CuhuJ4RchcN+8EsVMbCkl7ckL7pTk5p2IODOON+GrV7erTUCvfjJ0RWvsy
-  lP5fkFfkvKFOh9Lf4LyI7lvitSd4pme1qwQz06iorusM/WwhlTQTVzOv5jDEoWAN
-  JejWrqAd54umuVW9XTIBnRq8y/C1pmSbmGVAWuAq5ZY7/btceeMbbJpkW6T5qFq3
-  ituZFCYiFdtf7/Z5FgMFfQ9HXhelBqmdJISN3bVVtARvTMTY+Y9kWKf5zsfhkAdm
-  WcEI9nGbHwhxsZFdvutgxSlIufkvN53lq50je12iDNJSAYCGpyQiD6i/OnBOOYkt
-  5pw1csLB1zDAyqcmGh7whaI6gMAYpTLwimgvcNZeYnEAwjJs1OeL4Laqmme+887H
-  bws7OWViQODl2jj1t4AgqnhKOg==
-  =WWnS
-  -----END PGP MESSAGE-----
-foreman_pw: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQf9EYWPaY1eAaDxTwNoHO4rx43p41izC1JlciA4G3ZlDqCz
-  uWlTYXPhqSaN35kWR30as0L/tCnPKFE8SE8/3a24BgGlf/ezyYBkzHBDzk3hM/lH
-  5XOnJLf52iI/YgtKcElhSJ33ZyrJd1lBS9SgxaB4LpAeBI1wpwEGE49Jp7q3TSyA
-  p4SmX3PuyDERdry9OIMZGLM10FNkeZh9D5Wrz7U5fV391Sn1bdIJ3cn98USMsaAi
-  NzHpTuIe4BXtjQrorbfee/29U6RbrqSLcXpLaahpzPeJXDQB4DJ/Fw7ioKg+9yaq
-  dZVOj6KqAVHLBtjLeIsxCivg3XTpPsIrDD5zfQoNxNJKAfUMK5Mg6RhTCsjbWh8X
-  tpWVCIUy9mOZMa53UJXVqctQkbVwPXnlGEorDhtvV0ddjQuRB37YNkKRx2LuLGfa
-  xO6Gs/svjTkZgJA=
-  =GnVR
-  -----END PGP MESSAGE-----
-
-# Bind
-#
-rndc_key: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQf/TPK1+BFPovZRrvdga99qcFz5CxGKFfwb1qHNAlgzXrzx
-  0msYqK0DaAWBOq9Z+fWp332x0WBrS3pQW3DMJF+fTIx7b0Vrdg/+zEYxwrfsuteN
-  bqU3CFNArrHUT4Lw/rHehi8G9LGFxOZAt+4jDhGkupUUVLw+UvYrvLnURNUSGwnv
-  amqe9+tMSSCYvm3C/Lh0QvHSN4KEjwx6t5TZAT+Zohph0raO5pGrPa4Vn3eL9dmf
-  B9fQeoPBahAaUfh7hopyOrkPf2Fm3Wl4WeJbMudqQHwJuC48855t9M2fBWGcQxkx
-  bvCIWTh4slZCoKvqah7KhunjjUAdKPhqRzegkqaJidKTAeqlWmGzIueDWGZA7Fok
-  OPQSrDPbJ0ZjaTwy6QeynqOwzEdrPD2ZO1rGZV2nawWYtVpMdPzgxHdXfNZfn/qz
-  aqnr2c69oMjmXCR4IlpidkMplSVNMC54veImQuYZtG3Sc80BG3opC7WeI6D6nluG
-  b4LF1vxUaCzcqrvedwjvL8l4kbO5vvMu6zr5cgxMdU4Xv/M4
-  =yGiL
-  -----END PGP MESSAGE-----
-
-# nrpe
-#
-nrpe_hosts: 'bigbrother.sal01.datacentred.co.uk'
-nrpe_commands:
- - 'command[check_users]=/usr/lib/nagios/plugins/check_users -w 5 -c 10'
- - 'command[check_load]=/usr/lib/nagios/plugins/check_load -w 15,10,5 -c 30,25,20'
- - 'command[check_total_procs]=/usr/lib/nagios/plugins/check_procs -w 150 -c 200'
- - 'command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w 20% -c 10%'
-
-# hipchat access rights
-#
-xmpp_jid: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQf9GcNNXE3g1i4CZnIx6iGq2ZINKbwLhMTxRW2gWbLq76GD
-  MK2v/itD67A9QRl1A6v/WEEVFXC6N6KLOBvCJzFf8oy8eWlBRhpzrxQcIEUUfj12
-  SujYnOCs777U4XveHopf4KvH+Lle/PVBurC2WFCUeFVDzinPsklHMINhkkoVqvfx
-  7rG1rBDg3o1b1go51r48c8w8HWqPOxtNCtd0sxqncmaMVsuLguz1lHot0h0JXov7
-  KPDfyQaowlIY1MbGC8uKGm7ah46MXHakmRoDQwNs1s9oR7aSkjPMKO3VqHxXnVqm
-  ho8Ip4Xos2+qEN3FABU0fd1VHQEbSdvNvx0txjYni9JVAfpFhvXq5C6dCmkYFNOM
-  9hPeoD4FwVR/hgy62lf1Fib77rjxjtzpSqn8IlIMpf9CTf5xs1zPHZy9VXBRAIVW
-  ZRYSo6z4AhJke7N37szOc1QxSFLDTg==
-  =ykWJ
-  -----END PGP MESSAGE-----
-
-xmpp_pass: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQgA17DF6j35IFlJ8y+lfLaTnfhcnaMxBhTBhkgg7NioKlU9
-  abQUP/O/haXjKy34vyjvAUKBEMeJMkZs7enb1IGWM9WkDchSuEnJeV1dZy7oglv4
-  G4FRx1dSXYqZ28oVP+S07nkocKwZHrPNVKJPwmA0ttVsZ4+gVvlH7ZCDvfv0+AJ2
-  q82n9igldzRhBzRgN0JanW1WFgj+4n6Pd2EprpbgKzCvBp3Y2M8SxEY0mtfab7/d
-  nq+sg6zY2uDy7NiLOIHcKuvVMDt2mFNeueB6mw5vDEIh1c+LjK8C25a7V1uK7IP/
-  YCT4TD6bq7/hWOJhYP/cUMuz6qNSy2yzditJ0aQtFdJBAVhL013z4RtRLtKVGrP1
-  7WAVkKKX5n1SpyMaH2KrbIAvIR/5NY5qpfhOTF9scccxJF09rsknjNdR9iQgOzFV
-  VP8=
-  =cXOZ
-  -----END PGP MESSAGE-----
-
-xmpp_room: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQf+P2zAR9+WCnSkBCaMYXxmb0hticysm7OG+z22ZdPtk4Mh
-  dqxU33Ngp87qZ90UGJP1bnZrmeK+TFYVwRLOixETHoS+2RgXm750z2ZWH9mo1WpR
-  NU6O3lm1F5XLgesrJGrOP5/79qvlOscklzEZEZX+uBt80eNTwETSfVvBkdeLd6Ka
-  rR79uNsdouODcLsSzkZ4TCyqRmNbyrQqSQrdoMtQHcMV9HWy3ECTznIqqoVcHcph
-  HhpRqtIiTGvZlmsW0VfjTMMnGmtlD3YSD6whTKljWYgaZIVOoTrPIjMHpUsJuc/o
-  8ocOxbQwxzEp9TvNYmbMbt02DCWddSSVM+RltPKn3dJdAR+MSAphGQZpb1hSa4+1
-  fhvswzevlQ7aq3a3Q5d91tlpVp5vURvcxxBKtZ95/3O5nhln3gZsJEiM7BjvFYnk
-  TkZX6jqNk/rZ+wDGC4Oy3n8nV+oCeh97PGKExI44
-  =/KJR
-  -----END PGP MESSAGE-----
-
-xmpp_name: |
-  -----BEGIN PGP MESSAGE-----
-  Version: GnuPG v1.4.14 (GNU/Linux)
-  
-  hQEMA0RHJ8uqU8yNAQf/W9zr+1OFvdLJohzmuA2DT9qZS9HyPmhJLUpnTYlgByXF
-  fYpGm5hbmUEuAIxr4ICiWKB5jDIHBQ+wSWg3pJALgfcqAE8lhH+g1no8CxwIsmc8
-  Cwn/xF9Pig+oF1cdfOE3I5mG9CTK0p3FlPaQdkca+80s/De6+w1XRw1noa4jrhAU
-  fyYw1pHlE83/fdV0p6YtknPTjiLL5Q68phyoR5eDmtyauZKBy0kCAWT2PYoQ4AuV
-  inHOpnTlHhPOg4KVlO1WH/zE6K48XDWrgxhOdc5cVwlhzwIe2QPkDRU9KwGeTTgC
-  tCLMdxR32eKjVm6GRBh6Ufbt19qx/H5iM8GqGSdQytJFAYKnNbfxiv+fgYaMd0PK
-  8Nn7UdW/DdH8TFGrUunnerlVMkL7hrSu608LiB5qbnZPVrAVdW8LXlkKYxHj+YqH
-  Y/JhcuzI
-  =ZmKx
-  -----END PGP MESSAGE-----
-
+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
+pnxsiYwjC6jQpy6wJb1KpHHaq9bQ
+=SFbG
+-----END PGP MESSAGE-----

@@ -1,68 +1,29 @@
-#ntp
-#
-localtimeservers: 
- - '10.10.192.250'
- - '10.10.192.251'
-# repos
-#
-mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
-ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
-ubuntu_security_mirror_path: 'mirror/security.ubuntu.com/ubuntu'
-cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
-puppet_mirror_path: 'mirror/apt.puppetlabs.com'
-nullmailer_mirror_path: 'mirror/ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu'
-ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
-ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
-virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
-hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
-rsyslog_mirror_path: 'mirror/ubuntu.adiscon.com'
-datacentred_path: 'datacentred-backports'
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-# nullmailer
-#
-smarthostuser: 'autobot@datacentred.co.uk'
-smarthostpass: 'horovAnVods5'
-smarthost: 'smtp.gmail.com'
-sysmailaddress: 'sysadmin@datacentred.co.uk'
-
-tftproot: '/var/tftpboot'
-
-rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
-
-# apt-mirror
-#
-ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
-
-# dhcpd
-#
-pxeserver: '10.10.192.250'
-dhcpdmasterip: '10.10.192.250'
-dhcpdslaveip: '10.10.192.251'
-omapi_key: 'omapi_key'
-omapi_secret: 'nad6wymAE9/qFnaUCMa52FWP/KgLYuPUTI0YUf16Zkn54b5uKOYGQ9IwiI+hfui2ZdmIwVHf+O2ExshChY7coA=='
-
-# dns
-# 
-forwarders:
-- '8.8.8.8'
-- '8.8.4.4'
-dnsmasters:
-- '10.10.192.250'
-nameservers:
-  ns0.sal01.datacentred.co.uk: '10.10.192.250'
-  ns1.sal01.datacentred.co.uk: '10.10.192.251'
-client_networks:
-- '10.10.192.0/24'
-- '10.10.128.0/24'
-- '10.10.32.0/24'
-- '10.5.10.0/24' 
-- '10.1.1.0/24'
-- '10.10.12.0/24' # SAL01M wireless
-- '10.0.1.0/24' # SAL01 wireless
-
-# foreman
-#
-foreman_url: 'foreman'
-
-# logstash
-logstash_server: 'logstash.sal01.datacentred.co.uk'
+hQEMA0RHJ8uqU8yNAQf/fQTKRgus2gZ7glk0nCbBgPxvy8s2KQU1mZhY0wxMnlNy
+BW0VBwCI6aqv0T6uLfCYrCPMRJoG/SjOBgwDgoQURHKoqIQCJlNUoBzICOsWW6KH
+pFi+6Enxh7/eaZTAPZhOi53VsVVSpNO24Nfq93b3aa+4Q+DFx+4m2khH6OtCrcYe
+rkB85wwHkv6km0nb/8icmRoJYW4KyN6GCn0Ta2GLikiRWWLx7DwL6Fq0DEw81b1k
+ARn1DFT6NcGgxd0KK85f/fhaqKKBb0VaYPTW7Y1GALzCD2GXywX94azMRAkw1nr5
+LmT6I1kYuZIf7dJRtQPL0v6yraIvYSME4/1Jx71Wj9LpAT42kMo1jo68LWPW+gi0
+D+efF8flWrZeiEnJn0KU2iO4+5QUbDGrUBH5HD/VzYJ70tLJeEjK9IzXQ4c46OLN
+WT+rEXXv0wJkv5rIKZD7a7jPyao+/T+QQlVJWdybL2AQ+ClnKynJaK3SBwYeeHWi
+Sr24FfUq05D4+ama5u91EHJBWh8bhYVl9W9804gKc00ComRjs3apY23OZQrHAQIN
+tUrNNBwm3EfFZmQmhUv0BW/HXmRWyr8Hy+8nevR3OOdB9Gl6uiObEFkaHynby3dg
+/Cg5SCIME78ldu7CIKNS1293USKY4V6Vwem2e46qxEhu+lUdVuE2uefi2kYV0qx8
+mB++wR9IBLEKTH0KWJVH2OnmufMJaDwxLMAg1SKQKvMjXE0BQnvU9Fb9bgLM+KI9
++Jqzsr9tE83A+A9p6QYuiPXCushcwy9QXYiR6Qzzempa6VSfxeG4Qjy0J9nPDOVs
+tx99eqpAzzrzNWc/4QGJOSHgnKAonNBCHaBLGwVey0OyJwJfGxxQicHaHpPDYLfP
+Cu5rzGO0ayaTFz9dWdmV1T5/LKBlXStYgByOM5MLalaeEPeBIQab6zYxzXGEBYaX
+qddBPS5niLnUxTM5eusQ1UtXy21zQF/VWgV7UOAyRjOBlPTCnTw69lXMg3647P8N
+A34znPDHpkV1RSttpt/2FZDAk+/3iZu1mFu4OBejp7EmBTNvg55gonGkmrOqBC9y
+kMTxQ0clYsF4xG0JSSXbSYkBUn6nNFcfSL7HuOkwHHWtBrBaiC6UMc35pzZR6VQm
+C2X88KV/SNzZeA5JjWEdegnarpsI5p33NrMVZq0q8GOAXw+VhEDYH4L9VP2OT+mf
+BotVBfnYyZ9kaVsKr3Ybd0LINebER6gO7ddsTMZ3V0VdjGAKEDSE1OaJG3qDkZgz
+hmj2kMySh7H9BJX6Bv/FioSBNzPmQyYCEHpCEzwvAMVy8DpckcKBlzry8Nv4KYsj
+AJ5t8IE7U3Bn0hq9SqXbxpgUrdb5I9ULz+oc1EHChM+a+4TJellsiAbb8fnCiULf
+oWIUBq1BVfevDQoacxSQCwraWTS+JOyws5znsH20bqTImDyIrGw5MoymppkuJERu
+2LT1lhxzWS0wM52A1i2Bnm7jyoTt5A==
+=UPtC
+-----END PGP MESSAGE-----

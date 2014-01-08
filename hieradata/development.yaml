@@ -1,81 +1,32 @@
-#ntp
-#
-localtimeservers: '10.1.5.10'
-timeservers:
- - '0.uk.pool.ntp.org'
- - '1.uk.pool.ntp.org'
- - '2.uk.pool.ntp.org'
- - '3.uk.pool.ntp.org'
-# repos
-#
-mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
-ubuntu_mirror_path: 'mirror/gb.archive.ubuntu.com/ubuntu'
-ubuntu_security_mirror_path: 'mirror/security.ubuntu.com/ubuntu'
-cloudarchive_mirror_path: 'mirror/ubuntu-cloud.archive.canonical.com/ubuntu'
-puppet_mirror_path: 'mirror/apt.puppetlabs.com'
-nullmailer_mirror_path: 'mirror/ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu'
-ceph_c_mirror_path: 'mirror/ceph.com/debian-cuttlefish'
-ceph_d_mirror_path: 'mirror/ceph.com/debian-dumpling'
-virtualbox_mirror_path: 'mirror/download.virtualbox.org/virtualbox/debian'
-hpsupport_mirror_path: 'mirror/downloads.linux.hp.com/SDR/downloads/MCP/ubuntu'
-datacentred_path: 'datacentred-backports'
-rsyslog_mirror_path: 'mirror/ubuntu.adiscon.com'
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1.4.14 (GNU/Linux)
 
-mysql_root_pw: 'OithGec3'
-
-foreman_secret_key: 'XMcQcUUpZlR+ICwEOzpXYA=='
-
-client_networks:
-- '10.0.0.0/16'
-# nullmailer
-#
-smarthostuser: 'autobot@datacentred.co.uk'
-smarthostpass: 'horovAnVods5'
-smarthost: 'smtp.gmail.com'
-sysmailaddress: 'sysadmin@datacentred.co.uk'
-
-tftpdir: '/var/tftpboot'
-
-rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
-
-# apt-mirror
-#
-ubuntu_mirror_url: 'http://gb.archive.ubuntu.com/ubuntu'
-
-# dhcpd for testing
-#
-pxeserver: '10.0.1.250'
-dhcpdmasterip: '10.0.1.250'
-dhcpdslaveip: '10.0.1.251'
-omapi_key: 'omapi_key'
-omapi_secret: 'nad6wymAE9/qFnaUCMa52FWP/KgLYuPUTI0YUf16Zkn54b5uKOYGQ9IwiI+hfui2ZdmIwVHf+O2ExshChY7coA=='
-# dns
-# 
-forwarders:
-- '8.8.8.8'
-- '8.8.4.4'
-dnsmasters:
-- '10.1.5.50'
-nameservers:
-  ns0.sal01.datacentred.co.uk: '10.1.5.50'
-  ns1.sal01.datacentred.co.uk: '10.1.5.58'
-client_networks:
-- '10.10.192.0/24'
-- '10.5.10.0/24'
-- '10.1.1.0/24'
-- '10.10.128.0/24'
-- '10.10.32.0/24'
-
-# foreman
-#
-foreman_url: 'foreman'
-# snmpd
-dc_snmp_community: 'dcpub'
-snmp_allowed_net: '10.1.5.0/24'
-system_location: 'sal01'
-
-# logstash stuff
-logstash_server: 'logstash.sal01.datacentred.co.uk'
-
-# rndc key
-test_rndc_key: 'testing'
+hQEMA0RHJ8uqU8yNAQf/VQFIN421dS7cX+Zwa+VWEqlE5WcG6zsITXZL+0qugp3S
+BmXRiuwwTHo33pUzT5J2WdN84APQ/Tj0AMOfYtiPGsbCoh2ADvoTokzYh+ZLII4E
+EoBIh8B95W9gl+bK8QBgz98Cu8oPNYkgXBaJGcBXt9k6YAqW/+13l0iDHxuK0RpZ
+z+ItFjDHtaUYfHZQEgaMRDF4n6vwIPPPlJTprVpPK/lxK4HEzspESCGAfUxBG1ao
+NbuhJ+EmUGrfFat2lt6HvNrUYa6nlWadLgR3lYhVehYIoYn0awSzycM/mEXeQrMI
+O0GsL2I3JmiUpdbZA7+PlBXfHDs8lwFsH7/bWpf5xNLpAa7xR0Z60hRHZvZpAMM9
+HdOx0d5a4X1GRqr6bD02PMO73zYqWO52tmcHbNsGXDlttEiaYrIighqozjyoy3+l
+CaCIxAQzx4sp72lfpGZFTobxT+EDCkYE7H+a7LcfE1qaxsgnlyyCxNo4EYCAJ3ay
+yKnTuLnLTa18uZuVf8iYMgsAsnlJbI6OFL1Xm3ktMXvolAe77h2gsLOH28uaeQam
+1OTaBQXZp5uYG2YaO9PUWRednDzY0eU5gI1es0h29/xFjnaAfRxPnntlj1qKi1Nd
+X08GvR9Ox5+uFg3B5VSODntwm2RKFv5hoRJAJn0xDc6Zh/LZMzcjpPsmj4ySpCPq
+la2hqSrow9Ry0/tC5EGNrFmXJuSYZX6ot5ow9rUV5cyeTC5MuYe7bJGzwl4FzVpa
+DHKby0GFbGe7i81OeYI/p9SSkx6ghxA4mBPzR/qXejYRhaflEEZzQ3NAgyox5FjI
+3kCQFbQiugMMaay1yZV4fOC97NJjcIuW8NECJfhNtIR5Lr0oyGzE1q/O3fA7qgPo
+f9O6PhLd9hevGgvdgwIS6BMf1WNMEUSTbtX3huj3vJRITaGE9+honPV2fdC7EQ1Q
+DOAKPpliVfXtHVFqelgNsF5VLIAG8SMIy11ynHe0pM1sufpTy5SmM+RaDSEO1HAp
+ab9r7GC3XpIxpQxpsua6YObBGyXS2JSBSzwhjQ9Hyn+Od3ILi74LyJGgHrwdBdjM
+7y/ZjOft75m9U/HkyUD+QIEuvlGG4pD+k/F94hshdXCL8c+Sz9YYFXLO2vU3YT1q
+5BtiKRPD78XAEHa/mAndlBDcV16MSmSY1zo0W0xRKqXxuDFOcpozor2tiOVRpBg5
+nOv6Ca4KpC8oLFiMqvXHQUHD9CQIY0Md9pi8r39cR9GToCTGFotVxfON2GWA5hNz
+ldWqFC4gsukoe6pzSnTRxji8DCZGzRB1S4ekaZIDecH3+zQP9vR2kfGLpTCBQ4Do
+47T2P6mgRD1dyVeehe1k4Zs51GD0MDGBxRmhRX4B7SELqZEiuW0ir4LM4Yu6P0Yb
+5nuaPOTN7divAUNNfRu9UGJPfqMFV2W5G3kU3SC/1XmMHpJzAPpsHNm5tgxwJarG
+atQ8QDLeQ+s3EYsnp4asvn1bFJgHOuweBLre3+kzpbun/bJj43BWWeCcGU+GK0sm
+k2y0glpeYEyLQxh0lbKH818B0q1h887YChll0jaN340E1Q82ObmZxYICNTMJ/v6j
+hvpWzxOetyxmYkZnU4Q63gE6+Mz/BKmONWn3FyRlefqIeEX0v6e60+qfmv+M3lxq
+Lzj2N9VF912aIw7gMSk=
+=v7py
+-----END PGP MESSAGE-----

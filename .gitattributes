@@ -1,0 +1,3 @@
+/hieradata/development.yaml filter=private
+/hieradata/production.yaml  filter=private
+/hieradata/common.yaml      filter=private
