@@ -27,6 +27,7 @@ class dc_nrpe (
   file { '/etc/nagios/nrpe.cfg':
     ensure  => file,
     require => Package['nagios-nrpe-server'],
+    before  => File['/etc/xinetd.d/nrpe'],
     path    => '/etc/nagios/nrpe.cfg',
     owner   => 'root',
     group   => 'root',
@@ -37,6 +38,7 @@ class dc_nrpe (
   service { 'nagios-nrpe-server':
     ensure  => stopped,
     require => Package['nagios-nrpe-server'],
+    before  => File['/etc/xinetd.d/nrpe'],
     enable  => false,
   }
 
