@@ -76,3 +76,6 @@
 [submodule "modules/hpilo"]
 	path = modules/hpilo
 	url = https://github.com/datacentred/hpilo
+[submodule "modules/nfs"]
+	path = modules/nfs
+	url = https://github.com/datacentred/puppet-module-nfs
