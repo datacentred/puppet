@@ -28,7 +28,7 @@ class dc_icinga::client {
     alias           => $::fqdn,
     address         => $::ipaddress,
     use             => 'dc_host_generic',
-    hostgroups      => 'dc_hostgroup_generic',
+    hostgroups      => template('dc_icinga/hostgroups.erb'),
     icon_image      => 'base/ubuntu.png',
     icon_image_alt  => 'Ubuntu 12.04 LTS (precise)',
     notes           => 'Ubuntu 12.04 LTS servers',
