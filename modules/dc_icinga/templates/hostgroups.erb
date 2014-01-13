@@ -1,4 +1,4 @@
 dc_hostgroup_generic<% -%>
-<% if scope.looupvar('dc_profile::coredb::defined') -%>
+<% if scope.lookupvar('dc_profile::coredb::defined') -%>
 <%= ',dc_hostgroup_postgres' -%>
 <% end -%>
