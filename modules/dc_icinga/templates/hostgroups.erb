@@ -10,4 +10,6 @@ dc_hostgroup_generic<% -%>
 <% end -%>
 <% if scope.lookupvar('dc_profile::puppetmaster::defined') -%>
 <%= ',dc_hostgroup_puppetmaster' -%>
+<%= ',dc_hostgroup_http' -%>
+<%= ',dc_hostgroup_https' -%>
 <% end -%>
