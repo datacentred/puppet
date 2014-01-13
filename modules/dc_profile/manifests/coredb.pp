@@ -28,3 +28,5 @@ class dc_profile::coredb {
   }
 
 }
+# Enable nagios hostgroup
+$dc_hostgroup_postgres = true
