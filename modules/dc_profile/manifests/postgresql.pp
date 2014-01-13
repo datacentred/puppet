@@ -30,3 +30,5 @@ class dc_profile::postgresql (
   }
 
 }
+# Enable nagios hostgroup
+$dc_hostgroup_postgres = true
