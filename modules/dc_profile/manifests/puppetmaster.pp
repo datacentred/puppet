@@ -26,4 +26,6 @@ class dc_profile::puppetmaster {
     puppetdb_port       => '8081',
   }
 
+  $defined = true
+
 }

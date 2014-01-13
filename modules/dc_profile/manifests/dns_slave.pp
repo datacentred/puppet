@@ -13,4 +13,6 @@ class dc_profile::dns_slave {
     isslave => true,
   }
 
+  $defined = true
+
 }

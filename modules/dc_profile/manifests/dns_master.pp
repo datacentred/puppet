@@ -11,4 +11,6 @@ class dc_profile::dns_master {
 
   Dc_dns::Virtual::Dnszone <| |>
 
+  $defined = true
+
 }

@@ -2,3 +2,12 @@ dc_hostgroup_generic<% -%>
 <% if scope.lookupvar('dc_profile::coredb::defined') -%>
 <%= ',dc_hostgroup_postgres' -%>
 <% end -%>
+<% if scope.lookupvar('dc_profile::dns_master::defined') -%>
+<%= ',dc_hostgroup_dns' -%>
+<% end -%>
+<% if scope.lookupvar('dc_profile::dns_slave::defined') -%>
+<%= ',dc_hostgroup_dns' -%>
+<% end -%>
+<% if scope.lookupvar('dc_profile::puppetmaster::defined') -%>
+<%= ',dc_hostgroup_puppetmaster' -%>
+<% end -%>
