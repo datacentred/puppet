@@ -27,6 +27,7 @@ class dc_profile::coredb {
     require  => Class['::postgresql::server'],
   }
 
+  # Used by icinga to generate per host hostgroups
+  $defined = true
+
 }
-# Enable nagios hostgroup
-$enable_dc_hostgroup_postgres = true

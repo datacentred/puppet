@@ -1,6 +1,4 @@
 dc_hostgroup_generic<% -%>
-<% scope.to_hash.keys.each do |k| -%>
-<% if k =~ /enable_(dc_hostgroup_.*)/ -%>
-<%= ',' + $1 -%>
-<% end -%>
+<% if scope.looupvar('dc_profile::coredb::defined') -%>
+<%= ',dc_hostgroup_postgres' -%>
 <% end -%>
