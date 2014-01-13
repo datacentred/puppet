@@ -1,6 +1,6 @@
 dc_hostgroup_generic<% -%>
 <% scope.to_hash.keys.each do |k| -%>
-<% if k =~ /(dc_hostgroup_.*)/ -%>
+<% if k =~ /enable_(dc_hostgroup_.*)/ -%>
 <%= ',' + $1 -%>
 <% end -%>
 <% end -%>
