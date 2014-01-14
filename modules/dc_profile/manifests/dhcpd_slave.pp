@@ -37,4 +37,6 @@ class dc_profile::dhcpd_slave {
 
   Dhcp::Pool { failover => "dhcp-failover" }
 
+  $defined = true
+
 }

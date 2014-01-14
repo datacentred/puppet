@@ -10,6 +10,13 @@ dc_hostgroup_generic<% -%>
 <% end -%>
 <% if scope.lookupvar('dc_profile::puppetmaster::defined') -%>
 <%= ',dc_hostgroup_puppetmaster' -%>
-<%= ',dc_hostgroup_http' -%>
-<%= ',dc_hostgroup_https' -%>
+<% end -%>
+<% if scope.lookupvar('dc_profile::ntpserver::defined') -%>
+<%= ',dc_hostgroup_ntp' -%>
+<% end -%>
+<% if scope.lookupvar('dc_profile::dhcpd_master') -%>
+<%= ',dc_hostgroup_dhcpd' -%>
+<% end -%>
+<% if scope.lookupvar('dc_profile::dhcpd_slave') -%>
+<%= ',dc_hostgroup_dhcpd' -%>
 <% end -%>

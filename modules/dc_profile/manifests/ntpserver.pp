@@ -8,4 +8,6 @@ class dc_profile::ntpserver {
     restrict   => false,
   }
 
+  $defined = true
+
 }

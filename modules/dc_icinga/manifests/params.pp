@@ -13,8 +13,11 @@
 #
 class dc_icinga::params {
 
-  # Target path for all nagios related config files
-  $cfg_path = '/etc/icinga/objects'
+  # Target path for icinga config files
+  $cfg_path = '/etc/icinga'
+
+  # Target path for nagios definition files
+  $obj_path = '/etc/icinga/objects'
 
 }
 
