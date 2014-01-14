@@ -53,6 +53,14 @@ class dc_icinga::server::config (
     notify  => Service['icinga'],
   }
 
+  # This need to setuid to root to work from the icinga user
+  file { '/usr/lib/nagios/plugins/check_dhcp':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '4755',
+  }
+
   ######################################################################
   # Pre configuration
   ######################################################################
