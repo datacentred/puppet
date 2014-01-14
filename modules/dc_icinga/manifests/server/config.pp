@@ -63,7 +63,7 @@ class dc_icinga::server::config (
   # generated files get nuked as well.  It's safer this way as
   # puppet leaves old definitions around when you change names
   exec { 'icinga_purge':
-    command => "/bin/rm -f ${cfg_path}/*",
+    command => "/bin/rm -f ${dc_commands_file} ${obj_path}/*",
   }
 
   ######################################################################
