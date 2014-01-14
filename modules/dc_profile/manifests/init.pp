@@ -10,6 +10,7 @@ class dc_profile::base {
   include dc_profile::puppet
   include dc_profile::icinga_client
   include dc_profile::rsyslog_client
+  include dc_profile::external_facts
 
 }
 
