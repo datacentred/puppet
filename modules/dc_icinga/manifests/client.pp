@@ -14,9 +14,6 @@
 #
 class dc_icinga::client {
 
-  include dc_icinga::params
-  $cfg_path = $::dc_icinga::params::cfg_path
-
   # Each client gets all the plugins on earth
   package { 'nagios-plugins':
     ensure => present,
