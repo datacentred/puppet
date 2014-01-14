@@ -15,16 +15,27 @@
 #
 # Sample Usage:
 #
-class dc_icinga::server::config {
+class dc_icinga::server::config (
+  $password = 'dcsal01dev',
+) {
 
   include dc_icinga::params
   $cfg_path = $::dc_icinga::params::cfg_path
+  $obj_path = $::dc_icinga::params::obj_path
+
+  $dc_timeperiods_file   = "${obj_path}/dc_timeperiods.cfg"
+  $dc_contacts_file      = "${obj_path}/dc_contacts.cfg"
+  $dc_hostgroups_file    = "${obj_path}/dc_hostgroups.cfg"
+  $dc_servicegroups_file = "${obj_path}/dc_servicegroups.cfg"
+  $dc_hosts_file         = "${obj_path}/dc_hosts.cfg"
+  $dc_services_file      = "${obj_path}/dc_services.cfg"
+  $dc_commands_file      = "${cfg_path}/commands.cfg"
 
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
   exec { 'icinga_cgi_passwd':
-    command     => '/usr/bin/htpasswd -c -b htpasswd.users icingaadmin icinga',
-    cwd         => '/etc/icinga',
+    command => "/usr/bin/htpasswd -c -b htpasswd.users icingaadmin ${password}",
+    cwd     => '/etc/icinga',
   }
 
   # We enable support for empty hostgroups, which in turn allows
@@ -51,60 +62,83 @@ class dc_icinga::server::config {
   # generated files get nuked as well.  It's safer this way as
   # puppet leaves old definitions around when you change names
   exec { 'icinga_purge':
-    command => "/bin/rm ${cfg_path}/*",
+    command => "/bin/rm -f ${dc_commands_file} ${obj_path}/*",
   }
 
   ######################################################################
   # Defaults
   ######################################################################
 
-  Nagios_timeperiod {
-    target  => "${cfg_path}/dc_timeperiods.cfg",
+  # Created files are 0600 which are unreadable by the icinga user
+  # so ensure the perms are changed before notifying icinga to
+  # pick up the changes
+
+  File {
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
     notify  => Service['icinga'],
+  }
+
+  file { $dc_timeperiods_file: }
+  file { $dc_contacts_file: }
+  file { $dc_hostgroups_file: }
+  file { $dc_servicegroups_file: }
+  file { $dc_hosts_file: }
+  file { $dc_services_file: }
+  file { $dc_commands_file: }
+
+  # All nagios definitions depend on the directory being purged
+  # and happen before the files are chmodded
+
+  Nagios_timeperiod {
+    target  => $dc_timeperiods_file,
+    require => Exec['icinga_purge'],
+    before  => File[$dc_timeperiods_file],
   }
 
   Nagios_contactgroup {
-    target  => "${cfg_path}/dc_contacts.cfg",
+    target  => $dc_contacts_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
+    before  => File[$dc_contacts_file],
   }
 
   Nagios_contact {
-    target  => "${cfg_path}/dc_contacts.cfg",
+    target  => $dc_contacts_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
+    before  => File[$dc_contacts_file],
   }
 
   Nagios_hostgroup {
-    target  => "${cfg_path}/dc_hostgroups.cfg",
+    target  => $dc_hostgroups_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
+    before  => File[$dc_hostgroups_file],
   }
 
   Nagios_servicegroup {
-    target  => "${cfg_path}/dc_servicegroups.cfg",
+    target  => $dc_servicegroups_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
+    before  => File[$dc_servicegroups_file],
   }
 
   Nagios_host {
-    target  => "${cfg_path}/dc_hosts.cfg",
+    target  => $dc_hosts_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
+    before  => File[$dc_hosts_file],
   }
 
   Nagios_service {
-    target  => "${cfg_path}/dc_services.cfg",
+    target  => $dc_services_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
+    before  => File[$dc_services_file],
+  }
+
+  Nagios_command {
+    target  => $dc_commands_file,
+    require => Exec['icinga_purge'],
+    before  => File[$dc_commands_file],
   }
 
   ######################################################################
@@ -239,6 +273,20 @@ class dc_icinga::server::config {
   }
 
   ######################################################################
+  # Commands
+  ######################################################################
+  # Define custom commands not provided by nagios-plugins
+  ######################################################################
+
+  nagios_command { 'notify-host-by-email':
+    command_line => '/usr/bin/printf "%b" "***** Icinga *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /usr/bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$'
+  }
+
+  nagios_command { 'notify-service-by-email':
+    command_line => '/usr/bin/printf "%b" "***** Icinga *****\n\nNotification Type: $NOTIFICATIONTYPE$\n\nService: $SERVICEDESC$\nHost: $HOSTALIAS$\nAddress: $HOSTADDRESS$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$\n" | /usr/bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTALIAS$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$'
+  }
+
+  ######################################################################
   # Services
   ######################################################################
   # These are the generic services that are locally monitored
@@ -311,7 +359,7 @@ class dc_icinga::server::config {
   nagios_service { 'check_dhcp':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_dhcp',
-    check_command       => 'check_dhcp',
+    check_command       => 'check_dhcp_interface!bond0',
     service_description => 'DHCP',
   }
 
@@ -333,25 +381,11 @@ class dc_icinga::server::config {
   # Per client storeconfig data
   ######################################################################
 
+  # Imports don't pick up the defaults for some reason
   Nagios_host <<||>> {
-    target  => "${cfg_path}/dc_hosts.cfg",
+    target  => $dc_hosts_file,
     require => Exec['icinga_purge'],
-    before  => File['icinga_chmod'],
-    notify  => Service['icinga'],
-  }
-
-  ######################################################################
-  # Post configuration
-  ######################################################################
-
-  # When puppet creates the nagios congiuration files they
-  # are 0600 ergo un readable by icinga, so modify them pre
-  # refresh
-  file { 'icinga_chmod':
-    ensure  => directory,
-    path    => $cfg_path,
-    mode    => '0644',
-    recurse => true,
+    before  => File[$dc_hosts_file],
   }
 
 }
