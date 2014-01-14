@@ -16,7 +16,6 @@
 # Sample Usage:
 #
 class dc_icinga::server::config (
-  $username = 'admin',
   $password = 'dcsal01dev',
 ) {
 
@@ -35,7 +34,7 @@ class dc_icinga::server::config (
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
   exec { 'icinga_cgi_passwd':
-    command => "/usr/bin/htpasswd -c -b htpasswd.users ${username} ${password}",
+    command => "/usr/bin/htpasswd -c -b htpasswd.users icingaadmin ${password}",
     cwd     => '/etc/icinga',
   }
 
