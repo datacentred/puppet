@@ -1,10 +1,32 @@
 class dc_profile::aptmirror {
 
+  if $hostgroup == 'Production/Platform Services/HA Raid' {
+    $base_path = '/var/storage/apt-mirror'
+  }
+  else {
+    $base_path = '/var/spool/apt-mirror'
+  }
+
   include dc_mirrors::mirrorlist
+  include apache
 
-  class { 'apt_mirror': }
+  apache::site { 'mirror':
+    docroot => "$base_path/mirror",
+    require => [ File["$base_path"], Class['apt_mirror']],
+    admin   => hiera(sysmailaddress)
+  }
+  
+  file { "$base_path":
+    ensure => directory,
+  }
 
-    Dc_mirrors::Virtual::Mirror <| |>
+  class { 'apt_mirror': 
+    base_path => "$base_path",
+    var_path  => '/var/spool/apt-mirror/var',
+    require   => File["$base_path"],
+  }
+
+  Dc_mirrors::Virtual::Mirror <| |>
 
 }
 

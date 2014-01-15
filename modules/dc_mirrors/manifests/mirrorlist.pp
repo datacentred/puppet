@@ -7,19 +7,19 @@ include dc_mirrors::virtual
   $ubuntumirrorsdebinstcomponents = ['main/debian-installer', 'restricted/debian-installer', 'universe/debian-installer', 'multiverse/debian-installer']
 
   $ubuntumirrors = {
-    'ubuntu_precise_mirror'          => { release   => 'precise',
+    'ubuntu_mirror'          => { release   => 'precise',
                                          components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_precise_updates_mirror'  => { release   => 'precise-updates',
+    'ubuntu_updates_mirror'  => { release   => 'precise-updates',
                                          components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_precise_security_mirror' => { release   => 'precise-security',
+    'ubuntu_security_mirror' => { release   => 'precise-security',
                                          components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_precise_backports_mirror'=> { release   => 'precise-backports',
+    'ubuntu_backports_mirror'=> { release   => 'precise-backports',
                                          components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_precise_debinst_mirror'  => { release   => 'precise',
+    'ubuntu_debinst_mirror'  => { release   => 'precise',
                                          components => [$ubuntumirrorsdebinstcomponents],
     },
   }
@@ -31,38 +31,50 @@ include dc_mirrors::virtual
 
   create_resources("@dc_mirrors::virtual::mirror", $ubuntumirrors, $ubuntumirrorsdefaults)
 
-  @dc_mirrors::virtual::mirror { 'puppetlabs_precise_mirror':
-    mirrorurl  => 'http://apt.puppetlabs.com',
+  @dc_mirrors::virtual::mirror { 'puppetlabs_mirror':
+    mirrorurl  => 'apt.puppetlabs.com',
     release    => 'precise',
     components => ['main', 'dependencies'],
   }
 
-  @dc_mirrors::virtual::mirror { 'cloudarchive_precise_grizzly_mirror':
-    mirrorurl  => 'http://ubuntu-cloud.archive.canonical.com/ubuntu',
-    release    => 'precise-updates',
-    components => ['grizzly'],
+  @dc_mirrors::virtual::mirror { 'cloudarchive_mirror':
+    mirrorurl  => 'ubuntu-cloud.archive.canonical.com/ubuntu',
+    release    => 'precise-updates/grizzly',
+    components => ['main'],
   }
 
-  @dc_mirrors::virtual::mirror { 'nullmailer_precise_mirror':
-    mirrorurl  => 'http://ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu',
+  @dc_mirrors::virtual::mirror { 'nullmailer_mirror':
+    mirrorurl  => 'ppa.launchpad.net/mikko-red-innovation/ppa/ubuntu',
     release    => 'precise',
     components => ['main'],
   }
 
-  @dc_mirrors::virtual::mirror { 'virtualbox_precise_mirror':
-    mirrorurl  => 'http://download.virtualbox.org/virtualbox/debian',
+  @dc_mirrors::virtual::mirror { 'virtualbox_mirror':
+    mirrorurl  => 'download.virtualbox.org/virtualbox/debian',
     release    => 'precise',
-    components => ['main'],
+    components => ['contrib'],
+  }
+  
+  @dc_mirrors::virtual::mirror { 'foreman_mirror':
+    mirrorurl  => 'deb.theforeman.org',
+    release    => 'precise',
+    components => ['stable'],
   }
 
-  @dc_mirrors::virtual::mirror { 'HP_blade_support_precise_mirror':
-    mirrorurl  => 'http://downloads.linux.hp.com/SDR/downloads/MCP/ubuntu',
-    release    => 'precise-current',
+  @dc_mirrors::virtual::mirror { 'rsyslog_mirror':
+    mirrorurl  => 'ubuntu.adiscon.com/v8-devel',
+    release    => 'precise',
+    components => [ '' ],
+  }
+  
+  @dc_mirrors::virtual::mirror { 'HP_blade_support_mirror':
+    mirrorurl  => 'downloads.linux.hp.com/SDR/downloads/MCP/ubuntu',
+    release    => 'precise/current',
     components => ['non-free'],
   }
 
-  @dc_mirrors::virtual::mirror { 'ceph_precise_dumpling_mirror':
-    mirrorurl  => 'http://ceph.com/debian-dumpling',
+  @dc_mirrors::virtual::mirror { 'ceph_dumpling_mirror':
+    mirrorurl  => 'ceph.com/debian-dumpling',
     release    => 'precise',
     components => ['main'],
   }
