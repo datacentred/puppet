@@ -32,4 +32,7 @@ class dc_profile::foreman {
     require     => Class['::foreman'],
   }
 
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact['dc_hostgroup_https']
+
 }

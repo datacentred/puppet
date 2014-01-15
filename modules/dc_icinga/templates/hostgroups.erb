@@ -1,22 +1,6 @@
 dc_hostgroup_generic<% -%>
-<% if scope.lookupvar('dc_profile::coredb::defined') -%>
-<%= ',dc_hostgroup_postgres' -%>
+<% scope.to_hash.keys.each do |k| -%>
+<% if k =~ /(dc_hostgroup_[\w\d_]+)/ -%>
+<%= ',' + $1 -%>
 <% end -%>
-<% if scope.lookupvar('dc_profile::dns_master::defined') -%>
-<%= ',dc_hostgroup_dns' -%>
-<% end -%>
-<% if scope.lookupvar('dc_profile::dns_slave::defined') -%>
-<%= ',dc_hostgroup_dns' -%>
-<% end -%>
-<% if scope.lookupvar('dc_profile::puppetmaster::defined') -%>
-<%= ',dc_hostgroup_puppetmaster' -%>
-<% end -%>
-<% if scope.lookupvar('dc_profile::ntpserver::defined') -%>
-<%= ',dc_hostgroup_ntp' -%>
-<% end -%>
-<% if scope.lookupvar('dc_profile::dhcpd_master::defined') -%>
-<%= ',dc_hostgroup_dhcp' -%>
-<% end -%>
-<% if scope.lookupvar('dc_profile::dhcpd_slave::defined') -%>
-<%= ',dc_hostgroup_dhcp' -%>
 <% end -%>

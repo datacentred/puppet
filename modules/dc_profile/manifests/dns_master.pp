@@ -11,6 +11,7 @@ class dc_profile::dns_master {
 
   Dc_dns::Virtual::Dnszone <| |>
 
-  $defined = true
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact['dc_hostgroup_dns']
 
 }
