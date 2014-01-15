@@ -1,6 +1,6 @@
 <%= '-----------------KEYS------------------' %>
 <% scope.to_hash.keys.each do |k| -%>
-<%= k @k %>
+<%= k scope[k] %>
 <% end -%>
 <%= '-----------------CLASSES---------------' %>
 <% classes.each do |k| -%>
