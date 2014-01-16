@@ -25,7 +25,7 @@ class dc_profile::logstash {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_http']
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_http']
 
 }
 

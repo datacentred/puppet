@@ -33,6 +33,6 @@ class dc_profile::foreman {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_https']
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_https']
 
 }
