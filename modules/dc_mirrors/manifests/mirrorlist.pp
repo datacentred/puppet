@@ -1,55 +1,35 @@
-#
 class dc_mirrors::mirrorlist {
 
 include dc_mirrors::virtual
 
-  $ubuntu_mirror_url = hiera(ubuntu_mirror_url)
-  $ubuntumirrorscomponents = [
-    'main',
-    'restricted',
-    'universe',
-    'multiverse',
-  ]
-  $ubuntumirrorsdebinstcomponents = [
-    'main/debian-installer',
-    'restricted/debian-installer',
-    'universe/debian-installer',
-    'multiverse/debian-installer',
-  ]
+  $ubuntu_mirror_url              = hiera(ubuntu_mirror_url)
+  $ubuntumirrorscomponents        = ['main', 'restricted', 'universe', 'multiverse']
+  $ubuntumirrorsdebinstcomponents = ['main/debian-installer', 'restricted/debian-installer', 'universe/debian-installer', 'multiverse/debian-installer']
 
   $ubuntumirrors = {
-    'ubuntu_mirror' => {
-      release    => 'precise',
-      components => [$ubuntumirrorscomponents],
+    'ubuntu_mirror'          => { release   => 'precise',
+                                  components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_updates_mirror' => {
-      release    => 'precise-updates',
-      components => [$ubuntumirrorscomponents],
+    'ubuntu_updates_mirror'  => { release   => 'precise-updates',
+                                  components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_security_mirror' => {
-      release    => 'precise-security',
-      components => [$ubuntumirrorscomponents],
+    'ubuntu_security_mirror' => { release   => 'precise-security',
+                                  components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_backports_mirror'=> {
-      release    => 'precise-backports',
-      components => [$ubuntumirrorscomponents],
+    'ubuntu_backports_mirror'=> { release   => 'precise-backports',
+                                  components => [$ubuntumirrorscomponents],
     },
-    'ubuntu_debinst_mirror'  => {
-      release    => 'precise',
-      components => [$ubuntumirrorsdebinstcomponents],
+    'ubuntu_debinst_mirror'  => { release   => 'precise',
+                                  components => [$ubuntumirrorsdebinstcomponents],
     },
   }
 
   $ubuntumirrorsdefaults = {
-    mirrorurl  => $ubuntu_mirror_url,
-    tag        => basemirrors,
+    mirrorurl  => "$ubuntu_mirror_url",
+    tag        => basemirrors
   }
 
-  create_resources(
-    '@dc_mirrors::virtual::mirror',
-    $ubuntumirrors,
-    $ubuntumirrorsdefaults
-  )
+  create_resources("@dc_mirrors::virtual::mirror", $ubuntumirrors, $ubuntumirrorsdefaults)
 
   @dc_mirrors::virtual::mirror { 'puppetlabs_mirror':
     mirrorurl  => 'apt.puppetlabs.com',
