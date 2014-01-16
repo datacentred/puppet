@@ -8,6 +8,7 @@ class dc_profile::ntpserver {
     restrict   => false,
   }
 
-  $defined = true
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_ntp']
 
 }

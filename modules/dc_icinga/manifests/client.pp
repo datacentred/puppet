@@ -12,9 +12,7 @@
 #
 # class { icinga::client: }
 #
-class dc_icinga::client (
-  $hostgroups = 'dc_hostgroup_generic',
-) {
+class dc_icinga::client {
 
   # Each client gets all the plugins on earth
   package { 'nagios-plugins':
@@ -27,7 +25,7 @@ class dc_icinga::client (
     alias           => $::fqdn,
     address         => $::ipaddress,
     use             => 'dc_host_generic',
-    hostgroups      => $hostgroups,
+    hostgroups      => template('dc_icinga/hostgroups.erb'),
     icon_image      => 'base/ubuntu.png',
     icon_image_alt  => 'Ubuntu 12.04 LTS (precise)',
     notes           => 'Ubuntu 12.04 LTS servers',

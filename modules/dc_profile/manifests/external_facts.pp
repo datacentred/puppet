@@ -1,16 +1,7 @@
 class dc_profile::external_facts {
 
-  file { '/etc/facter/facts.d':
-    ensure  => directory,
-    require => File['/etc/facter'],
-    owner   => root,
-    group   => root
-  }
-  
-  file { '/etc/facter':
-    ensure     => directory,
-    owner      => root,
-    group      => root
-  }
+  anchor { 'dc_profile::external_facts::first': } ->
+  class { 'dc_external_facts::external_facts': } ->
+  anchor { 'dc_profile::external_facts::last': }
 
 }

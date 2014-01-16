@@ -37,6 +37,7 @@ class dc_profile::dhcpd_slave {
 
   Dhcp::Pool { failover => "dhcp-failover" }
 
-  $defined = true
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_dhcp']
 
 }

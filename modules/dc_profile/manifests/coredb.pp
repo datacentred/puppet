@@ -27,7 +27,7 @@ class dc_profile::coredb {
     require  => Class['::postgresql::server'],
   }
 
-  # Used by icinga to generate per host hostgroups
-  $defined = true
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_postgres']
 
 }
