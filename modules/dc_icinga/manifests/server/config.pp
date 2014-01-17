@@ -360,7 +360,7 @@ class dc_icinga::server::config (
   nagios_service { 'check_pgsql':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_postgres',
-    check_command       => 'check_pgsql',
+    check_command       => 'check_pgsql!-d nagiostest -l nagios -p nagios',
     service_description => 'PostgreSQL',
   }
 
