@@ -2,30 +2,32 @@ class dc_profile::nfsserver {
 
   include nfs::server
 
-  file { '/var/storage':
+  $storagedir = hiera(storagedir)
+
+  file { "$storagedir":
     ensure => directory
   }
 
-  file { '/var/storage/backups':
+  file { "$storagedir/backups":
     ensure  => directory,
-    require => File['/var/storage'],
+    require => File["$storagedir"],
   }
 
-  file { '/var/storage/nfsroot':
-    ensure => directory,
-    require => File['/var/storage'],
+  file { "$storagedir/nfsroot":
+    ensure  => directory,
+    require => File["$storagedir"],
   }
 
-  nfs::server::export { '/var/storage/backups':
+  nfs::server::export { "$storagedir/backups":
     ensure  => 'present',
-    require => File['/var/storage/backups'],
+    require => File["$storagedir/backups"],
     clients => '10.10.192.0/24(rw,insecure,async,no_root_squash)',
     nfstag  => 'backups',
   }
-  
-  nfs::server::export { '/var/storage/nfsroot':
+
+  nfs::server::export { "$storagedir/nfsroot":
     ensure  => 'present',
-    require => File['/var/storage/nfsroot'],
+    require => File["$storagedir/nfsroot"],
     clients => '10.10.0.0/16(rw,insecure,async,no_root_squash)',
     nfstag  => 'nfsroot',
   }

@@ -1,7 +1,9 @@
 class dc_profile::tftpserver {
 
+  $storagedir = hiera(storagedir)
+
   if $hostgroup == 'Production/Platform Services/HA Raid' {
-    $tftpdir = '/var/storage/tftp'
+    $tftpdir = "$storagedir/tftp"
   }
   else {
     $tftpdir = hiera('tftpdir')
