@@ -298,6 +298,10 @@ class dc_icinga::server::config (
     command_line => '/usr/lib/nagios/plugins/check_pgsql -H $HOSTADDRESS$ -d $ARG1$ -l $ARG2$ -p $ARG3$',
   }
 
+  nagios_command { 'check_ntp_dc':
+    command_line => '/usr/lib/nagios/plugins/check_ntp_time -H $HOSTADDRESS$',
+  }
+
   ######################################################################
   # Services
   ######################################################################
@@ -385,7 +389,7 @@ class dc_icinga::server::config (
   nagios_service { 'check_ntp':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_ntp',
-    check_command       => 'check_ntp',
+    check_command       => 'check_ntp_dc',
     service_description => 'NTP',
   }
 
