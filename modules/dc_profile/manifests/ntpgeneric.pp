@@ -10,6 +10,7 @@ class dc_profile::ntpgeneric {
     class { 'ntp':
       servers    => hiera(localtimeservers),
       autoupdate => false,
+      restrict   => ['127.0.0.1'],
     }
   }
 }
