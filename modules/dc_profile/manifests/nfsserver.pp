@@ -14,7 +14,7 @@ class dc_profile::nfsserver {
   }
 
   file { "$storagedir/nfsroot":
-    ensure => directory,
+    ensure  => directory,
     require => File["$storagedir"],
   }
 
