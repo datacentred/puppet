@@ -1,6 +1,11 @@
 class dc_profile::tftpserver {
 
-  $tftpdir = hiera('tftpdir')
+  if $hostgroup == 'Production/Platform Services/HA Raid' {
+    $tftpdir = '/var/storage/tftp'
+  }
+  else {
+    $tftpdir = hiera('tftpdir')
+  }
 
   file { "$tftpdir":
     ensure => directory
