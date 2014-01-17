@@ -11,6 +11,13 @@ class dc_profile::coredb {
     listen_addresses        => '*',
   }
 
+  # A test database for Nagios to probe
+  postgresql::server::db { 'nagiostest':
+    user     => 'nagios',
+    password => 'nagios',
+    require  => Class['::postgresql::server'],
+  }
+
   # Create the puppetdb user as this cannot be done from provisioning
   postgresql::server::db { 'puppetdb':
     user     => 'puppetdb',
