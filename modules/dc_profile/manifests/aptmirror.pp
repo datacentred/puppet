@@ -1,7 +1,9 @@
 class dc_profile::aptmirror {
 
+  $storagedir = hiera(storagedir)
+
   if $hostgroup == 'Production/Platform Services/HA Raid' {
-    $base_path = '/var/storage/apt-mirror'
+    $base_path = "$storagedir/apt-mirror"
   }
   else {
     $base_path = '/var/spool/apt-mirror'
@@ -15,12 +17,12 @@ class dc_profile::aptmirror {
     require => [ File["$base_path"], Class['apt_mirror']],
     admin   => hiera(sysmailaddress)
   }
-  
+
   file { "$base_path":
     ensure => directory,
   }
 
-  class { 'apt_mirror': 
+  class { 'apt_mirror':
     base_path => "$base_path",
     var_path  => '/var/spool/apt-mirror/var',
     require   => File["$base_path"],
