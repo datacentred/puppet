@@ -284,6 +284,10 @@ class dc_icinga::server::config (
     alias => 'Puppet DB Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_foreman_proxy':
+    alias => 'Foreman Proxies',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -304,6 +308,10 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_ntp_dc':
     command_line => '/usr/lib/nagios/plugins/check_ntp_time -H $HOSTADDRESS$',
+  }
+
+  nagios_command { 'check_foreman_proxy_dc':
+    command_line => '/usr/lib/nagios/plugins/check_http -H $HOSTADDRESS$ --ssl -p 8443 -u /version',
   }
 
   ######################################################################
@@ -399,9 +407,16 @@ class dc_icinga::server::config (
 
   nagios_service { 'check_puppetdb':
     use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
+    hostgroup_name      => 'dc_hostgroup_puppetdb',
     check_command       => 'check_nrpe_1arg!check_puppetdb',
-    service_description => 'Load Average',
+    service_description => 'Puppet DB REST API',
+  }
+
+  nagios_service { 'check_foreman_proxy':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_foreman_proxy',
+    check_command       => 'check_foreman_proxy_dc',
+    service_description => 'Foreman Proxy REST API',
   }
 
   ######################################################################
