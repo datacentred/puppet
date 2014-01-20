@@ -12,5 +12,8 @@ class dc_profile::puppetdb {
     database_password  => $puppetdb_pw,
   }
 
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact::Def['Dc_dc_hostgroup_puppetdb']
+
 }
 

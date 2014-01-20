@@ -280,6 +280,10 @@ class dc_icinga::server::config (
     alias => 'NTP Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_puppetdb':
+    alias => 'Puppet DB Servers',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -391,6 +395,13 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_ntp',
     check_command       => 'check_ntp_dc',
     service_description => 'NTP',
+  }
+
+  nagios_service { 'check_puppetdb':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_generic',
+    check_command       => 'check_nrpe_1arg!check_puppetdb',
+    service_description => 'Load Average',
   }
 
   ######################################################################

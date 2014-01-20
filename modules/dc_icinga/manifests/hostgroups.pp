@@ -11,5 +11,6 @@ class dc_icinga::hostgroups {
   @dc_external_facts::fact::def { 'dc_hostgroup_tftp': }
   @dc_external_facts::fact::def { 'dc_hostgroup_dns': }
   @dc_external_facts::fact::def { 'dc_hostgroup_ntp': }
+  @dc_external_facts::fact::def { 'dc_hostgroup_puppetdb': }
 
 }
