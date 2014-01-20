@@ -13,7 +13,7 @@ class dc_profile::puppetdb {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact::Def['Dc_dc_hostgroup_puppetdb']
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_puppetdb']
 
 }
 
