@@ -28,7 +28,7 @@ class dc_profile::nfsserver {
   nfs::server::export { "$storagedir/nfsroot":
     ensure  => 'present',
     require => File["$storagedir/nfsroot"],
-    clients => '10.10.0.0/16(rw,insecure,async,no_root_squash)',
+    clients => '10.10.0.0/16(ro,insecure,async,no_root_squash,no_subtree_check,no_all_squash)',
     nfstag  => 'nfsroot',
   }
 
