@@ -323,7 +323,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_tftp_dc':
-    command_line => '/usr/lib/nagios/plugins/check_tftp -H $HOSTADDRESS$',
+    command_line => '/usr/lib/nagios/plugins/check_tftp -H $HOSTADDRESS$ -p nagios_test_file',
   }
 
   ######################################################################
@@ -435,7 +435,7 @@ class dc_icinga::server::config (
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_tftp',
     check_command       => 'check_tftp_dc',
-    service_description => 'TFPT',
+    service_description => 'TFTP',
   }
 
   ######################################################################
