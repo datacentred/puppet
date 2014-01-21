@@ -2,25 +2,31 @@ class dc_packer::install {
 
   # We want the latest and greatest stable VirtualBox packages from upstream
   include dc_repos::repolist
-  realize (Dc_repos::Virtual::Repo['local_virtualbox_mirror'])
+  realize (Dc_repos::Virtual::Repo["local_virtualbox_mirror"])
 
-  file { "/home/packer/":
+  $packer_home = "/home/packer"
+  $packer_pass = hiera(packer_pass)
+
+  file { $packer_home:
     source  => "puppet:///modules/dc_packer",
     ensure  => directory,
     replace => true,
     purge   => true,
     recurse => true,
-    owner   => "packer",
+    owner   => 'packer',
   }
 
-  file { "/home/packer/output":
-    ensure => directory,
-    owner  => "packer",
+  file { 'preseedme.rb':
+    path    => '/home/packer/bin/preseedme.rb',
+    content => template('dc_packer/preseedme.rb'),
+    ensure  => file,
+    owner   => 'packer',
+    mode    => '0744',
   }
 
-  file { "/home/packer/http":
+  file { [ "$packer_home/output", "$packer_home/http" ]:
     ensure => directory,
-    owner  => "packer",
+    owner  => 'packer',
   }
 
   # Need this for some shady Ruby script...
