@@ -4,7 +4,6 @@ include dc_repos::virtual
 
   $mirrorserver         = hiera(mirror_server)
   $ubuntumirrorpath     = hiera(ubuntu_mirror_path)
-  $ubuntusecmirrorpath  = hiera(ubuntu_security_mirror_path)
   $puppetmirrorpath     = hiera(puppet_mirror_path)
   $cephcmirrorpath      = hiera(ceph_c_mirror_path)
   $cephdmirrorpath      = hiera(ceph_d_mirror_path)
@@ -30,7 +29,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'local_precise_security_mirror':
-    location => "$mirrorserver/$ubuntusecmirrorpath",
+    location => "$mirrorserver/$ubuntumirrorpath",
     release  => 'precise-security',
     repos    => 'main restricted universe',
     tag      => baserepos
