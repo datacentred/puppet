@@ -5,17 +5,22 @@ class dc_packer::install {
   realize (Dc_repos::Virtual::Repo['local_virtualbox_mirror'])
 
   file { "/home/packer/":
-      source  => "puppet:///modules/dc_packer",
-      ensure  => directory,
-      replace => true,
-      purge   => true,
-      recurse => true,
-      owner   => "packer",
+    source  => "puppet:///modules/dc_packer",
+    ensure  => directory,
+    replace => true,
+    purge   => true,
+    recurse => true,
+    owner   => "packer",
   }
 
   file { "/home/packer/output":
-      ensure => directory,
-      owner  => "packer",
+    ensure => directory,
+    owner  => "packer",
+  }
+
+  file { "/home/packer/http":
+    ensure => directory,
+    owner  => "packer",
   }
 
   # Need this for some shady Ruby script...
