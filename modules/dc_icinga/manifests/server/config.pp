@@ -185,10 +185,9 @@ class dc_icinga::server::config (
   # Contacts
   ######################################################################
 
-  nagios_contact { 'matt':
-    alias                         => 'Matt Jarvis',
-    #email                         => 'matt.jarvis@datacentred.co.uk',
-    email                         => 'root@localhost',
+  nagios_contact { 'sysadmin':
+    alias                         => 'System Administrators',
+    email                         => hiera(sysmailaddress),
     contactgroups                 => 'dc_admins',
     service_notification_period   => 'dc_timeperiod_24x7',
     host_notification_period      => 'dc_timeperiod_24x7',
