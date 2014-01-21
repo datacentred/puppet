@@ -13,37 +13,38 @@ include dc_repos::virtual
   $foremanmirrorpath    = hiera(foreman_mirror_path)
   $datacentredpath      = hiera(datacentred_path)
   $rsyslogmirrorpath    = hiera(rsyslog_mirror_path)
+  $postgresmirrorpath   = hiera(postgres_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
-    location => "$mirrorserver/$ubuntumirrorpath",
+    location => "${mirrorserver}/${ubuntumirrorpath}",
     release  => 'precise',
     repos    => 'main restricted universe multiverse',
     tag      => baserepos
   }
 
   @dc_repos::virtual::repo { 'local_precise_updates_mirror':
-    location => "$mirrorserver/$ubuntumirrorpath",
+    location => "${mirrorserver}/${ubuntumirrorpath}",
     release  => 'precise-updates',
     repos    => 'main restricted universe multiverse',
     tag      => baserepos
   }
 
   @dc_repos::virtual::repo { 'local_precise_security_mirror':
-    location => "$mirrorserver/$ubuntumirrorpath",
+    location => "${mirrorserver}/${ubuntumirrorpath}",
     release  => 'precise-security',
     repos    => 'main restricted universe',
     tag      => baserepos
   }
 
   @dc_repos::virtual::repo { 'local_puppetlabs_mirror':
-    location => "$mirrorserver/$puppetmirrorpath",
+    location => "${mirrorserver}/${puppetmirrorpath}",
     release  => 'precise',
     repos    => 'main dependencies',
     tag      => baserepos
   }
 
   @dc_repos::virtual::repo { 'local_nullmailer_backports_mirror':
-    location   => "$mirrorserver/$nullmailermirrorpath",
+    location   => "${mirrorserver}/${nullmailermirrorpath}",
     release    => 'precise',
     repos      => 'main',
     key        => 'E8B30951',
@@ -52,7 +53,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'ceph_c_mirror':
-    location   => "$mirrorserver/$cephcmirrorpath",
+    location   => "${mirrorserver}/${cephcmirrorpath}",
     release    => 'precise',
     repos      => 'main',
     key        => '17ED316D',
@@ -60,7 +61,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'ceph_d_mirror':
-    location   => "$mirrorserver/$cephdmirrorpath",
+    location   => "${mirrorserver}/${cephdmirrorpath}",
     release    => 'precise',
     repos      => 'main',
     key        => '17ED316D',
@@ -68,7 +69,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'local_virtualbox_mirror':
-    location   => "$mirrorserver/$virtualboxmirrorpath",
+    location   => "${mirrorserver}/${virtualboxmirrorpath}",
     release    => 'precise',
     repos      => 'contrib',
     key        => '98AB5139',
@@ -76,7 +77,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'local_hpsupport_mirror':
-    location   => "$mirrorserver/$hpsupportmirrorpath",
+    location   => "${mirrorserver}/${hpsupportmirrorpath}",
     release    => 'precise/current',
     repos      => 'non-free',
     key        => '2689B887',
@@ -84,7 +85,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'local_foreman_mirror':
-    location   => "$mirrorserver/$foremanmirrorpath",
+    location   => "${mirrorserver}/${foremanmirrorpath}",
     release    => 'precise',
     repos      => 'stable',
     key        => 'E775FF07',
@@ -100,12 +101,20 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo {'local_rsyslog_mirror':
-    location   => "$mirrorserver/$rsyslogmirrorpath/v8-devel",
-    release    => 'precise/',
+    location   => "${mirrorserver}/${rsyslogmirrorpath}/v8-devel",
+    release    => 'precise',
     repos      => '',
     key        => 'AEF0CF8E',
     key_server => 'keyserver.ubuntu.com',
     tag        => baserepos
+  }
+
+  @dc_repos::virtual::repo {'local_postgres_mirror':
+    location   => "${mirrorserver}/${postgresmirrorpath}",
+    release    => 'precise-pgdg',
+    repos      => 'main',
+    key        => 'ACCC4CF8',
+    key_source => 'https://www.postgresql.org/media/keys/ACCC4CF8.asc',
   }
 
 }
