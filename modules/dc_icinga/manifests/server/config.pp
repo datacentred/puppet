@@ -432,7 +432,7 @@ class dc_icinga::server::config (
     service_description => 'Foreman Proxy REST API',
   }
 
-  magios_service { 'check_tftp':
+  nagios_service { 'check_tftp':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_tftp',
     check_command       => 'check_tftp_dc',
