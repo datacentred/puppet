@@ -98,4 +98,11 @@ include dc_mirrors::virtual
     release    => 'precise',
     components => ['main'],
   }
+
+  @dc_mirrors::virtual::mirror { 'postgresql_mirror':
+    mirrorurl  => 'apt.postgresql.org/pub/repos/apt',
+    release    => 'precise-pgdg',
+    components => ['main'],
+  }
+
 }
