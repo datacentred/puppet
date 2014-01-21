@@ -12,6 +12,10 @@
 #
 class dc_icinga::server::service {
 
+  service { 'nagios3':
+    ensure => stopped,
+  }
+
   service { 'icinga':
     ensure => running,
   }

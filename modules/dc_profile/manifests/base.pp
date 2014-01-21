@@ -1,3 +1,4 @@
+# Base profile every host gets
 class dc_profile::base {
 
   include dc_profile::vim
@@ -11,17 +12,5 @@ class dc_profile::base {
   include dc_profile::icinga_client
   include dc_profile::rsyslog_client
   include dc_profile::external_facts
-
-}
-
-class dc_profile::cephnode {
-
-  include dc_profile::cephrepos
-
-}
-
-class dc_profile::openstack {
-
-  include dc_profile::mysqlserver
-
+  include dc_profile::nsca_client
 }
