@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby1.9.3
 
 #
 # This script pulls a preseed configuration down from Foreman and adds the
