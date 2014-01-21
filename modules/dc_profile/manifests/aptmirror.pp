@@ -3,10 +3,10 @@ class dc_profile::aptmirror {
   $storagedir = hiera(storagedir)
 
   if $hostgroup == 'Production/Platform Services/HA Raid' {
-    $base_path = "$storagedir/apt-mirror"
+    $base_path = "$storagedir/apt-mirror/mirror"
   }
   else {
-    $base_path = '/var/spool/apt-mirror'
+    $base_path = '/var/spool/apt-mirror/mirror'
   }
 
   include dc_mirrors::mirrorlist
