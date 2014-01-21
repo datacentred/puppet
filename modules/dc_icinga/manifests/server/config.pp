@@ -19,15 +19,6 @@ class dc_icinga::server::config (
   $password = 'dcsal01dev',
 ) {
 
-  # Custom nagios plugins
-  file { '/usr/lib/nagios/plugins/check_tftp':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => 'puppet:///modules/dc_icinga/check_tftp',
-  }
-
   include dc_icinga::params
   $cfg_path = $::dc_icinga::params::cfg_path
   $obj_path = $::dc_icinga::params::obj_path
@@ -68,6 +59,15 @@ class dc_icinga::server::config (
     owner  => 'root',
     group  => 'root',
     mode   => '4755',
+  }
+
+  # Custom nagios plugins
+  file { '/usr/lib/nagios/plugins/check_tftp':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/dc_icinga/check_tftp',
   }
 
   ######################################################################
