@@ -277,7 +277,7 @@ class dc_icinga::server::config (
   }
 
   nagios_hostgroup { 'dc_hostgroup_tftp':
-    alias => 'TFPT Servers',
+    alias => 'TFTP Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_dns':
