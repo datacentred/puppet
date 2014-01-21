@@ -13,7 +13,7 @@ class dc_profile::aptmirror {
   include apache
 
   apache::site { 'mirror':
-    docroot => "$base_path/mirror",
+    docroot => "$base_path",
     require => [ File["$base_path"], Class['apt_mirror']],
     admin   => hiera(sysmailaddress)
   }
