@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+"""
+docstring
+"""
+
+import sys
+import getopt
+import tftpy
+
+VERSION = '1.0'
+
+def version():
+    """
+    Print out the version string
+    """
+    sys.stderr.write('check_tftp v{0}\n'.format(VERSION))
+    sys.stderr.write('Simon Murray <simon.murray@datacentred.co.uk>\n')
+    sys.exit(3)
+
+def syntax():
+    """
+    Print out the syntax and exit with code of 1
+    """
+    sys.stderr.write('check_tftp -H hostname [-p path]\n')
+    sys.exit(3)
+
+def main():
+    """
+    docstring
+    """
+    # Defaults
+    path = 'pxelinux.0'
+
+    # Parse the options
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'H:p:hv', ['help', 'version'])
+    except getopt.GetoptError:
+        syntax()
+    for opt, param in opts:
+        if opt == '-H':
+            hostname = param
+        elif opt == '-p':
+            path = param
+        elif opt in ('-h', '--help'):
+            syntax()
+        elif opt in ('-v', '--version'):
+            version()
+    for arg in args:
+        print arg
+
+    # Check that what we need is defined
+    try:
+        hostname
+    except NameError:
+        syntax()
+
+    # Go ahead and perform the download
+    client = tftpy.TftpClient(hostname, 69)
+    try:
+        client.download(path, '/tmp/check_tftp')
+    except tftpy.TftpShared.TftpException:
+        sys.stdout.write('CRITICAL: Unable to download {0}\n'.format(path))
+        sys.exit(2)
+    sys.stdout.write('OK: Downloaded {0}\n'.format(path))
+    sys.exit(0)
+
+
+main()

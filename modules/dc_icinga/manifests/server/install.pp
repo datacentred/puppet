@@ -34,4 +34,8 @@ class dc_icinga::server::install {
     require => Dc_repos::Virtual::Repo['local_datacentred_backports'],
   }
 
+  package { 'python-tftpy':
+    ensure => present,
+  }
+
 }

@@ -19,6 +19,15 @@ class dc_icinga::server::config (
   $password = 'dcsal01dev',
 ) {
 
+  # Custom nagios plugins
+  file { '/usr/lib/nagios/plugins/check_tftp':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => 'puppet:///modules/dc_icinga/check_tftp',
+  }
+
   include dc_icinga::params
   $cfg_path = $::dc_icinga::params::cfg_path
   $obj_path = $::dc_icinga::params::obj_path
@@ -314,6 +323,10 @@ class dc_icinga::server::config (
     command_line => '/usr/lib/nagios/plugins/check_http -H $HOSTADDRESS$ --ssl -p 8443 -u /version',
   }
 
+  nagios_command { 'check_tftp_dc':
+    command_line => '/usr/lib/nagios/plugins/check_tftp -H $HOSTADDRESS$',
+  }
+
   ######################################################################
   # Services
   ######################################################################
@@ -417,6 +430,13 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_foreman_proxy',
     check_command       => 'check_foreman_proxy_dc',
     service_description => 'Foreman Proxy REST API',
+  }
+
+  magios_service { 'check_tftp':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_tftp',
+    check_command       => 'check_tftp_dc',
+    service_description => 'TFPT',
   }
 
   ######################################################################
