@@ -5,9 +5,7 @@ class dc_profile::puppet {
 
   # Puppet master will provide this so avoid duplication
   if $::fqdn != $::puppetmaster {
-    class { '::puppet':
-      listen => true,
-    }
+    class { '::puppet': }
   }
 
 }
