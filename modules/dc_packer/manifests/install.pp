@@ -4,11 +4,11 @@ class dc_packer::install {
   include dc_repos::repolist
   realize (Dc_repos::Virtual::Repo["local_virtualbox_mirror"])
 
-  $packer_home = "/home/packer"
+  $packer_home = '/home/packer'
   $packer_pass = hiera(packer_pass)
 
   file { $packer_home:
-    source  => "puppet:///modules/dc_packer",
+    source  => 'puppet:///modules/dc_packer',
     ensure  => directory,
     replace => true,
     purge   => true,
@@ -17,7 +17,7 @@ class dc_packer::install {
   }
 
   file { 'preseedme.rb':
-    path    => '/home/packer/bin/preseedme.rb',
+    path    => "$packer_home/bin/preseedme.rb",
     content => template('dc_packer/preseedme.rb'),
     ensure  => file,
     owner   => 'packer',
