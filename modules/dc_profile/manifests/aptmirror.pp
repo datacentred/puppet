@@ -18,7 +18,7 @@ class dc_profile::aptmirror {
     admin   => hiera(sysmailaddress)
   }
 
-  file { "$base_path":
+  file { "${base_path}":
     ensure => directory,
   }
 
