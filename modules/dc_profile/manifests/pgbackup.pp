@@ -7,6 +7,7 @@ class dc_profile::pgbackup {
 
   class { 'barman':
     require => Dc_repos::Virtual::Repo['local_postgres_mirror'],
+    home    => '/var/storage/barman',
   }
 
   barman::server { 'db0':
