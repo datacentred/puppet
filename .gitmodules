@@ -79,3 +79,6 @@
 [submodule "modules/nfs"]
 	path = modules/nfs
 	url = https://github.com/datacentred/puppet-module-nfs
+[submodule "modules/barman"]
+	path = modules/barman
+	url = https://github.com/2ndquadrant-it/puppet-barman
