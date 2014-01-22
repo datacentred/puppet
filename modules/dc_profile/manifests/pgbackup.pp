@@ -30,4 +30,6 @@ class dc_profile::pgbackup {
     compression => 'bzip2',
   }
 
+  Ssh_authorized_key <<| tag == "postgres" |>>
+
 }
