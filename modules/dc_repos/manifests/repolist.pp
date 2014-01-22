@@ -101,7 +101,7 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo {'local_rsyslog_mirror':
-    location   => "${mirrorserver}/${rsyslogmirrorpath}/v8-devel",
+    location   => "${mirrorserver}/${rsyslogmirrorpath}/v7-stable",
     release    => 'precise/',
     repos      => '',
     key        => 'AEF0CF8E',

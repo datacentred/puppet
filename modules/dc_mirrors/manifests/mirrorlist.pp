@@ -82,7 +82,7 @@ include dc_mirrors::virtual
   }
 
   @dc_mirrors::virtual::mirror { 'rsyslog_mirror':
-    mirrorurl  => 'ubuntu.adiscon.com/v8-devel',
+    mirrorurl  => 'ubuntu.adiscon.com/v7-stable',
     release    => 'precise',
     components => [ '' ],
   }

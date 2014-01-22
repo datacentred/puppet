@@ -7,7 +7,7 @@ class dc_profile::logstash {
     provider     => 'custom',
     java_install => true,
     # No packages provided so we just install the JAR, currently 'mirrored' onto mirror.sal01...
-    jarfile      => 'http://mirror.sal01.datacentred.co.uk/misc/logstash/logstash-1.2.2-flatjar.jar',
+    jarfile      => 'https://download.elasticsearch.org/logstash/logstash/logstash-1.3.3-flatjar.jar',
   }
 
   # UDP listener
