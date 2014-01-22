@@ -5,6 +5,16 @@ class dc_profile::pgbackup {
 
   realize Dc_repos::Virtual::Repo['local_postgres_mirror']
 
+  if $::barman_key {
+    @@ssh_authorized_key { "barman_key_${hostname}" :
+      ensure  => present,
+      key     => "$::barman_key",
+      user    => 'postgres',
+      options => "from=$::ipaddress",
+      tag     => barman,
+    }
+  }
+
   class { 'barman':
     require => Dc_repos::Virtual::Repo['local_postgres_mirror'],
     home    => '/var/storage/barman',
