@@ -9,8 +9,9 @@ class dc_profile::postgresql (
 
   # Install the sever to listen on the chosen address range
   class { '::postgresql::server':
-    ip_mask_allow_all_users => $client_mask,
-    listen_addresses        => '*',
+    ip_mask_allow_all_users     => $client_mask,
+    ip_mask_deny_postgres_user  => '0.0.0.0/32',
+    listen_addresses            => '*',
   }
 
   # Create the puppetdb user as this cannot be done from provisioning
