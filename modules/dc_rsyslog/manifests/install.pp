@@ -2,6 +2,6 @@
 class dc_rsyslog::install {
   # Initialise the rsyslog mirror
   package { 'rsyslog':
-    ensure  => latest,
+    ensure  => '7.4.8-0adiscon1',
   }
 }
