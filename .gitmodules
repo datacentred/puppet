@@ -82,3 +82,6 @@
 [submodule "modules/barman"]
 	path = modules/barman
 	url = https://github.com/2ndquadrant-it/puppet-barman
+[submodule "modules/puppetdbquery"]
+	path = modules/puppetdbquery
+	url = https://github.com/dalen/puppet-puppetdbquery
