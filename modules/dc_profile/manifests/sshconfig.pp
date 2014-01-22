@@ -11,7 +11,7 @@ class dc_profile::sshconfig {
 
   sshd_config { 'AllowGroups':
     ensure => present,
-    value  => ['sysadmin', 'git', 'postgres'],
+    value  => ['sysadmin', 'git', 'postgres', 'barman'],
     notify => Service['ssh']
   }
 
