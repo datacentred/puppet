@@ -11,7 +11,7 @@ class dc_profile::pgbackup {
 
     @@ssh_authorized_key { "barman_key_${hostname}" :
       ensure  => present,
-      key     => "testing",
+      key     => $key_elements[1],
       user    => 'postgres',
       options => "from=$::ipaddress",
       tag     => barman,
