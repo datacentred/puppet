@@ -13,7 +13,7 @@ class dc_profile::pgbackup {
       ensure  => present,
       key     => $key_elements[1],
       user    => 'postgres',
-      options => ["from=$::ipaddress"],
+      options => "from=\"${ipaddress}\"",
       tag     => barman,
     }
   }
