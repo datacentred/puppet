@@ -6,9 +6,12 @@ class dc_profile::pgbackup {
   realize Dc_repos::Virtual::Repo['local_postgres_mirror']
 
   if $::barman_key {
+
+    $key_elements = split($::barman_key, ' ')
+
     @@ssh_authorized_key { "barman_key_${hostname}" :
       ensure  => present,
-      key     => "$::barman_key",
+      key     => $key_elements[1],
       user    => 'postgres',
       options => "from=$::ipaddress",
       tag     => barman,
