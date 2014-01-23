@@ -36,7 +36,7 @@ class dc_profile::pgbackup {
     ensure  => present,
     command => '/usr/bin/barman backup all',
     hour    => '2',
-    user    => 'root'
+    user    => 'barman'
   }
 
 }
