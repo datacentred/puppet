@@ -32,7 +32,7 @@ class dc_profile::pgbackup {
 
   Ssh_authorized_key <<| tag == "postgres" |>>
 
-  cron { 'barman':
+  cron { 'barman-backup':
     ensure  => present,
     command => '/usr/bin/barman backup all',
     hour    => '2',
