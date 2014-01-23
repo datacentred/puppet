@@ -25,17 +25,25 @@ class dc_profile::pgbackup {
   }
 
   barman::server { 'db0':
-    conninfo    => "user=postgres host=db0 password=${db0_postgres_pw}",
-    ssh_command => 'ssh postgres@db0',
-    compression => 'bzip2',
+    conninfo     => "user=postgres host=db0 password=${db0_postgres_pw}",
+    ssh_command  => 'ssh postgres@db0',
+    compression  => 'bzip2',
+    custom_lines => 'retention_policy = RECOVERY_WINDOW OF 7 DAYS'
   }
 
   Ssh_authorized_key <<| tag == "postgres" |>>
 
-  cron { 'barman-backup':
+  cron { 'barman-backup-friday':
     ensure  => present,
     command => '/usr/bin/barman backup all',
-    hour    => '2',
+    weekday => '5',
+    user    => 'barman'
+  }
+
+  cron { 'barman-backup-tuesday':
+    ensure  => present,
+    command => '/usr/bin/barman backup all',
+    weekday => '2',
     user    => 'barman'
   }
 
