@@ -35,6 +35,23 @@ class dc_profile::coredb {
     require  => Class['::postgresql::server'],
   }
 
+  # Add configuration for WAL archiving and barman backup
+
+  $pgbackupserver = hiera(pg_backup_server)
+  $barmanpath     = hiera(barman_path)
+
+  postgresql::server::config_entry { 'wal_level':
+    value => 'archive'
+  }
+
+  postgresql::server::config_entry { 'archive_mode':
+    value => 'on'
+  }
+
+  postgresql::server::config_entry { 'archive_command':
+    value => "rsync -a %p barman@:${pgbackupserver}:${barman_path}/${hostname}/incoming/%f"
+  }
+
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact::Def['dc_hostgroup_postgres']
 
