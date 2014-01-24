@@ -91,3 +91,18 @@
 [submodule "modules/graphite"]
 	path = modules/graphite
 	url = https://github.com/echocat/puppet-graphite
+[submodule "modules/mcollective"]
+	path = modules/mcollective
+	url = https://github.com/puppetlabs/puppetlabs-mcollective
+[submodule "modules/datacat"]
+	path = modules/datacat
+	url = https://github.com/richardc/puppet-datacat
+[submodule "modules/rabbitmq"]
+	path = modules/rabbitmq
+	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
+[submodule "modules/erlang"]
+	path = modules/erlang
+	url = https://github.com/garethr/garethr-erlang
+[submodule "modules/staging"]
+	path = modules/staging
+	url = https://github.com/nanliu/puppet-staging
