@@ -8,6 +8,8 @@ class dc_profile::nfsserver {
     ensure => directory
   }
 
+  File <<| tag == "backups" |>>
+
   file { "$storagedir/backups":
     ensure  => directory,
     require => File["$storagedir"],
@@ -18,18 +20,13 @@ class dc_profile::nfsserver {
     require => File["$storagedir"],
   }
 
-  nfs::server::export { "$storagedir/backups":
-    ensure  => 'present',
-    require => File["$storagedir/backups"],
-    clients => '10.10.192.0/24(rw,insecure,async,no_root_squash)',
-    nfstag  => 'backups',
-  }
-
   nfs::server::export { "$storagedir/nfsroot":
     ensure  => 'present',
     require => File["$storagedir/nfsroot"],
     clients => '10.10.0.0/16(ro,insecure,async,no_root_squash,no_subtree_check,no_all_squash)',
     nfstag  => 'nfsroot',
   }
+
+  Nfs::Server::Export <<| tag == "backups" |>>
 
 }
