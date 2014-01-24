@@ -11,22 +11,21 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-
 class dc_logstashbackup::exports {
 
   $storagedir = hiera(storage_dir)
 
-  @@file { "$::hostname-logstashbackup":
-    path    => "$storagedir/backups/$::hostname-logstashbackup",
+  @@file { "$::{hostname}-logstashbackup":
     ensure  => directory,
-    require => File["$storagedir/backups"],
+    path    => "${storagedir}/backups/$::{hostname}-logstashbackup",
+    require => File["${storagedir}/backups"],
     tag     => 'backups',
   }
 
-  @@nfs::server::export { "$::hostname-logstashbackup":
+  @@nfs::server::export { "$::{hostname}-logstashbackup":
     ensure  => present,
-    require => File["$::hostname-logstashbackup"],
-    clients => "$::hostname(rw,insecure,async,no_root_squash)",
+    require => File["$::{hostname}-logstashbackup"],
+    clients => "$::{hostname}(rw,insecure,async,no_root_squash)",
     tag     => 'backups',
   }
 

@@ -11,7 +11,6 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-
 class dc_logstashbackup (
   $logstashlocalretention = '14',
   $logstashbackupmount    = '/var/lsbackups',
@@ -23,8 +22,8 @@ class dc_logstashbackup (
   }
 
   file { 'logstashbackup':
-    path   => '/usr/local/bin/elasticsearch-backup-index.sh',
     ensure => file,
+    path   => '/usr/local/bin/elasticsearch-backup-index.sh',
     owner  => root,
     group  => root,
     mode   => '0754',
@@ -32,8 +31,8 @@ class dc_logstashbackup (
   }
 
   file { 'logstashtrim':
-    path   => '/usr/local/bin/elasticsearch-remove-old-indices.sh',
     ensure => file,
+    path   => '/usr/local/bin/elasticsearch-remove-old-indices.sh',
     owner  => root,
     group  => root,
     mode   => '0754',
@@ -41,13 +40,13 @@ class dc_logstashbackup (
   }
 
   file { 'logstashbackupmount':
-    path   => "$logstashbackupmount",
-    ensure => 'directory'
+    ensure => directory,
+    path   => "${logstashbackupmount}",
   }
 
   cron { 'logstashbackup':
     ensure  => present,
-    command => "/usr/local/bin/elasticsearch-backup-index.sh -b $logstashbackupmount -i $indicespath",
+    command => "/usr/local/bin/elasticsearch-backup-index.sh -b ${logstashbackupmount} -i ${indicespath}",
     user    => root,
     hour    => '2',
     minute  => '0',
@@ -55,7 +54,7 @@ class dc_logstashbackup (
 
   cron { 'logstashtrim':
     ensure  => present,
-    command => "/usr/local/bin/elasticsearch-remove-old-indices.sh -i $logstashlocalretention",
+    command => "/usr/local/bin/elasticsearch-remove-old-indices.sh -i ${logstashlocalretention}",
     user    => root,
     hour    => '3',
     minute  => '0',
