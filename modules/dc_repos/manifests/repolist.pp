@@ -118,7 +118,7 @@ include dc_repos::virtual
     key_source => 'https://www.postgresql.org/media/keys/ACCC4CF8.asc',
   }
 
-  @dc_repos::virtual::repo { 'collectd_mirror':
+  @dc_repos::virtual::repo { 'local_collectd_mirror':
     location   => "${mirrorserver}/${collectdmirrorpath}",
     release    => 'precise',
     repos      => 'main',
