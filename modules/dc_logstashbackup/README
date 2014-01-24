@@ -1,0 +1,4 @@
+Module : dc_logstashbackup
+Author : matt
+
+Module for backing up Logstash ElasticSearch

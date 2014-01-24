@@ -8,6 +8,7 @@ class dc_profile::nfsserver {
     ensure => directory
   }
 
+  # Collect any exported file resources for backup directories
   File <<| tag == "backups" |>>
 
   file { "$storagedir/backups":
@@ -27,6 +28,7 @@ class dc_profile::nfsserver {
     nfstag  => 'nfsroot',
   }
 
+  # Collect any exported nfs exports for backups
   Nfs::Server::Export <<| tag == "backups" |>>
 
 }
