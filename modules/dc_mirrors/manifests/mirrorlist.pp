@@ -105,4 +105,10 @@ include dc_mirrors::virtual
     components => ['main'],
   }
 
+  @dc_mirrors::virtual::mirror { 'collectd_mirror':
+    mirrorurl  => 'ppa.launchpad.net/kmscherer/collectd/ubuntu',
+    release    => 'precise',
+    components => ['main'],
+  }
+
 }

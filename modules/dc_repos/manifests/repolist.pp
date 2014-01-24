@@ -14,6 +14,7 @@ include dc_repos::virtual
   $datacentredpath      = hiera(datacentred_path)
   $rsyslogmirrorpath    = hiera(rsyslog_mirror_path)
   $postgresmirrorpath   = hiera(postgres_mirror_path)
+  $collectdmirrorpath   = hiera(collectd_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "${mirrorserver}/${ubuntumirrorpath}",
@@ -115,6 +116,14 @@ include dc_repos::virtual
     repos      => 'main',
     key        => 'ACCC4CF8',
     key_source => 'https://www.postgresql.org/media/keys/ACCC4CF8.asc',
+  }
+
+  @dc_repos::virtual::repo { 'collectd_mirror':
+    location   => "${mirrorserver}/${collectdmirrorpath}",
+    release    => 'precise',
+    repos      => 'main',
+    key        => 'FB7B395F',
+    key_server => 'keyserver.ubuntu.com',
   }
 
 }
