@@ -26,12 +26,12 @@ class dc_logstashbackup (
   }
 
   file { 'logstashbackup':
-    ensure => file,
-    path   => '/usr/local/bin/elasticsearch-backup-index.sh',
-    owner  => root,
-    group  => root,
-    mode   => '0754',
-    source => 'puppet:///modules/dc_logstashbackup/elasticsearch-backup-index.sh'
+    ensure  => file,
+    path    => '/usr/local/bin/elasticsearch-backup-index.sh',
+    owner   => root,
+    group   => root,
+    mode    => '0754',
+    content => template('logstashbackup/elasticsearch-backup-index.sh.erb'),
   }
 
   file { 'logstashtrim':
