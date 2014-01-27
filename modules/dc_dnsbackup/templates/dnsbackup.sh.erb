@@ -8,6 +8,13 @@
 # nick.jones@datacentred.co.uk
 # matt.jarvis@datacentred.co.uk
 
+if [ $# -eq 0 ]
+then
+    echo "Required argument missing - please supply a configuration directory path"
+    echo "Usage: dnsbackup.sh confdir"
+    exit 1
+fi
+
 CONFDIR=$1
 TS=$(date "+%y-%m-%d-%H")
 
