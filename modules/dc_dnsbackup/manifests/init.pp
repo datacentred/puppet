@@ -46,7 +46,9 @@ class dc_dnsbackup(
     minute  => '0',
   }
 
-  class { dc_dnsbackup::exports: }
+  anchor { 'dc_dnsbackup::first': } ->
+  class { dc_dnsbackup::exports: } ->
+  anchor { 'dc_dnsbackup::last': }
 
   Dc_dnsbackup::Backupzone <<| |>>
 
