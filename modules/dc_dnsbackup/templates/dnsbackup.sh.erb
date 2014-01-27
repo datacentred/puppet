@@ -1,14 +1,41 @@
 #!/usr/bin/env bash
 
 # Quick script to get a dump (AXFR) of RRs that we'd potentially want to restore
-# Takes two arguments - target NS and the domain
+# Takes a conf directory as an argument and expects individual conf files containing the zonename and the master for each zone
+# Config is controlled by puppet in the dc_dns and dc_dnsbackup modules
 # Assumption is you're doing this on a network segment for which BIND will let
 # you do AXFRs, of course...
 # nick.jones@datacentred.co.uk
+# matt.jarvis@datacentred.co.uk
 
-NS=$1
-DOMAIN=$2
-TS=$(date "+%y-%m-%d-%H%M%S")
+CONFDIR=$1
+TS=$(date "+%y-%m-%d-%H")
 
-dig @$NS $DOMAIN AXFR | grep -v -E ';|SOA|NS|AAAA' | awk 'NF > 0' > $DOMAIN.$TS.axfr
+# Mount the backup directory
+if ! mount <%= @nfs_backup_server %>:<%= @storagedir %>/backups/<%= @hostname %>-dnsbackup <%= @dnsbackupmount %>
+then echo "Could not mount remote backup directory"
+exit 1
+fi
 
+if ! mkdir <%= @dnsbackupmount %>/$TS
+then echo "Could not create backup folder"
+exit 1
+fi
+
+for conffile in `ls $CONFDIR`
+do
+    NS=`grep master $conffile | cut -d ' ' -f 2`
+    DOMAIN=`grep zonename $conffile | cut -d ' ' -f 2`
+    if ! dig @$NS $DOMAIN AXFR | grep -v -E ';|SOA|NS|AAAA' | awk 'NF > 0' > <%= @dnsbackupmount %>/$TS/$DOMAIN.axfr
+    then echo "Could not AXFR"
+    exit 1
+    fi
+done
+
+if ! umount <%= @dnsbackupmount %>
+then
+    echo "Could not unmount backup directory"
+    exit 1
+fi
+
+exit 0
