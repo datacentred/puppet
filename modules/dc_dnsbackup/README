@@ -1,17 +1,4 @@
-Module : dc_skeleton
+Module : dc_dnsbackup
 Author : matt
  ____________________________________ 
-/ This is the skeleton module, for   \
-| template use only - don't use this |
-\ directly.                          /
- ------------------------------------ 
-          \      (__)      
-           \     /oo|  
-            \   (_"_)*+++++++++*
-                   //I#\\\\\\\\I\
-                   I[I|I|||||I I `
-                   I`I'///'' I I
-                   I I       I I
-                   ~ ~       ~ ~
-                     Scowleton
 
