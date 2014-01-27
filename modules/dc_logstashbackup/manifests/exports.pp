@@ -22,10 +22,10 @@ class dc_logstashbackup::exports {
     tag     => 'backups',
   }
 
-  @@nfs::server::export { "$::hostname-logstashbackup":
+  @@nfs::server::export { "${storagedir}/backups/$::hostname-logstashbackup":
     ensure  => present,
     require => File["$::hostname-logstashbackup"],
-    clients => "$::hostname(rw,insecure,async,no_root_squash)",
+    clients => "$::ipaddress(rw,insecure,async,no_root_squash)",
     tag     => 'backups',
   }
 
