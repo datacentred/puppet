@@ -15,7 +15,7 @@ class dc_dns::virtual {
         reverse     => $reverse,
       }
       # Export a backup definition
-      @@dc_dnsbackup::backupzone { "$title_$hostname":
+      @@dc_dnsbackup::backupzone { "${title}_$::hostname":
         zonename => $title,
         master   => $::fqdn,
       }
