@@ -25,7 +25,6 @@ class dc_profile::mcollective_mq {
       middleware_password       => $mco_middleware_password,
       middleware_admin_password => $mco_middleware_admin_password,
       middleware_ssl            => true,
-      delete_guest_user         => true,
       securityprovider          => 'ssl',
       ssl_client_certs          => "puppet:///${mco_ssl_path}/client_certs",
       ssl_ca_cert               => "puppet:///${mco_ssl_path}/certs/ca.pem",
