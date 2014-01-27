@@ -17,6 +17,7 @@ class dc_dnsbackup(
 ){
 
   $nfs_backup_server = hiera(nfs_backup_server)
+  $storagedir        = hiera(storagedir)
 
   package{ 'nfs-common':
     ensure => installed,
