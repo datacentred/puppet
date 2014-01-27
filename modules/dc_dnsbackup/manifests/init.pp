@@ -20,7 +20,7 @@ class dc_dnsbackup(
 
   file { 'backupmount':
     ensure => directory,
-    path   => "${dnsbackupmount}",
+    path   => $dnsbackupmount,
   }
 
   file { 'dnsbackup.sh':
