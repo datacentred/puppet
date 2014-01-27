@@ -64,7 +64,7 @@ if [ "$USER" != 'root' ] && [ "$LOGNAME" != 'root' ]; then
 fi
 
 # Defaults
-BACKUPDIR=/var/logstashbackup
+BACKUPDIR=/var/backup
 SHARDS=5
 REPLICAS=0
 ELASTICSEARCH="http://localhost:9200"
@@ -149,6 +149,12 @@ fi
 # Make sure we have curl
 if ! which curl >/dev/null
 then echo "This script requires curl - please install it"
+exit 1
+fi
+
+# Try and mount the backup directory
+if ! mount <%= @nfs_backup_server %>:<%= @storagedir %>/backups/<%= @hostname %>-logstashbackup <%= @logstashbackupmount %>
+then echo "Could not mount remote backup directory"
 exit 1
 fi
 
