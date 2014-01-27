@@ -40,7 +40,7 @@ class dc_dnsbackup(
 
   cron { 'dnsbackup':
     ensure  => present,
-    command => '/usr/local/bin/dnsbackup.sh -c /etc/dnsbackup.conf.d',
+    command => '/usr/local/bin/dnsbackup.sh /etc/dnsbackup.conf.d',
     user    => root,
     hour    => '2',
     minute  => '0',
