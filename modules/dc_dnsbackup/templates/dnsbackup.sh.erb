@@ -24,18 +24,25 @@ then echo "Could not mount remote backup directory"
 exit 1
 fi
 
-if ! mkdir <%= @dnsbackupmount %>/$TS
-then echo "Could not create backup folder"
-exit 1
+if [ -d <%= @dnsbackupmount %> ]
+then
+    if ! mkdir <%= @dnsbackupmount %>/$TS
+    then 
+        echo "Could not create backup folder"
+        umount <%= @dnsbackupmount %>
+        exit 1
+    fi
 fi
 
 for conffile in `ls $CONFDIR`
 do
-    NS=`grep master $conffile | cut -d ' ' -f 2`
-    DOMAIN=`grep zonename $conffile | cut -d ' ' -f 2`
+    NS=`grep master $CONFDIR/$conffile | cut -d ' ' -f 2`
+    DOMAIN=`grep zone $CONFDIR/$conffile | cut -d ' ' -f 2`
     if ! dig @$NS $DOMAIN AXFR | grep -v -E ';|SOA|NS|AAAA' | awk 'NF > 0' > <%= @dnsbackupmount %>/$TS/$DOMAIN.axfr
-    then echo "Could not AXFR"
-    exit 1
+    then 
+        echo "Could not AXFR"
+        umount <%= @dnsbackupmount %>
+        exit 1
     fi
 done
 
