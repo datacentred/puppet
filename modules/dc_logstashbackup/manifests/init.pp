@@ -17,6 +17,9 @@ class dc_logstashbackup (
   $indicespath            = '/var/lib/logstash/data/elasticsearch/nodes/0/indices',
 ){
 
+  $nfs_backup_server = hiera(nfs_backup_server)
+  $storagedir        = hiera(storagedir)
+
   package { 'curl':
     ensure => installed,
   }
