@@ -222,4 +222,10 @@ fi
 
 EOF
 
+# Unmount the backup directory
+if ! umount <%= @logstashbackupmount %>
+then echo "Could not unmount backup directory"
+exit 1
+fi
+
 exit 0
