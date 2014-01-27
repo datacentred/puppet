@@ -1,7 +1,6 @@
 # Mcollective host, applies to all hosts
 class dc_profile::mcollective_host {
 
-  $mco_middleware_hosts          = hiera(mco_middleware_hosts)
   $mco_middleware_password       = hiera(mco_middleware_password)
   $mco_middleware_admin_password = hiera(mco_middleware_admin_password)
   $mco_ssl_path                  = 'modules/dc_mcollective'
@@ -9,11 +8,11 @@ class dc_profile::mcollective_host {
   # The message queues will have their own definition of
   # the mcollective class so prevent them from defining
   # the default configuration
-  if $hostname !~ /^mco_mq/ {
+  if get_exported_var($::fqdn, 'mco_mq_host', 'DEFAULT') == 'DEFAULT' {
     anchor { 'dc_profile::mcollective_host::first': } ->
     class { '::mcollective':
       connector                 => 'rabbitmq',
-      middleware_hosts          => $mco_middleware_hosts,
+      middleware_hosts          => get_exported_var('', 'mco_mq_host', ''),
       middleware_password       => $mco_middleware_password,
       middleware_admin_password => $mco_middleware_admin_password,
       middleware_ssl            => true,
