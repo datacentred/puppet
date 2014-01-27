@@ -46,4 +46,8 @@ class dc_dnsbackup(
     minute  => '0',
   }
 
+  class { dc_dnsbackup::exports: }
+
+  Dc_dnsbackup::Backupzone <<| |>>
+
 }
