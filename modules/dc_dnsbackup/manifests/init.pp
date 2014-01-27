@@ -18,6 +18,10 @@ class dc_dnsbackup(
 
   $nfs_backup_server = hiera(nfs_backup_server)
 
+  package{ 'nfs-common':
+    ensure => installed,
+  }
+
   file { 'backupmount':
     ensure => directory,
     path   => $dnsbackupmount,
