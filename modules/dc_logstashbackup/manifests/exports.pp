@@ -13,6 +13,8 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_logstashbackup::exports {
 
+  $storagedir = hiera(storagedir)
+
   @@file { "$::hostname-logstashbackup":
     ensure  => directory,
     path    => "${storagedir}/backups/$::hostname-logstashbackup",
