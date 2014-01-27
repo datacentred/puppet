@@ -2,6 +2,8 @@
 # For posterity and humour this comment was written 12/12/2013 - SM
 class dc_profile::puppetmaster {
 
+  class { '::exported_vars': }
+
   class { '::puppet':
     server                      => true,
     server_storeconfigs_backend => 'puppetdb',
