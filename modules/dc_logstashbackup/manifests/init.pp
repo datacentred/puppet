@@ -34,7 +34,7 @@ class dc_logstashbackup (
     owner   => root,
     group   => root,
     mode    => '0754',
-    content => template('logstashbackup/elasticsearch-backup-index.sh.erb'),
+    content => template('dc_logstashbackup/elasticsearch-backup-index.sh.erb'),
   }
 
   file { 'logstashtrim':
