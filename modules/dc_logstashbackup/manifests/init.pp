@@ -27,7 +27,7 @@ class dc_logstashbackup (
     owner  => root,
     group  => root,
     mode   => '0754',
-    source => 'puppet:///modules/dc_esbackup/elasticsearch-backup-index.sh'
+    source => 'puppet:///modules/dc_logstashbackup/elasticsearch-backup-index.sh'
   }
 
   file { 'logstashtrim':
@@ -36,7 +36,7 @@ class dc_logstashbackup (
     owner  => root,
     group  => root,
     mode   => '0754',
-    source => 'puppet:///modules/dc_esbackup/elasticsearch-remove-old-indices.sh'
+    source => 'puppet:///modules/dc_logstashbackup/elasticsearch-remove-old-indices.sh'
   }
 
   file { 'logstashbackupmount':
