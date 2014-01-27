@@ -21,6 +21,10 @@ class dc_logstashbackup (
     ensure => installed,
   }
 
+  package { 'nfs-common':
+    ensure => installed,
+  }
+
   file { 'logstashbackup':
     ensure => file,
     path   => '/usr/local/bin/elasticsearch-backup-index.sh',
