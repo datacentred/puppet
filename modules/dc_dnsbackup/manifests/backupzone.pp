@@ -3,8 +3,8 @@ define dc_dnsbackup::backupzone ($zonename,$master){
   include dc_dnsbackup
 
   file { "${zonename}-backup.conf":
-    require => File['/etc/dnsbackup.conf.d'],
     ensure  => file,
+    require => File['/etc/dnsbackup.conf.d'],
     path    => "/etc/dnsbackup.conf.d/${zonename}-backup.conf",
     owner   => root,
     group   => root,
