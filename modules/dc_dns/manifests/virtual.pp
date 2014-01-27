@@ -14,6 +14,11 @@ class dc_dns::virtual {
         nameservers => $nameservers,
         reverse     => $reverse,
       }
+      # Export a backup definition
+      @@dc_dnsbackup::backupzone { "$title-$hostname":
+        zonename => $title,
+        master   => $::fqdn,
+      }
     }
   }
 }
