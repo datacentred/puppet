@@ -8,7 +8,7 @@ class dc_profile::puppet {
     class { '::puppet':
       version => latest,
     }
-    contain '::puppet'
+    contain 'puppet'
   }
 
 }
