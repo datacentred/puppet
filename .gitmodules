@@ -109,3 +109,6 @@
 [submodule "modules/exported_vars"]
 	path = modules/exported_vars
 	url = https://github.com/example42/puppet-exported_vars
+[submodule "modules/keystone"]
+	path = modules/keystone
+	url = https://github.com/stackforge/puppet-keystone
