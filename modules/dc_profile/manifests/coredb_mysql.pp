@@ -7,7 +7,7 @@ class dc_profile::coredb_mysql {
   class { '::mysql::server':
     root_password    => $mysqlroot_pw,
     override_options => { 'mysqld' => {
-      'bind_address' => $::ipaddress
+      'bind_address' => '0.0.0.0'
       }
     }
   }
