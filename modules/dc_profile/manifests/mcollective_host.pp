@@ -5,6 +5,12 @@ class dc_profile::mcollective_host {
   $mco_middleware_admin_password = hiera(mco_middleware_admin_password)
   $mco_ssl_path                  = 'modules/dc_mcollective'
 
+  # Install the puppet agent on all nodes to allow kicking
+  package { 'mcollective-puppet-agent':
+    ensure => latest,
+    notify => Service['mcollective'],
+  }
+
   # The message queues will have their own definition of
   # the mcollective class so prevent them from defining
   # the default configuration
