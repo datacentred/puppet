@@ -4,7 +4,7 @@ class dc_profile::coredb {
 
   $puppetdb_pw = hiera(puppetdb_pw)
   $foreman_pw  = hiera(foreman_pw)
-  $keystone_pw = hiera(keystone_pw)
+  $keystone_db_pw = hiera(keystone_db_pw)
 
   # Install the sever to listen on the chosen address range
   class { '::postgresql::server':
