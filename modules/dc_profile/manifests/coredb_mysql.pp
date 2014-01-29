@@ -1,3 +1,4 @@
+# Installation of MySQL as well as any associated databases
 class dc_profile::coredb_mysql {
 
   $mysql_pw = hiera(db0_mysql_pw)
@@ -7,17 +8,20 @@ class dc_profile::coredb_mysql {
   class { '::mysql::server':
     root_password    => $mysqlroot_pw,
     override_options => { 'mysqld' => {
-      'bind_address' => '0.0.0.0'
-      }
-    }
+      'bind_address' => '0.0.0.0',
+      },
+    },
   }
 
+  contain 'mysql::server'
+
+# MySQL database backend for Graphite
   mysql::db { 'graphite':
     user     => 'graphite',
     host     => $graphite_server,
     password => $graphite_db_pw,
     grant    => ['ALL'],
-    require  => Class['::mysql::server']
+    require  => Class['::mysql::server'],
   }
 
 }
