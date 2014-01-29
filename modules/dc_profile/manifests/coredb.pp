@@ -23,7 +23,7 @@ class dc_profile::coredb {
   # Keystone database
   postgresql::server::db { 'keystone':
     user     => 'keystone',
-    password => $keystone_pw,
+    password => $keystone_db_pw,
     grant    => 'all',
     require  => Class['::postgresql::server'],
   }
