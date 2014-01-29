@@ -11,6 +11,19 @@ class dc_profile::graphite {
     ensure => installed,
   }
 
+  # Another hack as the Graphite module we're using is hardcoded to install
+  # everything under /opt.  We dedicate the lion's share of available disk
+  # to /var, so that's the preference in this case.
+  file { '/var/opt/graphite':
+    ensure => directory,
+  }
+
+  file { '/opt/graphite':
+    ensure  => 'link',
+    target  => '/var/opt/graphite',
+    require => File['/var/opt/graphite'],
+  }
+
   class { '::graphite':
     gr_aggregator_line_interface => '0.0.0.0',
     gr_aggregator_line_port      => '2023',
@@ -25,7 +38,7 @@ class dc_profile::graphite {
     gr_django_db_password        => $graphite_db_pw,
     gr_django_db_host            => 'db0.sal01.datacentred.co.uk',
     gr_django_db_port            => 3306,
-    require                      => Package['mysql-client', 'python-mysqldb'],
+    require                      => [ Package['mysql-client', 'python-mysqldb'], File['/opt/graphite'], ]
   }
 
   contain 'graphite'
