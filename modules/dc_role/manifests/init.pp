@@ -26,6 +26,7 @@ class dc_role::platformservices_puppetmaster {
 
 class dc_role::platformservices_database {
   include dc_profile::coredb
+  include dc_profile::coredb_mysql
 }
 
 class dc_role::platformservices_puppetdb {
