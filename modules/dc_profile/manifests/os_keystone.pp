@@ -12,7 +12,7 @@ class dc_profile::os_keystone {
 
   # Adds the admin credential to keystone.
   class { 'keystone::roles::admin':
-    email        => 'sysadmin@datacentred.co.uk',
+    email        => hiera(sysmailaddress),
     password     => hiera(keystone_admin_pw),
   }
 
