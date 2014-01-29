@@ -41,3 +41,7 @@ class dc_role::platformservices_logstash {
   include dc_profile::kibana
   include dc_profile::logstash
 }
+
+class dc_role::platformservices_graphite {
+  include dc_profile::graphite
+}
