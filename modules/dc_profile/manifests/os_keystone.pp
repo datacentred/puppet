@@ -25,4 +25,3 @@ class dc_profile::os_keystone {
   }
 
 }
-
