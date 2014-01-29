@@ -58,7 +58,7 @@ class dc_profile::coredb {
   }
 
   postgresql::server::config_entry { 'archive_command':
-    value => "rsync -a %p barman@${pgbackupserver}:${barmanpath}/${hostname}/incoming/%f"
+    value => "rsync -a %p barman@${pgbackupserver}:${barmanpath}/${::hostname}/incoming/%f"
   }
 
   include dc_icinga::hostgroups
