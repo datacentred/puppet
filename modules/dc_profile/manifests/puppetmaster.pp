@@ -7,6 +7,7 @@ class dc_profile::puppetmaster {
 
   class { '::puppet':
     version                     => latest,
+    runmode                     => 'cron',
     server                      => true,
     server_storeconfigs_backend => 'puppetdb',
     server_dynamic_environments => true,
