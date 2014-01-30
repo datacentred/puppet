@@ -1,4 +1,8 @@
-# collectd - gather statistics and fire them into carbon
+#
+# Class: dc_profile::collectd
+#
 class dc_profile::collectd {
-  include dc_collectd
+  class { 'dc_collectd':
+    graphite_server => hiera(graphite_server),
+  }
 }
