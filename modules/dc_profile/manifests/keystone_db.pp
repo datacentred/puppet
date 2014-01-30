@@ -9,6 +9,5 @@ class dc_profile::keystone_db {
     grant    => 'all',
     require  => Class['::postgresql::server'],
   }
-  contain postgresql::server
 
 }
