@@ -7,6 +7,7 @@ class dc_profile::puppet {
   if $::fqdn != $::puppetmaster {
     class { '::puppet':
       version => latest,
+      runmode => 'cron',
     }
     contain 'puppet'
   }
