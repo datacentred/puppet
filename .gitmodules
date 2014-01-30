@@ -112,3 +112,6 @@
 [submodule "modules/keystone"]
 	path = modules/keystone
 	url = https://github.com/stackforge/puppet-keystone
+[submodule "modules/nova"]
+	path = modules/nova
+	url = https://github.com/spjmurray/puppet-nova

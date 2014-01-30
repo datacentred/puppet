@@ -1,0 +1,29 @@
+# Installs a HA rabbitmq node onto the network
+class dc_profile::nova_mq {
+
+  $nova_mq_username = hiera(nova_mq_username)
+  $nova_mq_password = hiera(nova_mq_password)
+  $nova_mq_port     = hiera(nova_mq_port)
+  $nova_mq_vhost    = hiera(nova_mq_vhost)
+
+  # Hard coded exported variable name
+  $nova_mq_ev = 'nova_mq_node'
+
+  # Export a variable to say we're part of a nova_mq cluster
+  exported_vars::set { $nova_mq_ev:
+    value => "${::fqdn}",
+  }
+
+  # Create the MQ with the openstack user and password
+  # 'cluster_disk_nodes' expects an array so ensure the
+  # default is valid for the first run
+  class { 'nova::rabbitmq':
+    userid             => $nova_mq_username,
+    password           => $nova_mq_password,
+    port               => $nova_mq_port,
+    virtual_host       => $nova_mq_vhost,
+    cluster_disk_nodes => get_exported_var('', $nova_mq_ev, ['localhost']),
+  }
+  contain 'nova::rabbitmq'
+
+}
