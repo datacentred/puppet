@@ -26,13 +26,13 @@ class dc_postgresql (
     listen_addresses             => $listen,
   }
 
-  class { dc_postgresql::pg_backup:
+  class { 'dc_postgresql::pg_backup':
     barmanpath     => $barmanpath,
     pgbackupserver => $pgbackupserver,
     require        => Class['::postgresql::server'],
   }
 
-  class { dc_postgresql::icinga: }
+  class { 'dc_postgresql::icinga': }
 
 # FIXME Add define for databases
 
