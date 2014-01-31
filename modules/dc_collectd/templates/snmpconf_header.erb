@@ -1,0 +1,8 @@
+LoadPlugin snmp
+<Plugin snmp>
+  <Data "switch_traffic">
+  Type "if_octets"
+  Table true
+  Instance "IF-MIB::ifDescr"
+  Values "IF-MIB::ifInOctets" "IF-MIB::ifOutOctets"
+</Data>

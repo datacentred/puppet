@@ -5,7 +5,8 @@
 #
 class dc_collectd (
   $graphite_server = '',
-  $interfaces = split($::interfaces, ',')
+  $interfaces = split($::interfaces, ','),
+  $snmptargets = undef,
 ) {
 
   include dc_repos::repolist
@@ -29,6 +30,10 @@ class dc_collectd (
   # Configure collectd to send its output to carbon
   class { 'collectd::plugin::write_graphite':
     graphitehost => $graphite_server,
+  }
+
+  if $snmptargets {
+    include dc_collectd::snmp
   }
 
   contain 'collectd'
