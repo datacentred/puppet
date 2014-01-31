@@ -1,0 +1,31 @@
+# Class: dc_postgresql::pg_backupconfig
+#
+# Server side configuration for barman backups
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+# [Remember: No empty lines between comments and class definition]
+class dc_postgresql::pg_backupconfig {
+
+  # Add configuration for WAL archiving and barman backup
+
+  postgresql::server::config_entry { 'wal_level':
+    value => 'archive'
+  }
+
+  postgresql::server::config_entry { 'archive_mode':
+    value => 'on'
+  }
+
+  postgresql::server::config_entry { 'archive_command':
+    value => "rsync -a %p barman@${pgbackupserver}:${barmanpath}/${::hostname}/incoming/%f"
+  }
+
+}
+
