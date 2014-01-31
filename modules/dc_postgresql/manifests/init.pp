@@ -32,6 +32,8 @@ class dc_postgresql (
     require        => Class['::postgresql::server'],
   }
 
+  class { 'dc_postgresql::backupkeys': }
+
   class { 'dc_postgresql::icinga': }
 
 # FIXME Add define for databases
