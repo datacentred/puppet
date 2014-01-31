@@ -30,9 +30,7 @@ class dc_postgresql (
   class { 'dc_postgresql::pg_backupconfig':
     barmanpath     => $barmanpath,
     pgbackupserver => $pgbackupserver,
-    require        => Class['::postgresql::server'],
   }
-  contain 'postgresql::server'
 
   class { 'dc_postgresql::backupkeys': }
   contain 'postgresql::server'
