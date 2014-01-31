@@ -11,7 +11,10 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_postgresql::pg_backupconfig {
+class dc_postgresql::pg_backupconfig (
+  $pgbackupserver,
+  $barmanpath,
+){
 
   # Add configuration for WAL archiving and barman backup
 
