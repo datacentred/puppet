@@ -77,4 +77,4 @@ nova_mq_vhost:    '/'
 graphite_server: 'graphite.sal01.datacentred.co.uk'
 graphite_secret_key: 'yefritfapAg8'
 # icinga
-icinga_server: 'icinga.sal01.datacentred.co.uk'
+icinga_ip: '10.10.192.142'
