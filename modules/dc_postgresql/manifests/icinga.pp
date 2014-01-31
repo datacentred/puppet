@@ -23,8 +23,7 @@ class dc_postgresql::icinga {
   }
 
   # Create a fact defining the required ipv4acl entry
-  class { 'dc_external_facts::fact::def':
-    title => 'icinga-access',
+  dc_external_facts::fact::def { 'icinga-access':
     value => "host nagios nagios ${icinga_ip}/32 password",
   }
 
