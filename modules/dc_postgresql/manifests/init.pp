@@ -26,7 +26,7 @@ class dc_postgresql (
     listen_addresses             => $listen,
   }
 
-  class { 'dc_postgresql::pg_backup':
+  class { 'dc_postgresql::pg_backupconfig':
     barmanpath     => $barmanpath,
     pgbackupserver => $pgbackupserver,
     require        => Class['::postgresql::server'],
