@@ -14,6 +14,14 @@ class dc_collectd::snmp {
     order   => '01',
   }
 
+  concat::fragment { 'snmp_footer':
+    target  => $snmpconf,
+    content => "</Plugin>\n",
+    # We want this to be last, regardless of how many times we
+    # realise snmptarget_query (up to a sane limit!)
+    order   => '999',
+  }
+
   define snmptarget_query ($host,$ip,$snmpconf) {
     concat::fragment { "$title":
       target  => "$snmpconf",
