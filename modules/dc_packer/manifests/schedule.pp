@@ -24,7 +24,7 @@ class dc_packer::schedule {
   
   # Make sure the latest-virtualbox symlink points to the most recent build
   cron { 'symlink_latest':
-    command => "cd /home/packer/output && rm latest-virtualbox ; ln -s $(ls -lrt | awk '{ print $9 }' | grep vbox | tail -1) latest-virtualbox",
+    command => "cd /home/packer/output && rm latest-virtualbox ; ln -s $(ls -lrt | awk '{ print \$9 }' | grep vbox | tail -1) latest-virtualbox",
     user    => 'packer',
     minute  => 0,
     hour    => 5,
