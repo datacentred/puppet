@@ -41,5 +41,6 @@ class dc_postgresql (
   contain 'postgresql::server'
 
 # FIXME Add define for databases
+# FIXME Add handling for per database ACL's
 
 }
