@@ -25,19 +25,21 @@ class dc_postgresql (
     ip_mask_deny_postgres_user   => $ip_mask_postgres,
     listen_addresses             => $listen,
   }
+  contain 'postgresql::server'
 
   class { 'dc_postgresql::pg_backupconfig':
     barmanpath     => $barmanpath,
     pgbackupserver => $pgbackupserver,
     require        => Class['::postgresql::server'],
   }
+  contain 'postgresql::server'
 
   class { 'dc_postgresql::backupkeys': }
+  contain 'postgresql::server'
 
   class { 'dc_postgresql::icinga': }
+  contain 'postgresql::server'
 
 # FIXME Add define for databases
 
 }
-
-
