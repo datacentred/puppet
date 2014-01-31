@@ -4,7 +4,6 @@ class dc_profile::coredb {
 
   $puppetdb_pw = hiera(puppetdb_pw)
   $foreman_pw  = hiera(foreman_pw)
-  $keystone_db_pw = hiera(keystone_db_pw)
 
   # Install the sever to listen on the chosen address range
   class { '::postgresql::server':
@@ -17,14 +16,6 @@ class dc_profile::coredb {
   postgresql::server::db { 'nagiostest':
     user     => 'nagios',
     password => 'nagios',
-    require  => Class['::postgresql::server'],
-  }
-
-  # Keystone database
-  postgresql::server::db { 'keystone':
-    user     => 'keystone',
-    password => $keystone_db_pw,
-    grant    => 'all',
     require  => Class['::postgresql::server'],
   }
 
