@@ -38,7 +38,7 @@ class dc_postgresql (
   class { 'dc_postgresql::icinga': }
   contain 'postgresql::server'
 
-# FIXME Add define for databases
-# FIXME Add handling for per database ACL's
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_postgres']
 
 }
