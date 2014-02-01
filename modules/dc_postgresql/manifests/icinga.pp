@@ -19,7 +19,7 @@ class dc_postgresql::icinga {
   dc_postgresql::db { 'nagiostest':
     user           => 'nagios',
     password       => 'nagios',
-    access_address => $icinga_ip,
+    access_address => "$icinga_ip/32",
   }
 
 }
