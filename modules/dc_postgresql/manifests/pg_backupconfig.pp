@@ -30,5 +30,14 @@ class dc_postgresql::pg_backupconfig (
     value => "rsync -a %p barman@${pgbackupserver}:${barmanpath}/${::hostname}/incoming/%f"
   }
 
+  postgresql::server::pg_hba_rule { 'allow barman to access all db':
+    description => "Open up all for access from ${pgbackupserver}",
+    type        => 'host',
+    database    => 'all',
+    user        => 'postgres',
+    address     => template('dc_postgresql/getipaddr.erb'),
+    auth_method => 'password',
+  }
+
 }
 
