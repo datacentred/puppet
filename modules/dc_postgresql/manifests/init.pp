@@ -38,6 +38,10 @@ class dc_postgresql (
   class { 'dc_postgresql::icinga': }
   contain 'postgresql::server'
 
+  file { '/tmp/test':
+    ensure  => file,
+    content => template("dc_postgresql/ipv4acls.erb")
+  }
 # FIXME Add define for databases
 # FIXME Add handling for per database ACL's
 
