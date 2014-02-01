@@ -36,7 +36,6 @@ class dc_postgresql (
   contain 'postgresql::server'
 
   class { 'dc_postgresql::icinga': }
-  contain 'postgresql::server'
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact::Def['dc_hostgroup_postgres']
