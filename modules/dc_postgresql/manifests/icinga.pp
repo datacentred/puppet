@@ -20,7 +20,6 @@ class dc_postgresql::icinga {
     user           => 'nagios',
     password       => 'nagios',
     access_address => $icinga_ip,
-    require        => Class['::postgresql::server'],
   }
 
 }
