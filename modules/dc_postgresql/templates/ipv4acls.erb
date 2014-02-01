@@ -1,7 +1,7 @@
 [<% -%>
 <% scope.to_hash.keys.each do |k| -%>
 <% if k =~ /(pg_acl_[\w\d]+)/ -%>
-<%= '\'' + $1 + '\'' -%>
+<%= '\'' + value["key"] + '\'' -%>
 <% end -%>
 <% end -%>
 
