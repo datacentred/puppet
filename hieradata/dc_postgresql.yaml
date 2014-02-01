@@ -1,0 +1,80 @@
+# ntp
+#
+localtimeservers: 
+ - '10.10.192.250'
+ - '10.10.192.251'
+
+# nullmailer
+#
+smarthostuser: 'autobot@datacentred.co.uk'
+smarthostpass: 'horovAnVods5'
+smarthost: 'smtp.gmail.com'
+sysmailaddress: 'sysadmin@datacentred.co.uk'
+
+tftproot: '/var/tftpboot'
+
+rpass: '$1$datacent$H9rCZnCxYwOzGOpmtjmHz/'
+
+# dhcpd
+#
+pxeserver: '10.10.192.250'
+dhcpdmasterip: '10.10.192.250'
+dhcpdslaveip: '10.10.192.251'
+omapi_key: 'omapi_key'
+omapi_secret: 'nad6wymAE9/qFnaUCMa52FWP/KgLYuPUTI0YUf16Zkn54b5uKOYGQ9IwiI+hfui2ZdmIwVHf+O2ExshChY7coA=='
+
+# dns
+# 
+forwarders:
+- '8.8.8.8'
+- '8.8.4.4'
+dnsmasters:
+- '10.10.192.250'
+nameservers:
+  ns0.sal01.datacentred.co.uk: '10.10.192.250'
+  ns1.sal01.datacentred.co.uk: '10.10.192.251'
+client_networks:
+- '10.10.192.0/24'
+- '10.10.128.0/24'
+- '10.10.32.0/24'
+- '10.5.10.0/24' 
+- '10.1.5.0/24'
+- '10.1.1.0/24'
+- '10.10.12.0/24' # SAL01M wireless
+- '10.0.1.0/24' # SAL01 wireless
+- '10.10.160.0/24'
+- '10.10.96.0/24'
+
+# foreman
+#
+foreman_url: 'foreman'
+
+# logstash
+#
+logstash_server: 'logstash.sal01.datacentred.co.uk'
+
+# keystone
+#
+keystone_db_pw: ']DiJottAnhig7'
+keystone_admin_uuid: 'b87a49b7-7297-43f7-8a95-7ca26f0516ff'
+keystone_admin_pw: 'NowImUbEnck3'
+keystone_db_host: 'db0'
+
+# mcollective
+#
+mco_middleware_password: 'simedusikIm5'
+mco_middleware_admin_password: 'BavedNochAp2'
+
+# OpenStack
+#
+nova_mq_username: 'openstack'
+nova_mq_password: 'jagAymWufud5'
+nova_mq_port:     '5672'
+nova_mq_vhost:    '/'
+
+# graphite
+#
+graphite_server: 'graphite.sal01.datacentred.co.uk'
+graphite_secret_key: 'yefritfapAg8'
+# icinga
+icinga_ip: '10.10.192.142'
