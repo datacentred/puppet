@@ -36,8 +36,8 @@ class dc_foreman_proxy (
 
   file { '/etc/foreman-proxy/settings.yml':
     require => Package['foreman-proxy'],
-    owner   => foreman-proxy,
-    group   => foreman-proxy,
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
     mode    => '0640',
     content => template('dc_foreman_proxy/settings.yml.erb');
   }
@@ -46,23 +46,23 @@ class dc_foreman_proxy (
     File <| title == $dns::params::rndckeypath |> {
       ensure  => present,
       require => Package['foreman-proxy'],
-      owner   => bind,
-      group   => foreman-proxy,
+      owner   => 'bind',
+      group   => 'foreman-proxy',
     }
   }
 
   if $use_tftp == true {
-    file { "$tftproot/boot":
+    file { "${tftproot}/boot":
       ensure  => directory,
-      require => File["$tftproot"],
-      owner   => foreman-proxy,
-      group   => root,
+      require => File[$tftproot],
+      owner   => 'foreman-proxy',
+      group   => 'root',
     }
-    file { "$tftproot/pxelinux.cfg":
+    file { "${tftproot}/pxelinux.cfg":
       ensure  => directory,
-      require => File["$tftproot"],
-      owner   => foreman-proxy,
-      group   => root,
+      require => File[$tftproot],
+      owner   => 'foreman-proxy',
+      group   => 'root',
     }
   }
 
