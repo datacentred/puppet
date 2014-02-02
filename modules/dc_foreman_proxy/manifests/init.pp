@@ -14,6 +14,7 @@
 class dc_foreman_proxy (
   $use_dns = false,
   $use_dhcp = false,
+  $use_bmc = false,
   $use_puppetca = false,
   $use_puppet = false,
   $dns_key = '/etc/bind/rndc.key',
@@ -23,7 +24,7 @@ class dc_foreman_proxy (
   $tftproot=""
 ) {
 
-  validate_bool($use_dns, $use_dhcp, $use_tftp, $use_puppetca, $use_puppet)
+  validate_bool($use_dns, $use_dhcp, $use_tftp, $use_bmc, $use_puppetca, $use_puppet)
 
   realize Dc_repos::Virtual::Repo['local_foreman_mirror']
 
@@ -62,6 +63,15 @@ class dc_foreman_proxy (
       require => File["$tftproot"],
       owner   => foreman-proxy,
       group   => root,
+    }
+  }
+
+  if $use_bmc == true {
+    package { 'rubyipmi':
+      ensure   => installed,
+    }
+    package { 'ipmitool':
+      ensure => installed,
     }
   }
 
