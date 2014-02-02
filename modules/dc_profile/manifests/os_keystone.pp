@@ -4,7 +4,8 @@ class dc_profile::os_keystone {
   $keystone_db_host = hiera(keystone_db_host)
 
   class { 'keystone':
-    verbose        => True,
+    require        => Dc_repos::Virtual::Repo['local_cloudarchive_repo'],
+    verbose        => true,
     catalog_type   => 'sql',
     admin_token    => hiera(keystone_admin_uuid),
     sql_connection => "postgresql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
