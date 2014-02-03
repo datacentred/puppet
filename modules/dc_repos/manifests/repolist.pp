@@ -42,7 +42,7 @@ include dc_repos::virtual
     location   => "${mirrorserver}/${cloudarchivemirrorpath}",
     release    => 'precise-updates/havana',
     repos      => 'main',
-    key        => '5EDB1B62EC4926EA',
+    key        => 'EC4926EA',
     key_server => 'keyserver.ubuntu.com',
     tag        => openstackrepos
   }
