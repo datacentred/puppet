@@ -28,7 +28,8 @@ class dc_profile::puppetmaster {
   contain 'foreman_proxy'
 
   package { 'rubyipmi':
-    ensure => installed,
+    ensure   => installed,
+    provider => gem,
   }
 
   class { '::puppetdb::master::config':
