@@ -1,28 +1,16 @@
 # Definition: dc_collectd::snmptarget
-# List of SNMP targets we'd like to configure 
-# collectd's snmp plugin to monitor for us
+# Create the appropriate configuration for collectd's
+# snmp.conf for a given device
 #
-class dc_collectd::snmptarget {
+define dc_collectd::snmptarget (
+    $ip = undef,
+) {
 
   $snmpcommunity = hiera(dc_snmp_community)
 
-  # The devrack Cisco SG300
-  @dc_collectd::virtual::snmpvirtual { 'sg300':
-    host => 'sg300',
-    ip   => '10.10.10.2',
+  concat::fragment { "$title":
+    target  => '/etc/collectd/conf.d/snmp.conf',
+    content => template('dc_collectd/snmpconf_main.erb'),
   }
-
-  # Cisco 3560G at the top of Ark's Rack 3
-  @dc_collectd::virtual::snmpvirtual { 'ark-rack3-3560g-top':
-    host => 'ark-rack3-3560g-top',
-    ip   => '10.10.32.2',
-  }
-
-  @dc_collectd::virtual::snmpvirtual { 'ark-rack3-3560g-bottom':
-    host => 'ark-rack3-3560g-bottom',
-    ip   => '10.10.32.3',
-  }
-
-  Dc_collectd::Virtual::Snmpvirtual <| |>
 
 }
