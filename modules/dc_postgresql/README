@@ -1,0 +1,4 @@
+Module : dc_postgresql
+Author : matt
+ ____________________________________ 
+Wrapper module for a postgresql server which includes backup anb icinga configuration
