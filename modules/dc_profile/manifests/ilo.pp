@@ -1,7 +1,8 @@
 class dc_profile::ilo {
 
   class { 'hpilo':
-    dhcp        => true,
+    require => Class['dc_profile::hpsupportrepo'],
+    dhcp    => true,
   }
 }
 
