@@ -3,7 +3,7 @@ class dc_profile::os_repos {
 
   include dc_repos::repolist
 
-  Dc_repos::Virtual::Repo <| tag == openstack |>
+  realize Dc_repos::Virtual::Repo['local_cloudarchive_mirror']
 
 }
 
