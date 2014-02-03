@@ -1,12 +1,10 @@
-# Definition: dc_collectd::snmp
+# Class: dc_collectd::snmp
 # Sets up the snmp collectd plugin to target hosts,
 # specifically network devices in our case.
 #
 class dc_collectd::snmp {
-  $snmpconf = '/etc/collectd/conf.d/snmp.conf'
 
-  # Set up SNMP targets to be monitored
-  include dc_collectd::snmptarget
+  $snmpconf = '/etc/collectd/conf.d/snmp.conf'
 
   concat { $snmpconf:
     ensure => present,
@@ -42,5 +40,7 @@ class dc_collectd::snmp {
     # the case.
     content => '',
   }
+
+  create_resources(dc_collectd::snmptarget, hiera(snmp_devices))
 
 }
