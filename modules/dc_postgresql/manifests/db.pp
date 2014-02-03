@@ -12,6 +12,6 @@ define dc_postgresql::db ($user,$password,$access_address='127.0.0.1'){
     database    => $title,
     user        => $user,
     address     => $access_address,
-    auth_method => 'password',
+    auth_method => 'md5',
   }
 }
