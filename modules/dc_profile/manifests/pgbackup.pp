@@ -2,6 +2,7 @@ class dc_profile::pgbackup {
 
   $storagedir = hiera(storagedir)
   $db0_postgres_pw = hiera(db0_postgres_pw)
+  $keystone_postgres_pw = hiera(keystone_postgres_pw)
 
   realize Dc_repos::Virtual::Repo['local_postgres_mirror']
 
@@ -9,12 +10,12 @@ class dc_profile::pgbackup {
 
     $key_elements = split($::barman_key, ' ')
 
-    @@ssh_authorized_key { "barman_key_${hostname}" :
+    @@ssh_authorized_key { "barman_key_${::hostname}" :
       ensure  => present,
       type    => 'ssh-rsa',
       key     => $key_elements[1],
       user    => 'postgres',
-      options => "from=\"${ipaddress}\"",
+      options => "from=\"${::ipaddress}\"",
       tag     => barman,
     }
   }
@@ -31,7 +32,14 @@ class dc_profile::pgbackup {
     custom_lines => 'retention_policy = RECOVERY_WINDOW OF 7 DAYS'
   }
 
-  Ssh_authorized_key <<| tag == "postgres" |>>
+  barman::server { 'keystone':
+    conninfo     => "user=postgres host=db0 password=${keystone_postgres_pw}",
+    ssh_command  => 'ssh postgres@keystone',
+    compression  => 'bzip2',
+    custom_lines => 'retention_policy = RECOVERY_WINDOW OF 7 DAYS'
+  }
+
+  Ssh_authorized_key <<| tag == 'postgres' |>>
 
   cron { 'barman-backup-friday':
     ensure  => present,

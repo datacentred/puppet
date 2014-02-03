@@ -17,13 +17,15 @@ class dc_postgresql (
   $listen           = '*',
   $barmanpath       = hiera(barman_path),
   $pgbackupserver   = hiera(pg_backup_server),
+  $postgres_pw      = undef,
 ){
 
   # Install the sever to listen on the chosen address range
   class { '::postgresql::server':
-    ip_mask_allow_all_users      => $ip_mask_users,
-    ip_mask_deny_postgres_user   => $ip_mask_postgres,
-    listen_addresses             => $listen,
+    ip_mask_allow_all_users    => $ip_mask_users,
+    ip_mask_deny_postgres_user => $ip_mask_postgres,
+    listen_addresses           => $listen,
+    postgres_password          => $postgres_pw
   }
   contain 'postgresql::server'
 
