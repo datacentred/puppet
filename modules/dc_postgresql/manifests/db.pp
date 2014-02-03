@@ -1,4 +1,4 @@
-define dc_postgresql::db ($user,$password,$access_address='127.0.0.1'){
+define dc_postgresql::db ($user,$password,$access_address='127.0.0.1/32'){
 
   postgresql::server::db { $title:
     user      => $user,
