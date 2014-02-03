@@ -29,14 +29,14 @@ class dc_profile::pgbackup {
     conninfo     => "user=postgres host=db0 password=${db0_postgres_pw}",
     ssh_command  => 'ssh postgres@db0',
     compression  => 'bzip2',
-    custom_lines => 'retention_policy = RECOVERY_WINDOW OF 7 DAYS'
+    custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
   }
 
   barman::server { 'keystone':
     conninfo     => "user=postgres host=keystone password=${keystone_postgres_pw}",
     ssh_command  => 'ssh postgres@keystone',
     compression  => 'bzip2',
-    custom_lines => 'retention_policy = RECOVERY_WINDOW OF 7 DAYS'
+    custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
   }
 
   Ssh_authorized_key <<| tag == 'postgres' |>>
