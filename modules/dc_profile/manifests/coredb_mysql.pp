@@ -1,7 +1,7 @@
 # Installation of MySQL as well as any associated databases
 class dc_profile::coredb_mysql {
 
-  $mysql_pw = hiera(db0_mysql_pw)
+  $mysqlroot_pw = hiera(db0_mysql_pw)
   $graphite_db_pw = hiera(graphite_db_pw)
   $graphite_server = hiera(graphite_server)
 
