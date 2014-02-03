@@ -36,7 +36,7 @@ class dc_postgresql::pg_backupconfig (
     database    => 'all',
     user        => 'postgres',
     address     => template('dc_postgresql/getipaddr.erb'),
-    auth_method => 'password',
+    auth_method => 'md5',
   }
 
 }
