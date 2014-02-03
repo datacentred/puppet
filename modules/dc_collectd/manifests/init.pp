@@ -9,7 +9,6 @@ class dc_collectd (
   $snmptargets = undef,
 ) {
 
-  include dc_repos::repolist
   realize (Dc_repos::Virtual::Repo['local_collectd_mirror'])
 
   class { '::collectd':
