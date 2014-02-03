@@ -8,7 +8,7 @@ class dc_profile::os_keystone {
     verbose        => true,
     catalog_type   => 'sql',
     admin_token    => hiera(keystone_admin_uuid),
-    sql_connection => "postgresql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
+    sql_connection => "postgresql://keystone:${keystone_db_pw}@127.0.0.1/keystone",
   }
 
   # Adds the admin credential to keystone.
