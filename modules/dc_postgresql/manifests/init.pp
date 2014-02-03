@@ -13,7 +13,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_postgresql (
   $ip_mask_users    = '0.0.0.0/0',
-  $ip_mask_postgres = '0.0.0.0/0',
+  $ip_mask_postgres = '0.0.0.0/32',
   $listen           = '*',
   $barmanpath       = hiera(barman_path),
   $pgbackupserver   = hiera(pg_backup_server),
