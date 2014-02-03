@@ -13,6 +13,7 @@ class dc_collectd::snmp {
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
+    notify => Service['collectd'],
   }
 
   concat::fragment { 'snmpconf_header':
@@ -24,13 +25,17 @@ class dc_collectd::snmp {
   concat::fragment { 'snmp_footer':
     target  => $snmpconf,
     content => "</Plugin>\n",
-    # We want this to be last, pretty much regardless of how many times we
-    # realise snmptarget_query...
+    # This bit of configuration has to be the last line in the file
     order   => '999',
   }
 
+  # Let's actually get some MIBS on the go
+  package { 'snmp-mibs-downloader':
+    ensure => latest,
+  }
+
   file { 'snmp.conf':
-    ensure => present,
+    require => Package['snmp-mibs-downloader'],
     path   => '/etc/snmp/snmp.conf',
     # Default configuration has a single line that stops any MIBS
     # being loaded.  We want an empty file to ensure that's not
