@@ -3,7 +3,9 @@
 # collectd's snmp plugin to monitor for us
 #
 class dc_collectd::snmptarget {
-  
+
+  $snmpcommunity = hiera(dc_snmp_community)
+
   # The devrack Cisco SG300
   @dc_collectd::virtual::snmpvirtual { 'sg300':
     host => 'sg300',

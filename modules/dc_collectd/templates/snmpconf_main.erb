@@ -1,7 +1,7 @@
 <Host "<%= @host %>">
   Address "<%= @ip %>"
   Version 2
-  Community "sal01snmp"
+  Community "<%= @snmpcommunity %>"
   Collect "switch_traffic"
   Interval 120
 </Host>
