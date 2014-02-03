@@ -24,4 +24,14 @@ class dc_profile::coredb_mysql {
     require  => Class['::mysql::server'],
   }
 
+  # And one for Nova
+  $nova_db_user = hiera(nova_db_user)
+  $nova_db_pass = hiera(nova_db_pass)
+  $nova_db      = hiera(nova_db)
+
+  mysql::db { $nova_db:
+    user     => $nova_db_user,
+    password => $nova_db_pass,
+    require  => Class['::mysql::server'],
+  }
 }
