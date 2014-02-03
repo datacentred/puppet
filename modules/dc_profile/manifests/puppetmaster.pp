@@ -21,11 +21,15 @@ class dc_profile::puppetmaster {
     tftp                => false,
     dhcp                => false,
     dns                 => false,
-    bmc                 => false,
+    bmc                 => true,
     register_in_foreman => false,
     use_sudoersd        => false,
   }
   contain 'foreman_proxy'
+
+  package { 'rubyipmi':
+    ensure => installed,
+  }
 
   class { '::puppetdb::master::config':
     puppet_service_name => 'apache2',
