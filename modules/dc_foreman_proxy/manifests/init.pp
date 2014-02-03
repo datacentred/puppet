@@ -12,18 +12,19 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class dc_foreman_proxy (
-  $use_dns = false,
-  $use_dhcp = false,
+  $use_dns      = false,
+  $use_dhcp     = false,
+  $use_bmc      = false,
   $use_puppetca = false,
-  $use_puppet = false,
-  $dns_key = '/etc/bind/rndc.key',
-  $omapi_key="",
-  $omapi_secret="",
-  $use_tftp = false,
-  $tftproot=""
+  $use_puppet   = false,
+  $dns_key      = '/etc/bind/rndc.key',
+  $omapi_key    = '',
+  $omapi_secret = '',
+  $use_tftp     = false,
+  $tftproot     = ''
 ) {
 
-  validate_bool($use_dns, $use_dhcp, $use_tftp, $use_puppetca, $use_puppet)
+  validate_bool($use_dns, $use_dhcp, $use_tftp, $use_bmc, $use_puppetca, $use_puppet)
 
   realize Dc_repos::Virtual::Repo['local_foreman_mirror']
 
@@ -35,8 +36,8 @@ class dc_foreman_proxy (
 
   file { '/etc/foreman-proxy/settings.yml':
     require => Package['foreman-proxy'],
-    owner   => foreman-proxy,
-    group   => foreman-proxy,
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
     mode    => '0640',
     content => template('dc_foreman_proxy/settings.yml.erb');
   }
@@ -45,23 +46,32 @@ class dc_foreman_proxy (
     File <| title == $dns::params::rndckeypath |> {
       ensure  => present,
       require => Package['foreman-proxy'],
-      owner   => bind,
-      group   => foreman-proxy,
+      owner   => 'bind',
+      group   => 'foreman-proxy',
     }
   }
 
   if $use_tftp == true {
-    file { "$tftproot/boot":
+    file { "${tftproot}/boot":
       ensure  => directory,
-      require => File["$tftproot"],
-      owner   => foreman-proxy,
-      group   => root,
+      require => File[$tftproot],
+      owner   => 'foreman-proxy',
+      group   => 'root',
     }
-    file { "$tftproot/pxelinux.cfg":
+    file { "${tftproot}/pxelinux.cfg":
       ensure  => directory,
-      require => File["$tftproot"],
-      owner   => foreman-proxy,
-      group   => root,
+      require => File[$tftproot],
+      owner   => 'foreman-proxy',
+      group   => 'root',
+    }
+  }
+
+  if $use_bmc == true {
+    package { 'rubyipmi':
+      ensure   => installed,
+    }
+    package { 'ipmitool':
+      ensure => installed,
     }
   }
 
@@ -73,23 +83,25 @@ class dc_foreman_proxy (
     notify  => Service['foreman-proxy'],
   }
 
-  # TODO: This will clash with puppet::server::config
-  # but I tend to use the community foreman_proxy module
-  # so not overly concerned for now - SM
-  file { "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem":
-    ensure => file,
-    owner  => 'puppet',
-    group  => 'puppet',
-    mode   => '0640',
-    notify => Service['foreman-proxy'],
-  }
 
-  file { '/var/lib/puppet/ssl/private_keys':
-    ensure => directory,
-    owner  => 'puppet',
-    group  => 'puppet',
-    mode   => '0750',
-    notify => Service['foreman-proxy'],
+  if $::fqdn != $::puppetmaster {
+
+    file { "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem":
+      ensure => file,
+      owner  => 'puppet',
+      group  => 'puppet',
+      mode   => '0640',
+      notify => Service['foreman-proxy'],
+    }
+
+    file { '/var/lib/puppet/ssl/private_keys':
+      ensure => directory,
+      owner  => 'puppet',
+      group  => 'puppet',
+      mode   => '0750',
+      notify => Service['foreman-proxy'],
+    }
+
   }
 
   service { 'foreman-proxy':
