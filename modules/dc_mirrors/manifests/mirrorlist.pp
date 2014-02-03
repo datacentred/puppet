@@ -57,9 +57,15 @@ include dc_mirrors::virtual
     components => ['main', 'dependencies'],
   }
 
-  @dc_mirrors::virtual::mirror { 'cloudarchive_mirror':
+  @dc_mirrors::virtual::mirror { 'cloudarchive_grizzly_mirror':
     mirrorurl  => 'ubuntu-cloud.archive.canonical.com/ubuntu',
     release    => 'precise-updates/grizzly',
+    components => ['main'],
+  }
+
+  @dc_mirrors::virtual::mirror { 'cloudarchive_havana_mirror':
+    mirrorurl  => 'ubuntu-cloud.archive.canonical.com/ubuntu',
+    release    => 'precise-updates/havana',
     components => ['main'],
   }
 

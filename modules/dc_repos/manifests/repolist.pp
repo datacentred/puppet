@@ -2,19 +2,20 @@ class dc_repos::repolist {
 
 include dc_repos::virtual
 
-  $mirrorserver         = hiera(mirror_server)
-  $ubuntumirrorpath     = hiera(ubuntu_mirror_path)
-  $puppetmirrorpath     = hiera(puppet_mirror_path)
-  $cephcmirrorpath      = hiera(ceph_c_mirror_path)
-  $cephdmirrorpath      = hiera(ceph_d_mirror_path)
-  $nullmailermirrorpath = hiera(nullmailer_mirror_path)
-  $virtualboxmirrorpath = hiera(virtualbox_mirror_path)
-  $hpsupportmirrorpath  = hiera(hpsupport_mirror_path)
-  $foremanmirrorpath    = hiera(foreman_mirror_path)
-  $datacentredpath      = hiera(datacentred_path)
-  $rsyslogmirrorpath    = hiera(rsyslog_mirror_path)
-  $postgresmirrorpath   = hiera(postgres_mirror_path)
-  $collectdmirrorpath   = hiera(collectd_mirror_path)
+  $mirrorserver           = hiera(mirror_server)
+  $ubuntumirrorpath       = hiera(ubuntu_mirror_path)
+  $puppetmirrorpath       = hiera(puppet_mirror_path)
+  $cloudarchivemirrorpath = hiera(cloudarchive_mirror_path)
+  $cephcmirrorpath        = hiera(ceph_c_mirror_path)
+  $cephdmirrorpath        = hiera(ceph_d_mirror_path)
+  $nullmailermirrorpath   = hiera(nullmailer_mirror_path)
+  $virtualboxmirrorpath   = hiera(virtualbox_mirror_path)
+  $hpsupportmirrorpath    = hiera(hpsupport_mirror_path)
+  $foremanmirrorpath      = hiera(foreman_mirror_path)
+  $datacentredpath        = hiera(datacentred_path)
+  $rsyslogmirrorpath      = hiera(rsyslog_mirror_path)
+  $postgresmirrorpath     = hiera(postgres_mirror_path)
+  $collectdmirrorpath     = hiera(collectd_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "${mirrorserver}/${ubuntumirrorpath}",
@@ -35,6 +36,13 @@ include dc_repos::virtual
     release  => 'precise-security',
     repos    => 'main restricted universe',
     tag      => baserepos
+  }
+
+  @dc_repos::virtual::repo { 'local_cloudarchive_mirror':
+    location => "${mirrorserver}/${cloudarchivemirrorpath}",
+    release  => 'precise-updates/havana',
+    repos    => 'main',
+    tag      => openstackrepos
   }
 
   @dc_repos::virtual::repo { 'local_puppetlabs_mirror':
