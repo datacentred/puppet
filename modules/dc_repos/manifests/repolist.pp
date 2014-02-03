@@ -39,10 +39,12 @@ include dc_repos::virtual
   }
 
   @dc_repos::virtual::repo { 'local_cloudarchive_mirror':
-    location => "${mirrorserver}/${cloudarchivemirrorpath}",
-    release  => 'precise-updates/havana',
-    repos    => 'main',
-    tag      => openstackrepos
+    location   => "${mirrorserver}/${cloudarchivemirrorpath}",
+    release    => 'precise-updates/havana',
+    repos      => 'main',
+    key        => '5EDB1B62EC4926EA',
+    key_server => 'keyserver.ubuntu.com',
+    tag        => openstackrepos
   }
 
   @dc_repos::virtual::repo { 'local_puppetlabs_mirror':
