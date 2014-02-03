@@ -6,7 +6,6 @@
 class dc_collectd (
   $graphite_server = '',
   $interfaces = split($::interfaces, ','),
-  $snmptargets = undef,
 ) {
 
   realize (Dc_repos::Virtual::Repo['local_collectd_mirror'])
@@ -31,7 +30,7 @@ class dc_collectd (
     graphitehost => $graphite_server,
   }
 
-  if $snmptargets {
+  if $::snmptargets {
     include dc_collectd::snmp
   }
 
