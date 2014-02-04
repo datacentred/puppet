@@ -1,7 +1,6 @@
 class dc_repos::repolist {
 
 include dc_repos::virtual
-include stdlib
 
   $mirrorserver           = hiera(mirror_server)
   $ubuntumirrorpath       = hiera(ubuntu_mirror_path)
