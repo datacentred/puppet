@@ -117,4 +117,10 @@ include dc_mirrors::virtual
     components => ['main'],
   }
 
+  @dc_mirrors::virtual::mirror { 'mariadb_mirror':
+    mirrorurl  => 'mirrors.coreix.net/mariadb/repo/5.5/ubuntu',
+    release    => 'precise',
+    components => ['main'],
+  }
+
 }
