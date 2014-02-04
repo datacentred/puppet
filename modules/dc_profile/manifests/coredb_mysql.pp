@@ -24,26 +24,4 @@ class dc_profile::coredb_mysql {
     require  => Class['::mysql::server'],
   }
 
-
-  # Glance API and registry
-  $glance_api_db   = hiera(glance_api_db)
-  $glance_api_user = hiera(glance_api_user)
-  $glance_api_pass = hiera(glance_api_pass)
-
-  mysql::db { $glance_api_db:
-    user     => $glance_api_user,
-    password => $glance_api_pass,
-    require  => Class['::mysql::server'],
-  }
-
-  $glance_reg_db   = hiera(glance_reg_db)
-  $glance_reg_user = hiera(glance_reg_user)
-  $glance_reg_pass = hiera(glance_reg_pass)
-
-  mysql::db { $glance_reg_db:
-    user     => $glance_reg_user,
-    password => $glance_reg_pass,
-    require  => Class['::mysql::server'],
-  }
-
 }

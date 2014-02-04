@@ -117,4 +117,4 @@
 	url = https://github.com/spjmurray/puppet-nova
 [submodule "modules/glance"]
 	path = modules/glance
-	url = https://github.com/stackforge/puppet-glance
+	url = https://github.com/spjmurray/puppet-glance
