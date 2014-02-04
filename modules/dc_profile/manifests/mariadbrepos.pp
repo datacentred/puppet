@@ -1,6 +1,6 @@
-class dc_profile::mariadb {
+class dc_profile::mariadbrepos {
 
-    Dc_repos::Virtual::Repo <| tag == mariadb |>
+    realize (Dc_repos::Virtual::Repo['local_mariadb_mirror'])
 
 }
 
