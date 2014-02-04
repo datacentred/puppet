@@ -136,6 +136,7 @@ include dc_repos::virtual
     repos      => 'main',
     key        => '1BB943DB',
     key_server => 'keyserver.ubuntu.com',
+    tag        => mariadb
   }
 
   @dc_repos::virtual::repo { 'local_collectd_mirror':
