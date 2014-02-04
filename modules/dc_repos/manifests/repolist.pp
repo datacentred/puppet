@@ -17,7 +17,7 @@ include stdlib
   $rsyslogmirrorpath      = hiera(rsyslog_mirror_path)
   $postgresmirrorpath     = hiera(postgres_mirror_path)
   $collectdmirrorpath     = hiera(collectd_mirror_path)
-  $mariadbmirrorpath      = getparam(Dc_mirrors::Virtual::Mirror['local_mariadb_mirror'], 'mirrorurl')
+  $mariadbmirrorpath      = hiera(mariadb_mirror_path)
 
   @dc_repos::virtual::repo { 'local_precise_mirror':
     location => "${mirrorserver}/${ubuntumirrorpath}",
@@ -136,7 +136,7 @@ include stdlib
     release    => 'precise',
     repos      => 'main',
     key        => '1BB943DB',
-    key_source => 'keyserver.ubuntu.com',
+    key_server => 'keyserver.ubuntu.com',
   }
 
   @dc_repos::virtual::repo { 'local_collectd_mirror':
