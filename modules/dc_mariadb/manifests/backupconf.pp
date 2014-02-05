@@ -19,7 +19,6 @@ class dc_mariadb::backupconf (
   Nfs::Client::Mount <<| nfstag == "${::hostname}-mariadbbackup" |>> {
     ensure  => mounted,
     mount   => '/var/dbbackups',
-    require => File['/var/dbbackups']
   }
 
   class { 'mysql::server::backup':
