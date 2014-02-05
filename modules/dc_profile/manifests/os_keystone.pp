@@ -4,11 +4,11 @@ class dc_profile::os_keystone {
   $keystone_db_host = hiera(keystone_db_host)
 
   class { 'keystone':
-    require        => [ Dc_repos::Virtual::Repo['local_cloudarchive_mirror'], Dc_postgresql::Db['keystone'] ],
+    require        => [ Dc_repos::Virtual::Repo['local_cloudarchive_mirror'], Dc_maria::Db['keystone'] ],
     verbose        => true,
     catalog_type   => 'sql',
     admin_token    => hiera(keystone_admin_uuid),
-    sql_connection => "postgresql://keystone:${keystone_db_pw}@127.0.0.1/keystone",
+    sql_connection => "mysql://keystone:${keystone_db_pw}@127.0.0.1/keystone",
   }
 
   # Adds the admin credential to keystone.
