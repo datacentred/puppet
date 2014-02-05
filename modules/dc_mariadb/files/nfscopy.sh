@@ -3,7 +3,7 @@
 # Check the remote directory is mounted
 if cat /proc/mounts | grep -q /var/dbbackups-remote
 then
-    for file in ls /var/dbbackups
+    for file in `ls /var/dbbackups`
     do if ! cp /var/dbbackups/$file /var/dbbackups-remote
     then
         echo "Could not copy $file - exiting"
