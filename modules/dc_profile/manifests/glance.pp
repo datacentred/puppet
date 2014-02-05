@@ -21,8 +21,16 @@ class dc_profile::glance {
     tenant   => 'services',
   }
 
-  class { 'mysql::server': }
-  contain 'mysql::server'
+  # Okay so here is the sad part, because of all the includes and inherits in
+  # the 3rd party code, these packages get installed well before the apt
+  # repositories are updated and we get old versions, which causes the install
+  # to fail!
+  Dc_repos::Virtual::Repo['local_cloudarchive_mirror'] -> Package['mysql-client']
+  Dc_repos::Virtual::Repo['local_cloudarchive_mirror'] -> Package['glance']
+  Dc_repos::Virtual::Repo['local_cloudarchive_mirror'] -> Package['python-keystone']
+  Dc_repos::Virtual::Repo['local_cloudarchive_mirror'] -> Package['mysql-server']
+
+  contain mysql::server
 
   mysql::db { $glance_api_db:
     user     => $glance_api_user,
