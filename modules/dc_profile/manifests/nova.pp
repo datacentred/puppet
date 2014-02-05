@@ -8,7 +8,7 @@ class dc_profile::nova {
   $nova_mq_port        = hiera(nova_mq_port)
   $nova_mq_vhost       = hiera(nova_mq_vhost)
 
-  $glance_api_servers  = hiera(glance_api_servers)
+  $glance_api_servers  = get_exported_var('', 'glance_api_server', ['localhost:9292'])
 
   $nova_db_user        = hiera(nova_db_user)
   $nova_db_pass        = hiera(nova_db_pass)
@@ -31,7 +31,7 @@ class dc_profile::nova {
 
   class { '::nova':
     database_connection => $nova_database,
-    glance_api_servers  => $glance_api_servers,
+    glance_api_servers  => join($glance_api_servers, ','),
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
