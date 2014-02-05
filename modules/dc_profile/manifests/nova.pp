@@ -1,8 +1,6 @@
 # Nova controller node
 class dc_profile::nova {
 
-  realize Dc_repos::Virtual::Repo['local_cloudarchive_mirror']
-
   $nova_mq_username    = hiera(nova_mq_username)
   $nova_mq_password    = hiera(nova_mq_password)
   $nova_mq_port        = hiera(nova_mq_port)
@@ -20,7 +18,7 @@ class dc_profile::nova {
   $nova_admin_password = hiera(nova_admin_password)
   $nova_enabled_apis   = hiera(nova_enabled_apis)
 
-  $keystone_host       = hiera(keystone_host)
+  $keystone_host       = get_exported_var('', 'keystone_host', ['localhost'])
 
   $neutron_secret      = hiera(neutron_secret)
 
@@ -38,7 +36,6 @@ class dc_profile::nova {
     rabbit_port         => $nova_mq_port,
     rabbit_virtual_host => $nova_mq_vhost,
     use_syslog          => true,
-    require             => Dc_repos::Virtual::Repo['local_cloudarchive_mirror'],
   }
 
   class { '::nova::api':
@@ -49,7 +46,6 @@ class dc_profile::nova {
     enabled_apis                         => $nova_enabled_apis,
     auth_host                            => $keystone_host,
     neutron_metadata_proxy_shared_secret => $neutron_secret,
-    require                              => Dc_repos::Virtual::Repo['local_cloudarchive_mirror'],
   }
 
 }
