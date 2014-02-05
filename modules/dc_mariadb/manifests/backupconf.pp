@@ -33,6 +33,8 @@ class dc_mariadb::backupconf (
 
   file { '/usr/local/sbin/nfscopy.sh':
     ensure => file,
+    owner  => root,
+    group  => root,
     mode   => '0744',
     source => 'puppet:///modules/dc_mariadb/nfscopy.sh',
   }
