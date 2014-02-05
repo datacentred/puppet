@@ -39,5 +39,12 @@ class dc_mariadb::backupconf (
     source => 'puppet:///modules/dc_mariadb/nfscopy.sh',
   }
 
+  cron { 'nfscopy':
+    command => '/usr/local/sbin/nfscopy.sh',
+    user    => root,
+    hour    => 4,
+    minute  => 0,
+  }
+
 }
 
