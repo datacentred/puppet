@@ -1,6 +1,6 @@
-define dc_mariadb::db ($dbname,$user,$password){
+define dc_mariadb::db ($user,$password){
 
-  mysql::db { "${dbname}":
+  mysql::db { "${title}":
     user     => $user,
     password => $password,
     host     => 'localhost',
