@@ -34,7 +34,7 @@ class dc_mariadb::backupconf (
     file_per_database => true,
     time              => ['3','00']
   }
-  contain '::msyql::server'
+  contain 'msyql::server'
 
 }
 
