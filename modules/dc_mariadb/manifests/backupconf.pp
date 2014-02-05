@@ -31,5 +31,11 @@ class dc_mariadb::backupconf (
   }
   contain 'mysql::server'
 
+  file { '/usr/local/sbin/nfscopy.sh':
+    ensure => file,
+    mode   => '0744',
+    source => 'puppet:///modules/dc_mariadb/nfscopy.sh',
+  }
+
 }
 
