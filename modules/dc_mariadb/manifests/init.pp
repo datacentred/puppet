@@ -30,7 +30,7 @@ class dc_mariadb (
   class {'dc_mariadb::exports':}
 
   class {'dc_mariadb::backupconf':
-    require => [ Class['dc_mariadb::exports'], Class['::mysql::server']]
+    require => Class['dc_mariadb::exports']
   }
 
 }
