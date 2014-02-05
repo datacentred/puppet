@@ -80,6 +80,10 @@ $stdin.each_line do |line|
     puts "[1;32m*[0m Initializing submodules ..."
     %x{git submodule init}
 
+    # Synchronise the submodules with the real repos
+    puts "[1;32m*[0m Synchronising submodules ..."
+    %x{git submodule sync}
+
     # Update submodules as the hash reference may have changed
     puts "[1;32m*[0m Updating submodules ..."
     %x{git submodule update}
