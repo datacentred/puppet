@@ -17,13 +17,13 @@ class dc_profile::glance {
   dc_mariadb::db { $glance_api_db:
     user     => $glance_api_user,
     password => $glance_api_pass,
-    require  => Class['mysql::server'],
+    require  => Class['Dc_mariadb::server'],
   }
 
   dc_mariadb::db { $glance_reg_db:
     user     => $glance_reg_user,
     password => $glance_reg_pass,
-    require  => Class['mysql::server'],
+    require  => Class['Dc_mariadb::server'],
   }
 
   class { 'glance::api':
