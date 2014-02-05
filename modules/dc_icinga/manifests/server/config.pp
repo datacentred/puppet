@@ -296,6 +296,10 @@ class dc_icinga::server::config (
     alias => 'Foreman Proxies',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_mysql':
+    alias => 'MySQL Servers',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -324,6 +328,10 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_tftp_dc':
     command_line => '/usr/lib/nagios/plugins/check_tftp -H $HOSTADDRESS$ -p nagios_test_file',
+  }
+
+  nagios_command { 'check_mysql_dc':
+    command_line => '/usr/lib/nagios/plugins/check_mysql -H $HOSTADDRESS$ -u icinga -p icinga',
   }
 
   ######################################################################
@@ -436,6 +444,13 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_tftp',
     check_command       => 'check_tftp_dc',
     service_description => 'TFTP',
+  }
+
+  nagios_service { 'check_mysql':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_mysql',
+    check_command       => 'check_mysql_dc',
+    service_description => 'MySQL',
   }
 
   ######################################################################
