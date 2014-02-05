@@ -4,7 +4,7 @@ define dc_mariadb::db ($user,$password){
     user     => $user,
     password => $password,
     host     => 'localhost',
-    grant    => ['SELECT', 'UPDATE'],
+    grant    => ['ALL'],
   }
 
 }
