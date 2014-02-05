@@ -27,10 +27,12 @@ class dc_mariadb::backupconf (
   }
 
   class { 'mysql::server::backups':
-    backupuser     => 'backup',
-    backuppassword => hiera(backup_mysql_pw),
-    backupdir      => '/var/dbbackups',
-    backuprotate   => '7',
+    backupuser        => 'backup',
+    backuppassword    => hiera(backup_mysql_pw),
+    backupdir         => '/var/dbbackups',
+    backuprotate      => '7',
+    file_per_database => true,
+    time              => ['3','00']
   }
 
 }
