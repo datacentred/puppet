@@ -26,7 +26,7 @@ class dc_mariadb::backupconf (
     require => File['/var/dbbackups']
   }
 
-  class { 'mysql::server::backups':
+  class { 'mysql::server::backup':
     backupuser        => 'backup',
     backuppassword    => hiera(backup_mysql_pw),
     backupdir         => '/var/dbbackups',
