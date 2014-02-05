@@ -32,13 +32,6 @@ class dc_profile::pgbackup {
     custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
   }
 
-  barman::server { 'keystone':
-    conninfo     => "user=postgres host=keystone password=${keystone_postgres_pw}",
-    ssh_command  => 'ssh postgres@keystone',
-    compression  => 'bzip2',
-    custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
-  }
-
   Ssh_authorized_key <<| tag == 'postgres' |>>
 
   cron { 'barman-backup-friday':
