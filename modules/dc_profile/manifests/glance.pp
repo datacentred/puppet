@@ -61,6 +61,10 @@ class dc_profile::glance {
   }
   contain 'glance::api'
 
+  exported_vars::set { 'glance_api_server':
+    value => "${::fqdn}:9292",
+  }
+
   class { 'glance::registry':
     auth_type         => 'keystone',
     auth_host         => $keystone_host,
