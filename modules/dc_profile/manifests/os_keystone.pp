@@ -25,4 +25,20 @@ class dc_profile::os_keystone {
     region           => 'sal01',
   }
 
+  # OpenStack services get their own tenant
+  keystone_tenant { 'services':
+    ensure  => present,
+    enabled => true,
+  }
+
+  keystone_user { 'glance':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_glance_password),
+    tenant   => 'services',
+  }
+
+  exported_vars::set { 'keystone_host':
+    value => $::fqdn,
+  }
 }
