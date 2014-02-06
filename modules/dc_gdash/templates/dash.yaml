@@ -1,0 +1,3 @@
+:name: <%= @hostname %>
+:description: The cpu, load, etc. usage for <%= @hostname %>
+

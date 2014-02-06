@@ -15,7 +15,6 @@ class dc_gdash (
 
   class { 'dc_gdash::install': } ~>
   class { 'dc_gdash::config': } ~>
-  class { 'dc_gdash::dashing': } ~>
   Class ['dc_gdash']
 
 }
