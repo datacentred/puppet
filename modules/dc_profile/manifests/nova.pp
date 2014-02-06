@@ -77,6 +77,14 @@ class dc_profile::nova {
   }
   contain 'nova::api'
 
+  class { [
+    'nova::scheduler',
+    'nova::objectstore',
+    'nova::cert',
+    'nova::consoleauth',
+    'nova::conductor'
+  ]: }
+
   @@keystone_endpoint { "${os_region}/nova":
     ensure        => present,
     public_url    => "http://${::fqdn}:${nova_port}/v2/%(tenant_id)s",
