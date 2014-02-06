@@ -118,3 +118,9 @@
 [submodule "modules/glance"]
 	path = modules/glance
 	url = https://github.com/spjmurray/puppet-glance
+[submodule "modules/vcsrepo"]
+	path = modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
+[submodule "modules/bundler"]
+	path = modules/bundler
+	url = https://github.com/puppetlabs-operations/puppet-bundler.git
