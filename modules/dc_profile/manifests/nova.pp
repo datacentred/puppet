@@ -71,7 +71,6 @@ class dc_profile::nova {
     admin_user                           => $nova_admin_user,
     admin_password                       => $nova_admin_password,
     enabled_apis                         => $nova_enabled_apis,
-    auth_type                            => 'keystone',
     auth_host                            => $keystone_host,
     auth_uri                             => "http://${keystone_host}:5000/v2.0",
     neutron_metadata_proxy_shared_secret => $neutron_secret,
