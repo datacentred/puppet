@@ -56,6 +56,7 @@ class dc_profile::glance {
     registry_host     => 'localhost',
     auth_type         => 'keystone',
     auth_host         => $keystone_host,
+    auth_uri          => "http://${keystone_host}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
     keystone_password => $keystone_glance_password,
@@ -73,6 +74,7 @@ class dc_profile::glance {
   class { 'glance::registry':
     auth_type         => 'keystone',
     auth_host         => $keystone_host,
+    auth_uri          => "http://${keystone_host}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
     keystone_password => $keystone_glance_password,
