@@ -1,3 +1,4 @@
 class dc_gdash::params {
-  $graphite_host = undef,
+  $graphite_server = hiera(graphite_server)
+  $whisper_root = '/var/opt/graphite/storage/whisper'
 }
