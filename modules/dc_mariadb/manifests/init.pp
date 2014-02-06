@@ -23,6 +23,7 @@ class dc_mariadb (
     require           => Dc_repos::Virtual::Repo['local_mariadb_mirror'],
     override_options => { 'mysqld' => { 'bind_address' => '0.0.0.0' } }
   }
+  contain 'mysql::server'
 
   class { 'dc_mariadb::icinga':
     require => Class['::mysql::server']
