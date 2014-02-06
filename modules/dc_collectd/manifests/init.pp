@@ -34,6 +34,14 @@ class dc_collectd (
     include dc_collectd::snmp
   }
 
+  # Declare ourself
+  @@collectd_dash { $::hostname:
+    load       => true,
+    memory     => true,
+    interfaces => $interfaces,
+    tag        => host,
+  }
+
   contain 'collectd'
 
 }
