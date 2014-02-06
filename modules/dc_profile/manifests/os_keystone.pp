@@ -50,6 +50,29 @@ class dc_profile::os_keystone {
   }
   Keystone_endpoint <<| tag == 'glance_endpoint' |>>
 
+  # Nova bits
+  keystone_user { 'nova':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_nova_password),
+    tenant   => $os_service_tenant,
+  }
+  keystone_user_role { "nova@${os_service_tenant}":
+    ensure => present,
+    roles  => 'admin',
+  }
+  keystone_service { 'nova':
+    ensure      => present,
+    type        => 'compute',
+    description => 'Nova Compute Service',
+  }
+  keystone_service { 'nova_ec2':
+    ensure      => present,
+    type        => 'ec2',
+    description => 'EC2 Service',
+  }
+  Keystone_endpoint <<| tag == 'nova_endpoint' |>>
+
   exported_vars::set { 'keystone_host':
     value => $::fqdn,
   }

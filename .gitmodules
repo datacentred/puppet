@@ -118,3 +118,6 @@
 [submodule "modules/glance"]
 	path = modules/glance
 	url = https://github.com/spjmurray/puppet-glance
+[submodule "modules/cinder"]
+	path = modules/cinder
+	url = https://github.com/stackforge/puppet-cinder
