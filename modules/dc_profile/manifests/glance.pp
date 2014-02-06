@@ -4,6 +4,8 @@ class dc_profile::glance {
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_glance_password = hiera(keystone_glance_password)
 
+  $os_region = hiera(os_region)
+
   $glance_db_root_pw = hiera(glance_db_root_pw)
 
   $glance_api_db   = hiera(glance_api_db)
@@ -69,7 +71,7 @@ class dc_profile::glance {
   }
   contain 'glance::backend::file'
 
-  @@keystone_endpoint { "${::hostname}/glance":
+  @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
     public_url    => "http://${::fqdn}:${glance_port}",
     admin_url     => "http://${::fqdn}:${glance_port}",

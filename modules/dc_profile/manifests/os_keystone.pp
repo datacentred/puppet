@@ -4,6 +4,7 @@ class dc_profile::os_keystone {
   $keystone_db_pw = hiera(keystone_db_pw)
   $keystone_db_host = hiera(keystone_db_host)
   $os_service_tenant = hiera(os_service_tenant)
+  $os_region = hiera(os_region)
 
   class { 'keystone':
     require        => [
@@ -28,7 +29,7 @@ class dc_profile::os_keystone {
     public_address   => $::ipaddress,
     admin_address    => $::ipaddress,
     internal_address => $::ipaddress,
-    region           => 'sal01',
+    region           => $os_region,
   }
 
   # Glance bits
