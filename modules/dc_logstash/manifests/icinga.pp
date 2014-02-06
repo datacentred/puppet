@@ -9,10 +9,11 @@ class dc_logstash::icinga {
   }
 
   file { '/etc/nagios/nrpe.d/logstashes.cfg':
-    ensure => present,
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/dc_logstash/logstashes.cfg'
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    source  => 'puppet:///modules/dc_logstash/logstashes.cfg',
+    require => Package['nagios-nrpe-server']
   }
 
   include dc_icinga::hostgroups
