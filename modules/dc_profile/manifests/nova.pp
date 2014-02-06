@@ -1,4 +1,7 @@
 # Nova controller node
+# As a starter for 10 ;-) it fits the bill, I do however think in time
+# this could be split up into a more modular rather than monolithic
+# blob dependant on what our use case turns out to be - SM
 class dc_profile::nova {
 
   $os_region           = hiera(os_region)
