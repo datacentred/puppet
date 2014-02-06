@@ -90,9 +90,9 @@ class dc_profile::glance {
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
-    public_url    => "http://${::fqdn}:${glance_port}/v2/%(tenant_id)s",
-    admin_url     => "http://${::fqdn}:${glance_port}/v2/%(tenant_id)s",
-    internal_url  => "http://${::fqdn}:${glance_port}/v2/%(tenant_id)s",
+    public_url    => "http://${::fqdn}:${glance_port}",
+    admin_url     => "http://${::fqdn}:${glance_port}",
+    internal_url  => "http://${::fqdn}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
