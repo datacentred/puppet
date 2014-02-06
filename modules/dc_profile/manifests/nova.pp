@@ -79,7 +79,7 @@ class dc_profile::nova {
 
   class { [
     'nova::cert',
-    'nova::conductor'
+    'nova::conductor',
     'nova::consoleauth',
     'nova::scheduler',
     'nova::vncproxy'
