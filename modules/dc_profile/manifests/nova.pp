@@ -82,7 +82,7 @@ class dc_profile::nova {
     'nova::conductor'
     'nova::consoleauth',
     'nova::scheduler',
-    'nova::vncproxy',
+    'nova::vncproxy'
   ]:
     enabled => 'true',
   }
