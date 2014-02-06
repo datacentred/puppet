@@ -78,12 +78,14 @@ class dc_profile::nova {
   contain 'nova::api'
 
   class { [
-    'nova::scheduler',
-    'nova::objectstore',
     'nova::cert',
-    'nova::consoleauth',
     'nova::conductor'
-  ]: }
+    'nova::consoleauth',
+    'nova::scheduler',
+    'nova::vncproxy',
+  ]:
+    enabled => 'true',
+  }
 
   @@keystone_endpoint { "${os_region}/nova":
     ensure        => present,
