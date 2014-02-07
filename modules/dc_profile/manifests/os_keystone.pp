@@ -2,7 +2,6 @@
 class dc_profile::os_keystone {
 
   $keystone_db_pw = hiera(keystone_db_pw)
-  $keystone_db_host = hiera(keystone_db_host)
   $os_service_tenant = hiera(os_service_tenant)
   $os_region = hiera(os_region)
 
