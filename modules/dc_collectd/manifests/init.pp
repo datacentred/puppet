@@ -30,7 +30,7 @@ class dc_collectd (
     graphitehost => $graphite_server,
   }
 
-  @@dc_gdash::hostgraph { "${::hostname}": }
+  @@dc_gdash::hostgraph { $::hostname }
 
   if $::snmptargets {
     include dc_collectd::snmp

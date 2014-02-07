@@ -18,7 +18,7 @@ class dc_gdash::config {
     }
   }
 
-  file { "/etc/apache2/sites-available/gdash.conf":
+  file { '/etc/apache2/sites-available/gdash.conf':
     owner   => root,
     group   => www-data,
     content => template('dc_gdash/gdash.conf.erb'),
@@ -26,10 +26,10 @@ class dc_gdash::config {
     notify  => Service['apache2'],
   }
 
-  file { "/etc/apache2/sites-enabled/20-gdash.conf":
+  file { '/etc/apache2/sites-enabled/20-gdash.conf':
     ensure  => link,
-    target  => "/etc/apache2/sites-available/gdash.conf",
-    require => File["/etc/apache2/sites-available/gdash.conf"],
+    target  => '/etc/apache2/sites-available/gdash.conf',
+    require => File['/etc/apache2/sites-available/gdash.conf'],
     notify  => Service['apache2'],
   }
 
@@ -40,7 +40,7 @@ class dc_gdash::config {
     notify  => Service['apache2'],
   }
 
-  file { "/var/www/gdash/config/gdash.yaml":
+  file { '/var/www/gdash/config/gdash.yaml':
     owner   => root,
     group   => www-data,
     content => template('dc_gdash/gdash.yaml.erb'),
