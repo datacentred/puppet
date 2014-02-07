@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+	ServerAdmin admin@datacentred.co.uk
+
+  ServerName gdash.sal01.datacentred.co.uk 
+
+	DocumentRoot /var/www/gdash/public
+
+	<Directory "/var/www/gdash">
+		Options none
+		AllowOverride None
+    Order allow,deny
+    Allow from all
+	</Directory>
+
+  ErrorLog /var/log/apache2/gdash_error.log
+  CustomLog /var/log/apache2/gdash_access.log common
+
+</VirtualHost>
