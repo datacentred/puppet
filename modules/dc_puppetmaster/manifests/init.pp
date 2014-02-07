@@ -16,6 +16,8 @@
 #
 class dc_puppetmaster {
 
+  class { 'dc_puppetmaster::exports': } ~>
+  class { 'dc_puppetmaster::backup':} ~>
   class { 'dc_puppetmaster::git::install': } ~>
   class { 'dc_puppetmaster::git::config': } ~>
   class { 'dc_puppetmaster::errbot::install': } ~>
