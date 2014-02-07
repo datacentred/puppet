@@ -11,7 +11,9 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_gdash (
   $gdash_root = undef,
-) inherits dc_gdash::params {
+) {
+
+  include dc_gdash::params
 
   class { 'dc_gdash::install': } ~>
   class { 'dc_gdash::config': } ~>
