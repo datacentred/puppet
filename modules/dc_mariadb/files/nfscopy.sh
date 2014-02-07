@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Check the remote directory is mounted
-if cat /proc/mounts | grep -q /var/dbbackups-remote
+if grep -q /var/dbbackups-remote /proc/mounts
 then
     rsync -a --delete /var/dbbackups/ /var/dbbackups-remote/
 else
