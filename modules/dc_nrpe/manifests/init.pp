@@ -15,7 +15,6 @@
 class dc_nrpe (
   $allowed_hosts = '127.0.0.1',
   $ensure_nagios = stopped,
-  $nrpe_commands = [],
 ){
 
   include dc_profile::xinetd

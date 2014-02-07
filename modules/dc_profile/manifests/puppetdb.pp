@@ -12,6 +12,16 @@ class dc_profile::puppetdb {
     database_password  => $puppetdb_pw,
   }
 
+  file { '/etc/nagios/nrpe.d/puppetdb.cfg':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => 'command[check_puppetdb]=/usr/lib/nagios/plugins/check_http -H localhost -p 8080',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact::Def['dc_hostgroup_puppetdb']
 
