@@ -12,12 +12,10 @@
 #
 class dc_profile::icinga_client {
 
-  $nrpe_hosts = hiera(nrpe_hosts)
-  $nrpe_commands = hiera(nrpe_commands)
+  $icinga_ip = hiera(icinga_ip)
 
   class { '::dc_nrpe':
-    allowed_hosts => $nrpe_hosts,
-    nrpe_commands => $nrpe_commands,
+    allowed_hosts => "127.0.0.1 ${icinga_ip}/32",
   } ->
   class { '::dc_icinga::client': }
 
