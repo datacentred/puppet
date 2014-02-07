@@ -121,3 +121,9 @@
 [submodule "modules/cinder"]
 	path = modules/cinder
 	url = https://github.com/stackforge/puppet-cinder
+[submodule "modules/bundler"]
+	path = modules/bundler
+	url = https://github.com/puppetlabs-operations/puppet-bundler.git
+[submodule "modules/vcsrepo"]
+	path = modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
