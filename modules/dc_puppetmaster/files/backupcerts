@@ -1,0 +1,15 @@
+#!/bin/bash
+backupdir=/var/certsbackup
+dateformat=`date +"%d-%m-%Y"`
+# Check the remote directory is mounted
+if cat /proc/mounts | grep -q $backupdir
+then
+    # Backup and gzip the directory
+    tar zcvf $backupdir/certs-$dateformat.tgz /var/lib/puppet/ssl
+    # Rotate the backups, delete older than 7 days
+    find $backupdir/ -mtime +7 -exec rm {} \; 
+else
+    echo "Remote directory does not seem to be mounted"
+    exit 1
+fi
+
