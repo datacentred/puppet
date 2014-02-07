@@ -32,7 +32,8 @@ class dc_nrpe (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('dc_nrpe/nrpe.cfg.erb'),
+    source  => 'puppet:///modules/dc_nrpe/nrpe.cfg',
+    notify  => Service['nagios-nrpe-server'],
   }
 
   service { 'nagios-nrpe-server':
@@ -51,5 +52,15 @@ class dc_nrpe (
     mode    => '0644',
     content => template('dc_nrpe/nrpe.xinetd.erb'),
     notify  => Service['xinetd'],
+  }
+
+  file { '/etc/nagios/nrpe.d/dc_common.cfg':
+    ensure  => file,
+    require => Package['nagios-nrpe-server'],
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/dc_nrpe/dc_common.cfg',
+    notify  => Service['nagios-nrpe-server'],
   }
 }
