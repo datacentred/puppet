@@ -300,6 +300,10 @@ class dc_icinga::server::config (
     alias => 'MySQL Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_logstashes':
+    alias => 'Logstash ElasticSearch Servers',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -367,6 +371,13 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_generic',
     check_command       => 'check_nrpe_1arg!check_total_procs',
     service_description => 'Processes',
+  }
+
+  nagios_service { 'check_logstashes':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_logstashes',
+    check_command       => 'check_nrpe_1arg!check_logstashes',
+    service_description => 'Logstash ES',
   }
 
   nagios_service { 'check_ping':
