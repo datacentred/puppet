@@ -3,7 +3,7 @@ class dc_mirrors::mirrorlist {
 
 include dc_mirrors::virtual
 
-  $ubuntu_mirror_url = hiera(ubuntu_mirror_url)
+  $ubuntu_mirror_url = hiera(ubuntu_mirror_path)
   $ubuntumirrorscomponents = [
     'main',
     'restricted',
