@@ -4,7 +4,7 @@ class dc_logstash::icinga {
     ensure => present,
     owner  => 'root',
     group  => 'root',
-    mode   => '0744',
+    mode   => '0755',
     source => 'puppet:///modules/dc_logstash/es_data_updating_check'
   }
 
