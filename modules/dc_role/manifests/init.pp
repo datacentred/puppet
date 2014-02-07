@@ -39,7 +39,7 @@ class dc_role::platformservices_foreman {
 
 class dc_role::platformservices_logstash {
   include dc_profile::kibana
-  include dc_profile::logstash
+  include dc_profile::logstashnew
 }
 
 class dc_role::platformservices_graphite {
