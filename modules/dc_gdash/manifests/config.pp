@@ -9,10 +9,12 @@ class dc_gdash::config {
     service { 'apache2':
       ensure    => running,
       hasstatus => true,
+      require   => Package['apache2'],
     }
     file { '/etc/apache2/sites-enabled/000-default':
-      ensure => absent,
-      notify => Service['apache2'],
+      ensure  => absent,
+      require => Package['apache2'],
+      notify  => Service['apache2'],
     }
   }
 
@@ -34,6 +36,7 @@ class dc_gdash::config {
   exec { 'enable-headers':
     command => '/usr/sbin/a2enmod headers',
     creates => '/etc/apache2/mods-enabled/headers.load',
+    require => Package['apache2'],
     notify  => Service['apache2'],
   }
 
