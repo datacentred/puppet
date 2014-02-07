@@ -4,6 +4,8 @@
 # blob dependant on what our use case turns out to be - SM
 class dc_profile::nova {
 
+  $keystone_nova_password = hiera(keystone_nova_password)
+
   $os_region           = hiera(os_region)
 
   $nova_mq_username    = hiera(nova_mq_username)
@@ -69,7 +71,7 @@ class dc_profile::nova {
     enabled                              => true,
     admin_tenant_name                    => $nova_admin_tenant,
     admin_user                           => $nova_admin_user,
-    admin_password                       => $nova_admin_password,
+    admin_password                       => $keystone_nova_password,
     enabled_apis                         => $nova_enabled_apis,
     auth_host                            => $keystone_host,
     auth_uri                             => "http://${keystone_host}:5000/v2.0",
