@@ -17,7 +17,7 @@ class dc_profile::horizon {
     cache_server_ip       => $cache_server,
     cache_server_port     => $cache_port,
     secret_key            => $horizon_secret_key,
-    keystone_url          => "http://${keystone_host}:35357/v2.0",
+    keystone_url          => "http://${keystone_host}:5000/v2.0",
     keystone_default_role => '_member_',
     django_debug          => true,
     api_result_limit      => 1000,
