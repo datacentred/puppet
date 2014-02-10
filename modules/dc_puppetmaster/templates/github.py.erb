@@ -82,6 +82,9 @@ class GitHub(BotPlugin):
             # todo: The actual branch name is available in the regex
             #       matches above, probably buggers up with submodules
             subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                             'cd /etc/puppet/environments/production; git pull; ' \
-                             'git submodule init; git submodule update'])
+                             'cd /etc/puppet/environments/production;' \
+                             'git pull;' \
+                             'git submodule init;' \
+                             'git submodule sync;' \
+                             'git submodule update'])
 
