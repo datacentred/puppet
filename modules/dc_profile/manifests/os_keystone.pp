@@ -36,6 +36,7 @@ class dc_profile::os_keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_glance_password),
+    email    => hiera(sysmailaddress),
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "glance@${os_service_tenant}":
@@ -54,6 +55,7 @@ class dc_profile::os_keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_nova_password),
+    email    => hiera(sysmailaddress),
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "nova@${os_service_tenant}":
