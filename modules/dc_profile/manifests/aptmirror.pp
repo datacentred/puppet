@@ -2,7 +2,7 @@ class dc_profile::aptmirror {
 
   $storagedir = hiera(storagedir)
 
-  if $hostgroup =~ /HA\ Raid/ {
+  if $::hostgroup =~ /HA\ Raid/ {
     $base_path = "${storagedir}/apt-mirror"
   }
   else {
