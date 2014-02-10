@@ -1,10 +1,8 @@
 class dc_kibana::install {
-  file {
-      "/var/www/kibana/":
-        source => "puppet:///modules/dc_kibana/",
-        ensure => directory,
-        replace => true,
+  file { '/var/www/kibana':
+        ensure  => directory,
+        source  => 'puppet:///modules/dc_kibana/',
         purge   => true,
-        recurse => true;
+        recurse => true,
   }
 }
