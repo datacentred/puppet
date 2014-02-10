@@ -1,5 +1,7 @@
 class dc_gdash::config {
 
+  $whisper_root = $dc_gdash::params::whisper_root
+
   # Additional considerations if we're not installing this 
   # on the Graphite server itself
   if $::fqdn != $dc_gdash::params::graphite_server {

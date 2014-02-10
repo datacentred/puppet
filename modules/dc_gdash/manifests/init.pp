@@ -10,6 +10,7 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class dc_gdash (
+  $graphite_server = undef,
   $gdash_root = undef,
 ) {
 
@@ -18,5 +19,4 @@ class dc_gdash (
   class { 'dc_gdash::install': } ~>
   class { 'dc_gdash::config': } ~>
   Class ['dc_gdash']
-
 }
