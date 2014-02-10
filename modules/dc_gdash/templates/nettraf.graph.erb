@@ -1,12 +1,16 @@
-title   "Traffic on eth0"
+title   "Traffic on <%= @ifname %>"
 area    :first
 hide_legend false
+<%-
+  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-eth0.if_packets.tx"
+  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-eth0.if_packets.tx"
+-%>
 
 field :receiving, :color => "green",
                :alias => "Receiving",
-               :data  => "node.interface.packets.eth0.rx"
+               :data  => "<%= rxpackets %>"
 
 field :transmitting, :color => "blue",
                :alias => "Transmiting",
-               :data  => "node.interface.packets.eth0.tx"
+               :data  => "<%= txpackets %>"
 
