@@ -3,5 +3,5 @@ class dc_profile::gdash {
     gdash_root => '/var/www/gdash'
   }
 
-  Dc_gdash::Hostgraphs <<| |>>
+  Dc_gdash::Hostgraph <<| |>>
 }
