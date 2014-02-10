@@ -1,4 +1,4 @@
-# Class to deply horizon
+# Class to deploy horizon
 class dc_profile::horizon {
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
