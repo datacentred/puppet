@@ -3,8 +3,9 @@ define dc_gdash::hostgraph (
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
+  $hostpath = "${tplpath}/hosts/${hostname}"
 
-  file { "${tplpath}/hosts/${hostname}":
+  file { "${hostpath}":
     ensure  => directory,
     recurse => true,
   }
