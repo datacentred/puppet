@@ -2,7 +2,6 @@ title       "RAM Usage (in percent)"
 area        :stacked
 description "RAM usage (in percent)"
 hide_legend false
-
 <%-
   memused   = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-used" 
   memfree   = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-free"
@@ -13,20 +12,16 @@ hide_legend false
 field :use,    :color => "red",
                :alias => "used by application",
                :data  => "asPercent(diffSeries(<%= memused %>,<%= memcached %>,<%= membuffed %>),sumSeries(<%= memused %>, <%= memfree %>))"
-/
 
 field :buffer, :color => "orange",
                :alias => "buffer",
-               :data  => "asPercent(<%= membuffed %>)"
-/
+               :data  => "asPercent(<%= membuffed %>,sumSeries(<%= memused %>, <%= memfree %>))"
 
 field :cache,  :color => "yellow",
                :alias => "cache",
                :data  => "asPercent(<%= memcached %>,sumSeries(<%= memused %>, <%= memfree %>))"
-/
 
 field :free,   :color => "green",
                :alias => "free",
-               :data  => "asPercent(<%= memfree %>)"
-/
+               :data  => "asPercent(<%= memfree %>,sumSeries(<%= memused %>, <%= memfree %>))"
 
