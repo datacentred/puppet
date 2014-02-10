@@ -13,9 +13,9 @@ class dc_profile::aptmirror {
   include apache
 
   apache::vhost { 'mirror':
-    docroot => "${base_path}/mirror",
-    require => [ File["${base_path}"], Class['apt_mirror']],
-    admin   => hiera(sysmailaddress)
+    docroot     => "${base_path}/mirror",
+    require     => [ File["${base_path}"], Class['apt_mirror']],
+    serveradmin => hiera(sysmailaddress)
   }
 
   file { "${base_path}":
