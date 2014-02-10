@@ -1,6 +1,6 @@
 class dc_kibana::apache {
-  apache::site { 'logstash': 
+  apache::vhost { 'logstash': 
     docroot => '/var/www/kibana',
-    admin   => 'admin@datacentred.co.uk'
+    require => File['/var/www/kibana'],
   }
 }

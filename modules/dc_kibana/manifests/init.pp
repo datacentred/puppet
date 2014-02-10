@@ -5,7 +5,9 @@
 class dc_kibana (
   $elasticsearch_host = '',
 ){
-  class { 'dc_kibana::apache': } ~>
+
+  include dc_kibana::apache
+
   class { 'dc_kibana::install': } ~>
   class { 'dc_kibana::config': } ~>
   Class ['dc_kibana']
