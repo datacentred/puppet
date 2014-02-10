@@ -38,4 +38,8 @@ class dc_icinga::server::install {
     ensure => present,
   }
 
+  package { 'python-keystoneclient':
+    ensure => present,
+  }
+
 }
