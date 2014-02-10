@@ -21,11 +21,16 @@ class dc_profile::foreman {
   }
 
   # As the database is remote and unmanaged by the class
-  # we need to explicitly set up all the tables, as we're not great
-  # with puppet yet just do it unconditionally, doesn't seem to have
-  # any detrimental effects...
-  exec { 'explicit_dbmigrate':
-    command     => '/usr/share/foreman/extras/dbmigrate',
+  # we need to explicitly set up all the tables
+  exec { 'foreman_dbmigrate':
+    command     => '/usr/sbin/foreman-rake db:migrate',
+    user        => 'foreman',
+    environment => 'HOME=/usr/share/foreman',
+    logoutput   => 'on_failure',
+    require     => Class['::foreman'],
+  } ->
+  exec { 'foreman_dbseed':
+    command     => '/usr/sbin/foreman-rake db:seed',
     user        => 'foreman',
     environment => 'HOME=/usr/share/foreman',
     logoutput   => 'on_failure',
