@@ -2,7 +2,7 @@ class dc_profile::aptmirror {
 
   $storagedir = hiera(storagedir)
 
-  if $hostgroup =~ /HA\ Raid/ {
+  if $::hostgroup =~ /HA\ Raid/ {
     $base_path = "${storagedir}/apt-mirror"
   }
   else {
@@ -12,10 +12,10 @@ class dc_profile::aptmirror {
   include dc_mirrors::mirrorlist
   include apache
 
-  apache::site { 'mirror':
-    docroot => "${base_path}/mirror",
-    require => [ File["${base_path}"], Class['apt_mirror']],
-    admin   => hiera(sysmailaddress)
+  apache::vhost { 'mirror':
+    docroot     => "${base_path}/mirror",
+    require     => [ File["${base_path}"], Class['apt_mirror']],
+    serveradmin => hiera(sysmailaddress)
   }
 
   file { "${base_path}":
