@@ -13,15 +13,15 @@ define dc_gdash::hostgraph () {
   }
 
   file { "${hostpath}/load.graph": 
-    content => template('dc_gdash/load.graph') 
+    content => template('dc_gdash/load.graph.erb') 
   }
 
   file { "{$hostpath}/memory.graph": 
-    content => template('dc_gdash/memory.graph') 
+    content => template('dc_gdash/memory.graph.erb') 
   }
 
   file { "{$hostpath}/nettraf.graph": 
-    content => template('dc_gdash/nettraf.graph') 
+    content => template('dc_gdash/nettraf.graph.erb') 
   }
 
 }
