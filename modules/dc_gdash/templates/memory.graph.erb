@@ -17,7 +17,7 @@ field :use,    :color => "red",
 
 field :buffer, :color => "orange",
                :alias => "buffer",
-               :data  => "asPercent(<%= membuffed %>,sumSeries(<%= memused %>, <%= memfree %>))"
+               :data  => "asPercent(<%= membuffed %>)"
 /
 
 field :cache,  :color => "yellow",
@@ -27,6 +27,6 @@ field :cache,  :color => "yellow",
 
 field :free,   :color => "green",
                :alias => "free",
-               :data  => "asPercent(<%= memfree %>,sumSeries(<%= memused %>, <%= memfree %>))"
+               :data  => "asPercent(<%= memfree %>)"
 /
 
