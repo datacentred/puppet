@@ -3,23 +3,30 @@ area        :stacked
 description "RAM usage (in percent)"
 hide_legend false
 
+<%-
+  memused   = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-used" 
+  memfree   = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-free"
+  memcached = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-cached"
+  membuffed = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-buffered"
+-%>
+
 field :use,    :color => "red",
                :alias => "used by application",
-               :data  => "asPercent(diffSeries(node.memory.used,node.memory.cached,node.memory.buffered),sumSeries(node.memory.used, node.memory.free))"
+               :data  => "asPercent(diffSeries(<%= memused %>,<%= memcached %>,<%= membuffed %>),sumSeries(<%= memused %>, <%= memfree %>))"
 /
 
 field :buffer, :color => "orange",
                :alias => "buffer",
-               :data  => "asPercent(node.memory.buffered,sumSeries(node.memory.used, node.memory.free))"
+               :data  => "asPercent(<%= membuffed %>,sumSeries(<%= memused %>, <%= memfree %>))"
 /
 
 field :cache,  :color => "yellow",
                :alias => "cache",
-               :data  => "asPercent(node.memory.cached,sumSeries(node.memory.used, node.memory.free)"
+               :data  => "asPercent(<%= memcached %>,sumSeries(<%= memused %>, <%= memfree %>))"
 /
 
 field :free,   :color => "green",
                :alias => "free",
-               :data  => "asPercent(node.memory.free,sumSeries(node.memory.used, node.memory.free))"
+               :data  => "asPercent(<%= memfree %>,sumSeries(<%= memused %>, <%= memfree %>))"
 /
 
