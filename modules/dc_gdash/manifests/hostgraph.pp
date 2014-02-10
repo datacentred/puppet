@@ -3,7 +3,7 @@ define dc_gdash::hostgraph (
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
-  $hostpath = "${tplpath}/${hostname}/collectd"
+  $hostpath = "${tplpath}/${hostname}"
 
   file { $hostpath: 
     ensure  => directory,
