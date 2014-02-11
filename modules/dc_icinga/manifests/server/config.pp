@@ -33,6 +33,7 @@ class dc_icinga::server::config (
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
+  $foreman_icinga_password = hiera(foreman_icinga_password)
 
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
@@ -79,6 +80,14 @@ class dc_icinga::server::config (
     group  => 'root',
     mode   => '0755',
     source => 'puppet:///modules/dc_icinga/check_keystone',
+  }
+
+  file { '/usr/lib/nagios/plugins/check_foreman':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/dc_icinga/check_foreman',
   }
 
   ######################################################################
@@ -322,6 +331,11 @@ class dc_icinga::server::config (
   nagios_hostgroup { 'dc_hostgroup_nfs':
     alias => 'NFS Servers',
   }
+
+  nagios_hostgroup { 'dc_hostgroup_foreman':
+    alias => 'Foreman Servers',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -361,9 +375,12 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_keystone_dc':
-    command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://${keystone_host}:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
+    command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS$\:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
   }
 
+  nagios_command { 'check_foreman_dc':
+    command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_password}"
+  }
   ######################################################################
   # Services
   ######################################################################
@@ -497,11 +514,19 @@ class dc_icinga::server::config (
     service_description => 'MySQL',
   }
 
+<<<<<<< HEAD
   nagios_service { 'check_nfs':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nfs',
     check_command       => 'check_nfs_dc',
     service_description => 'NFS',
+=======
+  nagios_service { 'check_foreman':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_foreman',
+    check_command       => 'check_foreman_dc',
+    service_description => 'Foreman',
+>>>>>>> Add Foreman hostgroup and checks
   }
   ######################################################################
   # Per client storeconfig data
