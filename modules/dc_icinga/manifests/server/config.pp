@@ -319,6 +319,9 @@ class dc_icinga::server::config (
     alias => 'Openstack Keystone Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_nfs':
+    alias => 'NFS Servers',
+  }
   ######################################################################
   # Commands
   ######################################################################
@@ -351,6 +354,10 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_mysql_dc':
     command_line => '/usr/lib/nagios/plugins/check_mysql -H $HOSTADDRESS$ -u icinga -p icinga',
+  }
+
+  nagios_command { 'check_nfs_dc':
+    command_line => '/usr/lib/nagios/plugins/check_rpc -H $HOSTADDRESS$ -C nfs -c2,3,4',
   }
 
   nagios_command { 'check_keystone_dc':
@@ -490,6 +497,12 @@ class dc_icinga::server::config (
     service_description => 'MySQL',
   }
 
+  nagios_service { 'check_nfs':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nfs',
+    check_command       => 'check_nfs_dc',
+    service_description => 'NFS',
+  }
   ######################################################################
   # Per client storeconfig data
   ######################################################################

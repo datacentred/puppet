@@ -42,4 +42,15 @@ class dc_icinga::server::install {
     ensure => present,
   }
 
+  package { 'nfs-common':
+    ensure => present,
+  }
+
+  # Fix the RPC check, easiest way is to symlink
+  file { '/usr/bin/rpcinfo':
+    ensure  => link,
+    target  => '/usr/sbin/rpcinfo',
+    require => Package['nfs-common'],
+  }
+
 }
