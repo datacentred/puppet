@@ -375,7 +375,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_keystone_dc':
-    command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS\$\:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
+    command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS\$:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
   }
 
   nagios_command { 'check_foreman_dc':
