@@ -83,8 +83,9 @@ class dc_profile::os_keystone {
     ensure  => present,
     enabled => true,
   }
-  keystone_role { 'monitor':
+  keystone_user_role { 'icinga@icinga':
     ensure => present,
+    roles  => admin,
   }
   keystone_user { 'icinga':
     ensure   => present,
