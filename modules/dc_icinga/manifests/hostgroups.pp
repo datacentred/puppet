@@ -16,5 +16,6 @@ class dc_icinga::hostgroups {
   @dc_external_facts::fact::def { 'dc_hostgroup_mysql': }
   @dc_external_facts::fact::def { 'dc_hostgroup_logstashes': }
   @dc_external_facts::fact::def { 'dc_hostgroup_keystone': }
+  @dc_external_facts::fact::def { 'dc_hostgroup_nfs': }
 
 }
