@@ -33,7 +33,7 @@ class dc_icinga::server::config (
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
-  $foreman_icinga_password = hiera(foreman_icinga_password)
+  $foreman_icinga_pw = hiera(foreman_icinga_pw)
 
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
@@ -379,7 +379,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_foreman_dc':
-    command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_pw}"
   }
   ######################################################################
   # Services
