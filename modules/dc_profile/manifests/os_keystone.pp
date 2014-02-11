@@ -77,4 +77,23 @@ class dc_profile::os_keystone {
   exported_vars::set { 'keystone_host':
     value => $::fqdn,
   }
+
+  # Icinga monitoring
+  keystone_tenant { 'icinga':
+    ensure  => present,
+    enabled => true,
+  }
+  keystone_role { 'monitor':
+    ensure => present,
+  }
+  keystone_user { 'icinga':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_icinga_password),
+    email    => hiera(sysmailaddress),
+    tenant   => 'icinga'
+  }
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact::Def['dc_hostgroup_keystone']
+
 }

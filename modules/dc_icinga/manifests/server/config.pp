@@ -31,6 +31,9 @@ class dc_icinga::server::config (
   $dc_services_file      = "${obj_path}/dc_services.cfg"
   $dc_commands_file      = "${cfg_path}/commands.cfg"
 
+  $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
+  $keystone_icinga_password = hiera(keystone_icinga_password)
+
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
   exec { 'icinga_cgi_passwd':
@@ -68,6 +71,14 @@ class dc_icinga::server::config (
     group  => 'root',
     mode   => '0755',
     source => 'puppet:///modules/dc_icinga/check_tftp',
+  }
+
+  file { '/usr/lib/nagios/plugins/check_keystone':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/dc_icinga/check_keystone',
   }
 
   ######################################################################
@@ -304,6 +315,10 @@ class dc_icinga::server::config (
     alias => 'Logstash ElasticSearch Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_keystone':
+    alias => 'Openstack Keystone Servers',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -336,6 +351,10 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_mysql_dc':
     command_line => '/usr/lib/nagios/plugins/check_mysql -H $HOSTADDRESS$ -u icinga -p icinga',
+  }
+
+  nagios_command { 'check_keystone_dc':
+    command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://${keystone_host}:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
   }
 
   ######################################################################
@@ -378,6 +397,13 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_logstashes',
     check_command       => 'check_nrpe_1arg!check_logstashes',
     service_description => 'Logstash ES',
+  }
+
+  nagios_service { 'check_keystone':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_keystone',
+    check_command       => 'check_keystone_dc',
+    service_description => 'Keystone',
   }
 
   nagios_service { 'check_ping':
