@@ -514,19 +514,18 @@ class dc_icinga::server::config (
     service_description => 'MySQL',
   }
 
-<<<<<<< HEAD
   nagios_service { 'check_nfs':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nfs',
     check_command       => 'check_nfs_dc',
     service_description => 'NFS',
-=======
+  }
+  
   nagios_service { 'check_foreman':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_foreman',
     check_command       => 'check_foreman_dc',
     service_description => 'Foreman',
->>>>>>> Add Foreman hostgroup and checks
   }
   ######################################################################
   # Per client storeconfig data
