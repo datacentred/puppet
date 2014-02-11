@@ -89,5 +89,6 @@ if msgs:
     print ", ".join(msgs)
     sys.exit(STATE_WARNING)
 
-print "Got token %s for user %s and tenant %s" % (c.auth_token, c.auth_user_id, c.auth_tenant_id)
+#print "Got token %s for user %s and tenant %s" % (c.auth_token, c.auth_user_id, c.auth_tenant_id)
+print "Got token for user %s and tenant %s" % (c.auth_user_id, c.auth_tenant_id)
 sys.exit(STATE_OK)
