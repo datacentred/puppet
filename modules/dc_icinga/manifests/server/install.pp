@@ -53,4 +53,12 @@ class dc_icinga::server::install {
     require => Package['nfs-common'],
   }
 
+  package { 'libwww-perl':
+    ensure => present,
+  }
+
+  package { 'libjson-perl':
+    ensure => present,
+  }
+
 }
