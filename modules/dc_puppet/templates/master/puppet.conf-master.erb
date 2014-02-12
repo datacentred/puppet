@@ -1,0 +1,20 @@
+[master]
+    autosign       = $confdir/autosign.conf { mode = 664 }
+<% if @reports -%>
+    reports        = <%= scope.lookupvar('::dc_puppet::params::reports') %>
+<% end -%>
+<% if @external_nodes -%>
+    external_nodes = <%= scope.lookupvar('::dc_puppet::params::external_nodes') %>
+    node_terminus  = exec
+<% end -%>
+    ca             = true
+    ssldir         = <%= scope.lookupvar('::dc_puppet::params::ssldir') %>
+    certname       = <%= @fqdn %>
+<% if @storeconfigs -%>
+    storeconfigs   = true
+    storeconfigs_backend = <%= scope.lookupvar('::dc_puppet::params::storeconfigs_backend') %>
+<% end -%>
+
+    manifest       = /etc/puppet/environments/$environment/manifests/site.pp
+    modulepath     = /etc/puppet/environments/$environment/modules
+    config_version =

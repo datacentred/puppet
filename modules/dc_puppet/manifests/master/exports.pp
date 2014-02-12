@@ -1,4 +1,4 @@
-# Class: dc_puppetmaster::exports
+# Class: dc_puppet::master::exports
 #
 # Exports the file and nfs export classes for the server to pick up
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_puppetmaster::exports {
+class dc_puppet::master::exports {
 
   $storagedir = hiera(storagedir)
 

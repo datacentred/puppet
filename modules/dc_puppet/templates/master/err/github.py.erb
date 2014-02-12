@@ -3,6 +3,7 @@ from HTMLParser import HTMLParser
 import logging
 import re
 import subprocess
+import random
 
 class MLStripper(HTMLParser):
     """
@@ -61,12 +62,16 @@ class GitHub(BotPlugin):
         if match != None:
             # Provide visual feed back in the channel that we're
             # actually doing something.  Ponies are good for this
+            ponies = [
+              'http://goo.gl/a04HdJ',
+              'http://goo.gl/cpz7Ho',
+              'http://goo.gl/xGSZzH',
+              'http://puu.sh/1AEkZ'
+            ]
             self.send(message.getFrom(), match.group(1) +
                       ' performed a pull request merge',
                       message_type=message.getType())
-            self.send(message.getFrom(), 'http://images1.wikia.nocookie.net/' \
-                      '__cb20110314162139/mlpfanart/images/1/19/' \
-                      'Apple_Bloom_chasing_her_tail.gif',
+            self.send(message.getFrom(), random.choice(ponies),
                       message_type=message.getType())
 
             # Become the git user and fetch the production branch, this

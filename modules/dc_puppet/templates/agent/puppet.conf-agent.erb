@@ -1,0 +1,30 @@
+[agent]
+    # The file in which puppetd stores a list of the classes
+    # associated with the retrieved configuratiion.  Can be loaded in
+    # the separate ``puppet`` executable using the ``--loadclasses``
+    # option.
+    # The default value is '$statedir/classes.txt'.
+    classfile = $vardir/classes.txt
+
+    # Where puppetd caches the local configuration.  An
+    # extension indicating the cache format is added automatically.
+    # The default value is '$confdir/localconfig'.
+    localconfig = $vardir/localconfig
+
+    # Disable the default schedules as they cause continual skipped
+    # resources to be displayed in Foreman - only for Puppet >= 3.4
+    default_schedules = false
+
+    report        = true
+    pluginsync    = <%= scope.lookupvar('::dc_puppet::params::pluginsync') %>
+    masterport    = <%= scope.lookupvar('::dc_puppet::params::masterport') %>
+    environment   = <%= scope.lookupvar('::dc_puppet::params::environment') %>
+    certname      = <%= @fqdn %>
+    server        = <%= @server %>
+    listen        = <%= scope.lookupvar('::dc_puppet::params::listen') %>
+    splay         = <%= scope.lookupvar('::dc_puppet::params::splay') %>
+    runinterval   = <%= scope.lookupvar('::dc_puppet::params::runinterval') %>
+    noop          = <%= scope.lookupvar('::dc_puppet::params::noop') %>
+    show_diff     = <%= scope.lookupvar('::dc_puppet::params::show_diff') %>
+    configtimeout = <%= scope.lookupvar('::dc_puppet::params::configtimeout') %>
+

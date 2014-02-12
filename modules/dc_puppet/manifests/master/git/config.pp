@@ -5,17 +5,26 @@
 # - Installs a list of authorized keys to allow user access
 # The repository can be accessed via
 # - git@hostname:puppet.git
-class dc_puppetmaster::git::config {
+class dc_puppet::master::git::config {
+
+  include dc_puppet::master::git::params
+  $home   = $dc_puppet::master::git::params::home
+  $repo   = $dc_puppet::master::git::params::repo
+  $remote = $dc_puppet::master::git::params::remote
 
   # We need a user and group for all users to login as
   # to get to the master copy of the repository
   group { 'git':
     ensure  => present,
   }
+
+  # Become a member of the puppet group so we have write
+  # access to the environments
   user { 'git':
     ensure      => present,
     gid         => 'git',
-    home        => '/home/git',
+    groups      => 'puppet',
+    home        => $home,
     managehome  => true,
     shell       => '/usr/bin/git-shell',
     require     => Group['git'],
@@ -30,53 +39,51 @@ class dc_puppetmaster::git::config {
 
   # Install the ssh keys to grant access to the GitHub
   # backup servers
-  file { '/home/git/.ssh':
+  file { "${home}/.ssh":
     ensure  => directory,
     require => User['git'],
   }
-  file { '/home/git/.ssh/id_rsa':
+
+  file { "${home}/.ssh/id_rsa":
     ensure  => present,
     mode    => '0400',
-    content => template('dc_puppetmaster/id_rsa'),
-    require => File['/home/git/.ssh'],
+    content => template('dc_puppet/master/git/id_rsa'),
+    require => File["${home}/.ssh"],
   }
-  file { '/home/git/.ssh/id_rsa.pub':
+
+  file { "${home}/.ssh/id_rsa.pub":
     ensure  => present,
-    content => template('dc_puppetmaster/id_rsa.pub'),
-    require => File['/home/git/.ssh'],
+    content => template('dc_puppet/master/git/id_rsa.pub'),
+    require => File["${home}/.ssh"],
   }
-  file { '/home/git/.ssh/known_hosts':
+
+  file { "${home}/.ssh/known_hosts":
     ensure  => present,
-    content => template('dc_puppetmaster/known_hosts'),
-    require => File['/home/git/.ssh'],
+    content => template('dc_puppet/master/git/known_hosts'),
+    require => File["${home}/.ssh"],
   }
 
   # Clone the puppet repository from GitHub onto the puppet
   # master
   exec { 'puppet_master_clone_git':
-    command => 'bash -c "if [ ! -e /home/git/puppet.git ]; then \
-                  sudo -u git git clone --bare \
-                    git@github.com:datacentred/puppet.git \
-                    /home/git/puppet.git; \
-                fi"',
-    path    => ['/bin', '/usr/bin'],
-    require => [File['/home/git/.ssh/id_rsa'], File['/home/git/.ssh/known_hosts']],
+    command => "/usr/bin/git clone --bare ${remote} ${repo}",
+    user    => 'git',
+    creates => $repo,
+    require => [
+      File["${home}/.ssh/id_rsa"],
+      File["${home}/.ssh/known_hosts"]
+    ],
   }
 
   # Setup the users authorized to access the repositiory
-  # this is dumb for the moment and we just allow all
-  # users, but the eruby template could be extended to do
-  # some better checks based on the hiera data
-  $users = hiera('users')
-
-  file { '/home/git/.ssh/authorized_keys':
-    ensure  => present,
-    content => template('dc_puppetmaster/authorized_keys.erb'),
-    require => User['git'],
+  $user_hash = hiera(users)
+  $user_list = keys($user_hash)
+  dc_puppet::master::git::authorized_key { $user_list:
+    hash => hiera(ssh_keys),
   }
 
   # Finally keep git shell happy
-  file { '/home/git/git-shell-commands':
+  file { "${home}/git-shell-commands":
     ensure  => directory,
     require => User['git'],
   }
