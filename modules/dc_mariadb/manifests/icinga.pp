@@ -20,7 +20,7 @@ class dc_mariadb::icinga {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact::Def['dc_hostgroup_mysql']
+  realize Dc_external_facts::Fact['dc_hostgroup_mysql']
 
 }
 

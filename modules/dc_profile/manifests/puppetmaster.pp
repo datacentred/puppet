@@ -44,7 +44,7 @@ class dc_profile::puppetmaster {
   class { 'dc_puppetmaster::backup': }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact::Def['dc_hostgroup_puppetmaster']
-  realize Dc_external_facts::Fact::Def['dc_hostgroup_foreman_proxy']
+  realize Dc_external_facts::Fact['dc_hostgroup_puppetmaster']
+  realize Dc_external_facts::Fact['dc_hostgroup_foreman_proxy']
 
 }

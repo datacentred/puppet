@@ -20,7 +20,7 @@ class dc_profile::icinga_server {
   anchor { 'dc_profile::icinga_server::end': }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact::Def['dc_hostgroup_http']
+  realize Dc_external_facts::Fact['dc_hostgroup_http']
 
 }
 

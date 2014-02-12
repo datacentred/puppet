@@ -95,6 +95,6 @@ class dc_profile::os_keystone {
     tenant   => 'icinga'
   }
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact::Def['dc_hostgroup_keystone']
+  realize Dc_external_facts::Fact['dc_hostgroup_keystone']
 
 }
