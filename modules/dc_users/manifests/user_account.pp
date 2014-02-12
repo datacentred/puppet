@@ -18,12 +18,8 @@ define dc_users::user_account (
     group  => $hash[$title]['gid'],
     mode   => '0700',
   } ->
-  ssh_authorized_key { "dc_users::user_account ${title}":
-    ensure => present,
-    name   => $title,
-    user   => $title,
-    type   => 'ssh-rsa',
-    key    => $hash[$title]['sshkey'],
+  dc_users::ssh_authorized_key { "${title}@${title}":
+    hash => $hash,
   }
 
 }
