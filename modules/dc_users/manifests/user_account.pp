@@ -6,6 +6,7 @@ define dc_users::user_account {
   user { "dc_users::user_account ${title}":
     ensure     => present,
     name       => $title,
+    password   => $hash[$title]['pass'],
     uid        => $hash[$title]['uid'],
     gid        => $hash[$title]['gid'],
     shell      => '/bin/bash',
