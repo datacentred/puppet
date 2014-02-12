@@ -1,8 +1,11 @@
 # Class: dc_users
 #
-# This is the dc_users class
+#   Class to instantiate users based on groupings defined
+#   in hiera
 #
 # Parameters:
+#
+#   $title - name of the group to instantiate
 #
 # Actions:
 #
@@ -10,5 +13,16 @@
 #
 # Sample Usage:
 #
+#   dc_users { 'admins': }
+#   dc_users { 'operators': }
+#
 # [Remember: No empty lines between comments and class definition]
-class dc_users {}
+define dc_users {
+
+  $group = hiera($title)
+  $users = keys($group)
+  dc_users::user_account { $users:
+    hash => $group,
+  }
+
+}
