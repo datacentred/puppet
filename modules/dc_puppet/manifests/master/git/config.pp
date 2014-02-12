@@ -75,12 +75,8 @@ class dc_puppet::master::git::config {
     ],
   }
 
-  # Setup the users authorized to access the repositiory
-  $user_hash = hiera(users)
-  $user_list = keys($user_hash)
-  dc_puppet::master::git::authorized_key { $user_list:
-    hash => hiera(ssh_keys),
-  }
+  # Authorize admins to use the git account
+  dc_users::group_account_authorization { 'admins@git': }
 
   # Finally keep git shell happy
   file { "${home}/git-shell-commands":
