@@ -1,6 +1,6 @@
 #
 define dc_users::user_account (
-  $hash => undef,
+  $hash = undef,
 ) {
 
   user { "dc_users::user_account ${title}":
