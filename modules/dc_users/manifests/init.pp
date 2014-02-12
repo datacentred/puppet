@@ -19,7 +19,10 @@
 # [Remember: No empty lines between comments and class definition]
 define dc_users {
 
-  $users = keys(hiera($title))
-  dc_users::user_account { $users: }
+  $group = hiera($title)
+  $users = keys($group)
+  dc_users::user_account { $users:
+    hash => $group,
+  }
 
 }
