@@ -6,12 +6,12 @@ class dc_profile::hpblade {
 
   package { ['hpacucli', 'cciss-vol-status' ]:
     ensure  => installed,
-    require => Dc_repos::Virtual::Repo['local_hpsupport_mirror'],
+    require => Dc_repos::Repo['local_hpsupport_mirror'],
   }
 
   class { 'hpilo':
     dhcp => true,
-    require => Dc_repos::Virtual::Repo['local_hpsupport_mirror'],
+    require => Dc_repos::Repo['local_hpsupport_mirror'],
   }
 
 }

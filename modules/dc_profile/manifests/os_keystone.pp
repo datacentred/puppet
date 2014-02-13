@@ -7,7 +7,7 @@ class dc_profile::os_keystone {
 
   class { 'keystone':
     require        => [
-      Dc_repos::Virtual::Repo['local_cloudarchive_mirror'],
+      Dc_repos::Repo['local_cloudarchive_mirror'],
       Dc_mariadb::Db['keystone']
     ],
     verbose        => true,

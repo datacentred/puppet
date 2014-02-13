@@ -4,7 +4,7 @@ class dc_profile::pgbackup {
   $db0_postgres_pw = hiera(db0_postgres_pw)
   $keystone_postgres_pw = hiera(keystone_postgres_pw)
 
-  realize Dc_repos::Virtual::Repo['local_postgres_mirror']
+  realize Dc_repos::Repo['local_postgres_mirror']
 
   if $::barman_key {
 
@@ -21,7 +21,7 @@ class dc_profile::pgbackup {
   }
 
   class { 'barman':
-    require => Dc_repos::Virtual::Repo['local_postgres_mirror'],
+    require => Dc_repos::Repo['local_postgres_mirror'],
     home    => hiera(barman_path),
   }
 

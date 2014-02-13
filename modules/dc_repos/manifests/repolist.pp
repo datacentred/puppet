@@ -1,6 +1,5 @@
+#
 class dc_repos::repolist {
-
-include dc_repos::virtual
 
   $mirrorserver           = hiera(mirror_server)
   $ubuntumirrorpath       = hiera(ubuntu_mirror_path)
@@ -18,28 +17,28 @@ include dc_repos::virtual
   $collectdmirrorpath     = hiera(collectd_mirror_path)
   $mariadbmirrorpath      = hiera(mariadb_mirror_path)
 
-  @dc_repos::virtual::repo { 'local_precise_mirror':
+  @dc_repos::repo { 'local_precise_mirror':
     location => "${mirrorserver}/${ubuntumirrorpath}",
     release  => 'precise',
     repos    => 'main restricted universe multiverse',
     tag      => baserepos
   }
 
-  @dc_repos::virtual::repo { 'local_precise_updates_mirror':
+  @dc_repos::repo { 'local_precise_updates_mirror':
     location => "${mirrorserver}/${ubuntumirrorpath}",
     release  => 'precise-updates',
     repos    => 'main restricted universe multiverse',
     tag      => baserepos
   }
 
-  @dc_repos::virtual::repo { 'local_precise_security_mirror':
+  @dc_repos::repo { 'local_precise_security_mirror':
     location => "${mirrorserver}/${ubuntumirrorpath}",
     release  => 'precise-security',
     repos    => 'main restricted universe',
     tag      => baserepos
   }
 
-  @dc_repos::virtual::repo { 'local_cloudarchive_mirror':
+  @dc_repos::repo { 'local_cloudarchive_mirror':
     location   => "${mirrorserver}/${cloudarchivemirrorpath}",
     release    => 'precise-updates/havana',
     repos      => 'main',
@@ -48,14 +47,14 @@ include dc_repos::virtual
     tag        => openstackrepos
   }
 
-  @dc_repos::virtual::repo { 'local_puppetlabs_mirror':
+  @dc_repos::repo { 'local_puppetlabs_mirror':
     location => "${mirrorserver}/${puppetmirrorpath}",
     release  => 'precise',
     repos    => 'main dependencies',
     tag      => baserepos
   }
 
-  @dc_repos::virtual::repo { 'local_nullmailer_backports_mirror':
+  @dc_repos::repo { 'local_nullmailer_backports_mirror':
     location   => "${mirrorserver}/${nullmailermirrorpath}",
     release    => 'precise',
     repos      => 'main',
@@ -64,7 +63,7 @@ include dc_repos::virtual
     tag        => baserepos
   }
 
-  @dc_repos::virtual::repo { 'ceph_c_mirror':
+  @dc_repos::repo { 'ceph_c_mirror':
     location   => "${mirrorserver}/${cephcmirrorpath}",
     release    => 'precise',
     repos      => 'main',
@@ -72,7 +71,7 @@ include dc_repos::virtual
     key_server => 'keyserver.ubuntu.com',
   }
 
-  @dc_repos::virtual::repo { 'ceph_d_mirror':
+  @dc_repos::repo { 'ceph_d_mirror':
     location   => "${mirrorserver}/${cephdmirrorpath}",
     release    => 'precise',
     repos      => 'main',
@@ -80,7 +79,7 @@ include dc_repos::virtual
     key_server => 'keyserver.ubuntu.com'
   }
 
-  @dc_repos::virtual::repo { 'local_virtualbox_mirror':
+  @dc_repos::repo { 'local_virtualbox_mirror':
     location   => "${mirrorserver}/${virtualboxmirrorpath}",
     release    => 'precise',
     repos      => 'contrib',
@@ -88,7 +87,7 @@ include dc_repos::virtual
     key_source => 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc',
   }
 
-  @dc_repos::virtual::repo { 'local_hpsupport_mirror':
+  @dc_repos::repo { 'local_hpsupport_mirror':
     location   => "${mirrorserver}/${hpsupportmirrorpath}",
     release    => 'precise/current',
     repos      => 'non-free',
@@ -96,7 +95,7 @@ include dc_repos::virtual
     key_source => 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp',
   }
 
-  @dc_repos::virtual::repo { 'local_foreman_mirror':
+  @dc_repos::repo { 'local_foreman_mirror':
     location   => "${mirrorserver}/${foremanmirrorpath}",
     release    => 'precise',
     repos      => 'stable',
@@ -104,7 +103,7 @@ include dc_repos::virtual
     key_source => 'http://deb.theforeman.org/foreman.asc',
   }
 
-  @dc_repos::virtual::repo { 'local_datacentred_backports':
+  @dc_repos::repo { 'local_datacentred_backports':
     location   => "${mirrorserver}/${datacentredpath}",
     release    => 'precise',
     repos      => 'universe',
@@ -112,7 +111,7 @@ include dc_repos::virtual
     key_source => "${mirrorserver}/${datacentredpath}/repo.gpg.key",
   }
 
-  @dc_repos::virtual::repo {'local_rsyslog_mirror':
+  @dc_repos::repo {'local_rsyslog_mirror':
     location   => "${mirrorserver}/${rsyslogmirrorpath}/v7-stable",
     release    => 'precise/',
     repos      => '',
@@ -121,7 +120,7 @@ include dc_repos::virtual
     tag        => baserepos
   }
 
-  @dc_repos::virtual::repo {'local_postgres_mirror':
+  @dc_repos::repo {'local_postgres_mirror':
     location   => "${mirrorserver}/${postgresmirrorpath}",
     release    => 'precise-pgdg',
     repos      => 'main',
@@ -130,7 +129,7 @@ include dc_repos::virtual
     tag        => postgres
   }
 
-  @dc_repos::virtual::repo {'local_mariadb_mirror':
+  @dc_repos::repo {'local_mariadb_mirror':
     location   => "${mirrorserver}/${mariadbmirrorpath}",
     release    => 'precise',
     repos      => 'main',
@@ -139,7 +138,7 @@ include dc_repos::virtual
     tag        => mariadb
   }
 
-  @dc_repos::virtual::repo { 'local_collectd_mirror':
+  @dc_repos::repo { 'local_collectd_mirror':
     location   => "${mirrorserver}/${collectdmirrorpath}",
     release    => 'precise',
     repos      => 'main',
