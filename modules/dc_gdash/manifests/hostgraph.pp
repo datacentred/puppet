@@ -1,6 +1,6 @@
 define dc_gdash::hostgraph (
   $hostname = $title,
-  $ifname = undef
+  $interfaces,
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'

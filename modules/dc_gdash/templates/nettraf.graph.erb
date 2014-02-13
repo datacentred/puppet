@@ -1,9 +1,12 @@
-title   "Traffic on <%= @ifname %>"
+title   "Network interface traffic on <%= @hostname %>"
 area    :first
 hide_legend false
+
+<%- @interfaces.each do |i| %>
+
 <%-
-  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-eth0.if_packets.tx"
-  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-eth0.if_packets.tx"
+  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-#{i}.if_packets.tx"
+  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-#{i}.if_packets.tx"
 -%>
 
 field :receiving, :color => "green",
@@ -13,4 +16,4 @@ field :receiving, :color => "green",
 field :transmitting, :color => "blue",
                :alias => "Transmiting",
                :data  => "<%= txpackets %>"
-
+<%- end %>
