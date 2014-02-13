@@ -8,10 +8,10 @@ class dc_collectd (
   $interfaces = split($::interfaces, ','),
 ) {
 
-  realize (Dc_repos::Virtual::Repo['local_collectd_mirror'])
+  realize (Dc_repos::Repo['local_collectd_mirror'])
 
   class { '::collectd':
-    require      => Dc_repos::Virtual::Repo['local_collectd_mirror'],
+    require      => Dc_repos::Repo['local_collectd_mirror'],
     purge        => true,
     recurse      => true,
     purge_config => true,

@@ -2,7 +2,7 @@ class dc_packer::install {
 
   # We want the latest and greatest stable VirtualBox packages from upstream
   include dc_repos::repolist
-  realize (Dc_repos::Virtual::Repo['local_virtualbox_mirror'])
+  realize (Dc_repos::Repo['local_virtualbox_mirror'])
 
   $packer_home = '/home/packer'
   $packer_pass = hiera(packer_pass)
@@ -34,7 +34,7 @@ class dc_packer::install {
 
   package { 'virtualbox-4.3':
     ensure => installed,
-    require => Dc_repos::Virtual::Repo['local_virtualbox_mirror']
+    require => Dc_repos::Repo['local_virtualbox_mirror']
   }
 
 }

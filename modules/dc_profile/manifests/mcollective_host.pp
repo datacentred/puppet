@@ -28,7 +28,7 @@ class dc_profile::mcollective_host {
       ssl_server_public         => "puppet:///${mco_ssl_path}/certs/server.pem",
       ssl_server_private        => "puppet:///${mco_ssl_path}/private_keys/server.pem",
       classesfile               => '/var/lib/puppet/classes.txt',
-      require                   => Dc_repos::Virtual::Repo['local_puppetlabs_mirror'],
+      require                   => Dc_repos::Repo['local_puppetlabs_mirror'],
     } ->
     anchor { 'dc_profile::mcollective_host::last': }
   }
