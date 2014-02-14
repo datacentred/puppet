@@ -11,7 +11,7 @@ define dc_gdash::netgraph (
     recurse => true,
   }
 
-  file { "${hostpath}/nettraf.graph": 
+  file { "${hostpath}/nettraf.${interface}.graph": 
     content => template('dc_gdash/nettraf.graph.erb'), 
   }
 
