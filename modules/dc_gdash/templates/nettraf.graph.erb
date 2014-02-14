@@ -2,18 +2,15 @@ title   "Network interface traffic on <%= @hostname %>"
 area    :first
 hide_legend false
 
-<%- @interfaces.each do |i| %>
-
 <%-
-  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-#{i}.if_packets.tx"
-  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-#{i}.if_packets.tx"
+  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-bond0.if_octets.rx"
+  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-bond0.if_octets.tx"
 -%>
 
 field :receiving, :color => "green",
-               :alias => "Receiving",
-               :data  => "<%= rxpackets %>"
+               :alias => "Receiving (bps)",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxpackets %>),1)"
 
 field :transmitting, :color => "blue",
-               :alias => "Transmiting",
-               :data  => "<%= txpackets %>"
-<%- end %>
+               :alias => "Transmitting (bps)",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= txpackets %>),1)"
