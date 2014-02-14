@@ -31,9 +31,10 @@ class dc_collectd (
   }
 
   @@dc_gdash::hostgraph { $::hostname: }
-  @@dc_gdash::netgraph { $interfaces:
-    hostname => $::hostname,
-  }
+
+  # Compile array of unique interface-fqdn combos
+  $hostif = prefix($interfaces, "{$::hostname}-")
+  @@dc_gdash::netgraph { $hostif: }
 
   if $::snmptargets {
     include dc_collectd::snmp
