@@ -23,8 +23,5 @@ define dc_gdash::hostgraph (
     content => template('dc_gdash/memory.graph.erb'),
   }
 
-  file { "${hostpath}/nettraf.graph": 
-    content => template('dc_gdash/nettraf.graph.erb'), 
-  }
 
 }

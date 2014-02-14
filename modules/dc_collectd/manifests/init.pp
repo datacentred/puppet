@@ -30,8 +30,9 @@ class dc_collectd (
     graphitehost => $graphite_server,
   }
 
-  @@dc_gdash::hostgraph { $::hostname:
-    interfaces => $interfaces,
+  @@dc_gdash::hostgraph { $::hostname: }
+  @@dc_gdash::netgraph { $interfaces:
+    hostname => $::hostname,
   }
 
   if $::snmptargets {

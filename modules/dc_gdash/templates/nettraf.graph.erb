@@ -1,10 +1,10 @@
-title   "Network interface traffic on <%= @hostname %>"
+title   "Network interface <%= @interface %> traffic on <%= @hostname %>"
 area    :first
 hide_legend false
 
 <%-
-  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-bond0.if_octets.rx"
-  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-bond0.if_octets.tx"
+  rxpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-#{@interface}.if_octets.rx"
+  txpackets = "collectd.#{@hostname}_sal01_datacentred_co_uk.interface-#{@interface}.if_octets.tx"
 -%>
 
 field :receiving, :color => "green",
