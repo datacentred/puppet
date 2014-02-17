@@ -1,7 +1,8 @@
-#
 # Class: dc_collectd
 #
-# Install and configure collectd with a standard set of plugins.
+# Install and configure collectd with a standard set of plugins for monitoring
+# load, memory utilisation, and network interface statistics.  Hooks into dc_gdash
+# module for dynamic dashboard generation.
 #
 class dc_collectd (
   $graphite_server = '',
@@ -30,12 +31,19 @@ class dc_collectd (
     graphitehost => $graphite_server,
   }
 
+  # Export virtual resource for load and memory
   @@dc_gdash::hostgraph { $::hostname: }
 
   # Compile array of unique interface-fqdn combos
-  $hostif = prefix($interfaces, "{$::hostname}-")
-  @@dc_gdash::netgraph { $hostif: }
+  # $hostif becomes ifname-hostname
+  $hostif = suffix($interfaces, "-{$::hostname}")
 
+  # Export virtual resource for network traffic for each
+  # interface
+  @@dc_gdash::nettraf { $hostif: }
+
+  # If this is defined (currently set as a top-scope variable by Foreman),
+  # then configure collectd to gather statistics from SNMP-enabled devices
   if $::snmptargets {
     include dc_collectd::snmp
   }

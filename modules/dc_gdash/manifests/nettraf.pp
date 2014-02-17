@@ -1,6 +1,10 @@
-define dc_gdash::netgraph (
-  $interface = $title,
-  $hostname,
+# Class: dc_gdash::nettraf
+# 
+# Create a graph for network traffic on a per-interface basis
+# Expects $title to be in the format ifname-hostname
+#
+define dc_gdash::nettraf (
+  $interface = regsubst($title, '-.*', '\1'),
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
