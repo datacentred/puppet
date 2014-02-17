@@ -1,3 +1,14 @@
+# Class: dc_puppet::master::icinga
+#
+# Puppet master monitoring
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_puppet::master::icinga {
 

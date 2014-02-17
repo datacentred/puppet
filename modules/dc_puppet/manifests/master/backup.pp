@@ -10,10 +10,6 @@
 #
 # Sample Usage:
 #
-#   class { 'dc_puppet::master::backup':
-#   }
-#
-#
 class dc_puppet::master::backup {
 
   include nfs::client
@@ -25,11 +21,11 @@ class dc_puppet::master::backup {
   }
 
   file { '/usr/local/sbin/backupcerts':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0744',
-    content => 'puppet:///modules/dc_puppetmaster/backupcerts',
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0744',
+    source => 'puppet:///modules/dc_puppetmaster/backupcerts',
   }
 
   cron { 'backupcerts':

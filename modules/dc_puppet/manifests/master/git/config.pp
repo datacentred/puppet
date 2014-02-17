@@ -1,3 +1,5 @@
+# Class: dc_puppet::master::git::config
+#
 # Configures the master git repository on the puppet master.
 # - Creates user and group accounts
 # - Installs private keys and trusted hosts to access Github
@@ -5,6 +7,15 @@
 # - Installs a list of authorized keys to allow user access
 # The repository can be accessed via
 # - git@hostname:puppet.git
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_puppet::master::git::config {
 
   include dc_puppet::master::git::params
@@ -66,17 +77,18 @@ class dc_puppet::master::git::config {
   # Clone the puppet repository from GitHub onto the puppet
   # master
   exec { 'puppet_master_clone_git':
-    command => "/usr/bin/git clone --bare ${remote} ${repo}",
-    user    => 'git',
-    creates => $repo,
-    require => [
+    command     => "/usr/bin/git clone --bare ${remote} ${repo}",
+    user        => 'git',
+    creates     => $repo,
+    timeout     => 3600,
+    require     => [
       File["${home}/.ssh/id_rsa"],
       File["${home}/.ssh/known_hosts"]
     ],
   }
 
   # Authorize admins to use the git account
-  dc_users::group_account_authorization { 'admins@git': }
+  dc_users::group_account_authorize { 'admins@git': }
 
   # Finally keep git shell happy
   file { "${home}/git-shell-commands":

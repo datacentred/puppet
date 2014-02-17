@@ -1,3 +1,14 @@
+# Class: dc_puppet::agent::config
+#
+# Puppet agent configuration
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_puppet::agent::config {
 
@@ -12,4 +23,5 @@ class dc_puppet::agent::config {
   concat_fragment { 'puppet.conf+20-agent':
     content => template('dc_puppet/agent/puppet.conf-agent.erb'),
   }
+
 }

@@ -1,4 +1,15 @@
-# comment
+# Class: dc_puppet::master::err::install
+#
+# Errbot installation
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_puppet::master::err::install {
 
   package { [

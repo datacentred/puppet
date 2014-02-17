@@ -1,3 +1,14 @@
+# Class: dc_puppet::master::foreman::config
+#
+# Puppet master foreman integration
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_puppet::master::foreman::config {
 
@@ -11,7 +22,7 @@ class dc_puppet::master::foreman::config {
   # http://theforeman.org/manuals/1.4/index.html#3.5.5FactsandtheENC
 
   $foreman_url = $dc_puppet::params::foreman_url
-  $puppet_home = $dc_puppet::params::libdir
+  $puppet_home = $dc_puppet::params::vardir
   $puppet_user = 'puppet'
   $facts       = 'true'
   $ssl_ca      = "${ssldir}/certs/ca.pem"
@@ -22,13 +33,13 @@ class dc_puppet::master::foreman::config {
     ensure  => file,
     owner   => 'puppet',
     group   => 'puppet',
-    mode    => '0700',
+    mode    => '0550',
     content => template('dc_puppet/master/foreman/external_node_v2.rb.erb'),
   }
 
   file { "${libdir}/reports/foreman.rb":
     ensure  => file,
-    mode    => '0755',
+    mode    => '0644',
     content => template('dc_puppet/master/foreman/foreman-report_v2.rb.erb'),
   }
 

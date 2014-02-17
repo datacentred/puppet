@@ -10,7 +10,6 @@
 #
 # Sample Usage:
 #
-# [Remember: No empty lines between comments and class definition]
 class dc_puppet::master::exports {
 
   $storagedir = hiera(storagedir)

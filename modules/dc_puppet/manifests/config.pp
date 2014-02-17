@@ -1,8 +1,21 @@
+# Class: dc_puppet::config
+#
+# Puppet agent/master shared configuration
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_puppet::config {
+
   include dc_puppet::params
 
   concat_build { 'puppet.conf': }
+
   concat_fragment { 'puppet.conf+10-main':
     content => template('dc_puppet/puppet.conf-main.erb'),
   }
@@ -14,4 +27,5 @@ class dc_puppet::config {
     source  => concat_output('puppet.conf'),
     require => Concat_build['puppet.conf'],
   }
+
 }

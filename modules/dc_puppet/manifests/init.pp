@@ -1,4 +1,15 @@
-# One size fits all puppet class
+# Class: dc_puppet
+#
+# Puppet management class
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_puppet {
 
   # All hosts get the agent installed

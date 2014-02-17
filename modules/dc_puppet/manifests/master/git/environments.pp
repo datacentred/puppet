@@ -1,8 +1,20 @@
-# Links up the git infrastructure with the puppetmaster
+# Class: dc_puppet::master::git::environments
+#
+# Puppet master dynamic environments
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_puppet::master::git::environments {
 
   include dc_puppet::master::git::params
   $repo = $dc_puppet::master::git::params::repo
+  $home = $dc_puppet::master::git::params::home
 
   include dc_puppet::params
   $envdir         = $dc_puppet::params::envdir
@@ -17,9 +29,10 @@ class dc_puppet::master::git::environments {
     mode    => '0770',
   } ->
   exec { 'dc_puppet::master::config clone production':
-    command => "/usr/bin/git clone ${repo} ${production_env}",
-    creates => $production_env,
-    user    => 'git',
+    command     => "/usr/bin/git clone ${repo} ${production_env}",
+    creates     => $production_env,
+    user        => 'git',
+    environment => "HOME=${home}"
   } ~>
   exec { 'dc_puppet::master::config submodule init':
     command     => '/usr/bin/git submodule init',

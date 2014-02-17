@@ -1,5 +1,17 @@
+# Class: dc_puppet::master::install
+#
+# Puppet master package installation
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_puppet::master::install {
+
   include dc_puppet::params
 
   $ssl_valid_file = '/var/lib/puppet/ssl_valid'
@@ -25,4 +37,5 @@ class dc_puppet::master::install {
     mode    => '0440',
     require => Package[$dc_puppet::params::master_package],
   }
+
 }

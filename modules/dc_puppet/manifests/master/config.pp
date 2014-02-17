@@ -1,3 +1,14 @@
+# Class: dc_puppet::master::config
+#
+# Puppet master configuration
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_puppet::master::config {
 
@@ -12,10 +23,14 @@ class dc_puppet::master::config {
   contain dc_puppet::master::err
   # Install foreman bits and bobs
   contain dc_puppet::master::foreman
+  # Install puppetdb bits and bobs
+  contain dc_puppet::master::puppetdb
   # Install nfs mounts
   contain dc_puppet::master::exports
   # Install backups
   contain dc_puppet::master::backup
+  # Install monitoring
+  contain dc_puppet::master::icinga
   # Install exported variables
   contain exported_vars
 
@@ -47,12 +62,10 @@ class dc_puppet::master::config {
       $storeconfigs   = true
     }
     # Phase 3, fully integrated
-    undef: {
+    3: {
       $storeconfigs   = true
       $reports        = true
       $external_nodes = "${dc_puppet::params::dir}/node.rb"
-      # Now puppet DB is up spin up stuff which uses store configs
-      contain dc_puppet::master::icinga
     }
   }
 
@@ -60,7 +73,8 @@ class dc_puppet::master::config {
     content => template('dc_puppet/master/puppet.conf-master.erb'),
   }
 
-  dc_external_fact::fact { 'puppetmaster_stage':
+  dc_external_facts::fact { 'puppetmaster_stage':
     value => $::puppetmaster_stage,
   }
+
 }
