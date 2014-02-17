@@ -5,7 +5,7 @@ dateformat=`date +"%d-%m-%Y"`
 if grep -q $backupdir /proc/mounts
 then
     # Backup and gzip the directory
-    if ! tar zcf $backupdir/certs-$dateformat.tgz /var/lib/puppet/ssl >/dev/null
+    if ! tar zcf $backupdir/certs-$dateformat.tgz /var/lib/puppet/ssl >/dev/null 2>&1
     then
         echo "Could not tar the puppet certs"
         exit 1
