@@ -1,7 +1,7 @@
-/hieradata/development.yaml                   filter=private diff=private
-/hieradata/production.yaml                    filter=private diff=private
-/hieradata/common.yaml                        filter=private diff=private
-/modules/dc_mcollective/files/certs/*         filter=private diff=private
-/modules/dc_mcollective/files/private_keys/*  filter=private diff=private
-/modules/dc_mcollective/files/client_certs/*  filter=private diff=private
-/modules/dc_puppet/templates/git/id_rsa       filter=private diff=private
+/hieradata/development.yaml                     filter=private diff=private
+/hieradata/production.yaml                      filter=private diff=private
+/hieradata/common.yaml                          filter=private diff=private
+/modules/dc_mcollective/files/certs/*           filter=private diff=private
+/modules/dc_mcollective/files/private_keys/*    filter=private diff=private
+/modules/dc_mcollective/files/client_certs/*    filter=private diff=private
+/modules/dc_puppet/templates/master/git/id_rsa  filter=private diff=private
