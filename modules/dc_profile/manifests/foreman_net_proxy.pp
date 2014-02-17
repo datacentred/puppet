@@ -2,7 +2,7 @@ class dc_profile::foreman_net_proxy {
 
   $omapi_key    = hiera(omapi_key)
   $omapi_secret = hiera(omapi_secret)
-  $tftproot     = hiera(tftproot)
+  $tftproot     = hiera(tftpdir)
 
   class { 'dc_foreman_proxy' :
     use_dns      => true,
