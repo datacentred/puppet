@@ -5,5 +5,5 @@ class dc_profile::gdash {
   }
 
   Dc_gdash::Hostgraph <<| |>>
-  Dc_gdash::Netgraph <<| |>>
+  Dc_gdash::Nettraf <<| |>>
 }
