@@ -9,7 +9,6 @@ class dc_profile::aptmirror {
     $base_path = '/var/spool/apt-mirror'
   }
 
-  include dc_mirrors::mirrorlist
   include apache
 
   apache::vhost { 'mirror':
@@ -28,7 +27,7 @@ class dc_profile::aptmirror {
     require   => File["${base_path}"],
   }
 
-  Dc_mirrors::Virtual::Mirror <| |>
+  create_resources(apt_mirror::mirror, hiera(mirror_list))
 
 }
 
