@@ -25,7 +25,7 @@ class dc_puppet::master::backup {
     owner  => 'root',
     group  => 'root',
     mode   => '0744',
-    source => 'puppet:///modules/dc_puppetmaster/backupcerts',
+    source => 'puppet:///modules/dc_puppet/master/backupcerts',
   }
 
   cron { 'backupcerts':
