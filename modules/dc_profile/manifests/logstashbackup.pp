@@ -1,3 +1,4 @@
+#
 class dc_profile::logstashbackup {
 
   class { 'dc_logstashbackup':

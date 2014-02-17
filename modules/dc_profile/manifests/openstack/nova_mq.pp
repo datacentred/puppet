@@ -1,5 +1,5 @@
 # Installs a HA rabbitmq node onto the network
-class dc_profile::nova_mq {
+class dc_profile::openstack::nova_mq {
 
   $nova_mq_username = hiera(nova_mq_username)
   $nova_mq_password = hiera(nova_mq_password)

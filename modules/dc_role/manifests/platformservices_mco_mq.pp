@@ -1,7 +1,17 @@
-# Install a message queue for use my mcollective
+# Class: dc_role::platformservices_mco_mq
+#
+# Message queue used by mcollective
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_role::platformservices_mco_mq {
 
-  class { 'dc_profile::mcollective_mq': }
-  contain 'dc_profile::mcollective_mq'
+  contain dc_profile::mcollective_mq
 
 }

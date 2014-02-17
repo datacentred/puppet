@@ -1,4 +1,15 @@
+# Class: dc_profile::admins
+#
 # Class to create accounts for system administrators
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::admins {
 
     group { 'sysadmin':

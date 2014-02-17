@@ -1,5 +1,5 @@
 # Class to deploy horizon
-class dc_profile::horizon {
+class dc_profile::openstack::horizon {
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $horizon_secret_key = hiera(horizon_secret_key)
@@ -12,6 +12,7 @@ class dc_profile::horizon {
     tcp_port  => $cache_port,
     udp_port  => $cache_port,
   }
+  contain 'memcached'
 
   class { '::horizon':
     cache_server_ip       => $cache_server,
@@ -22,5 +23,6 @@ class dc_profile::horizon {
     django_debug          => true,
     api_result_limit      => 1000,
   }
+  contain 'horizon'
 
 }

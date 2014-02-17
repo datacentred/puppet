@@ -15,7 +15,7 @@ class dc_profile::coredb_mysql {
 
   contain 'mysql::server'
 
-# MySQL database backend for Graphite
+  # MySQL database backend for Graphite
   mysql::db { 'graphite':
     user     => 'graphite',
     host     => $graphite_server,

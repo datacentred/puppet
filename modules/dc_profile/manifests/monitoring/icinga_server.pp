@@ -10,14 +10,13 @@
 #
 # Sample Usage:
 #
-class dc_profile::icinga_server {
+class dc_profile::monitoring::icinga_server {
 
-  anchor { 'dc_profile::icinga_server::start': } ->
   class { 'dc_icinga::server':
     # todo: what is this dependency for??
-    require => Class['dc_profile::icinga_client'],
-  } ->
-  anchor { 'dc_profile::icinga_server::end': }
+    require => Class['dc_profile::monitoring::icinga_client'],
+  }
+  contain 'dc_icinga::server'
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_http']

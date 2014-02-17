@@ -1,4 +1,5 @@
-class dc_profile::foreman_net_proxy {
+#
+class dc_profile::net::foreman_proxy {
 
   $omapi_key    = hiera(omapi_key)
   $omapi_secret = hiera(omapi_secret)
@@ -8,9 +9,9 @@ class dc_profile::foreman_net_proxy {
     use_dns      => true,
     use_dhcp     => true,
     use_tftp     => true,
-    omapi_key    => "$omapi_key",
-    omapi_secret => "$omapi_secret",
-    tftproot     => "$tftproot"
+    omapi_key    => $omapi_key,
+    omapi_secret => $omapi_secret,
+    tftproot     => $tftproot,
   }
 
   include dc_icinga::hostgroups

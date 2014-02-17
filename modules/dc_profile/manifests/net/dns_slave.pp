@@ -1,4 +1,5 @@
-class dc_profile::dns_master {
+#
+class dc_profile::net::dns_slave {
 
   include dc_dns::dnszone
 
@@ -9,7 +10,9 @@ class dc_profile::dns_master {
     rndc_key    => hiera(rndc_key),
   }
 
-  Dc_dns::Virtual::Dnszone <| |>
+  Dc_dns::Virtual::Dnszone <| |> {
+    isslave => true,
+  }
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_dns']

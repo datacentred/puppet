@@ -1,5 +1,5 @@
 # comment me
-class dc_profile::tftpserver {
+class dc_profile::net::tftpserver {
 
   $storagedir = hiera(storagedir)
 
@@ -31,4 +31,5 @@ class dc_profile::tftpserver {
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_tftp']
+
 }

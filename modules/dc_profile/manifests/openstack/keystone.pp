@@ -1,5 +1,5 @@
 # Provision the OpenStack Keystone component
-class dc_profile::os_keystone {
+class dc_profile::openstack::keystone {
 
   $keystone_db_pw = hiera(keystone_db_pw)
   $os_service_tenant = hiera(os_service_tenant)

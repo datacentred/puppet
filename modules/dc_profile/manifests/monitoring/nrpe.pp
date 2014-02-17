@@ -1,4 +1,4 @@
-class dc_profile::nrpe {
+class dc_profile::monitoring::nrpe {
 
   $icinga_ip = hiera(icinga_ip)
 

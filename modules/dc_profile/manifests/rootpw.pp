@@ -1,10 +1,11 @@
+#
 class dc_profile::rootpw {
 
-  $rpass = hiera('rpass')
+  $rpass = hiera(rpass)
 
   user { 'root':
     ensure   => present,
-    password => "$rpass",
+    password => $rpass,
   }
 
 }

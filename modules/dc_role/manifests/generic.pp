@@ -1,4 +1,15 @@
+# Class: dc_role::generic
+#
 # Generic role all servers possess
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_role::generic {
 
   # Force the base repositories to install before the

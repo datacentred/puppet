@@ -1,3 +1,4 @@
+#
 class dc_profile::mail {
 
   $smarthostuser  = hiera('smarthostuser')
@@ -6,9 +7,9 @@ class dc_profile::mail {
   $sysmailaddress = hiera('sysmailaddress')
 
   class {'nullmailer':
-    adminaddr   => "$sysmailaddress",
-    remoterelay => "$smarthost",
-    remoteopts  => "--auth-login --ssl --port=465 --user=$smarthostuser --pass=$smarthostpass",
+    adminaddr   => $sysmailaddress,
+    remoterelay => $smarthost,
+    remoteopts  => "--auth-login --ssl --port=465 --user=${smarthostuser} --pass=${smarthostpass}",
   }
 
 }

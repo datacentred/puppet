@@ -1,4 +1,5 @@
-class dc_profile::nfsserver {
+#
+class dc_profile::net::nfsserver {
 
   include nfs::server
 

@@ -1,5 +1,5 @@
 # Glance API and registry server
-class dc_profile::glance {
+class dc_profile::openstack::glance {
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_glance_password = hiera(keystone_glance_password)

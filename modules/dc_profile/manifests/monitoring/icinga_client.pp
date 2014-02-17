@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::icinga_client {
+class dc_profile::monitoring::icinga_client {
 
   $icinga_ip = hiera(icinga_ip)
 

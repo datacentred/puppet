@@ -12,6 +12,7 @@
 # Sample Usage:
 #
 class dc_profile::packer {
+
   include dc_packer
   include apache
 
@@ -19,4 +20,5 @@ class dc_profile::packer {
     docroot     => '/home/packer/output',
     serveradmin => hiera(sysmailaddress),
   }
+
 }

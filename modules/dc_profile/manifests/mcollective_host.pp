@@ -15,7 +15,7 @@ class dc_profile::mcollective_host {
   # the mcollective class so prevent them from defining
   # the default configuration
   if get_exported_var($::fqdn, 'mco_mq_host', 'DEFAULT') == 'DEFAULT' {
-    anchor { 'dc_profile::mcollective_host::first': } ->
+
     class { '::mcollective':
       connector                 => 'rabbitmq',
       middleware_hosts          => get_exported_var('', 'mco_mq_host', ''),
@@ -28,8 +28,9 @@ class dc_profile::mcollective_host {
       ssl_server_public         => "puppet:///${mco_ssl_path}/certs/server.pem",
       ssl_server_private        => "puppet:///${mco_ssl_path}/private_keys/server.pem",
       classesfile               => '/var/lib/puppet/classes.txt',
-    } ->
-    anchor { 'dc_profile::mcollective_host::last': }
+    }
+    contain 'mcollective'
+
   }
 
 }

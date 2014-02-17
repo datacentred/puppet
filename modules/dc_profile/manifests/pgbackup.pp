@@ -1,3 +1,4 @@
+#
 class dc_profile::pgbackup {
 
   $storagedir = hiera(storagedir)
@@ -16,6 +17,7 @@ class dc_profile::pgbackup {
       options => "from=\"${::ipaddress}\"",
       tag     => barman,
     }
+
   }
 
   class { 'barman':

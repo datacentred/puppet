@@ -17,7 +17,7 @@ class dc_profile::mcollective_mq {
   # server definition will have been included until the exported
   # variable appears on the puppet master
   if get_exported_var($::fqdn, 'mco_mq_host', 'DEFAULT') != 'DEFAULT' {
-    anchor { 'dc_profile::mcollective_mq::first': } ->
+
     class { '::mcollective':
       connector                 => 'rabbitmq',
       middleware                => true,
@@ -31,8 +31,9 @@ class dc_profile::mcollective_mq {
       ssl_server_public         => "puppet:///${mco_ssl_path}/certs/server.pem",
       ssl_server_private        => "puppet:///${mco_ssl_path}/private_keys/server.pem",
       classesfile               => '/var/lib/puppet/classes.txt',
-    } ->
-    anchor { 'dc_profile::mcollective_mq::last': }
+    }
+    contain 'mcollective'
+
   }
 
 }

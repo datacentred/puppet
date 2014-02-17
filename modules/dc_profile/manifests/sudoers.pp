@@ -1,3 +1,4 @@
+#
 class dc_profile::sudoers {
 
   class { 'sudo': }

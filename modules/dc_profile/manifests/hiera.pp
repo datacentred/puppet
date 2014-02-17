@@ -1,3 +1,4 @@
+#
 class dc_profile::hiera {
 
   package { 'hiera':
