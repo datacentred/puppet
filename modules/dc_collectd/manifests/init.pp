@@ -36,13 +36,11 @@ class dc_collectd (
 
   # Compile array of unique interface-fqdn combos
   # $hostif becomes ifname-hostname
-  $hostif = suffix($interfaces, "-{$::hostname}")
+  $hostif = suffix($interfaces, "-${::hostname}")
 
   # Export virtual resource for network traffic for each
   # interface
-  @@dc_gdash::nettraf { $hostif:
-    hostname => $::hostname,
-  }
+  @@dc_gdash::nettraf { $hostif: }
 
   # If this is defined (currently set as a top-scope variable by Foreman),
   # then configure collectd to gather statistics from SNMP-enabled devices

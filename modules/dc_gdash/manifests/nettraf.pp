@@ -4,7 +4,7 @@
 # Expects $title to be in the format ifname-hostname
 #
 define dc_gdash::nettraf (
-  $hostname,
+  $hostname = regsubst($title, '.*-', '\1'),
   $interface = regsubst($title, '-.*', '\1'),
 ) {
 
