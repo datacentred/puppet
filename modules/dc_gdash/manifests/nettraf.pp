@@ -4,8 +4,8 @@
 # Expects $title to be in the format ifname-hostname
 #
 define dc_gdash::nettraf (
-  $hostname = regsubst($title, '.*-', '\1'),
-  $interface = regsubst($title, '-.*', '\1'),
+  $hostname = regsubst($title, '.*_', '\1'),
+  $interface = regsubst($title, '_.*', '\1'),
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'

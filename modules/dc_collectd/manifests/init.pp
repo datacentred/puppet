@@ -36,7 +36,7 @@ class dc_collectd (
 
   # Compile array of unique interface-fqdn combos
   # $hostif becomes ifname-hostname
-  $hostif = suffix($interfaces, "-${::hostname}")
+  $hostif = suffix($interfaces, "_${::hostname}")
 
   # Export virtual resource for network traffic for each
   # interface
