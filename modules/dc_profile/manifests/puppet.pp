@@ -3,13 +3,6 @@
 # proxies as they need access to the the host's private key
 class dc_profile::puppet {
 
-  # Puppet master will provide this so avoid duplication
-  if $::fqdn != $::puppetmaster {
-    class { '::puppet':
-      version => latest,
-      runmode => 'cron',
-    }
-    contain 'puppet'
-  }
+  contain dc_puppet
 
 }

@@ -10,7 +10,6 @@ define dc_users::ssh_authorized_key (
 
   ssh_authorized_key { "dc_users::ssh_authorized_key ${title}":
     ensure => present,
-    name   => $user,
     user   => $acct,
     type   => 'ssh-rsa',
     key    => $hash[$user]['sshkey'],
