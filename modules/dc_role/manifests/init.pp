@@ -39,6 +39,7 @@ class dc_role::platformservices_logstash {
   include dc_profile::logstashbackup
 }
 
-class dc_role::platformservices_graphite {
+class dc_role::platformservices_perfmon {
   include dc_profile::graphite
+  include dc_profile::gdash
 }

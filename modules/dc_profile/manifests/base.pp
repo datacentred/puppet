@@ -13,5 +13,6 @@ class dc_profile::base {
   contain dc_profile::external_facts
   contain dc_profile::nsca_client
   contain dc_profile::mcollective_host
+  contain dc_profile::collectd
 
 }
