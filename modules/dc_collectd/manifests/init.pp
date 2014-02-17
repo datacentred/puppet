@@ -40,7 +40,9 @@ class dc_collectd (
 
   # Export virtual resource for network traffic for each
   # interface
-  @@dc_gdash::nettraf { $hostif: }
+  @@dc_gdash::nettraf { $hostif:
+    hostname => $::hostname,
+  }
 
   # If this is defined (currently set as a top-scope variable by Foreman),
   # then configure collectd to gather statistics from SNMP-enabled devices

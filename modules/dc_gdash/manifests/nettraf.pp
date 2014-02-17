@@ -4,6 +4,7 @@
 # Expects $title to be in the format ifname-hostname
 #
 define dc_gdash::nettraf (
+  $hostname,
   $interface = regsubst($title, '-.*', '\1'),
 ) {
 
@@ -11,7 +12,7 @@ define dc_gdash::nettraf (
   $hostpath = "${tplpath}/hosts/${hostname}"
 
   file { "${hostpath}/nettraf.${interface}.graph": 
-    content => template('dc_gdash/nettraf.graph.erb'), 
+    content => template('dc_gdash/nettraf.graph.erb'),
   }
 
 }
