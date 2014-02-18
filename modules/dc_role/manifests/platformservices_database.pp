@@ -12,7 +12,7 @@
 #
 class dc_role::platformservices_database {
 
-  contain dc_profile::coredb
-  contain dc_profile::coredb_mysql
+  contain dc_profile::db::coredb
+  contain dc_profile::db::coredb_mysql
 
 }

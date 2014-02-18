@@ -11,7 +11,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::coredb {
+class dc_profile::db::coredb {
 
   $puppetdb_pw = hiera(puppetdb_pw)
   $foreman_pw  = hiera(foreman_pw)
