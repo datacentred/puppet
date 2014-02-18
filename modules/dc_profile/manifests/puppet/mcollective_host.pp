@@ -1,5 +1,16 @@
-# Mcollective host, applies to all hosts
-class dc_profile::mcollective_host {
+# Class: dc_profile::puppet::mcollective_host
+#
+# Installs mcollective end point on all hosts
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::puppet::mcollective_host {
 
   $mco_middleware_password       = hiera(mco_middleware_password)
   $mco_middleware_admin_password = hiera(mco_middleware_admin_password)

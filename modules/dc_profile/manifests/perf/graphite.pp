@@ -1,5 +1,16 @@
+# Class: dc_profile::perf::graphite
+#
 # Installation of Graphite, specifying a MySQL backend for storage
-class dc_profile::graphite {
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::perf::graphite {
 
   $graphite_db_pw = hiera(graphite_db_pw)
   $graphite_secret_key = hiera(graphite_secret_key)

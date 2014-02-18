@@ -12,6 +12,6 @@
 #
 class dc_role::platformservices_foreman {
 
-  contain dc_profile::foreman
+  contain dc_profile::foreman::foreman
 
 }

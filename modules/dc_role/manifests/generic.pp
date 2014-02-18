@@ -21,14 +21,14 @@ class dc_role::generic {
   }
 
   class { [
-    'dc_profile::apt',
-    'dc_profile::dpkg',
+    'dc_profile::apt::apt',
+    'dc_profile::apt::dpkg',
     'dc_profile::repos',
-    'dc_profile::rootpw',
+    'dc_profile::auth::rootpw',
   ]:
     stage => 'repos',
   }
 
-  contain dc_profile::base
+  contain dc_profile
 
 }

@@ -12,6 +12,6 @@
 #
 class dc_role::platformservices_puppetdb {
 
-  contain dc_profile::puppetdb
+  contain dc_profile::puppet::puppetdb
 
 }

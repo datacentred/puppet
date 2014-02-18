@@ -1,5 +1,16 @@
+# Class: dc_profile::net::mail
 #
-class dc_profile::mail {
+# Installs the null mailer on each host
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::net::mail {
 
   $smarthostuser  = hiera('smarthostuser')
   $smarthostpass  = hiera('smarthostpass')

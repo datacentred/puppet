@@ -1,5 +1,16 @@
-# Mcollective message queue.
-class dc_profile::mcollective_mq {
+# Class: dc_profile::puppet::mcollective_mq
+#
+# Creates a clustered message quque instance for mcollective
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::puppet::mcollective_mq {
 
   $mco_middleware_password       = hiera(mco_middleware_password)
   $mco_middleware_admin_password = hiera(mco_middleware_admin_password)

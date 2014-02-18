@@ -1,5 +1,16 @@
-# Class for provisioning puppet db
-class dc_profile::puppetdb {
+# Class: dc_profile::puppet::puppetdb
+#
+# Provisions a puppetdb service node
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::puppet::puppetdb {
 
   $puppetdb_pw = hiera(puppetdb_pw)
 

@@ -1,5 +1,16 @@
+# Class: dc_profile::db::coredb
+#
 # This is a bit of a hack at present, will clean it up on due course
 # For posterity and humour this comment was written 12/12/2013 - SM
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::coredb {
 
   $puppetdb_pw = hiera(puppetdb_pw)

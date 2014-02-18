@@ -1,6 +1,17 @@
+# Class: dc_profile::net::ssh
+#
 # This uses the custom types from the augueasproviders module
 # so that needs to be installed on the puppetmaster for this to work.
-class dc_profile::sshconfig {
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::ssh {
 
   service { 'ssh':
     ensure     => true,

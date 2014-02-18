@@ -1,5 +1,16 @@
+# Class: dc_profile::perf::gdash
 #
-class dc_profile::gdash {
+# Installs the whizzy graphite dashboard
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::perf::gdash {
 
   class { 'dc_gdash':
     gdash_root      => '/var/www/gdash',

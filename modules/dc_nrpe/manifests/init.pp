@@ -17,7 +17,7 @@ class dc_nrpe (
   $ensure_nagios = stopped,
 ){
 
-  include dc_profile::xinetd
+  include dc_profile::net::xinetd
 
   package { 'nagios-nrpe-server':
     ensure  => installed,

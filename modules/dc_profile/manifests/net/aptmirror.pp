@@ -1,4 +1,4 @@
-# Class: dc_profile::aptmirror
+# Class: dc_profile::net::aptmirror
 #
 # Creates an apt mirror
 #
@@ -10,14 +10,13 @@
 #
 # Sample Usage:
 #
-class dc_profile::aptmirror {
+class dc_profile::net::aptmirror {
 
   $storagedir = hiera(storagedir)
 
   if $::hostgroup =~ /HA\ Raid/ {
     $base_path = "${storagedir}/apt-mirror"
-  }
-  else {
+  } else {
     $base_path = '/var/spool/apt-mirror'
   }
 

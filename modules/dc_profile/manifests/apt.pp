@@ -1,3 +1,14 @@
+# Class: dc_profile::apt
+#
+# Dummy class to prevent warnings
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::apt {
 

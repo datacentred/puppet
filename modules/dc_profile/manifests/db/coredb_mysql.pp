@@ -1,5 +1,16 @@
+# Class: dc_profile::db::coredb_mysql
+#
 # Installation of MySQL as well as any associated databases
-class dc_profile::coredb_mysql {
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::db::coredb_mysql {
 
   $mysqlroot_pw = hiera(db0_mysql_pw)
   $graphite_db_pw = hiera(graphite_db_pw)

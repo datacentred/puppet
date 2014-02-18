@@ -1,8 +1,14 @@
-# All nodes get this class as it allows control over the puppet
-# configuration file, which is important for foreman and its
-# proxies as they need access to the the host's private key
+# Class: dc_profile::puppet
+#
+# Dummy class to prevent warnings
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::puppet {
-
-  contain dc_puppet
-
 }

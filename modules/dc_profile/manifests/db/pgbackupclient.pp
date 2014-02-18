@@ -1,5 +1,16 @@
+# Class: dc_profile::db::pgbackupclient
 #
-class dc_profile::pgbackupclient {
+# Something to do with postgres backups
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::db::pgbackupclient {
 
   Ssh_authorized_key <<| tag == 'barman' |>>
 

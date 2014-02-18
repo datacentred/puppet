@@ -12,6 +12,6 @@
 #
 class dc_role::platformservices_mco_mq {
 
-  contain dc_profile::mcollective_mq
+  contain dc_profile::puppet::mcollective_mq
 
 }

@@ -1,5 +1,16 @@
+# Class: dc_profile::db::pgbackup
 #
-class dc_profile::pgbackup {
+# Something else to do with backups
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::db::pgbackup {
 
   $storagedir = hiera(storagedir)
   $db0_postgres_pw = hiera(db0_postgres_pw)

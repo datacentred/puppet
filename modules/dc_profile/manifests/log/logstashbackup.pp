@@ -1,5 +1,16 @@
+# Class: dc_profile::log::logstashbackup
 #
-class dc_profile::logstashbackup {
+# Performs backups of all the logs
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::log::logstashbackup {
 
   class { 'dc_logstashbackup':
     logstashlocalretention => '14',

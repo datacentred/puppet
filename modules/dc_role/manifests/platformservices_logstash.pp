@@ -12,8 +12,8 @@
 #
 class dc_role::platformservices_logstash {
 
-  contain dc_profile::kibana
-  contain dc_profile::logstash
-  contain dc_profile::logstashbackup
+  contain dc_profile::log::kibana
+  contain dc_profile::log::logstash
+  contain dc_profile::log::logstashbackup
 
 }
