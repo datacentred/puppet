@@ -15,6 +15,7 @@ class dc_puppet::master::foreman {
   class { 'dc_foreman_proxy':
     use_puppetca => true,
     use_puppet   => true,
+    use_bmc      => true,
   }
   contain 'dc_foreman_proxy'
 
