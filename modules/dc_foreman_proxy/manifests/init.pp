@@ -67,9 +67,10 @@ class dc_foreman_proxy (
   }
 
   if $use_bmc == true {
-    package { 'rubyipmi':
-      ensure   => installed,
-    }
+    #TODO: This cannot be located!! Fix me
+    #package { 'rubyipmi':
+    #  ensure   => installed,
+    #}
     package { 'ipmitool':
       ensure => installed,
     }
