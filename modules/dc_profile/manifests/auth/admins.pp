@@ -1,4 +1,4 @@
-# Class: dc_profile::admins
+# Class: dc_profile::auth::admins
 #
 # Class to create accounts for system administrators
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::admins {
+class dc_profile::auth::admins {
 
     group { 'sysadmin':
         ensure => present,

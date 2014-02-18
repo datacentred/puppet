@@ -11,7 +11,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::ssh {
+class dc_profile::net::ssh {
 
   service { 'ssh':
     ensure     => true,

@@ -1,5 +1,16 @@
+# Class: dc_profile::auth::rootpw
 #
-class dc_profile::rootpw {
+# Set the root password of the host
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::auth::rootpw {
 
   $rpass = hiera(rpass)
 

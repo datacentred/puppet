@@ -24,7 +24,7 @@ class dc_profile {
 
   contain dc_profile::net::mail
   contain dc_profile::net::ntpgeneric
-  contain dc_profile::net::sshconfig
+  contain dc_profile::net::ssh
 
   contain dc_profile::perf::collectd
 

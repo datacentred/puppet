@@ -1,5 +1,16 @@
+# Class: dc_profile::auth::sudoers
 #
-class dc_profile::sudoers {
+# Grant sudo rights to users
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::auth::sudoers {
 
   class { 'sudo': }
 
