@@ -23,7 +23,7 @@ class dc_puppet::master::err::install {
     'err',
     'sleekxmpp',
     'pyasn1',
-    'pyasn1_modules',
+    'pyasn1-modules',
     '3to2',
     'daemonize',
     'markupsafe'
