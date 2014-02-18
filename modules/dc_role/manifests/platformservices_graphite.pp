@@ -13,5 +13,6 @@
 class dc_role::platformservices_graphite {
 
   contain dc_profile::graphite
+  contain dc_profile::gdash
 
 }
