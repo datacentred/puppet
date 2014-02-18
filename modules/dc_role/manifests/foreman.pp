@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_foreman
+# Class:
 #
 # Foreman provisioning server role
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_foreman {
+class dc_role::foreman {
 
   contain dc_profile::foreman::foreman
 

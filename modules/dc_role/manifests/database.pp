@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_database
+# Class:
 #
 # Core database used by platform service components
 #
@@ -10,9 +10,10 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_database {
+class dc_role::database {
 
   contain dc_profile::db::coredb
   contain dc_profile::db::coredb_mysql
+  contain dc_profile::db::pgbackupclient
 
 }

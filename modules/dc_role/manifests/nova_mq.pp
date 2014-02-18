@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_nova_mq
+# Class:
 #
 # Openstack Nova message queue
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_nova_mq {
+class dc_role::nova_mq {
 
   contain dc_profile::openstack::nova_mq
 

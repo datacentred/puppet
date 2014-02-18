@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_slave
+# Class:
 #
 # Slave DNS/DHCP/TFTP server
 #
@@ -10,8 +10,9 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_slave {
+class dc_role::dnsslave {
 
+  contain dc_profile::net::dnsbackup
   contain dc_profile::net::dns_slave
   contain dc_profile::net::dhcpd_slave
   contain dc_profile::net::tftpserver

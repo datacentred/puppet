@@ -1,4 +1,4 @@
-# Class: dc_profile::apt::dpkg
+# Class:
 #
 # Ensure dpkg is configuired correctly
 #

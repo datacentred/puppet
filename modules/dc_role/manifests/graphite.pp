@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_graphite
+# Class:
 #
 # Realtime graph plotting role
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_graphite {
+class dc_role::graphite {
 
   contain dc_profile::perf::graphite
   contain dc_profile::perf::gdash

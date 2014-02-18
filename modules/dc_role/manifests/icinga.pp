@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_icinga
+# Class:
 #
 # Role for the icinga (nagios) server.  Make the NSCA daemon
 # dependant on the icinga server as it requires the nagios
@@ -12,7 +12,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_icinga {
+class dc_role::icinga {
   # Make the NSCA daemon  dependant on the icinga server as it requires the
   # nagios user to run
   contain dc_profile::monitoring::icinga_server

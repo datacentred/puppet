@@ -11,7 +11,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::packer {
+class dc_profile::img::packer {
 
   include dc_packer
   include apache

@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_master
+# Class:
 #
 # Master DNS/DHCP/TFTP server and foreman endpoint
 #
@@ -10,8 +10,9 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_master {
+class dc_role::dnsmaster {
 
+  contain dc_profile::net::dnsbackup
   contain dc_profile::net::dns_master
   contain dc_profile::net::dhcpd_master
   contain dc_profile::net::tftpserver

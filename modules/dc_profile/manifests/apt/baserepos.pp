@@ -1,4 +1,4 @@
-# Class: dc_profile::apt::baserepos
+# Class:
 #
 # Common repositories
 #
@@ -12,7 +12,6 @@
 #
 class dc_profile::apt::baserepos {
 
-  contain dc_profile::apt::dpkg
   include dc_repos::repolist
 
   class { 'apt':

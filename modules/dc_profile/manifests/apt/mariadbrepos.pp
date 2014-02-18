@@ -1,4 +1,4 @@
-# Class: dc_profile::apt::mariadbrepos
+# Class:
 #
 # Install the mariadb repositories
 #

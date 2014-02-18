@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_puppetdb
+# Class:
 #
 # PuppetDB for store configs
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_puppetdb {
+class dc_role::puppetdb {
 
   contain dc_profile::puppet::puppetdb
 

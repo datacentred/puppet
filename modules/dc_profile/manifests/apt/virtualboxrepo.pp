@@ -1,4 +1,4 @@
-# Class: dc_profile::apt::virtualboxrepo
+# Class:
 #
 # Install the virtual box repositories
 #

@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_logstash
+# Class:
 #
 # Logstash and elastic search server
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_logstash {
+class dc_role::logstash {
 
   contain dc_profile::log::kibana
   contain dc_profile::log::logstash

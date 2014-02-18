@@ -1,4 +1,4 @@
-# Class: dc_role::platformservices_mco_mq
+# Class:
 #
 # Message queue used by mcollective
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::platformservices_mco_mq {
+class dc_role::mcollective_mq {
 
   contain dc_profile::puppet::mcollective_mq
 
