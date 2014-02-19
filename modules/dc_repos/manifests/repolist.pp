@@ -112,7 +112,7 @@ class dc_repos::repolist {
   }
 
   @dc_repos::repo {'local_rsyslog_mirror':
-    location   => "${mirrorserver}/${rsyslogmirrorpath}/v7-stable",
+    location   => "${mirrorserver}/${rsyslogmirrorpath}",
     release    => 'precise/',
     repos      => '',
     key        => 'AEF0CF8E',
