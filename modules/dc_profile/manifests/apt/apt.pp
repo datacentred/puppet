@@ -1,6 +1,6 @@
 # Class:
 #
-# Package repository profile
+# Apt configuration
 #
 # Parameters:
 #
@@ -10,8 +10,8 @@
 #
 # Sample Usage:
 #
-class dc_profile::repos {
+class dc_profile::apt::apt {
 
-  contain dc_repos
 
 }
+
