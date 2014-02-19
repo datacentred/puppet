@@ -15,7 +15,7 @@ class dc_profile::packer {
   include dc_packer
   include apache
 
-  apache::vhost { 'vboxes':
+  apache::vhost { 'vboxes.sal01.datacentred.co.uk':
     docroot     => '/home/packer/output',
     serveradmin => hiera(sysmailaddress),
   }
