@@ -9,11 +9,12 @@ class dc_role::generic {
     before => Stage['main'],
   }
 
-  class { 'dc_profile::rootpw':
-    stage => 'repos',
-  }
-
-  class { 'dc_profile::baserepos':
+  class { [
+    'dc_profile::apt',
+    'dc_profile::dpkg',
+    'dc_profile::repos',
+    'dc_profile::rootpw',
+  ]:
     stage => 'repos',
   }
 

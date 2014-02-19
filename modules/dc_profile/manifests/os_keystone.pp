@@ -6,10 +6,7 @@ class dc_profile::os_keystone {
   $os_region = hiera(os_region)
 
   class { 'keystone':
-    require        => [
-      Dc_repos::Repo['local_cloudarchive_mirror'],
-      Dc_mariadb::Db['keystone']
-    ],
+    require        => Dc_mariadb::Db['keystone'],
     verbose        => true,
     catalog_type   => 'sql',
     admin_token    => hiera(keystone_admin_uuid),
