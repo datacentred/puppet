@@ -90,7 +90,7 @@
 	url = https://github.com/echocat/puppet-graphite
 [submodule "modules/mcollective"]
 	path = modules/mcollective
-	url = https://github.com/puppetlabs/puppetlabs-mcollective
+	url = https://github.com/spjmurray/puppetlabs-mcollective
 [submodule "modules/datacat"]
 	path = modules/datacat
 	url = https://github.com/richardc/puppet-datacat
