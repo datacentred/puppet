@@ -26,11 +26,8 @@ class dc_foreman_proxy (
 
   validate_bool($use_dns, $use_dhcp, $use_tftp, $use_bmc, $use_puppetca, $use_puppet)
 
-  realize Dc_repos::Repo['local_foreman_mirror']
-
   package { 'foreman-proxy':
     ensure  => installed,
-    require => Dc_repos::Repo['local_foreman_mirror'],
     name    => 'foreman-proxy',
   }
 
