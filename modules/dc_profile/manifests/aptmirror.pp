@@ -27,7 +27,10 @@ class dc_profile::aptmirror {
     require   => File["${base_path}"],
   }
 
-  create_resources(apt_mirror::mirror, hiera(mirror_list))
+  $mirror_defaults = {
+    os => '',
+  }
+  create_resources(apt_mirror::mirror, hiera(mirror_list), $mirror_defaults)
 
 }
 
