@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::dnsmaster
 #
 # Master DNS/DHCP/TFTP server and foreman endpoint
 #

@@ -1,3 +1,14 @@
+# Class: dc_profile::openstack::keystone_postgres
+#
+# Provides a postgres database packend for keystone
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::openstack::keystone_postgres {
 

@@ -14,7 +14,7 @@ class dc_profile::log::kibana {
 
   include apache
 
-  class {'dc_kibana':
+  class { 'dc_kibana':
     elasticsearch_host => hiera(logstash_server)
   }
 

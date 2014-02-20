@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::dnsslave
 #
 # Slave DNS/DHCP/TFTP server
 #

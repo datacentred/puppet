@@ -1,4 +1,15 @@
+# Class: dc_profile::openstack::nova_mq
+#
 # Installs a HA rabbitmq node onto the network
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::openstack::nova_mq {
 
   $nova_mq_username = hiera(nova_mq_username)

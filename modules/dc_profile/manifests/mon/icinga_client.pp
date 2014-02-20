@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_profile::mon::icinga_client
 #
 # Icinga client for all hosts on the network, bar the icinga server.
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::monitoring::icinga_client {
+class dc_profile::mon::icinga_client {
 
   $icinga_ip = hiera(icinga_ip)
 
@@ -20,4 +20,3 @@ class dc_profile::monitoring::icinga_client {
   class { '::dc_icinga::client': }
 
 }
-

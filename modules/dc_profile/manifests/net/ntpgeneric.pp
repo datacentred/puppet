@@ -1,3 +1,14 @@
+# Class: dc_profile::net::ntpgeneric
+#
+# Generic class for both NTP servers and clients
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::net::ntpgeneric {
 

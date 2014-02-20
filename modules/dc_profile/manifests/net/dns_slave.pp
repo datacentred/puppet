@@ -1,3 +1,14 @@
+# Class: dc_profile::net::dns_slave
+#
+# DNS slave node
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::net::dns_slave {
 

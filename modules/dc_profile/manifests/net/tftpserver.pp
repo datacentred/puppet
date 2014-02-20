@@ -1,12 +1,22 @@
-# comment me
+# Class: dc_profile::net::tftpserver
+#
+# Provide a TFTP service
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::net::tftpserver {
 
   $storagedir = hiera(storagedir)
 
   if $::hostgroup == 'Production/Platform Services/HA Raid' {
     $tftpdir = "${storagedir}/tftp"
-  }
-  else {
+  } else {
     $tftpdir = hiera('tftpdir')
   }
 

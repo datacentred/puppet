@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::glance
 #
 # Openstack image service
 #
@@ -12,10 +12,6 @@
 #
 class dc_role::glance {
 
-  contain dc_profile::openstack::repos
   contain dc_profile::openstack::glance
-
-  Class['dc_profile::openstack::repos'] ->
-  Class['dc_profile::openstack::glance']
 
 }

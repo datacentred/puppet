@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_profile::img::packer
 #
 # Packer installation for automated builds of VM images
 # Currently just builds 'dcdevbox' for use with Vagrant
@@ -16,7 +16,7 @@ class dc_profile::img::packer {
   include dc_packer
   include apache
 
-  apache::vhost { 'vboxes.sal01.datacentred.co.uk':
+  apache::vhost { 'vboxes':
     docroot     => '/home/packer/output',
     serveradmin => hiera(sysmailaddress),
   }

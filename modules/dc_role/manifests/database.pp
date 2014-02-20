@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::database
 #
 # Core database used by platform service components
 #

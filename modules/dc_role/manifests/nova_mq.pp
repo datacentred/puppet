@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_profile::openstack::nova_mq
 #
 # Openstack Nova message queue
 #

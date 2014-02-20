@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::generic
 #
 # Generic role all servers possess
 #

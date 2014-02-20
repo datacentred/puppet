@@ -1,4 +1,15 @@
+# Class: dc_profile::openstack::keystone
+#
 # Provision the OpenStack Keystone component
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::openstack::keystone {
 
   $keystone_db_pw = hiera(keystone_db_pw)

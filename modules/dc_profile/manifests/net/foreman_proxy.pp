@@ -1,3 +1,14 @@
+# Class: dc_profile::net::foreman_proxy
+#
+# Foreman proxy for network services: DNS, DHCP & TFTP
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::net::foreman_proxy {
 

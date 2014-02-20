@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::nova
 #
 # Openstack compute controller
 #
@@ -12,10 +12,6 @@
 #
 class dc_role::nova {
 
-  contain dc_profile::openstack::repos
   contain dc_profile::openstack::nova
 
-  Class['dc_profile::openstack::repos'] ->
-  Class['dc_profile::openstack::nova']
-  
 }

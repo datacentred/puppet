@@ -1,7 +1,18 @@
+# Class: dc_profile::openstack::nova
+#
 # Nova controller node
 # As a starter for 10 ;-) it fits the bill, I do however think in time
 # this could be split up into a more modular rather than monolithic
-# blob dependant on what our use case turns out to be - SM
+# blob dependent on what our use case turns out to be - SM
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::openstack::nova {
 
   $keystone_nova_password = hiera(keystone_nova_password)
@@ -86,7 +97,7 @@ class dc_profile::openstack::nova {
     'nova::scheduler',
     'nova::vncproxy'
   ]:
-    enabled => 'true',
+    enabled => true,
   }
 
   @@keystone_endpoint { "${os_region}/nova":

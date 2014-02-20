@@ -1,4 +1,15 @@
-# Class to deploy horizon
+# Class: dc_profile::openstack::horizon
+#
+# Class to deploy the OpenStack dashboard
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::openstack::horizon {
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])

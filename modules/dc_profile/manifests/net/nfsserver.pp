@@ -1,3 +1,14 @@
+# Class: dc_profile::net::nfsserver
+#
+# NFS server capability
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::net::nfsserver {
 

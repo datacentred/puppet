@@ -16,4 +16,3 @@ class dc_profile::log::logstash {
   class { 'dc_logstash': }
 
 }
-

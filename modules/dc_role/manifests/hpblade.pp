@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::hpblade
 #
 # Generic role picked up by the HP blades
 #

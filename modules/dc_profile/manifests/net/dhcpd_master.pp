@@ -1,3 +1,14 @@
+# Class: dc_profile::net::dhcpd_master
+#
+# DHCP master node
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::net::dhcpd_master {
 
@@ -10,7 +21,6 @@ class dc_profile::net::dhcpd_master {
   $omapi_key        = hiera(omapi_key)
   $omapi_secret     = hiera(omapi_secret)
   $rndc_key         = hiera(rndc_key)
-
 
   class { 'dhcp':
     dnsdomain    => [

@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::mcollective_mq
 #
 # Message queue used by mcollective
 #

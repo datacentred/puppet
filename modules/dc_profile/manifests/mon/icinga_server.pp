@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_profile::mon::icinga_server
 #
 # Icinga server instance
 #
@@ -10,11 +10,11 @@
 #
 # Sample Usage:
 #
-class dc_profile::monitoring::icinga_server {
+class dc_profile::mon::icinga_server {
 
   class { 'dc_icinga::server':
     # todo: what is this dependency for??
-    require => Class['dc_profile::monitoring::icinga_client'],
+    require => Class['dc_profile::mon::icinga_client'],
   }
   contain 'dc_icinga::server'
 
@@ -22,4 +22,3 @@ class dc_profile::monitoring::icinga_server {
   realize Dc_external_facts::Fact['dc_hostgroup_http']
 
 }
-

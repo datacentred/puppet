@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::horizon
 #
 # Openstack dashboard role
 #
@@ -12,10 +12,6 @@
 #
 class dc_role::horizon {
 
-  contain dc_profile::openstack::repos
   contain dc_profile::openstack::horizon
-
-  Class['dc_profile::openstack::repos'] ->
-  Class['dc_profile::openstack::horizon']
 
 }

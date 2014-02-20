@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::logstash
 #
 # Logstash and elastic search server
 #

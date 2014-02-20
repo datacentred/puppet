@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::graphite
 #
 # Realtime graph plotting role
 #

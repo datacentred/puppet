@@ -44,4 +44,3 @@ class dc_profile::net::aptmirror {
   create_resources(apt_mirror::mirror, hiera(mirror_list), $mirror_defaults)
 
 }
-

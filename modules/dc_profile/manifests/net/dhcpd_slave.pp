@@ -1,4 +1,16 @@
-class dc_profile::dhcpd_slave {
+# Class: dc_profile::net::dhcpd_slave
+#
+# DHCP slave node
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+class dc_profile::net::dhcpd_slave {
 
   include stdlib
   include dc_dhcpdpools::poollist
@@ -11,31 +23,33 @@ class dc_profile::dhcpd_slave {
   $rndc_key         = hiera(rndc_key)
 
   class { 'dhcp':
-    dnsdomain => [
+    dnsdomain    => [
       'sal01.datacentred.co.uk',
       '0.0.10.in-addr.arpa',
-      ],
+    ],
     nameservers  => [$nameservers],
     ntpservers   => [$localtimeservers],
     interfaces   => ['bond0'],
     omapi_key    => 'omapi_key',
-    omapi_secret => "$omapi_secret",
+    omapi_secret => $omapi_secret,
     ddns         => true,
   }
 
-  class { dhcp::ddns:
-    key        => "$rndc_key",
+  class { 'dhcp::ddns':
+    key        => $rndc_key,
     zonemaster => $nameservers[0],
   }
 
-  class { dhcp::failover:
-    role         => "secondary",
+  class { 'dhcp::failover':
+    role         => 'secondary',
     peer_address => $masterserver_ip,
   }
 
   Dc_dhcpdpools::Virtual::Dhcpdpool <| |>
 
-  Dhcp::Pool { failover => "dhcp-failover" }
+  Dhcp::Pool {
+    failover => 'dhcp-failover'
+  }
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_dhcp']

@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::foreman
 #
 # Foreman provisioning server role
 #

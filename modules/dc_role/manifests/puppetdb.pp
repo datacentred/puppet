@@ -1,4 +1,4 @@
-# Class:
+# Class: dc_role::puppetdb
 #
 # PuppetDB for store configs
 #

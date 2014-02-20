@@ -1,3 +1,14 @@
+# Class: dc_profile::openstack::keystone_mariadb
+#
+# Provides a backend mysql database for keystone
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
 #
 class dc_profile::openstack::keystone_mariadb {
 

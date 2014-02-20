@@ -1,4 +1,15 @@
-# Glance API and registry server
+# Class: dc_profile::openstack::glance
+#
+# Openstack image API and registry server
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
 class dc_profile::openstack::glance {
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
@@ -86,9 +97,7 @@ class dc_profile::openstack::glance {
   contain 'glance::registry'
 
   # TODO: Temporary backend while boot-strapping CEPH
-  class { 'glance::backend::file':
-  }
-  contain 'glance::backend::file'
+  contain glance::backend::file
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
