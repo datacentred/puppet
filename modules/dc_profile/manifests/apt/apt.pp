@@ -1,6 +1,8 @@
-# Class:
+# Class: dc_profile::apt::apt
 #
-# Apt configuration
+# Apt configuration, ensures default sources are
+# removed and unmanagaed files in sources.list.d
+# are also removed
 #
 # Parameters:
 #
@@ -19,4 +21,3 @@ class dc_profile::apt::apt {
   contain 'apt'
 
 }
-

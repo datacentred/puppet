@@ -1,7 +1,6 @@
 # Class: dc_profile::db::coredb
 #
-# This is a bit of a hack at present, will clean it up on due course
-# For posterity and humour this comment was written 12/12/2013 - SM
+# Install and maintain the core database
 #
 # Parameters:
 #
@@ -13,57 +12,27 @@
 #
 class dc_profile::db::coredb {
 
-  $puppetdb_pw = hiera(puppetdb_pw)
-  $foreman_pw  = hiera(foreman_pw)
+  # SM - 20/02/2014
+  # TODO: This is looking like a dc_postgresql module now as
+  #       there is no hard coding, with the exception of the
+  #       hiera tables names, which can always be made dyamic
+  #       by doing hiera("${::hostname}_pg_blah")
 
-  # Install the sever to listen on the chosen address range
+  # Install the sever
   class { '::postgresql::server':
-    ip_mask_allow_all_users    => '10.10.192.0/24',
-    ip_mask_deny_postgres_user => '0.0.0.0/32',
-    listen_addresses           => '*',
-    postgres_password          => hiera(db0_postgres_pw)
+    ip_mask_allow_all_users    => hiera(postgresql_allow),
+    ip_mask_deny_postgres_user => hiera(postgresql_deny),
+    listen_addresses           => hiera(postgresql_listen),
+    postgres_password          => hiera(postgresql_password),
   }
 
-  # A test database for Nagios to probe
-  postgresql::server::db { 'nagiostest':
-    user     => 'nagios',
-    password => 'nagios',
-    require  => Class['::postgresql::server'],
-  }
+  # Create any databases
+  create_resources(postgresql::server::db, hiera(postgresql_coredb))
 
-  # Create the puppetdb user as this cannot be done from provisioning
-  postgresql::server::db { 'puppetdb':
-    user     => 'puppetdb',
-    password => $puppetdb_pw,
-    grant    => 'all',
-    require  => Class['::postgresql::server'],
-  }
+  # Add configuration
+  create_resources(postgresql::server::config_entry, hiera(postgresql_config))
 
-  # Create the foreman user as this cannot be done from provisioning
-  postgresql::server::db { 'foreman':
-    user     => 'foreman',
-    password => $foreman_pw,
-    grant    => 'all',
-    require  => Class['::postgresql::server'],
-  }
-
-  # Add configuration for WAL archiving and barman backup
-
-  $pgbackupserver = hiera(pg_backup_server)
-  $barmanpath     = hiera(barman_path)
-
-  postgresql::server::config_entry { 'wal_level':
-    value => 'archive'
-  }
-
-  postgresql::server::config_entry { 'archive_mode':
-    value => 'on'
-  }
-
-  postgresql::server::config_entry { 'archive_command':
-    value => "rsync -a %p barman@${pgbackupserver}:${barmanpath}/${::hostname}/incoming/%f"
-  }
-
+  # And add in any monitoring
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_postgres']
 

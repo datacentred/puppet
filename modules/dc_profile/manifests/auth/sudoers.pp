@@ -12,7 +12,7 @@
 #
 class dc_profile::auth::sudoers {
 
-  class { 'sudo': }
+  contain sudo
 
   sudo::conf { '%sysadmin':
     priority => 10,

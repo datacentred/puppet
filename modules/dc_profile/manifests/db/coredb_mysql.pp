@@ -12,18 +12,18 @@
 #
 class dc_profile::db::coredb_mysql {
 
-  $mysqlroot_pw = hiera(db0_mysql_pw)
-  $graphite_db_pw = hiera(graphite_db_pw)
+  $mysqlroot_pw    = hiera(db0_mysql_pw)
+  $graphite_db_pw  = hiera(graphite_db_pw)
   $graphite_server = hiera(graphite_server)
 
   class { '::mysql::server':
     root_password    => $mysqlroot_pw,
-    override_options => { 'mysqld' => {
-      'bind_address' => '0.0.0.0',
+    override_options => {
+      'mysqld' => {
+        'bind_address' => '0.0.0.0',
       },
     },
   }
-
   contain 'mysql::server'
 
   # MySQL database backend for Graphite
