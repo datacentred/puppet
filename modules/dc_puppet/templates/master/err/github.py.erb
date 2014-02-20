@@ -4,6 +4,8 @@ import logging
 import re
 import subprocess
 import random
+import urllib2
+import json
 
 class MLStripper(HTMLParser):
     """
@@ -62,15 +64,14 @@ class GitHub(BotPlugin):
         if match != None:
             # Provide visual feed back in the channel that we're
             # actually doing something.  Ponies are good for this
-            ponies = [
-                'http://images1.wikia.nocookie.net/__cb20110314162139/mlpfanart/images/1/19/Apple_Bloom_chasing_her_tail.gif',
-                'http://media.giphy.com/media/7THxd1beOYjF6/giphy.gif',
-                'http://denver.mylittlefacewhen.com/media/f/img/mlfw482_so_much_pony.gif'
-            ]
+            path = 'http://ponies/'
+            resp = urllib2.urlopen(path + 'ponies.json')
+            ponies = json.loads(resp.read())
+            pony = path + random.choice(ponies)
             self.send(message.getFrom(), match.group(1) +
                       ' performed a pull request merge',
                       message_type=message.getType())
-            self.send(message.getFrom(), random.choice(ponies),
+            self.send(message.getFrom(), pony,
                       message_type=message.getType())
 
             # Become the git user and fetch the production branch, this
