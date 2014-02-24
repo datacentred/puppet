@@ -31,23 +31,6 @@ class dc_profile::foreman::foreman {
     oauth_consumer_secret => 't3H_84lr0G',
   }
 
-  # As the database is remote and unmanaged by the class
-  # we need to explicitly set up all the tables
-  exec { 'foreman_dbmigrate':
-    command     => '/usr/sbin/foreman-rake db:migrate',
-    user        => 'foreman',
-    environment => 'HOME=/usr/share/foreman',
-    logoutput   => 'on_failure',
-    require     => Class['::foreman'],
-  } ->
-  exec { 'foreman_dbseed':
-    command     => '/usr/sbin/foreman-rake db:seed',
-    user        => 'foreman',
-    environment => 'HOME=/usr/share/foreman',
-    logoutput   => 'on_failure',
-    require     => Class['::foreman'],
-  }
-
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_https']
   realize Dc_external_facts::Fact['dc_hostgroup_foreman']
