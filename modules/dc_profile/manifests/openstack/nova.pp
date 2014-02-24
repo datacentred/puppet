@@ -34,7 +34,6 @@ class dc_profile::openstack::nova {
 
   $nova_admin_tenant   = hiera(nova_admin_tenant)
   $nova_admin_user     = hiera(nova_admin_user)
-  $nova_admin_password = hiera(nova_admin_password)
   $nova_enabled_apis   = hiera(nova_enabled_apis)
 
   $keystone_host       = get_exported_var('', 'keystone_host', ['localhost'])

@@ -16,7 +16,7 @@ class dc_profile::openstack::keystone {
   $os_service_tenant = hiera(os_service_tenant)
   $os_region = hiera(os_region)
 
-  class { 'keystone':
+  class { '::keystone':
     require        => Dc_mariadb::Db['keystone'],
     verbose        => true,
     catalog_type   => 'sql',
@@ -25,18 +25,18 @@ class dc_profile::openstack::keystone {
   }
 
   # Adds the admin credential to keystone.
-  class { 'keystone::roles::admin':
+  class { '::keystone::roles::admin':
     email          => hiera(sysmailaddress),
     password       => hiera(keystone_admin_pw),
     service_tenant => $os_service_tenant,
   }
 
   # Installs the service user endpoint.
-  class { 'keystone::endpoint':
-    public_address   => $::ipaddress,
-    admin_address    => $::ipaddress,
-    internal_address => $::ipaddress,
-    region           => $os_region,
+  class { '::keystone::endpoint':
+    public_url   => "http://${::fqdn}:5000/v2.0",
+    internal_url => "http://${::fqdn}:5000/v2.0",
+    admin_url    => "http://${::fqdn}:35357/v2.0",
+    region       => $os_region,
   }
 
   # Glance bits
