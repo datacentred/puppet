@@ -16,7 +16,6 @@ class dc_puppet::agent::service {
   $dir = $dc_puppet::params::dir
 
   service { 'puppet':
-    ensure => stopped,
     enable => false,
   }
 
