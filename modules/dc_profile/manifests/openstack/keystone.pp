@@ -33,9 +33,9 @@ class dc_profile::openstack::keystone {
 
   # Installs the service user endpoint.
   class { '::keystone::endpoint':
-    public_url   => "http://${::fqdn}:5000/v2.0",
-    internal_url => "http://${::fqdn}:5000/v2.0",
-    admin_url    => "http://${::fqdn}:35357/v2.0",
+    public_url   => "http://${::fqdn}:5000",
+    internal_url => "http://${::fqdn}:5000",
+    admin_url    => "http://${::fqdn}:35357",
     region       => $os_region,
   }
 
