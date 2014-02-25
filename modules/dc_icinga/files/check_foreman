@@ -46,8 +46,8 @@ my %message_ndx = (
     failing => 3,
     other => 4
 );
-my $host_age_mins = 25;
-my $host_changed_mins = 25;
+my $host_age_mins = 45;
+my $host_changed_mins = 45;
 my %num_hosts = ();
 my $exit = 0;
 my @exit = qw/OK: WARNING: CRITICAL: UNKNOWN:/;
