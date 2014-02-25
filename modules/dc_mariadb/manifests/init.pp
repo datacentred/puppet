@@ -16,9 +16,13 @@ class dc_mariadb (
 ){
 
   class { '::mysql::server':
-    root_password     => $maria_root_pw,
-    package_name      => 'mariadb-server',
-    override_options => { 'mysqld' => { 'bind_address' => '0.0.0.0' } }
+    root_password    => $maria_root_pw,
+    package_name     => 'mariadb-server',
+    override_options => {
+      'mysqld' => {
+        'bind_address' => '0.0.0.0',
+      }
+    },
   }
   contain 'mysql::server'
 
@@ -26,10 +30,13 @@ class dc_mariadb (
     require => Class['::mysql::server']
   }
 
-  class {'dc_mariadb::exports':}
+  contain dc_mariadb::exports
 
   class {'dc_mariadb::backupconf':
-    require => Class['dc_mariadb::exports']
+    require => [
+      Class['::mysql::server'],
+      Class['dc_mariadb::exports'],
+    ],
   }
 
 }

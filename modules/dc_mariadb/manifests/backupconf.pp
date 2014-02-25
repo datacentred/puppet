@@ -29,7 +29,7 @@ class dc_mariadb::backupconf (
     file_per_database => true,
     time              => ['3','00']
   }
-  contain 'mysql::server'
+  contain 'mysql::server::backup'
 
   file { '/usr/local/sbin/nfscopy.sh':
     ensure => file,
