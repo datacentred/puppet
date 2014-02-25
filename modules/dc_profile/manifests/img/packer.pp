@@ -16,7 +16,7 @@ class dc_profile::img::packer {
   include dc_packer
   include apache
 
-  apache::vhost { 'vboxes':
+  apache::vhost { "vboxes.${::domain}":
     docroot     => '/home/packer/output',
     serveradmin => hiera(sysmailaddress),
   }

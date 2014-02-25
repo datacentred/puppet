@@ -13,7 +13,7 @@ class dc_ponies {
     recurse => true,
   }
 
-  apache::vhost { 'ponies':
+  apache::vhost { "ponies.${::domain}":
     docroot => $docroot,
   }
 

@@ -45,7 +45,7 @@ class GitHub(BotPlugin):
 
     def get_pony(self):
         """Return a random pony"""
-        path = 'http://ponies/'
+        path = 'http://ponies.<%= @domain %>/'
         resp = urllib2.urlopen(path + 'ponies.json')
         ponies = json.loads(resp.read())
         return path + random.choice(ponies)
