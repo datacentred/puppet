@@ -22,6 +22,12 @@ class dc_profile::puppet::mcollective_host {
     notify => Service['mcollective'],
   }
 
+  # Install the package agent on all nodes
+  package { 'mcollective-package-agent':
+    ensure => latest,
+    notify => Service['mcollective'],
+  }
+
   # The message queues will have their own definition of
   # the mcollective class so prevent them from defining
   # the default configuration
