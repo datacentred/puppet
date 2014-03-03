@@ -8,7 +8,6 @@
 # }
 #
 # dns_resource { '1.2.168.192.in-addr.arpa/PTR':
-#   nameserver => 'a.ns.angel.net',
 #   rdata      => 'melody.angel.net',
 # }
 #
@@ -22,16 +21,6 @@ Puppet::Type.newtype(:dns_resource) do
     validate do |value|
       unless value =~ /^[a-z0-9\-\.]+\/(A|PTR|CNAME)$/
         raise ArgumentError, 'dns_resource::name invalid'
-      end
-    end
-  end
-
-  newparam(:nameserver) do
-    desc 'The DNS nameserver to alter, defaults to 127.0.0.1'
-    defaultto '127.0.0.1'
-    validate do |value|
-      unless value =~ /^[a-z0-9\-\.]+$/
-        raise ArgumentError, 'dns_resource::nameserver invalid'
       end
     end
   end
