@@ -21,4 +21,8 @@ class dc_profile::img::packer {
     serveradmin => hiera(sysmailaddress),
   }
 
+  @@dns_resource { "vboxes.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
+
 }
