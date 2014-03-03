@@ -34,76 +34,100 @@ end
 
 Puppet::Type.type(:dns_resource).provide(:nsupdate) do
 
+  commands :dig      => 'dig',
+           :hostname => 'hostname'
+
+  private
+
   # Run a command script through nsupdate
   def nsupdate(cmd)
-    Open3.popen3('nsupdate -k ~/rndc-key') do |i, o, e, t|
-      i.write(cmd)
-      i.close_write
-      raise RuntimeError, e.read unless t.value.success?
+    IO.popen('nsupdate -k /etc/bind/rndc.key 2>&1', "r+") do |io|
+      io.puts(cmd)
+      io.close_write
+      raise RuntimeError unless io.gets == nil
+    end
+  end
+
+  public
+
+  # Initial setup stuff
+  def initialize(value={})
+    super(value)
+    @property_flush = {}
+  end
+
+  # Probe the local system for all DNS resources
+  def self.instances
+    domain = hostname('-d')[0..-2]
+    axfr = dig('@127.0.0.1', domain, 'AXFR')
+    records = Array.new
+    axfr.split("\n").each do |line|
+      tok = line.split
+      if tok.length >= 5 and tok[3] =~ /^(A|PTR|CNAME)$/
+        rdata = (tok[4][-1, 1] == '.') ? tok[4][0..-2] : tok[4]
+        records << new(:name   => "#{tok[0][0..-2]}/#{tok[3]}",
+                       :ensure => :present,
+                       :rdata  => rdata,
+                       :ttl    => tok[1])
+      end
+    end
+    records
+  end
+
+  def self.prefetch(resources)
+    records = instances
+    resources.keys.each do |name|
+      if provider = records.find{ |record| record.name == name }
+        resources[name].provider = provider
+      end
     end
   end
 
   # Create a new DNS resource
   def create
     name, type = resource[:name].split('/')
-    nameserver = resource[:nameserver]
     rdata = resource[:rdata]
     ttl = resource[:ttl]
-    nsupdate("server #{nameserver}
+    nsupdate("server 127.0.0.1
               update add #{name}. #{ttl} #{type} #{rdata}
               send")
+    @property_hash[:name] = resource[:name]
+    @property_hash[:ensure] = :present
+    @property_hash[:rdata] = resource[:rdata]
+    @property_hash[:ttl] = resource[:ttl]
   end
 
   # Destroy an existing DNS resource
   def destroy
     name, type = resource[:name].split('/')
-    nameserver = resource[:nameserver]
-    nsupdate("server #{nameserver}
+    nsupdate("server 127.0.0.1
               update delete #{name}. #{type}
               send")
+    @property_hash.clear
   end
 
   # Determine whether a DNS resource exists
   def exists?
-    name, type = resource[:name].split('/')
-    # Work out which type class we are fetching
-    typeclass = nil
-    case type
-    when 'A'
-      typeclass = Resolv::DNS::Resource::IN::A
-    when 'PTR'
-      typeclass = Resolv::DNS::Resource::IN::PTR
-    when 'CNAME'
-      typeclass = Resolv::DNS::Resource::IN::CNAME
-    else
-      raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
+    @property_hash[:ensure] == :present
+  end
+
+  mk_resource_methods
+
+  def rdata=(value)
+    @property_hash[:rdata] = value
+    @property_flush[:rdata] = value
+  end
+
+  def ttl=(value)
+    @property_hash[:ttl] = value
+    @property_flush[:ttl] = value
+  end
+
+  def flush
+    if ! @property_flush.empty?
+      create
     end
-    # Create the resolver, pointing to the nameserver
-    r = Resolv::DNS.new(:nameserver => resource[:nameserver])
-    # Attempt the lookup via DNS
-    begin
-      @dnsres = r.getresource(name, typeclass)
-    rescue Resolv::ResolvError
-      return false
-    end
-    # The record exists!
-    return true
-  end
-
-  def rdata
-    @dnsres.to_rdata
-  end
-
-  def ttl
-    @dnsres.ttl.to_s
-  end
-
-  def rdata=(val)
-    create
-  end
-
-  def ttl=(val)
-    create
+    @property_hash = resource.to_hash
   end
 
 end
