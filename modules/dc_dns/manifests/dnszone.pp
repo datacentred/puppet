@@ -1,94 +1,41 @@
-class dc_dns::dnszone {
+# Class: dc_dns::dnszone
+#
+# Defines a DNS zone in BIND
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+define dc_dns::dnszone (
+  $soa         = undef,
+  $soaip       = undef,
+  $nameservers = undef,
+  $reverse     = undef,
+  $isslave     = false
+) {
 
-  include dc_dns::virtual
-
-  $nameservers = hiera(nameservers)
-
-  # DataCentred top level
-
-  @dc_dns::virtual::dnszone { 'datacentred.co.uk':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => false,
-    tag         => datacentred
+  if $isslave {
+    dns::zone {$title:
+      zonetype    => 'slave',
+      masters     => hiera(dnsmasters),
+      nameservers => $nameservers
+    }
+  } else {
+    dns::zone {$title:
+      soa         => $soa,
+      soaip       => $soaip,
+      nameservers => $nameservers,
+      reverse     => $reverse,
+    }
+    # Export a backup definition
+    @@dc_dnsbackup::backupzone { "${title}_${::hostname}":
+      zonename => $title,
+      master   => $::fqdn,
+    }
   }
 
-  # SAL01 top level
-
-  @dc_dns::virtual::dnszone { 'sal01.datacentred.co.uk':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => false,
-    tag         => sal01
-  }
-
-  # Test subdomain
-
-  @dc_dns::virtual::dnszone { 'test.sal01.datacentred.co.uk':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => false,
-    tag         => sal01
-  }
-
-  # Reverse
-
-  @dc_dns::virtual::dnszone { '96.10.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.10.96'
-  }
-
-  @dc_dns::virtual::dnszone { '128.10.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.10.128'
-  }
-
-  @dc_dns::virtual::dnszone { '160.10.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.10.160'
-  }
-
-  @dc_dns::virtual::dnszone { '32.10.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.10.32'
-  }
-
-  @dc_dns::virtual::dnszone { '192.10.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.10.192'
-  }
-
-  @dc_dns::virtual::dnszone { '193.10.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.10.193'
-  }
-
-  @dc_dns::virtual::dnszone { '5.1.10.in-addr.arpa':
-    soa         => $::fqdn,
-    soaip       => $::ipaddress,
-    nameservers => $nameservers,
-    reverse     => true,
-    tag         => '10.1.5'
-  }
 }
