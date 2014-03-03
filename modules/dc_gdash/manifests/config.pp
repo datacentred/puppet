@@ -49,4 +49,10 @@ class dc_gdash::config {
     require => Vcsrepo['gdash_github'],
   }
 
+  if $::hostname != 'gdash' {
+    @@dns_resource { "gdash.${::domain}/CNAME":
+      rdata => $::fqdn,
+    }
+  }
+
 }
