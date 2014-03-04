@@ -28,6 +28,10 @@ class dc_profile::net::aptmirror {
     serveradmin => hiera(sysmailaddress)
   }
 
+  @@dns_resource { "mirror.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
+
   file { $base_path:
     ensure => directory,
   }

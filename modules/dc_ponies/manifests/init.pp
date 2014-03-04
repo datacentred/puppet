@@ -17,4 +17,8 @@ class dc_ponies {
     docroot => $docroot,
   }
 
+  @@dns_resource { "ponies.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
+
 }

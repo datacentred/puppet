@@ -12,8 +12,6 @@
 #
 class dc_profile::net::dns_master {
 
-  include dc_dns::dnszone
-
   class { 'dns':
     nameservers => hiera(nameservers),
     forwarders  => hiera(forwarders),
@@ -21,9 +19,14 @@ class dc_profile::net::dns_master {
     rndc_key    => hiera(rndc_key),
   }
 
-  Dc_dns::Virtual::Dnszone <| |>
+  class { 'dc_dns':
+    isslave => false,
+  }
+  contain 'dc_dns'
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_dns']
+
+  Dns_resource <<||>>
 
 }
