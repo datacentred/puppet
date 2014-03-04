@@ -92,7 +92,7 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
       raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
     end
     # Create the resolver, pointing to the nameserver
-    r = Resolv::DNS.new(:nameserver => resource[:nameserver])
+    r = Resolv::DNS.new(:nameserver => '127.0.0.1')
     # Attempt the lookup via DNS
     begin
       @dnsres = r.getresource(name, typeclass)
