@@ -112,7 +112,9 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   end
 
   def ttl
-    @dnsres.ttl.to_s
+    '86400'
+    #TODO: requires 14.04 LTS upgrade, ruby too old
+    #@dnsres.ttl.to_s
   end
 
   def ttl=(value)
