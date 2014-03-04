@@ -16,14 +16,16 @@ class dc_profile::puppet::mcollective_host {
   $mco_middleware_admin_password = hiera(mco_middleware_admin_password)
   $mco_ssl_path                  = 'modules/dc_mcollective'
 
-  # Install the puppet agent on all nodes to allow kicking
-  package { 'mcollective-puppet-agent':
-    ensure => latest,
-    notify => Service['mcollective'],
-  }
-
-  # Install the package agent on all nodes
-  package { 'mcollective-package-agent':
+  # Install various plugins on all hosts
+  package { [
+    'mcollective-filemgr-agent',
+    'mcollective-iptables-agent',
+    'mcollective-nettest-agent',
+    'mcollective-nrpe-agent',
+    'mcollective-package-agent',
+    'mcollective-puppet-agent',
+    'mcollective-service-agent',
+  ]:
     ensure => latest,
     notify => Service['mcollective'],
   }
