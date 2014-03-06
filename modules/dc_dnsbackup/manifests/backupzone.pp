@@ -2,7 +2,7 @@ define dc_dnsbackup::backupzone ($zonename,$master){
 
   include dc_dnsbackup
 
-  file { "${zonename}-backup.conf":
+  file { "${zonename}-${::hostname}-backup.conf":
     ensure  => file,
     require => File['/etc/dnsbackup.conf.d'],
     path    => "/etc/dnsbackup.conf.d/${zonename}-backup.conf",

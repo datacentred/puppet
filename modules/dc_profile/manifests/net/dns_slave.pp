@@ -20,7 +20,7 @@ class dc_profile::net::dns_slave {
   }
 
   class { 'dc_dns':
-    isslave => false,
+    isslave => true,
   }
   contain 'dc_dns'
 
