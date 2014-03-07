@@ -30,6 +30,12 @@ class dc_logstash {
     type   => 'rsyslog',
   }
 
+  # Syslog listener for network devices
+  logstash::input::syslog { 'logstash-syslog':
+    type => 'syslog',
+    port => '5544',
+  }
+
   # Setup default embedded ElasticSearch instance
   logstash::output::elasticsearch { 'logstash-elasticsearch':
     embedded => true,
