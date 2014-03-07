@@ -15,6 +15,5 @@ class dc_role::logstash {
   contain dc_profile::log::kibana
   contain dc_profile::log::logstash
   contain dc_profile::log::logstashbackup
-  contain dc_profile::log::rsyslog_remote
 
 }
