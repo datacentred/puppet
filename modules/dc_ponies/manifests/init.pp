@@ -14,7 +14,8 @@ class dc_ponies {
   }
 
   apache::vhost { "ponies.${::domain}":
-    docroot => $docroot,
+    docroot    => $docroot,
+    add_listen => false,
   }
 
   @@dns_resource { "ponies.${::domain}/CNAME":
