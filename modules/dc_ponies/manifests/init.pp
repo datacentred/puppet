@@ -15,7 +15,7 @@ class dc_ponies {
 
   apache::vhost { "ponies.${::domain}":
     docroot => $docroot,
-    port    => 80,
+    port    => '80',
   }
 
   @@dns_resource { "ponies.${::domain}/CNAME":
