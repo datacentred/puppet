@@ -19,6 +19,7 @@ class dc_profile::img::packer {
   apache::vhost { "vboxes.${::domain}":
     docroot     => '/home/packer/output',
     serveradmin => hiera(sysmailaddress),
+    add_listen  => false,
   }
 
   @@dns_resource { "vboxes.${::domain}/CNAME":
