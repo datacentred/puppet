@@ -25,7 +25,8 @@ class dc_profile::net::aptmirror {
   apache::vhost { 'mirror':
     docroot     => "${base_path}/mirror",
     require     => [ File[$base_path], Class['apt_mirror']],
-    serveradmin => hiera(sysmailaddress)
+    serveradmin => hiera(sysmailaddress),
+    add_listen  => false,
   }
 
   @@dns_resource { "mirror.${::domain}/CNAME":
