@@ -44,20 +44,20 @@ class dc_logstash {
   # Email alerting from rsyslog
   # Currently the logstash module only supports match
   # which is now deprecated in favour of conditionals
-  logstash::output::email { 'logstash-rsyslog-email':
-    from    => "logstash@${::fqdn}",
-    match   => {
+#  logstash::output::email { 'logstash-rsyslog-email':
+#    from    => "logstash@${::fqdn}",
+#    match   => {
       #                'WARN'      => 'syslog_severity_code,4',
-                'ERROR'     => 'syslog_severity_code,3',
-                'CRITICAL'  => 'syslog_severity_code,2',
-                'ALERT'     => 'syslog_severity_code,1',
-                'EMERGENCY' => 'syslog_severity_code,0',
-              },
-    subject => '%{matchName}',
-    to      => hiera(sysmailaddress),
-    via     => 'sendmail',
-    body    => 'Here is the event line that occured: %{message}',
-  }
+      #                'ERROR'     => 'syslog_severity_code,3',
+      #          'CRITICAL'  => 'syslog_severity_code,2',
+      #          'ALERT'     => 'syslog_severity_code,1',
+      #          'EMERGENCY' => 'syslog_severity_code,0',
+      #        },
+      # subject => "Logstash on ${::hostname} - %{matchName} Alert on %{source_host}",
+      #to      => hiera(sysmailaddress),
+      #via     => 'sendmail',
+      #body    => 'Here is the event line that occured: %{message}',
+      #}
 
   class { 'dc_logstash::icinga': }
 
