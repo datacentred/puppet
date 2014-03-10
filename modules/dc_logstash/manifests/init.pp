@@ -47,7 +47,7 @@ class dc_logstash {
   logstash::output::email { 'logstash-rsyslog-email':
     from    => "logstash@${::fqdn}",
     match   => {
-                'WARN'      => 'syslog_severity_code,4',
+      #                'WARN'      => 'syslog_severity_code,4',
                 'ERROR'     => 'syslog_severity_code,3',
                 'CRITICAL'  => 'syslog_severity_code,2',
                 'ALERT'     => 'syslog_severity_code,1',
@@ -56,7 +56,7 @@ class dc_logstash {
     subject => '%{matchName}',
     to      => hiera(sysmailaddress),
     via     => 'sendmail',
-    body    => 'Here is the event line that occured: %{@message}',
+    body    => 'Here is the event line that occured: %{message}',
   }
 
   class { 'dc_logstash::icinga': }
