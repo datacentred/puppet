@@ -23,10 +23,11 @@ class dc_profile::net::aptmirror {
   include apache
 
   apache::vhost { "mirror.${::domain}":
-    docroot     => "${base_path}/mirror",
-    port        => '80',
-    require     => [ File[$base_path], Class['apt_mirror']],
-    serveradmin => hiera(sysmailaddress)
+    docroot       => "${base_path}/mirror",
+    port          => '80',
+    require       => [ File[$base_path], Class['apt_mirror']],
+    serveradmin   => hiera(sysmailaddress),
+    serveraliases => [ 'mirror' ],
   }
 
   @@dns_resource { "mirror.${::domain}/CNAME":
