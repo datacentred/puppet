@@ -26,6 +26,14 @@ class dc_mariadb (
   }
   contain 'mysql::server'
 
+  # Fix log file ownership bug which causes logrotate to error
+  file { '/var/log/mysql/error.log':
+    ensure  => file,
+    require => Class['::mysql::server'],
+    owner   => mysql,
+    group   => mysql,
+  }
+
   class { 'dc_mariadb::icinga':
     require => Class['::mysql::server']
   }
