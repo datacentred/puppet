@@ -24,6 +24,7 @@ class dc_profile::net::aptmirror {
 
   apache::vhost { 'mirror':
     docroot     => "${base_path}/mirror",
+    port        => '80',
     require     => [ File[$base_path], Class['apt_mirror']],
     serveradmin => hiera(sysmailaddress)
   }

@@ -18,6 +18,7 @@ class dc_profile::img::packer {
 
   apache::vhost { "vboxes.${::domain}":
     docroot     => '/home/packer/output',
+    port        => '80',
     serveradmin => hiera(sysmailaddress),
   }
 
