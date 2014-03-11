@@ -1,0 +1,17 @@
+{
+  "network": {
+    "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @ls_port %>" ],
+    "ssl ca": "/etc/ssl/certs/logstash-forwarder.crt",
+    "timeout": 15
+  },
+  "files": [
+    {
+      "paths": [ "/var/log/apache2/*access.log" ],
+      "fields": { "type": "apache" }
+    },
+    {
+      "paths": [ "/var/log/apache2/*error.log" ],
+      "fields": { "type": "apache_error" }
+    }
+  ]
+}

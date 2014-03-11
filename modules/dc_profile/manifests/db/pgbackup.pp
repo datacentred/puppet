@@ -50,7 +50,8 @@ class dc_profile::db::pgbackup {
     weekday => '5',
     hour    => '2',
     minute  => '0',
-    user    => 'barman'
+    user    => 'barman',
+    require => Class['barman'],
   }
 
   cron { 'barman-backup-tuesday':
@@ -59,7 +60,8 @@ class dc_profile::db::pgbackup {
     weekday => '2',
     hour    => '2',
     minute  => '0',
-    user    => 'barman'
+    user    => 'barman',
+    require => Class['barman'],
   }
 
 }
