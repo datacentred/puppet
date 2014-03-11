@@ -1,0 +1,1 @@
+MYSQLERROR %{MONTHDAY:day}%{MONTHNUM:month}%{YEAR:year} %{TIME:time} \[%{WORD:severity}\] %{GREEDYDATA:message_remainder}
