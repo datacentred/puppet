@@ -1,6 +1,6 @@
 # Class: dc_logstash::forwarder
 #
-# Much like rsyslog, but does it encrpyted and compressed
+# Much like rsyslog, but does it encrypted and compressed
 #
 class dc_logstash::forwarder {
 
