@@ -14,6 +14,7 @@
 #
 define dc_apache::vhost (
   $docroot,
+  $port = '80',
 ) {
 
   # Note: apache will refuse to fire up a vhost without
@@ -24,8 +25,10 @@ define dc_apache::vhost (
   } ->
 
   apache::vhost { "${title}.${::domain}":
-    docroot           => $docroot,
-    serveradmin       => hiera(sysmailaddress),
+    port          => $port,
+    docroot       => $docroot,
+    serveradmin   => hiera(sysmailaddress),
+    serveraliases => [ $title ],
   }
 
   # Export the CNAME to the rest of the network
