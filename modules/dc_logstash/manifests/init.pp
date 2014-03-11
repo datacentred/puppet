@@ -36,6 +36,50 @@ class dc_logstash {
     port => hiera(logstash_syslog_port),
   }
 
+  # Logstash forwarder support
+  logstash::input::lumberjack { 'logstash-forwarder':
+    port            => hiera(logstash_forwarder_port),
+    type            => 'lumberjack',
+    ssl_key         => '/etc/ssl/private/logstash-forwarder.key',
+    ssl_certificate => '/etc/ssl/certs/logstash-forwarder.crt',
+  }
+
+  file { '/etc/ssl/private/logstash-forwarder.key':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0600',
+    source => 'puppet:///modules/dc_logstash/logstash-forwarder.key',
+  }
+
+  # Filters and parsers
+  file { '/etc/logstash/agent/grok':
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    recurse => true,
+    source  => 'puppet:///modules/dc_logstash/grok',
+    require => Class['::logstash'],
+  }
+
+  logstash::filter::grok { 'apache-log':
+    type    => 'apache',
+    pattern => [ "%{COMBINEDAPACHELOG}" ],
+  }
+
+  logstash::filter::grok { 'apache-error-log':
+    type         => 'apache_error',
+    patterns_dir => [ '/etc/logstash/agent/grok' ],
+    pattern      => [ "%{APACHEERRORLOG}" ],
+  }
+
+  logstash::filter::grok { 'mysql-error-log':
+    type         => 'mysql_error',
+    patterns_dir => [ '/etc/logstash/agent/grok' ],
+    pattern      => [ "%{MYSQLERROR}" ],
+  }
+
   # Setup default embedded ElasticSearch instance
   logstash::output::elasticsearch { 'logstash-elasticsearch':
     embedded => true,

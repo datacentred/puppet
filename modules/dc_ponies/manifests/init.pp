@@ -13,14 +13,8 @@ class dc_ponies {
     recurse => true,
   }
 
-  apache::vhost { "ponies.${::domain}":
-    docroot       => $docroot,
-    port          => '80',
-    serveraliases => [ 'ponies' ],
-  }
-
-  @@dns_resource { "ponies.${::domain}/CNAME":
-    rdata => $::fqdn,
+  dc_apache::vhost { 'ponies':
+    docroot => $docroot,
   }
 
 }

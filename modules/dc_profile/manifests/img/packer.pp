@@ -16,15 +16,8 @@ class dc_profile::img::packer {
   include dc_packer
   include apache
 
-  apache::vhost { "vboxes.${::domain}":
-    docroot       => '/home/packer/output',
-    port          => '80',
-    serveradmin   => hiera(sysmailaddress),
-    serveraliases => [ 'vboxes' ],
-  }
-
-  @@dns_resource { "vboxes.${::domain}/CNAME":
-    rdata => $::fqdn,
+  dc_apache::vhost { 'vboxes':
+    docroot     => '/home/packer/output',
   }
 
 }

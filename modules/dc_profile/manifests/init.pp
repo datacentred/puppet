@@ -15,6 +15,7 @@ class dc_profile {
   contain dc_profile::auth::admins
   contain dc_profile::auth::sudoers
   contain dc_profile::editors::vim
+  contain dc_profile::log::logstash_forwarder
   contain dc_profile::log::rsyslog_client
   contain dc_profile::mon::icinga_client
   contain dc_profile::mon::nsca_client
