@@ -12,6 +12,10 @@
     {
       "paths": [ "/var/log/apache2/*error.log" ],
       "fields": { "type": "apache_error" }
+    },
+    {
+      "paths": [ "/var/log/mysql/error.log" ],
+      "fields": { "type": "mysql_error" }
     }
   ]
 }
