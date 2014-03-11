@@ -38,7 +38,7 @@ class dc_logstash {
 
   # Logstash forwarder support
   logstash::input::lumberjack { 'logstash-forwarder':
-    port            => '55515',
+    port            => hiera(logstash_forwarder_port),
     type            => 'lumberjack',
     ssl_key         => '/etc/ssl/private/logstash-forwarder.key',
     ssl_certificate => '/etc/ssl/certs/logstash-forwarder.crt',

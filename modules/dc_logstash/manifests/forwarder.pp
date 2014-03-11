@@ -2,10 +2,10 @@
 #
 # Much like rsyslog, but does it encrpyted and compressed
 #
-class dc_logstash::forwarder (
-  $ls_host = 'logstash',
-  $ls_port = '55515',
-) {
+class dc_logstash::forwarder {
+
+  $ls_host = hiera(logstash_server)
+  $ls_port = hiera(logstash_forwarder_port)
 
   package { 'logstash-forwarder':
     ensure => installed,
