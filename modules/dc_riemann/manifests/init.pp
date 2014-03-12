@@ -31,13 +31,5 @@ class dc_riemann {
     owner  => 'riemann',
     group  => 'riemann',
   }
-
-  file {'/etc/riemann.conf.d/syslog-errors.clj':
-    ensure  => file,
-    require => File['/etc/riemann.conf.d'],
-    owner   => 'riemann',
-    group   => 'riemann',
-    content => template('dc_riemann/syslog-errors.clj.erb')
-  }
 }
 

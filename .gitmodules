@@ -130,3 +130,12 @@
 [submodule "modules/memcached"]
 	path = modules/memcached
 	url = https://github.com/saz/puppet-memcached
+[submodule "modules/java"]
+	path = modules/java
+	url = https://github.com/puppetlabs/puppetlabs-java
+[submodule "modules/wget"]
+	path = modules/wget
+	url = http://github.com/maestrodev/puppet-wget
+[submodule "modules/riemann"]
+	path = modules/riemann
+	url = https://github.com/datacentred/garethr-riemann
