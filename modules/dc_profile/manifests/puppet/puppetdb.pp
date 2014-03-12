@@ -14,14 +14,7 @@ class dc_profile::puppet::puppetdb {
 
   $puppetdb_pw = hiera(puppetdb_pw)
 
-  class { '::puppetdb::server':
-    ssl_listen_address => '0.0.0.0',
-    database           => 'postgres',
-    database_host      => 'db0.sal01.datacentred.co.uk',
-    database_name      => 'puppetdb',
-    database_username  => 'puppetdb',
-    database_password  => $puppetdb_pw,
-  }
+  contain puppetdb::server
 
   file { '/etc/nagios/nrpe.d/puppetdb.cfg':
     ensure  => file,
