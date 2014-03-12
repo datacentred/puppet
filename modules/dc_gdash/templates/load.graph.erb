@@ -2,11 +2,9 @@ title       "Load"
 area        :none
 description "The combined CPU usage for <%= @hostname %>"
 hide_legend false
-<%-
-  loadshort = "collectd.#{@hostname}_sal01_datacentred_co_uk.load.load.shortterm"
-  loadmid   = "collectd.#{@hostname}_sal01_datacentred_co_uk.load.load.midterm"
-  loadlong  = "collectd.#{@hostname}_sal01_datacentred_co_uk.load.load.longterm"
--%>
+  loadshort = "collectd.<%= @fqdn.gsub(/\./, '_') %>.load.load.shortterm"
+  loadmid   = "collectd.<%= @fqdn.gsub(/\./, '_') %>.load.load.midterm"
+  loadlong  = "collectd.<%= @fqdn.gsub(/\./, '_') %>.load.load.longterm"
 
 field :short, :color => "red",
                :alias => "Short term (1 minute)",

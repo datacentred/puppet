@@ -2,12 +2,10 @@ title       "RAM Usage (in percent)"
 area        :stacked
 description "RAM usage (in percent)"
 hide_legend false
-<%-
-  memused   = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-used" 
-  memfree   = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-free"
-  memcached = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-cached"
-  membuffed = "collectd.#{@hostname}_sal01_datacentred_co_uk.memory.memory-buffered"
--%>
+  memused   = "collectd.<%= @fqdn.gsub(/\./, '_') %>.memory.memory-used" 
+  memfree   = "collectd.<%= @fqdn.gsub(/\./, '_') %>.memory.memory-free"
+  memcached = "collectd.<%= @fqdn.gsub(/\./, '_') %>.memory.memory-cached"
+  membuffed = "collectd.<%= @fqdn.gsub(/\./, '_') %>.memory.memory-buffered"
 
 field :use,    :color => "red",
                :alias => "used by application",

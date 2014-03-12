@@ -47,7 +47,7 @@ class dc_profile::perf::graphite {
     gr_django_db_name            => 'graphite',
     gr_django_db_user            => 'graphite',
     gr_django_db_password        => $graphite_db_pw,
-    gr_django_db_host            => 'db0.sal01.datacentred.co.uk',
+    gr_django_db_host            => "db0.${::domain}",
     gr_django_db_port            => 3306,
     gr_storage_schemas           => [
       {
