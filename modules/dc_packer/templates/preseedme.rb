@@ -9,7 +9,7 @@ require 'net/http'
 require 'openssl'
 
 # URL for the preseed template used to build Foreman itself
-preseed_uri = URI('https://foreman/unattended/provision?spoof=10.10.192.140')
+preseed_uri = URI('https://foreman.<%= @domain -%>/unattended/provision?hostname=foreman.<%= @domain -%>')
 
 # Filesystem location for the VMware / VirtualBox / Vagrant specific preseed bits
 preseed_vagrant = "/home/packer/templates/vagrant.cfg"
