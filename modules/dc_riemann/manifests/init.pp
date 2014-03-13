@@ -26,7 +26,7 @@ class dc_riemann {
     content => template('dc_riemann/riemann.config.erb'),
   }
 
-  file {'/etc/riemann.conf.d':
+  file { '/etc/riemann.conf.d':
     ensure => directory,
     owner  => 'riemann',
     group  => 'riemann',
