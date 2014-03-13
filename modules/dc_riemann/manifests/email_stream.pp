@@ -19,11 +19,11 @@ define dc_riemann::email_stream (
   $rollup      = 3,
   $event       = undef,
 ){
-  file { "/etc/${dc_riemann::riemann_config_dir}/${title}.clj":
+  file { "${dc_riemann::riemann_config_dir}/${title}.clj":
     ensure  => file,
     owner   => 'riemann',
     group   => 'riemann',
-    content => template('email_stream.clj')
+    content => template('dc_riemann/email_stream.clj.erb')
   }
 }
 
