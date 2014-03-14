@@ -6,7 +6,7 @@ include dc_dhcpdpools::virtual
     network    => '10.10.40.0',
     mask       => '255.255.255.0',
     range      => '10.10.40.16 10.10.40.247',
-    gateway    => '10.10.40.1',
+    gateway    => '10.10.40.254',
     parameters => [ 'default-lease-time 86400', 'max-lease-time 172800', 'ddns-updates on', 'deny client-updates' ],
     tag        => vlan40
   }
@@ -15,7 +15,7 @@ include dc_dhcpdpools::virtual
     network     => '10.10.96.0',
     mask        => '255.255.255.0',
     range       => '10.10.96.16 10.10.96.247',
-    gateway     => '10.10.96.1',
+    gateway     => '10.10.96.254',
     pxeserver   => hiera(pxeserver),
     pxefilename => '/pxelinux.0',
     options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
@@ -27,7 +27,7 @@ include dc_dhcpdpools::virtual
     network     => '10.10.160.0',
     mask        => '255.255.255.0',
     range       => '10.10.160.16 10.10.160.247',
-    gateway     => '10.10.160.1',
+    gateway     => '10.10.160.254',
     pxeserver   => hiera(pxeserver),
     pxefilename => '/pxelinux.0',
     options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
@@ -39,7 +39,7 @@ include dc_dhcpdpools::virtual
     network     => '10.10.170.0',
     mask        => '255.255.255.0',
     range       => '10.10.170.16 10.10.170.247',
-    gateway     => '10.10.170.1',
+    gateway     => '10.10.170.254',
     pxeserver   => hiera(pxeserver),
     pxefilename => '/pxelinux.0',
     options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
@@ -51,7 +51,7 @@ include dc_dhcpdpools::virtual
     network     => '10.10.192.0',
     mask        => '255.255.255.0',
     range       => '10.10.192.16 10.10.192.247',
-    gateway     => '10.10.192.1',
+    gateway     => '10.10.192.254',
     pxeserver   => hiera(pxeserver),
     pxefilename => '/pxelinux.0',
     options     => [ 'domain-search "sal01.datacentred.co.uk"' ],
@@ -63,7 +63,7 @@ include dc_dhcpdpools::virtual
     network    => '10.10.128.0',
     mask       => '255.255.255.0',
     range      => '10.10.128.16 10.10.128.247',
-    gateway    => '10.10.128.1',
+    gateway    => '10.10.128.254',
     parameters => [ 'default-lease-time 86400', 'max-lease-time 172800', 'ddns-updates on', 'deny client-updates' ],
     tag        => vlan128
   }
