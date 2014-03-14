@@ -1,0 +1,6 @@
+(def email(mailer { :from "<%= @fromaddress %>" :host "localhost"}))
+(def <%= @title %>(rollup <%= @rollup %> <%= @waittime %> (email "<%= @sysmailaddress %>")))
+(streams
+(where <%= @event %> <%= @title %>)
+)
+
