@@ -15,7 +15,7 @@ class dc_profile::log::riemann{
   class { 'dc_riemann': }
 
   dc_riemann::email_stream { 'syslog-errors':
-    event   => '(or (state "3")(state "2")(state "1")',
+    event   => '(or (state "3")(state "2")(state "1"))',
     require => Class['dc_riemann'],
   }
 
