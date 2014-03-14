@@ -16,7 +16,7 @@
 # Sample Usage:
 #
 class dc_icinga::server::config (
-  $password = 'dcsal01dev',
+  $password = hiera(icinga_gui_password),
 ) {
 
   include dc_icinga::params
@@ -520,7 +520,7 @@ class dc_icinga::server::config (
     check_command       => 'check_nfs_dc',
     service_description => 'NFS',
   }
-  
+
   nagios_service { 'check_foreman':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_foreman',
