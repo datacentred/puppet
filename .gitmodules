@@ -1,9 +1,6 @@
 [submodule "modules/nullmailer"]
 	path = modules/nullmailer
 	url = git://github.com/akumria/puppet-nullmailer.git
-[submodule "modules/tftp"]
-	path = modules/tftp
-	url = git://github.com/puppetlabs/puppetlabs-tftp.git
 [submodule "modules/sudo"]
 	path = modules/sudo
 	url = git://github.com/saz/puppet-sudo.git
