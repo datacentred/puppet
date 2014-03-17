@@ -65,19 +65,19 @@ class dc_logstash {
 
   logstash::filter::grok { 'apache-log':
     type    => 'apache',
-    pattern => [ "%{COMBINEDAPACHELOG}" ],
+    pattern => [ '%{COMBINEDAPACHELOG}' ],
   }
 
   logstash::filter::grok { 'apache-error-log':
     type         => 'apache_error',
     patterns_dir => [ '/etc/logstash/agent/grok' ],
-    pattern      => [ "%{APACHEERRORLOG}" ],
+    pattern      => [ '%{APACHEERRORLOG}' ],
   }
 
   logstash::filter::grok { 'mysql-error-log':
     type         => 'mysql_error',
     patterns_dir => [ '/etc/logstash/agent/grok' ],
-    pattern      => [ "%{MYSQLERROR}" ],
+    pattern      => [ '%{MYSQLERROR}' ],
   }
 
   # Setup default embedded ElasticSearch instance
