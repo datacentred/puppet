@@ -2,6 +2,7 @@
     (clojure.string/join " " ["Level" (clojure.string/join " " (map :state events)) "event from process" (clojure.string/join " " (map :service events)) "running on host" (clojure.string/join " " (map :host events))]))}))
 (def <%= @title %>(rollup <%= @rollup %> <%= @waittime %> (email "<%= @sysmailaddress %>")))
 (streams
-(where <%= @event %> <%= @title %>)
+    (by [:host :service]
+        (where <%= @event %> <%= @title %>))
 )
 
