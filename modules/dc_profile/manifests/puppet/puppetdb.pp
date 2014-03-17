@@ -12,7 +12,7 @@
 #
 class dc_profile::puppet::puppetdb {
 
-  $puppetdb_pw = hiera(puppetdb_pw)
+  $puppetdb_pw = hiera(puppetdb_pass)
 
   contain puppetdb::server
 
