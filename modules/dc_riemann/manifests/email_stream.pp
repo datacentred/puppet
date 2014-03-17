@@ -19,6 +19,9 @@ define dc_riemann::email_stream (
   $rollup      = 3,
   $event       = undef,
 ){
+
+  $sysmailaddress = hiera(sysmailaddress)
+
   file { "${dc_riemann::riemann_config_dir}/${title}.clj":
     ensure  => file,
     owner   => 'riemann',
