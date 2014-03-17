@@ -136,3 +136,6 @@
 [submodule "modules/barman"]
 	path = modules/barman
 	url = https://github.com/datacentred/puppet-barman
+[submodule "modules/tftp"]
+	path = modules/tftp
+	url = https://github.com/datacentred/puppetlabs-tftp
