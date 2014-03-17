@@ -87,9 +87,10 @@ class dc_logstash {
 
   # Setup syslog output to riemann
   logstash::output::riemann { 'logstash-riemann':
-    type            => 'rsyslog',
-    riemann_event   => {
+    type              => 'rsyslog',
+    riemann_event     => {
           state       => '%{syslog_severity_code}',
+          service     => '%{program}',
           description => '%{message}',
     },
   }
