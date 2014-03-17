@@ -21,7 +21,7 @@ class dc_profile::net::dhcpd_slave {
 
   class { 'dhcp':
     dnsdomain    => [
-      'sal01.datacentred.co.uk',
+      $::domain,
       '0.0.10.in-addr.arpa',
     ],
     nameservers  => [$nameservers],
