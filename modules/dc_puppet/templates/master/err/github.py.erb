@@ -50,6 +50,27 @@ class GitHub(BotPlugin):
         ponies = json.loads(resp.read())
         return path + random.choice(ponies)
 
+    def pull_production(self):
+        """Synchronise repos and submodules"""
+        # Become the git user and fetch the production branch, this
+        # is a bare repository so we need to fast forward the destination
+        # reference to that of the source
+        # todo: The actual branch name is available in the regex
+        #       matches above, probably buggers up with submodules
+        subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
+                         'cd /home/git/puppet.git; ' \
+                         'git fetch origin master:master'])
+
+        # Likewise mirror changes to the puppet environment
+        # todo: The actual branch name is available in the regex
+        #       matches above, probably buggers up with submodules
+        subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
+                         'cd /etc/puppet/environments/production;' \
+                         'git pull;' \
+                         'git submodule init;' \
+                         'git submodule sync;' \
+                         'git submodule update'])
+
     def callback_message(self, conn, message):
         """
         Process incoming messages and take any action that is required
@@ -76,27 +97,14 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), self.get_pony(),
                       message_type=message.getType())
-
-            # Become the git user and fetch the production branch, this
-            # is a bare repository so we need to fast forward the destination
-            # reference to that of the source
-            # todo: The actual branch name is available in the regex
-            #       matches above, probably buggers up with submodules
-            subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                             'cd /home/git/puppet.git; ' \
-                             'git fetch origin master:master'])
-
-            # Likewise mirror changes to the puppet environment
-            # todo: The actual branch name is available in the regex
-            #       matches above, probably buggers up with submodules
-            subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                             'cd /etc/puppet/environments/production;' \
-                             'git pull;' \
-                             'git submodule init;' \
-                             'git submodule sync;' \
-                             'git submodule update'])
+            pull_production()
 
     @botcmd
     def pony(self, msg, args):
         """Print a pony! And test the daemon obviously"""
+        return self.get_pony()
+
+    def pull(self, msg, args):
+        """Print a pony and sync the repos explicitly"""
+        pull_production()
         return self.get_pony()
