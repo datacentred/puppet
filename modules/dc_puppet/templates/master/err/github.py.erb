@@ -97,7 +97,7 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), self.get_pony(),
                       message_type=message.getType())
-            pull_production()
+            self.pull_production()
 
     @botcmd
     def pony(self, msg, args):
@@ -106,5 +106,5 @@ class GitHub(BotPlugin):
 
     def pull(self, msg, args):
         """Print a pony and sync the repos explicitly"""
-        pull_production()
+        self.pull_production()
         return self.get_pony()
