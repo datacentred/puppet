@@ -76,9 +76,9 @@ class dc_puppet::params {
   $storeconfigs_backend = 'puppetdb'
 
   # Where puppet db lives
-  $puppetdb_url         = 'puppetdb.sal01.datacentred.co.uk'
+  $puppetdb_url         = "puppetdb.${::domain}"
 
   # Where foreman lives
-  $foreman_url          = 'https://foreman.sal01.datacentred.co.uk'
+  $foreman_url          = "https://foreman.${::domain}"
 
 }

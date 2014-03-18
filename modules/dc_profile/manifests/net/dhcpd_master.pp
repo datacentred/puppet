@@ -12,9 +12,6 @@
 #
 class dc_profile::net::dhcpd_master {
 
-  include stdlib
-  include dc_dhcpdpools::poollist
-
   $localtimeservers = hiera(localtimeservers)
   $nameservers      = values(hiera(nameservers))
   $slaveserver_ip   = hiera(dhcpdslaveip)
@@ -24,7 +21,7 @@ class dc_profile::net::dhcpd_master {
 
   class { 'dhcp':
     dnsdomain    => [
-      'sal01.datacentred.co.uk',
+      $::domain,
       '0.0.10.in-addr.arpa',
     ],
     nameservers  => [$nameservers],
@@ -45,7 +42,7 @@ class dc_profile::net::dhcpd_master {
     load_split   => '255',
   }
 
-  Dc_dhcpdpools::Virtual::Dhcpdpool <| |>
+  contain dc_dhcpdpools
 
   Dhcp::Pool { failover => 'dhcp-failover' }
 
