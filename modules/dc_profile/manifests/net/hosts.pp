@@ -12,7 +12,7 @@
 #
 class dc_profile::net::hosts {
 
-  host { $::hostname:
+  host { $::fqdn:
     ensure => absent,
     ip     => '127.0.1.1',
   }
