@@ -22,15 +22,7 @@ class dc_logstash {
   }
 
   # UDP listener
-  # This handles messages from rsyslog sent in formatted natively for Logstash's
-  # consumption using JSON.
-  logstash::input::udp { 'logstash-udp':
-    format => 'json_event',
-    port   => 55514,
-    type   => 'rsyslog',
-  }
-
-  # Syslog listener for network devices
+  # Syslog listener
   logstash::input::syslog { 'logstash-syslog':
     type => 'syslog',
     port => hiera(logstash_syslog_port),
@@ -80,6 +72,21 @@ class dc_logstash {
     pattern      => [ '%{MYSQLERROR}' ],
   }
 
+  # Munge incoming syslogs to set host to hostname and not ip
+  # Need the ip-address-add to run first
+
+  logstash::filter::mutate { 'ip-address-add':
+    type      => 'syslog',
+    add_field => { ipaddress => '%{host}', },
+    order     => 9,
+  }
+
+  logstash::filter::mutate { 'set-hostname':
+    type    => 'syslog',
+    replace => { host    => '%{logsource}', },
+    order   => 10,
+  }
+
   # Setup default embedded ElasticSearch instance
   logstash::output::elasticsearch { 'logstash-elasticsearch':
     embedded => true,
@@ -87,7 +94,7 @@ class dc_logstash {
 
   # Setup syslog output to riemann
   logstash::output::riemann { 'logstash-riemann':
-    type              => 'rsyslog',
+    type              => 'syslog',
     riemann_event     => {
           state       => '%{syslog_severity_code}',
           service     => '%{program}',

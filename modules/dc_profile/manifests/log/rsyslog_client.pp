@@ -14,7 +14,7 @@ class dc_profile::log::rsyslog_client {
 
   class { 'dc_rsyslog':
     logstash_server => hiera(logstash_server),
-    logstash_port   => 55514,
+    logstash_port   => hiera(logstash_syslog_port),
   }
 
 }
