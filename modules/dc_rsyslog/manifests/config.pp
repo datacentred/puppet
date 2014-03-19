@@ -2,7 +2,7 @@
 # updates
 class dc_rsyslog::config {
 
-  file { '/etc/ryslog.d':
+  file { '/etc/rsyslog.d':
     ensure  => directory,
     purge   => true,
     force   => true,
