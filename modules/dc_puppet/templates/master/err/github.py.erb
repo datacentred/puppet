@@ -104,6 +104,7 @@ class GitHub(BotPlugin):
         """Print a pony! And test the daemon obviously"""
         return self.get_pony()
 
+    @botcmd
     def pull(self, msg, args):
         """Print a pony and sync the repos explicitly"""
         self.pull_production()
