@@ -73,13 +73,6 @@ class dc_logstash {
   }
 
   # Munge incoming syslogs to set host to hostname and not ip
-  # Need the ip-address-add to run first
-
-  logstash::filter::mutate { 'ip-address-add':
-    type      => 'syslog',
-    add_field => { ipaddress => '%{host}', },
-    order     => 9,
-  }
 
   logstash::filter::mutate { 'set-hostname':
     type    => 'syslog',
