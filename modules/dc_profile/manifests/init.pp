@@ -19,6 +19,7 @@ class dc_profile {
   contain dc_profile::log::rsyslog_client
   contain dc_profile::mon::icinga_client
   contain dc_profile::mon::nsca_client
+  contain dc_profile::net::hosts
   contain dc_profile::net::mail
   contain dc_profile::net::ntpgeneric
   contain dc_profile::net::ssh
