@@ -26,7 +26,8 @@ define dc_riemann::email_stream (
     ensure  => file,
     owner   => 'riemann',
     group   => 'riemann',
-    content => template('dc_riemann/email_stream.clj.erb')
+    content => template('dc_riemann/email_stream.clj.erb'),
+    notify  => Service['riemann'],
   }
 }
 
