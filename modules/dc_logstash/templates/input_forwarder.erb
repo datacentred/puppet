@@ -1,0 +1,8 @@
+input {
+ lumberjack {
+  port => 55515
+  ssl_certificate => "<%= @certpath %>"
+  ssl_key => "<%= @keypath %>"
+  type => "lumberjack"
+ }
+}

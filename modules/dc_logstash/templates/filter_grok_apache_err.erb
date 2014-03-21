@@ -1,0 +1,8 @@
+filter {
+ if [type] == "apache_error" {
+  grok {
+   pattern => ['%{APACHEERRORLOG}']
+   patterns_dir => ['<%= @logstash_grok_patterns_dir %>']
+  }
+ }
+}

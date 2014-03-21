@@ -2,3 +2,8 @@ Module : dc_logstash
 Author : matt
  ____________________________________ 
 
+Check the ordering of existing config
+
+10-19 Input plugins
+20-29 Output plugins
+50-59 Filter plugins
