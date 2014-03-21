@@ -1,8 +1,8 @@
-# Class: dc_logstash::forwarder
+# Class: dc_logstash::client::forwarder
 #
 # Much like rsyslog, but does it encrypted and compressed
 #
-class dc_logstash::forwarder {
+class dc_logstash::client::forwarder {
 
   $ls_host = hiera(logstash_server)
   $ls_port = hiera(logstash_forwarder_port)
@@ -16,7 +16,7 @@ class dc_logstash::forwarder {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('dc_logstash/logstash-forwarder.erb'),
+    content => template('dc_logstash/logstash-forwarder_client.erb'),
   }
 
   file { '/etc/ssl/certs/logstash-forwarder.crt':
