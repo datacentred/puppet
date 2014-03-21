@@ -14,6 +14,6 @@
 #
 class dc_profile::log::logstash_forwarder {
 
-  contain dc_logstash::forwarder
+  contain dc_logstash::client::forwarder
 
 }
