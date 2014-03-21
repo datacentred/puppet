@@ -17,6 +17,9 @@ class dc_puppet::master::err::config {
   $xmpp_room = hiera(xmpp_room)
   $xmpp_name = hiera(xmpp_name)
 
+  $foreman_url      = hiera(foreman_url)
+  $foreman_admin_pw = hiera(foreman_admin_pw)
+
   file { '/var/log/err':
     ensure => directory,
     mode   => '0755',

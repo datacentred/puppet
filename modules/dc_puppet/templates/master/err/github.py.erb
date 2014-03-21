@@ -6,6 +6,14 @@ import subprocess
 import random
 import urllib2
 import json
+import threading
+import Queue
+import base64
+
+# Worker thread synchronisation
+condvar = threading.Condition()
+# A queue to store requests
+queue = Queue.Queue()
 
 class MLStripper(HTMLParser):
     """
@@ -38,38 +46,142 @@ class MLStripper(HTMLParser):
         """
         return ''.join(self.fed)
 
+##############################################################################
+# My Little Pony: Friendship Is Magic
+##############################################################################
+
+def get_pony():
+    """Return a random pony"""
+    path = 'http://ponies.<%= @domain %>/'
+    resp = urllib2.urlopen(path + 'ponies.json')
+    ponies = json.loads(resp.read())
+    return path + random.choice(ponies)
+
+##############################################################################
+# Git
+##############################################################################
+
+def git_sync():
+    """Synchronise repos and submodules"""
+    # Become the git user and fetch the production branch, this
+    # is a bare repository so we need to fast forward the destination
+    # reference to that of the source
+    # todo: The actual branch name is available in the regex
+    #       matches above, probably buggers up with submodules
+    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
+                     'cd /home/git/puppet.git; ' \
+                     'git fetch origin master:master'])
+
+    # Likewise mirror changes to the puppet environment
+    # todo: The actual branch name is available in the regex
+    #       matches above, probably buggers up with submodules
+    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
+                     'cd /etc/puppet/environments/production;' \
+                     'git pull;' \
+                     'git submodule init;' \
+                     'git submodule sync;' \
+                     'git submodule update'])
+
+##############################################################################
+# Foreman
+##############################################################################
+
+HOST     = <%= @foreman_url %>
+DOMAIN   = <%= @domain %>
+USERNAME = 'admin'
+PASSWORD = <%= @foreman_admin_pw %>
+
+def foreman_get(path):
+    """GET from the foreman"""
+    url = 'https://{0}.{1}{2}'.format(HOST, DOMAIN, path)
+    request = urllib2.Request(url)
+    # Add in the plain-text authorization header
+    auth = base64.encodestring("{0}:{1}".format(USERNAME, PASSWORD))
+    request.add_header('Authorization', 'Basic {0}'.format(auth))
+    # May raise urllib2.URLError
+    response = urllib2.urlopen(request)
+    if response.getcode() != 200:
+        raise Exception
+    return response.read()
+
+def foreman_post(path, post):
+    """POST to the foreman"""
+    url = 'https://{0}.{1}{2}'.format(HOST, DOMAIN, path)
+    request = urllib2.Request(url)
+    # Add in the plain-text authorization header
+    auth = base64.encodestring("{0}:{1}".format(USERNAME, PASSWORD))
+    request.add_header('Authorization', 'Basic {0}'.format(auth))
+    # May raise urllib2.URLError
+    response = urllib2.urlopen(request, post)
+    if response.getcode() != 200:
+        raise Exception
+    return response.read()
+
+def get_smart_proxy_id(name):
+    """Given the textual name lookup a smart proxy"""
+    resp = foreman_get('/api/smart_proxies')
+    data = json.loads(resp)
+    for proxy in data:
+        if proxy['smart_proxy']['name'] == name:
+            return proxy['smart_proxy']['id']
+    raise Exception
+
+def get_environment_id(name):
+    """Given the textual name lookup an environment"""
+    resp = foreman_get('/api/environments')
+    data = json.loads(resp)
+    for environment in data:
+        if environment['environment']['name'] == name:
+            return environment['environment']['id']
+    raise Exception
+
+def post_update_puppetclasses(proxy, env):
+    """Update all puppet classes for the specified environment"""
+    path = '/api/smart_proxies/{0}/import_puppetclasses'.format(proxy)
+    data = 'environment_id={0}'.format(env)
+    foreman_post(path, data)
+
+def foreman_sync():
+    """Document"""
+    proxy = get_smart_proxy_id('Puppet Master')
+    env = get_environment_id('production')
+    post_update_puppetclasses(proxy, env)
+
+##############################################################################
+# Updater thread
+##############################################################################
+
+def worker_main(*args, **kwargs):
+    """
+    As we can have multiple pull requests happen at once
+    we process them asynchronously in this thread to ensure
+    that both foreman and the puppet repos are totally in sync
+    with GitHub
+    """
+    while True:
+        queue.get()
+        git_sync()
+        foreman_sync()
+        queue.task_done()
+
+##############################################################################
+# Actual errbot plugin!
+##############################################################################
+
 class GitHub(BotPlugin):
     """
     GitHub plugin for Marvin Bot running locally on the puppet master
     """
-
-    def get_pony(self):
-        """Return a random pony"""
-        path = 'http://ponies.<%= @domain %>/'
-        resp = urllib2.urlopen(path + 'ponies.json')
-        ponies = json.loads(resp.read())
-        return path + random.choice(ponies)
-
-    def pull_production(self):
-        """Synchronise repos and submodules"""
-        # Become the git user and fetch the production branch, this
-        # is a bare repository so we need to fast forward the destination
-        # reference to that of the source
-        # todo: The actual branch name is available in the regex
-        #       matches above, probably buggers up with submodules
-        subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                         'cd /home/git/puppet.git; ' \
-                         'git fetch origin master:master'])
-
-        # Likewise mirror changes to the puppet environment
-        # todo: The actual branch name is available in the regex
-        #       matches above, probably buggers up with submodules
-        subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                         'cd /etc/puppet/environments/production;' \
-                         'git pull;' \
-                         'git submodule init;' \
-                         'git submodule sync;' \
-                         'git submodule update'])
+    def __init__(self):
+        """Constructor"""
+        worker = threading.Thread(target=worker_main)
+        worker.daemon = True
+        worker.start()
+        BotPlugin.__init__(self)
+    
+    def __del__(self):
+        """Destructor"""
+        queue.join()
 
     def callback_message(self, conn, message):
         """
@@ -95,17 +207,17 @@ class GitHub(BotPlugin):
             self.send(message.getFrom(), match.group(1) +
                       ' performed a pull request merge',
                       message_type=message.getType())
-            self.send(message.getFrom(), self.get_pony(),
+            self.send(message.getFrom(), get_pony(),
                       message_type=message.getType())
-            self.pull_production()
+            queue.put(0)
 
     @botcmd
     def pony(self, msg, args):
         """Print a pony! And test the daemon obviously"""
-        return self.get_pony()
+        return get_pony()
 
     @botcmd
-    def pull(self, msg, args):
+    def sync(self, msg, args):
         """Print a pony and sync the repos explicitly"""
-        self.pull_production()
-        return self.get_pony()
+        queue.put(0)
+        return get_pony()
