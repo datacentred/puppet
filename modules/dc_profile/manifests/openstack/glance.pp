@@ -17,8 +17,6 @@ class dc_profile::openstack::glance {
 
   $os_region = hiera(os_region)
 
-  $glance_db_root_pw = hiera(glance_db_root_pw)
-
   $glance_api_db   = hiera(glance_api_db)
   $glance_api_user = hiera(glance_api_user)
   $glance_api_pass = hiera(glance_api_pass)
@@ -37,10 +35,7 @@ class dc_profile::openstack::glance {
   # Optionally install the database package
   if '127.0.0.1' in [$glance_api_host, $glance_reg_host] {
 
-    class { 'dc_mariadb':
-      maria_root_pw => $glance_db_root_pw,
-    }
-    contain 'dc_mariadb'
+    contain dc_mariadb
 
     # Optionally install each database
     # TODO: I suspect this could be a shared class to be
