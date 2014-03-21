@@ -17,7 +17,7 @@ class dc_logstash {
   # Add directory and install patterns for filters and parsers
   $logstash_grok_patterns_dir = hiera(logstash_grok_patterns_dir)
 
-  file { "${logstash_grok_patterns_dir}":
+  file { $logstash_grok_patterns_dir:
     ensure  => directory,
     owner   => 'root',
     group   => 'root',
@@ -32,8 +32,9 @@ class dc_logstash {
   exec { 'install-contrib':
     creates => '/opt/logstash/lib/logstash/outputs/riemann.rb',
     cwd     => '/opt/logstash',
-    command => 'bin/plugin install contrib',
+    command => '/opt/logstash/bin/plugin install contrib',
     require => Class['::logstash'],
+    notify  => Service['logstash'],
   }
 
   # Add config files
