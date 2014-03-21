@@ -33,7 +33,6 @@ class dc_logstash {
     creates => '/opt/logstash/lib/logstash/outputs/riemann.rb',
     cwd     => '/opt/logstash',
     command => '/opt/logstash/bin/plugin install contrib',
-    require => Class['::logstash'],
     notify  => Service['logstash'],
   }
 
