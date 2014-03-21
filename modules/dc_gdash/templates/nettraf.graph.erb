@@ -7,8 +7,8 @@ hide_legend false
 
 field :receiving, :color => "green",
                :alias => "Receiving (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxpackets %>),1)"
+               :data  => "scaleToSeconds(nonNegativeDerivative(rxpackets),1)"
 
 field :transmitting, :color => "blue",
                :alias => "Transmitting (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= txpackets %>),1)"
+               :data  => "scaleToSeconds(nonNegativeDerivative(txpackets),1)"
