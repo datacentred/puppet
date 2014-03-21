@@ -139,3 +139,6 @@
 [submodule "modules/tftp"]
 	path = modules/tftp
 	url = https://github.com/datacentred/puppetlabs-tftp
+[submodule "modules/file_concat"]
+	path = modules/file_concat
+	url = https://github.com/electrical/puppet-lib-file_concat
