@@ -12,7 +12,7 @@
 class dc_logstash {
 
   # Basic class for installing Logstash
-  class { '::logstash':}
+  class { '::logstash': }
 
   # Add directory and install patterns for filters and parsers
   $logstash_grok_patterns_dir = hiera(logstash_grok_patterns_dir)
@@ -33,7 +33,7 @@ class dc_logstash {
     creates => '/opt/logstash/lib/logstash/outputs/riemann.rb',
     cwd     => '/opt/logstash',
     command => '/opt/logstash/bin/plugin install contrib',
-    notify  => Service['logstash'],
+    require => Class['::logstash'],
   }
 
   # Add config files
