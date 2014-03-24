@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::generic {
+class dc_role::vagrant {
 
   stage { 'repos':
     before => Stage['main'],
