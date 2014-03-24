@@ -1,14 +1,14 @@
 title   "Network interface <%= @interface %> traffic on <%= @hostname %>"
 area    :first
 hide_legend false
-
-  rxpackets = "collectd.<%= @fqdn.gsub(/\./, '_') %>.interface-#{@interface}.if_octets.rx"
-  txpackets = "collectd.<%= @fqdn.gsub(/\./, '_') %>.interface-#{@interface}.if_octets.tx"
-
+<%
+  rxpackets = "collectd." + @fqdn.gsub(/\./, '_') + ".interface-" + @interface + ".if_octets.rx"
+  txpackets = "collectd." + @fqdn.gsub(/\./, '_') + ".interface-" + @interface + ".if_octets.tx"
+%>
 field :receiving, :color => "green",
                :alias => "Receiving (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(rxpackets),1)"
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxpackets %>),1)"
 
 field :transmitting, :color => "blue",
                :alias => "Transmitting (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(txpackets),1)"
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= txpackets %>),1)"
