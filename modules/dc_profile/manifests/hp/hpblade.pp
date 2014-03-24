@@ -21,11 +21,4 @@ class dc_profile::hp::hpblade {
     dhcp => true,
   }
 
-  augeas { 'network_interfaces':
-    context => '/files/etc/network/interfaces',
-    changes => [
-      "set iface[. = 'bond0']/gateway 10.10.192.254",
-    ],
-  }
-
 }
