@@ -10,8 +10,6 @@ import threading
 import Queue
 import base64
 
-# Worker thread synchronisation
-condvar = threading.Condition()
 # A queue to store requests
 queue = Queue.Queue()
 
@@ -159,9 +157,11 @@ def worker_main(*args, **kwargs):
     with GitHub
     """
     while True:
-        queue.get()
+        request = queue.get()
         git_sync()
         foreman_sync()
+        args[0].send('Development',
+                     'Completed sync of {0}'.format(request))
         queue.task_done()
 
 ##############################################################################
@@ -174,7 +174,7 @@ class GitHub(BotPlugin):
     """
     def __init__(self):
         """Constructor"""
-        worker = threading.Thread(target=worker_main)
+        worker = threading.Thread(args=(self), target=worker_main)
         worker.daemon = True
         worker.start()
         BotPlugin.__init__(self)
@@ -209,7 +209,7 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), get_pony(),
                       message_type=message.getType())
-            queue.put(0)
+            queue.put('pull request #{0}'.format(match.group(4)))
 
     @botcmd
     def pony(self, msg, args):
@@ -219,5 +219,11 @@ class GitHub(BotPlugin):
     @botcmd
     def sync(self, msg, args):
         """Print a pony and sync the repos explicitly"""
-        queue.put(0)
+        queue.put('explicit request')
         return get_pony()
+
+    @botcmd
+    def queue(self, msg, args):
+        """Interrogate the run queue"""
+        return 'Run queue has {0}'.format(queue.qsize())
+    
