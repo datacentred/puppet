@@ -84,10 +84,10 @@ def git_sync():
 # Foreman
 ##############################################################################
 
-HOST     = <%= @foreman_url %>
-DOMAIN   = <%= @domain %>
+HOST     = '<%= @foreman_url %>'
+DOMAIN   = '<%= @domain %>'
 USERNAME = 'admin'
-PASSWORD = <%= @foreman_admin_pw %>
+PASSWORD = '<%= @foreman_admin_pw %>'
 
 def foreman_get(path):
     """GET from the foreman"""
