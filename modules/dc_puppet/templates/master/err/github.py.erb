@@ -140,7 +140,7 @@ def post_update_puppetclasses(proxy, env):
     foreman_post(path, data)
 
 def foreman_sync():
-    """Document"""
+    """Import all puppet classes from the master's production env"""
     proxy = get_smart_proxy_id('Puppet Master')
     env = get_environment_id('production')
     post_update_puppetclasses(proxy, env)
@@ -156,12 +156,14 @@ def worker_main(*args, **kwargs):
     that both foreman and the puppet repos are totally in sync
     with GitHub
     """
+    logging.info('[GitBot] started child')
     while True:
+        logging.info('[GitBot] wait queue')
         request = queue.get()
+        logging.info('[GitBot] syncing git')
         git_sync()
+        logging.info('[GitBot] syncing foreman')
         foreman_sync()
-        args[0].send('Development',
-                     'Completed sync of {0}'.format(request))
         queue.task_done()
 
 ##############################################################################
@@ -174,7 +176,7 @@ class GitHub(BotPlugin):
     """
     def __init__(self):
         """Constructor"""
-        worker = threading.Thread(args=(self), target=worker_main)
+        worker = threading.Thread(target=worker_main)
         worker.daemon = True
         worker.start()
         BotPlugin.__init__(self)
@@ -225,5 +227,5 @@ class GitHub(BotPlugin):
     @botcmd
     def queue(self, msg, args):
         """Interrogate the run queue"""
-        return 'Run queue has {0}'.format(queue.qsize())
+        return 'Run queue has {0} entries'.format(queue.qsize())
     
