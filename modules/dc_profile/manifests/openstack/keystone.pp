@@ -13,6 +13,7 @@
 class dc_profile::openstack::keystone {
 
   $keystone_db_pw = hiera(keystone_db_pw)
+  $keystone_db_host = hiera(keystone_db_host)
   $os_service_tenant = hiera(os_service_tenant)
   $os_region = hiera(os_region)
 
@@ -21,7 +22,7 @@ class dc_profile::openstack::keystone {
     verbose        => true,
     catalog_type   => 'sql',
     admin_token    => hiera(keystone_admin_uuid),
-    sql_connection => "mysql://keystone:${keystone_db_pw}@127.0.0.1/keystone",
+    sql_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
   }
 
   # Adds the admin credential to keystone.
