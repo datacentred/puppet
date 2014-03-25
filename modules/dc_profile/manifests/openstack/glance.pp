@@ -32,32 +32,6 @@ class dc_profile::openstack::glance {
   $glance_api_database = "mysql://${glance_api_user}:${glance_api_pass}@${glance_api_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_user}:${glance_reg_pass}@${glance_reg_host}/${glance_reg_db}"
 
-  # Optionally install the database package
-  if '127.0.0.1' in [$glance_api_host, $glance_reg_host] {
-
-    contain dc_mariadb
-
-    # Optionally install each database
-    # TODO: I suspect this could be a shared class to be
-    #       included in case you wished to provision on
-    #       another host
-    if $glance_api_host == '127.0.0.1' {
-      dc_mariadb::db { $glance_api_db:
-        user     => $glance_api_user,
-        password => $glance_api_pass,
-        require  => Class['Dc_mariadb'],
-      }
-    }
-    if $glance_reg_host == '127.0.0.1' {
-        dc_mariadb::db { $glance_reg_db:
-        user     => $glance_reg_user,
-        password => $glance_reg_pass,
-        require  => Class['Dc_mariadb'],
-      }
-    }
-
-  }
-
   class { 'glance::api':
     registry_host     => 'localhost',
     auth_type         => 'keystone',
