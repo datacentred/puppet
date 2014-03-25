@@ -19,6 +19,11 @@ class dc_collectd (
 
   class { 'collectd::plugin::memory': }
 
+  class { 'collectd::plugin::disk': 
+    disks          => ['/^dm/'],
+    ignoreselected => true,
+  }
+
   class { 'collectd::plugin::interface': 
     interfaces => $interfaces,
   }
