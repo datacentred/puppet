@@ -3,11 +3,12 @@ area        :stacked
 description "RAM usage (in percent)"
 hide_legend false
 <%
-  hostname  = (@hostname + "." + @domain).gsub(/\./, '_')  
-  memused   = "collectd." + hostname + ".memory.memory-used" 
-  memfree   = "collectd." + hostname + ".memory.memory-free"
-  memcached = "collectd." + hostname + ".memory.memory-cached"
-  membuffed = "collectd." + hostname + ".memory.memory-buffered"
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')  
+  memused   = "collectd." + ghostname + ".memory.memory-used" 
+  memfree   = "collectd." + ghostname + ".memory.memory-free"
+  memcached = "collectd." + ghostname + ".memory.memory-cached"
+  membuffed = "collectd." + ghostname + ".memory.memory-buffered"
 %>
 field :use,    :color => "red",
                :alias => "used by application",

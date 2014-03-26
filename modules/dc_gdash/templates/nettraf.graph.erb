@@ -2,9 +2,10 @@ title   "Network interface <%= @interface %> traffic on <%= @hostname %>"
 area    :first
 hide_legend false
 <%
-  hostname  = (@hostname + "." + @domain).gsub(/\./, '_') 
-  rxpackets = "collectd." + hostname + ".interface-" + @interface + ".if_octets.rx"
-  txpackets = "collectd." + hostname + ".interface-" + @interface + ".if_octets.tx"
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
+  rxpackets = "collectd." + ghostname + ".interface-" + @interface + ".if_octets.rx"
+  txpackets = "collectd." + ghostname + ".interface-" + @interface + ".if_octets.tx"
 %>
 field :receiving, :color => "green",
                :alias => "Receiving (bps)",
