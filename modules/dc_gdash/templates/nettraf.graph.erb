@@ -2,8 +2,8 @@ title   "Network interface <%= @interface %> traffic on <%= @hostname %>"
 area    :first
 hide_legend false
 <%
-  rxpackets = "collectd." + @fqdn.gsub(/\./, '_') + ".interface-" + @interface + ".if_octets.rx"
-  txpackets = "collectd." + @fqdn.gsub(/\./, '_') + ".interface-" + @interface + ".if_octets.tx"
+  rxpackets = "collectd." + @hostname.gsub(/\./, '_') + ".interface-" + @interface + ".if_octets.rx"
+  txpackets = "collectd." + @hostname.gsub(/\./, '_') + ".interface-" + @interface + ".if_octets.tx"
 %>
 field :receiving, :color => "green",
                :alias => "Receiving (bps)",
