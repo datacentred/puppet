@@ -16,6 +16,7 @@ class dc_role::controller0 {
   contain dc_profile::openstack::glance_api_db
   contain dc_profile::openstack::glance_registry_db
   contain dc_profile::openstack::nova_db
+  contain dc_profile::openstack::neutron_db
 
   contain dc_profile::openstack::keystone
   contain dc_profile::openstack::glance
@@ -25,6 +26,8 @@ class dc_role::controller0 {
   Class['dc_profile::openstack::keystone']
 
   Class['dc_profile::openstack::glance_api_db'] ->
+  Class['dc_profile::openstack::glance']
+
   Class['dc_profile::openstack::glance_registry_db'] ->
   Class['dc_profile::openstack::glance']
 
