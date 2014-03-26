@@ -12,7 +12,7 @@
 #
 class dc_profile::openstack::glance_registry_db {
 
-  contain dc_mariadb
+  include dc_mariadb
 
   $glance_reg_db   = hiera(glance_reg_db)
   $glance_reg_user = hiera(glance_reg_user)
