@@ -43,7 +43,6 @@ class dc_profile::openstack::glance {
     sql_connection    => $glance_api_database,
     use_syslog        => true,
     enabled           => true,
-    require           => Dc_mariadb::Db[$glance_api_db],
   }
   contain 'glance::api'
 
@@ -61,7 +60,6 @@ class dc_profile::openstack::glance {
     sql_connection    => $glance_reg_database,
     use_syslog        => true,
     enabled           => true,
-    require           => Dc_mariadb::Db[$glance_reg_db],
   }
   contain 'glance::registry'
 
