@@ -39,10 +39,10 @@ class dc_profile::openstack::neutron_server {
   
   # configure authentication
   class { 'neutron::server':
-      auth_host      => $keystone_host,
-      auth_password  => $neutron_secret,
-      sql_connection => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
-      mysql_module   => '2.2',
+      auth_host           => $keystone_host,
+      auth_password       => $neutron_secret,
+      database_connection => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
+      mysql_module        => '2.2',
   }
   
   # enable the Open VSwitch plugin server
