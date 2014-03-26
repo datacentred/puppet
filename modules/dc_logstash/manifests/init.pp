@@ -45,6 +45,7 @@ class dc_logstash {
   class { 'dc_logstash::config::filter_grok_apache':}
   class { 'dc_logstash::config::filter_grok_apache_err':}
   class { 'dc_logstash::config::filter_grok_mysql_err':}
+  class { 'dc_logstash::config::filter_multiline_syslog':}
 
   # Add icinga config
   class { 'dc_logstash::icinga': }

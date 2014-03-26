@@ -1,0 +1,8 @@
+filter {
+ if [type] == "syslog" {
+  multiline {
+   pattern => "^\s"
+   what => "previous"
+  }
+ }
+}
