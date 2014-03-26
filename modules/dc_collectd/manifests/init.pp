@@ -36,7 +36,7 @@ class dc_collectd (
   # Export virtual resource for load and memory
   @@dc_gdash::hostgraph { $::hostname: }
 
-  # Compile array of unique interface-fqdn combos
+  # Compile array of unique interface-hostname combos
   # $hostif becomes ifname-hostname
   $hostif = suffix($interfaces, "_${::hostname}")
 
