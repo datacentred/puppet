@@ -1,9 +1,9 @@
 define dc_gdash::hostgraph (
-  $hostname = $title,
+  $_hostname = $title,
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
-  $hostpath = "${tplpath}/hosts/${hostname}"
+  $hostpath = "${tplpath}/hosts/${_hostname}"
 
   file { "${hostpath}":
     ensure  => directory,
@@ -21,6 +21,5 @@ define dc_gdash::hostgraph (
   file { "${hostpath}/memory.graph": 
     content => template('dc_gdash/memory.graph.erb'),
   }
-
 
 }
