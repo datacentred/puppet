@@ -26,7 +26,6 @@ class dc_profile::openstack::nova {
 
   $glance_api_servers  = get_exported_var('', 'glance_api_server', ['localhost:9292'])
 
-  $nova_db_root_pw     = hiera(nova_db_root_pw)
   $nova_db_user        = hiera(nova_db_user)
   $nova_db_pass        = hiera(nova_db_pass)
   $nova_db_host        = hiera(nova_db_host)
@@ -47,23 +46,6 @@ class dc_profile::openstack::nova {
   $nova_mq_ev = 'nova_mq_node'
 
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
-
-  # Check to see if we need to install the data base locally
-  if $nova_db_host == '127.0.0.1' {
-
-    class { 'dc_mariadb':
-      maria_root_pw => $nova_db_root_pw,
-    }
-    contain 'dc_mariadb'
-
-    dc_mariadb::db { $nova_db:
-      user     => $nova_db_user,
-      password => $nova_db_pass,
-      require  => Class['Dc_mariadb'],
-      before   => Class['::nova'],
-    }
-
-  }
 
   class { '::nova':
     database_connection => $nova_database,
