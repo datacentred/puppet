@@ -21,6 +21,8 @@ class dc_riemann {
     require     => File['/etc/riemann.config'],
   }
 
+  class { 'riemann::dash': }
+
   file { '/etc/riemann.config':
     ensure  => file,
     content => template('dc_riemann/riemann.config.erb'),
