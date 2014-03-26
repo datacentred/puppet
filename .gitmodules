@@ -148,3 +148,6 @@
 [submodule "modules/ceph"]
 	path = modules/ceph
 	url = https://github.com/enovance/puppet-ceph
+[submodule "modules/gcc"]
+	path = modules/gcc
+	url = https://github.com/puppetlabs/puppetlabs-gcc
