@@ -21,7 +21,9 @@ class dc_riemann {
     require     => File['/etc/riemann.config'],
   }
 
-  class { 'riemann::dash': }
+  class { 'riemann::dash':
+    host => $::ipaddress,
+  }
 
   file { '/etc/riemann.config':
     ensure  => file,
