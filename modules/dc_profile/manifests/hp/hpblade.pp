@@ -17,10 +17,6 @@ class dc_profile::hp::hpblade {
     ensure  => installed,
   }
 
-  package { 'isc-dhcp-client':
-    ensure => purged,
-  }
-
   class { 'hpilo':
     dhcp => true,
   }
