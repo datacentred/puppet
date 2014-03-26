@@ -10,7 +10,7 @@
 #   
 # Sample Usage:
 #
-class dc_profile::openstack::neutron {
+class dc_profile::openstack::neutron_db {
 
   contain dc_mariadb
 
