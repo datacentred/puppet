@@ -10,7 +10,7 @@
 #
 class dc_profile::openstack::neutron_server {
 
-  $os_region = hiera(os_region)
+  $os_region          = hiera(os_region)
 
   $keystone_host      = get_exported_var('', 'keystone_host', ['localhost'])
 
@@ -63,11 +63,6 @@ class dc_profile::openstack::neutron_server {
   class { 'neutron::plugins::ovs':
       tenant_network_type => 'gre',
   } 
-
-  # Enable various agent plugins
-  class { 'neutron::agents::dhcp': }
-  class { 'neutron::agents::l3': }
-  class { 'neutron::agents::metering': }
 
   # Export Keystone endpoint details
   # Might need revisiting once we have an external (public) network defined
