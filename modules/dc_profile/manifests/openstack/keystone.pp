@@ -93,12 +93,12 @@ class dc_profile::openstack::keystone {
   }
   keystone_user_role { "neutron@${os_service_tenant}":
     ensure => 'present',
-    role   => 'admin',
+    roles   => 'admin',
   }
   keystone_service { 'neutron':
     ensure      => present,
     type        => 'network',
-    description => "OpenStack Networking Service",
+    description => 'OpenStack Networking Service',
   }
   Keystone_endpoint <<| tag == 'neutron_endpoint' |>>
 
