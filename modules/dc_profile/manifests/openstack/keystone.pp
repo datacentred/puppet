@@ -87,8 +87,8 @@ class dc_profile::openstack::keystone {
   keystone_user { 'neutron':
     ensure   => present,
     enabled  => true,
-    password => hiera(keystone_neutron_password)
-    email    => hiera(sysmailaddress)
+    password => hiera(keystone_neutron_password),
+    email    => hiera(sysmailaddress),
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "neutron@${os_service_tenant}":
