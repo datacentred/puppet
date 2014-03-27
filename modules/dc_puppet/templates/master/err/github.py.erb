@@ -113,7 +113,7 @@ def foreman_post(path, post):
     # May raise urllib2.URLError
     response = urllib2.urlopen(request, post)
     if response.getcode() != 200:
-        logging.info('[Worker] PUT exception: ' + url)
+        logging.info('[Worker] POST exception: ' + url)
         raise Exception
     return response.read()
 
