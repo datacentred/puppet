@@ -99,6 +99,7 @@ def foreman_get(path):
     # May raise urllib2.URLError
     response = urllib2.urlopen(request)
     if response.getcode() != 200:
+        logging.info('[Worker] GET exception: ' + url)
         raise Exception
     return response.read()
 
@@ -112,6 +113,7 @@ def foreman_post(path, post):
     # May raise urllib2.URLError
     response = urllib2.urlopen(request, post)
     if response.getcode() != 200:
+        logging.info('[Worker] POST exception: ' + url)
         raise Exception
     return response.read()
 
@@ -122,6 +124,7 @@ def get_smart_proxy_id(name):
     for proxy in data:
         if proxy['smart_proxy']['name'] == name:
             return proxy['smart_proxy']['id']
+    logging.info('[Worker] smart proxy exception: ' + url)
     raise Exception
 
 def get_environment_id(name):
@@ -131,6 +134,7 @@ def get_environment_id(name):
     for environment in data:
         if environment['environment']['name'] == name:
             return environment['environment']['id']
+    logging.info('[Worker] environment exception: ' + url)
     raise Exception
 
 def post_update_puppetclasses(proxy, env):
@@ -156,14 +160,15 @@ def worker_main(*args, **kwargs):
     that both foreman and the puppet repos are totally in sync
     with GitHub
     """
-    logging.info('[GitBot] started child')
+    logging.info('[Worker] started child')
     while True:
-        logging.info('[GitBot] wait queue')
+        logging.info('[Worker] wait queue')
         request = queue.get()
-        logging.info('[GitBot] syncing git')
+        logging.info('[Worker] syncing git')
         git_sync()
-        logging.info('[GitBot] syncing foreman')
+        logging.info('[Worker] syncing foreman')
         foreman_sync()
+        logging.info('[Worker] sync complete')
         queue.task_done()
 
 ##############################################################################
