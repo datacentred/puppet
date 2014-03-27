@@ -37,6 +37,7 @@ class dc_profile::openstack::nova {
 
   $keystone_host       = get_exported_var('', 'keystone_host', ['localhost'])
 
+  $neutron_server_host = hiera(neutron_server_host)
   $neutron_secret      = hiera(neutron_secret)
 
   $ec2_port = '8773'
@@ -70,6 +71,14 @@ class dc_profile::openstack::nova {
     neutron_metadata_proxy_shared_secret => $neutron_secret,
   }
   contain 'nova::api'
+
+  class { '::nova::network::neutron':
+    neutron_url            => "http://${neutron_server_host}:9696",
+    neutron_region_name    => $os_region,
+    neutron_admin_auth_url => "http://${keystone_host}:35357/v2.0",
+    neutron_admin_password => $neutron_secret,
+  }
+  contain 'nova::network::neutron'
 
   class { [
     'nova::cert',
