@@ -83,6 +83,25 @@ class dc_profile::openstack::keystone {
   }
   Keystone_endpoint <<| tag == 'nova_endpoint' |>>
 
+  # Neutron bits
+  keystone_user { 'neutron':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_neutron_password)
+    email    => hiera(sysmailaddress)
+    tenant   => $os_service_tenant,
+  }
+  keystone_user_role { "neutron@${os_service_tenant}":
+    ensure => 'present',
+    role   => 'admin',
+  }
+  keystone_service { 'neutron':
+    ensure      => present,
+    type        => 'network',
+    description => "OpenStack Networking Service",
+  }
+  Keystone_endpoint <<| tag == 'neutron_endpoint' |>>
+
   exported_vars::set { 'keystone_host':
     value => $::fqdn,
   }

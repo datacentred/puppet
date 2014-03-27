@@ -27,6 +27,8 @@ class dc_profile::openstack::neutron_server {
   # Hard coded exported variable name
   $nova_mq_ev = 'nova_mq_node'
 
+  $neutron_port = "9696"
+
   # enable the neutron service
   class { 'neutron':
       enabled               => true,
@@ -54,7 +56,6 @@ class dc_profile::openstack::neutron_server {
     local_ip         => $::network_eth1,
     enable_tunneling => true,
   }
-  
 
   # Enable the Open VSwitch plugin server
   class { 'neutron::plugins::ovs':
@@ -65,5 +66,15 @@ class dc_profile::openstack::neutron_server {
   class { 'neutron::agents::dhcp': }
   class { 'neutron::agents::l3': }
   class { 'neutron::agents::metering': }
+
+  # Export Keystone endpoint details
+  # Might need revisiting once we have an external (public) network defined
+  @@keystone_endpoint { "${os_region}/neutron":
+    ensure       => present,
+    public_url   => "http://${::fqdn}:${neutron_port}",
+    admin_url    => "http://${::fqdn}:${neutron_port}",
+    internal_url => "http://${::fqdn}-int:${neutron_port}",
+    tag          => 'neutron_endpoint',
+  }
 
 }
