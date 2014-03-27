@@ -10,6 +10,8 @@
 #
 class dc_profile::openstack::neutron_server {
 
+  $os_region = hiera(os_region)
+
   $keystone_host      = get_exported_var('', 'keystone_host', ['localhost'])
 
   $nova_mq_username   = hiera(nova_mq_username)
