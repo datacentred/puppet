@@ -43,12 +43,13 @@ class dc_profile::openstack::neutron_server {
       allow_overlapping_ips => true,
       verbose               => true,
       debug                 => false,
+      core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
   }
   
   # configure authentication
   class { 'neutron::server':
       auth_host           => $keystone_host,
-      auth_password       => $neutron_secret,
+      auth_password       => $keystone_neutron_password,
       database_connection => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
       mysql_module        => '2.2',
   }

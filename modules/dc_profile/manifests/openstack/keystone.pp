@@ -92,7 +92,7 @@ class dc_profile::openstack::keystone {
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "neutron@${os_service_tenant}":
-    ensure => 'present',
+    ensure  => present,
     roles   => 'admin',
   }
   keystone_service { 'neutron':
