@@ -42,6 +42,7 @@ class dc_logstash {
   class { 'dc_logstash::config::input_forwarder':}
   class { 'dc_logstash::config::output_elasticsearch':}
   class { 'dc_logstash::config::output_riemann':}
+  class { 'dc_logstash::config::output_riemann_dev':}
   class { 'dc_logstash::config::filter_grok_apache':}
   class { 'dc_logstash::config::filter_grok_apache_err':}
   class { 'dc_logstash::config::filter_grok_mysql_err':}
