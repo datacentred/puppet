@@ -44,7 +44,7 @@ class dc_collectd (
 
   # Compile array of unique interface-shorthostname combos for export
   # in the format ifname#shorthostname
-  $ifhashhost = suffix($interfaces, "#${::hostname}")
+  $ifhashhost = suffix($_interfaces, "#${::hostname}")
 
   # Now export virtual resource for network traffic for each
   # interface
