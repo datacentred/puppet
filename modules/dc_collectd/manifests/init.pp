@@ -1,12 +1,18 @@
 # Class: dc_collectd
 #
-# Install and configure collectd with a standard set of plugins for monitoring
-# load, memory utilisation, and network interface statistics.  Hooks into dc_gdash
-# module for dynamic dashboard generation.
+# Set up collectd to collect a standard set of metrics for a give host
+#
+# Actions: Hooks into dc_gdash for dynamic dashboard graph generation
+#
+# Requires: collectd, dc_gdash
+#
+# Sample Usage: dc_gdash::nettraf { 'eth0#gdash': }
+#
+# Class: dc_collectd
 #
 class dc_collectd (
   $graphite_server = '',
-  $interfaces = split($::interfaces, ','),
+  $_interfaces = split($::interfaces, ','),
 ) {
 
   class { '::collectd':
@@ -25,7 +31,7 @@ class dc_collectd (
   }
 
   class { 'collectd::plugin::interface': 
-    interfaces => $interfaces,
+    interfaces => $_interfaces,
   }
 
   # Configure collectd to send its output to carbon
@@ -36,13 +42,13 @@ class dc_collectd (
   # Export virtual resource for load and memory
   @@dc_gdash::hostgraph { $::hostname: }
 
-  # Compile array of unique interface-hostname combos
-  # $hostif becomes ifname-hostname
-  $hostif = suffix($interfaces, "_${::hostname}")
+  # Compile array of unique interface-shorthostname combos for export
+  # in the format ifname#shorthostname
+  $ifhashhost = suffix($interfaces, "#${::hostname}")
 
-  # Export virtual resource for network traffic for each
+  # Now export virtual resource for network traffic for each
   # interface
-  @@dc_gdash::nettraf { $hostif: }
+  @@dc_gdash::nettraf { $ifhashhost: }
 
   # If this is defined (currently set as a top-scope variable by Foreman),
   # then configure collectd to gather statistics from SNMP-enabled devices
