@@ -1,7 +1,11 @@
 output {
   if [type] == "syslog" {
-    riemann {
-      riemann_event => ["description", "%{message}", "service", "%{program}", "state", "%{severity}"]
+  riemann {
+      riemann_event   => {
+        "description" => "%{message}"
+        "service"     => "%{program}"
+        "state"       => "%{severity}"
+      }
     }
   }
 }
