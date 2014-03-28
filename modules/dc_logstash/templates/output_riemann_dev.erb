@@ -1,8 +1,12 @@
 output {
   if [type] == "syslog" {
   riemann {
-      host => <%= @riemann_dev_host %>
-      riemann_event => ["description", "%{message}", "service", "%{program}", "state", "%{severity}"]
+      host => "<%= @riemann_dev_host %>"
+      riemann_event   => {
+        "description" => "%{message}"
+        "service"     => "%{program}"
+        "state"       => "%{severity}"
+      }
     }
   }
 }
