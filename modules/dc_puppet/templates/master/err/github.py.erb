@@ -276,7 +276,7 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), get_pony(),
                       message_type=message.getType())
-            enqueue_job(match.group(4))
+            enqueue_job(match.group(5))
 
     @botcmd
     def pony(self, msg, args):
