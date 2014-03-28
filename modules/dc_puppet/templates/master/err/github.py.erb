@@ -85,8 +85,11 @@ def git_delete(branch):
     """Delete a branch and kill off the dynamic environment"""
     subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
                      'cd /home/git/puppet.git; ' \
+                     'git branch -D {0}'.format(branch)])
+    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
+                     'cd /home/git/puppet.git; ' \
                      'git push origin :{0}'.format(branch)])
-    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c'
+    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
                      'rm -rf /etc/puppet/environments/{0}'.format(branch)])
 
 ##############################################################################
