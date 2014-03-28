@@ -35,7 +35,7 @@ class dc_collectd (
   }
 
   class { 'collectd::plugin::interface': 
-    interfaces => $_interfaces
+    interfaces => $_interfaces,
   }
 
   # Configure collectd to send its output to carbon
