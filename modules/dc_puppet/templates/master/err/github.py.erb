@@ -81,6 +81,14 @@ def git_sync():
                      'git submodule sync;' \
                      'git submodule update'])
 
+def git_delete(branch):
+    """Delete a branch and kill off the dynamic environment"""
+    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
+                     'cd /home/git/puppet.git; ' \
+                     'git push origin :{0}'.format(branch)])
+    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c'
+                     'rm -rf /etc/puppet/environments/{0}'.format(branch)])
+
 ##############################################################################
 # Foreman
 ##############################################################################
@@ -157,32 +165,45 @@ def foreman_sync():
 lock = threading.Lock()
 
 def enqueue_job(branch):
+    """Add a branch merge to the job queue(s)"""
     queue.put(0)
     lock.acquire()
     branches.append(branch)
     lock.release()
 
 def wait_job():
+    """Wait for a job to become available"""
     queue.get()
 
 def dequeue_job():
+    """Remove the job from the job queue(s)"""
     lock.acquire()
     branches.pop(0)
     lock.release()
     queue.task_done()
 
+def kill_environment():
+    """Kill off a dynamic environment"""
+    lock.acquire()
+    env = branches[0]
+    lock.release()
+    ary = env.split('/')
+    if len(ary) == 2:
+        git_delete(ary[1])
+
 def dump_queue():
+    """Print out the current job queue status"""
     output = ""
     lock.acquire()
     if len(branches) == 0:
-        output += "<b>Job queue empty</b>"
+        output += "Job queue empty"
     else:
-        output += "<b>Current job:</b>\n"
-        output += "    {0}\n".format(branches[0])
+        output += "Current job:\n"
+        output += "  {0}\n".format(branches[0])
         if len(branches) > 1:
-            output += "<b>Queued job(s):</b>\n"
+            output += "Queued job(s):\n"
             for i in branches[1:]:
-                output += "    {0}\n".format(i)
+                output += "  {0}\n".format(i)
     lock.release()
     return output
 
@@ -203,6 +224,8 @@ def worker_main(*args, **kwargs):
         wait_job()
         logging.info('[Worker] syncing git')
         git_sync()
+        logging.info('[Worker] deleting dynamic environment')
+        kill_environment()
         logging.info('[Worker] syncing foreman')
         foreman_sync()
         logging.info('[Worker] sync complete')
