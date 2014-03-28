@@ -12,6 +12,7 @@ import base64
 
 # A queue to store requests
 queue = Queue.Queue()
+branches = []
 
 class MLStripper(HTMLParser):
     """
@@ -150,6 +151,42 @@ def foreman_sync():
     post_update_puppetclasses(proxy, env)
 
 ##############################################################################
+# Utilities
+##############################################################################
+
+lock = threading.Lock()
+
+def enqueue_job(branch):
+    queue.put(0)
+    lock.acquire()
+    branches.append(branch)
+    lock.release()
+
+def wait_job():
+    queue.get()
+
+def dequeue_job():
+    lock.acquire()
+    branches.pop(0)
+    lock.release()
+    queue.task_done()
+
+def dump_queue():
+    output = ""
+    lock.acquire()
+    if len(branches) == 0:
+        output += "<b>Job queue empty</b>"
+    else:
+        output += "<b>Current job:</b>\n"
+        output += "    {0}\n".format(branches[0])
+        if len(branches) > 1:
+            output += "<b>Queued job(s):</b>\n"
+            for i in branches[1:]:
+                output += "    {0}\n".format(i)
+    lock.release()
+    return output
+
+##############################################################################
 # Updater thread
 ##############################################################################
 
@@ -163,13 +200,13 @@ def worker_main(*args, **kwargs):
     logging.info('[Worker] started child')
     while True:
         logging.info('[Worker] wait queue')
-        request = queue.get()
+        wait_job()
         logging.info('[Worker] syncing git')
         git_sync()
         logging.info('[Worker] syncing foreman')
         foreman_sync()
         logging.info('[Worker] sync complete')
-        queue.task_done()
+        dequeue_job()
 
 ##############################################################################
 # Actual errbot plugin!
@@ -216,7 +253,7 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), get_pony(),
                       message_type=message.getType())
-            queue.put('pull request #{0}'.format(match.group(4)))
+            enqueue_job(match.group(4))
 
     @botcmd
     def pony(self, msg, args):
@@ -226,11 +263,11 @@ class GitHub(BotPlugin):
     @botcmd
     def sync(self, msg, args):
         """Print a pony and sync the repos explicitly"""
-        queue.put('explicit request')
+        enqueue_job('no-branch')
         return get_pony()
 
     @botcmd
     def queue(self, msg, args):
         """Interrogate the run queue"""
-        return 'Run queue has {0} entries'.format(queue.qsize())
+        return dump_queue()
     
