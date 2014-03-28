@@ -12,8 +12,12 @@
 #
 class dc_collectd (
   $graphite_server = '',
-  $_interfaces = split($::interfaces, ','),
 ) {
+
+  # Compile array of interface names.  If it's a bridge or OVS
+  # interface then it'll have had the hyphen swapped out for an underscore
+  # by Facter.  We need to change that back before we do anything else.
+  $_interfaces = regsubst(regsubst(split($::interfaces, ','), 'br_', 'br-', 'G'), 'ovs_', 'ovs-', 'G')
 
   class { '::collectd':
     purge        => true,
