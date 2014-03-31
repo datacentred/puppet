@@ -22,7 +22,7 @@ class dc_profile {
     contain dc_profile::auth::admins
     contain dc_profile::net::ssh
     contain dc_profile::auth::sudoers
-    if $::environment != 'pre-production' {
+    if $::environment == 'production' {
       contain dc_profile::puppet::mcollective_host
       contain dc_profile::perf::collectd
       contain dc_profile::net::mail
