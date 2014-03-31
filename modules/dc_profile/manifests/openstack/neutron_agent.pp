@@ -52,11 +52,23 @@ class dc_profile::openstack::neutron_agent {
     enable_tunneling => true,
   }
 
-  class { [
-    'neutron::agents::dhcp',
-    'neutron::agents::l3',
-  ]:
-    enabled => true,
+  # If we're on a designated network node, configure the various
+  # additional Neutron agents for L3, DHCP and metadata functionality
+  # network_node defined at Host Group level via Foreman
+  if $::network_node {
+    class { [
+      'neutron::agents::dhcp',
+      'neutron::agents::l3',
+    ]:
+      enabled => true,
+    }
+    class { 'neutron::agents::metadata':
+      shared_secret => $neutron_metadata_secret,
+      auth_url      => "http://${keystone_host}:35357/v2.0",
+      auth_password => $neutron_secret,
+      auth_region   => $os_region,
+      metadata_ip   => $::network_eth1,
+    }
   }
 }
 
