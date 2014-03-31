@@ -44,7 +44,6 @@ class dc_profile::openstack::nova_compute {
     rabbit_virtual_host => $nova_mq_vhost,
     rabbit_port         => $nova_mq_port,
     use_syslog          => true,
-    neutron_enabled     => true,
   }
 
   class { '::nova::compute':
