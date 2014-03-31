@@ -34,7 +34,7 @@ class dc_profile::openstack::nova_compute {
 
   $nova_database          = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
-  class { 'nova':
+  class { '::nova':
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
     glance_api_servers  => join($glance_api_servers, ','),
@@ -42,24 +42,25 @@ class dc_profile::openstack::nova_compute {
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
     rabbit_virtual_host => $nova_mq_vhost,
+    rabbit_port         => $nova_mq_port,
     use_syslog          => true,
     neutron_enabled     => true,
   }
 
-  class { 'nova::compute':
+  class { '::nova::compute':
     enabled         => true,
     vnc_enabled     => true,
     neutron_enabled => false,
   }
 
-  class { 'nova::compute::libvirt':
+  class { '::nova::compute::libvirt':
     migration_support => true,
   }
 
-  class { 'nova::compute::neutron': }
+  class { '::nova::compute::neutron': }
   
   # Configures nova.conf entries applicable to Neutron.
-  class { 'nova::network::neutron':
+  class { '::nova::network::neutron':
     neutron_auth_strategy     => 'keystone',
     neutron_url               => "http://${neutron_server_host}:9696",
     neutron_admin_username    => $neutron_admin_user,
@@ -68,6 +69,6 @@ class dc_profile::openstack::nova_compute {
     neutron_admin_auth_url    => "http://${keystone_host}:35357/v2.0",
   }
 
-  contain 'nova'
+  contain '::nova'
 
 }
