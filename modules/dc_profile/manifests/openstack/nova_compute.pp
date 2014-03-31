@@ -57,6 +57,7 @@ class dc_profile::openstack::nova_compute {
   }
 
   class { 'nova::compute::libvirt':
+    vncserver_listen  => 0.0.0.0,
     migration_support => true,
   }
 
