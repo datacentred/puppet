@@ -37,7 +37,7 @@ class dc_profile::openstack::nova_compute {
   class { 'nova':
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
-    glance_api_servers  => join($glance_api_servers, ',')
+    glance_api_servers  => join($glance_api_servers, ','),
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
