@@ -40,7 +40,6 @@ class dc_profile::openstack::nova_compute {
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
-    rabbit_port         => $nova_mq_port,
     rabbit_virtual_host => $nova_mq_vhost,
     use_syslog          => true,
     neutron_enabled     => true,
