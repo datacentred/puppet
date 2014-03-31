@@ -65,7 +65,14 @@ $stdin.each_line do |line|
       # case that someone did a force push to a branch.
 
       puts "[1;32m*[0m Updating existing environment #{environment_name} ..."
+
+      # Clear out the old yaml file pre-fetch and checkout
       Dir.chdir environment_path
+      if environment_name != "production"
+        puts "[1;32m*[0m Deleting environment hiera data ..."
+        FileUtils.rm_f "hieradata/#{environment_name}.yaml"
+      end
+
       %x{git fetch --all}
       %x{git reset --hard "origin/#{branchname}"}
     else
@@ -75,8 +82,14 @@ $stdin.each_line do |line|
       %x{git clone #{SOURCE_REPOSITORY} #{environment_path} --branch #{branchname}}
     end
 
-    # We use submodules, so initialise any new ones
+    # Set up the yaml data for our dynamic environment
     Dir.chdir environment_path
+    if environment_name != "production"
+      puts "[1;32m*[0m Creating environment hiera data ..."
+      FileUtils.cp 'hieradata/production.yaml' "hieradata/#{environment_name}.yaml"
+    end
+
+    # We use submodules, so initialise any new ones
     puts "[1;32m*[0m Initializing submodules ..."
     %x{git submodule init}
 
