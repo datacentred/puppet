@@ -66,7 +66,7 @@ class dc_profile::openstack::neutron_agent {
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
       auth_url      => "http://${keystone_host}:35357/v2.0",
-      auth_password => $neutron_secret,
+      auth_password => $keystone_neutron_password,
       auth_region   => $os_region,
       metadata_ip   => $::network_eth1,
     }
