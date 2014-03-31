@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::neutron_server
+# Class: dc_role::openstack::neutron_server
 #
 # Openstack Neutron server components
 #
