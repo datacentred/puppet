@@ -86,7 +86,7 @@ $stdin.each_line do |line|
     Dir.chdir environment_path
     if environment_name != "production"
       puts "[1;32m*[0m Creating environment hiera data ..."
-      FileUtils.cp 'hieradata/production.yaml' "hieradata/#{environment_name}.yaml"
+      FileUtils.cp 'hieradata/production.yaml', "hieradata/#{environment_name}.yaml"
     end
 
     # We use submodules, so initialise any new ones
