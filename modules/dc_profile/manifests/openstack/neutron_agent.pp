@@ -1,6 +1,7 @@
 # Class: dc_profile::openstack::neutron_agent
 #
-# Parameters: None
+# Parameters: Checks for network_node set at global scope
+# for hosts in the OpenStack/Network Host Group
 #
 # Actions: Installs the OpenStack Neutron agent components
 #
