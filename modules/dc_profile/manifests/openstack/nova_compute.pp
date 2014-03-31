@@ -73,6 +73,4 @@ class dc_profile::openstack::nova_compute {
     neutron_admin_auth_url    => "http://${keystone_host}:35357/v2.0",
   }
 
-  contain '::nova'
-
 }
