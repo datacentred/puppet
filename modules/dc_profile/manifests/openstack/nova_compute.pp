@@ -20,6 +20,11 @@ class dc_profile::openstack::nova_compute {
   $nova_mq_port           = hiera(nova_mq_port)
   $nova_mq_vhost          = hiera(nova_mq_vhost)
 
+  $nova_db_user           = hiera(nova_db_user)
+  $nova_db_pass           = hiera(nova_db_pass)
+  $nova_db_host           = hiera(nova_db_host)
+  $nova_db                = hiera(nova_db)
+
   $glance_api_servers     = get_exported_var('', 'glance_api_server', ['localhost:9292'])
 
   $keystone_host          = get_exported_var('', 'keystone_host', ['localhost'])
