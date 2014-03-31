@@ -50,17 +50,16 @@ class dc_profile::openstack::nova_compute {
   class { '::nova::compute':
     enabled         => true,
     vnc_enabled     => true,
-    neutron_enabled => false,
   }
 
-  class { '::nova::compute::libvirt':
+  class { 'nova::compute::libvirt':
     migration_support => true,
   }
 
-  class { '::nova::compute::neutron': }
+  class { 'nova::compute::neutron': }
   
   # Configures nova.conf entries applicable to Neutron.
-  class { '::nova::network::neutron':
+  class { 'nova::network::neutron':
     neutron_auth_strategy     => 'keystone',
     neutron_url               => "http://${neutron_server_host}:9696",
     neutron_admin_username    => $neutron_admin_user,
