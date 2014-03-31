@@ -18,7 +18,7 @@ class dc_profile {
   contain dc_profile::puppet::puppet
   contain dc_profile::util::external_facts
 
-  if $::is_vagrant == undef {
+  if $::id != 'vagrant' {
     contain dc_profile::auth::admins
     contain dc_profile::net::ssh
     contain dc_profile::auth::sudoers
