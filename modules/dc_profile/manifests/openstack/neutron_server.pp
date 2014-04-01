@@ -72,7 +72,7 @@ class dc_profile::openstack::neutron_server {
     ensure       => present,
     public_url   => "http://${::fqdn}:${neutron_port}",
     admin_url    => "http://${::fqdn}:${neutron_port}",
-    internal_url => "http://${::fqdn}-int:${neutron_port}",
+    internal_url => "http://${::fqdn}:${neutron_port}",
     tag          => 'neutron_endpoint',
   }
 
