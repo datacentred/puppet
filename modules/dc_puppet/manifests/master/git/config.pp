@@ -38,6 +38,7 @@ class dc_puppet::master::git::config {
     home        => $home,
     managehome  => true,
     shell       => '/usr/bin/git-shell',
+    system      => true,
     require     => Group['git'],
   }
 
