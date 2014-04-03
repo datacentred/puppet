@@ -28,9 +28,12 @@ class dc_profile::openstack::neutron_server {
   $neutron_db_pass    = hiera(neutron_db_pass)
 
   # Hard coded exported variable name
-  $nova_mq_ev = 'nova_mq_node'
+  $nova_mq_ev         = 'nova_mq_node'
 
-  $neutron_port = "9696"
+  $neutron_port       = "9696"
+
+  $management_ip      = $::ipaddress_eth0
+  $integration_ip     = $::ipaddress_eth1
 
   # enable the neutron service
   class { 'neutron':
@@ -57,7 +60,7 @@ class dc_profile::openstack::neutron_server {
 
   # Configure Neutron for OVS
   class { 'neutron::agents::ovs':
-    local_ip         => $::ipaddress_eth1,
+    local_ip         => $integration_ip,
     enable_tunneling => true,
   }
 
