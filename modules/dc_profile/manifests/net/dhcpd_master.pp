@@ -32,7 +32,7 @@ class dc_profile::net::dhcpd_master {
     ddns         => true,
   }
 
-  dhcp::ddns { "${::domain}":
+  class { 'dhcp::ddns':
     key        => $rndc_key,
     zonemaster => '127.0.0.1'
   }
