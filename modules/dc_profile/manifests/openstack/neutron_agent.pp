@@ -49,7 +49,7 @@ class dc_profile::openstack::neutron_agent {
 
   # Configure Neutron for OVS
   class { 'neutron::agents::ovs':
-    local_ip         => $::network_eth1,
+    local_ip         => $::ipaddress_eth1,
     enable_tunneling => true,
   }
 
