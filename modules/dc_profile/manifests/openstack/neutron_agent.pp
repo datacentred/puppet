@@ -28,9 +28,12 @@ class dc_profile::openstack::neutron_agent {
   $neutron_db_pass    = hiera(neutron_db_pass)
 
   # Hard coded exported variable name
-  $nova_mq_ev = 'nova_mq_node'
+  $nova_mq_ev         = 'nova_mq_node'
 
-  $neutron_port = "9696"
+  $neutron_port       = "9696"
+
+  $management_ip      = $::ipaddress_eth0
+  $integration_ip     = $::ipaddress_eth1
 
   # enable the neutron service
   class { 'neutron':
@@ -49,7 +52,7 @@ class dc_profile::openstack::neutron_agent {
 
   # Configure Neutron for OVS
   class { 'neutron::agents::ovs':
-    local_ip         => $::ipaddress_eth1,
+    local_ip         => $integration_ip,
     enable_tunneling => true,
   }
 
@@ -68,7 +71,7 @@ class dc_profile::openstack::neutron_agent {
       auth_url      => "http://${keystone_host}:35357/v2.0",
       auth_password => $keystone_neutron_password,
       auth_region   => $os_region,
-      metadata_ip   => $::network_eth1,
+      metadata_ip   => $management_ip,
     }
   }
 }

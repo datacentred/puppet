@@ -34,6 +34,8 @@ class dc_profile::openstack::nova_compute {
   $neutron_server_host    = hiera(neutron_server_host)
   $neutron_secret         = hiera(neutron_secret)
 
+  $management_ip          = $::ipaddress_eth0
+
   # Hard coded exported variable name
   $nova_mq_ev             = 'nova_mq_node'
 
@@ -52,8 +54,9 @@ class dc_profile::openstack::nova_compute {
   }
 
   class { '::nova::compute':
-    enabled         => true,
-    vnc_enabled     => true,
+    enabled                       => true,
+    vnc_enabled                   => true,
+    vncserver_proxyclient_address => $management_ip,
   }
 
   class { 'nova::compute::libvirt':
