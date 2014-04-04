@@ -45,7 +45,7 @@ class dc_profile::openstack::nova_compute {
     path    => '/var/lib/nova/instances',
     owner   => 'nova',
     group   => 'nova',
-    require => Class['Nova'],
+    require => Class['::Nova'],
   }
 
   class { '::nova':
