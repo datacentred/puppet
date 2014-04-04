@@ -54,8 +54,8 @@ class dc_profile::openstack::neutron_agent {
   # Note: network_node is defined at Host Group level via Foreman
   if $::network_node {
     class { 'neutron::agents::ovs':
-      bridge_uplinks        => '[br-ex:eth3]',
-      bridge_mappings       => '[default:br-ex]',
+      bridge_uplinks        => ['br-ex:eth3'],
+      bridge_mappings       => ['default:br-ex'],
       local_ip              => $integration_ip,
       enable_tunneling      => true,
     }
