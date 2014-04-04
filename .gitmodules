@@ -154,3 +154,6 @@
 [submodule "modules/vswitch"]
 	path = modules/vswitch
 	url = https://github.com/stackforge/puppet-vswitch.git
+[submodule "modules/logrotate"]
+	path = modules/logrotate
+	url = https://github.com/rodjek/puppet-logrotate/
