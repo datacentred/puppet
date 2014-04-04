@@ -35,8 +35,11 @@ class dc_profile::openstack::neutron_agent {
   $management_ip      = $::ipaddress_eth0
   $integration_ip     = $::ipaddress_eth1
 
-  # enable the neutron service
-  class { 'neutron':
+  # If we're on a designated network node, configure the various
+  # additional Neutron agents for L3, DHCP and metadata functionality
+  # Note: network_node is defined at Host Group level via Foreman
+  if $::network_node {
+    class { 'neutron':
       enabled               => true,
       bind_host             => '0.0.0.0',
       rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
@@ -48,30 +51,20 @@ class dc_profile::openstack::neutron_agent {
       verbose               => true,
       debug                 => false,
       core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
-      if $::network_node {
-        bridge_uplinks      => '[br-ex:eth3]',
-        bridge_mappings     => '[default:br-ex]',
-      }
-  }
+      bridge_uplinks        => '[br-ex:eth3]',
+      bridge_mappings       => '[default:br-ex]',
+    }
 
-  # Configure Neutron for OVS
-  class { 'neutron::agents::ovs':
-    local_ip         => $integration_ip,
-    enable_tunneling => true,
-  }
-
-  # If we're on a designated network node, configure the various
-  # additional Neutron agents for L3, DHCP and metadata functionality
-  # network_node defined at Host Group level via Foreman
-  if $::network_node {
     class { 'neutron::agents::dhcp':
       enabled => true,
     }
+
     class { 'neutron::agents::l3':
       enabled                  => true,
       use_namespaces           => true,
       router_delete_namespaces => true,
     }
+
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
       auth_url      => "http://${keystone_host}:35357/v2.0",
@@ -80,5 +73,27 @@ class dc_profile::openstack::neutron_agent {
       metadata_ip   => $management_ip,
     }
   }
-}
+  else  { 
+    # We're a compute node, so just configure the OVS basics
+    class { 'neutron':
+        enabled               => true,
+        bind_host             => '0.0.0.0',
+        rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
+        rabbit_user           => $nova_mq_username,
+        rabbit_password       => $nova_mq_password,
+        rabbit_port           => $nova_mq_port,
+        rabbit_virtual_host   => $nova_mq_vhost,
+        allow_overlapping_ips => true,
+        verbose               => true,
+        debug                 => false,
+        core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+    }
+  }
 
+  # Configure Neutron for OVS - common for all roles
+  class { 'neutron::agents::ovs':
+    local_ip         => $integration_ip,
+    enable_tunneling => true,
+  }
+
+}
