@@ -48,6 +48,10 @@ class dc_profile::openstack::neutron_agent {
       verbose               => true,
       debug                 => false,
       core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+      if $::network_node {
+        bridge_uplinks      => '[br-ex:eth3]',
+        bridge_mappings     => '[default:br-ex]',
+      }
   }
 
   # Configure Neutron for OVS
@@ -60,11 +64,13 @@ class dc_profile::openstack::neutron_agent {
   # additional Neutron agents for L3, DHCP and metadata functionality
   # network_node defined at Host Group level via Foreman
   if $::network_node {
-    class { [
-      'neutron::agents::dhcp',
-      'neutron::agents::l3',
-    ]:
+    class { 'neutron::agents::dhcp':
       enabled => true,
+    }
+    class { 'neutron::agents::l3':
+      enabled                  => true,
+      use_namespaces           => true,
+      router_delete_namespaces => true,
     }
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
