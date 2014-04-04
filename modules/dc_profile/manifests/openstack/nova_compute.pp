@@ -41,6 +41,13 @@ class dc_profile::openstack::nova_compute {
 
   $nova_database          = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
+  file { 'nova_instance_cache':
+    path    => '/var/lib/nova/instances',
+    owner   => 'nova',
+    group   => 'nova',
+    require => Class['Nova'],
+  }
+
   class { '::nova':
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
