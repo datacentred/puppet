@@ -35,24 +35,29 @@ class dc_profile::openstack::neutron_agent {
   $management_ip      = $::ipaddress_eth0
   $integration_ip     = $::ipaddress_eth1
 
+  class { 'neutron':
+    enabled               => true,
+    bind_host             => '0.0.0.0',
+    rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
+    rabbit_user           => $nova_mq_username,
+    rabbit_password       => $nova_mq_password,
+    rabbit_port           => $nova_mq_port,
+    rabbit_virtual_host   => $nova_mq_vhost,
+    allow_overlapping_ips => true,
+    verbose               => true,
+    debug                 => false,
+    core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+  }
+
   # If we're on a designated network node, configure the various
   # additional Neutron agents for L3, DHCP and metadata functionality
   # Note: network_node is defined at Host Group level via Foreman
   if $::network_node {
-    class { 'neutron':
-      enabled               => true,
-      bind_host             => '0.0.0.0',
-      rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
-      rabbit_user           => $nova_mq_username,
-      rabbit_password       => $nova_mq_password,
-      rabbit_port           => $nova_mq_port,
-      rabbit_virtual_host   => $nova_mq_vhost,
-      allow_overlapping_ips => true,
-      verbose               => true,
-      debug                 => false,
-      core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+    class { 'neutron::agents::ovs':
       bridge_uplinks        => '[br-ex:eth3]',
       bridge_mappings       => '[default:br-ex]',
+      local_ip              => $integration_ip,
+      enable_tunneling      => true,
     }
 
     class { 'neutron::agents::dhcp':
@@ -75,25 +80,10 @@ class dc_profile::openstack::neutron_agent {
   }
   else  { 
     # We're a compute node, so just configure the OVS basics
-    class { 'neutron':
-        enabled               => true,
-        bind_host             => '0.0.0.0',
-        rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
-        rabbit_user           => $nova_mq_username,
-        rabbit_password       => $nova_mq_password,
-        rabbit_port           => $nova_mq_port,
-        rabbit_virtual_host   => $nova_mq_vhost,
-        allow_overlapping_ips => true,
-        verbose               => true,
-        debug                 => false,
-        core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+    class { 'neutron::agents::ovs':
+      local_ip         => $integration_ip,
+      enable_tunneling => true,
     }
-  }
-
-  # Configure Neutron for OVS - common for all roles
-  class { 'neutron::agents::ovs':
-    local_ip         => $integration_ip,
-    enable_tunneling => true,
   }
 
 }
