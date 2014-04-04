@@ -10,10 +10,9 @@
 #
 # Sample Usage:
 #
-class dc_puppet::params {
-
-  # Which puppetlabs package version to install
-  $version              = 'latest'
+class dc_puppet::params (
+  $version = 'latest',
+) {
 
   # Puppet configuration directory
   $dir                  = '/etc/puppet'
