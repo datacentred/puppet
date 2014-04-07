@@ -160,3 +160,6 @@
 [submodule "modules/ldap"]
 	path = modules/ldap
 	url = https://github.com/torian/puppet-ldap.git
+[submodule "modules/radius"]
+	path = modules/radius
+	url = https://github.com/datacentred/datacentred-radius.git

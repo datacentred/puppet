@@ -1,6 +1,6 @@
 # Class: dc_profile::auth::ldap::master
 #
-# Set the root password of the host
+# LDAP master server
 #
 # Parameters:
 #
