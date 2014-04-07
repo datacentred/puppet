@@ -36,4 +36,9 @@ class dc_profile::openstack::horizon {
   }
   contain 'horizon'
 
+  class { '::dc_branding::openstack::horizon':
+    require => Class['::horizon'],
+  }
+  contain 'dc_branding::openstack::horizon'
+
 }
