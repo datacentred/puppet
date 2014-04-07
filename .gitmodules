@@ -157,3 +157,6 @@
 [submodule "modules/logrotate"]
 	path = modules/logrotate
 	url = https://github.com/rodjek/puppet-logrotate/
+[submodule "modules/ldap"]
+	path = modules/ldap
+	url = https://github.com/torian/puppet-ldap.git
