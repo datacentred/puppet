@@ -13,7 +13,7 @@
 class dc_branding::openstack::horizon (
   $horizon_path = '/usr/share/openstack-dashboard',
   $theme_path   = '/usr/share/openstack-dashboard-datacentred-theme',
-  $files_path   = '/modules/dc_branding/openstack/horizon',
+  $files_path   = 'dc_branding/openstack/horizon',
 ) {
 
   File {
@@ -34,21 +34,21 @@ class dc_branding::openstack::horizon (
   # Add in the resources
   file { "${theme_path}/static/datacentred/css":
     ensure  => directory,
-    source  => "puppet://${files_path}/css",
+    source  => "puppet:///modules/${files_path}/css",
     recurse => true,
-    require => File['${theme_path}/static/datacentred'],
+    require => File["${theme_path}/static/datacentred"],
   }
 
   file { "${theme_path}/static/datacentred/img":
     ensure  => directory,
-    source  => "puppet://${files_path}/img",
+    source  => "puppet:///modules/${files_path}/img",
     recurse => true,
-    require => File['${theme_path}/static/datacentred'],
+    require => File["${theme_path}/static/datacentred"],
   }
 
   file { "${theme_path}/templates":
     ensure  => directory,
-    source  => "puppet://${files_path}/templates",
+    source  => "puppet:///modules/${files_path}/templates",
     recurse => true,
     require => File[$theme_path],
   }
@@ -56,7 +56,7 @@ class dc_branding::openstack::horizon (
   # Create the configuration file
   file { '/etc/openstack-dashboard/datacentred_theme.py':
     ensure => file,
-    content => template('dc_branding/openstack/horizon/openstack_theme.py.erb'),
+    content => template("${files_path}/datacentred_theme.py.erb"),
   }
 
   # Link resources into the horizon install
