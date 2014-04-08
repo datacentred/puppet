@@ -40,7 +40,7 @@ class dc_profile::perf::graphite {
     gr_aggregator_line_port      => '2023',
     gr_web_server                => 'apache',
     secret_key                   => $graphite_secret_key,
-    gr_max_cache_size            => 1024,
+    gr_max_cache_size            => 12288,
     gr_enable_udp_listener       => true,
     gr_enable_carbon_aggregator  => true,
     gr_django_db_engine          => 'django.db.backends.mysql',
