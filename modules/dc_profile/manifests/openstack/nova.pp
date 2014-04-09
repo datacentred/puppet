@@ -98,6 +98,10 @@ class dc_profile::openstack::nova {
     enabled => true,
   }
 
+  exported_vars::set { 'novnc_proxy_host':
+    value => $::fqdn,
+  }
+
   @@keystone_endpoint { "${os_region}/nova":
     ensure        => present,
     public_url    => "http://${::fqdn}:${nova_port}/v2/%(tenant_id)s",
