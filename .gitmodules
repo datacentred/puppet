@@ -163,3 +163,15 @@
 [submodule "modules/radius"]
 	path = modules/radius
 	url = https://github.com/datacentred/datacentred-radius.git
+[submodule "modules/nginx"]
+	path = modules/nginx
+	url = https://github.com/jfryman/puppet-nginx.git
+[submodule "modules/rbenv"]
+	path = modules/rbenv
+	url = https://github.com/alup/puppet-rbenv.git
+[submodule "modules/redis"]
+	path = modules/redis
+	url = https://github.com/thomasvandoren/puppet-redis.git
+[submodule "modules/unicorn"]
+	path = modules/unicorn
+	url = https://github.com/puppetlabs-operations/puppet-unicorn.git
