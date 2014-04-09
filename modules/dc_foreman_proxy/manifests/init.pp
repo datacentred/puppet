@@ -76,7 +76,7 @@ class dc_foreman_proxy (
   if $use_bmc == true {
     package { 'rubyipmi':
       ensure   => installed,
-      provider => 'gem',
+      provider => gem,
     }
     package { 'ipmitool':
       ensure => installed,
