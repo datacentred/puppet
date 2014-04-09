@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
 
       Example:
 
-        sha1digest("hello") # => "{SHA}6d3L1UCJtULYvBnp47aqAvjtfM8="
+        sha1digest(["hello"]) # => "{SHA}6d3L1UCJtULYvBnp47aqAvjtfM8="
 
     ENDHEREDOC
 

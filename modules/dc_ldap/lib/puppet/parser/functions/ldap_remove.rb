@@ -8,8 +8,8 @@ module Puppet::Parser::Functions
       Example:
 
         # Remove entry for UID 'testy_test'.
-        ldap_remove(host, port, admin_user, admin_password,
-          :dn => 'uid=testy_test,ou=People,dc=example,dc=net')
+        ldap_remove([host, port, admin_user, admin_password,
+          {:dn => 'uid=testy_test,ou=People,dc=example,dc=net'}])
 
     ENDHEREDOC
 

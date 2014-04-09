@@ -8,9 +8,9 @@ module Puppet::Parser::Functions
       Example:
 
         # Search in the example.net base for a mail with 'a*.com' matching.
-        ldap_search(host, port, admin_user, admin_password, 
-                   :base => 'dc=example, dc=net', :filter => ['mail', 'a*.com'],
-                   :attributes => ["mail", "cn", "sn", "objectclass"])
+        ldap_search([host, port, admin_user, admin_password, 
+                   {:base => 'dc=example, dc=net', :filter => ['mail', 'a*.com'],
+                   :attributes => ["mail", "cn", "sn", "objectclass"]}])
 
     ENDHEREDOC
 
