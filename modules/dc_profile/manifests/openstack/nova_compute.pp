@@ -66,7 +66,7 @@ class dc_profile::openstack::nova_compute {
     enabled                       => true,
     vnc_enabled                   => true,
     vncproxy_host                 => $novnc_proxy_host,
-    vncserver_proxyclient_address => $novnc_proxy_host,
+    vncserver_proxyclient_address => $management_ip,
   }
 
   class { 'nova::compute::libvirt':
