@@ -15,7 +15,7 @@ class dc_profile::openstack::neutron_agent {
   $keystone_host              = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_neutron_password  = hiera(keystone_neutron_password)
 
-  $nova_api_host              = get_exported_var('', 'nova_api_host', ['localhost'])
+  $nova_api_ip                = get_exported_var('', 'nova_api_ip', ['localhost'])
   $nova_mq_username           = hiera(nova_mq_username)
   $nova_mq_password           = hiera(nova_mq_password)
   $nova_mq_port               = hiera(nova_mq_port)
