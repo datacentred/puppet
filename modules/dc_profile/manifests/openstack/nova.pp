@@ -15,30 +15,31 @@
 #
 class dc_profile::openstack::nova {
 
-  $keystone_nova_password = hiera(keystone_nova_password)
+  $keystone_nova_password   = hiera(keystone_nova_password)
 
-  $os_region           = hiera(os_region)
+  $os_region                = hiera(os_region)
 
-  $nova_mq_username    = hiera(nova_mq_username)
-  $nova_mq_password    = hiera(nova_mq_password)
-  $nova_mq_port        = hiera(nova_mq_port)
-  $nova_mq_vhost       = hiera(nova_mq_vhost)
+  $nova_mq_username         = hiera(nova_mq_username)
+  $nova_mq_password         = hiera(nova_mq_password)
+  $nova_mq_port             = hiera(nova_mq_port)
+  $nova_mq_vhost            = hiera(nova_mq_vhost)
 
-  $glance_api_servers  = get_exported_var('', 'glance_api_server', ['localhost:9292'])
+  $glance_api_servers       = get_exported_var('', 'glance_api_server', ['localhost:9292'])
 
-  $nova_db_user        = hiera(nova_db_user)
-  $nova_db_pass        = hiera(nova_db_pass)
-  $nova_db_host        = hiera(nova_db_host)
-  $nova_db             = hiera(nova_db)
+  $nova_db_user             = hiera(nova_db_user)
+  $nova_db_pass             = hiera(nova_db_pass)
+  $nova_db_host             = hiera(nova_db_host)
+  $nova_db                  = hiera(nova_db)
 
-  $nova_admin_tenant   = hiera(nova_admin_tenant)
-  $nova_admin_user     = hiera(nova_admin_user)
-  $nova_enabled_apis   = hiera(nova_enabled_apis)
+  $nova_admin_tenant        = hiera(nova_admin_tenant)
+  $nova_admin_user          = hiera(nova_admin_user)
+  $nova_enabled_apis        = hiera(nova_enabled_apis)
 
-  $keystone_host       = get_exported_var('', 'keystone_host', ['localhost'])
+  $keystone_host            = get_exported_var('', 'keystone_host', ['localhost'])
 
-  $neutron_server_host = hiera(neutron_server_host)
-  $neutron_secret      = hiera(neutron_secret)
+  $neutron_server_host      = hiera(neutron_server_host)
+  $neutron_secret           = hiera(neutron_secret)
+  $neutron_metadata_secret  = hiera(neutron_metadata_secret)
 
   $ec2_port = '8773'
   $nova_port = '8774'
@@ -47,6 +48,8 @@ class dc_profile::openstack::nova {
   $nova_mq_ev = 'nova_mq_node'
 
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
+
+  $management_ip              = $::ipaddress_eth0
 
   class { '::nova':
     database_connection => $nova_database,
@@ -68,9 +71,13 @@ class dc_profile::openstack::nova {
     enabled_apis                         => $nova_enabled_apis,
     auth_host                            => $keystone_host,
     auth_uri                             => "http://${keystone_host}:5000/v2.0",
-    neutron_metadata_proxy_shared_secret => $neutron_secret,
+    neutron_metadata_proxy_shared_secret => $neutron_metadata_secret,
   }
   contain 'nova::api'
+
+  exported_vars::set { 'nova_api_ip':
+    value => $management_ip,
+  }
 
   class { '::nova::network::neutron':
     neutron_url            => "http://${neutron_server_host}:9696",
