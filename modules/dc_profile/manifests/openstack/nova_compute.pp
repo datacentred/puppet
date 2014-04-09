@@ -12,34 +12,35 @@
 #
 class dc_profile::openstack::nova_compute {
 
-  $os_region              = hiera(os_region)
-  $os_service_tenant      = hiera(os_service_tenant)
+  $os_region                  = hiera(os_region)
+  $os_service_tenant          = hiera(os_service_tenant)
 
-  $nova_mq_username       = hiera(nova_mq_username)
-  $nova_mq_password       = hiera(nova_mq_password)
-  $nova_mq_port           = hiera(nova_mq_port)
-  $nova_mq_vhost          = hiera(nova_mq_vhost)
+  $nova_mq_username           = hiera(nova_mq_username)
+  $nova_mq_password           = hiera(nova_mq_password)
+  $nova_mq_port               = hiera(nova_mq_port)
+  $nova_mq_vhost              = hiera(nova_mq_vhost)
 
-  $nova_db_user           = hiera(nova_db_user)
-  $nova_db_pass           = hiera(nova_db_pass)
-  $nova_db_host           = hiera(nova_db_host)
-  $nova_db                = hiera(nova_db)
+  $nova_db_user               = hiera(nova_db_user)
+  $nova_db_pass               = hiera(nova_db_pass)
+  $nova_db_host               = hiera(nova_db_host)
+  $nova_db                    = hiera(nova_db)
 
-  $glance_api_servers     = get_exported_var('', 'glance_api_server', ['localhost:9292'])
+  $glance_api_servers         = get_exported_var('', 'glance_api_server', ['localhost:9292'])
+  $novnc_proxy_host           = get_exported_var('', 'novnc_proxy_host', ['localhost'])
 
-  $keystone_host          = get_exported_var('', 'keystone_host', ['localhost'])
-  $keystone_neutron_password = hiera(keystone_neutron_password)
+  $keystone_host              = get_exported_var('', 'keystone_host', ['localhost'])
+  $keystone_neutron_password  = hiera(keystone_neutron_password)
 
-  $neutron_admin_user     = hiera(neutron_admin_user)
-  $neutron_server_host    = hiera(neutron_server_host)
-  $neutron_secret         = hiera(neutron_secret)
+  $neutron_admin_user         = hiera(neutron_admin_user)
+  $neutron_server_host        = hiera(neutron_server_host)
+  $neutron_secret             = hiera(neutron_secret)
 
-  $management_ip          = $::ipaddress_eth0
+  $management_ip              = $::ipaddress_eth0
 
   # Hard coded exported variable name
-  $nova_mq_ev             = 'nova_mq_node'
+  $nova_mq_ev                 = 'nova_mq_node'
 
-  $nova_database          = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
+  $nova_database              = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
@@ -64,7 +65,8 @@ class dc_profile::openstack::nova_compute {
   class { '::nova::compute':
     enabled                       => true,
     vnc_enabled                   => true,
-    vncserver_proxyclient_address => $management_ip,
+    vnc_proxy_host                => $novnc_proxy_host,
+    vncserver_proxyclient_address => $novnc_proxy_host,
   }
 
   class { 'nova::compute::libvirt':
