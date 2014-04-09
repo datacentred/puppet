@@ -65,7 +65,7 @@ class dc_profile::openstack::nova_compute {
   class { '::nova::compute':
     enabled                       => true,
     vnc_enabled                   => true,
-    vnc_proxy_host                => $novnc_proxy_host,
+    vncproxy_host                 => $novnc_proxy_host,
     vncserver_proxyclient_address => $novnc_proxy_host,
   }
 
