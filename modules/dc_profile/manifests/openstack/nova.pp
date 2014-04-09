@@ -15,31 +15,32 @@
 #
 class dc_profile::openstack::nova {
 
-  $keystone_nova_password   = hiera(keystone_nova_password)
+  $keystone_nova_password     = hiera(keystone_nova_password)
+  $keystone_neutron_password  = hiera(keystone_neutron_password)
 
-  $os_region                = hiera(os_region)
+  $os_region                  = hiera(os_region)
 
-  $nova_mq_username         = hiera(nova_mq_username)
-  $nova_mq_password         = hiera(nova_mq_password)
-  $nova_mq_port             = hiera(nova_mq_port)
-  $nova_mq_vhost            = hiera(nova_mq_vhost)
+  $nova_mq_username           = hiera(nova_mq_username)
+  $nova_mq_password           = hiera(nova_mq_password)
+  $nova_mq_port               = hiera(nova_mq_port)
+  $nova_mq_vhost              = hiera(nova_mq_vhost)
 
-  $glance_api_servers       = get_exported_var('', 'glance_api_server', ['localhost:9292'])
+  $glance_api_servers         = get_exported_var('', 'glance_api_server', ['localhost:9292'])
 
-  $nova_db_user             = hiera(nova_db_user)
-  $nova_db_pass             = hiera(nova_db_pass)
-  $nova_db_host             = hiera(nova_db_host)
-  $nova_db                  = hiera(nova_db)
+  $nova_db_user               = hiera(nova_db_user)
+  $nova_db_pass               = hiera(nova_db_pass)
+  $nova_db_host               = hiera(nova_db_host)
+  $nova_db                    = hiera(nova_db)
 
-  $nova_admin_tenant        = hiera(nova_admin_tenant)
-  $nova_admin_user          = hiera(nova_admin_user)
-  $nova_enabled_apis        = hiera(nova_enabled_apis)
+  $nova_admin_tenant          = hiera(nova_admin_tenant)
+  $nova_admin_user            = hiera(nova_admin_user)
+  $nova_enabled_apis          = hiera(nova_enabled_apis)
 
-  $keystone_host            = get_exported_var('', 'keystone_host', ['localhost'])
+  $keystone_host              = get_exported_var('', 'keystone_host', ['localhost'])
 
-  $neutron_server_host      = hiera(neutron_server_host)
-  $neutron_secret           = hiera(neutron_secret)
-  $neutron_metadata_secret  = hiera(neutron_metadata_secret)
+  $neutron_server_host        = hiera(neutron_server_host)
+  $neutron_secret             = hiera(neutron_secret)
+  $neutron_metadata_secret    = hiera(neutron_metadata_secret)
 
   $ec2_port = '8773'
   $nova_port = '8774'
@@ -83,7 +84,7 @@ class dc_profile::openstack::nova {
     neutron_url            => "http://${neutron_server_host}:9696",
     neutron_region_name    => $os_region,
     neutron_admin_auth_url => "http://${keystone_host}:35357/v2.0",
-    neutron_admin_password => $neutron_secret,
+    neutron_admin_password => $keystone_neutron_password,
   }
   contain 'nova::network::neutron'
 
