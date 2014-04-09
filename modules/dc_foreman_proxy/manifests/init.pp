@@ -39,6 +39,16 @@ class dc_foreman_proxy (
     content => template('dc_foreman_proxy/settings.yml.erb');
   }
 
+  file {'/usr/share/foreman-proxy/lib/proxy/dhcp/subnet.rb':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/dc_foreman_proxy/subnet.rb',
+    require => Package['foreman-proxy'],
+    notify  => Service['foreman-proxy'],
+  }
+
   if $use_dns == true {
     File <| title == $dns::params::rndckeypath |> {
       ensure  => present,
@@ -64,10 +74,10 @@ class dc_foreman_proxy (
   }
 
   if $use_bmc == true {
-    #TODO: This cannot be located!! Fix me
-    #package { 'rubyipmi':
-    #  ensure   => installed,
-    #}
+    package { 'rubyipmi':
+      ensure   => installed,
+      provider => gem,
+    }
     package { 'ipmitool':
       ensure => installed,
     }
