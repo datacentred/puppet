@@ -16,14 +16,14 @@ Zero indicates success.
 
 ```ruby
 # Add an entry for the user with UID 'testy_test'.
-ldap_add(host, port, admin_user, admin_password,
-           :dn => 'uid=testy_test,ou=People,dc=example,dc=net',
+ldap_add([host, port, admin_user, admin_password,
+           {:dn => 'uid=testy_test,ou=People,dc=example,dc=net',
            :attributes => {
              :cn => 'Testy Tester', :givenName => 'Testy',
              :objectClass => ['top', 'person', 'inetorgPerson'],
              :sn => 'Tester', :mail => 'testy@test.com', 
              :uid => 'testy_test',
-             :userPassword => '{SHA}6d3L1UCJtULYvBnp47aqAvjtfM8='})
+             :userPassword => '{SHA}6d3L1UCJtULYvBnp47aqAvjtfM8='}}])
 ```
 
 Note: User passwords should be hashed with SHA1 as in the example.
@@ -32,13 +32,13 @@ Note: User passwords should be hashed with SHA1 as in the example.
 
 ```ruby
 # Add a mail for user with UID 'testy_test', set sn to blank, change givenName.
-ldap_modify(host, port, admin_user, admin_password, 
-            :dn => 'uid=testy_test,ou=People,dc=example,dc=net',
+ldap_modify([host, port, admin_user, admin_password, 
+            {:dn => 'uid=testy_test,ou=People,dc=example,dc=net',
             :operations => [
               [:add, :mail, "aliasaddress@example.com"],
               [:replace, :givenName, 'George'],
               [:delete, :sn]
-            ])
+            ]}])
 ```
 
 ### Remove an entry in an LDAP directory.
@@ -53,7 +53,13 @@ ldap_remove(host, port, admin_user, admin_password,
 
 ```ruby
 # Search in the example.net base for a mail with 'a*.com' matching.
-ldap_search(host, port, admin_user, admin_password, 
-           :base => 'dc=example, dc=net', :filter => ['mail', 'a*.com'],
-           :attributes => ["mail", "cn", "sn", "objectclass"])
+ldap_search([host, port, admin_user, admin_password, 
+           {:base => 'dc=example, dc=net', :filter => ['mail', 'a*.com'],
+           :attributes => ["mail", "cn", "sn", "objectclass"]}])
+```
+
+### Hash a password with SHA-1 Digest
+
+```ruby
+sha1digest(["secret"]) # => "{SHA}5en6G6MezRroT3XKqkdPOmY/BfQ="
 ```
