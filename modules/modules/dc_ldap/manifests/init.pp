@@ -1,0 +1,5 @@
+class dc_ldap (
+) {
+
+
+}
