@@ -2,6 +2,10 @@
 
 This module adds puppet functions to administer LDAP directory entries.
 
+## Specs
+
+Run the specs from this subdirectory with `rake spec`. You'll have to run `bundle install` first.
+
 ## Functions
 
 Each function returns a status code and message:
