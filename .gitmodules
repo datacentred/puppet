@@ -175,3 +175,6 @@
 [submodule "modules/unicorn"]
 	path = modules/unicorn
 	url = https://github.com/puppetlabs-operations/puppet-unicorn.git
+[submodule "modules/motd"]
+	path = modules/motd
+	url = https://github.com/saz/puppet-motd.git
