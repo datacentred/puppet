@@ -21,6 +21,8 @@ class dc_profile::foreman::foreman {
   }
 
   include dc_icinga::hostgroups
+  class { '::foreman':} ->
+  class { 'dc_foreman': }
   realize Dc_external_facts::Fact['dc_hostgroup_https']
   realize Dc_external_facts::Fact['dc_hostgroup_foreman']
 
