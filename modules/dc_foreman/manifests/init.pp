@@ -19,7 +19,7 @@ class dc_foreman (
     owner   => 'foreman',
     group   => 'foreman',
     mode    => '0640',
-    content => template('dc_foreman/host_edit.js');
+    content => template('dc_foreman/host_edit.js'),
   }
 
   file { '/usr/share/foreman/app/views/hosts/_unattended.html.erb':
@@ -27,7 +27,7 @@ class dc_foreman (
     owner   => 'foreman',
     group   => 'foreman',
     mode    => '0640',
-    content => template('dc_foreman/_unattended.html.erb');
+    source  => 'puppet:///dc_foreman/_unattended.html.erb',
   }
 
 }
