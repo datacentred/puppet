@@ -25,7 +25,7 @@ class dc_foreman (
     owner   => 'foreman',
     group   => 'foreman',
     mode    => '0640',
-    source  => 'puppet:///dc_foreman/_unattended.html.erb',
+    source  => 'puppet:///modules/dc_foreman/_unattended.html.erb',
   }
 
 }
