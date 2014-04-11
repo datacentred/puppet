@@ -1,6 +1,6 @@
-# Class: dc_foreman_proxy
+# Class: dc_foreman
 #
-# Foreman_proxy
+# Foreman
 #
 # Parameters:
 #
