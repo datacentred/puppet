@@ -17,10 +17,14 @@ class dc_profile::net::mail {
   $smarthost      = hiera('smarthost')
   $sysmailaddress = hiera('sysmailaddress')
 
-  class {'nullmailer':
-    adminaddr   => $sysmailaddress,
-    remoterelay => $smarthost,
-    remoteopts  => "--auth-login --ssl --port=465 --user=${smarthostuser} --pass=${smarthostpass}",
+  package { 'nullmailer':
+    ensure => absent,
   }
+
+  #  class {'nullmailer':
+  #  adminaddr   => $sysmailaddress,
+  #  remoterelay => $smarthost,
+  #  remoteopts  => "--auth-login --ssl --port=465 --user=${smarthostuser} --pass=${smarthostpass}",
+  #}
 
 }
