@@ -21,7 +21,7 @@ class dc_profile::foreman::foreman {
     passenger             => true,
     use_vhost             => true,
     ssl                   => true,
-  } #-> Class['dc_foreman']
+  } -> Class['dc_foreman']
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_https']
