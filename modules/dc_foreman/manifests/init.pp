@@ -17,14 +17,14 @@ class dc_foreman (
   file { '/usr/share/foreman/app/assets/javascripts/host_edit.js':
     owner   => 'foreman',
     group   => 'foreman',
-    mode    => '0640',
+    mode    => '0644',
     content => template('dc_foreman/host_edit.js'),
   }
 
   file { '/usr/share/foreman/app/views/hosts/_unattended.html.erb':
     owner   => 'foreman',
     group   => 'foreman',
-    mode    => '0640',
+    mode    => '0644',
     source  => 'puppet:///modules/dc_foreman/_unattended.html.erb',
   }
 
