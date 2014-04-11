@@ -12,17 +12,18 @@
 #
 class dc_profile::foreman::foreman {
 
+  include ::dc_foreman
+  contain 'dc_foreman'
+
   class { '::foreman':
     foreman_url           => $::fqdn,
     authentication        => true,
     passenger             => true,
     use_vhost             => true,
     ssl                   => true,
-  }
+  } -> Class['dc_foreman']
 
   include dc_icinga::hostgroups
-  class { '::foreman':} ->
-  class { 'dc_foreman': }
   realize Dc_external_facts::Fact['dc_hostgroup_https']
   realize Dc_external_facts::Fact['dc_hostgroup_foreman']
 

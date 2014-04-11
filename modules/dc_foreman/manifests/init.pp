@@ -15,7 +15,6 @@ class dc_foreman (
 ) {
 
   file { '/usr/share/foreman/app/assets/javascripts/host_edit.js':
-    require => Package['foreman'],
     owner   => 'foreman',
     group   => 'foreman',
     mode    => '0640',
@@ -23,11 +22,10 @@ class dc_foreman (
   }
 
   file { '/usr/share/foreman/app/views/hosts/_unattended.html.erb':
-    require => Package['foreman'],
     owner   => 'foreman',
     group   => 'foreman',
     mode    => '0640',
-    source  => 'puppet:///dc_foreman/_unattended.html.erb',
+    source  => 'puppet:///modules/dc_foreman/_unattended.html.erb',
   }
 
 }
