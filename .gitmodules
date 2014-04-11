@@ -157,9 +157,6 @@
 [submodule "modules/logrotate"]
 	path = modules/logrotate
 	url = https://github.com/rodjek/puppet-logrotate/
-[submodule "modules/ldap"]
-	path = modules/ldap
-	url = https://github.com/torian/puppet-ldap.git
 [submodule "modules/radius"]
 	path = modules/radius
 	url = https://github.com/datacentred/datacentred-radius.git
@@ -178,3 +175,6 @@
 [submodule "modules/motd"]
 	path = modules/motd
 	url = https://github.com/saz/puppet-motd.git
+[submodule "modules/ldap"]
+	path = modules/ldap
+	url = https://github.com/datacentred/datacentred-ldap.git

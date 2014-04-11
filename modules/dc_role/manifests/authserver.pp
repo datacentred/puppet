@@ -11,6 +11,6 @@
 # Sample Usage:
 #
 class dc_role::authserver {
-  contain dc_profile::auth::ldap::master
+  contain dc_profile::auth::ldap::server
   contain dc_profile::auth::radius::server
 }
