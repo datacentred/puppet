@@ -175,3 +175,6 @@
 [submodule "modules/motd"]
 	path = modules/motd
 	url = https://github.com/saz/puppet-motd.git
+[submodule "modules/ldap"]
+	path = modules/ldap
+	url = https://github.com/datacentred/datacentred-ldap.git
