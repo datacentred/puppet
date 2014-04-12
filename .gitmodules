@@ -178,3 +178,9 @@
 [submodule "modules/ldap"]
 	path = modules/ldap
 	url = https://github.com/datacentred/datacentred-ldap.git
+[submodule "modules/postfix"]
+	path = modules/postfix
+	url = https://github.com/datacentred/puppet-postfix
+[submodule "modules/augeas"]
+	path = modules/augeas
+	url = https://github.com/datacentred/puppet-augeas
