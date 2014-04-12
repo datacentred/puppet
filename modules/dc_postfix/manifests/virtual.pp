@@ -23,8 +23,9 @@ class dc_postfix::virtual {
   }
 
   postfix::hash { '/etc/postfix/vmailbox':
-        ensure  => present,
-        content => "${sysmailaddress} ${::domain}/${sysmailuser}/",
+        ensure    => present,
+        map_owner => 'postfix',
+        content   => "${sysmailaddress} ${::domain}/${sysmailuser}/",
   }
   postfix::config { 'virtual_mailbox_maps':
         value => 'hash:/etc/postfix/vmailbox',
