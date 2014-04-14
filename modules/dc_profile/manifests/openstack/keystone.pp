@@ -109,15 +109,8 @@ class dc_profile::openstack::keystone {
   # Set up DC admin users as admins in the admin tenant
   $dcadminhash = hiera(admins)
   $dcadmins = keys($dcadminhash)
-  keystone_user { $dcadmins:
-    ensure   => present,
-    enabled  => true,
-    password => $dcadminhash[$title]['pass'],
-    tenant   => 'admin',
-  }
-  keystone_user_role { $dcadmins:
-    ensure => present,
-    roles  => admin,
+  dc_profile::openstack::keystone_dcadmins { $dcadmins:
+    hash => $dcadminhash,
   }
 
   # Icinga monitoring
