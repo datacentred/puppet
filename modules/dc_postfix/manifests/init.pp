@@ -21,5 +21,6 @@ class dc_postfix {
   contain dc_postfix::gmailrelay
   contain dc_postfix::ratelimit
   contain dc_postfix::debug
+  contain dc_postfix::restrictions
 
 }
