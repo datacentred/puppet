@@ -106,6 +106,13 @@ class dc_profile::openstack::keystone {
     value => $::fqdn,
   }
 
+  # Set up DC admin users as admins in the admin tenant
+  $dcadminhash = hiera(admins)
+  $dcadmins = keys($dcadminhash)
+  dc_profile::openstack::keystone_dcadmins { $dcadmins:
+    hash => $dcadminhash,
+  }
+
   # Icinga monitoring
   keystone_tenant { 'icinga':
     ensure  => present,
@@ -120,7 +127,7 @@ class dc_profile::openstack::keystone {
     enabled  => true,
     password => hiera(keystone_icinga_password),
     email    => hiera(sysmailaddress),
-    tenant   => 'icinga'
+    tenant   => 'icinga',
   }
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_keystone']
