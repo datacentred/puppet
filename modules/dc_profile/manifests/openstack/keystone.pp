@@ -108,7 +108,7 @@ class dc_profile::openstack::keystone {
 
   # Set up DC admin users as admins in the admin tenant
   $dcadminhash = hiera(admins)
-  $dcadmins = keys(hiera(admins))
+  $dcadmins = keys($dcadminhash)
   keystone_user { $dcadmins:
     ensure   => present,
     enabled  => true,
