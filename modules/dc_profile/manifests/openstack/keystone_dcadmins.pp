@@ -18,15 +18,16 @@
 #
 define dc_profile::openstack::keystone_dcadmins (
   $hash = undef,
+  $tenant = 'admin',
 ) {
 
   keystone_user { $title:
     ensure   => present,
     enabled  => true,
     password => $hash[$title]['pass'],
-    tenant   => 'admin',
+    tenant   => $tenant,
   }
-  keystone_user_role { $title:
+  keystone_user_role { "${title}@${tenant}":
     ensure => present,
     roles  => admin,
   }
