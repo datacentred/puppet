@@ -19,6 +19,6 @@ class dc_profile::auth::ldap::server {
   contain 'dc_ssl::slapd'
   contain 'ldap::server'
 
-  Class['dc:ssl'] ~> Class['ldap::server::service']
+  Class['dc_ssl'] ~> Class['ldap::server::service']
   Class['dc_ssl::slapd'] ~> Class['ldap::server::service']
 }
