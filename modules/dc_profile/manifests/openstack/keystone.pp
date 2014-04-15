@@ -111,7 +111,7 @@ class dc_profile::openstack::keystone {
   $dcadmins = keys($dcadminhash)
   dc_profile::openstack::keystone_dcadmins { $dcadmins:
     hash   => $dcadminhash,
-    tenant => 'admin',
+    tenant => 'openstack',
   }
 
   # Icinga monitoring
