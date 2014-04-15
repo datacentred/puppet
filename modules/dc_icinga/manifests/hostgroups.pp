@@ -16,5 +16,7 @@ class dc_icinga::hostgroups {
   @dc_external_facts::fact { 'dc_hostgroup_keystone': }
   @dc_external_facts::fact { 'dc_hostgroup_nfs': }
   @dc_external_facts::fact { 'dc_hostgroup_foreman': }
+  @dc_external_facts::fact { 'dc_hostgroup_smtp': }
+  @dc_external_facts::fact { 'dc_hostgroup_postfix': }
 
 }
