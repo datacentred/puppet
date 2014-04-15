@@ -336,6 +336,10 @@ class dc_icinga::server::config (
     alias => 'Foreman Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_smtp':
+    alias => 'SMTP Servers',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -526,6 +530,13 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_foreman',
     check_command       => 'check_foreman_dc',
     service_description => 'Foreman',
+  }
+
+  nagios_service { 'check_smtp':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_smtp',
+    check_command       => 'check_smtp',
+    service_description => 'SMTP',
   }
   ######################################################################
   # Per client storeconfig data
