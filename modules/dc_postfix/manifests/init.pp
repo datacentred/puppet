@@ -12,7 +12,10 @@
 #
 class dc_postfix {
 
-  include postfix
+  class { 'postfix':
+    smtp_listen => 'all',
+  }
+
   include augeas
 
   contain dc_postfix::users
