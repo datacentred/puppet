@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.manifests_path    = "vagrant"
     puppet.module_path       = "modules"
     puppet.hiera_config_path = "vagrant/hiera.yaml"
-    puppet.options           = "--verbose --debug"
+    puppet.options           = "--verbose "
     puppet.facter            = {
                                  "environment" => "production",
                                  "is_vagrant" => "true",
