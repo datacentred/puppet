@@ -538,6 +538,14 @@ class dc_icinga::server::config (
     check_command       => 'check_smtp',
     service_description => 'SMTP',
   }
+
+  nagios_service { 'check_postfix_queue':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_postfix',
+    check_command       => 'check_nrpe_1arg!check_mailq_postfix',
+    service_description => 'Postfix Mail Queue',
+  }
+  ######################################################################
   ######################################################################
   # Per client storeconfig data
   ######################################################################
