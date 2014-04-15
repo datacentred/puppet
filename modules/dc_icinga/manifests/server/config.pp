@@ -340,6 +340,12 @@ class dc_icinga::server::config (
     alias => 'SMTP Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_postfix':
+    alias => 'Postfix Servers',
+  }
+
+
+
   ######################################################################
   # Commands
   ######################################################################
