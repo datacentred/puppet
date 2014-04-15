@@ -20,7 +20,7 @@ class dc_postfix::restrictions {
 
   # Recipient restrictions
   postfix::config { 'smtpd_recipient_restrictions':
-    value => 'reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, permit_mynetworks, reject_unauth_destination, permit'
+    value => 'reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit_mynetworks, permit'
   }
 
   # Sender restrictions
