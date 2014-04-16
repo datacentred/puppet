@@ -82,8 +82,18 @@ class dc_profile::openstack::neutron_agent {
       auth_region   => $os_region,
       metadata_ip   => $nova_api_ip,
     }
+
+    class { 'neutron::agents::vpnaas':
+      enabled => true,
+    }
+
+    class { 'neutron::agents::lbaas':
+      enabled        => true,
+      use_namespaces => true,
+    }
+
   }
-  else  { 
+  else  {
     # We're a compute node, so just configure the OVS basics
     class { 'neutron::agents::ovs':
       local_ip         => $integration_ip,
