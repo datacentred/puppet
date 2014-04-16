@@ -23,7 +23,7 @@ class dc_postfix::nullclient {
       satellite           => true,
     }
 
-   contain dc_postfix::nrpe
+    contain dc_postfix::nrpe
 
   }
 
