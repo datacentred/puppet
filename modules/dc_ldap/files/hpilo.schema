@@ -1,0 +1,3 @@
+objectclass ( 1.3.6.1.4.1.15959.9.2.2 NAME 'user'
+  DESC 'Required by Integrated Lights-Out for OpenLDAP '
+  SUP top AUXILIARY )
