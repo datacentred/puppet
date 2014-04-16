@@ -51,6 +51,7 @@ class dc_profile::openstack::neutron_server {
       service_plugins       =>  [ 'neutron.services.vpn.plugin.VPNDriverPlugin',
                                   'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
                                   'neutron.services.firewall.fwaas_plugin.FirewallPlugin',
+                                  'neutron.services.metering.metering_plugin.MeteringPlugin',
                                 ],
   }
 
