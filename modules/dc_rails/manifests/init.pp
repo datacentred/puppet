@@ -59,7 +59,7 @@ class dc_rails {
 
   nginx::resource::upstream { 'rails':
     members => [
-      'localhost:8080',
+      'unix:///var/run/rails/unicorn.sock',
     ],
   } ->
 
@@ -117,17 +117,27 @@ class dc_rails {
     group  => $group;
   } ->
 
+  file { '/home/rails/soleman/log/production.log' :
+    owner  => $user,
+    group  => $group,
+    mode   => '0666',  
+  } ->
+
+  file { "/etc/environment":
+    content => inline_template("SECRET_KEY_BASE=91fe5d494f16b1f3bff432c65d1b30a39e8881c0e842ab607f78f44260ea27f5da3b7c24b5347a57c3059858435b8fc6b2f918bc8fb516c34caecd7810aea7e0")
+  } ->  
+
   unicorn::app { 'soleman':
     approot     => $app_home,
     pidfile     => '/var/run/rails/unicorn.pid',
     socket      => '/var/run/rails/unicorn.sock',
     user        => $user,
     config_file => '/home/rails/soleman/config/unicorn.rb',
-    logdir      => '/var/log/rails/',
+    logdir      => '/var/log/rails',
     group       => $group,
     preload_app => false,
     rack_env    => 'production',
-    #source      => 'bundler',
+    source      => '/home/rails/.rbenv/shims/unicorn',
     require     => [
       Class['ruby::dev'],
     ],
