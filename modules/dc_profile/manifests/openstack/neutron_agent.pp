@@ -92,6 +92,11 @@ class dc_profile::openstack::neutron_agent {
       use_namespaces => true,
     }
 
+    class { 'neutron::agents::metering':
+      enabled        => true,
+      use_namespaces => true,
+    }
+
   }
   else  {
     # We're a compute node, so just configure the OVS basics
