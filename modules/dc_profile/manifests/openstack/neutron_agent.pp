@@ -84,7 +84,8 @@ class dc_profile::openstack::neutron_agent {
     }
 
     class { 'neutron::agents::vpnaas':
-      enabled => true,
+      enabled          => true,
+      interface_driver => 'neutron.agent.linux.interface.OVSInterfaceDriver',
     }
 
     class { 'neutron::agents::lbaas':
