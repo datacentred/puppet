@@ -111,6 +111,22 @@ class dc_rails {
     user        => $user,
   } ->
 
+  exec { 'rake db:create':
+    command     => '/home/rails/.rbenv/shims/bundle exec rake db:create',
+    cwd         => $app_home,
+    group       => $group,
+    user        => $user,
+    environment => 'RAILS_ENV=production',
+  } ->
+
+  exec { 'rake db:migrate':
+    command     => '/home/rails/.rbenv/shims/bundle exec rake db:migrate',
+    cwd         => $app_home,
+    group       => $group,
+    user        => $user,
+    environment => 'RAILS_ENV=production',
+  } ->
+
   file { ['/var/log/rails/', '/var/run/rails/']:
     ensure => directory,
     owner  => $user,
