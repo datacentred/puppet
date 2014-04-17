@@ -20,7 +20,7 @@ define dc_riemann::email_stream (
   $event       = undef,
 ){
 
-  $sysmailaddress = hiera(sysmailaddress)
+  $sysmailaddress = hiera(sal01_internal_sysmail_address)
 
   file { "${dc_riemann::riemann_config_dir}/${title}.clj":
     ensure  => file,

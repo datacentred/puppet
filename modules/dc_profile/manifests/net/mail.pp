@@ -12,10 +12,10 @@
 #
 class dc_profile::net::mail {
 
-  $smarthostuser  = hiera('smarthostuser')
-  $smarthostpass  = hiera('smarthostpass')
-  $smarthost      = hiera('smarthost')
-  $sysmailaddress = hiera('sysmailaddress')
+
+
+
+
 
   package { 'nullmailer':
     ensure => purged,
