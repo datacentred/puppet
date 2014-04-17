@@ -27,7 +27,7 @@ define dc_apache::vhost (
   apache::vhost { "${title}.${::domain}":
     port          => $port,
     docroot       => $docroot,
-    serveradmin   => hiera(sysmailaddress),
+    serveradmin   => hiera(sal01_internal_sysmail_address),
     serveraliases => [ $title ],
   }
 

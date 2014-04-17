@@ -27,7 +27,7 @@ class dc_profile::openstack::keystone {
 
   # Adds the admin credential to keystone.
   class { '::keystone::roles::admin':
-    email          => hiera(sysmailaddress),
+    email          => hiera(sal01_internal_sysmail_address),
     password       => hiera(keystone_admin_pw),
     service_tenant => $os_service_tenant,
   }
@@ -45,7 +45,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_glance_password),
-    email    => hiera(sysmailaddress),
+    email    => hiera(sal01_internal_sysmail_address),
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "glance@${os_service_tenant}":
@@ -64,7 +64,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_nova_password),
-    email    => hiera(sysmailaddress),
+    email    => hiera(sal01_internal_sysmail_address),
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "nova@${os_service_tenant}":
@@ -88,7 +88,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_neutron_password),
-    email    => hiera(sysmailaddress),
+    email    => hiera(sal01_internal_sysmail_address),
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "neutron@${os_service_tenant}":
@@ -119,7 +119,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_icinga_password),
-    email    => hiera(sysmailaddress),
+    email    => hiera(sal01_internal_sysmail_address),
     tenant   => 'icinga',
   }
   include dc_icinga::hostgroups

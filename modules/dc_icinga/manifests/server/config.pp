@@ -207,7 +207,7 @@ class dc_icinga::server::config (
 
   nagios_contact { 'sysadmin':
     alias                         => 'System Administrators',
-    email                         => hiera(sysmailaddress),
+    email                         => hiera(sal01_internal_sysmail_address),
     contactgroups                 => 'dc_admins',
     service_notification_period   => 'dc_timeperiod_24x7',
     host_notification_period      => 'dc_timeperiod_24x7',
