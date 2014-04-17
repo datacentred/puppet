@@ -147,7 +147,7 @@
 	url = https://github.com/stackforge/puppet-neutron.git
 [submodule "modules/ceph"]
 	path = modules/ceph
-	url = https://github.com/enovance/puppet-ceph
+	url = https://github.com/stackforge/puppet-ceph
 [submodule "modules/gcc"]
 	path = modules/gcc
 	url = https://github.com/puppetlabs/puppetlabs-gcc
