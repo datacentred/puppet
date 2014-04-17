@@ -18,7 +18,7 @@ class dc_profile::net::mail {
   $sysmailaddress = hiera('sysmailaddress')
 
   package { 'nullmailer':
-    ensure => absent,
+    ensure => purged,
   }
 
   #  class {'nullmailer':
