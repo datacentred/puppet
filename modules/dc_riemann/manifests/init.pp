@@ -13,7 +13,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_riemann {
 
-  $sysmailaddress = hiera(sysmailaddress)
+  $sysmailaddress = hiera(sal01_internal_sysmail_address)
   $riemann_config_dir = '/etc/riemann.conf.d'
 
   class { 'riemann':
