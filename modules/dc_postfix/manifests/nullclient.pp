@@ -12,15 +12,19 @@
 #
 class dc_postfix::nullclient {
 
-  include augeas
+  if $::fqdn != hiera(primary_mail_server) {
 
-  class { 'postfix':
-     relayhost           => hiera(primary_mail_server),
-     myorigin            => $::fqdn,
-     root_mail_recipient => hiera(sal01_internal_sysmail_address),
-     satellite           => true,
-   }
+    include augeas
 
-   contain dc_postfix::nrpe
+    class { 'postfix':
+      relayhost           => hiera(primary_mail_server),
+      myorigin            => $::fqdn,
+      root_mail_recipient => hiera(sal01_internal_sysmail_address),
+      satellite           => true,
+    }
+
+    contain dc_postfix::nrpe
+
+  }
 
 }
