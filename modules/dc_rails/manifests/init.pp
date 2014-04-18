@@ -31,6 +31,8 @@ class dc_rails(
   $logdir = "/var/log/rails/${app_name}/"
   $rundir = "/var/run/rails/${app_name}/"
 
+  class { 'redis': }
+
   class { 'nginx': manage_repo => false }
 
   nginx::resource::upstream { $app_name:
