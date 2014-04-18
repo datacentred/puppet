@@ -11,30 +11,36 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_rails {
-  include ::ruby
-  include ::bundler
-  contain 'ruby'
-  contain 'bundler'
+class dc_rails(
+  $user = 'rails',
+  $password = 'secret',
+  $db_password = 'secret',
+  $group = 'rails',
+  $home = '/home/rails/',
+  $rails_env = 'production',
+  $ruby = '2.0.0-p451',
+  $app_name = 'soleman',
+  $app_url = 'soleman.dev',
+  $app_repo = 'https://github.com/seanhandley/helloworld.git',
+  $secret_key_base = '91fe5d494f16b1f3bff432c65d1b30a39e8881c0e842ab607f78f44260ea27f5da3b7c24b5347a57c3059858435b8fc6b2f918bc8fb516c34caecd7810aea7e0',
+) {
 
-  $user = 'rails'
-  $password = 'secret'
-  $group = 'rails'
-  $home = '/home/rails/'
-  $ruby = '2.0.0-p451'
-  $app_home = '/home/rails/soleman'
-  $app_repo = 'https://github.com/seanhandley/helloworld.git'
+  $app_home = "${home}${app_name}/"
+  $bundler = "${home}.rbenv/shims/bundle"
+  $unicorn = "${home}.rbenv/shims/unicorn"
+  $logdir = "/var/log/rails/${app_name}/"
+  $rundir = "/var/run/rails/${app_name}/"
 
   class { 'nginx': manage_repo => false }
 
-  nginx::resource::upstream { 'rails':
+  nginx::resource::upstream { $app_name:
     members => [
-      'unix:///var/run/rails/unicorn.sock',
+      "unix:///var/run/rails/${app_name}.sock",
     ],
   } ->
 
-  nginx::resource::vhost { 'soleman.dev':
-    proxy => 'http://rails',
+  nginx::resource::vhost { $app_url:
+    proxy => "http://${app_name}",
   }
 
   package { 'git' :
@@ -51,14 +57,14 @@ class dc_rails {
     password   => $password,
   } ->
 
-  file { '/home/rails/.ssh' :
+  file { "${home}.ssh" :
     ensure => 'directory',
     owner  => $user,
     group  => $group,
     mode   => '0700',
   } ->
 
-  file { ['/var/log/rails/', '/var/run/rails/']:
+  file { [$logdir, $rundir]:
     ensure => directory,
     owner  => $user,
     group  => $group;
@@ -70,13 +76,13 @@ class dc_rails {
     group  => $group;
   } ->
 
-  git::repo{'soleman':
+  git::repo{$app_name:
     path   => $app_home,
     source => $app_repo,
     owner  => $user,
   } ->
 
-  file { '/home/rails/soleman/log/production.log' :
+  file { "${logdir}${rails_env}.log" :
     owner  => $user,
     group  => $group,
     mode   => '0666',  
@@ -105,37 +111,37 @@ class dc_rails {
   } ->
 
   exec { 'bundle install --deployment':
-    command     => '/home/rails/.rbenv/shims/bundle install --deployment',
+    command     => "${bundler} install --deployment",
     cwd         => $app_home,
     group       => $group,
     user        => $user,
   } ->
 
   exec { 'bundle binstubs unicorn':
-    command     => '/home/rails/.rbenv/shims/bundle binstubs unicorn',
+    command     => "${bundler} binstubs unicorn",
     cwd         => $app_home,
     group       => $group,
     user        => $user,
   } ->
 
   class { 'dc_mariadb': 
-    maria_root_pw => 'secret'
+    maria_root_pw => $db_password
   } ->
 
   exec { 'rake db:create':
-    command     => '/home/rails/.rbenv/shims/bundle exec rake db:create',
+    command     => "${bundler} exec rake db:create",
     cwd         => $app_home,
     group       => $group,
     user        => $user,
-    environment => 'RAILS_ENV=production',
+    environment => "RAILS_ENV=${rails_env}",
   } ->
 
   exec { 'rake db:migrate':
-    command     => '/home/rails/.rbenv/shims/bundle exec rake db:migrate',
+    command     => "${bundler} exec rake db:migrate",
     cwd         => $app_home,
     group       => $group,
     user        => $user,
-    environment => 'RAILS_ENV=production',
+    environment => "RAILS_ENV=${rails_env}",
   } ->
 
   exec { 'rbenv-init':
@@ -145,19 +151,22 @@ class dc_rails {
     user        => $user,
   } ->
 
-  unicorn::app { 'soleman':
+  unicorn::app { $app_name:
     approot          => $app_home,
-    pidfile          => '/var/run/rails/unicorn.pid',
-    socket           => '/var/run/rails/unicorn.sock',
+    pidfile          => "${$rundir}unicorn.pid",
+    socket           => "${$rundir}unicorn.sock",
     user             => $user,
-    config_file      => '/home/rails/soleman/config/unicorn.rb',
-    logdir           => '/var/log/rails',
+    config_file      => "${app_home}config/unicorn.rb",
+    logdir           => $logdir,
     group            => $group,
     preload_app      => false,
-    rack_env         => 'production',
-    secret_key_base  => '91fe5d494f16b1f3bff432c65d1b30a39e8881c0e842ab607f78f44260ea27f5da3b7c24b5347a57c3059858435b8fc6b2f918bc8fb516c34caecd7810aea7e0',
-    source           => '/home/rails/.rbenv/shims/unicorn',
-    # subscribe => Exec['bundle binstubs unicorn'],
+    rack_env         => $rails_env,
+    secret_key_base  => $secret_key_base,
+    source           => $unicorn,
+    subscribe =>  [
+                   Nginx::Resource::Upstream[$app_name],
+                   Nginx::Resource::Vhost[$app_url],
+                  ],
   }
 
 
