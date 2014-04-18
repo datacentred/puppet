@@ -12,19 +12,19 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class dc_rails(
+  $app_name,
+  $app_url,
+  $app_repo,
+  $password = undef,
+  $db_password = undef,
+  $secret_key_base = undef,
   $user = 'rails',
-  $password = 'secret',
-  $db_password = 'secret',
   $group = 'rails',
-  $home = '/home/rails/',
   $rails_env = 'production',
   $ruby = '2.0.0-p451',
-  $app_name = 'soleman',
-  $app_url = 'soleman.dev',
-  $app_repo = 'https://github.com/seanhandley/helloworld.git',
-  $secret_key_base = '91fe5d494f16b1f3bff432c65d1b30a39e8881c0e842ab607f78f44260ea27f5da3b7c24b5347a57c3059858435b8fc6b2f918bc8fb516c34caecd7810aea7e0',
 ) {
 
+  $home = "/home/${user}/"
   $app_home = "${home}${app_name}/"
   $bundler = "${home}.rbenv/shims/bundle"
   $unicorn = "${home}.rbenv/shims/unicorn"
@@ -80,6 +80,7 @@ class dc_rails(
     path   => $app_home,
     source => $app_repo,
     owner  => $user,
+    update => true,
   } ->
 
   file { "${logdir}${rails_env}.log" :
@@ -115,6 +116,7 @@ class dc_rails(
     cwd         => $app_home,
     group       => $group,
     user        => $user,
+    tries       => 3,
   } ->
 
   exec { 'bundle binstubs unicorn':
