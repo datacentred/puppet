@@ -28,21 +28,28 @@ class dc_rails(
   $app_home = "${home}${app_name}/"
   $bundler = "${home}.rbenv/shims/bundle"
   $unicorn = "${home}.rbenv/shims/unicorn"
-  $logdir = "/var/log/rails/${app_name}/"
-  $rundir = "/var/run/rails/${app_name}/"
+  $log_base = '/var/log/rails/'
+  $logdir = "${log_base}${app_name}/"
+  $run_base = '/var/run/rails/'
+  $rundir = "${run_base}${app_name}/"
 
   class { 'redis': }
 
   class { 'nginx': manage_repo => false }
 
   nginx::resource::upstream { $app_name:
+    ensure  => present,
     members => [
-      "unix:///var/run/rails/${app_name}.sock",
+      "unix://${rundir}unicorn.sock",
     ],
   } ->
 
   nginx::resource::vhost { $app_url:
-    proxy => "http://${app_name}",
+    ensure   => present,
+    proxy    => "http://${app_name}",
+    ssl      => true,
+    ssl_cert => 'puppet:///modules/dc_ssl/soleman/soleman.dev.crt',
+    ssl_key  => 'puppet:///modules/dc_ssl/soleman/soleman.dev.key',
   }
 
   package { 'git' :
@@ -66,10 +73,16 @@ class dc_rails(
     mode   => '0700',
   } ->
 
+  file { [$log_base, $run_base]:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
+  } ->
+
   file { [$logdir, $rundir]:
     ensure => directory,
     owner  => $user,
-    group  => $group;
+    group  => $group,
   } ->
 
   file { $app_home :
