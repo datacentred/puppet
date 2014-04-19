@@ -18,6 +18,8 @@ class dc_rails(
   $password = undef,
   $db_password = undef,
   $secret_key_base = undef,
+  $ssl_key = undef,
+  $ssl_cert = undef,
   $user = 'rails',
   $group = 'rails',
   $rails_env = 'production',
@@ -48,8 +50,8 @@ class dc_rails(
     ensure   => present,
     proxy    => "http://${app_name}",
     ssl      => true,
-    ssl_cert => 'puppet:///modules/dc_ssl/soleman/soleman.dev.crt',
-    ssl_key  => 'puppet:///modules/dc_ssl/soleman/soleman.dev.key',
+    ssl_cert => $ssl_cert,
+    ssl_key  => $ssl_key,
   }
 
   package { 'git' :

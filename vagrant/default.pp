@@ -8,4 +8,6 @@ class { 'dc_rails':
   password => 'secret',
   db_password => 'secret',
   secret_key_base => '91fe5d494f16b1f3bff432c65d1b30a39e8881c0e842ab607f78f44260ea27f5da3b7c24b5347a57c3059858435b8fc6b2f918bc8fb516c34caecd7810aea7e0',
+  ssl_key => 'puppet:///modules/dc_ssl/soleman/soleman.dev.key',
+  ssl_cert => 'puppet:///modules/dc_ssl/soleman/soleman.dev.crt',
 }
