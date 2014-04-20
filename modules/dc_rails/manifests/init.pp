@@ -77,28 +77,28 @@ class dc_rails(
     mode   => '0700',
   } ->
 
-  # file { "${home}.ssh/id_rsa" :
-  #   ensure => present,
-  #   owner  => $user,
-  #   group  => $group,
-  #   mode   => '0700',
-  #   source => $deploy_key_private,
-  # } ->
+  file { "${home}.ssh/id_rsa" :
+    ensure => present,
+    owner  => $user,
+    group  => $group,
+    mode   => '0600',
+    source => $deploy_key_private,
+  } ->
 
-  # file { "${home}.ssh/id_rsa.pub" :
-  #   ensure => present,
-  #   owner  => $user,
-  #   group  => $group,
-  #   mode   => '0700',
-  #   source => $deploy_key_public,
-  # } ->
+  file { "${home}.ssh/id_rsa.pub" :
+    ensure => present,
+    owner  => $user,
+    group  => $group,
+    mode   => '0600',
+    source => $deploy_key_public,
+  } ->
 
-  sshkey { 'deployer_key_private':
-    ensure       => present,
-    name         => 'github.com',
-    key          => $deploy_key_private,
-    target       => "${home}.ssh/id_rsa",
-    type         => ssh-rsa,
+  file { "${home}.ssh/known_hosts" :
+    ensure => present,
+    owner  => $user,
+    group  => $group,
+    mode   => '0600',
+    source => 'puppet:///modules/dc_rails/deployer_keys/known_hosts',
   } ->
 
   file { [$log_base, $run_base]:
@@ -118,13 +118,6 @@ class dc_rails(
     owner  => $user,
     group  => $group;
   } ->
-
-  # git::repo{$app_name:
-  #   path   => $app_home,
-  #   source => $app_repo,
-  #   owner  => $user,
-  #   update => true,
-  # } ->
 
   vcsrepo { $app_home:
     ensure   => present,
