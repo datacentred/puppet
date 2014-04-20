@@ -12,14 +12,16 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class dc_rails(
-  $app_name,
-  $app_url,
-  $app_repo,
+  $app_name = undef,
+  $app_url = undef,
+  $app_repo = undef,
   $password = undef,
   $db_password = undef,
   $secret_key_base = undef,
   $ssl_key = undef,
   $ssl_cert = undef,
+  $deploy_key_private = undef,
+  $deploy_key_public = undef,
   $user = 'rails',
   $group = 'rails',
   $rails_env = 'production',
@@ -75,6 +77,30 @@ class dc_rails(
     mode   => '0700',
   } ->
 
+  # file { "${home}.ssh/id_rsa" :
+  #   ensure => present,
+  #   owner  => $user,
+  #   group  => $group,
+  #   mode   => '0700',
+  #   source => $deploy_key_private,
+  # } ->
+
+  # file { "${home}.ssh/id_rsa.pub" :
+  #   ensure => present,
+  #   owner  => $user,
+  #   group  => $group,
+  #   mode   => '0700',
+  #   source => $deploy_key_public,
+  # } ->
+
+  sshkey { 'deployer_key_private':
+    ensure       => present,
+    name         => 'github.com',
+    key          => $deploy_key_private,
+    target       => "${home}.ssh/id_rsa",
+    type         => ssh-rsa,
+  } ->
+
   file { [$log_base, $run_base]:
     ensure => directory,
     owner  => $user,
@@ -93,17 +119,25 @@ class dc_rails(
     group  => $group;
   } ->
 
-  git::repo{$app_name:
-    path   => $app_home,
-    source => $app_repo,
-    owner  => $user,
-    update => true,
+  # git::repo{$app_name:
+  #   path   => $app_home,
+  #   source => $app_repo,
+  #   owner  => $user,
+  #   update => true,
+  # } ->
+
+  vcsrepo { $app_home:
+    ensure   => present,
+    provider => git,
+    source   => $app_repo,
+    user     => $user,
+    revision => 'master',
   } ->
 
   file { "${logdir}${rails_env}.log" :
     owner  => $user,
     group  => $group,
-    mode   => '0666',  
+    mode   => '0666',
   } ->
 
   rbenv::install { $user:
