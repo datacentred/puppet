@@ -159,7 +159,7 @@
 	url = https://github.com/datacentred/datacentred-radius.git
 [submodule "modules/nginx"]
 	path = modules/nginx
-	url = https://github.com/datacentred/puppet-nginx.git
+	url = https://github.com/jfryman/puppet-nginx.git
 [submodule "modules/rbenv"]
 	path = modules/rbenv
 	url = https://github.com/alup/puppet-rbenv.git
