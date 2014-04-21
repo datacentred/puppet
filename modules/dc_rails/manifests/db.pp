@@ -24,6 +24,10 @@ class dc_rails::db(
     maria_root_pw => $db_password
   } ->
 
+  package { 'libmariadbclient-dev' :
+    ensure => present,
+  } ->
+
   exec { 'rake db:create':
     command     => "${bundler} exec rake db:create",
     cwd         => $app_home,
