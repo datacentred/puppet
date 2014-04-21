@@ -83,15 +83,6 @@ class dc_rails(
     app_home => $app_home,
   } ->
 
-  class { 'db':
-    db_password => $db_password,
-    bundler     => $bundler,
-    app_home    => $app_home,
-    user        => $user,
-    group       => $group,
-    rails_env   => $rails_env,
-  } ->
-
   unicorn::app { $app_name:
     approot          => $app_home,
     pidfile          => "${$rundir}unicorn.pid",
@@ -106,11 +97,19 @@ class dc_rails(
     db_password      => $db_password,
     source           => $unicorn,
     subscribe        =>  [
-        # Class['db'],
-        # Class['environment'],
-        # Class['webserver'],
-        # Vcsrepo[$app_home],
+        Class['environment'],
+        Class['webserver'],
+        Vcsrepo[$app_home],
       ],
+  } ->
+
+  class { 'db':
+    db_password => $db_password,
+    bundler     => $bundler,
+    app_home    => $app_home,
+    user        => $user,
+    group       => $group,
+    rails_env   => $rails_env,
   }
 
 }
