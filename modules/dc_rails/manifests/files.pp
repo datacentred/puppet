@@ -51,7 +51,7 @@ class dc_rails::files(
     group  => $group,
     mode   => '0600',
     source => 'puppet:///modules/dc_rails/deployer_keys/known_hosts',
-  } ->
+  }
 
   file { [$log_base, $run_base]:
     ensure => directory,
@@ -69,7 +69,7 @@ class dc_rails::files(
     owner  => $user,
     group  => $group,
     mode   => '0666',
-  } ->
+  }
 
   file { $app_home :
     ensure => directory,
