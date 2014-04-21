@@ -43,6 +43,7 @@ class dc_rails::environment(
     cwd         => $app_home,
     group       => $group,
     user        => $user,
+    timeout     => 600,
     tries       => 3,
   } ->
 
