@@ -29,7 +29,7 @@ class dc_rails::db(
     cwd         => $app_home,
     group       => $group,
     user        => $user,
-    environment => "RAILS_ENV=${rails_env}",
+    environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   } ->
 
   exec { 'rake db:migrate':
@@ -37,6 +37,6 @@ class dc_rails::db(
     cwd         => $app_home,
     group       => $group,
     user        => $user,
-    environment => "RAILS_ENV=${rails_env}",
+    environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   }
 }
