@@ -38,6 +38,10 @@ class dc_rails::environment(
 
   class{'ruby::dev':} ->
 
+  package { 'libmariadbclient-dev' :
+    ensure => present,
+  } ->
+
   exec { 'bundle install --deployment':
     command     => "${bundler} install --deployment",
     cwd         => $app_home,
