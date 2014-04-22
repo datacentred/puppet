@@ -18,7 +18,7 @@
 #
 define dc_profile::openstack::keystone_dcadmins (
   $hash = undef,
-  $tenant = 'admin',
+  $tenant = 'openstack',
 ) {
 
   keystone_user { $title:

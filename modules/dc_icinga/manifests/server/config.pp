@@ -207,7 +207,7 @@ class dc_icinga::server::config (
 
   nagios_contact { 'sysadmin':
     alias                         => 'System Administrators',
-    email                         => hiera(sysmailaddress),
+    email                         => hiera(sal01_internal_sysmail_address),
     contactgroups                 => 'dc_admins',
     service_notification_period   => 'dc_timeperiod_24x7',
     host_notification_period      => 'dc_timeperiod_24x7',
@@ -335,6 +335,16 @@ class dc_icinga::server::config (
   nagios_hostgroup { 'dc_hostgroup_foreman':
     alias => 'Foreman Servers',
   }
+
+  nagios_hostgroup { 'dc_hostgroup_smtp':
+    alias => 'SMTP Servers',
+  }
+
+  nagios_hostgroup { 'dc_hostgroup_postfix':
+    alias => 'Postfix Servers',
+  }
+
+
 
   ######################################################################
   # Commands
@@ -527,6 +537,21 @@ class dc_icinga::server::config (
     check_command       => 'check_foreman_dc',
     service_description => 'Foreman',
   }
+
+  nagios_service { 'check_smtp':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_smtp',
+    check_command       => 'check_smtp',
+    service_description => 'SMTP',
+  }
+
+  nagios_service { 'check_postfix_queue':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_postfix',
+    check_command       => 'check_nrpe_1arg!check_mailq_postfix',
+    service_description => 'Postfix Mail Queue',
+  }
+  ######################################################################
   ######################################################################
   # Per client storeconfig data
   ######################################################################

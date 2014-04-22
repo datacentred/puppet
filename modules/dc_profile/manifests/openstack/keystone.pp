@@ -16,6 +16,7 @@ class dc_profile::openstack::keystone {
   $keystone_db_host = hiera(keystone_db_host)
   $os_service_tenant = hiera(os_service_tenant)
   $os_region = hiera(os_region)
+  $sysmailaddress = hiera(sal01_internal_sysmail_address)
 
   class { '::keystone':
     require        => Dc_mariadb::Db['keystone'],
@@ -27,7 +28,7 @@ class dc_profile::openstack::keystone {
 
   # Adds the admin credential to keystone.
   class { '::keystone::roles::admin':
-    email          => hiera(sysmailaddress),
+    email          => $sysmailaddress,
     password       => hiera(keystone_admin_pw),
     service_tenant => $os_service_tenant,
   }
@@ -45,7 +46,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_glance_password),
-    email    => hiera(sysmailaddress),
+    email    => $sysmailaddress,
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "glance@${os_service_tenant}":
@@ -64,7 +65,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_nova_password),
-    email    => hiera(sysmailaddress),
+    email    => $sysmailaddress,
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "nova@${os_service_tenant}":
@@ -88,7 +89,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_neutron_password),
-    email    => hiera(sysmailaddress),
+    email    => $sysmailaddress,
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "neutron@${os_service_tenant}":
@@ -106,14 +107,6 @@ class dc_profile::openstack::keystone {
     value => $::fqdn,
   }
 
-  # Set up DC admin users as admins in the admin tenant
-  $dcadminhash = hiera(admins)
-  $dcadmins = keys($dcadminhash)
-  dc_profile::openstack::keystone_dcadmins { $dcadmins:
-    hash   => $dcadminhash,
-    tenant => 'admin',
-  }
-
   # Icinga monitoring
   keystone_tenant { 'icinga':
     ensure  => present,
@@ -127,7 +120,7 @@ class dc_profile::openstack::keystone {
     ensure   => present,
     enabled  => true,
     password => hiera(keystone_icinga_password),
-    email    => hiera(sysmailaddress),
+    email    => $sysmailaddress,
     tenant   => 'icinga',
   }
   include dc_icinga::hostgroups

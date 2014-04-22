@@ -30,7 +30,7 @@ class dc_profile::openstack::neutron_server {
   # Hard coded exported variable name
   $nova_mq_ev         = 'nova_mq_node'
 
-  $neutron_port       = "9696"
+  $neutron_port       = '9696'
 
   $management_ip      = $::ipaddress_eth0
   $integration_ip     = $::ipaddress_eth1
@@ -48,8 +48,13 @@ class dc_profile::openstack::neutron_server {
       verbose               => true,
       debug                 => false,
       core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+      service_plugins       =>  [ 'neutron.services.vpn.plugin.VPNDriverPlugin',
+                                  'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
+                                  'neutron.services.firewall.fwaas_plugin.FirewallPlugin',
+                                  'neutron.services.metering.metering_plugin.MeteringPlugin',
+                                ],
   }
-  
+
   # configure authentication
   class { 'neutron::server':
       auth_host           => $keystone_host,
@@ -67,7 +72,7 @@ class dc_profile::openstack::neutron_server {
   # Enable the Open VSwitch plugin server
   class { 'neutron::plugins::ovs':
       tenant_network_type => 'gre',
-  } 
+  }
 
   # Export Keystone endpoint details
   # Might need revisiting once we have an external (public) network defined

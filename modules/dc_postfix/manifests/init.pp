@@ -1,6 +1,6 @@
 # Class: dc_postfix
 #
-# Installs postfix as a mail gateway
+# Installs postfix
 #
 # Parameters:
 #
@@ -10,17 +10,25 @@
 #
 # Sample Usage:
 #
-class dc_postfix {
+class dc_postfix (
+  $gateway    = undef,
+  $nullclient = undef,
+) {
 
-  include postfix
-  include augeas
+  if $gateway and $nullclient {
+      fail('enabling both the $gateway and $nullclient parameters is not supported. Please disable one.')
+  }
 
-  contain dc_postfix::users
-  contain dc_postfix::virtual
-  contain dc_postfix::networks
-  contain dc_postfix::gmailrelay
-  contain dc_postfix::ratelimit
-  contain dc_postfix::debug
-  contain dc_postfix::restrictions
+  if ! $gateway and ! $nullclient {
+      fail('must specify one of $gateway or $nullclient')
+  }
+
+  if $gateway {
+    include ::dc_postfix::gateway
+  }
+
+  if $nullclient {
+    include ::dc_postfix::nullclient
+  }
 
 }
