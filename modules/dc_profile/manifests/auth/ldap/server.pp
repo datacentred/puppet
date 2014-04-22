@@ -23,4 +23,8 @@ class dc_profile::auth::ldap::server {
   Class['ldap::server::install'] -> Class['dc_ldap'] ~> Class['ldap::server::service']
   Class['dc_ssl'] ~> Class['ldap::server::service']
   Class['dc_ssl::slapd'] ~> Class['ldap::server::service']
+
+  @@dns_resource { "ldap.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
 }
