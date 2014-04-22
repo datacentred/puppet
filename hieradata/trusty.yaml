@@ -1,0 +1,30 @@
+---
+repo_list:
+  trusty_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty'
+    repos: 'main restricted universe multiverse'
+  trusty_updates_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-updates'
+    repos: 'main restricted universe multiverse'
+  trusty_security_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-security'
+    repos: 'main restricted universe'
+  puppetlabs_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('puppet_mirror_path')}"
+    release: 'trusty'
+    repos: 'main dependencies'
+  postgres_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('postgres_mirror_path')}"
+    release: 'trusty-pgdg'
+    repos: 'main'
+    key: 'ACCC4CF8'
+    key_source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+  mariadb_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('mariadb_mirror_path')}"
+    release: 'trusty'
+    repos: 'main'
+    key: '1BB943DB'
+    key_server: 'keyserver.ubuntu.com'
