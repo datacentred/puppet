@@ -13,4 +13,8 @@
 class dc_profile::auth::radius::server {
   include ::radius
   contain 'radius'
+
+  @@dns_resource { "radius.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
 }
