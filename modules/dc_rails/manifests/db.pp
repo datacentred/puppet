@@ -20,9 +20,7 @@ class dc_rails::db(
   $rails_env = undef,
 ) {
 
-  class { 'dc_mariadb':
-    maria_root_pw => $db_password
-  } ->
+  class { 'dc_mariadb': } ->
 
   exec { 'rake db:create':
     command     => "${bundler} exec rake db:create",
