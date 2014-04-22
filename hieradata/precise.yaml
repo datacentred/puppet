@@ -16,6 +16,12 @@ repo_list:
     location: "%{hiera('mirror_server')}/%{hiera('puppet_mirror_path')}"
     release: 'precise'
     repos: 'main dependencies'
+  rsyslog_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('rsyslog_mirror_path')}"
+    release: 'precise/'
+    repos: ''
+    key: 'AEF0CF8E'
+    key_server: 'keyserver.ubuntu.com'
   postgres_mirror:
     location: "%{hiera('mirror_server')}/%{hiera('postgres_mirror_path')}"
     release: 'precise-pgdg'
