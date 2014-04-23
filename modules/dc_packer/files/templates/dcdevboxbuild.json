@@ -9,10 +9,10 @@
       "type": "shell",
       "scripts": [
         "scripts/base.sh",
-		"scripts/vagrant.sh",
-		"scripts/vmtools.sh",
-		"scripts/cleanup.sh",
-		"scripts/zerodisk.sh"
+		    "scripts/vagrant.sh",
+		    "scripts/vmtools.sh",
+		    "scripts/cleanup.sh",
+		    "scripts/zerodisk.sh"
       ],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{ .Path }}'"
     }
