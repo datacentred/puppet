@@ -12,22 +12,25 @@ class dc_packer::schedule {
     user    => 'packer',
     minute  => 0,
     hour    => 2,
+    weekday => 0,
   }
-  
+
   # The actual Packer run itself
   cron { 'run_packer':
     command => 'cd /home/packer && bin/packer build -only=dcdevbox-vbox /home/packer/templates/dcdevboxbuild.json 2>&1 >> /home/packer/output/packerbuild.log',
     user    => 'packer',
     minute  => 0,
     hour    => 3,
+    weekday => 0,
   }
-  
+
   # Make sure the latest-virtualbox symlink points to the most recent build
   cron { 'symlink_latest':
     command => "cd /home/packer/output && rm latest-virtualbox ; ln -s $(ls -lrt | awk '{ print \$9 }' | grep vbox | tail -1) latest-virtualbox",
     user    => 'packer',
     minute  => 0,
     hour    => 5,
+    weekday => 0,
   }
 
 }
