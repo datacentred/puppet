@@ -11,12 +11,12 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_rails(
-  $app_name = undef,
-  $app_url = undef,
-  $app_repo = undef,
-  $ssl_key = undef,
-  $ssl_cert = undef,
+define dc_rails::app (
+  $app_name,
+  $app_url,
+  $app_repo,
+  $ssl_key,
+  $ssl_cert,
   $user = hiera(rails::user::name),
   $password = hiera(rails::user::password),
   $group = hiera(rails::user::name),

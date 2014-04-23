@@ -31,15 +31,15 @@ class dc_rails::environment(
     global => true,
   } ->
 
-  rbenv::gem { 'unicorn':
-    user => $user,
-    ruby => $ruby,
-  } ->
-
   class{'ruby::dev':} ->
 
   package { 'libmariadbclient-dev' :
     ensure => present,
+  } ->
+
+  rbenv::gem { 'unicorn':
+    user => $user,
+    ruby => $ruby,
   } ->
 
   exec { 'bundle install --deployment':
@@ -51,17 +51,31 @@ class dc_rails::environment(
     tries       => 3,
   } ->
 
-  exec { 'bundle binstubs unicorn':
-    command     => "${bundler} binstubs unicorn",
-    cwd         => $app_home,
-    group       => $group,
+  exec { "rbenv::rehash for unicorn ${user} ${ruby}":
+    command     => "rbenv rehash && rm -f ${home}/.rbenv/.rehash",
     user        => $user,
+    group       => $group,
+    cwd         => $home,
+    environment => [ "HOME=${home}" ],
+    path        => [ "${home}/.rbenv/shims", "${home}/.rbenv/bin", '/bin', '/usr/bin' ],
+    logoutput   => 'on_failure',
   } ->
 
-  exec { 'rbenv-init':
-    command     => "/bin/bash -c 'eval \"$(rbenv init -)\"'",
-    cwd         => $app_home,
-    group       => $group,
+  exec { "rbenv::init ${user} ${ruby}":
+    command     => '/bin/bash -c \'eval "$(rbenv init -)"\'',
     user        => $user,
+    group       => $group,
+    cwd         => $home,
+    environment => [ "HOME=${home}" ],
+    path        => [ "${home}/.rbenv/shims", "${home}/.rbenv/bin", '/bin', '/usr/bin' ],
+    logoutput   => 'on_failure',
+  } ->
+
+  # Hack to make rbenv rebuild shims
+  exec { 'force shims':
+    command  => '/bin/bash --login -c "echo"',
+    user     => $user,
+    group    => $group,
   }
+
 }
