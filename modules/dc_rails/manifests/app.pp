@@ -17,15 +17,15 @@ define dc_rails::app (
   $app_repo,
   $ssl_key,
   $ssl_cert,
-  $user = hiera(rails::user::name),
-  $password = hiera(rails::user::password),
-  $group = hiera(rails::user::name),
-  $secret_key_base = hiera(rails::server::secret_key),
-  $db_password = hiera(dc_mariadb::maria_root_pw),
-  $rails_env = 'production',
-  $ruby = '2.0.0-p451',
 ) {
 
+  $user = hiera(rails::user::name)
+  $password = hiera(rails::user::password)
+  $group = hiera(rails::user::name)
+  $secret_key_base = hiera(rails::server::secret_key)
+  $db_password = hiera(dc_mariadb::maria_root_pw)
+  $rails_env = 'production'
+  $ruby = '2.0.0-p451'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/"
   $bundler = "${home}.rbenv/shims/bundle"
@@ -35,35 +35,37 @@ define dc_rails::app (
   $run_base = '/var/run/rails/'
   $rundir = "${run_base}${app_name}/"
 
-  class { 'redis': }
+  nginx::resource::upstream { $app_name:
+    ensure  => present,
+    members => [
+      "unix://${rundir}unicorn.sock",
+    ],
+  } ->
 
-  class { 'webserver':
-    proxy    => "unix://${rundir}unicorn.sock",
-    app_name => $app_name,
-    app_url  => $app_url,
+  nginx::resource::vhost { $app_url:
+    ensure   => present,
+    proxy    => "http://${app_name}",
+    ssl      => true,
     ssl_cert => $ssl_cert,
     ssl_key  => $ssl_key,
   }
 
-  user { $user :
-    ensure     => present,
-    groups     => 'sudo',
-    shell      => '/bin/bash',
-    managehome => true,
-    home       => $home,
-    password   => $password,
+  file { [$logdir, $rundir]:
+    ensure => directory,
+    owner  => $user,
+    group  => $group,
   } ->
 
-  class { 'files':
-    home      => $home,
-    logdir    => $logdir,
-    log_base  => $log_base,
-    rundir    => $rundir,
-    run_base  => $run_base,
-    rails_env => $rails_env,
-    app_home  => $app_home,
-    user      => $user,
-    group     => $group,
+  file { "${logdir}${rails_env}.log" :
+    owner  => $user,
+    group  => $group,
+    mode   => '0666',
+  } ->
+
+  file { $app_home :
+    ensure => directory,
+    owner  => $user,
+    group  => $group;
   } ->
 
   vcsrepo { $app_home:
@@ -74,13 +76,13 @@ define dc_rails::app (
     revision => 'master',
   } ->
 
-  class { 'environment':
-    home     => $home,
-    user     => $user,
-    group    => $group,
-    ruby     => $ruby,
-    bundler  => $bundler,
-    app_home => $app_home,
+  exec { "bundle install --deployment ${app_name}":
+    command     => "${bundler} install --deployment",
+    cwd         => $app_home,
+    group       => $group,
+    user        => $user,
+    timeout     => 600,
+    tries       => 3,
   } ->
 
   unicorn::app { $app_name:
@@ -97,19 +99,24 @@ define dc_rails::app (
     db_password      => $db_password,
     source           => $unicorn,
     subscribe        =>  [
-        Class['environment'],
-        Class['webserver'],
         Vcsrepo[$app_home],
       ],
   } ->
 
-  class { 'db':
-    db_password => $db_password,
-    bundler     => $bundler,
-    app_home    => $app_home,
-    user        => $user,
+  exec { "rake db:create ${$app_name}":
+    command     => "${bundler} exec rake db:create",
+    cwd         => $app_home,
     group       => $group,
-    rails_env   => $rails_env,
+    user        => $user,
+    environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
+  } ->
+
+  exec { "rake db:migrate ${$app_name}":
+    command     => "${bundler} exec rake db:migrate",
+    cwd         => $app_home,
+    group       => $group,
+    user        => $user,
+    environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   }
 
 }
