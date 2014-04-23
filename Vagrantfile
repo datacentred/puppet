@@ -16,6 +16,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     override.vm.box_url = "http://vboxes.sal01.datacentred.co.uk/latest-virtualbox"
   end
 
+  # Port Forwarding
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+  config.vm.network "forwarded_port", guest: 443, host: 4443
+
   # VMWare Fusion Configuration
   config.vm.provider "vmware_fusion" do |vmware, override|
     override.vm.box_url = "http://vboxes.sal01.datacentred.co.uk/latest-fusionbox"

@@ -5,3 +5,4 @@
 /modules/dc_puppet/templates/master/git/id_rsa    filter=private diff=private
 /modules/dc_logstash/files/logstash-forwarder.crt filter=private diff=private
 /modules/dc_logstash/files/logstash-forwarder.key filter=private diff=private
+/modules/dc_rails/files/deployer_keys/id_rsa      filter=private diff=private

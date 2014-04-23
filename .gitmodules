@@ -10,9 +10,6 @@
 [submodule "modules/apt"]
 	path = modules/apt
 	url = git://github.com/puppetlabs/puppetlabs-apt.git
-[submodule "modules/mysql"]
-	path = modules/mysql
-	url = https://github.com/datacentred/puppetlabs-mysql
 [submodule "modules/stdlib"]
 	path = modules/stdlib
 	url = git://github.com/puppetlabs/puppetlabs-stdlib.git
@@ -169,9 +166,6 @@
 [submodule "modules/redis"]
 	path = modules/redis
 	url = https://github.com/thomasvandoren/puppet-redis.git
-[submodule "modules/unicorn"]
-	path = modules/unicorn
-	url = https://github.com/puppetlabs-operations/puppet-unicorn.git
 [submodule "modules/motd"]
 	path = modules/motd
 	url = https://github.com/saz/puppet-motd.git
@@ -184,3 +178,12 @@
 [submodule "modules/augeas"]
 	path = modules/augeas
 	url = https://github.com/datacentred/puppet-augeas
+[submodule "modules/unicorn"]
+	path = modules/unicorn
+	url = https://github.com/datacentred/puppet-unicorn.git
+[submodule "modules/ruby"]
+	path = modules/ruby
+	url = https://github.com/jlyheden/puppet-ruby.git
+[submodule "modules/mysql"]
+	path = modules/mysql
+	url = git@github.com:datacentred/puppetlabs-mysql.git
