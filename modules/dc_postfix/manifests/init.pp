@@ -12,7 +12,9 @@
 #
 class dc_postfix {
 
-  if ::fqdn != hiera(primary_mail_server) {
+  $primary_mail_server = hiera(primary_mail_server)
+
+  if ::fqdn != $primary_mail_server {
     include ::dc_postfix::nullclient
   }
   else {
