@@ -12,8 +12,6 @@
 #
 class dc_postfix::nullclient {
 
-  if $::fqdn != hiera(primary_mail_server) {
-
     include augeas
 
     class { 'postfix':
@@ -24,7 +22,5 @@ class dc_postfix::nullclient {
     }
 
     contain dc_postfix::nrpe
-
-  }
 
 }

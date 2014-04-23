@@ -10,25 +10,12 @@
 #
 # Sample Usage:
 #
-class dc_postfix (
-  $gateway    = undef,
-  $nullclient = undef,
-) {
+class dc_postfix {
 
-  if $gateway and $nullclient {
-      fail('enabling both the $gateway and $nullclient parameters is not supported. Please disable one.')
-  }
-
-  if ! $gateway and ! $nullclient {
-      fail('must specify one of $gateway or $nullclient')
-  }
-
-  if $gateway {
-    include ::dc_postfix::gateway
-  }
-
-  if $nullclient {
+  if ::fqdn != hiera(primary_mail_server) {
     include ::dc_postfix::nullclient
   }
-
+  else {
+    include ::dc_postfix::gateway
+  }
 }
