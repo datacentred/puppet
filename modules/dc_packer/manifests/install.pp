@@ -44,9 +44,9 @@ class dc_packer::install {
   }
 
   exec { 'packer_binaries':
-    command => "wget -q https://dl.bintray.com/mitchellh/packer/${packer_package} && unzip ${packer_package}",
+    command => "wget -q https://dl.bintray.com/mitchellh/packer/${packer_package} && unzip -qqfo ${packer_package}",
     cwd     => "${packer_home}/bin",
-    path    => [ '/usr/bin' ],
+    path    => ['/usr/bin'],
     require => [ File[$packer_home], Package['unzip'] ],
   }
 
