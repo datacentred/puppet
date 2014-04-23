@@ -8,8 +8,9 @@
 require 'net/http'
 require 'openssl'
 
-# URL for the preseed template used to build Foreman itself
-preseed_uri = URI('https://foreman.<%= @domain -%>/unattended/provision?hostname=foreman.<%= @domain -%>')
+# URL for the preseed template used to build 'logtest'
+# TODO: switch this back to a more 'permanent' host on which to base this off
+preseed_uri = URI('https://foreman.<%= @domain -%>/unattended/provision?hostname=logtest.<%= @domain -%>')
 
 # Filesystem location for the VMware / VirtualBox / Vagrant specific preseed bits
 preseed_vagrant = "/home/packer/templates/vagrant.cfg"
