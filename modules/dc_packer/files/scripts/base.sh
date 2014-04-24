@@ -15,15 +15,5 @@ apt-get -y install zlib1g-dev libssl-dev libreadline-gplv2-dev libyaml-dev
 apt-get -y install vim curl
 apt-get clean
 
-
 # Install NFS client
 apt-get -y install nfs-common
-
-# Prepare puppetlabs repo
-wget http://apt.puppetlabs.com/puppetlabs-release-precise.deb
-dpkg -i puppetlabs-release-precise.deb
-apt-get update
-
-# Install puppet/facter
-apt-get install -y puppet facter
-
