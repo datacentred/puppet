@@ -14,9 +14,10 @@ class dc_packer::install {
 
   $packer_home    = '/home/packer'
   $packer_package = '0.5.2_linux_amd64.zip'
+  $packer_pass    = hiera(packer_pass)
 
   package { [ 'ruby1.9.3', 'virtualbox-4.3', 'unzip' ]:
-    ensure  => installed,
+    ensure  => latest,
   }
 
   file { $packer_home:
