@@ -117,6 +117,14 @@ define dc_rails::app (
     group       => $group,
     user        => $user,
     environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
+  } ->
+
+  exec { "rake db:seed ${$app_name}":
+    command     => "${bundler} exec rake db:seed",
+    cwd         => $app_home,
+    group       => $group,
+    user        => $user,
+    environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   }
 
 }
