@@ -1,7 +1,7 @@
 {
 
   "variables": {
-	"packerhome": "/home/packer"
+	  "packerhome": "/home/packer"
   },
 
   "provisioners": [
@@ -97,7 +97,7 @@
   "post-processors": [
   	{
   		"type": "vagrant",
-  	  	"output": "{{.BuildName}}.{{timestamp}}.box"
+  	  	"output": "/home/packer/output/{{.BuildName}}.{{timestamp}}.box"
 	}
   ]
 }
