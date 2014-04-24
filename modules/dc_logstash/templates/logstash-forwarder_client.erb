@@ -1,7 +1,9 @@
 {
   "network": {
     "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @ls_port %>" ],
-    "ssl ca": "/etc/ssl/certs/logstash-forwarder.crt",
+    "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
+    "ssl key": "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem",
+    "ssl ca": "/var/lib/puppet/ssl/certs/ca.pem",
     "timeout": 15
   },
   "files": [
