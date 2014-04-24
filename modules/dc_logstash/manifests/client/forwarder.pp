@@ -19,22 +19,11 @@ class dc_logstash::client::forwarder {
     content => template('dc_logstash/logstash-forwarder_client.erb'),
   }
 
-  file { '/etc/ssl/certs/logstash-forwarder.crt':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    source => 'puppet:///modules/dc_logstash/logstash-forwarder.crt',
-  }
-
   service { 'logstash-forwarder':
     ensure    => running,
     enable    => true,
     require   => Package['logstash-forwarder'],
-    subscribe => [
-      File['/etc/logstash-forwarder'],
-      File['/etc/ssl/certs/logstash-forwarder.crt'],
-    ],
+    subscribe => File['/etc/logstash-forwarder'],
   }
 
 }

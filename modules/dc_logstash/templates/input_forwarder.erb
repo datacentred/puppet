@@ -1,8 +1,8 @@
 input {
  lumberjack {
   port => 55515
-  ssl_certificate => "<%= @certpath %>"
-  ssl_key => "<%= @keypath %>"
+  ssl_certificate => "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem"
+  ssl_key => "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem"
   type => "lumberjack"
  }
 }
