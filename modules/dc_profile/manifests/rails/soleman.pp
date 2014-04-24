@@ -12,6 +12,8 @@
 #
 class dc_profile::rails::soleman {
 
+  class { 'dc_rails::server': } ->
+
   dc_rails::app { 'soleman':
     app_name => 'soleman',
     app_url  => 'soleman.dev',

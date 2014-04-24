@@ -16,8 +16,6 @@ class dc_rails::environment(
   $user = undef,
   $group = undef,
   $ruby = undef,
-  $bundler = undef,
-  $app_home = undef,
 ) {
 
   rbenv::install { $user:
@@ -33,6 +31,8 @@ class dc_rails::environment(
 
   class{'ruby::dev':} ->
 
+  class { 'dc_mariadb': } ->
+
   package { 'libmariadbclient-dev' :
     ensure => present,
   } ->
@@ -40,15 +40,6 @@ class dc_rails::environment(
   rbenv::gem { 'unicorn':
     user => $user,
     ruby => $ruby,
-  } ->
-
-  exec { 'bundle install --deployment':
-    command     => "${bundler} install --deployment",
-    cwd         => $app_home,
-    group       => $group,
-    user        => $user,
-    timeout     => 600,
-    tries       => 3,
   } ->
 
   exec { "rbenv::rehash for unicorn ${user} ${ruby}":

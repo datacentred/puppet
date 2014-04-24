@@ -13,12 +13,8 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_rails::files(
   $home = undef,
-  $logdir = undef,
-  $rundir = undef,
   $log_base = undef,
   $run_base = undef,
-  $rails_env = undef,
-  $app_home = undef,
   $user = undef,
   $group = undef,
 ) {
@@ -57,23 +53,6 @@ class dc_rails::files(
     ensure => directory,
     owner  => $user,
     group  => $group,
-  } ->
-
-  file { [$logdir, $rundir]:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-  } ->
-
-  file { "${logdir}${rails_env}.log" :
-    owner  => $user,
-    group  => $group,
-    mode   => '0666',
   }
 
-  file { $app_home :
-    ensure => directory,
-    owner  => $user,
-    group  => $group;
-  }
 }
