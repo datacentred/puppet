@@ -69,7 +69,7 @@ define dc_rails::app (
   } ->
 
   vcsrepo { $app_home:
-    ensure   => present,
+    ensure   => latest,
     provider => git,
     source   => $app_repo,
     user     => $user,
