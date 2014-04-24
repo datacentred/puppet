@@ -14,6 +14,17 @@ class dc_logstash {
   # Basic class for installing Logstash
   class { '::logstash': }
 
+  # SPJM
+  # Yes it makes me sick too, seemingly this package pays *absolutely* no attention
+  # to being added to the puppet group, and we need it to have access to the signed
+  # puppet certs
+  exec { 'frig logstash group':
+    command => '/bin/sed -ie "s/setgid logstash/setgid puppet/" /etc/init/logstash.conf',
+    unless  => '/bin/grep "setgid logstash" /etc/init/logstash.conf',
+    require => Package['logstash'],
+    notify  => Service['logstash'],
+  }
+
   # Add directory and install patterns for filters and parsers
   $logstash_grok_patterns_dir = hiera(logstash_grok_patterns_dir)
 
