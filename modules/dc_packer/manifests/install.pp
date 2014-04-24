@@ -15,15 +15,20 @@ class dc_packer::install {
   $packer_home    = '/home/packer'
   $packer_package = '0.5.2_linux_amd64.zip'
 
+  package { [ 'ruby1.9.3', 'virtualbox-4.3', 'unzip' ]:
+    ensure  => installed,
+  }
+
   file { $packer_home:
     ensure  => directory,
+    recurse => true,
     owner   => packer,
     source  => 'puppet:///modules/dc_packer',
   }
 
-  file {  [ "${packer_home}/bin",
-            "${packer_home}/output",
+  file {  [ "${packer_home}/output",
             "${packer_home}/http",
+            "${packer_home}/bin",
           ]:
     ensure  => directory,
     recurse => true,
@@ -39,15 +44,13 @@ class dc_packer::install {
     require => File["${packer_home}/bin"],
   }
 
-  package { [ 'ruby1.9.3', 'virtualbox-4.3', 'unzip']:
-    ensure  => installed,
-  }
-
-  exec { 'packer_binaries':
-    command => "wget -q https://dl.bintray.com/mitchellh/packer/${packer_package} && unzip -qqfo ${packer_package}",
+  exec { 'install_packer_binaries':
+    command => "wget https://dl.bintray.com/mitchellh/packer/${packer_package} \
+                && unzip -qqo ${packer_package}",
+    creates => "${packer_home}/bin/${packer_package}",
     cwd     => "${packer_home}/bin",
     path    => ['/usr/bin'],
-    require => [ File[$packer_home], Package['unzip'] ],
+    require => [ File[ "${packer_home}/bin" ], Package['unzip'] ],
   }
 
 }
