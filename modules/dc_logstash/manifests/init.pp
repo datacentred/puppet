@@ -22,13 +22,14 @@ class dc_logstash {
     exec { 'logstash patch upstart':
       command => '/bin/sed -ie "s/setgid logstash/setgid puppet/" /etc/init/logstash.conf',
       onlyif  => '/bin/grep "setgid logstash" /etc/init/logstash.conf',
-      require => Package['logstash'],
+      require => [ Package['logstash'], Package['puppet'] ],
       notify  => Service['logstash'],
     }
   } else {
     exec { '/usr/sbin/usermod -a -G puppet logstash':
       unless  => '/usr/bin/groups logstash | /bin/grep puppet',
       require => [ Package['logstash'], Package['puppet'] ],
+      notify  => Service['logstash'],
     }
   }
 
