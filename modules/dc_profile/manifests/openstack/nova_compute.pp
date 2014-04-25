@@ -89,7 +89,7 @@ class dc_profile::openstack::nova_compute {
 
   file { '/etc/nagios/nrpe.d/nova_compute.cfg':
     ensure  => file,
-    content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
+    content => "command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute\n",
   }
 
   include dc_icinga::hostgroups
