@@ -19,9 +19,10 @@ class dc_profile::apt::dpkg {
     }
   }
   elsif $::lsbdistcodename == 'trusty' {
-    file {'/var/lib/dpkg/arch':
-      ensure  => file,
-      content => 'amd64\n',
+    exec { 'remove-architecture i386':
+        command => '/usr/bin/dpkg --remove-architecture i386',
+        onlyif  => '/usr/bin/dpkg --print-foreign-architectures | /bin/grep -q i386',
     }
   }
 }
+
