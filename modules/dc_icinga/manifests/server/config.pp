@@ -344,6 +344,10 @@ class dc_icinga::server::config (
     alias => 'Postfix Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_nova_compute':
+    alias => 'Openstack Compute Nodes',
+  }
+
 
 
   ######################################################################
@@ -550,6 +554,34 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_postfix',
     check_command       => 'check_nrpe_1arg!check_mailq_postfix',
     service_description => 'Postfix Mail Queue',
+  }
+
+  nagios_service { 'check_nova_compute':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_nova_compute_proc',
+    service_description => 'Nova Compute Process',
+  }
+
+  nagios_service { 'check_neutron_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_neutron_agent',
+    service_description => 'Neutron Agent',
+  }
+
+  nagios_service { 'check_ovswitch_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_ovswitch_proc',
+    service_description => 'Open vSwitch',
+  }
+
+  nagios_service { 'check_ovswitch_server_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_ovswitch_server_proc',
+    service_description => 'Open vSwitch DB Server',
   }
   ######################################################################
   ######################################################################
