@@ -108,7 +108,7 @@ class dc_profile::openstack::neutron_agent {
 
     file { '/etc/nagios/nrpe.d/os_neutron_agent.cfg':
       ensure  => file,
-      content => 'command[check_neutron_agent]=/usr/lib/nagios/plugins/check_procs -w 2 -C neutron-openvswitch-agent',
+      content => 'command[check_neutron_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
     }
   }
 
