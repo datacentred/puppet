@@ -75,7 +75,7 @@ class dc_profile::openstack::nova_compute {
   }
 
   class { 'nova::compute::neutron': }
-  
+
   # Configures nova.conf entries applicable to Neutron.
   class { 'nova::network::neutron':
     neutron_auth_strategy     => 'keystone',
@@ -86,5 +86,13 @@ class dc_profile::openstack::nova_compute {
     neutron_admin_auth_url    => "http://${keystone_host}:35357/v2.0",
     neutron_region_name       => $os_region,
   }
+
+  file { '/etc/nagios/nrpe.d/nova_compute.cfg':
+    ensure  => present,
+    content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
 
 }

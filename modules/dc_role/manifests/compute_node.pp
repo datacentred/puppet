@@ -18,4 +18,7 @@ class dc_role::compute_node {
   Class['dc_profile::openstack::neutron_agent'] ->
   Class['dc_profile::openstack::nova_compute']
 
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact['dc_hostgroup_nova_compute']
+
 }

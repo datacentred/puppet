@@ -18,5 +18,6 @@ class dc_icinga::hostgroups {
   @dc_external_facts::fact { 'dc_hostgroup_foreman': }
   @dc_external_facts::fact { 'dc_hostgroup_smtp': }
   @dc_external_facts::fact { 'dc_hostgroup_postfix': }
+  @dc_external_facts::fact { 'dc_hostgroup_nova_compute': }
 
 }
