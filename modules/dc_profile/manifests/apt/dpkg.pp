@@ -21,7 +21,7 @@ class dc_profile::apt::dpkg {
   elsif $::lsbdistcodename == 'trusty' {
     file {'/var/lib/dpkg/arch':
       ensure  => file,
-      content => 'amd64',
+      content => 'amd64\n',
     }
   }
 }
