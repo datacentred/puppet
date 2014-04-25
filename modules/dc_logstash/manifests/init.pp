@@ -14,6 +14,25 @@ class dc_logstash {
   # Basic class for installing Logstash
   class { '::logstash': }
 
+  # On precise upstart doesn't respect supplementary groups
+  # so we have to hack the upstart config to force execution
+  # as puppet to allow access to the SSL certs.  This has
+  # alledgedly been fixed upstream, so just use UNIX standards
+  if $::lsbdistcodename == 'precise' {
+    exec { 'logstash patch upstart':
+      command => '/bin/sed -ie "s/setgid logstash/setgid puppet/" /etc/init/logstash.conf',
+      onlyif  => '/bin/grep "setgid logstash" /etc/init/logstash.conf',
+      require => [ Package['logstash'], Package['puppet'] ],
+      notify  => Service['logstash'],
+    }
+  } else {
+    exec { '/usr/sbin/usermod -a -G puppet logstash':
+      unless  => '/usr/bin/groups logstash | /bin/grep puppet',
+      require => [ Package['logstash'], Package['puppet'] ],
+      notify  => Service['logstash'],
+    }
+  }
+
   # Add directory and install patterns for filters and parsers
   $logstash_grok_patterns_dir = hiera(logstash_grok_patterns_dir)
 
