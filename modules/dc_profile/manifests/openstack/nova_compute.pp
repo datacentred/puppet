@@ -94,7 +94,5 @@ class dc_profile::openstack::nova_compute {
     notify  => Service['nagios-nrpe-server'],
   }
 
-  include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_nova_compute']
 
 }
