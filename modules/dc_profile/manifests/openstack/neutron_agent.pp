@@ -115,11 +115,11 @@ class dc_profile::openstack::neutron_agent {
   # Nagios checks common to both network and compute node
   file { '/etc/nagios/nrpe.d/os_ovswitch_proc.cfg':
     ensure  => file,
-    content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 2 -C ovs-vswitchd',
+    content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovs-vswitchd',
   }
 
   file { '/etc/nagios/nrpe.d/os_ovswitch_server_proc.cfg':
     ensure  => file,
-    content => 'command[check_ovswitch_server_proc]=/usr/lib/nagios/plugins/check_procs -w 2 -C ovsdb-server',
+    content => 'command[check_ovswitch_server_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovsdb-server',
   }
 }
