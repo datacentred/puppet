@@ -14,15 +14,22 @@ class dc_logstash {
   # Basic class for installing Logstash
   class { '::logstash': }
 
-  # SPJM
-  # Yes it makes me sick too, seemingly this package pays *absolutely* no attention
-  # to being added to the puppet group, and we need it to have access to the signed
-  # puppet certs
-  exec { 'frig logstash group':
-    command => '/bin/sed -ie "s/setgid logstash/setgid puppet/" /etc/init/logstash.conf',
-    unless  => '/bin/grep "setgid logstash" /etc/init/logstash.conf',
-    require => Package['logstash'],
-    notify  => Service['logstash'],
+  # On precise upstart doesn't respect supplementary groups
+  # so we have to hack the upstart config to force execution
+  # as puppet to allow access to the SSL certs.  This has
+  # alledgedly been fixed upstream, so just use UNIX standards
+  if $::lsbdistcodename == 'precise' {
+    exec { 'logstash patch upstart':
+      command => '/bin/sed -ie "s/setgid logstash/setgid puppet/" /etc/init/logstash.conf',
+      onlyif  => '/bin/grep "setgid logstash" /etc/init/logstash.conf',
+      require => Package['logstash'],
+      notify  => Service['logstash'],
+    }
+  } else {
+    exec { '/usr/sbin/usermod -a -G puppet logstash':
+      unless  => '/usr/bin/groups logstash | /bin/grep puppet',
+      require => [ Package['logstash'], Package['puppet'] ],
+    }
   }
 
   # Add directory and install patterns for filters and parsers
