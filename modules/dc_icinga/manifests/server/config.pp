@@ -356,6 +356,10 @@ class dc_icinga::server::config (
     alias => 'Openstack Neutron Server',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_nova_server':
+    alias => 'Openstack Nova Server',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -639,6 +643,33 @@ class dc_icinga::server::config (
     service_description => 'Neutron Server',
   }
 
+  nagios_service { 'check_nova_conductor':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_conductor',
+    service_description => 'Nova Conductor',
+  }
+
+  nagios_service { 'check_nova_scheduler':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_scheduler',
+    service_description => 'Nova Scheduler',
+  }
+
+  nagios_service { 'check_nova_consoleauth':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_consoleauth',
+    service_description => 'Nova Consoleauth',
+  }
+
+  nagios_service { 'check_nova_cert':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_cert',
+    service_description => 'Nova Cert',
+  }
   ######################################################################
   ######################################################################
   # Per client storeconfig data
