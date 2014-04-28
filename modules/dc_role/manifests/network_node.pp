@@ -15,6 +15,7 @@
 class dc_role::network_node {
 
   contain dc_profile::openstack::neutron_agent
+  contain dc_profile::openstack::neutron_common
 
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_neutron_node']

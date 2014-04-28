@@ -15,6 +15,7 @@ class dc_role::controller1 {
   contain dc_profile::openstack::nova_mq
   contain dc_profile::openstack::nova
   contain dc_profile::openstack::neutron_server
+  contain dc_profile::openstack::neutron_common
 
   Class['dc_profile::openstack::nova_mq'] ->
   Class['dc_profile::openstack::nova'] ->
