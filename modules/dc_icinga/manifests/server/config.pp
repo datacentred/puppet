@@ -405,6 +405,21 @@ class dc_icinga::server::config (
   nagios_command { 'check_foreman_dc':
     command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_pw}"
   }
+
+  nagios_command { 'check_nova_ec2_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8773"
+  }
+
+  nagios_command { 'check_nova_os_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8774"
+  }
+
+  nagios_command { 'check_nova_os_metadata_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
+  }
+  ######################################################################
+  ######################################################################
+  ######################################################################
   ######################################################################
   # Services
   ######################################################################
@@ -669,6 +684,27 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_nova_server',
     check_command       => 'check_nrpe_1arg!check_nova_cert',
     service_description => 'Nova Cert',
+  }
+
+  nagios_service { 'check_nova_ec2_api':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nova_ec2_api',
+    service_description => 'Nova EC2 API',
+  }
+
+  nagios_service { 'check_nova_os_api':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nova_os_api',
+    service_description => 'Nova Openstack API',
+  }
+
+  nagios_service { 'check_nova_os_metadata_api':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nova_os_metadata_api',
+    service_description => 'Nova Openstack Metadata API',
   }
   ######################################################################
   ######################################################################
