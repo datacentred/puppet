@@ -63,6 +63,13 @@ class dc_profile::openstack::neutron_server {
       mysql_module        => '2.2',
   }
 
+  file { '/etc/nagios/nrpe.d/os_neutron_server.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_server]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-server',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+  }
+
   # Configure Neutron for OVS
   class { 'neutron::agents::ovs':
     local_ip         => $integration_ip,
