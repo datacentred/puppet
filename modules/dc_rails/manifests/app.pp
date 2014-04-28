@@ -72,8 +72,7 @@ define dc_rails::app (
     ensure   => present,
     provider => git,
     source   => $app_repo,
-    user     => $user,
-    revision => 'master',
+    user     => $user
   } ->
 
   exec { "bundle install --deployment ${app_name}":
