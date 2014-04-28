@@ -16,7 +16,6 @@ class dc_juniperbackup {
 
   user { 'juniperbackup':
     comment    => 'Juniper Backups Storage User',
-    shell      => '/sbin/nologin',
     password   => sha1(hiera('juniper_backups_password')),
     managehome => true,
   }
