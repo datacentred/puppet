@@ -18,7 +18,7 @@ class dc_profile::puppet::mcollective_host {
 
   # Install various plugins on all hosts
   # Use the standard ubuntu packages on trusty
-  if $::lsbdistname == 'trusty' {
+  if $::lsbdistcodename == 'trusty' {
     package { [
       'mcollective-plugins-filemgr',
       'mcollective-plugins-iptables',
