@@ -5,7 +5,7 @@
 #
 # Actions: Installs the OpenStack Neutron agent components
 #
-# Requires: neutron, vswitch
+# Requires: neutron, vswitch, ethtool
 #
 # Sample Usage:
 #
@@ -96,6 +96,13 @@ class dc_profile::openstack::neutron_agent {
     class { 'neutron::agents::metering':
       enabled        => true,
       use_namespaces => true,
+    }
+
+    # We also want to disable GRO on the external interface
+    # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
+    include ethtool
+    ethtool { $uplink_if:
+      gro => 'disabled',
     }
 
   }

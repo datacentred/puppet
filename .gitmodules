@@ -187,3 +187,6 @@
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = git@github.com:datacentred/puppetlabs-mysql.git
+[submodule "modules/ethtool"]
+	path = modules/ethtool
+	url = https://github.com/bobtfish/puppet-ethtool
