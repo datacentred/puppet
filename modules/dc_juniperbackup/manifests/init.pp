@@ -13,11 +13,13 @@
 class dc_juniperbackup {
 
   $storagedir = hiera('storagedir')
+  $password   = hiera('juniper_backups_password'),
 
   user { 'juniperbackup':
     comment    => 'Juniper Backups Storage User',
-    password   => sha1(hiera('juniper_backups_password')),
+    password   => generate('/bin/sh', '-c', "mkpasswd -m sha-512 ${password} | tr -d '\n'"),
     managehome => true,
+    system     => true,
   }
 
   @@file { "$::hostname-juniperbackup":
