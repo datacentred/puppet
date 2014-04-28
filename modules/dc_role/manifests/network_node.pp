@@ -13,7 +13,10 @@
 # Sample Usage:
 #
 class dc_role::network_node {
-  
+
   contain dc_profile::openstack::neutron_agent
+
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact['dc_hostgroup_neutron_node']
 
 }
