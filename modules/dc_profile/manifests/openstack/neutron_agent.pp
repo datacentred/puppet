@@ -58,6 +58,14 @@ class dc_profile::openstack::neutron_agent {
   # additional Neutron agents for L3, DHCP and metadata functionality
   # Note: network_node is defined at Host Group level via Foreman
   if $::network_node {
+
+    # We also want to disable GRO on the external interface
+    # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
+    include ethtool
+    ethtool { $uplink_if:
+      gro => 'disabled',
+    }
+
     class { 'neutron::agents::ovs':
       bridge_uplinks        => ["br-ex:${uplink_if}"],
       bridge_mappings       => ['default:br-ex'],
@@ -69,11 +77,25 @@ class dc_profile::openstack::neutron_agent {
       enabled => true,
     }
 
+    file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_dhcp_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-dhcp-agent',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+    }
+
     class { 'neutron::agents::l3':
       enabled                  => true,
       use_namespaces           => true,
       router_delete_namespaces => true,
       interface_driver         => 'neutron.agent.linux.interface.OVSInterfaceDriver',
+    }
+
+    file { '/etc/nagios/nrpe.d/os_neutron_l3_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_l3_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-l3-agent',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
     }
 
     class { 'neutron::agents::metadata':
@@ -84,8 +106,22 @@ class dc_profile::openstack::neutron_agent {
       metadata_ip   => $nova_api_ip,
     }
 
+    file { '/etc/nagios/nrpe.d/os_neutron_metadata_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_metadata_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-ns-metadata-proxy',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+    }
+
     class { 'neutron::agents::vpnaas':
       enabled          => true,
+    }
+
+    file { '/etc/nagios/nrpe.d/os_neutron_vpn_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_vpn_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-vpn-agent',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
     }
 
     class { 'neutron::agents::lbaas':
@@ -93,16 +129,23 @@ class dc_profile::openstack::neutron_agent {
       use_namespaces => true,
     }
 
+    file { '/etc/nagios/nrpe.d/os_neutron_lbaas_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_lbaas_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-lbaas-agent',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+    }
+
     class { 'neutron::agents::metering':
       enabled        => true,
       use_namespaces => true,
     }
 
-    # We also want to disable GRO on the external interface
-    # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
-    include ethtool
-    ethtool { $uplink_if:
-      gro => 'disabled',
+    file { '/etc/nagios/nrpe.d/os_neutron_metering_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_metering_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-metering-agent',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
     }
 
   }
@@ -112,16 +155,16 @@ class dc_profile::openstack::neutron_agent {
       local_ip         => $integration_ip,
       enable_tunneling => true,
     }
-
-    file { '/etc/nagios/nrpe.d/os_neutron_agent.cfg':
-      ensure  => present,
-      content => 'command[check_neutron_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
-    }
   }
 
   # Nagios checks common to both network and compute node
+  file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
+    ensure  => present,
+    content => 'command[check_neutron_vswitch_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
   file { '/etc/nagios/nrpe.d/os_ovswitch_proc.cfg':
     ensure  => present,
     content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovs-vswitchd',
