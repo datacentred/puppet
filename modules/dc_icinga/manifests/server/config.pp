@@ -348,6 +348,10 @@ class dc_icinga::server::config (
     alias => 'Openstack Compute Nodes',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_neutron_node':
+    alias => 'Openstack Neutron Nodes',
+  }
+
 
 
   ######################################################################
@@ -563,10 +567,10 @@ class dc_icinga::server::config (
     service_description => 'Nova Compute Process',
   }
 
-  nagios_service { 'check_neutron_agent':
+  nagios_service { 'check_neutron_vswitch_agent':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_compute',
-    check_command       => 'check_nrpe_1arg!check_neutron_agent',
+    check_command       => 'check_nrpe_1arg!check_neutron_vswitch_agent',
     service_description => 'Neutron Agent',
   }
 
@@ -582,6 +586,48 @@ class dc_icinga::server::config (
     hostgroup_name      => 'dc_hostgroup_nova_compute',
     check_command       => 'check_nrpe_1arg!check_ovswitch_server_proc',
     service_description => 'Open vSwitch DB Server',
+  }
+
+  nagios_service { 'check_neutron_dhcp_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_dhcp_agent',
+    service_description => 'Neutron DHCP Agent',
+  }
+
+  nagios_service { 'check_neutron_l3_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_l3_agent',
+    service_description => 'Neutron L3 Agent',
+  }
+
+  nagios_service { 'check_neutron_metadata_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_metadata_agent',
+    service_description => 'Neutron Metadata Agent',
+  }
+
+  nagios_service { 'check_neutron_vpn_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_vpn_agent',
+    service_description => 'Neutron VPN Agent',
+  }
+
+  nagios_service { 'check_neutron_lbaas_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_lbaas_agent',
+    service_description => 'Neutron LBAAS Agent',
+  }
+
+  nagios_service { 'check_neutron_metering_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_metering_agent',
+    service_description => 'Neutron Metering Agent',
   }
   ######################################################################
   ######################################################################
