@@ -84,6 +84,14 @@ define dc_rails::app (
     tries       => 3,
   } ->
 
+  exec { "rake assets:precompile ${$app_name}":
+    command     => "${bundler} exec rake assets:precompile",
+    cwd         => $app_home,
+    group       => $group,
+    user        => $user,
+    environment => ["RAILS_ENV=${rails_env}"],
+  } ->
+
   unicorn::app { $app_name:
     approot          => $app_home,
     pidfile          => "${$rundir}unicorn.pid",
