@@ -1,4 +1,4 @@
-# Class: dc_profile::net::juniper_backup
+# Class: dc_juniperbackup
 #
 # Juniper switch backups
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::net::juniper_backups {
+class dc_juniperbackup {
 
   $storagedir = hiera('storagedir')
 
