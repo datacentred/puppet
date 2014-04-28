@@ -31,7 +31,8 @@ class dc_profile::net::juniper_backups {
   }
 
   tidy { $juniper_directory:
-    age => '12w',
+    age    => '12w',
+    backup => false,
   }
 
   cron { "juniperbackup-to-nfs":
