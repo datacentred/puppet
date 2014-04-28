@@ -17,17 +17,34 @@ class dc_profile::puppet::mcollective_host {
   $mco_ssl_path                  = 'modules/dc_mcollective'
 
   # Install various plugins on all hosts
-  package { [
-    'mcollective-filemgr-agent',
-    'mcollective-iptables-agent',
-    'mcollective-nettest-agent',
-    'mcollective-nrpe-agent',
-    'mcollective-package-agent',
-    'mcollective-puppet-agent',
-    'mcollective-service-agent',
-  ]:
-    ensure => latest,
-    notify => Service['mcollective'],
+  # Use the standard ubuntu packages on trusty
+  if $::lsbdistcodename == 'trusty' {
+    package { [
+      'mcollective-plugins-filemgr',
+      'mcollective-plugins-iptables',
+      'mcollective-plugins-nettest',
+      'mcollective-plugins-nrpe',
+      'mcollective-plugins-package',
+      'mcollective-plugins-puppetd',
+      'mcollective-plugins-service',
+    ]:
+      ensure => latest,
+      notify => Service['mcollective'],
+    }
+  }
+  else {
+    package { [
+      'mcollective-filemgr-agent',
+      'mcollective-iptables-agent',
+      'mcollective-nettest-agent',
+      'mcollective-nrpe-agent',
+      'mcollective-package-agent',
+      'mcollective-puppet-agent',
+      'mcollective-service-agent',
+    ]:
+      ensure => latest,
+      notify => Service['mcollective'],
+    }
   }
 
   # The message queues will have their own definition of
