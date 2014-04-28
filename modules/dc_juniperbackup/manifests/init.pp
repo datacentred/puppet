@@ -13,7 +13,7 @@
 class dc_juniperbackup {
 
   $storagedir = hiera('storagedir')
-  $password   = hiera('juniper_backups_password'),
+  $password   = hiera('juniper_backups_password')
 
   user { 'juniperbackup':
     comment    => 'Juniper Backups Storage User',
