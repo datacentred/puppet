@@ -20,4 +20,11 @@ class dc_role::controller1 {
   Class['dc_profile::openstack::nova'] ->
   Class['dc_profile::openstack::neutron_server']
 
+  # mysql-server is pulled in as a dependancy from python-mysql
+  # via python-nova.  It shouldn't be running on the controller1 instance,
+  # however - all MySQL databases currently reside elsewhere.
+  service { 'mysql':
+    ensure => stopped,
+  }
+
 }
