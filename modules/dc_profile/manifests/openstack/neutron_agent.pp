@@ -108,7 +108,7 @@ class dc_profile::openstack::neutron_agent {
 
     file { '/etc/nagios/nrpe.d/os_neutron_metadata_agent.cfg':
       ensure  => present,
-      content => 'command[check_neutron_metadata_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-ns-metadata-proxy',
+      content => 'command[check_neutron_metadata_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -a /usr/bin/neutron-ns-metadata-proxy',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
