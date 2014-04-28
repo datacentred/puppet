@@ -27,6 +27,7 @@ class dc_juniperbackup::exports {
     require => File["$::hostname-juniperbackup"],
     clients => "$::ipaddress(rw,insecure,async,no_root_squash,no_subtree_check)",
     tag     => 'backups',
+    nfstag  => "${::hostname}-juniperbackup",
   }
 
 }
