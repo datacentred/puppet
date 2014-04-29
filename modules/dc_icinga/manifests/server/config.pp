@@ -65,30 +65,8 @@ class dc_icinga::server::config (
     mode   => '4755',
   }
 
-  # Custom nagios plugins
-  file { '/usr/lib/nagios/plugins/check_tftp':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga/check_tftp',
-  }
-
-  file { '/usr/lib/nagios/plugins/check_keystone':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga/check_keystone',
-  }
-
-  file { '/usr/lib/nagios/plugins/check_foreman':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga/check_foreman',
-  }
+  # Add custom plugins
+  include dc_icinga::server::custom_plugins
 
   ######################################################################
   # Pre configuration
