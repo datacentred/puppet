@@ -22,7 +22,7 @@ class dc_profile::mon::rabbitmq_monuser (
   exec { "${userid}_set_user_tags":
     command => "/usr/sbin/rabbitmqctl set_user_tags ${userid} monitoring",
     unless  => "/usr/sbin/rabbitmqctl list_users | grep ${userid} | grep -w monitoring",
-    require => Class['::rabbitmq'],
+    require => Rabbitmq_user[$userid],
   }
 
 }
