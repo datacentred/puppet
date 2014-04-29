@@ -7,6 +7,7 @@ class dc_icinga::server::custom_plugins {
     source  => 'puppet:///modules/dc_icinga/custom_plugins',
     owner   => 'root',
     group   => 'root',
+    mode    => '0755',
     purge   => false,
     recurse => 'remote',
   }
