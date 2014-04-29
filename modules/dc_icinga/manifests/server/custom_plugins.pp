@@ -8,7 +8,7 @@ class dc_icinga::server::custom_plugins {
     owner   => 'root',
     group   => 'root',
     purge   => false,
-    recurse => true,
+    recurse => 'remote',
   }
 
 }
