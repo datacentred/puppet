@@ -187,3 +187,6 @@
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = git@github.com:datacentred/puppetlabs-mysql.git
+[submodule "modules/cephdeploy"]
+	path = modules/cephdeploy
+	url = https://github.com/madkiss/puppet-cephdeploy
