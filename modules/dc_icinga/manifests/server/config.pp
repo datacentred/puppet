@@ -34,6 +34,8 @@ class dc_icinga::server::config (
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
+  $rabbitmq_monuser = hiera(nova_mq_monuser)
+  $rabbitmq_monuser_password = hiera(nova_mq_monuser_password)
 
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
@@ -394,6 +396,34 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_nova_os_metadata_api':
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
+  }
+
+  nagios_command { 'check_rabbit_aliveness':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_server':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_overview':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_overview -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_watermark':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_watermark -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_partition':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_partition -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_shovels':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_shovels -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_queue':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_queue -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
   ######################################################################
   ######################################################################
