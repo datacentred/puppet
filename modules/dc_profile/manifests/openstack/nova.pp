@@ -120,5 +120,6 @@ class dc_profile::openstack::nova {
 
   # Nagios config
   include dc_profile::openstack::nova_nagios
+  include dc_profile::mon::rabbitmq_monuser
 
 }
