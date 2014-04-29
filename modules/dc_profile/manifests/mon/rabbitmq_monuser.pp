@@ -1,6 +1,6 @@
 class dc_profile::mon::rabbitmq_monuser (
   $userid       = 'monitor',
-  $virtual_host = undef,
+  $vhost = undef,
   $password = undef, ){
 
   include rabbitmq
