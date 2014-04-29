@@ -12,7 +12,7 @@ class dc_profile::mon::rabbitmq_monuser (
     require   => Class['::rabbitmq'],
   }
 
-  rabbitmq_user_permissions { "${userid}@${virtual_host}":
+  rabbitmq_user_permissions { "${userid}@${vhost}":
     configure_permission => '.*',
     write_permission     => '.*',
     read_permission      => '.*',
