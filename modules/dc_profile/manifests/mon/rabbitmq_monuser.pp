@@ -1,12 +1,13 @@
 class dc_profile::mon::rabbitmq_monuser (
   $userid       = 'monitor',
-  $virtual_host = '/', ){
+  $virtual_host = undef,
+  $password = undef, ){
 
   include rabbitmq
 
   rabbitmq_user { $userid:
     admin     => false,
-    password  => hiera(rabbitmq_monitor_password),
+    password  => $password,
     provider  => 'rabbitmqctl',
     require   => Class['::rabbitmq'],
   }
