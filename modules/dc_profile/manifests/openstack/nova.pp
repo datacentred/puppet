@@ -118,4 +118,7 @@ class dc_profile::openstack::nova {
     tag           => 'nova_endpoint',
   }
 
+  # Nagios config
+  include dc_profile::openstack::nova_nagios
+
 }
