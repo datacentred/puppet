@@ -20,7 +20,7 @@ class dc_profile::net::juniper_backups {
 
   user { $juniper_username:
     comment    => 'Juniper Backups Storage User',
-    password   => generate('/bin/sh', '-c', "mkpasswd -m sha-512 ${juniper_password} ${juniper_password_salt} | tr -d '\n'")
+    password   => generate('/bin/sh', '-c', "mkpasswd -m sha-512 ${juniper_password} ${juniper_password_salt} | tr -d '\n'"),
     home       => $juniper_directory,
     managehome => true,
     system     => true,
