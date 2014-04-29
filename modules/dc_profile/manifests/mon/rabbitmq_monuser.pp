@@ -1,7 +1,7 @@
 class dc_profile::mon::rabbitmq_monuser (
-  $userid       = 'monitor',
+  $userid       = hiera(rabbitmq_monuser),
   $vhost = undef,
-  $password = undef, ){
+  $password = hiera(rabbitmq_monuser_password), ){
 
   include rabbitmq
 
