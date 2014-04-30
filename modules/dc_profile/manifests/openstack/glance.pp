@@ -27,7 +27,7 @@ class dc_profile::openstack::glance {
   $glance_reg_pass = hiera(glance_reg_pass)
   $glance_reg_host = hiera(glance_reg_host)
 
-  $glance_port = "9292"
+  $glance_port = '9292'
 
   $glance_api_database = "mysql://${glance_api_user}:${glance_api_pass}@${glance_api_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_user}:${glance_reg_pass}@${glance_reg_host}/${glance_reg_db}"
