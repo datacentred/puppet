@@ -12,10 +12,41 @@
 #
 # Sample Usage:
 #
-class dc_ceph::osd {
+class dc_ceph::osd (
+  $ceph_setup_pools,
+  $ceph_deploy_user,
+  $ceph_primary_mon,
+  $ceph_cluster_interface,
+  $ceph_cluster_network,
+  $ceph_journal_disk,
+  $ceph_journal_size,
+  $ceph_num_osds,
+  $ceph_osds,
+){
 
-  $devices = hiera("ceph_osd_${::hostgroup}")
+  Exec {
+    path => '/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin',
+  }
 
-  ceph::osd { $devices: }
+  package { 'xfsprogs':
+    ensure => installed,
+  } ->
+
+  file { '/usr/local/bin/journal-provision':
+    source => 'puppet:///modules/dc_ceph/provision.py',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  } ->
+
+  exec { "/usr/local/bin/journal-provision ${ceph_journal_disk} ${ceph_num_osds} ${ceph_journal_size}": } ->
+
+  cephdeploy::osd { $osds:
+    setup_pools            => $ceph_setup_pools,
+    ceph_deploy_user       => $ceph_deploy_user,
+    ceph_primary_mon       => $ceph_primary_mon,
+    ceph_cluster_interface => $ceph_cluster_interface,
+    ceph_cluster_network   => $ceph_cluster_network,
+  }
 
 }
