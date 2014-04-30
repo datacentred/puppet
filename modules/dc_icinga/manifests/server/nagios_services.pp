@@ -309,10 +309,10 @@ class dc_icinga::server::nagios_services {
     service_description => 'RabbitMQ Objects',
   }
 
-  nagios_service { 'check_rabbitmq_partitions':
+  nagios_service { 'check_rabbitmq_partition':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_rabbitmq',
-    check_command       => 'check_rabbitmq_partitions',
+    check_command       => 'check_rabbitmq_partition',
     service_description => 'RabbitMQ Partitions',
   }
 
