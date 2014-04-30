@@ -187,3 +187,6 @@
 [submodule "modules/ethtool"]
 	path = modules/ethtool
 	url = https://github.com/bobtfish/puppet-ethtool
+[submodule "modules/graphite"]
+	path = modules/graphite
+	url = https://github.com/datacentred/puppet-graphite
