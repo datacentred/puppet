@@ -34,8 +34,8 @@ class dc_icinga::server::config (
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
-  $rabbitmq_monuser = hiera(nova_mq_monuser)
-  $rabbitmq_monuser_password = hiera(nova_mq_monuser_password)
+  $rabbitmq_monuser = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
 
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
