@@ -12,14 +12,15 @@
 #
 class dc_profile::net::juniper_backups {
 
-  $juniper_username  = hiera('juniper_backups_username')
-  $juniper_password  = hiera('juniper_backups_password')
-  $juniper_directory = hiera('juniper_backups_directory')
-  $storagedir        = hiera('storagedir')
+  $juniper_username      = hiera('juniper_backups_username')
+  $juniper_password      = hiera('juniper_backups_password')
+  $juniper_password_salt = hiera('juniper_backups_password_salt')
+  $juniper_directory     = hiera('juniper_backups_directory')
+  $storagedir            = hiera('storagedir')
 
   user { $juniper_username:
     comment    => 'Juniper Backups Storage User',
-    password   => generate('/bin/sh', '-c', "mkpasswd -m sha-512 ${juniper_password} | tr -d '\n'"),
+    password   => generate('/bin/sh', '-c', "mkpasswd -m sha-512 ${juniper_password} ${juniper_password_salt} | tr -d '\n'"),
     home       => $juniper_directory,
     managehome => true,
     system     => true,

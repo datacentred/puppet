@@ -34,6 +34,8 @@ class dc_icinga::server::config (
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
+  $rabbitmq_monuser = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
 
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
@@ -65,30 +67,8 @@ class dc_icinga::server::config (
     mode   => '4755',
   }
 
-  # Custom nagios plugins
-  file { '/usr/lib/nagios/plugins/check_tftp':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga/check_tftp',
-  }
-
-  file { '/usr/lib/nagios/plugins/check_keystone':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga/check_keystone',
-  }
-
-  file { '/usr/lib/nagios/plugins/check_foreman':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga/check_foreman',
-  }
+  # Add custom plugins
+  include dc_icinga::server::custom_plugins
 
   ######################################################################
   # Pre configuration
@@ -352,7 +332,17 @@ class dc_icinga::server::config (
     alias => 'Openstack Neutron Nodes',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_neutron_server':
+    alias => 'Openstack Neutron Server',
+  }
 
+  nagios_hostgroup { 'dc_hostgroup_nova_server':
+    alias => 'Openstack Nova Server',
+  }
+
+  nagios_hostgroup { 'dc_hostgroup_rabbitmq':
+    alias => 'RabbitMQ Node',
+  }
 
   ######################################################################
   # Commands
@@ -399,236 +389,56 @@ class dc_icinga::server::config (
   nagios_command { 'check_foreman_dc':
     command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_pw}"
   }
+
+  nagios_command { 'check_nova_ec2_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -u /services/Cloud/ -H \$HOSTADDRESS$ -p 8773"
+  }
+
+  nagios_command { 'check_nova_os_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8774"
+  }
+
+  nagios_command { 'check_nova_os_metadata_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
+  }
+
+  nagios_command { 'check_rabbit_aliveness':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_server':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_overview':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_overview -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_watermark':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_watermark -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_partition':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_partition -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_shovels':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_shovels -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_queue':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_queue -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_rabbit_objects':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_objects -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
   ######################################################################
-  # Services
-  ######################################################################
-  # These are the generic services that are locally monitored
-  # via NRPE therefore must be defined in /etc/nagios/nrpe.cfg
   ######################################################################
 
-  nagios_service { 'check_all_disks':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_all_disks',
-    service_description => 'Disk Space',
-  }
+  include dc_icinga::server::nagios_services
 
-  nagios_service { 'check_load':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_load',
-    service_description => 'Load Average',
-  }
-
-  nagios_service { 'check_users':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_users',
-    service_description => 'Users',
-  }
-
-  nagios_service { 'check_procs':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_total_procs',
-    service_description => 'Processes',
-  }
-
-  nagios_service { 'check_logstashes':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_logstashes',
-    check_command       => 'check_nrpe_1arg!check_logstashes',
-    service_description => 'Logstash ES',
-  }
-
-  nagios_service { 'check_keystone':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_keystone',
-    check_command       => 'check_keystone_dc',
-    service_description => 'Keystone',
-  }
-
-  nagios_service { 'check_ping':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_ping!100.0,20%!500.0,60%',
-    service_description => 'Ping',
-  }
-
-  nagios_service { 'check_ssh':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_ssh',
-    service_description => 'SSH',
-  }
-
-  nagios_service { 'check_http':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_http',
-    check_command       => 'check_http',
-    service_description => 'HTTP',
-  }
-
-  nagios_service { 'check_https':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_https',
-    check_command       => 'check_https',
-    service_description => 'HTTPS',
-  }
-
-  nagios_service { 'check_pgsql':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_postgres',
-    check_command       => 'check_pgsql_dc!nagiostest!nagios!nagios',
-    service_description => 'PostgreSQL',
-  }
-
-  nagios_service { 'check_dhcp':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_dhcp',
-    check_command       => 'check_dhcp_interface!bond0',
-    service_description => 'DHCP',
-  }
-
-  nagios_service { 'check_dns':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_dns',
-    check_command       => 'check_dns',
-    service_description => 'DNS',
-  }
-
-  nagios_service { 'check_ntp':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_ntp',
-    check_command       => 'check_ntp_dc',
-    service_description => 'NTP',
-  }
-
-  nagios_service { 'check_puppetdb':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_puppetdb',
-    check_command       => 'check_nrpe_1arg!check_puppetdb',
-    service_description => 'Puppet DB REST API',
-  }
-
-  nagios_service { 'check_foreman_proxy':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_foreman_proxy',
-    check_command       => 'check_foreman_proxy_dc',
-    service_description => 'Foreman Proxy REST API',
-  }
-
-  nagios_service { 'check_tftp':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_tftp',
-    check_command       => 'check_tftp_dc',
-    service_description => 'TFTP',
-  }
-
-  nagios_service { 'check_mysql':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_mysql',
-    check_command       => 'check_mysql_dc',
-    service_description => 'MySQL',
-  }
-
-  nagios_service { 'check_nfs':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nfs',
-    check_command       => 'check_nfs_dc',
-    service_description => 'NFS',
-  }
-
-  nagios_service { 'check_foreman':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_foreman',
-    check_command       => 'check_foreman_dc',
-    service_description => 'Foreman',
-  }
-
-  nagios_service { 'check_smtp':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_smtp',
-    check_command       => 'check_smtp',
-    service_description => 'SMTP',
-  }
-
-  nagios_service { 'check_postfix_queue':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_postfix',
-    check_command       => 'check_nrpe_1arg!check_mailq_postfix',
-    service_description => 'Postfix Mail Queue',
-  }
-
-  nagios_service { 'check_nova_compute':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute',
-    check_command       => 'check_nrpe_1arg!check_nova_compute_proc',
-    service_description => 'Nova Compute Process',
-  }
-
-  nagios_service { 'check_neutron_vswitch_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_vswitch_agent',
-    service_description => 'Neutron Agent',
-  }
-
-  nagios_service { 'check_ovswitch_proc':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_ovswitch_proc',
-    service_description => 'Open vSwitch',
-  }
-
-  nagios_service { 'check_ovswitch_server_proc':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_ovswitch_server_proc',
-    service_description => 'Open vSwitch DB Server',
-  }
-
-  nagios_service { 'check_neutron_dhcp_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_dhcp_agent',
-    service_description => 'Neutron DHCP Agent',
-  }
-
-  nagios_service { 'check_neutron_l3_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_l3_agent',
-    service_description => 'Neutron L3 Agent',
-  }
-
-  nagios_service { 'check_neutron_metadata_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_metadata_agent',
-    service_description => 'Neutron Metadata Agent',
-  }
-
-  nagios_service { 'check_neutron_vpn_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_vpn_agent',
-    service_description => 'Neutron VPN Agent',
-  }
-
-  nagios_service { 'check_neutron_lbaas_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_lbaas_agent',
-    service_description => 'Neutron LBAAS Agent',
-  }
-
-  nagios_service { 'check_neutron_metering_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
-    check_command       => 'check_nrpe_1arg!check_neutron_metering_agent',
-    service_description => 'Neutron Metering Agent',
-  }
   ######################################################################
   ######################################################################
   # Per client storeconfig data

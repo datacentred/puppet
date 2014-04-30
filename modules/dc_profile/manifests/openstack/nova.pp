@@ -22,6 +22,8 @@ class dc_profile::openstack::nova {
 
   $nova_mq_username           = hiera(nova_mq_username)
   $nova_mq_password           = hiera(nova_mq_password)
+  $rabbitmq_monuser            = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password   = hiera(rabbitmq_monuser_password)
   $nova_mq_port               = hiera(nova_mq_port)
   $nova_mq_vhost              = hiera(nova_mq_vhost)
 
@@ -116,6 +118,14 @@ class dc_profile::openstack::nova {
     admin_url     => "http://${::fqdn}:${ec2_port}/services/Admin",
     internal_url  => "http://${::fqdn}:${ec2_port}/services/Cloud",
     tag           => 'nova_endpoint',
+  }
+
+  # Nagios config
+  include dc_profile::openstack::nova_nagios
+  class { 'dc_profile::mon::rabbitmq_monuser':
+    userid   => $rabbitmq_monuser,
+    password => $rabbitmq_monuser_password,
+    vhost    => $nova_mq_vhost,
   }
 
 }

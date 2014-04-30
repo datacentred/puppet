@@ -20,5 +20,8 @@ class dc_icinga::hostgroups {
   @dc_external_facts::fact { 'dc_hostgroup_postfix': }
   @dc_external_facts::fact { 'dc_hostgroup_nova_compute': }
   @dc_external_facts::fact { 'dc_hostgroup_neutron_node': }
+  @dc_external_facts::fact { 'dc_hostgroup_neutron_server': }
+  @dc_external_facts::fact { 'dc_hostgroup_nova_server': }
+  @dc_external_facts::fact { 'dc_hostgroup_rabbitmq': }
 
 }
