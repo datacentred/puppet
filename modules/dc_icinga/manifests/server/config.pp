@@ -333,15 +333,19 @@ class dc_icinga::server::config (
   }
 
   nagios_hostgroup { 'dc_hostgroup_neutron_server':
-    alias => 'Openstack Neutron Server',
+    alias => 'Openstack Neutron Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_nova_server':
-    alias => 'Openstack Nova Server',
+    alias => 'Openstack Nova Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_rabbitmq':
-    alias => 'RabbitMQ Node',
+    alias => 'RabbitMQ Nodes',
+  }
+
+  nagios_hostgroup { 'dc_hostgroup_glance':
+    alias => 'Glance Servers',
   }
 
   ######################################################################
