@@ -407,7 +407,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_rabbitmq_server':
-    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_server -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_server -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTNAME$ --port=15672"
   }
 
   nagios_command { 'check_rabbitmq_overview':
