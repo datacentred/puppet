@@ -76,9 +76,6 @@
 [submodule "modules/collectd"]
 	path = modules/collectd
 	url = https://github.com/pdxcat/puppet-module-collectd.git
-[submodule "modules/graphite"]
-	path = modules/graphite
-	url = https://github.com/echocat/puppet-graphite
 [submodule "modules/mcollective"]
 	path = modules/mcollective
 	url = https://github.com/spjmurray/puppetlabs-mcollective
@@ -187,6 +184,12 @@
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = git@github.com:datacentred/puppetlabs-mysql.git
+[submodule "modules/ethtool"]
+	path = modules/ethtool
+	url = https://github.com/bobtfish/puppet-ethtool
+[submodule "modules/graphite"]
+	path = modules/graphite
+	url = https://github.com/datacentred/puppet-graphite
 [submodule "modules/cephdeploy"]
 	path = modules/cephdeploy
 	url = https://github.com/madkiss/puppet-cephdeploy
