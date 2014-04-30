@@ -125,7 +125,7 @@ class dc_profile::openstack::nova {
   class { 'dc_profile::mon::rabbitmq_monuser':
     userid   => $rabbitmq_monuser,
     password => $rabbitmq_monuser_password,
-    vhost    => $rabbitmq_vhost,
+    vhost    => $nova_mq_vhost,
   }
 
 }
