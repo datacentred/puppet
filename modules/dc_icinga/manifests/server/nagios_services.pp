@@ -336,4 +336,11 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_rabbitmq_watermark',
     service_description => 'RabbitMQ Watermark',
   }
+
+  nagios_service { 'check_glance_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_glance_http',
+    service_description => 'Glance API HTTP',
+  }
 }
