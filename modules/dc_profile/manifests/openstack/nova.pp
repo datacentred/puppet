@@ -128,7 +128,4 @@ class dc_profile::openstack::nova {
     vhost    => $nova_mq_vhost,
   }
 
-  include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_rabbitmq']
-
 }
