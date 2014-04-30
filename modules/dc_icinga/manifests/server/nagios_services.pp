@@ -239,6 +239,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron Server',
   }
 
+  nagios_service { 'check_neutron_api':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_server',
+    check_command       => 'check_nrpe_1arg!check_neutron_server',
+    service_description => 'Neutron API',
+  }
+
   nagios_service { 'check_nova_conductor':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_server',
