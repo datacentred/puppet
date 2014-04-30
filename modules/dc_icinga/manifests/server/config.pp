@@ -446,6 +446,10 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9292"
   }
 
+  nagios_command { 'check_glance_registry_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9191"
+  }
+
   ######################################################################
   ######################################################################
 

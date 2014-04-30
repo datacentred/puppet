@@ -344,6 +344,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Glance API HTTP',
   }
 
+  nagios_service { 'check_glance_registry_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_glance_registry_http',
+    service_description => 'Glance Registry HTTP',
+  }
+
   nagios_service { 'check_glance_proc':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_glance',
