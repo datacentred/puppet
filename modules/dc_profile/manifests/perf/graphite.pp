@@ -15,13 +15,6 @@ class dc_profile::perf::graphite {
   $graphite_db_pw = hiera(graphite_db_pw)
   $graphite_secret_key = hiera(graphite_secret_key)
 
-  # Bit of a hack as the Graphite module we're using doesn't install
-  # these automatically despite handling the various MySQL-related
-  # parameters for us...
-  package { ['mysql-client', 'python-mysqldb']:
-    ensure => installed,
-  }
-
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt.  We dedicate the lion's share of available disk
   # to /var, so that's the preference in this case.
@@ -81,7 +74,6 @@ class dc_profile::perf::graphite {
       },
     },
     require                      => [
-      Package['mysql-client', 'python-mysqldb'],
       File['/opt/graphite'],
     ],
   }
