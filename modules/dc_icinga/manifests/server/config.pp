@@ -402,35 +402,35 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
   }
 
-  nagios_command { 'check_rabbit_aliveness':
+  nagios_command { 'check_rabbitmq_aliveness':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_server':
+  nagios_command { 'check_rabbitmq_server':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_overview':
+  nagios_command { 'check_rabbitmq_overview':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_overview -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_watermark':
+  nagios_command { 'check_rabbitmq_watermark':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_watermark -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_partition':
+  nagios_command { 'check_rabbitmq_partition':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_partition -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_shovels':
+  nagios_command { 'check_rabbitmq_shovels':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_shovels -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_queue':
+  nagios_command { 'check_rabbitmq_queue':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_queue -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_objects':
+  nagios_command { 'check_rabbitmq_objects':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_objects -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
