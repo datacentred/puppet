@@ -18,14 +18,9 @@ define dc_gdash::hostgraph (
   $tplpath = '/var/www/gdash/graph_templates/hosts'
   $hostpath = "${tplpath}/${_hostname}"
 
-  file { $tplpath:
-    ensure  => directory,
-    recurse => true,
-  }
-
   file { $hostpath:
     ensure  => directory,
-    require => File[$tplpath],
+    recurse => true,
   }
 
   file { "${hostpath}/dash.yaml":
