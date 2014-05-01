@@ -333,15 +333,19 @@ class dc_icinga::server::config (
   }
 
   nagios_hostgroup { 'dc_hostgroup_neutron_server':
-    alias => 'Openstack Neutron Server',
+    alias => 'Openstack Neutron Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_nova_server':
-    alias => 'Openstack Nova Server',
+    alias => 'Openstack Nova Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_rabbitmq':
-    alias => 'RabbitMQ Node',
+    alias => 'RabbitMQ Nodes',
+  }
+
+  nagios_hostgroup { 'dc_hostgroup_glance':
+    alias => 'Glance Servers',
   }
 
   ######################################################################
@@ -402,36 +406,48 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
   }
 
-  nagios_command { 'check_rabbit_aliveness':
+  nagios_command { 'check_neutron_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9696"
+  }
+
+  nagios_command { 'check_rabbitmq_aliveness':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_server':
-    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  nagios_command { 'check_rabbitmq_server':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_server -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTNAME$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_overview':
+  nagios_command { 'check_rabbitmq_overview':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_overview -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_watermark':
-    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_watermark -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  nagios_command { 'check_rabbitmq_watermark':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_watermark -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTNAME$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_partition':
-    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_partition -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  nagios_command { 'check_rabbitmq_partition':
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_partition -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTNAME$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_shovels':
+  nagios_command { 'check_rabbitmq_shovels':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_shovels -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_queue':
+  nagios_command { 'check_rabbitmq_queue':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_queue -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
-  nagios_command { 'check_rabbit_objects':
+  nagios_command { 'check_rabbitmq_objects':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_objects -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_glance_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9292"
+  }
+
+  nagios_command { 'check_glance_registry_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9191"
   }
 
   ######################################################################

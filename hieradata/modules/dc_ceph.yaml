@@ -1,0 +1,16 @@
+---
+dc_ceph::osd::ceph_setup_pools:       false
+dc_ceph::osd::ceph_deploy_user:       "%{hiera(cephdeploy_user)}"
+dc_ceph::osd::ceph_primary_mon:       "%{hiera(cephdeploy_primary_mon)}"
+dc_ceph::osd::ceph_cluster_interface: 'eth1'
+dc_ceph::osd::ceph_cluster_network:   "%{hiera(cephdeploy_cluster_network)}"
+
+dc_ceph::osd::ceph_journal_disk:  '/dev/sdg'
+dc_ceph::osd::ceph_journal_size:  '10'
+dc_ceph::osd::ceph_num_osds:      '5'
+dc_ceph::osd::ceph_osds:
+  - '/dev/sdb:/dev/sdg1'
+  - '/dev/sdc:/dev/sdg2'
+  - '/dev/sdd:/dev/sdg3'
+  - '/dev/sde:/dev/sdg4'
+  - '/dev/sdf:/dev/sdg5'

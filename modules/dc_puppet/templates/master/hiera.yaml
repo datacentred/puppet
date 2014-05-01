@@ -1,6 +1,7 @@
 :hierarchy:
-    - %{lsbdistcodename}
-    - %{environment}
+    - "modules/%{calling_module}"
+    - "%{lsbdistcodename}"
+    - "%{environment}"
     - common
 :backends:
     - yaml
