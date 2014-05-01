@@ -351,18 +351,18 @@ class dc_icinga::server::nagios_services {
     service_description => 'Glance Registry HTTP',
   }
 
-  nagios_service { 'check_glance_proc':
+  nagios_service { 'check_glance_api_proc':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_glance',
-    check_command       => 'check_nrpe_1arg!check_glance_proc',
-    service_description => 'Glance Server',
+    check_command       => 'check_nrpe_1arg!check_glance_api_proc',
+    service_description => 'Glance API Server Process',
   }
 
   nagios_service { 'check_glance_registry_proc':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_glance',
     check_command       => 'check_nrpe_1arg!check_glance_registry_proc',
-    service_description => 'Glance Registry Server',
+    service_description => 'Glance Registry Server Process',
   }
 
 }
