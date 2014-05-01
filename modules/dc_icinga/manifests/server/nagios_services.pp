@@ -239,6 +239,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron Server',
   }
 
+  nagios_service { 'check_neutron_api':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_server',
+    check_command       => 'check_nrpe_1arg!check_neutron_server',
+    service_description => 'Neutron API',
+  }
+
   nagios_service { 'check_nova_conductor':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_server',
@@ -329,4 +336,33 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_rabbitmq_watermark',
     service_description => 'RabbitMQ Watermark',
   }
+
+  nagios_service { 'check_glance_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_glance_http',
+    service_description => 'Glance API HTTP',
+  }
+
+  nagios_service { 'check_glance_registry_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_glance_registry_http',
+    service_description => 'Glance Registry HTTP',
+  }
+
+  nagios_service { 'check_glance_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_nrpe_1arg!check_glance_proc',
+    service_description => 'Glance Server',
+  }
+
+  nagios_service { 'check_glance_registry_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_nrpe_1arg!check_glance_registry_proc',
+    service_description => 'Glance Registry Server',
+  }
+
 }

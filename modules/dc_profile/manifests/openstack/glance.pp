@@ -27,7 +27,7 @@ class dc_profile::openstack::glance {
   $glance_reg_pass = hiera(glance_reg_pass)
   $glance_reg_host = hiera(glance_reg_host)
 
-  $glance_port = "9292"
+  $glance_port = '9292'
 
   $glance_api_database = "mysql://${glance_api_user}:${glance_api_pass}@${glance_api_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_user}:${glance_reg_pass}@${glance_reg_host}/${glance_reg_db}"
@@ -73,5 +73,22 @@ class dc_profile::openstack::glance {
     internal_url  => "http://${::fqdn}:${glance_port}",
     tag           => 'glance_endpoint',
   }
+
+  file { '/etc/nagios/nrpe.d/glance_api_proc.cfg':
+    ensure  => present,
+    content => 'command[check_glance_api_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -u glance -a glance-api',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
+  file { '/etc/nagios/nrpe.d/glance_registry_proc.cfg':
+    ensure  => present,
+    content => 'command[check_glance_registry_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -u glance -a glance-registry',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
+  include dc_icinga::hostgroups
+  realize Dc_external_facts::Fact['dc_hostgroup_glance']
 
 }

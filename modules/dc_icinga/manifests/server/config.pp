@@ -333,15 +333,19 @@ class dc_icinga::server::config (
   }
 
   nagios_hostgroup { 'dc_hostgroup_neutron_server':
-    alias => 'Openstack Neutron Server',
+    alias => 'Openstack Neutron Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_nova_server':
-    alias => 'Openstack Nova Server',
+    alias => 'Openstack Nova Servers',
   }
 
   nagios_hostgroup { 'dc_hostgroup_rabbitmq':
-    alias => 'RabbitMQ Node',
+    alias => 'RabbitMQ Nodes',
+  }
+
+  nagios_hostgroup { 'dc_hostgroup_glance':
+    alias => 'Glance Servers',
   }
 
   ######################################################################
@@ -402,7 +406,11 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
   }
 
-  nagios_command { 'check_rabbitmq_aliveness':
+  nagios_command { 'check_neutron_api':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9696"
+  }
+
+  nagios_command { 'check_rabbit_aliveness':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
@@ -432,6 +440,14 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_rabbitmq_objects':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_objects -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
+  }
+
+  nagios_command { 'check_glance_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9292"
+  }
+
+  nagios_command { 'check_glance_registry_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9191"
   }
 
   ######################################################################
