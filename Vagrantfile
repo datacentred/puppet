@@ -14,6 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Virtualbox Configuration
   config.vm.provider "virtualbox" do |virtualbox, override|
     override.vm.box_url = "http://vboxes.sal01.datacentred.co.uk/latest-virtualbox"
+    virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   # Port Forwarding
