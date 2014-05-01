@@ -29,17 +29,18 @@ class dc_rails::environment(
     global => true,
   } ->
 
-  class{'ruby::dev':} ->
-
-  class { 'dc_mariadb': } ->
-
   package { 'libmariadbclient-dev' :
     ensure => present,
   } ->
 
   rbenv::gem { 'unicorn':
-    user => $user,
-    ruby => $ruby,
+    user   => $user,
+    ruby   => $ruby,
+    notify => [
+      Exec["rbenv::rehash for unicorn ${user} ${ruby}"],
+      Exec["rbenv::init ${user} ${ruby}"],
+      Exec["force shims ${user} ${ruby}"],
+    ]
   } ->
 
   exec { "rbenv::rehash for unicorn ${user} ${ruby}":
@@ -50,6 +51,7 @@ class dc_rails::environment(
     environment => [ "HOME=${home}" ],
     path        => [ "${home}/.rbenv/shims", "${home}/.rbenv/bin", '/bin', '/usr/bin' ],
     logoutput   => 'on_failure',
+    refreshonly => true,
   } ->
 
   exec { "rbenv::init ${user} ${ruby}":
@@ -60,13 +62,15 @@ class dc_rails::environment(
     environment => [ "HOME=${home}" ],
     path        => [ "${home}/.rbenv/shims", "${home}/.rbenv/bin", '/bin', '/usr/bin' ],
     logoutput   => 'on_failure',
+    refreshonly => true,
   } ->
 
   # Hack to make rbenv rebuild shims
-  exec { 'force shims':
+  exec { "force shims ${user} ${ruby}":
     command  => '/bin/bash --login -c "echo"',
     user     => $user,
     group    => $group,
+    refreshonly => true,
   }
 
 }

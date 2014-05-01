@@ -23,8 +23,10 @@ class dc_rails::server {
   $log_base = '/var/log/rails/'
   $run_base = '/var/run/rails/'
 
-  class { 'redis': }
-  class { 'nginx': manage_repo => false }
+  class { '::redis': }
+  class { '::nginx': manage_repo => false }
+  class { '::ruby::dev': }
+  class { '::dc_mariadb': }
 
   user { $user :
     ensure     => present,
@@ -35,7 +37,7 @@ class dc_rails::server {
     password   => $password,
   } ->
 
-  class { 'files':
+  class { 'dc_rails::files':
     home      => $home,
     log_base  => $log_base,
     run_base  => $run_base,
@@ -43,10 +45,11 @@ class dc_rails::server {
     group     => $group,
   } ->
 
-  class { 'environment':
+  class { 'dc_rails::environment':
     home     => $home,
     user     => $user,
     group    => $group,
     ruby     => $ruby,
   }
+
 }
