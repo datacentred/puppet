@@ -10,7 +10,6 @@ class dc_gdash::install {
   package { ['ruby-dev', 
             'git', 
             'ruby-bundler', 
-            'rubygems', 
             'libapache2-mod-passenger', 
             ]:
     ensure => installed,
