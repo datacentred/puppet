@@ -35,6 +35,8 @@ define dc_rails::app (
   $run_base = '/var/run/rails/'
   $rundir = "${run_base}${app_name}/"
 
+  class { 'dc_rails::server': } ->
+
   nginx::resource::upstream { $app_name:
     ensure  => present,
     members => [
@@ -48,7 +50,7 @@ define dc_rails::app (
     ssl      => true,
     ssl_cert => $ssl_cert,
     ssl_key  => $ssl_key,
-  }
+  } ->
 
   file { [$logdir, $rundir]:
     ensure => directory,
@@ -72,7 +74,7 @@ define dc_rails::app (
     ensure   => present,
     provider => git,
     source   => $app_repo,
-    user     => $user
+    user     => $user,
   } ->
 
   exec { "bundle install --deployment ${app_name}":
@@ -82,6 +84,8 @@ define dc_rails::app (
     user        => $user,
     timeout     => 600,
     tries       => 3,
+    refreshonly => true,
+    subscribe   => Vcsrepo[$app_home],
   } ->
 
   exec { "rake assets:precompile ${$app_name}":
@@ -90,6 +94,8 @@ define dc_rails::app (
     group       => $group,
     user        => $user,
     environment => ["RAILS_ENV=${rails_env}"],
+    refreshonly => true,
+    subscribe   => Vcsrepo[$app_home],
   } ->
 
   unicorn::app { $app_name:
@@ -105,9 +111,7 @@ define dc_rails::app (
     secret_key_base  => $secret_key_base,
     db_password      => $db_password,
     source           => $unicorn,
-    subscribe        =>  [
-        Vcsrepo[$app_home],
-      ],
+    subscribe        => Vcsrepo[$app_home],
   } ->
 
   exec { "rake db:create ${$app_name}":
@@ -115,6 +119,8 @@ define dc_rails::app (
     cwd         => $app_home,
     group       => $group,
     user        => $user,
+    refreshonly => true,
+    subscribe   => Vcsrepo[$app_home],
     environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   } ->
 
@@ -123,6 +129,8 @@ define dc_rails::app (
     cwd         => $app_home,
     group       => $group,
     user        => $user,
+    refreshonly => true,
+    subscribe   => Vcsrepo[$app_home],
     environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   } ->
 
@@ -131,6 +139,8 @@ define dc_rails::app (
     cwd         => $app_home,
     group       => $group,
     user        => $user,
+    refreshonly => true,
+    subscribe   => Vcsrepo[$app_home],
     environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   }
 

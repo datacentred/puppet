@@ -12,8 +12,6 @@
 #
 class dc_profile::rails::stronghold {
 
-  class { 'dc_rails::server': } ->
-
   dc_rails::app { 'stronghold':
     app_name => 'stronghold',
     app_url  => 'stronghold.dev',
@@ -21,4 +19,5 @@ class dc_profile::rails::stronghold {
     ssl_key  => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.key',
     ssl_cert => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.crt',
   }
+
 }
