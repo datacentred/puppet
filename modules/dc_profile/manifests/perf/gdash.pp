@@ -20,8 +20,4 @@ class dc_profile::perf::gdash {
   Dc_gdash::Hostgraph <<| |>>
   Dc_gdash::Nettraf <<| |>>
 
-  # Add an appropriate CNAME RR
-  @@dns_resource { "gdash.${::domain}/CNAME":
-    rdata => $::fqdn,
-  }
 }
