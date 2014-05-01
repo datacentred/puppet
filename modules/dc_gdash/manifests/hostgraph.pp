@@ -15,12 +15,17 @@ define dc_gdash::hostgraph (
   $_hostname = $title,
 ) {
 
-  $tplpath = '/var/www/gdash/graph_templates'
-  $hostpath = "${tplpath}/hosts/${_hostname}"
+  $tplpath = '/var/www/gdash/graph_templates/hosts'
+  $hostpath = "${tplpath}/${_hostname}"
+
+  file { $tplpath:
+    ensure  => directory,
+    recurse => true,
+  }
 
   file { $hostpath:
     ensure  => directory,
-    recurse => true,
+    require => File[$tplpath],
   }
 
   file { "${hostpath}/dash.yaml":
