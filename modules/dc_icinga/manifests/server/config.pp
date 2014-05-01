@@ -410,7 +410,7 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9696"
   }
 
-  nagios_command { 'check_rabbit_aliveness':
+  nagios_command { 'check_rabbitmq_aliveness':
     command_line => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTADDRESS$ --port=15672"
   }
 
