@@ -81,4 +81,9 @@ class dc_profile::perf::graphite {
 
   contain 'graphite'
 
+  # Add an appropriate CNAME RR
+  @@dns_resource { "graphite.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
+
 }
