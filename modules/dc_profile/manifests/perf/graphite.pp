@@ -23,7 +23,7 @@ class dc_profile::perf::graphite {
   }
 
   file { '/opt/graphite':
-    ensure  => 'link',
+    ensure  => link,
     target  => '/var/opt/graphite',
     require => File['/var/opt/graphite'],
   }
@@ -32,6 +32,7 @@ class dc_profile::perf::graphite {
     gr_aggregator_line_interface => '0.0.0.0',
     gr_aggregator_line_port      => '2023',
     gr_web_server                => 'apache',
+    gr_apache_24                 => true,
     secret_key                   => $graphite_secret_key,
     gr_max_cache_size            => inf,
     gr_max_updates_per_second    => 50,
