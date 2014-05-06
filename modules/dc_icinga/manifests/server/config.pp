@@ -456,7 +456,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_dc_ldap':
-    command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -d ${ldap_root_dn}"
+    command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -b ${ldap_root_dn}"
   }
   ######################################################################
   ######################################################################
