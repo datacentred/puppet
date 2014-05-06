@@ -365,4 +365,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'Glance Registry Server Process',
   }
 
+  nagios_service { 'check_dc_ldap':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_ldap',
+    check_command       => 'check_dc_ldap',
+    service_description => 'LDAP Server',
+  }
+
 }

@@ -37,6 +37,8 @@ class dc_icinga::server::config (
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
 
+  $ldap_root_dn = hiera(ldap::server::rootdn)
+
   # When doing a non interactive install the password isn't generated
   # so do that for us first time around
   exec { 'icinga_cgi_passwd':
@@ -348,6 +350,9 @@ class dc_icinga::server::config (
     alias => 'Glance Servers',
   }
 
+  nagios_hostgroup { 'dc_hostgroup_ldap':
+    alias => 'LDAP Servers',
+  }
   ######################################################################
   # Commands
   ######################################################################
@@ -450,6 +455,9 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9191"
   }
 
+  nagios_command { 'check_dc_ldap':
+    command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -d ${ldap_root_dn}"
+  }
   ######################################################################
   ######################################################################
 
