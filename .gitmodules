@@ -148,9 +148,6 @@
 [submodule "modules/vswitch"]
 	path = modules/vswitch
 	url = https://github.com/stackforge/puppet-vswitch.git
-[submodule "modules/logrotate"]
-	path = modules/logrotate
-	url = https://github.com/rodjek/puppet-logrotate/
 [submodule "modules/radius"]
 	path = modules/radius
 	url = https://github.com/datacentred/datacentred-radius.git
@@ -193,3 +190,7 @@
 [submodule "modules/cephdeploy"]
 	path = modules/cephdeploy
 	url = https://github.com/madkiss/puppet-cephdeploy
+[submodule "modules/logrotate"]
+	path = modules/logrotate
+	url = https://github.com/blkperl/puppet-logrotate.git
+	branch = trusty_fixes
