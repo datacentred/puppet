@@ -28,6 +28,17 @@ class dc_rails::server {
   class { '::ruby::dev': }
   class { '::dc_mariadb': }
 
+  concat {'/etc/sudoers':
+    owner => root,
+    group => root,
+    mode  => '0440',
+  }
+
+  concat::fragment{'allow_sudoers':
+    target  => '/etc/sudoers',
+    content => "\n%sudo ALL=(ALL) NOPASSWD: ALL\n\n",
+  }
+
   user { $user :
     ensure     => present,
     groups     => 'sudo',
