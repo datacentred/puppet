@@ -41,6 +41,19 @@ class dc_profile::openstack::keystone {
     region       => $os_region,
   }
 
+  # Set up DC admin users with the admin role in the 'openstack' tenant
+  $dcadminhash = hiera(admins)
+  $dcadmins = keys($dcadminhash)
+  dc_profile::openstack::keystone_dcadmins { $dcadmins:
+    hash   => $dcadminhash,
+    tenant => 'openstack',
+    role   => 'admin',
+  }
+
+  exported_vars::set { 'keystone_host':
+    value => $::fqdn,
+  }
+
   # Glance bits
   keystone_user { 'glance':
     ensure   => present,
@@ -103,10 +116,6 @@ class dc_profile::openstack::keystone {
   }
   Keystone_endpoint <<| tag == 'neutron_endpoint' |>>
 
-  exported_vars::set { 'keystone_host':
-    value => $::fqdn,
-  }
-
   # Icinga monitoring
   keystone_tenant { 'icinga':
     ensure  => present,
@@ -123,6 +132,7 @@ class dc_profile::openstack::keystone {
     email    => $sysmailaddress,
     tenant   => 'icinga',
   }
+
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_keystone']
 
