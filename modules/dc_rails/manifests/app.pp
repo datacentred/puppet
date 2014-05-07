@@ -35,7 +35,14 @@ define dc_rails::app (
   $run_base = '/var/run/rails/'
   $rundir = "${run_base}${app_name}/"
 
+  contain sudo
+
   class { 'dc_rails::server': } ->
+
+  sudo::conf { $user:
+    priority => 10,
+    content  => "${user} ALL=(ALL) NOPASSWD: /usr/sbin/service",
+  } ->
 
   nginx::resource::upstream { $app_name:
     ensure  => present,
