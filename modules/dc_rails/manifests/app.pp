@@ -35,7 +35,14 @@ define dc_rails::app (
   $run_base = '/var/run/rails/'
   $rundir = "${run_base}${app_name}/"
 
+  contain sudo
+
   class { 'dc_rails::server': } ->
+
+  sudo::conf { $user:
+    priority => 10,
+    content  => "Cmnd_Alias UNICORN_CMDS = /usr/sbin/service unicorn_${app_name}, /usr/sbin/service unicorn_${app_name} start, /usr/sbin/service unicorn_${app_name} stop, /usr/sbin/service unicorn_${app_name} status, /usr/sbin/service unicorn_${app_name} restart\n${user} ALL=(ALL) NOPASSWD: UNICORN_CMDS",
+  } ->
 
   nginx::resource::upstream { $app_name:
     ensure  => present,
