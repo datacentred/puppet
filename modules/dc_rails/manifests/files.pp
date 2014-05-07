@@ -55,4 +55,15 @@ class dc_rails::files(
     group  => $group,
   }
 
+  concat { "${home}.bashrc" :
+    owner => $user,
+    group => $user,
+    mode  => '0644',
+  }
+
+  concat::fragment{'add_sbin_to_path':
+    target  => "${home}.bashrc",
+    content => "\nexport PATH=\$PATH:/sbin/\n\n",
+  }
+
 }
