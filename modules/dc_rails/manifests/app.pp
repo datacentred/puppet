@@ -41,7 +41,7 @@ define dc_rails::app (
 
   sudo::conf { $user:
     priority => 10,
-    content  => "${user} ALL=(ALL) NOPASSWD: /usr/sbin/service",
+    content  => "Cmnd_Alias UNICORN_CMDS = /usr/sbin/service unicorn_${app_name}, /usr/sbin/service unicorn_${app_name} start, /usr/sbin/service unicorn_${app_name} stop, /usr/sbin/service unicorn_${app_name} status, /usr/sbin/service unicorn_${app_name} restart\n${user} ALL=(ALL) NOPASSWD: UNICORN_CMDS",
   } ->
 
   nginx::resource::upstream { $app_name:
