@@ -20,19 +20,19 @@ define dc_gdash::diskperf (
   $hostpath = "${tplpath}/hosts/${hostname}"
 
   file { "${hostpath}/disk_merged_ops.${disk}.graph": 
-    content => template('dc_gdash/disk_merged_ops.graph.erb'),
+    content => template('dc_gdash/disk-merged_ops.graph.erb'),
   }
 
   file { "${hostpath}/disk_octets.${disk}.graph": 
-    content => template('dc_gdash/disk_octets.graph.erb'),
+    content => template('dc_gdash/disk-octets.graph.erb'),
   }
 
   file { "${hostpath}/disk_ops.${disk}.graph": 
-    content => template('dc_gdash/disk_ops.graph.erb'),
+    content => template('dc_gdash/disk-ops.graph.erb'),
   }
 
   file { "${hostpath}/disk_time.${disk}.graph": 
-    content => template('dc_gdash/disk_time.graph.erb'),
+    content => template('dc_gdash/disk-time.graph.erb'),
   }
 
 }
