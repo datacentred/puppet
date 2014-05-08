@@ -12,8 +12,8 @@
 # Sample Usage: dc_gdash::diskperf { 'sda1#gdash': }
 #
 define dc_gdash::diskperf (
-  $hostname = regsubst($title, '.*\#', '\1'),
-  $disk = regsubst($title, '\#.*', '\1'),
+  $_hostname = regsubst($title, '.*\#', '\1'),
+  $_disk = regsubst($title, '\#.*', '\1'),
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
