@@ -10,7 +10,7 @@ class dc_collectd::disks {
   $joinedarray = [ split($::software_raid, ','), split($::disks, ','), split($::partitions, ',') ]
   $diskhashhost = suffix($joinedarray, "#${::hostname}")
 
-  @@dc_gdash_disk { $diskhashhost: }
+  @@dc_gdash::diskperf { $diskhashhost: }
 
 }
 
