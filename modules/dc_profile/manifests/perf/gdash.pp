@@ -19,5 +19,6 @@ class dc_profile::perf::gdash {
 
   Dc_gdash::Hostgraph <<| |>>
   Dc_gdash::Nettraf <<| |>>
+  Dc_gdash::Diskperf <<| |>>
 
 }
