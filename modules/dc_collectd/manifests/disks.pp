@@ -4,11 +4,11 @@ class dc_collectd::disks {
   # FIXME handle only having one entry in the string )
   # FIXME sort
   $mdarray = split($::software_raid, ',')
-  $disksarray = split($::disks, ',')
-  $partsarray = split($::partitions, ',')
+  #$disksarray = split($::disks, ',')
+  #$partsarray = split($::partitions, ',')
   #$joinedarray = [ $mdarray, $disksarray, $partsarray ]
-  $joinedarray = [ split($::mdarray, ','), split($::disksarray, ','), split($::partsarray, ',') ]
-  $diskhashhost = suffix($joinedarray, "#${::hostname}")
+  #$joinedarray = [ split($::mdarray, ','), split($::disksarray, ','), split($::partsarray, ',') ]
+  $diskhashhost = suffix($mdarray, "#${::hostname}")
 
   @@dc_gdash::diskperf { $diskhashhost: }
 
