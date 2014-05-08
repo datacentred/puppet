@@ -23,6 +23,10 @@ class dc_profile::net::ntpgeneric {
     include dc_icinga::hostgroups
     realize Dc_external_facts::Fact['dc_hostgroup_ntp']
 
+    @@dns_resource { "ntp.${::domain}/A":
+      rdata => $::ipaddress,
+    } 
+
   } else {
 
     class { 'ntp':
