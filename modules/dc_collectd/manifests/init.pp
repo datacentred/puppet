@@ -64,10 +64,7 @@ class dc_collectd (
   $joinedarray = [ split($::software_raid, ','), split($::disks, ','), split($::partitions, ',') ]
   $diskhashhost = suffix($joinedarray, "#${::hostname}")
 
-  @@dc_gdash_disk_merged_ops { $diskhashhost: }
-  @@dc_gdash_disk_octets { $diskhashhost: }
-  @@dc_gdash_disk_ops { $diskhashhost: }
-  @@dc_gdash_disk_time { $diskhashhost: }
+  @@dc_gdash_disk { $diskhashhost: }
 
   # If this is defined (currently set as a top-scope variable by Foreman),
   # then configure collectd to gather statistics from SNMP-enabled devices
