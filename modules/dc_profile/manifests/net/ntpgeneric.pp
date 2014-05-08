@@ -12,21 +12,32 @@
 #
 class dc_profile::net::ntpgeneric {
 
-  # if server address is in local then add remote servers
-  if $::ipaddress in hiera(localtimeservers) {
+  # Look up our timeservers
+  $localtimeservers = hiera('localtimeservers')
 
+  # Is the current server going to act as a local timeserver?
+  if has_key($localtimeservers, $::fqdn) {
+
+    # Setup NTP, using remote peers - allow query from everywhere
     class { 'ntp':
-      servers    => hiera(timeservers),
+      servers    => $localtimeservers[$::fqdn]['servers'],
       autoupdate => false,
     }
 
+    # Setup monitoring
     include dc_icinga::hostgroups
     realize Dc_external_facts::Fact['dc_hostgroup_ntp']
 
+    # Add CNAME entry
+    @@dns_resource { "${localtimeservers[$::fqdn]['cname']}/CNAME":
+      rdata => $::fqdn,
+    }
+
   } else {
 
+    # Setup NTP, using local timeservers - don't allow queries
     class { 'ntp':
-      servers    => hiera(localtimeservers),
+      servers    => hiera(timeservers),
       autoupdate => false,
       restrict   => ['127.0.0.1'],
     }
