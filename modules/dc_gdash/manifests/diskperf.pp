@@ -12,12 +12,12 @@
 # Sample Usage: dc_gdash::diskperf { 'sda1#gdash': }
 #
 define dc_gdash::diskperf (
-  $_hostname = regsubst($title, '.*\#', '\1'),
-  $_disk = regsubst($title, '\#.*', '\1'),
+  $hostname = regsubst($title, '.*\#', '\1'),
+  $disk = regsubst($title, '\#.*', '\1'),
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
-  $hostpath = "${tplpath}/hosts/${_hostname}"
+  $hostpath = "${tplpath}/hosts/${hostname}"
 
   file { "${hostpath}/disk_merged_ops.${disk}.graph": 
     content => template('dc_gdash/disk_merged_ops.graph.erb'),
