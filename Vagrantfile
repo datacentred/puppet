@@ -5,25 +5,12 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "dcdevbox" 
-
-  # TODO: Box versioning
-  #config.vm.box_check_update = true
-  #config.vm.box_version = 1.0.0
+  config.vm.box         = 'datacentred/ubuntu-trusty64-puppet'
+  config.vm.box_version = '0.1.1'
 
   # Virtualbox Configuration
   config.vm.provider "virtualbox" do |virtualbox, override|
-    override.vm.box_url = "http://vboxes.sal01.datacentred.co.uk/latest-virtualbox"
     virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-  end
-
-  # Port Forwarding
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "forwarded_port", guest: 443, host: 4443
-
-  # VMWare Fusion Configuration
-  config.vm.provider "vmware_fusion" do |vmware, override|
-    override.vm.box_url = "http://vboxes.sal01.datacentred.co.uk/latest-fusionbox"
   end
 
   # Puppet provisioner
