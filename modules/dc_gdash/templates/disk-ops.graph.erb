@@ -1,0 +1,19 @@
+title   "Disk Ops for <%= @_disk %> on <%= @_hostname %>"
+vtite   "Ops/s"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  # ༼ つ ◕_◕ ༽つ
+    ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')
+
+  writes = "collectd." + ghostname + ".disk-" + @_disk + ".disk_ops.write"
+  reads = "collectd." + ghostname + ".disk-" + @_disk + ".disk_ops.read"
+%>
+field :Written, :color => "green",
+               :alias => "Writes",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= writes %>),1)"
+
+field :Read, :color => "blue",
+               :alias => "Reads",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= reads %>),1)"

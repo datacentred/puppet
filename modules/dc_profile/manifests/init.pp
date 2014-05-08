@@ -19,6 +19,7 @@ class dc_profile {
   contain dc_profile::util::external_facts
   contain dc_profile::util::timezone
   contain dc_profile::util::locale
+  contain dc_profile::util::facter
 
   if $::is_vagrant == undef {
     contain dc_profile::auth::admins
