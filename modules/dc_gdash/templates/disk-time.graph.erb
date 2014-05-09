@@ -1,4 +1,4 @@
-title   "Disk Response Times for <%= @_disk %> on <%= @_hostname %>"
+title   "Disk Response Times for <%= @disk %> on <%= @_hostname %>"
 vtitle   "Milliseconds"
 area    :first
 hide_legend false
@@ -7,8 +7,8 @@ hide_legend false
   # ༼ つ ◕_◕ ༽つ
     ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')
 
-  writes = "collectd." + ghostname + ".disk-" + @_disk + ".disk_time.write"
-  reads = "collectd." + ghostname + ".disk-" + @_disk + ".disk_time.read"
+  writes = "collectd." + ghostname + ".disk-" + @disk + ".disk_time.write"
+  reads = "collectd." + ghostname + ".disk-" + @disk + ".disk_time.read"
 %>
 field :Written, :color => "green",
                :alias => "Writes",

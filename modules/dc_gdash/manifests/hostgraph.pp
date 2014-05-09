@@ -1,7 +1,6 @@
 # Class: dc_gdash::hostgraph
 #
-# Creates a graph template in the host's graph folder
-# per interface
+# Creates a basic graph template in the host's graph folder
 #
 # Parameters: Title composed of ifname#shorthostname
 #
@@ -15,7 +14,7 @@ define dc_gdash::hostgraph (
   $_hostname = $title,
 ) {
 
-  $tplpath = '/var/www/gdash/graph_templates/hosts'
+  $tplpath = '/var/www/gdash/graph_templates/overview'
   $hostpath = "${tplpath}/${_hostname}"
 
   file { $hostpath:
