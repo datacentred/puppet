@@ -18,21 +18,31 @@ define dc_gdash::diskperf (
 
   $tplpath = '/var/www/gdash/graph_templates'
   $hostpath = "${tplpath}/hosts/${_hostname}"
+  
+  # Only graph merged ops for devices and not for partitions
+  if $disk !~ /^[a-z]d[a-z]\d/ {
 
-  file { "${hostpath}/disk_merged_ops.${_disk}.graph": 
-    content => template('dc_gdash/disk-merged_ops.graph.erb'),
+    file { "${hostpath}/disk_merged_ops.${disk}.graph": 
+      content => template('dc_gdash/disk-merged_ops.graph.erb'),
+    }
+
   }
 
-  file { "${hostpath}/disk_octets.${_disk}.graph": 
+  # Software raid devices don't supply data for IO time
+  if $disk !~ /^md[0-9].*/ {
+
+    file { "${hostpath}/disk_time.${disk}.graph": 
+      content => template('dc_gdash/disk-time.graph.erb'),
+    }
+  
+  }
+
+  file { "${hostpath}/disk_octets.${disk}.graph": 
     content => template('dc_gdash/disk-octets.graph.erb'),
   }
 
-  file { "${hostpath}/disk_ops.${_disk}.graph": 
+  file { "${hostpath}/disk_ops.${disk}.graph": 
     content => template('dc_gdash/disk-ops.graph.erb'),
-  }
-
-  file { "${hostpath}/disk_time.${_disk}.graph": 
-    content => template('dc_gdash/disk-time.graph.erb'),
   }
 
 }
