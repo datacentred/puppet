@@ -81,8 +81,9 @@ if Facter.value(:kernel) == 'Linux'
     end
 
     # Convert back into a string value ...
-    disk = disk.first.to_s
-
+    unless disk.is_a?(String)
+        disk = disk.first.to_s
+    end
     # We have something rather odd that did not parse at all, so ignore ...
     next if disk.empty?
 
