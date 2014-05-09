@@ -19,8 +19,8 @@ define dc_gdash::diskperf (
   $tplpath = '/var/www/gdash/graph_templates'
   $hostpath = "${tplpath}/hosts/${hostname}"
   
-  # Only graph merged ops for devices and not for partitions
-  if $disk !~ /^[a-z]d[a-z]\d/ {
+  # Only graph merged ops for devices and not for partitions or raid devices
+  if $disk !~ /^sd[a-z]+$/ {
 
     file { "${hostpath}/disk_merged_ops.${disk}.graph": 
       content => template('dc_gdash/disk-merged_ops.graph.erb'),
