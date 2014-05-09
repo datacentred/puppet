@@ -17,7 +17,7 @@ define dc_gdash::diskperf (
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates'
-  $hostpath = "${tplpath}/hosts/${_hostname}"
+  $hostpath = "${tplpath}/hosts/${hostname}"
   
   # Only graph merged ops for devices and not for partitions
   if $disk !~ /^[a-z]d[a-z]\d/ {
