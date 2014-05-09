@@ -44,7 +44,7 @@ class dc_collectd (
   }
 
   # Export virtual resource for load and memory
-  @@dc_gdash::hostgraph { $::hostname: }
+  @@dc_gdash::overview { $::hostname: }
 
   # Compile array of unique interface-shorthostname combos for export
   # in the format ifname#shorthostname
