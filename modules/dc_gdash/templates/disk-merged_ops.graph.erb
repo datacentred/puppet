@@ -1,4 +1,4 @@
-title   "Merged OPs/s for <%= @_disk %> on <%= @_hostname %>"
+title   "Merged OPs/s for <%= @disk %> on <%= @_hostname %>"
 vtitle   "Merged OPs/s"
 area    :first
 hide_legend false
@@ -7,8 +7,8 @@ hide_legend false
   # ༼ つ ◕_◕ ༽つ
     ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')
 
-  writes = "collectd." + ghostname + ".disk-" + @_disk + ".disk_merged.write"
-  reads = "collectd." + ghostname + ".disk-" + @_disk + ".disk_merged.read"
+  writes = "collectd." + ghostname + ".disk-" + @disk + ".disk_merged.write"
+  reads = "collectd." + ghostname + ".disk-" + @disk + ".disk_merged.read"
 %>
 field :Written, :color => "green",
                :alias => "Merged Writes",

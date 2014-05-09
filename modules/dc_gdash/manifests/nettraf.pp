@@ -16,8 +16,16 @@ define dc_gdash::nettraf (
   $_interface = regsubst($title, '\#.*', '\1'),
 ) {
 
-  $tplpath = '/var/www/gdash/graph_templates'
-  $hostpath = "${tplpath}/hosts/${_hostname}"
+  $tplpath = '/var/www/gdash/graph_templates/network'
+  $hostpath = "${tplpath}/${_hostname}"
+
+  ensure_resource('file', $hostpath, { 'ensure' => 'directory', 'purge' => 'true' })
+
+  # Evaluate the template outside of the ensure_resource function
+  # as it doesn't get evaluated for some reason
+  $yaml = template('dc_gdash/nettraf.dash.yaml.erb')
+          
+  ensure_resource('file', "${hostpath}/dash.yaml", { 'ensure' => 'present', 'content' => "$yaml", 'require' => "File[$hostpath]"})
 
   file { "${hostpath}/nettraf.${_interface}.graph": 
     content => template('dc_gdash/nettraf.graph.erb'),
