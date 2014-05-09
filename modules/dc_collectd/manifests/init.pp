@@ -60,6 +60,8 @@ class dc_collectd (
     include dc_collectd::snmp
   }
 
+  include dc_collectd::disks
+
   contain 'collectd'
 
 }
