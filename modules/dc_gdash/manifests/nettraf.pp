@@ -30,5 +30,12 @@ define dc_gdash::nettraf (
   file { "${hostpath}/nettraf.${_interface}.graph": 
     content => template('dc_gdash/nettraf.graph.erb'),
   }
+  
+  file { "${hostpath}/netpackets.${_interface}.graph": 
+    content => template('dc_gdash/netpackets.graph.erb'),
+  }
 
+  file { "${hostpath}/neterrors.${_interface}.graph": 
+    content => template('dc_gdash/neterrors.graph.erb'),
+  }
 }
