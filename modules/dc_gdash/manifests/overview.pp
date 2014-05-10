@@ -19,7 +19,7 @@ define dc_gdash::overview (
 
   file { $hostpath:
     ensure  => directory,
-    recurse => true,
+    purge => true,
   }
 
   file { "${hostpath}/dash.yaml":
