@@ -1,18 +1,18 @@
 title   "Network interface <%= @_interface %> traffic on <%= @_hostname %>"
-vtitle "Bits/s"
+vtitle "Packets/s"
 area    :first
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
   # ༼ つ ◕_◕ ༽つ
   ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
-  rxoctets = "collectd." + ghostname + ".interface-" + @_interface + ".if_octets.rx"
-  txoctets = "collectd." + ghostname + ".interface-" + @_interface + ".if_octets.tx"
+  rxpackets = "collectd." + ghostname + ".interface-" + @_interface + ".if_octets.rx"
+  txpackets = "collectd." + ghostname + ".interface-" + @_interface + ".if_octets.tx"
 %>
 field :receiving, :color => "green",
                :alias => "Receiving (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxoctets %>),1)"
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxpackets %>),1)"
 
 field :transmitting, :color => "blue",
                :alias => "Transmitting (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= txoctets %>),1)"
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= txpackets %>),1)"
