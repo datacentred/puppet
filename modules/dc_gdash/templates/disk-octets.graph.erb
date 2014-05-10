@@ -8,8 +8,8 @@ hide_legend false
     ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')
   # Handle the naming in collectd for HP blade raid arrays
     if @disk =~ /^c0d0/
-        writes = "collectd." + ghostname + ".disk-cciss" + @disk + ".disk_octets.write"
-        reads = "collectd." + ghostname + ".disk-cciss" + @disk + ".disk_octets.read"
+        writes = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_octets.write"
+        reads = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_octets.read"
     else
         writes = "collectd." + ghostname + ".disk-" + @disk + ".disk_octets.write"
         reads = "collectd." + ghostname + ".disk-" + @disk + ".disk_octets.read"
