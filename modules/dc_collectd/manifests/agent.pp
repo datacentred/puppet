@@ -24,6 +24,7 @@ class dc_collectd::agent {
 
   # Get all our mount points into an array
   $mounts_array = split($::mounts, ',')
+  
   class { 'collectd::plugin::df':
     mountpoints => $mounts_array
   }
