@@ -1,0 +1,48 @@
+title   "CPU stats for <%= @cpu %> on <%= @_hostname %>"
+vtitle "Jiffies"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  # ༼ つ ◕_◕ ༽つ
+  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
+  cpuidle = "collectd." + ghostname + "." + @cpu + ".cpu-idle"
+  cpunice = "collectd." + ghostname + "." + @cpu + ".cpu-nice"
+  cpusoftirq = "collectd." + ghostname + "." + @cpu + ".cpu-softirq"
+  cpusteal = "collectd." + ghostname + "." + @cpu + ".cpu-steal"
+  cpusystem = "collectd." + ghostname + "." + @cpu + ".cpu-system"
+  cpuwait = "collectd." + ghostname + "." + @cpu + ".cpu-wait"
+  cpuinterrupt = "collectd." + ghostname + "." + @cpu + ".cpu-interrupt"
+  cpuuser = "collectd." + ghostname + "." + @cpu + ".cpu-user"
+%>
+field :idle, :color => "white",
+               :alias => "Idle",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpuidle %>),1)"
+
+field :nice, :color => "green",
+               :alias => "Nice",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpunice %>),1)"
+               
+field :user, :color => "blue",
+               :alias => "User",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpuuser %>),1)"
+               
+field :wait, :color => "yellow",
+               :alias => "Wait-IO",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpuwait %>),1)"
+
+field :system, :color => "red",
+               :alias => "System",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpusystem %>),1)"
+
+field :softirq, :color => "pink",
+               :alias => "SoftIRQ",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpusoftirq %>),1)"
+
+field :interrupt, :color => "purple",
+               :alias => "IRQ",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpuinterrupt %>),1)"
+
+field :steal, :color => "black",
+               :alias => "Steal",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= cpusteal %>),1)"
