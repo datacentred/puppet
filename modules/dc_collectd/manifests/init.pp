@@ -28,6 +28,8 @@ class dc_collectd (
   class { 'collectd::plugin::load': }
 
   class { 'collectd::plugin::memory': }
+  
+  class { 'collectd::plugin::cpu': }
 
   class { 'collectd::plugin::disk': 
     disks          => ['/^dm/'],
