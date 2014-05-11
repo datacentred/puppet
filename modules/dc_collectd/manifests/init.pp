@@ -36,8 +36,10 @@ class dc_collectd (
     ignoreselected => true,
   }
 
+  # Get all our mount points into an array
+  $mounts_array = split($::mounts, ',')
   class { 'collectd::plugin::df':
-    mountpoints => [ '/var', '/' ]
+    mountpoints => $mounts_array
   }
 
   class { 'collectd::plugin::interface': 
