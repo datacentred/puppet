@@ -33,6 +33,12 @@ class dc_collectd (
     disks          => ['/^dm/'],
     ignoreselected => true,
   }
+  
+  class { 'collectd::plugin::cpu': }
+
+  class { 'collectd::plugin::df':
+    mountpoints => [ '/var', '/' ]
+  }
 
   class { 'collectd::plugin::interface': 
     interfaces => $_interfaces,
