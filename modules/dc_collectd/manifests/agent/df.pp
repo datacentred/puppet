@@ -1,4 +1,4 @@
-class dc_collectd::df {
+class dc_collectd::agent::df {
 
   $df_array = split($::mounts,',')
 

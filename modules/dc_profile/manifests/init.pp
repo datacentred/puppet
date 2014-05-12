@@ -27,7 +27,7 @@ class dc_profile {
     contain dc_profile::auth::sudoers
     if $::environment == 'production' {
       contain dc_profile::puppet::mcollective_host
-      contain dc_profile::perf::collectd
+      contain dc_profile::perf::collectd::agent
       contain dc_profile::net::mail
       contain dc_profile::mon::nsca_client
       contain dc_profile::mon::icinga_client
