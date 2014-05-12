@@ -187,7 +187,7 @@ def wait_job():
             queue.get(False)
         except Queue.Empty:
             break
-        coalesce_size++
+        coalesce_size += 1
     lock.release()
 
 def dequeue_job():
