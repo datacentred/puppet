@@ -26,7 +26,8 @@ class dc_puppet::master::err::install {
     'pyasn1-modules',
     '3to2',
     'daemonize',
-    'markupsafe'
+    'markupsafe',
+    'python-simple-hipchat'
   ]:
     ensure   => installed,
     provider => 'pip',

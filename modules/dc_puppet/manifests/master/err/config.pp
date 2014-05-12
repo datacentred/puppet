@@ -10,7 +10,10 @@
 #
 # Sample Usage:
 #
-class dc_puppet::master::err::config {
+class dc_puppet::master::err::config (
+  $err_hipchat_token = undef,
+  $err_hipchat_room = undef,
+) {
 
   $xmpp_jid  = hiera(xmpp_jid)
   $xmpp_pass = hiera(xmpp_pass)

@@ -9,11 +9,13 @@ import json
 import threading
 import Queue
 import base64
+import hipchat
 
 # A queue to store requests
 queue = Queue.Queue()
 branches = []
 coalesce_size = 0
+hipster = hipchat.HipChat(token='<%= @err_hipchat_token %>')
 
 class MLStripper(HTMLParser):
     """
@@ -168,6 +170,9 @@ def foreman_sync():
 
 lock = threading.Lock()
 
+def talk_async(message):
+    hipster.message_room(<%= @err_hipchat_room %>, 'Robocopy', message)
+
 def enqueue_job(branch):
     """Add a branch merge to the job queue(s)"""
     lock.acquire()
@@ -195,6 +200,10 @@ def dequeue_job():
     """Remove the job(s) from the job queue(s)"""
     global coalesce_size
     lock.acquire()
+    message = "/quote Your move creep:\n"
+    for environment in branches[:coalesce_size]:
+        message += "  {0}\n".format(environment)
+    talk_async(message)
     # Pop and ack all the jobs we coalesced
     for temp in range(coalesce_size):
         branches.pop(0)
