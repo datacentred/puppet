@@ -1,29 +1,17 @@
-# Class: dc_collectd
+# Class: dc_collectd::agent
 #
-# Set up collectd to collect a standard set of metrics for a give host
+# Set up collectd to collect a standard set of metrics for a given host
 #
-# Actions: Hooks into dc_gdash for dynamic dashboard graph generation
+# Actions: Configures collectd metrics for a server agent
 #
-# Requires: collectd, dc_gdash
+# Requires: collectd
 #
-# Sample Usage: dc_gdash::nettraf { 'eth0#gdash': }
-#
-# Class: dc_collectd
-#
-class dc_collectd (
-  $graphite_server = '',
-) {
+class dc_collectd::agent {
 
   # Compile array of interface names.  If it's a bridge or OVS
   # interface then it'll have had the hyphen swapped out for an underscore
   # by Facter.  We need to change that back before we do anything else.
   $_interfaces = regsubst(regsubst(split($::interfaces, ','), 'br_', 'br-', 'G'), 'ovs_', 'ovs-', 'G')
-
-  class { '::collectd':
-    purge        => true,
-    recurse      => true,
-    purge_config => true,
-  }
 
   class { 'collectd::plugin::load': }
 
@@ -46,11 +34,6 @@ class dc_collectd (
     interfaces => $_interfaces,
   }
 
-  # Configure collectd to send its output to carbon
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => $graphite_server,
-  }
-
   # Export virtual resource for load and memory
   @@dc_gdash::overview { $::hostname: }
 
@@ -68,8 +51,6 @@ class dc_collectd (
     include dc_collectd::snmp
   }
 
-  include dc_collectd::disks
-
-  contain 'collectd'
+  include dc_collectd::agent::disks
 
 }
