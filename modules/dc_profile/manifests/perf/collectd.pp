@@ -1,6 +1,6 @@
 # Class: dc_profile::perf::collectd
 #
-# Installs performance counter collection
+# Installs collectd
 #
 # Parameters:
 #
@@ -12,8 +12,18 @@
 #
 class dc_profile::perf::collectd {
 
-  class { 'dc_collectd':
-    graphite_server => hiera(graphite_server),
+  class { '::collectd':
+    purge        => true,
+    recurse      => true,
+    purge_config => true,
   }
+
+  # Configure collectd to send its output to carbon
+  class { 'collectd::plugin::write_graphite':
+    graphitehost => hiera('graphite_server'),
+  }
+
+  contain 'collectd'
+  contain 'collectd::plugin::write_graphite'
 
 }
