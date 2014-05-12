@@ -13,6 +13,7 @@ import base64
 # A queue to store requests
 queue = Queue.Queue()
 branches = []
+coalesce_size = 0
 
 class MLStripper(HTMLParser):
     """
@@ -169,30 +170,44 @@ lock = threading.Lock()
 
 def enqueue_job(branch):
     """Add a branch merge to the job queue(s)"""
-    queue.put(0)
     lock.acquire()
     branches.append(branch)
     lock.release()
+    queue.put(0)
 
 def wait_job():
     """Wait for a job to become available"""
     queue.get()
+    # Dequeue as many jobs as possible and merge
+    # into a single synchronisation
+    lock.acquire()
+    coalesce_size = 1
+    while True:
+        try:
+            queue.get(False)
+        except Queue.Empty:
+            break
+        coalesce_size++
+    lock.release()
 
 def dequeue_job():
-    """Remove the job from the job queue(s)"""
+    """Remove the job(s) from the job queue(s)"""
     lock.acquire()
-    branches.pop(0)
+    # Pop and ack all the jobs we coalesced
+    for temp in range(coalesce_size):
+        branches.pop(0)
+        queue.task_done()
+    coalesce_size = 0
     lock.release()
-    queue.task_done()
 
 def kill_environment():
     """Kill off a dynamic environment"""
     lock.acquire()
-    env = branches[0]
+    for environment in branches[:coalesce_size]:
+        ary = environment.split('/')
+        if len(ary) == 2:
+            git_delete(ary[1])
     lock.release()
-    ary = env.split('/')
-    if len(ary) == 2:
-        git_delete(ary[1])
 
 def dump_queue():
     """Print out the current job queue status"""
@@ -201,11 +216,12 @@ def dump_queue():
     if len(branches) == 0:
         output += "Job queue empty"
     else:
-        output += "Current job:\n"
-        output += "  {0}\n".format(branches[0])
-        if len(branches) > 1:
+        output += "Current job(s):\n"
+        for i in branches[:coalesce_size]:
+            output += "  {0}\n".format(i)
+        if len(branches) > coalesce_size:
             output += "Queued job(s):\n"
-            for i in branches[1:]:
+            for i in branches[coalesce_size:]:
                 output += "  {0}\n".format(i)
     lock.release()
     return output
@@ -297,3 +313,4 @@ class GitHub(BotPlugin):
         """Interrogate the run queue"""
         return dump_queue()
     
+# vim: set syntax=python ts=4 et:
