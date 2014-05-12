@@ -45,16 +45,8 @@ class dc_collectd::agent {
   # interface
   @@dc_gdash::nettraf { $ifhashhost: }
 
-  # If this is defined (currently set as a top-scope variable by Foreman),
-  # then configure collectd to gather statistics from SNMP-enabled devices
-  if $::snmptargets {
-    include dc_collectd::snmp
-  }
-
   include dc_collectd::agent::disks
-  include dc_collectd::cpu
-  include dc_collectd::df
-
-  contain 'collectd'
+  include dc_collectd::agent::cpu
+  include dc_collectd::agent::df
 
 }
