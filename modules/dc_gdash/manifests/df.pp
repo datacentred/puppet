@@ -35,7 +35,7 @@ define dc_gdash::df (
   }
 
   file { "${hostpath}/df_complex.${mount}.graph": 
-    content => template('dc_gdash/df-complex.graph.erb'),
+    content => template('dc_gdash/df_complex.graph.erb'),
     require => File[$hostpath],
   }
 
