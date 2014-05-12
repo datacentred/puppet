@@ -49,6 +49,7 @@ class dc_collectd (
   # Configure collectd to send its output to carbon
   class { 'collectd::plugin::write_graphite':
     graphitehost => $graphite_server,
+    storerates   => false,
   }
 
   # Export virtual resource for load and memory
