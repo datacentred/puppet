@@ -1,4 +1,4 @@
-# Class: dc_gdash::hostgraph
+# Class: dc_gdash::overview
 #
 # Creates a basic graph template in the host's graph folder
 #
@@ -8,9 +8,9 @@
 #
 # Requires:
 #
-# Sample Usage: dc_gdash::hostgraph { 'hostname': }
+# Sample Usage: dc_gdash::overview { 'hostname': }
 #
-define dc_gdash::hostgraph (
+define dc_gdash::overview (
   $_hostname = $title,
 ) {
 
@@ -19,7 +19,7 @@ define dc_gdash::hostgraph (
 
   file { $hostpath:
     ensure  => directory,
-    recurse => true,
+    purge => true,
   }
 
   file { "${hostpath}/dash.yaml":

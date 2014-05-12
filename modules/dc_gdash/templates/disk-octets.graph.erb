@@ -1,4 +1,4 @@
-title   "Disk Throughput for <%= @_disk %> on <%= @_hostname %>"
+title   "Disk Throughput for <%= @disk %> on <%= @_hostname %>"
 vtitle   "Bytes/s"
 area    :first
 hide_legend false
@@ -6,9 +6,14 @@ hide_legend false
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
   # ༼ つ ◕_◕ ༽つ
     ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')
-
-  writes = "collectd." + ghostname + ".disk-" + @_disk + ".disk_octets.write"
-  reads = "collectd." + ghostname + ".disk-" + @_disk + ".disk_octets.read"
+  # Handle the naming in collectd for HP blade raid arrays
+    if @disk =~ /^c0d0/
+        writes = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_octets.write"
+        reads = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_octets.read"
+    else
+        writes = "collectd." + ghostname + ".disk-" + @disk + ".disk_octets.write"
+        reads = "collectd." + ghostname + ".disk-" + @disk + ".disk_octets.read"
+    end
 %>
 field :Written, :color => "green",
                :alias => "Writes",

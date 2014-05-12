@@ -28,10 +28,18 @@ class dc_collectd (
   class { 'collectd::plugin::load': }
 
   class { 'collectd::plugin::memory': }
+  
+  class { 'collectd::plugin::cpu': }
 
   class { 'collectd::plugin::disk': 
     disks          => ['/^dm/'],
     ignoreselected => true,
+  }
+
+  # Get all our mount points into an array
+  $mounts_array = split($::mounts, ',')
+  class { 'collectd::plugin::df':
+    mountpoints => $mounts_array
   }
 
   class { 'collectd::plugin::interface': 
@@ -44,7 +52,7 @@ class dc_collectd (
   }
 
   # Export virtual resource for load and memory
-  @@dc_gdash::hostgraph { $::hostname: }
+  @@dc_gdash::overview { $::hostname: }
 
   # Compile array of unique interface-shorthostname combos for export
   # in the format ifname#shorthostname
@@ -59,6 +67,8 @@ class dc_collectd (
   if $::snmptargets {
     include dc_collectd::snmp
   }
+
+  include dc_collectd::disks
 
   contain 'collectd'
 
