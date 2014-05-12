@@ -38,4 +38,16 @@ class dc_gdash::dashboards {
     purge   => true,
     require => File[$tplpath]
   }
+
+  file { $dftplpath:
+    ensure  => directory,
+    purge   => true,
+    require => File[$tplpath],
+  }
+  
+  file { $cputplpath:
+    ensure  => directory,
+    purge   => true,
+    require => File[$tplpath],
+  }
 }
