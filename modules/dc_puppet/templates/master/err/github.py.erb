@@ -177,6 +177,7 @@ def enqueue_job(branch):
 
 def wait_job():
     """Wait for a job to become available"""
+    global coalesce_size
     queue.get()
     # Dequeue as many jobs as possible and merge
     # into a single synchronisation
@@ -192,6 +193,7 @@ def wait_job():
 
 def dequeue_job():
     """Remove the job(s) from the job queue(s)"""
+    global coalesce_size
     lock.acquire()
     # Pop and ack all the jobs we coalesced
     for temp in range(coalesce_size):
