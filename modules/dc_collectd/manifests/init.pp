@@ -69,6 +69,8 @@ class dc_collectd (
   }
 
   include dc_collectd::disks
+  include dc_collectd::cpu
+  include dc_collectd::df
 
   contain 'collectd'
 
