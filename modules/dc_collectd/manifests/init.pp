@@ -29,7 +29,7 @@ class dc_collectd (
 
   class { 'collectd::plugin::memory': }
   
-  class { 'collectd::plugin::cpu': }
+  #  class { 'collectd::plugin::cpu': }
 
   class { 'collectd::plugin::disk': 
     disks          => ['/^dm/'],
@@ -37,10 +37,10 @@ class dc_collectd (
   }
 
   # Get all our mount points into an array
-  $mounts_array = split($::mounts, ',')
-  class { 'collectd::plugin::df':
-    mountpoints => $mounts_array
-  }
+  #$mounts_array = split($::mounts, ',')
+  #class { 'collectd::plugin::df':
+  #  mountpoints => $mounts_array
+  #}
 
   class { 'collectd::plugin::interface': 
     interfaces => $_interfaces,
@@ -69,8 +69,8 @@ class dc_collectd (
   }
 
   include dc_collectd::disks
-  include dc_collectd::cpu
-  include dc_collectd::df
+  #include dc_collectd::cpu
+  #include dc_collectd::df
 
   contain 'collectd'
 
