@@ -1,4 +1,4 @@
-class dc_collectd::cpu {
+class dc_collectd::agent::cpu {
 
   $cpu_array = prefix((split($::cpunumbers,',')),'cpu-')
 
