@@ -213,7 +213,9 @@ def kill_environment():
 
 def dump_queue():
     """Print out the current job queue status"""
-    output = ""
+    # Multi line input must be given via /quote
+    # or the newlines will be ignored
+    output = "/quote "
     lock.acquire()
     if len(branches) == 0:
         output += "Job queue empty"
