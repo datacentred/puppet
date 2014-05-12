@@ -30,7 +30,7 @@ define dc_gdash::df (
   ensure_resource('file', "${hostpath}/dash.yaml", { 'ensure' => 'present', 'content' => "$yaml", 'require' => "File[$hostpath]"}) 
 
   file { "${hostpath}/df_inodes.${mount}.graph": 
-    content => template('dc_gdash/df-inodes.graph.erb'),
+    content => template('dc_gdash/df_inodes.graph.erb'),
     require => File[$hostpath],
   }
 
