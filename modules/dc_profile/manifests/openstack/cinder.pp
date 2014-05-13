@@ -41,7 +41,6 @@ class dc_profile::openstack::cinder {
     rabbit_port         => $nova_mq_port,
     rabbit_virtual_host => $nova_mq_vhost,
     package_ensure      => present,
-    enabled             => true,
   }
 
   class {'::cinder::api':
