@@ -11,6 +11,7 @@ import Queue
 import base64
 import hipchat
 import time
+import glob
 
 # A queue to store requests
 queue = Queue.Queue()
@@ -95,6 +96,22 @@ def git_delete(branch):
                      'git push origin :{0}'.format(branch)])
     subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
                      'rm -rf /etc/puppet/environments/{0}'.format(branch)])
+
+def git_resolve_branch(branch):
+    """Resolve the true branch name from what hipchat spits out"""
+    try:
+        branch = branch.split('/')[1]
+    except:
+        logging.warning('[Git] Error parsing "{0}"'.format(branch))
+        return 'invalid_branch_name'
+    match = re.match(r'(.*)[\.]{3}$', branch)
+    if match == None:
+        return branch
+    dirs = glob.glob('/etc/puppet/environments/{0}*'.format(match.group(1)))
+    if len(dirs) != 1:
+        logging.warning('[Git] Multiple matches for {0}'.format(branch)
+        return 'ambiguous_branch_name'
+    return dirs[0]
 
 ##############################################################################
 # Foreman
@@ -322,7 +339,7 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), get_pony(),
                       message_type=message.getType())
-            enqueue_job(match.group(5))
+            enqueue_job(git_resolve_branch(match.group(5)))
 
     @botcmd
     def pony(self, msg, args):
