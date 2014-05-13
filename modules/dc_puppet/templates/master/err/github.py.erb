@@ -12,12 +12,14 @@ import base64
 import hipchat
 import time
 import glob
+import os
 
 # A queue to store requests
 queue = Queue.Queue()
 branches = []
 coalesce_size = 0
 hipster = hipchat.HipChat(token='<%= @err_hipchat_token %>')
+faux_branch_name = 'not_a_real_branch'
 
 class MLStripper(HTMLParser):
     """
@@ -111,7 +113,7 @@ def git_resolve_branch(branch):
     if len(dirs) != 1:
         logging.warning('[Git] Multiple matches for {0}'.format(branch))
         return 'ambiguous_branch_name'
-    return dirs[0]
+    return os.path.basename(dirs[0])
 
 ##############################################################################
 # Foreman
@@ -246,9 +248,8 @@ def kill_environment():
     """Kill off a dynamic environment"""
     lock.acquire()
     for environment in branches[:coalesce_size]:
-        ary = environment.split('/')
-        if len(ary) == 2:
-            git_delete(ary[1])
+        if environment != faux_branch_name:
+            git_delete(environment)
     lock.release()
 
 def dump_queue():
@@ -349,7 +350,7 @@ class GitHub(BotPlugin):
     @botcmd
     def sync(self, msg, args):
         """Print a pony and sync the repos explicitly"""
-        enqueue_job('no-branch')
+        enqueue_job(faux_branch_name)
         return get_pony()
 
     @botcmd
