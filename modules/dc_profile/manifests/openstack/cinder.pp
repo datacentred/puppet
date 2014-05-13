@@ -49,7 +49,7 @@ class dc_profile::openstack::cinder {
     keystone_auth_host => "http://${keystone_host}:5000/v2.0",
     keystone_user      => 'cinder',
     keystone_password  => $keystone_cinder_password,
-    use_syslog         => true,
+    package_ensure     => present,
     enabled            => true,
   }
 
