@@ -35,6 +35,7 @@ class dc_profile::openstack::cinder {
   class {'::cinder':
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
     sql_connection      => "mysql://${cinder_db_user}:${cinder_db_pass}@${cinder_db_host}/${cinder_db}?charset=utf8",
+    mysql_module        => '2.2',
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
