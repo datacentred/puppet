@@ -109,7 +109,7 @@ def git_resolve_branch(branch):
         return branch
     dirs = glob.glob('/etc/puppet/environments/{0}*'.format(match.group(1)))
     if len(dirs) != 1:
-        logging.warning('[Git] Multiple matches for {0}'.format(branch)
+        logging.warning('[Git] Multiple matches for {0}'.format(branch))
         return 'ambiguous_branch_name'
     return dirs[0]
 
