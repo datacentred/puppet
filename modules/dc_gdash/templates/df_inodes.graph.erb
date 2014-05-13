@@ -1,0 +1,25 @@
+title   "Disk inode usage for <%= @mount %> on <%= @_hostname %>"
+vtitle "Inodes"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+    # ༼ つ ◕_◕ ༽つ
+  # Mounts come in from the title with underscores which need to be dashes
+  mount_rename = @mount.gsub(/_/,'-')
+  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
+  free = "collectd." + ghostname + ".df-" + @mount_rename + ".df_inodes-free"
+  reserved = "collectd." + ghostname + ".df-" + @mount_rename + ".df_inodes-reserved"
+  used = "collectd." + ghostname + ".df-" + @mount_rename + ".df_inodes-used"
+%>
+field :free, :color => "green",
+               :alias => "Free",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= free %>),1)"
+
+field :used, :color => "red",
+               :alias => "Used",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= used %>),1)"
+               
+field :reserved, :color => "yellow",
+               :alias => "Reserved",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= reserved %>),1)"

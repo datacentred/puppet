@@ -17,6 +17,7 @@ class dc_role::bigyellow {
   contain dc_profile::net::aptmirror
   contain dc_profile::net::nfsserver
   contain dc_profile::net::ponies
+  contain dc_profile::net::puppies
   contain dc_profile::net::tftpserver
 
 }

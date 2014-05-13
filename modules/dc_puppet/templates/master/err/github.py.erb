@@ -9,10 +9,15 @@ import json
 import threading
 import Queue
 import base64
+import hipchat
+import time
+import glob
 
 # A queue to store requests
 queue = Queue.Queue()
 branches = []
+coalesce_size = 0
+hipster = hipchat.HipChat(token='<%= @err_hipchat_token %>')
 
 class MLStripper(HTMLParser):
     """
@@ -92,6 +97,22 @@ def git_delete(branch):
     subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
                      'rm -rf /etc/puppet/environments/{0}'.format(branch)])
 
+def git_resolve_branch(branch):
+    """Resolve the true branch name from what hipchat spits out"""
+    try:
+        branch = branch.split('/')[1]
+    except:
+        logging.warning('[Git] Error parsing "{0}"'.format(branch))
+        return 'invalid_branch_name'
+    match = re.match(r'(.*)[\.]{3}$', branch)
+    if match == None:
+        return branch
+    dirs = glob.glob('/etc/puppet/environments/{0}*'.format(match.group(1)))
+    if len(dirs) != 1:
+        logging.warning('[Git] Multiple matches for {0}'.format(branch))
+        return 'ambiguous_branch_name'
+    return dirs[0]
+
 ##############################################################################
 # Foreman
 ##############################################################################
@@ -167,45 +188,84 @@ def foreman_sync():
 
 lock = threading.Lock()
 
+def talk_async(message):
+    """Aynchronously post a message to hipchat in html"""
+    hipster.message_room(
+        <%= @err_hipchat_room %>,
+        'Robocopy',
+        message,
+        'html',
+        'green'
+    )
+
 def enqueue_job(branch):
     """Add a branch merge to the job queue(s)"""
-    queue.put(0)
     lock.acquire()
     branches.append(branch)
     lock.release()
+    queue.put(0)
 
 def wait_job():
     """Wait for a job to become available"""
+    global coalesce_size
+    global start_time
     queue.get()
+    # Dequeue as many jobs as possible and merge
+    # into a single synchronisation
+    lock.acquire()
+    coalesce_size = 1
+    while True:
+        try:
+            queue.get(False)
+        except Queue.Empty:
+            break
+        coalesce_size += 1
+    lock.release()
+    start_time = time.time()
 
 def dequeue_job():
-    """Remove the job from the job queue(s)"""
+    """Remove the job(s) from the job queue(s)"""
+    global coalesce_size
+    end_time = time.time()
+    delta = end_time - start_time
     lock.acquire()
-    branches.pop(0)
+    message = "<b>Foreman Class Import</b><br />"
+    message += "Completed in {0:.2}s for branches<br />".format(delta)
+    for environment in branches[:coalesce_size]:
+        message += "&#9656; {0}<br />".format(environment)
+    message += "Your move creep!"
+    talk_async(message)
+    # Pop and ack all the jobs we coalesced
+    for temp in range(coalesce_size):
+        branches.pop(0)
+        queue.task_done()
+    coalesce_size = 0
     lock.release()
-    queue.task_done()
 
 def kill_environment():
     """Kill off a dynamic environment"""
     lock.acquire()
-    env = branches[0]
+    for environment in branches[:coalesce_size]:
+        ary = environment.split('/')
+        if len(ary) == 2:
+            git_delete(ary[1])
     lock.release()
-    ary = env.split('/')
-    if len(ary) == 2:
-        git_delete(ary[1])
 
 def dump_queue():
     """Print out the current job queue status"""
-    output = ""
+    # Multi line input must be given via /quote
+    # or the newlines will be ignored
+    output = "/quote "
     lock.acquire()
     if len(branches) == 0:
         output += "Job queue empty"
     else:
-        output += "Current job:\n"
-        output += "  {0}\n".format(branches[0])
-        if len(branches) > 1:
+        output += "Current job(s):\n"
+        for i in branches[:coalesce_size]:
+            output += "  {0}\n".format(i)
+        if len(branches) > coalesce_size:
             output += "Queued job(s):\n"
-            for i in branches[1:]:
+            for i in branches[coalesce_size:]:
                 output += "  {0}\n".format(i)
     lock.release()
     return output
@@ -279,7 +339,7 @@ class GitHub(BotPlugin):
                       message_type=message.getType())
             self.send(message.getFrom(), get_pony(),
                       message_type=message.getType())
-            enqueue_job(match.group(5))
+            enqueue_job(git_resolve_branch(match.group(5)))
 
     @botcmd
     def pony(self, msg, args):
@@ -297,3 +357,4 @@ class GitHub(BotPlugin):
         """Interrogate the run queue"""
         return dump_queue()
     
+# vim: set syntax=python ts=4 et:

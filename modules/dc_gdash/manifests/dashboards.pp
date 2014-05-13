@@ -14,6 +14,8 @@ class dc_gdash::dashboards {
   $disktplpath = "${tplpath}/disk_perf"
   $nettplpath = "${tplpath}/network"
   $overviewtplpath = "${tplpath}/overview"
+  $dftplpath = "${tplpath}/df"
+  $cputplpath = "${tplpath}/cpu"
 
   file { $tplpath:
     ensure  => directory,
@@ -35,5 +37,17 @@ class dc_gdash::dashboards {
     ensure  => directory,
     purge   => true,
     require => File[$tplpath]
+  }
+
+  file { $dftplpath:
+    ensure  => directory,
+    purge   => true,
+    require => File[$tplpath],
+  }
+  
+  file { $cputplpath:
+    ensure  => directory,
+    purge   => true,
+    require => File[$tplpath],
   }
 }
