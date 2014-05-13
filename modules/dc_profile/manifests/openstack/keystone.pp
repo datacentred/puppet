@@ -73,6 +73,25 @@ class dc_profile::openstack::keystone {
   }
   Keystone_endpoint <<| tag == 'glance_endpoint' |>>
 
+  # Cinder
+  keystone_user { 'cinder':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_cinder_password),
+    email    => $sysmailaddress,
+    tenant   => $os_service_tenant,
+  }
+  keystone_user_role { "cinder@${os_service_tenant}":
+    ensure => present,
+    roles  => 'admin',
+  }
+  keystone_service { 'cinder':
+    ensure      => present,
+    type        => 'volume',
+    description => 'Cinder Volume Service',
+  }
+  Keystone_endpoint <<| tag == 'cinder_endpoint' |>>
+
   # Nova bits
   keystone_user { 'nova':
     ensure   => present,

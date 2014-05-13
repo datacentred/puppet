@@ -16,9 +16,11 @@ class dc_role::controller1 {
   contain dc_profile::openstack::nova
   contain dc_profile::openstack::neutron_server
   contain dc_profile::openstack::neutron_common
+  contain dc_profile::openstack::cinder
 
   Class['dc_profile::openstack::nova_mq'] ->
   Class['dc_profile::openstack::nova'] ->
+  Class['dc_profile::openstack::cinder'] ->
   Class['dc_profile::openstack::neutron_server']
 
   # mysql-server is pulled in as a dependancy from python-mysql

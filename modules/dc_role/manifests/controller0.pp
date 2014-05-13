@@ -17,6 +17,7 @@ class dc_role::controller0 {
   contain dc_profile::openstack::glance_registry_db
   contain dc_profile::openstack::nova_db
   contain dc_profile::openstack::neutron_db
+  contain dc_profile::openstack::cinder_db
 
   contain dc_profile::openstack::keystone
   contain dc_profile::openstack::glance
