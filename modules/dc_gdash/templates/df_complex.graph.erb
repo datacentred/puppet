@@ -4,11 +4,12 @@ area    :first
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
-  # ༼ つ ◕_◕ ༽つ
+    # ༼ つ ◕_◕ ༽つ
+  mount_rename = @mount.gsub(/_/,'-')
   ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
-  free = "collectd." + ghostname + ".df-" + @mount + ".df_complex-free"
-  reserved = "collectd." + ghostname + ".df-" + @mount + ".df_complex-reserved"
-  used = "collectd." + ghostname + ".df-" + @mount + ".df_complex-used"
+  free = "collectd." + ghostname + ".df-" + @mount_rename + ".df_complex-free"
+  reserved = "collectd." + ghostname + ".df-" + @mount_rename + ".df_complex-reserved"
+  used = "collectd." + ghostname + ".df-" + @mount_rename + ".df_complex-used"
 %>
 field :free, :color => "green",
                :alias => "Free",
