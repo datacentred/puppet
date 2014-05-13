@@ -8,7 +8,7 @@ class dc_collectd::agent::df {
   # These then need converting to dashes in the gdash template
   $df_array_convert = regsubst($df_array_deslash, '/', '_', 'G')
 
-  $dfhashhost = suffix($df_array, "#${::hostname}")
+  $dfhashhost = suffix($df_array_convert, "#${::hostname}")
 
   @@dc_gdash::df { $dfhashhost: }
 
