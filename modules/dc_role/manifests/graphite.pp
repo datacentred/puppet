@@ -17,6 +17,6 @@ class dc_role::graphite {
 
   # Use this server to poll remote SNMP targets
   # defined in hiera
-  contain dc_profile:perf::collectd::poller
+  contain dc_profile::perf::collectd::poller
 
 }
