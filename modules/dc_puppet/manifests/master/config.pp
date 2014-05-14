@@ -17,6 +17,9 @@ class dc_puppet::master::config {
   $envdir         = $dc_puppet::params::envdir
   $production_env = "${envdir}/production"
 
+  include ::apache
+  include ::apache::mod::passenger
+
   # Install git, repo and clone default environments
   contain dc_puppet::master::git
   # Install the xmpp bot to monitor for pull requests
