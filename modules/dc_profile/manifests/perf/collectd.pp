@@ -18,9 +18,19 @@ class dc_profile::perf::collectd {
     purge_config => true,
   }
 
-  class { 'collectd::plugin::write_graphite':
-    graphitehost => hiera('graphite_server'),
-    storerates   => false,
+  if $::fqdn == 'graphite0.sal01.datacentred.co.uk' {
+    class { 'collectd::plugin::write_graphite':
+      graphitehost      => hiera('graphite_server'),
+      graphiteprefix    => 'rob.',
+      escapecharacter   => '.',
+      storerates        => false,
+      separateinstances => true,
+    }
+  } else {
+    class { 'collectd::plugin::write_graphite':
+      graphitehost => hiera('graphite_server'),
+      storerates   => false,
+    }
   }
 
   contain collectd
