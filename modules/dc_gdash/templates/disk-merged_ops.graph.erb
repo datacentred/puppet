@@ -4,8 +4,9 @@ area    :first
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
-  # ༼ つ ◕_◕ ༽つ
-    ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')
+    # ༼ つ ◕_◕ ༽つ
+    reversedomain = join(reverse(split(@domain, '.'),'.')
+    ghostname  = reversedomain + "." + @_hostname
   # Handle the naming in collectd for HP blade raid arrays
     if @disk =~ /^c0d0/
         writes = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_merged.write"

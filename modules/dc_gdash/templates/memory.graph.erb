@@ -5,7 +5,9 @@ description "RAM usage (in percent)"
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
-  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')  
+  reversedomain = join(reverse(split(@domain, '.'),'.')
+  ghostname  = reversedomain + "." + @_hostname
+
   memused   = "collectd." + ghostname + ".memory.memory-used" 
   memfree   = "collectd." + ghostname + ".memory.memory-free"
   memcached = "collectd." + ghostname + ".memory.memory-cached"
