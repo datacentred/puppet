@@ -73,9 +73,6 @@
 [submodule "modules/puppetdbquery"]
 	path = modules/puppetdbquery
 	url = https://github.com/dalen/puppet-puppetdbquery
-[submodule "modules/collectd"]
-	path = modules/collectd
-	url = https://github.com/pdxcat/puppet-module-collectd.git
 [submodule "modules/mcollective"]
 	path = modules/mcollective
 	url = https://github.com/spjmurray/puppetlabs-mcollective
@@ -194,3 +191,6 @@
 	path = modules/logrotate
 	url = https://github.com/blkperl/puppet-logrotate.git
 	branch = trusty_fixes
+[submodule "modules/collectd"]
+	path = modules/collectd
+	url = git@github.com:datacentred/puppet-module-collectd.git
