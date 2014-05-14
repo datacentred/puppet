@@ -87,7 +87,7 @@ class dc_profile::openstack::keystone {
   }
   keystone_service { 'cinder':
     ensure      => present,
-    type        => 'volume',
+    type        => 'volumev2',
     description => 'Cinder Volume Service',
   }
   Keystone_endpoint <<| tag == 'cinder_endpoint' |>>
