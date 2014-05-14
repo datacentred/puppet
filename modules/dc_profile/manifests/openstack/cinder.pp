@@ -55,9 +55,10 @@ class dc_profile::openstack::cinder {
 
   @@keystone_endpoint { "${os_region}/cinder":
     ensure       => present,
-    public_url   => "http://${::fqdn}:${cinder_port}/v2",
-    admin_url    => "http://${::fqdn}:${cinder_port}/v2",
-    internal_url => "http://${::fqdn}:${cinder_port}/v2",
+    public_url   => "http://${::fqdn}:${cinder_port}/v2/%(tenant_id)s",
+    admin_url    => "http://${::fqdn}:${cinder_port}/v2/%(tenant_id)s",
+    internal_url => "http://${::fqdn}:${cinder_port}/v2/%(tenant_id)s",
+    tag          => 'cinder_endpoint',
   }
 
   class {'::cinder::scheduler':
