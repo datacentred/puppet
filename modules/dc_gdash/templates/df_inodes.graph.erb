@@ -8,9 +8,9 @@ hide_legend false
   # Mounts come in from the title with underscores which need to be dashes
   mount_rename = @mount.gsub(/_/,'-')
   ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
-  free = "collectd." + ghostname + ".df-" + @mount_rename + ".df_inodes-free"
-  reserved = "collectd." + ghostname + ".df-" + @mount_rename + ".df_inodes-reserved"
-  used = "collectd." + ghostname + ".df-" + @mount_rename + ".df_inodes-used"
+  free = "collectd." + ghostname + ".df-" + mount_rename + ".df_inodes-free"
+  reserved = "collectd." + ghostname + ".df-" + mount_rename + ".df_inodes-reserved"
+  used = "collectd." + ghostname + ".df-" + mount_rename + ".df_inodes-used"
 %>
 field :free, :color => "green",
                :alias => "Free",

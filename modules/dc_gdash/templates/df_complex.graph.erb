@@ -7,9 +7,9 @@ hide_legend false
     # ༼ つ ◕_◕ ༽つ
   mount_rename = @mount.gsub(/_/,'-')
   ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
-  free = "collectd." + ghostname + ".df-" + @mount_rename + ".df_complex-free"
-  reserved = "collectd." + ghostname + ".df-" + @mount_rename + ".df_complex-reserved"
-  used = "collectd." + ghostname + ".df-" + @mount_rename + ".df_complex-used"
+  free = "collectd." + ghostname + ".df-" + mount_rename + ".df_complex-free"
+  reserved = "collectd." + ghostname + ".df-" + mount_rename + ".df_complex-reserved"
+  used = "collectd." + ghostname + ".df-" + mount_rename + ".df_complex-used"
 %>
 field :free, :color => "green",
                :alias => "Free",
