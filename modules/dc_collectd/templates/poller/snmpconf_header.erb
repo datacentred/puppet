@@ -1,8 +1,38 @@
 LoadPlugin snmp
 <Plugin snmp>
-  <Data "traffic">
-    Type "if_octets"
-    Table true
-    Instance "IF-MIB::ifName"
-    Values "IF-MIB::ifHCInOctets" "IF-MIB::ifHCOutOctets"
-  </Data>
+  <Data "std_if_traffic">
+       Type "if_octets"
+       Table true
+       Instance "IF-MIB::ifName"
+       Values "IF-MIB::ifHCInOctets" "IF-MIB::ifHCOutOctets"
+   </Data>
+   <Data "std_if_errors">
+       Type "if_errors"
+       Table true
+       Instance "IF-MIB::ifName"
+       Values "IF-MIB::ifInErrors" "IF-MIB::ifOutErrors"
+   </Data>
+   <Data "std_if_dropped">
+       Type "if_dropped"
+       Table true
+       Instance "IF-MIB::ifName"
+       Values "IF-MIB::ifInDiscards" "IF-MIB::ifOutDiscards"
+   </Data>
+   <Data "std_if_packets_ucast">
+       Type "if_packets"
+       Table true
+       Instance "IF-MIB::ifName"
+       Values "IF-MIB::ifHCInUcastPkts" "IF-MIB::ifHCOutUcastPkts"
+   </Data>
+   <Data "std_if_packets_mcast">
+       Type "if_packets"
+       Table true
+       Instance "IF-MIB::ifName"
+       Values "IF-MIB::ifHCInMulticastPkts" "IF-MIB::ifHCInMulticastPkts"
+   </Data>
+   <Data "std_if_packets_bcast">
+       Type "if_packets"
+       Table true
+       Instance "IF-MIB::ifName"
+       Values "IF-MIB::ifHCInBroadcastPkts" "IF-MIB::ifHCInBroadcastPkts"
+   </Data>

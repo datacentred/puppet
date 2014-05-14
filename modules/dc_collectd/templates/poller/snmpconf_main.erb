@@ -1,12 +1,12 @@
-<Host "<%= @title %>">
-  Address "<%= @ip %>"
-  Version 3
-  Username "<%= @snmp_username %>"
-  AuthProtocol "<%= @snmp_auth_protocol %>"
-  AuthPassphrase "<%= @snmp_auth_password %>"
-  PrivacyProtocol "<%= @snmp_privacy_protocol %>"
-  PrivacyPassphrase "<%= @snmp_privacy_password %>"
-  SecurityLevel "authPriv"
-  Collect "traffic"
-  Interval <%= @interval %>
-</Host>
+  <Host "<%= @title %>">
+    Address "<%= @ip %>"
+    Version 3
+    Username "<%= @snmp_username %>"
+    AuthProtocol "<%= @snmp_auth_protocol %>"
+    AuthPassphrase "<%= @snmp_auth_password %>"
+    PrivacyProtocol "<%= @snmp_privacy_protocol %>"
+    PrivacyPassphrase "<%= @snmp_privacy_password %>"
+    SecurityLevel "authPriv"
+    Collect "std_if_traffic", "std_if_errors", "std_if_dropped", "std_if_packets_ucast", "std_if_packets_mcast", "std_if_packets_bcast"
+    Interval <%= @interval %>
+  </Host>
