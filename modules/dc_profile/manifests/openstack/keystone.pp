@@ -86,9 +86,14 @@ class dc_profile::openstack::keystone {
     roles  => 'admin',
   }
   keystone_service { 'cinder':
+    ensure     => present,
+    type       => 'volume',
+    descrption => 'Cinder Volume Service',
+  }
+  keystone_service { 'cinderv2':
     ensure      => present,
-    type        => 'volume',
-    description => 'Cinder Volume Service',
+    type        => 'volumev2',
+    description => 'Cinder Volume Service V2',
   }
   Keystone_endpoint <<| tag == 'cinder_endpoint' |>>
 

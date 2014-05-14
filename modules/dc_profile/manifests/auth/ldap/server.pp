@@ -31,4 +31,29 @@ class dc_profile::auth::ldap::server {
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_ldap']
 
+  class { 'ldap::client':
+    uri       => 'ldaps://127.0.0.1',
+    base      => hiera(ldap::server::suffix),
+    ssl       => true,
+    ssl_cert  => '/etc/ssl/certs/datacentred-ca.crt',
+  }
+
+  $defaults = {
+    ensure      => present,
+    host        => '127.0.0.1',
+    port        => 636,
+    base        => hiera(ldap::server::suffix),
+    username    => hiera(ldap::server::rootdn),
+    password    => hiera(ldap::server::rootpw),
+  }
+
+  create_resources(ldap_entry, hiera(ldap_schema), $defaults)
+  create_resources(ldap_entry, hiera(ldap_users), $defaults)
+  create_resources(ldap_entry, hiera(ldap_groups), $defaults)
+
+  Ldap_entry <| tag == 'root' |> ->
+  Ldap_entry <| tag == 'organizational_unit' |> ->
+  Ldap_entry <| tag == 'user' |> ->
+  Ldap_entry <| tag == 'group_of_names' |>
+
 }
