@@ -11,14 +11,14 @@ hide_legend false
   reserved = "collectd." + ghostname + ".df-" + mount_rename + ".df_complex-reserved"
   used = "collectd." + ghostname + ".df-" + mount_rename + ".df_complex-used"
 %>
+field :used, :color => "yellow",
+               :alias => "Used",
+               :data  => "<%= used %>"
+
 field :free, :color => "green",
                :alias => "Free",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= free %>),1)"
-
-field :used, :color => "red",
-               :alias => "Used",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= used %>),1)"
+               :data  => "diffSeries(<%= free %>, <%= reserved %>)"
                
-field :reserved, :color => "yellow",
+field :reserved, :color => "red",
                :alias => "Reserved",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= reserved %>),1)"
+               :data  => "<%= reserved %>"
