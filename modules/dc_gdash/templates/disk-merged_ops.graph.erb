@@ -7,13 +7,13 @@ hide_legend false
     # ༼ つ ◕_◕ ༽つ
   # Handle the naming in collectd for HP blade raid arrays
     if @disk =~ /^c0d0/
-        ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".disk-cciss_" + @disk
+        ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".disk.cciss_" + @disk + ".disk_merged"
     else
-        ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".disk-" + @disk
+        ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".disk." + @disk + ".disk_merged"
     end
     
-    writes = ghostname + ".disk_merged.write"
-    reads = ghostname + ".disk_merged.read"
+    writes = ghostname + ".write"
+    reads = ghostname + ".read"
 %>
 field :Written, :color => "green",
                :alias => "Merged Writes",
