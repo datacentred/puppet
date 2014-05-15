@@ -1,6 +1,6 @@
 class dc_collectd::agent::cpu {
 
-  $cpu_array = prefix(split($::cpunumbers,','),'cpu-')
+  $cpu_array = split($::cpunumbers,',')
 
   $cpuhashhost = suffix($cpu_array, "#${::hostname}")
 
