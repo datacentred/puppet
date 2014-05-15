@@ -14,6 +14,7 @@
 define dc_gdash::diskperf (
   $_hostname = regsubst($title, '.*\#', '\1'),
   $disk = regsubst($title, '\#.*', '\1'),
+  $reversedomain = $dc_gdash::params::reversedomain
 ) {
 
   include stdlib

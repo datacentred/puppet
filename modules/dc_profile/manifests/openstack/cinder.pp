@@ -46,9 +46,10 @@ class dc_profile::openstack::cinder {
 
   class {'::cinder::api':
     keystone_enabled   => true,
-    keystone_auth_host => "http://${keystone_host}:5000/v2.0",
+    keystone_auth_host => $keystone_host,
     keystone_user      => 'cinder',
     keystone_password  => $keystone_cinder_password,
+    os_region_name     => $os_region,
     package_ensure     => present,
     enabled            => true,
   }

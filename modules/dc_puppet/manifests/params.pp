@@ -30,7 +30,7 @@ class dc_puppet::params (
   $libdir               = '/usr/lib/ruby/vendor_ruby/puppet'
 
   # Puppet master package to install
-  $master_package       = 'puppetmaster-passenger'
+  $master_package       = 'puppetmaster'
 
   # Puppet master service to refresh
   $master_service       = 'apache2'

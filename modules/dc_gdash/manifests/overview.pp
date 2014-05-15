@@ -12,6 +12,7 @@
 #
 define dc_gdash::overview (
   $_hostname = $title,
+  $reversedomain = $dc_gdash::params::reversedomain
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates/overview'

@@ -17,10 +17,4 @@ class dc_profile::perf::gdash {
     graphite_server => hiera(graphite_server),
   }
 
-  Dc_gdash::Hostgraph <<| |>>
-  Dc_gdash::Nettraf <<| |>>
-  Dc_gdash::Diskperf <<| |>>
-  Dc_gdash::Df <<| |>>
-  Dc_gdash::Cpu <<| |>>
-
 }

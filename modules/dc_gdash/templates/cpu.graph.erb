@@ -1,19 +1,19 @@
-title   "CPU stats for <%= @cpu %> on <%= @_hostname %>"
+title   "CPU stats for cpu-<%= @cpu %> on <%= @_hostname %>"
 vtitle "Percent"
 area    :none
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
-  # ༼ つ ◕_◕ ༽つ
-  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
-  cpuidle = "collectd." + ghostname + "." + @cpu + ".cpu-idle"
-  cpunice = "collectd." + ghostname + "." + @cpu + ".cpu-nice"
-  cpusoftirq = "collectd." + ghostname + "." + @cpu + ".cpu-softirq"
-  cpusteal = "collectd." + ghostname + "." + @cpu + ".cpu-steal"
-  cpusystem = "collectd." + ghostname + "." + @cpu + ".cpu-system"
-  cpuwait = "collectd." + ghostname + "." + @cpu + ".cpu-wait"
-  cpuinterrupt = "collectd." + ghostname + "." + @cpu + ".cpu-interrupt"
-  cpuuser = "collectd." + ghostname + "." + @cpu + ".cpu-user"
+    # ༼ つ ◕_◕ ༽つ
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".cpu." + @cpu
+  cpuidle = ghostname + ".idle"
+  cpunice = ghostname + ".nice"
+  cpusoftirq = ghostname + ".softirq"
+  cpusteal = ghostname + ".steal"
+  cpusystem = ghostname + ".system"
+  cpuwait = ghostname + ".wait"
+  cpuinterrupt = ghostname + ".interrupt"
+  cpuuser = ghostname + ".user"
 %>
 field :idle, :color => "green",
                :alias => "Idle",

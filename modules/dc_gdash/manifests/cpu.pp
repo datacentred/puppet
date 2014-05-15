@@ -14,6 +14,7 @@
 define dc_gdash::cpu (
   $_hostname = regsubst($title, '.*\#', '\1'),
   $cpu = regsubst($title, '\#.*', '\1'),
+  $reversedomain = $dc_gdash::params::reversedomain
 ) {
 
   include stdlib
