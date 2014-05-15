@@ -21,8 +21,12 @@ class dc_puppet::master::install {
     command => "rm -rf ${dc_puppet::params::ssldir}",
     path    => '/bin',
     creates => $ssl_valid_file,
-    before  => Package[$dc_puppet::params::master_package],
-  }
+  } ->
+
+  # Don't want this running as it will block apache
+  file { '/etc/default/puppetmaster':
+    content => "START=no\n",
+  } ->
 
   package { $dc_puppet::params::master_package:
     ensure => $dc_puppet::params::version,
