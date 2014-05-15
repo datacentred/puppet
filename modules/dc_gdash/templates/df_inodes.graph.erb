@@ -7,7 +7,7 @@ hide_legend false
     # ༼ つ ◕_◕ ༽つ
   # Mounts come in from the title with underscores which need to be dashes
   mount_rename = @mount.gsub(/_/,'-')
-  ghostname  = @reversedomain + "." + @_hostname + ".df-" + mount_rename
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".df-" + mount_rename
   free = ghostname + ".df_inodes-free"
   reserved = ghostname + ".df_inodes-reserved"
   used = ghostname + ".df_inodes-used"

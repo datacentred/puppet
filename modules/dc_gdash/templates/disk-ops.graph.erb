@@ -6,9 +6,9 @@ hide_legend false
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
     # ༼ つ ◕_◕ ༽つ
     if @disk =~ /^c0d0/
-        ghostname  = @reversedomain + "." + @_hostname + ".disk-cciss_" + @disk
+        ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".disk-cciss_" + @disk
     else
-        ghostname  = @reversedomain + "." + @_hostname + ".disk-" + @disk
+        ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".disk-" + @disk
     end
 
     writes = ghostname + ".disk_ops.write"
