@@ -14,6 +14,7 @@
 define dc_gdash::df (
   $_hostname = regsubst($title, '.*\#', '\1'),
   $mount = regsubst($title, '\#.*', '\1'),
+  $reversedomain = $dc_gdash::params::reversedomain
 ) {
 
   include stdlib

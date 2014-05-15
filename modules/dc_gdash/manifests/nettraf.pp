@@ -14,6 +14,7 @@
 define dc_gdash::nettraf (
   $_hostname = regsubst($title, '.*\#', '\1'),
   $_interface = regsubst($title, '\#.*', '\1'),
+  $reversedomain = $dc_gdash::params::reversedomain,
 ) {
 
   $tplpath = '/var/www/gdash/graph_templates/network'
