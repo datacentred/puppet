@@ -5,16 +5,15 @@ hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
   # ༼ つ ◕_◕ ༽つ
-    reversedomain = join(reverse(split(@domain, '.'),'.')
-    ghostname  = reversedomain + "." + @_hostname
-  # Handle the naming in collectd for HP blade raid arrays
-    if @disk =~ /^c0d0/
-        writes = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_octets.write"
-        reads = "collectd." + ghostname + ".disk-cciss_" + @disk + ".disk_octets.read"
+
+   if @disk =~ /^c0d0/
+        ghostname  = @reversedomain + "." + @_hostname + ".disk-cciss_" + @disk
     else
-        writes = "collectd." + ghostname + ".disk-" + @disk + ".disk_octets.write"
-        reads = "collectd." + ghostname + ".disk-" + @disk + ".disk_octets.read"
+        ghostname  = @reversedomain + "." + @_hostname + ".disk-" + @disk
     end
+
+    writes = ghostname + ".disk_octets.write"
+    reads = ghostname + ".disk_octets.read"
 %>
 field :Written, :color => "green",
                :alias => "Writes",
