@@ -20,4 +20,11 @@ class dc_gdash (
   class { 'dc_gdash::config': } ~>
   class { 'dc_gdash::dashboards': } ~>
   Class ['dc_gdash']
+
+  Dc_gdash::Hostgraph <<| |>>
+  Dc_gdash::Nettraf <<| |>>
+  Dc_gdash::Diskperf <<| |>>
+  Dc_gdash::Df <<| |>>
+  Dc_gdash::Cpu <<| |>>
+
 }
