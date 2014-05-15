@@ -12,9 +12,9 @@ hide_legend false
  
 %>
 field :receiving, :color => "green",
-               :alias => "Receiving (bps)",
+               :alias => "Receiving (packets)",
                :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxpackets %>),1)"
 
 field :transmitting, :color => "blue",
-               :alias => "Transmitting (bps)",
+               :alias => "Transmitting (packets)",
                :data  => "scaleToSeconds(nonNegativeDerivative(<%= txpackets %>),1)"
