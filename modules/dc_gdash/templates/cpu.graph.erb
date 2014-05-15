@@ -4,8 +4,9 @@ area    :none
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
-  # ༼ つ ◕_◕ ༽つ
-  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_') 
+    # ༼ つ ◕_◕ ༽つ
+  reversedomain = join(reverse(split(@domain, '.'),'.')
+  ghostname  = reversedomain + "." + @_hostname
   cpuidle = "collectd." + ghostname + "." + @cpu + ".cpu-idle"
   cpunice = "collectd." + ghostname + "." + @cpu + ".cpu-nice"
   cpusoftirq = "collectd." + ghostname + "." + @cpu + ".cpu-softirq"

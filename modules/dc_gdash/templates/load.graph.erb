@@ -5,7 +5,8 @@ description "The combined CPU usage for <%= @_hostname %>"
 hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
-  ghostname  = (@_hostname + "." + @domain).gsub(/\./, '_')  
+  reversedomain = join(reverse(split(@domain, '.'),'.')
+  ghostname  = reversedomain + "." + @_hostname
   loadshort = "collectd." + ghostname + ".load.load.shortterm"
   loadmid   = "collectd." + ghostname + ".load.load.midterm"
   loadlong  = "collectd." + ghostname + ".load.load.longterm" 
