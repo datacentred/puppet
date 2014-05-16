@@ -7,6 +7,6 @@
     PrivacyProtocol "<%= @snmp_privacy_protocol %>"
     PrivacyPassphrase "<%= @snmp_privacy_password %>"
     SecurityLevel "authPriv"
-    Collect "std_if_traffic", "std_if_errors", "std_if_dropped", "std_if_packets_ucast", "std_if_packets_mcast", "std_if_packets_bcast"
+    Collect "snmp_if_octets" "snmp_if_errors" "snmp_if_dropped" "snmp_if_packets"
     Interval <%= @interval %>
   </Host>
