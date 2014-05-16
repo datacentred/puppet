@@ -27,7 +27,7 @@ define dc_collectd::poller::snmp_target (
   $_expanded_graphs = bracket_expansion($graphs)
 
   # Extract a hostname from the title field
-  $namearray = split($title, '.'))
+  $namearray = split($title, '.')
   $_hostname = $namearray[-1]
   # Format a reversed domain string to use in templates
   $reversedomain = join(delete_at($namearray,-1),'.')
