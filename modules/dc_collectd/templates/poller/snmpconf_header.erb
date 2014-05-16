@@ -1,26 +1,26 @@
 LoadPlugin snmp
 <Plugin snmp>
-  <Data "if_octets">
+  <Data "snmp_if_octets">
        Type "if_octets"
        Table true
        Instance "IF-MIB::ifName"
-       Values "IF-MIB::ifHCInOctets" "IF-MIB::ifHCOutOctets"
+       Values "IF-MIB::ifInOctets" "IF-MIB::ifOutOctets"
    </Data>
-   <Data "if_errors">
+   <Data "snmp_if_errors">
        Type "if_errors"
        Table true
        Instance "IF-MIB::ifName"
        Values "IF-MIB::ifInErrors" "IF-MIB::ifOutErrors"
    </Data>
-   <Data "if_dropped">
+   <Data "snmp_if_dropped">
        Type "if_dropped"
        Table true
        Instance "IF-MIB::ifName"
        Values "IF-MIB::ifInDiscards" "IF-MIB::ifOutDiscards"
    </Data>
-   <Data "if_packets">
+   <Data "snmp_if_packets">
        Type "if_packets"
        Table true
        Instance "IF-MIB::ifName"
-       Values "IF-MIB::ifHCInUcastPkts" "IF-MIB::ifHCOutUcastPkts"
+       Values "IF-MIB::ifInUcastPkts" "IF-MIB::ifOutUcastPkts"
    </Data>
