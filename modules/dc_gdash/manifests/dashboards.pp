@@ -13,6 +13,7 @@ class dc_gdash::dashboards {
   $tplpath = '/var/www/gdash/graph_templates/'
   $disktplpath = "${tplpath}/disk_perf"
   $nettplpath = "${tplpath}/network"
+  $swtplpath = "${tplpath}/switches"
   $overviewtplpath = "${tplpath}/overview"
   $dftplpath = "${tplpath}/df"
   $cputplpath = "${tplpath}/cpu"
@@ -28,6 +29,12 @@ class dc_gdash::dashboards {
   }
 
   file { $nettplpath:
+    ensure  => directory,
+    purge   => true,
+    require => File[$tplpath]
+  }
+
+  file { $swtplpath:
     ensure  => directory,
     purge   => true,
     require => File[$tplpath]

@@ -5,16 +5,16 @@ hide_legend false
 <%
   # Create our hostname string in a format that's consistent with what we're storing in Carbon
   # ༼ つ ◕_◕ ༽つ
-  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".interface." + @_interface
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".snmp.if_packets." + @_interface
   
-  rxpackets = ghostname + ".if_octets.rx"
-  txpackets = ghostname + ".if_octets.tx"
+  rxpackets = ghostname + ".rx"
+  txpackets = ghostname + ".tx"
  
 %>
 field :receiving, :color => "green",
-               :alias => "Receiving (bps)",
+               :alias => "Receiving (packets)",
                :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxpackets %>),1)"
 
 field :transmitting, :color => "blue",
-               :alias => "Transmitting (bps)",
+               :alias => "Transmitting (packets)",
                :data  => "scaleToSeconds(nonNegativeDerivative(<%= txpackets %>),1)"
