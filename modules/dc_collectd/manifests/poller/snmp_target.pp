@@ -32,7 +32,7 @@ define dc_collectd::poller::snmp_target (
   # Format a reversed domain string to use in templates
   $reversedomain = join(delete_at($namearray,-1),'.')
   # Add hostname to the array of interfaces
-  $ifhashhost = suffix($_expanded_graphs, "#{$_hostname}")
+  $ifhashhost = suffix($_expanded_graphs, "#${_hostname}")
 
   # Now export virtual resource for network traffic for each
   # interface
