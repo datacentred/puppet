@@ -63,7 +63,7 @@ class dc_puppet::params (
   $show_diff            = 'true'
 
   # How long to wait for the catalogue before failing
-  $configtimeout        = '120'
+  $configtimeout        = '240'
 
   # Which reports plugin to use
   $reports              = 'foreman'
