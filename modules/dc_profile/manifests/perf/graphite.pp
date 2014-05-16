@@ -48,36 +48,17 @@ class dc_profile::perf::graphite {
     gr_django_db_port            => 3306,
     gr_storage_schemas           => [
       {
-        name       => 'default',
-        pattern    => '.*',
-        retentions => '1s:30m,1m:2d,5m:28d,15m:1y',
-      }
+        name       => 'carbon',
+        pattern    => '^carbon.*',
+        retentions => '1m:5d,5m:30d',
+      },
+      {
+        name       => 'collectd',
+        pattern    => '^collectd.*',
+        retentions => '1m:5d,5m:30d,15m:1y',
+      },
     ],
-    gr_storage_aggregation_rules => {
-      '00_min'         => {
-        pattern => '\.min$',
-        factor  => '0.1',
-        method  => 'min'
-      },
-      '01_max'         => {
-        pattern => '\.max$',
-        factor  => '0.1',
-        method  => 'max'
-      },
-      '02_sum'         => {
-        pattern => '\.count$',
-        factor  => '0.1',
-        method  => 'sum'
-      },
-      '99_default_avg' => {
-        pattern => '.*',
-        factor  => '0.0',
-        method  => 'average'
-      },
-    },
-    require                      => [
-      File['/opt/graphite'],
-    ],
+    require                      => File['/opt/graphite'],
   }
 
   contain 'graphite'
