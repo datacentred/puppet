@@ -26,6 +26,6 @@ class dc_gdash (
   Dc_gdash::Diskperf <<| |>>
   Dc_gdash::Df <<| |>>
   Dc_gdash::Cpu <<| |>>
-  #  Dc_gdash::Swnettraf <<| |>>
+  Dc_gdash::Swnettraf <<| |>>
 
 }
