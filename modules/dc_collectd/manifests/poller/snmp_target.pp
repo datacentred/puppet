@@ -29,7 +29,9 @@ define dc_collectd::poller::snmp_target (
   # Extract a hostname from the title field
   notify{"title is ${title}":}
   $namearray = split($title, '.')
+  notify{"namearray is ${namearray}":}
   $_hostname = $namearray[-1]
+
   #notify{"hostname is ${_hostname}":}
   # Format a reversed domain string to use in templates
   $reversedomain = join(delete_at($namearray,-1),'.')
