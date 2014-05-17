@@ -27,9 +27,10 @@ define dc_collectd::poller::snmp_target (
   $_expanded_graphs = bracket_expansion($graphs)
 
   # Extract a hostname from the title field
+  notify{"title is ${title}":}
   $namearray = split($title, '.')
   $_hostname = $namearray[-1]
-  notify{"hostname is ${_hostname}":}
+  #notify{"hostname is ${_hostname}":}
   # Format a reversed domain string to use in templates
   $reversedomain = join(delete_at($namearray,-1),'.')
   # Add hostname to the array of interfaces
