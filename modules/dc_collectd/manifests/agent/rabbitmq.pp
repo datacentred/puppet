@@ -39,7 +39,7 @@ class dc_collectd::agent::rabbitmq (
   file { '/etc/collectd/conf.d/10-rabbitmq.conf':
     ensure  => file,
     content => template('dc_collectd/10-rabbitmq.conf.erb'),
-    require => [ Class['collectd'], File['/usr/lib/collectd/perl/Collectd/Plugins/RabbitMQ.pm'] ],
+    require => File['/usr/lib/collectd/perl/Collectd/Plugins/RabbitMQ.pm'],
     notify  => Service['collectd'],
   }
 
