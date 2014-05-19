@@ -25,7 +25,7 @@ class dc_profile::puppet::mcollective_host {
       'mcollective-plugins-nettest',
       'mcollective-plugins-nrpe',
       'mcollective-plugins-package',
-      'mcollective-plugins-puppetd',
+      'mcollective-puppet-agent',
       'mcollective-plugins-service',
     ]:
       ensure => latest,
