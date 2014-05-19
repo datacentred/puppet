@@ -25,7 +25,7 @@ class dc_collectd::agent::rabbitmq (
   $perldirs = [ '/usr/lib/collectd/perl', '/usr/lib/collectd/perl/Collectd', '/usr/lib/collectd/perl/Collectd/Plugins' ]
   file { $perldirs:
     ensure  => directory,
-    require => Class['collectd'],
+    require => Package['collectd'],
   }
 
   # Copy in new plugin
