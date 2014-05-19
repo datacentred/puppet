@@ -13,8 +13,8 @@ hide_legend false
 %>
 field :receiving, :color => "green",
                :alias => "Receiving (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= rxoctets %>),1)"
+               :data  => "scale(scaleToSeconds(nonNegativeDerivative(<%= rxoctets %>),1),8)"
 
 field :transmitting, :color => "blue",
                :alias => "Transmitting (bps)",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= txoctets %>),1)"
+               :data  => "scale(scaleToSeconds(nonNegativeDerivative(<%= txoctets %>),1),8)"

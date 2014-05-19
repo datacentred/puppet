@@ -1,5 +1,5 @@
 title   "Disk Throughput for <%= @disk %> on <%= @_hostname %>"
-vtitle   "Bytes/s"
+vtitle   "Bits/s"
 area    :first
 hide_legend false
 <%
@@ -18,8 +18,8 @@ hide_legend false
 %>
 field :Written, :color => "green",
                :alias => "Writes",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= writes %>),1)"
+               :data  => "scale(scaleToSeconds(nonNegativeDerivative(<%= writes %>),1),8)"
 
 field :Read, :color => "blue",
                :alias => "Reads",
-               :data  => "scaleToSeconds(nonNegativeDerivative(<%= reads %>),1)"
+               :data  => "scale(scaleToSeconds(nonNegativeDerivative(<%= reads %>),1),8)"
