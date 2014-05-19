@@ -20,12 +20,17 @@ class dc_profile::puppet::mcollective_host {
   # Use the standard ubuntu packages on trusty
   if $::lsbdistcodename == 'trusty' {
     package { [
+      'mcollective-plugins-puppetd',
+    ]:
+      ensure => purged,
+    } ->
+    package { [
       'mcollective-plugins-filemgr',
       'mcollective-plugins-iptables',
       'mcollective-plugins-nettest',
       'mcollective-plugins-nrpe',
       'mcollective-plugins-package',
-      'mcollective-plugins-puppetd',
+      'mcollective-puppet-agent',
       'mcollective-plugins-service',
     ]:
       ensure => latest,
