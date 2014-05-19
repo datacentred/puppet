@@ -14,17 +14,17 @@ hide_legend false
 %>
 field :use,    :color => "red",
                :alias => "used by application",
-               :data  => "asPercent(diffSeries(<%= memused %>,<%= memcached %>,<%= membuffed %>,sumSeries(<%= memused %>,<%= memfree %>))"
+               :data  => "asPercent(<%= memused %>,sumSeries(<%= ghostname + ".*" %>))"
 
 field :buffer, :color => "orange",
                :alias => "buffer",
-               :data  => "asPercent(<%= membuffed %>,sumSeries(<%= memused %>,<%= memfree %>))"
+               :data  => "asPercent(<%= membuffed %>,sumSeries(<%= ghostname + ".*" %>))"
 
 field :cache,  :color => "yellow",
                :alias => "cache",
-               :data  => "asPercent(<%= memcached %>,sumSeries(<%= memused %>,<%= memfree %>))"
+               :data  => "asPercent(<%= memcached %>,sumSeries(<%= ghostname + ".*" %>))"
 
 field :free,   :color => "green",
                :alias => "free",
-               :data  => "asPercent(<%= memfree %>,sumSeries(<%= memused %>,<%= memfree %>))"
+               :data  => "asPercent(<%= memfree %>,sumSeries(<%= ghostname + ".*" %>))"
 
