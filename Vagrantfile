@@ -13,10 +13,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
-  # Port Forwarding
-  config.vm.network "forwarded_port", guest: 80, host: 8080
-  config.vm.network "forwarded_port", guest: 443, host: 4443
-
   # Puppet provisioner
   config.vm.provision :puppet do |puppet|
     puppet.manifests_path    = "vagrant"
