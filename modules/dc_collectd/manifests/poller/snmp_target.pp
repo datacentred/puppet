@@ -18,7 +18,7 @@ define dc_collectd::poller::snmp_target (
 
   # Create the collectd SNMP host object
   concat::fragment { $title:
-    target  => '/etc/collectd/conf.d/snmp.conf',
+    target  => '/etc/collectd/conf.d/99-snmp.conf',
     content => template('dc_collectd/poller/snmpconf_main.erb'),
   }
 

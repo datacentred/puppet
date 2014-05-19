@@ -23,12 +23,17 @@ class dc_profile::perf::collectd {
     purge_config  => true,
   }
 
+  class { 'collectd::plugin::syslog':
+    log_level => 'info',
+  }
+
   class { 'collectd::plugin::write_graphite':
     graphitehost      => hiera('graphite_server'),
     graphiteprefix    => 'collectd.',
     escapecharacter   => '.',
     storerates        => false,
     separateinstances => true,
+    protocol          => "tcp"
   }
 
   contain collectd

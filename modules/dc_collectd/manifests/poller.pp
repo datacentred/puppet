@@ -4,7 +4,7 @@
 #
 class dc_collectd::poller {
 
-  $snmpconf = '/etc/collectd/conf.d/snmp.conf'
+  $snmpconf = '/etc/collectd/conf.d/99-snmp.conf'
 
   concat { $snmpconf:
     ensure => present,
