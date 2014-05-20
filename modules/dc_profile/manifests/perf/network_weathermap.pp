@@ -17,7 +17,7 @@ class dc_profile::perf::network_weathermap {
   }
 
   apache::vhost { 'network-weathermap':
-    servername => "weathermap.${::domainname}",
+    servername => "weathermap.${::domain}",
     docroot    => '/opt/network-weathermap/latest',
     port       => 80, 
   }

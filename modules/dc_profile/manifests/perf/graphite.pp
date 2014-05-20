@@ -65,7 +65,7 @@ class dc_profile::perf::graphite {
   contain 'graphite'
 
   apache::vhost { 'graphite':
-    servername                  => "graphite.${::domainname}",
+    servername                  => "graphite.${::domain}",
     docroot                     => '/opt/graphite/webapp',
     port                        => 80,
     wsgi_application_group      => '%{GLOBAL}',

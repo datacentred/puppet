@@ -21,7 +21,7 @@ class dc_profile::perf::gdash {
   }
 
   apache::vhost { 'gdash':
-    servername => "gdash.${::domainname}",
+    servername => "gdash.${::domain}",
     docroot    => '/var/www/gdash/public',
     port       => 80,
   }
