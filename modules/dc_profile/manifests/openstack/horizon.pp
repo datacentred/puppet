@@ -33,6 +33,7 @@ class dc_profile::openstack::horizon {
     keystone_default_role => '_member_',
     django_debug          => true,
     api_result_limit      => 1000,
+    neutron_options       => { 'enable_lb' => true, 'enable_vpn' => true },
   }
   contain 'horizon'
 
