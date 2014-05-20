@@ -45,6 +45,7 @@ class dc_profile::auth::ldap::server {
     base        => hiera(ldap::server::suffix),
     username    => hiera(ldap::server::rootdn),
     password    => hiera(ldap::server::rootpw),
+    self_signed => true,
   }
 
   create_resources(ldap_entry, hiera(ldap_schema), $defaults)
