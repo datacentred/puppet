@@ -11,6 +11,7 @@
 # Sample Usage:
 #
 class dc_profile::perf::graphite {
+  include apache
 
   $graphite_db_pw = hiera(graphite_db_pw)
   $graphite_secret_key = hiera(graphite_secret_key)
@@ -31,8 +32,8 @@ class dc_profile::perf::graphite {
   class { '::graphite':
     gr_aggregator_line_interface => '0.0.0.0',
     gr_aggregator_line_port      => '2023',
-    gr_web_server                => 'apache',
-    gr_timezone			 => 'GB-Eire',
+    gr_web_server                => 'none',
+    gr_timezone                  => 'GB-Eire',
     gr_apache_24                 => true,
     secret_key                   => $graphite_secret_key,
     gr_max_cache_size            => inf,
@@ -62,6 +63,27 @@ class dc_profile::perf::graphite {
   }
 
   contain 'graphite'
+
+  apache::vhost { 'graphite':
+    servername                  => "graphite.${::domainname}",
+    docroot                     => '/opt/graphite/webapp',
+    port                        => 80,
+    wsgi_application_group      => '%{GLOBAL}',
+    wsgi_daemon_process         => 'graphite',
+    wsgi_daemon_process_options => {
+      processes          => '5',
+      threads            => '5',
+      display-name       => '%{GROUP}',
+      inactivity-timeout => '120',
+    },
+    wsgi_import_script          => '/opt/graphite/conf/graphite.wsgi',
+    wsgi_import_script_options  => {
+      process-group     => 'graphite',
+      application-group => '%{GLOBAL}',
+    },
+    wsgi_process_group          => graphite,
+    wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
+  } 
 
   # Add an appropriate CNAME RR
   @@dns_resource { "graphite.${::domain}/CNAME":

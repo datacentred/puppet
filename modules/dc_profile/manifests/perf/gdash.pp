@@ -11,10 +11,18 @@
 # Sample Usage:
 #
 class dc_profile::perf::gdash {
+  include apache
+  include apache::mod::passenger
+  include apache::mod::headers
 
   class { 'dc_gdash':
     gdash_root      => '/var/www/gdash',
     graphite_server => hiera(graphite_server),
   }
 
+  apache::vhost { 'gdash':
+    servername => "gdash.${::domainname}",
+    docroot    => '/var/www/gdash/public',
+    port       => 80,
+  }
 }
