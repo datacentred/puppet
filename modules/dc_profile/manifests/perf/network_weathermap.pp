@@ -17,9 +17,10 @@ class dc_profile::perf::network_weathermap {
   }
 
   apache::vhost { 'network-weathermap':
-    servername => "weathermap.${::domain}",
-    docroot    => '/opt/network-weathermap/latest',
-    port       => 80, 
+    servername     => "weathermap.${::domain}",
+    docroot        => '/opt/network-weathermap/latest',
+    port           => 80, 
+    directoryindex => 'DataCentred.html',
   }
 
   @@dns_resource { "weathermap.${::domain}/CNAME":
