@@ -36,7 +36,7 @@ class dc_icinga::server::config (
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
-
+  $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap::server::suffix)
 
   # When doing a non interactive install the password isn't generated
@@ -384,7 +384,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_mysql_dc':
-    command_line => '/usr/lib/nagios/plugins/check_mysql -H $HOSTADDRESS$ -u icinga -p icinga',
+    command_line => "/usr/lib/nagios/plugins/check_mysql -H $HOSTADDRESS$ -u icinga -p ${mariadb_icinga_pw}",
   }
 
   nagios_command { 'check_nfs_dc':
