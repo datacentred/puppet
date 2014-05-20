@@ -15,7 +15,7 @@ class dc_mariadb::icinga {
 
   class { '::mysql::server::monitor':
     mysql_monitor_username => 'icinga',
-    mysql_monitor_password => 'icinga',
+    mysql_monitor_password => hiera(mariadb_icinga_pw),
     mysql_monitor_hostname => hiera(icinga_ip)
   }
 
