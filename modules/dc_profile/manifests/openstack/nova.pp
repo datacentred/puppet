@@ -122,10 +122,5 @@ class dc_profile::openstack::nova {
 
   # Nagios config
   include dc_profile::openstack::nova_nagios
-  class { 'dc_profile::mon::rabbitmq_monuser':
-    userid   => $rabbitmq_monuser,
-    password => $rabbitmq_monuser_password,
-    vhost    => $nova_mq_vhost,
-  }
 
 }
