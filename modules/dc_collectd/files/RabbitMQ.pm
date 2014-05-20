@@ -90,7 +90,7 @@ sub my_read
     $res = $ua->request($req);
   };
   if ($@) {
-    plugin_log(LOG_INFO, "RabbitMQ: exception fetching document by http");
+    plugin_log(LOG_ERR, "RabbitMQ: exception fetching document by http");
     return 1;
   }
 
