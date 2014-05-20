@@ -1,5 +1,5 @@
 # mysql command line to execute queries
-mysqlcmd = 'mysql -u <%= @dbuser %> --password=<%= @dbpassword %> -B -N -e'
+mysqlcmd = 'mysql -u <%= @mysql_collectd_username %> --password=<%= @mysql_collectd_password %> -B -N -e'
 # command string to get the list of databases
 getdbs = %x[#{mysqlcmd} "SHOW DATABASES"].split("\n")
 
