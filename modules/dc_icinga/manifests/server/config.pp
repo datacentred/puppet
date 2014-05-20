@@ -384,7 +384,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_mysql_dc':
-    command_line => "/usr/lib/nagios/plugins/check_mysql -H $HOSTADDRESS$ -u icinga -p ${mariadb_icinga_pw}",
+    command_line => "/usr/lib/nagios/plugins/check_mysql -H \$HOSTADDRESS$ -u icinga -p ${mariadb_icinga_pw}",
   }
 
   nagios_command { 'check_nfs_dc':
