@@ -1,0 +1,18 @@
+<LoadPlugin "perl">
+    Globals true
+</LoadPlugin>
+
+<Plugin "perl">
+    IncludeDir "/usr/lib/collectd/perl"
+    BaseName "Collectd::Plugins"
+    LoadPlugin "RabbitMQ"
+
+    <Plugin "RabbitMQ">
+        Username "<%= @rabbitmq_monuser %>"
+        Password "<%= @rabbitmq_monuser_password %>"
+        Realm "<%= @realm %>"
+        Host "<%= @rabbithost %>"
+        Port "<%= @port %>"
+    </Plugin>
+</Plugin>
+

@@ -40,4 +40,12 @@ class dc_profile::openstack::nova_mq {
   include dc_icinga::hostgroups
   realize Dc_external_facts::Fact['dc_hostgroup_rabbitmq']
 
+  class { 'dc_profile::mon::rabbitmq_monuser':
+    userid   => $rabbitmq_monuser,
+    password => $rabbitmq_monuser_password,
+    vhost    => $nova_mq_vhost,
+  }
+
+  include dc_collectd::agent::rabbitmq
+
 }
