@@ -194,3 +194,6 @@
 [submodule "modules/collectd"]
 	path = modules/collectd
 	url = git@github.com:datacentred/puppet-module-collectd.git
+[submodule "modules/php"]
+	path = modules/php
+	url = https://github.com/jippi/puppet-php.git
