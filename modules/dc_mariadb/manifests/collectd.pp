@@ -31,5 +31,12 @@ class dc_mariadb::collectd {
     require    => Mysql_user["${mysql_collectd_username}@${mysql_collectd_hostname}"],
   }
 
+  # Add custom facts
+
+  file { '/usr/lib/ruby/vendor_ruby/facter/mysql.rb':
+    ensure  => file,
+    content => template('dc_mariadb/mysql.rb.erb'),
+  }
+
 }
 
