@@ -45,5 +45,10 @@ class dc_mariadb::collectd {
     username => $mysql_collectd_username,
     password => $mysql_collectd_password,
   }
+
+  $dbhashhost = [ "${hostname}#${hostname}" ]
+
+  @@dc_gdash::mysql { $dbhashhost }
+
 }
 
