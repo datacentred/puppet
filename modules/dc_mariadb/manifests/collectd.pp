@@ -39,14 +39,8 @@ class dc_mariadb::collectd {
     content => template('dc_mariadb/mysql.rb.erb'),
   }
 
-  # Get an array of database names from the custom fact
-  $databases = split($::mysql_databases,',')
-
-  # Delete internal mysql databases from the array
-  $dbs_stripped = delete(delete(delete($databases, 'mysql'),'performance_schema'),'information_schema')
-  
   # Generate the collectd config
-  collectd::plugin::mysql::database { $dbs_stripped :
+  collectd::plugin::mysql::database { $hostname :
     host     => 'localhost',
     username => $mysql_collectd_username,
     password => $mysql_collectd_password,
