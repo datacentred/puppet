@@ -12,19 +12,16 @@
 #
 class dc_puppet::master::hipbot::install {
 
+  include ::dc_puppet::master::hipbot::params
+
   Package {
     ensure => installed,
   }
 
-  package { [
-    'python-pip',
-    'python-daemon',
-    'python-pyasn1',
-    'python-pyasn1-modules',
-    ]:
+  package { $::dc_puppet::master::hipbot::params::debs:
   } ->
 
-  package { 'sleekxmpp':
+  package { $::dc_puppet::master::hipbot::params::pips:
     provider => 'pip',
   }
 
