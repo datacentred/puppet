@@ -10,7 +10,7 @@ class dc_profile::perf::network_weathermap {
   include dc_network_weathermap
 
   cron { 'network-weathermap':
-    command => 'cd /opt/network-weathermap/latest && php weathermap --config configs/DataCentred.conf',
+    command => 'cd /opt/network-weathermap/latest && php weathermap --config configs/DataCentred.conf &> /dev/null',
     hour    => '*',
     minute  => '*',
     month   => '*',
