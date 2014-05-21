@@ -12,7 +12,9 @@
 #
 class dc_profile::auth::radius::server {
   include ::radius
-  contain 'radius'
+  include ::radius::module::ldap
+
+  radius::vhost { 'datacentred': }
 
   @@dns_resource { "radius.${::domain}/CNAME":
     rdata => $::fqdn,
