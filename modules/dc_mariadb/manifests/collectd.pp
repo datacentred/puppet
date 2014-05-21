@@ -43,12 +43,10 @@ class dc_mariadb::collectd {
   $databases = split($::mysql_databases,',')
 
   # Delete internal mysql databases from the array
-  delete($databases, 'mysql')
-  delete($databases, 'performance_schema')
-  delete($databases, 'information_schema')
+  $dbs_stripped = delete(delete(delete($databases, 'mysql'),'performance_schema'),'information_schema')
   
   # Generate the collectd config
-  collectd::plugin::mysql::database { $databases :
+  collectd::plugin::mysql::database { $dbs_stripped :
     host     => 'localhost',
     username => $mysql_collectd_username,
     password => $mysql_collectd_password,
