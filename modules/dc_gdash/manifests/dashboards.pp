@@ -27,28 +27,28 @@ class dc_gdash::dashboards {
   file { $disktplpath:
     ensure  => directory,
     purge   => true,
-    require => File[$tplpath]
+    require => File[$tplpath],
     notify  => Service['apache2'],
   }
 
   file { $nettplpath:
     ensure  => directory,
     purge   => true,
-    require => File[$tplpath]
+    require => File[$tplpath],
     notify  => Service['apache2'],
   }
 
   file { $swtplpath:
     ensure  => directory,
     purge   => true,
-    require => File[$tplpath]
+    require => File[$tplpath],
     notify  => Service['apache2'],
   }
 
   file { $overviewtplpath:
     ensure  => directory,
     purge   => true,
-    require => File[$tplpath]
+    require => File[$tplpath],
     notify  => Service['apache2'],
   }
 
