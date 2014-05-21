@@ -48,7 +48,7 @@ class dc_mariadb::collectd {
 
   $dbhashhost = [ "${hostname}#${hostname}" ]
 
-  @@dc_gdash::mysql { $dbhashhost }
+  @@dc_gdash::mysql { $dbhashhost: }
 
 }
 
