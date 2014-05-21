@@ -24,7 +24,7 @@ class dc_puppet::master::config {
   # Install git, repo and clone default environments
   contain dc_puppet::master::git
   # Install the xmpp bot to monitor for pull requests
-  contain dc_puppet::master::err
+  contain dc_puppet::master::hipbot
   # Install foreman bits and bobs
   contain dc_puppet::master::foreman
   # Install puppetdb bits and bobs

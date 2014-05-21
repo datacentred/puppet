@@ -1,0 +1,170 @@
+#!/usr/bin/env python
+"""
+HipBot
+
+It's an XMPP bot but hipper!  Does the basics of interacting
+with HipChat such as pings, filtering out delayed data etc.
+Then you decide what to do with messages.  Typically you will
+write "$NICK $COMMAND $ARGS" in a MUC room, HipBot will intercept
+things intended for itself, then try executing the command in
+each of the plugin classes, passing the args or None if invalid,
+which should be checked for obviously.
+"""
+
+import logging
+from urllib import urlencode
+import urllib2
+from sleekxmpp import ClientXMPP
+import json
+import re
+import os
+
+API     = 'https://api.hipchat.com/v1/'
+TOKEN   = '<%= @xmpp_hipchat_api_token %>'
+ROOMID  = <%= @xmpp_hipchat_api_room @>
+JID     = '<%= @xmpp_jid %>'
+PASS    = '<%= @xmpp_pass %>'
+NICK    = '<%= @xmpp_name %>'
+ROOM    = '<%= @xmpp_room %>'
+COMMAND = 'robocopy'
+
+PID_FILE = '/var/run/hipbot.pid'
+
+class CommandDispatcher:
+    """
+    Registers and instantiates plugins, then dispatches
+    messages to them if the proper methods are defined
+    """
+
+    def __init__(self, backend):
+        """ """
+        self.backend = backend
+        self.plugins = []
+
+    def register_plugin(self, name):
+        """
+        Register and instantiate a plugin
+        TODO: Needs some exception handling and testing
+              in all likelihood
+        """
+        mod = __import__(name.lower())
+        cls = getattr(mod, name)
+        self.plugins.append(cls(self.backend))
+
+    def dispatch_cmd(self, command, args):
+        """
+        For each registered plug-in try call the requested
+        method
+        """
+        handled = False
+        for plugin in self.plugins:
+            try:
+                getattr(plugin, command)(args)
+            except AttributeError:
+                pass
+            else:
+                handled = True
+        return handled
+
+    def dispatch_msg(self, msg):
+        """
+        For each registered plugin pass the message on
+        for processing
+        """
+        for plugin in self.plugins:
+            try:
+                getattr(plugin, 'message')(msg)
+            except AttributeError:
+                pass
+
+class HipBot(ClientXMPP):
+    """ """
+
+    def __init__(self):
+        """ """
+        logging.info('Initialising XMPP connection {0} ...'.format(JID))
+        ClientXMPP.__init__(self, JID, PASS)
+
+        logging.info("Registering XMPP extensions ...")
+        self.register_plugin('xep_0004') # Data forms
+        self.register_plugin('xep_0030') # Service directory
+        self.register_plugin('xep_0045') # Multi user chat
+        self.register_plugin('xep_0199', # XMPP ping
+            pconfig={'keepalive':True, 'frequency':60}
+        )
+        self.register_plugin('xep_0203') # Delayed delivery
+
+        self.whitespace_keepalive = True
+        self.whitespace_keepalive_interval = 60
+
+        logging.info('Registering XMPP callbacks')
+        self.add_event_handler('session_start', self._session_start)
+        self.add_event_handler('groupchat_message', self._groupchat_message)
+
+        logging.info('Registering plugins ...')
+        self.dispatcher = CommandDispatcher(self)
+
+    def register_hipbot_plugin(self, plugin):
+        """ """
+        self.dispatcher.register_plugin(plugin)
+
+    def run(self):
+        """ """
+        self.connect()
+        self.process(threaded=False)
+
+    def _session_start(self, event):
+        """ """
+        logging.info('starting session ...')
+        self.get_roster()
+        self.send_presence()
+
+        logging.info('Joining room {0} as {1} ...'.format(ROOM, NICK))
+        self.plugin['xep_0045'].joinMUC(ROOM, NICK, wait=True)
+
+    def _groupchat_message(self, msg):
+        """ """
+        # Filter out delayed content (XEP-0203) and stuff from ourselves
+        if msg['delay']['stamp'] != None or msg['mucnick'] == NICK:
+            return
+        # Match the command and any other arguments to be passed on the
+        # individual plugins
+        match = re.match(r'^{0}\s+([\w\d]+)(\s+(.*))?'.format(COMMAND), msg['body'])
+        if match:
+            if not self.dispatcher.dispatch_cmd(match.group(1), match.group(3)):
+                self.send_message('<b>Illegal command:</b> %s' % match.group(1), 'red')
+            return
+        # No joy, just pass the whole message on regardless
+        self.dispatcher.dispatch_msg(msg['body'])
+            
+            
+    def send_message(self, msg, color='yellow', msg_format='html'):
+        """ """
+        get = dict()
+        get['auth_token'] = TOKEN
+        url = '{0}{1}?{2}'.format(API, 'rooms/message', urlencode(get))
+        post = dict()
+        post['room_id'] = ROOMID
+        post['from'] = NICK
+        post['message'] = msg
+        post['message_format'] = msg_format
+        post['color'] = color
+        data = urlencode(post).encode('utf-8')
+
+        req = urllib2.Request(url, data)
+        req.method = 'POST'
+        resp = urllib2.urlopen(req).read()
+        return json.loads(resp.decode('utf-8'))
+
+if __name__ == '__main__':
+
+    logging.basicConfig(level=logging.INFO,
+        filename='/var/log/hipbot/hipbot.log',
+        format='[%(asctime)-8s] %(levelname)s: %(message)s'
+    )
+
+    hipbot = HipBot()
+    hipbot.register_hipbot_plugin('RoboCopy')
+    hipbot.run()
+
+# vim: set syntax=python ts=4 et:

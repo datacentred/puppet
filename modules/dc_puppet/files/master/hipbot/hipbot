@@ -1,0 +1,49 @@
+#!/bin/bash
+
+PIDFILE=/var/run/hipbot.pid
+DAEMON=/opt/hipbot/hipbot.py
+DESC="Hipbot"
+
+. /lib/lsb/init-functions
+
+start_daemon() {
+  log_begin_msg "Starting $DESC"
+  start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile --startas $DAEMON
+  log_end_msg $?
+}
+
+stop_daemon() {
+  log_begin_msg "Stopping $DESC"
+  start-stop-daemon --stop --pidfile $PIDFILE --signal INT 
+  while daemon_status
+  do
+    sleep 1
+  done
+  log_end_msg 0
+}
+
+daemon_status() {
+  start-stop-daemon --status  --pidfile $PIDFILE $DAEMON
+}
+
+case "$1" in
+  start)
+    start_daemon
+    ;;
+  stop)
+    stop_daemon
+    ;;
+  restart)
+    stop_daemon
+    start_daemon
+    ;;
+  status)
+    daemon_status $?
+    exit
+    ;;
+  *)
+    echo "Usage: /etc/init.d/errbot {start|stop|restart|status}" >&2
+    exit 1
+  ;;
+esac
+
