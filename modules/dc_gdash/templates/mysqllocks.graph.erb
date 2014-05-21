@@ -1,0 +1,20 @@
+title   "MySQL locks on <%= @_hostname %>"
+vtitle "Locks"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  # ༼ つ ◕_◕ ༽つ
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".mysql." + @_db + ".mysql_locks"
+  
+  immediate = ghostname + ".immediate"
+  waited = ghostname + ".waited"
+
+%>
+field :immediate, :color => "green",
+               :alias => "Immediate",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= immediate %>),1)"
+
+field :waited, :color => "red",
+               :alias => "Waited",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= waited %>),1)"

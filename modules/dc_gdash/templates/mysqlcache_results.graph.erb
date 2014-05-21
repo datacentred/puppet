@@ -1,0 +1,30 @@
+title   "MySQL query cache on <%= @_hostname %>"
+vtitle "Queries/s"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  # ༼ つ ◕_◕ ༽つ
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".mysql." + @_db + ".qcache-"
+  
+  hits = ghostname + "-hits"
+  inserts = ghostname + "-inserts"
+  misses = ghostname + "-not_cached"
+  prunes = ghostname + "-prunes"
+
+%>
+field :hits, :color => "green",
+               :alias => "Hits",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= hits %>),1)"
+
+field :inserts, :color => "blue",
+               :alias => "Inserts",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= inserts %>),1)"
+               
+field :misses, :color => "red",
+               :alias => "Misses",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= misses %>),1)"
+               
+field :prunes, :color => "yellow",
+               :alias => "Prunes",
+               :data  => "scaleToSeconds(nonNegativeDerivative(<%= prunes %>),1)"

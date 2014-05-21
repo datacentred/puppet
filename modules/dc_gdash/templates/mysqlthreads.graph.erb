@@ -1,0 +1,25 @@
+title   "MySQL threads on <%= @_hostname %>"
+vtitle "Threads"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  # ༼ つ ◕_◕ ༽つ
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".mysql." + @_db + ".threads"
+  
+  cached = ghostname + ".cached"
+  connected = ghostname + ".connected"
+  running = ghostname + ".running"
+
+%>
+field :running, :color => "green",
+               :alias => "Running",
+               :data  => "<%= running %>"
+
+field :cached, :color => "red",
+               :alias => "Cached",
+               :data  => "<%= cached %>"
+               
+field :connected, :color => "blue",
+               :alias => "Connected",
+               :data  => "<%= connected %>"

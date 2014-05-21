@@ -1,0 +1,20 @@
+title   "MySQL traffic on <%= @_hostname %>"
+vtitle "Bits/s"
+area    :first
+hide_legend false
+<%
+  # Create our hostname string in a format that's consistent with what we're storing in Carbon
+  # ༼ つ ◕_◕ ༽つ
+  ghostname  = "collectd." + @reversedomain + "." + @_hostname + ".mysql." + @_db + ".mysql_octets"
+  
+  rxoctets = ghostname + ".rx"
+  txoctets = ghostname + ".tx"
+
+%>
+field :receiving, :color => "green",
+               :alias => "Receiving (bps)",
+               :data  => "scale(scaleToSeconds(nonNegativeDerivative(<%= rxoctets %>),1),8)"
+
+field :transmitting, :color => "blue",
+               :alias => "Transmitting (bps)",
+               :data  => "scale(scaleToSeconds(nonNegativeDerivative(<%= txoctets %>),1),8)"
