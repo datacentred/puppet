@@ -29,7 +29,7 @@ class dc_mariadb::collectd {
     ensure     => present,
     user       => "${mysql_collectd_username}@${mysql_collectd_hostname}",
     table      => '*.*',
-    privileges => [ 'USAGE', 'REPLICATION CLIENT' ],
+    privileges => [ 'USAGE', 'REPLICATION CLIENT', 'SHOW DATABASES' ],
     require    => Mysql_user["${mysql_collectd_username}@${mysql_collectd_hostname}"],
   }
 
