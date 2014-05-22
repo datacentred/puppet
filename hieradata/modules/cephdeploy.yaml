@@ -11,7 +11,7 @@ cephdeploy::ceph_cluster_name:          "%{hiera('cephdeploy_cluster')}"
 cephdeploy::has_compute:                false
 
 cephdeploy::mon::ceph_deploy_user:      "%{hiera('cephdeploy_user')}"
-cephdeploy::mon::ceph_public_interface: 'bond0'
+cephdeploy::mon::ceph_public_interface: 'eth0'
 cephdeploy::mon::ceph_public_network:   "%{hiera('cephdeploy_public_network')}"
 cephdeploy::mon::ceph_primary_mon:      "%{hiera('cephdeploy_primary_mon')}"
 cephdeploy::mon::ceph_cluster_name:     "%{hiera('cephdeploy_cluster')}"
