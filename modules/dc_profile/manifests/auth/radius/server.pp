@@ -21,15 +21,15 @@ class dc_profile::auth::radius::server {
   }
 
   radius::vhost::listen {
-    'dc_auth':
+    'dc_authentication':
       vhost  => 'datacentred',
       ipaddr => '0.0.0.0',
-      port   => '0',
+      port   => '1812',
       type   => 'auth';
-    'dc_acct':
+    'dc_accounting':
       vhost  => 'datacentred',
       ipaddr => '0.0.0.0',
-      port   => '0',
+      port   => '1813',
       type   => 'acct',
   }
 
