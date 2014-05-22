@@ -91,4 +91,7 @@ class dc_profile::openstack::cinder {
     glance_api_servers => get_exported_var('', 'glance_api_server', ['localhost'])
   }
 
+  # Nagios config
+  include dc_profile::openstack::cinder_nagios
+
 }
