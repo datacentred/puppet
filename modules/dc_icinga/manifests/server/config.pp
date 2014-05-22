@@ -457,7 +457,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_glance_registry_http':
-    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9191"
+    command_line => "/usr/lib/nagios/plugins/check_http -e 401 -H \$HOSTADDRESS$ -p 9191"
   }
 
   nagios_command { 'check_dc_ldap':
