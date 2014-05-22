@@ -464,7 +464,7 @@ class dc_icinga::server::config (
     command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -b ${ldap_server_suffix}"
   }
   
-  nagios_command { 'check_cinder_http':
+  nagios_command { 'check_cinder_api_http':
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8776"
   }
   ######################################################################
