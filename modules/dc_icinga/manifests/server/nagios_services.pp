@@ -393,4 +393,10 @@ class dc_icinga::server::nagios_services {
     service_description => 'Cinder Volume Server Process',
   }
 
+  nagios_service { 'check_cinder_api_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_cinder',
+    check_command       => 'check_cinder_api_http',
+    service_description => 'Cinder API HTTP',
+  }
 }
