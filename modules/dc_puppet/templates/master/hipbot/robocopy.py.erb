@@ -157,7 +157,7 @@ def foreman_get(path):
         except:
             be.send_message(
                 '<img src="http://robocopy.<%= @domain %>/foreman.png"></img>' \
-                '<b>Foreman API Error</b><br />' \
+                '&nbsp;<b>Foreman API Error</b><br />' \
                 'Retrying in 60s ...', 'red')
             logging.warning("[Worker] HTTP GET exception")
             time.sleep(60)
@@ -179,7 +179,7 @@ def foreman_post(path, post):
         except:
             be.send_message(
                 '<img src="http://robocopy.<%= @domain %>/foreman.png"></img>' \
-                '<b>Foreman API Error</b><br />' \
+                '&nbsp;<b>Foreman API Error</b><br />' \
                 'Retrying in 60s ...', 'red')
             logging.warning("[Worker] HTTP PUT exception")
             time.sleep(60)
@@ -257,7 +257,7 @@ def dequeue_job():
     delta = end_time - start_time
     lock.acquire()
     message = '<img src="http://robocopy.<%= @domain %>/foreman.png"></img>'
-    message += "<b>Foreman Class Import</b><br />"
+    message += "&nbsp;<b>Foreman Class Import</b><br />"
     message += "<em>Completed in {0:.2f}s</em><br />".format(delta)
     message += "The following branches are now live<br />"
     for environment in branches[:coalesce_size]:
@@ -274,7 +274,7 @@ def report_git_sync():
     """Report that your classes are synced with puppet"""
     lock.acquire()
     message = '<img src="http://robocopy.<%= @domain %>/puppet.png"></img>'
-    message += "<b>Puppet Class Sync</b><br />"
+    message += "&nbsp;<b>Puppet Class Sync</b><br />"
     message += "The following branches are now live<br />"
     for environment in branches[:coalesce_size]:
         message += "&#9656; {0}<br />".format(environment)
@@ -373,7 +373,7 @@ class RoboCopy():
             # actually doing something.  Ponies are good for this
             self.backend.send_message(
                 '<img src="http://robocopy.<%= @domain %>/github.png"></img>' \
-                "<b>Branch Merged</b><br />" \
+                "&nbsp;<b>Branch Merged</b><br />" \
                 "Enqueuing clean up and synchronisation for pull request " \
                 + match.group(1) + "<br />", 'yellow')
             enqueue_job(git_resolve_branch(match.group(2)))
