@@ -37,4 +37,4 @@ mail.err			/var/log/mail.err
 #
 *.emerg                                :omusrmsg:*
 
-*.* @@<%= @logstash_server %>:<%= @logstash_port %>
+*.*;authpriv.notice @@<%= @logstash_server %>:<%= @logstash_port %>
