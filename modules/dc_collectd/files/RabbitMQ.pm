@@ -58,6 +58,7 @@ plugin_register (TYPE_READ, 'RabbitMQ', 'my_read');
 plugin_register (TYPE_CONFIG, "RabbitMQ", "rabbit_config");
 
 sub rabbit_config {
+  plugin_log(LOG_INFO, "RabbitMQ: reading configuration");
     my ($ci) = @_;
     foreach my $item (@{$ci->{'children'}}) {
         my $key = lc($item->{'key'});
@@ -74,11 +75,13 @@ sub rabbit_config {
             $realm = $val;
         }
     }
+  plugin_log(LOG_INFO, "RabbitMQ: reading configuration done");
     return 1;
 }
 
 sub my_read
 {
+  plugin_log(LOG_INFO, "RabbitMQ: starting http request");
   eval {
     my $ua = LWP::UserAgent->new;
     $ua->timeout(5);
@@ -91,10 +94,12 @@ sub my_read
     return 1;
   }
 
+  plugin_log(LOG_INFO, "RabbitMQ: finished http request");
   if ($res->code ne '200') {
     plugin_log(LOG_ERR, "RabbitMQ: non-200 response");
     return 1;
   }
+  plugin_log(LOG_INFO, "RabbitMQ: got 200 response");
 
   my $contents = $res->content();
   my $ref;
@@ -105,6 +110,7 @@ sub my_read
     plugin_log(LOG_ERR, "RabbitMQ: exception decoding response");
     return 1;
   }
+  plugin_log(LOG_INFO, "RabbitMQ: decoded response");
 
   my $vl = {};
   $vl->{'plugin'} = 'rabbitmq';
@@ -131,7 +137,9 @@ sub my_read
       $result->{'message_stats'}->{'deliver_get'} ? $result->{'message_stats'}->{'deliver_get'} : 0,
       $result->{'message_stats'}->{'deliver_get_details'}->{'rate'} ? $result->{'message_stats'}->{'deliver_get_details'}->{'rate'} : 0,
     ];  
+    plugin_log(LOG_INFO, "RabbitMQ: dispatching stats for " . $result->{'vhost'} . '/' . $result->{'name'});
     plugin_dispatch_values($vl);
   }
+  plugin_log(LOG_INFO, "RabbitMQ: done processing results");
   return 1;
 }
