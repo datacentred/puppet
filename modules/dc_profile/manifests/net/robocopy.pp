@@ -12,6 +12,6 @@
 #
 class dc_profile::net::robocopy {
 
-  contain ::robocopy
+  include ::robocopy
 
 }
