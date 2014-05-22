@@ -20,8 +20,14 @@ class dc_logstash::client::forwarder {
 
   concat::fragment { 'logstash-forwarder-header':
     target  => '/etc/logstash-forwarder',
-    content => template('dc_logstash/logstash-forwarder_client.erb'),
+    content => template('dc_logstash/logstash-forwarder_client_header.erb'),
     order   => '01',
+  }
+
+  concat::fragment { 'logstash-forwarder-footer':
+    target  => '/etc/logstash-forwarder',
+    content => template('dc_logstash/logstash-forwarder_client_footer.erb'),
+    order   => '99',
   }
 
   define forwarder::register ($logfile, $order=10) {
