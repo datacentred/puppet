@@ -47,4 +47,5 @@ class dc_mariadb (
     ],
   }
 
+  include dc_mariadb::collectd
 }
