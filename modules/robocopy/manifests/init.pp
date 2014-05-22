@@ -1,5 +1,5 @@
-# Scarlett for HipChat
-class dc_puppies {
+# Icons and stuff for robocopy/hipchat
+class robocopy {
 
   include apache
 
