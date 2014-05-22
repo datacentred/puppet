@@ -11,19 +11,32 @@ class dc_logstash::client::forwarder {
     ensure => installed,
   }
 
-  file { '/etc/logstash-forwarder':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+  concat { '/etc/logstash-forwarder':
+    ensure => present,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644'
+  }
+
+  concat::fragment { 'logstash-forwarder-header':
+    target  => '/etc/logstash-forwarder',
     content => template('dc_logstash/logstash-forwarder_client.erb'),
+    order   => '01',
+  }
+
+  define forwarder::register ($logfile, $order=10) {
+    concat::fragment { "logstash_forwarder_log_$name":
+      target  => '/etc/logstash-forwarder'
+      order   => $order,
+      content => template('dc_logstash/logstash-forwarder_log.erb'),
+    }
   }
 
   service { 'logstash-forwarder':
     ensure    => running,
     enable    => true,
     require   => Package['logstash-forwarder'],
-    subscribe => File['/etc/logstash-forwarder'],
+    subscribe => Concat['/etc/logstash-forwarder'],
   }
 
 }
