@@ -40,15 +40,15 @@ class dc_mariadb::collectd {
   }
 
   # Generate the collectd config
-  collectd::plugin::mysql::database { $hostname :
+  collectd::plugin::mysql::database { $::hostname :
     host     => 'localhost',
     username => $mysql_collectd_username,
     password => $mysql_collectd_password,
   }
 
-  $dbhashhost = [ "${hostname}#${hostname}" ]
+  $dbhashhost = [ "${::hostname}#${::hostname}" ]
 
-  @@dc_gdash::mysql { $dbhashhost: }
+  @@dc_gdash::mysql { $dbhashhost : }
 
 }
 
