@@ -85,37 +85,48 @@ def get_scarlett():
 # Git
 ##############################################################################
 
+def git_run(command):
+    """Run a command as the git user"""
+    rc = subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c', command])
+    if rc != 0:
+        be.send_message('<b>Git Consistency Error</b><br />' \
+            'Exit code ' + '{0}'.format(rc) + ' performing<br />' \
+            '<em>' + command + '</em>', 'red')
+        raise RuntimeError
+
 def git_sync():
     """Synchronise repos and submodules"""
-    # Become the git user and fetch the production branch, this
-    # is a bare repository so we need to fast forward the destination
-    # reference to that of the source
-    # todo: The actual branch name is available in the regex
-    #       matches above, probably buggers up with submodules
-    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                     'cd /home/git/puppet.git; ' \
-                     'git fetch origin master:master'])
+    popd = os.getcwd()
+    try:
+        # Become the git user and fetch the production branch, this
+        # is a bare repository so we need to fast forward the destination
+        # reference to that of the source
+        os.chdir('/home/git/puppet.git')
+        git_run('git fetch origin master:master')
 
-    # Likewise mirror changes to the puppet environment
-    # todo: The actual branch name is available in the regex
-    #       matches above, probably buggers up with submodules
-    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                     'cd /etc/puppet/environments/production;' \
-                     'git pull;' \
-                     'git submodule init;' \
-                     'git submodule sync;' \
-                     'git submodule update'])
+        # Likewise mirror changes to the puppet environment
+        os.chdir('/etc/puppet/environments/production')
+        git_run('git pull')
+        git_run('git submodule init')
+        git_run('git submodule sync')
+        git_run('git submodule update')
+    except RuntimeError:
+        raise
+    finally:
+        os.chdir(popd)
 
 def git_delete(branch):
     """Delete a branch and kill off the dynamic environment"""
-    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                     'cd /home/git/puppet.git; ' \
-                     'git branch -D {0}'.format(branch)])
-    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                     'cd /home/git/puppet.git; ' \
-                     'git push origin :{0}'.format(branch)])
-    subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c',
-                     'rm -rf /etc/puppet/environments/{0}'.format(branch)])
+    popd = os.getcwd()
+    try:
+        os.chdir('/home/git/puppet.git')
+        git_run('git branch -D {0}'.format(branch))
+        git_run('git push origin :{0}'.format(branch))
+        git_run('rm -rf /etc/puppet/environments/{0}'.format(branch))
+    except RuntimeError:
+        raise
+    finally:
+        os.chdir(popd)
 
 def git_resolve_branch(branch):
     """Resolve the true branch name from what hipchat spits out"""
@@ -277,6 +288,10 @@ def dump_queue():
     # Multi line input must be given via /quote
     # or the newlines will be ignored
     output = "<b>Job Queue</b><br />"
+    if coalesce_size:
+        end_time = time.time()
+        delta = end_time - start_time
+        output += "<em>Current runtime {0:.2f}s</em><br />".format(delta)
     lock.acquire()
     for i in branches[:coalesce_size]:
         output += "{0} (<em>running</em>)<br />".format(i)
@@ -300,13 +315,17 @@ def worker_main(*args, **kwargs):
     while True:
         logging.info('[Worker] wait queue')
         wait_job()
-        logging.info('[Worker] syncing git')
-        git_sync()
-        report_git_sync()
-        logging.info('[Worker] deleting dynamic environment')
-        kill_environment()
-        logging.info('[Worker] syncing foreman')
-        foreman_sync()
+        try:
+            logging.info('[Worker] deleting dynamic environment')
+            kill_environment()
+            logging.info('[Worker] syncing git')
+            git_sync()
+            report_git_sync()
+            logging.info('[Worker] syncing foreman')
+            foreman_sync()
+        except RuntimeError:
+            pass
+        # Always dequeue to prevent infinite spam
         logging.info('[Worker] sync complete')
         dequeue_job()
 
