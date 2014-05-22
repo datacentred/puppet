@@ -14,16 +14,12 @@ start_daemon() {
 
 stop_daemon() {
   log_begin_msg "Stopping $DESC"
-  start-stop-daemon --stop --pidfile $PIDFILE --signal INT 
-  while daemon_status
-  do
-    sleep 1
-  done
+  start-stop-daemon --stop --pidfile $PIDFILE --retry=INT/20/KILL/5
   log_end_msg 0
 }
 
 daemon_status() {
-  start-stop-daemon --status  --pidfile $PIDFILE $DAEMON
+  status_of_proc -p $PIDFILE "$DAEMON" hipbot
 }
 
 case "$1" in
