@@ -24,7 +24,7 @@ class dc_profile::perf::collectd {
   }
 
   class { 'collectd::plugin::syslog':
-    log_level => 'info',
+    log_level => 'error',
   }
 
   class { 'collectd::plugin::write_graphite':
