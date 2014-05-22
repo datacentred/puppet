@@ -89,7 +89,7 @@ def git_run(command):
     """Run a command as the git user"""
     rc = subprocess.call(['sudo', '-H', '-u', 'git', 'bash', '-c', command])
     if rc != 0:
-        be.send_message('<b>Git Consistency Error</b></br>' \
+        be.send_message('<b>Git Consistency Error</b><br />' \
             'Exit code ' + '{0}'.format(rc) + ' performing<br />' \
             '<em>' + command + '</em>', 'red')
         raise RuntimeError
