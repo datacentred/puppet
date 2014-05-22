@@ -353,6 +353,11 @@ class dc_icinga::server::config (
   nagios_hostgroup { 'dc_hostgroup_ldap':
     alias => 'LDAP Servers',
   }
+
+  nagios_hostgroup { 'dc_hostgroup_cinder':
+    alias => 'Cinder Servers',
+  }
+  ######################################################################
   ######################################################################
   # Commands
   ######################################################################
@@ -457,6 +462,10 @@ class dc_icinga::server::config (
 
   nagios_command { 'check_dc_ldap':
     command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -b ${ldap_server_suffix}"
+  }
+  
+  nagios_command { 'check_cinder_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8776"
   }
   ######################################################################
   ######################################################################
