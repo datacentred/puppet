@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box         = 'datacentred/ubuntu-trusty64-puppet'
-  config.vm.box_version = '0.1.1'
+  config.vm.box_version = '0.1.2'
 
   # Make the NAT engine use the host's resolver mechanisms to handle DNS requests
   config.vm.provider "virtualbox" do |virtualbox|
