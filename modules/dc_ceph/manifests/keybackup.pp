@@ -17,7 +17,7 @@ class dc_ceph::keybackup {
   if $::hostname == hiera(cephdeploy_primary_mon) {
 
     $sos_address      = hiera(sal01_internal_sysmail_address)
-    $ceph_deploy_user = hiera(ceph_deploy_user)
+    $ceph_deploy_user = hiera(cephdeploy_user)
     $mountpoint       = '/var/ceph-keybackup'
 
     include ::nfs::client
