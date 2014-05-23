@@ -18,12 +18,13 @@ class dc_ceph::keybackup {
 
     $sos_address      = hiera(sal01_internal_sysmail_address)
     $ceph_deploy_user = hiera(ceph_deploy_user)
+    $mountpoint       = '/var/ceph-keybackup'
 
     include ::nfs::client
 
     Nfs::Client::Mount <<| nfstag == 'ceph-keybackup' |>> {
       ensure => mounted,
-      mount  => '/var/ceph-keybackup',
+      mount  => $mountpoint,
     }
 
     file { '/usr/local/bin/ceph-keybackup':
