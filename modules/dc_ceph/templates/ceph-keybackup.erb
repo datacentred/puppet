@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if grep -q /var/ceph-keybackup /proc/mounts; then
+  rsync -a --delete /home/<%= @cephdeploy_user %>/bootstrap /var/ceph-keybackup
+  rsync -a --delete /home/<%= @cephdeploy_user %>/zapped /var/ceph-keybackup
+else
+  msg='Hello from <%= @::fqdn %> my ceph backup mounts seem broken, help!'
+  echo $msg | mail -s 'Ceph Key Backup Failure' <%= @sos_address %>
+fi
+

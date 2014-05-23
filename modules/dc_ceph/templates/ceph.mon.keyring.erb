@@ -1,8 +1,0 @@
-[mon.]
-	key = <%= @ceph_mon_key %>
-	caps mon = "allow *"
-[client.admin]
-	key = <%= @ceph_admin_key %>
-        caps mon = "allow *"
-        caps osd = "allow *"
-        caps mds = "allow"
