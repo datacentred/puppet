@@ -26,7 +26,7 @@ class dc_ceph::exports {
     @@nfs::server::export { "${storagedir}/backups/ceph-keybackup":
       ensure  => present,
       require => File['ceph-keybackup'],
-      clients => "${::ipaddress} (rw,insecure,async,no_root_squash,no_subtree_check",
+      clients => "${::ipaddress}(rw,insecure,async,no_root_squash,no_subtree_check",
       tag     => 'backups',
       nfstag  => 'ceph-keybackup',
     }
