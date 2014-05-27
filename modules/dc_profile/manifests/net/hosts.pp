@@ -12,9 +12,11 @@
 #
 class dc_profile::net::hosts {
 
-  host { $::fqdn:
-    ensure => absent,
-    ip     => '127.0.1.1',
+  if !$::is_vagrant {
+    host { $::fqdn:
+      ensure => absent,
+      ip     => '127.0.1.1',
+    }
   }
 
 }
