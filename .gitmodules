@@ -200,3 +200,6 @@
 [submodule "modules/external_facts"]
 	path = modules/external_facts
 	url = https://github.com/datacentred/datacentred-external_facts
+[submodule "modules/haproxy"]
+	path = modules/haproxy
+	url = https://github.com/datacentred/puppetlabs-haproxy
