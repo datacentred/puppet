@@ -30,11 +30,11 @@ class dc_logstash::client::forwarder {
     order   => '99',
   }
 
-  define forwarder::register ($logfile, $order=10) {
+  define register ($logs, $order='10', $type) {
     concat::fragment { "logstash_forwarder_log_$name":
-      target  => '/etc/logstash-forwarder'
+      target  => '/etc/logstash-forwarder',
       order   => $order,
-      content => template('dc_logstash/logstash-forwarder_log.erb'),
+      content => template('dc_logstash/logstash-forwarder_client_log.erb'),
     }
   }
 
