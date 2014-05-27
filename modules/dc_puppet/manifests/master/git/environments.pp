@@ -45,6 +45,7 @@ class dc_puppet::master::git::environments {
     cwd         => $production_env,
     refreshonly => true,
     user        => 'git',
+    timeout     => 0,
   }
 
   # Finally add in the post receive hooks which are responsible
