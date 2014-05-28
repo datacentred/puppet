@@ -48,4 +48,6 @@ class dc_profile::openstack::nova_mq {
 
   include dc_collectd::agent::rabbitmq
 
+  include dc_profile::openstack::nova_mq_logstash
+
 }
