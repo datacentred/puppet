@@ -7,20 +7,20 @@
 # Actions:
 #
 # Requires:
-#   
+#
 # Sample Usage:
 #
 class dc_profile::openstack::glance_api_db {
 
   include dc_mariadb
 
-  $glance_api_db   = hiera(glance_api_db)
-  $glance_api_user = hiera(glance_api_user)
-  $glance_api_pass = hiera(glance_api_pass)
+  $glance_api_db      = hiera(glance_api_db)
+  $glance_api_db_user = hiera(glance_api_db_user)
+  $glance_api_db_pass = hiera(glance_api_db_pass)
 
   dc_mariadb::db { $glance_api_db:
-    user     => $glance_api_user,
-    password => $glance_api_pass,
+    user     => $glance_api_db_user,
+    password => $glance_api_db_pass,
     require  => Class['Dc_mariadb'],
   }
 
