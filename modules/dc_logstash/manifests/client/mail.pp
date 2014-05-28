@@ -4,7 +4,7 @@
 #
 class dc_logstash::client::mail {
   
-  dc_logstash::client::forwarder::register { 'mail_error':
+  dc_logstash::client::register { 'mail_error':
     logs => '/var/log/mail.err',
     type => 'mail_error',
   }
