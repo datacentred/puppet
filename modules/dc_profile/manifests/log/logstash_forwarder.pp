@@ -15,5 +15,8 @@
 class dc_profile::log::logstash_forwarder {
 
   contain dc_logstash::client::forwarder
+  contain dc_logstash::client::apache
+  contain dc_logstash::client::mysql
+  contain dc_logstash::client::mail
 
 }
