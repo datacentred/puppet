@@ -123,4 +123,7 @@ class dc_profile::openstack::nova {
   # Nagios config
   include dc_profile::openstack::nova_nagios
 
+  # Logstash config
+  include dc_profile::openstack::nova_logstash
+
 }
