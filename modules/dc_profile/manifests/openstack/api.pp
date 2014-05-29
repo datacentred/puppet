@@ -14,10 +14,11 @@
 
 class dc_profile::openstack::api {
 
-  class { 'haproxy': }
+  include ::dc_ssl::haproxy
+  include ::haproxy
 
   # Filesystem location of the SSL certificate
-  $sslcert = '/etc/haproxy/test.pem'
+  $sslcert = '/etc/ssl/certs/haproxy.pem'
 
   # Default haproxy options applicable to all listeners
   $listeneroptions =  {
@@ -39,8 +40,9 @@ class dc_profile::openstack::api {
   haproxy::listen { 'keystone':
     ipaddress => '*',
     ports     => '5000',
-    ssl       => '/etc/haproxy/test.pem',
+    ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'keystone':
     listening_service => 'keystone',
@@ -56,6 +58,7 @@ class dc_profile::openstack::api {
     ports     => '9292',
     ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'glance-api':
     listening_service => 'glance-api',
@@ -69,6 +72,7 @@ class dc_profile::openstack::api {
     ports     => '9191',
     ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'glance-reg':
     listening_service => 'glance-reg',
@@ -84,6 +88,7 @@ class dc_profile::openstack::api {
     ports     => '9696',
     ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'neutron':
     listening_service => 'neutron',
@@ -99,6 +104,7 @@ class dc_profile::openstack::api {
     ports     => '8774',
     ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'nova-compute':
     listening_service => 'nova-compute',
@@ -112,6 +118,7 @@ class dc_profile::openstack::api {
     ports     => '8775',
     ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'nova-metadata':
     listening_service => 'nova-metadata',
@@ -127,6 +134,7 @@ class dc_profile::openstack::api {
     ports     => '8776',
     ssl       => $sslcert,
     options   => $listeneroptions,
+    require   => File[$sslcert],
   }
   haproxy::balancermember { 'cinder':
     listening_service => 'cinder',
@@ -137,11 +145,18 @@ class dc_profile::openstack::api {
   }
 
   # Horizon
+  haproxy::listen { 'horizon':
+    ipaddress => '*',
+    ports     => '443',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+    require   => File[$sslcert],
+  }
   haproxy::balancermember { 'horizon':
     listening_service => 'horizon',
     server_names      => 'controller0.sal01.datacentred.co.uk',
     ipaddresses       => 'controller0.sal01.datacentred.co.uk',
     ports             => '80',
-    options           => 'check inter 2000 rise 2 fall 5',
+    options           => $balanceroptions,
   }
 }
