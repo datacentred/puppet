@@ -40,6 +40,6 @@ class dc_profile::net::tftpserver {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_tftp']
+  realize External_facts::Fact['dc_hostgroup_tftp']
 
 }

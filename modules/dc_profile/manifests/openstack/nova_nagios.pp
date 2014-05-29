@@ -48,6 +48,6 @@ class dc_profile::openstack::nova_nagios {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_nova_server']
+  realize External_facts::Fact['dc_hostgroup_nova_server']
 
 }

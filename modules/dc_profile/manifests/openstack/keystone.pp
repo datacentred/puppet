@@ -158,6 +158,6 @@ class dc_profile::openstack::keystone {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_keystone']
+  realize External_facts::Fact['dc_hostgroup_keystone']
 
 }

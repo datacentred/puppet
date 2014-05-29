@@ -72,7 +72,7 @@ class dc_profile::openstack::neutron_server {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_neutron_server']
+  realize External_facts::Fact['dc_hostgroup_neutron_server']
 
   # Configure Neutron for OVS
   class { 'neutron::agents::ovs':

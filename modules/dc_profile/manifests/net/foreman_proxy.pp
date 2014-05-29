@@ -26,6 +26,6 @@ class dc_profile::net::foreman_proxy {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_foreman_proxy']
+  realize External_facts::Fact['dc_hostgroup_foreman_proxy']
 
 }

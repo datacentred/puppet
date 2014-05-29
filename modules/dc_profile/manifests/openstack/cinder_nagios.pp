@@ -34,6 +34,6 @@ class dc_profile::openstack::cinder_nagios {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_cinder']
+  realize External_facts::Fact['dc_hostgroup_cinder']
 
 }
