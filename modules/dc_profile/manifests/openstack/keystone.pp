@@ -50,6 +50,8 @@ class dc_profile::openstack::keystone {
     role   => 'admin',
   }
 
+  # Export variable for use by haproxy to front the Keystone
+  # endpoint
   exported_vars::set { 'keystone_host':
     value => $::fqdn,
   }

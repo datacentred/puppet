@@ -85,6 +85,11 @@ class dc_profile::openstack::neutron_server {
       tenant_network_type => 'gre',
   }
 
+  # Export variable for use by haproxy
+  exported_vars::set { 'neutron_api':
+    value => $::fqdn,
+  }
+
   # Export Keystone endpoint details
   # Might need revisiting once we have an external (public) network defined
   @@keystone_endpoint { "${os_region}/neutron":

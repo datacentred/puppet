@@ -46,6 +46,13 @@ class dc_profile::openstack::glance {
   }
   contain 'glance::api'
 
+  # Export variable for use by haproxy to front this
+  # API endpoint
+  exported_vars::set { 'glance_api':
+    value => $::fqdn,
+  }
+  # Used by Nova
+  # FIXME: Can be removed once API servers are stood up
   exported_vars::set { 'glance_api_server':
     value => "${::fqdn}:${glance_port}",
   }
