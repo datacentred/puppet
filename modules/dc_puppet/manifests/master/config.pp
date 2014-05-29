@@ -81,7 +81,7 @@ class dc_puppet::master::config {
     content => template('dc_puppet/master/puppet.conf-master.erb'),
   }
 
-  dc_external_facts::fact { 'puppetmaster_stage':
+  external_facts::fact { 'puppetmaster_stage':
     value => $::puppetmaster_stage,
   }
 

@@ -12,6 +12,6 @@
 #
 class dc_profile::util::external_facts {
 
-  contain dc_external_facts::external_facts
+  include ::external_facts
 
 }

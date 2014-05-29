@@ -197,3 +197,6 @@
 [submodule "modules/php"]
 	path = modules/php
 	url = https://github.com/jippi/puppet-php.git
+[submodule "modules/external_facts"]
+	path = modules/external_facts
+	url = https://github.com/datacentred/datacentred-external_facts

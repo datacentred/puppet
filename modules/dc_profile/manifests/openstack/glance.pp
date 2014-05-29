@@ -89,6 +89,6 @@ class dc_profile::openstack::glance {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_glance']
+  realize External_facts::Fact['dc_hostgroup_glance']
 
 }

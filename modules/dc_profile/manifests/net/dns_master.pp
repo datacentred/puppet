@@ -25,7 +25,7 @@ class dc_profile::net::dns_master {
   contain 'dc_dns'
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_dns']
+  realize External_facts::Fact['dc_hostgroup_dns']
 
   Dns_resource <<||>>
 

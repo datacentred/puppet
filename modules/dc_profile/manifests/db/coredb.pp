@@ -34,6 +34,6 @@ class dc_profile::db::coredb {
 
   # And add in any monitoring
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_postgres']
+  realize External_facts::Fact['dc_hostgroup_postgres']
 
 }

@@ -49,6 +49,6 @@ class dc_profile::net::dhcpd_slave {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_dhcp']
+  realize External_facts::Fact['dc_hostgroup_dhcp']
 
 }

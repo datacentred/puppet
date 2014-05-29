@@ -45,6 +45,6 @@ class dc_profile::net::nfsserver {
 
   # Icinga config
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_nfs']
+  realize External_facts::Fact['dc_hostgroup_nfs']
 
 }

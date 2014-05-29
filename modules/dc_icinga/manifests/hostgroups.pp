@@ -1,30 +1,30 @@
 #
 class dc_icinga::hostgroups {
 
-  @dc_external_facts::fact { 'dc_hostgroup_http': }
-  @dc_external_facts::fact { 'dc_hostgroup_https': }
-  @dc_external_facts::fact { 'dc_hostgroup_puppetmaster': }
-  @dc_external_facts::fact { 'dc_hostgroup_postgres': }
-  @dc_external_facts::fact { 'dc_hostgroup_dhcp': }
-  @dc_external_facts::fact { 'dc_hostgroup_tftp': }
-  @dc_external_facts::fact { 'dc_hostgroup_dns': }
-  @dc_external_facts::fact { 'dc_hostgroup_ntp': }
-  @dc_external_facts::fact { 'dc_hostgroup_puppetdb': }
-  @dc_external_facts::fact { 'dc_hostgroup_foreman_proxy': }
-  @dc_external_facts::fact { 'dc_hostgroup_mysql': }
-  @dc_external_facts::fact { 'dc_hostgroup_logstashes': }
-  @dc_external_facts::fact { 'dc_hostgroup_keystone': }
-  @dc_external_facts::fact { 'dc_hostgroup_nfs': }
-  @dc_external_facts::fact { 'dc_hostgroup_foreman': }
-  @dc_external_facts::fact { 'dc_hostgroup_smtp': }
-  @dc_external_facts::fact { 'dc_hostgroup_postfix': }
-  @dc_external_facts::fact { 'dc_hostgroup_nova_compute': }
-  @dc_external_facts::fact { 'dc_hostgroup_neutron_node': }
-  @dc_external_facts::fact { 'dc_hostgroup_neutron_server': }
-  @dc_external_facts::fact { 'dc_hostgroup_nova_server': }
-  @dc_external_facts::fact { 'dc_hostgroup_rabbitmq': }
-  @dc_external_facts::fact { 'dc_hostgroup_glance': }
-  @dc_external_facts::fact { 'dc_hostgroup_ldap': }
-  @dc_external_facts::fact { 'dc_hostgroup_cinder': }
+  @external_facts::fact { 'dc_hostgroup_http': }
+  @external_facts::fact { 'dc_hostgroup_https': }
+  @external_facts::fact { 'dc_hostgroup_puppetmaster': }
+  @external_facts::fact { 'dc_hostgroup_postgres': }
+  @external_facts::fact { 'dc_hostgroup_dhcp': }
+  @external_facts::fact { 'dc_hostgroup_tftp': }
+  @external_facts::fact { 'dc_hostgroup_dns': }
+  @external_facts::fact { 'dc_hostgroup_ntp': }
+  @external_facts::fact { 'dc_hostgroup_puppetdb': }
+  @external_facts::fact { 'dc_hostgroup_foreman_proxy': }
+  @external_facts::fact { 'dc_hostgroup_mysql': }
+  @external_facts::fact { 'dc_hostgroup_logstashes': }
+  @external_facts::fact { 'dc_hostgroup_keystone': }
+  @external_facts::fact { 'dc_hostgroup_nfs': }
+  @external_facts::fact { 'dc_hostgroup_foreman': }
+  @external_facts::fact { 'dc_hostgroup_smtp': }
+  @external_facts::fact { 'dc_hostgroup_postfix': }
+  @external_facts::fact { 'dc_hostgroup_nova_compute': }
+  @external_facts::fact { 'dc_hostgroup_neutron_node': }
+  @external_facts::fact { 'dc_hostgroup_neutron_server': }
+  @external_facts::fact { 'dc_hostgroup_nova_server': }
+  @external_facts::fact { 'dc_hostgroup_rabbitmq': }
+  @external_facts::fact { 'dc_hostgroup_glance': }
+  @external_facts::fact { 'dc_hostgroup_ldap': }
+  @external_facts::fact { 'dc_hostgroup_cinder': }
 
 }

@@ -17,8 +17,8 @@ class dc_logstash::icinga {
   }
 
   include dc_icinga::hostgroups
-  realize Dc_external_facts::Fact['dc_hostgroup_http']
-  realize Dc_external_facts::Fact['dc_hostgroup_logstashes']
+  realize External_facts::Fact['dc_hostgroup_http']
+  realize External_facts::Fact['dc_hostgroup_logstashes']
 
 }
 
