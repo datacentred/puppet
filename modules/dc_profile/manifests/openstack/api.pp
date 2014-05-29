@@ -16,79 +16,132 @@ class dc_profile::openstack::api {
 
   class { 'haproxy': }
 
-  haproxy::listen { [ 'keystone', 'horizon', 'glance-api',
-                      'glance-reg', 'neutron', 'nova-compute',
-                      'nova-metadata', 'cinder']:
-    ipaddress => $::ipaddress,
+  # Filesystem location of the SSL certificate
+  $sslcert = '/etc/haproxy/test.pem'
+
+  # Default haproxy options applicable to all listeners
+  $listeneroptions =  {
+                        'option'  => ['tcpka', 'httpchk', 'tcplog'],
+                        'balance' => 'source',
+                      }
+
+  # Default haproxy options applicable to all balancermembers
+  $balanceroptions = 'check inter 2000 rise 2 fall 5'
+
+  # Gather our API endpoints
+  $keystone_api_servers = get_exported_var('', 'keystone_host', ['localhost'])
+  $glance_api_servers   = get_exported_var('', 'glance_api', ['localhost'])
+  $neutron_api_servers  = get_exported_var('', 'neutron_api', ['localhost'])
+  $nova_api_servers     = get_exported_var('', 'nova_api', ['localhost'])
+  $cinder_api_servers   = get_exported_var('', 'cinder_api', ['localhost'])
+
+  # Keystone
+  haproxy::listen { 'keystone':
+    ipaddress => '*',
     ports     => '5000',
     ssl       => '/etc/haproxy/test.pem',
-    options   =>  {
-                    'option'  => ['tcpka', 'httpchk', 'tcplog'],
-                    'balance' => 'source',
-                  }
+    options   => $listeneroptions,
   }
-
   haproxy::balancermember { 'keystone':
     listening_service => 'keystone',
-    server_names      => 'controller0.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
+    server_names      => $keystone_api_servers,
+    ipaddresses       => $keystone_api_servers,
     ports             => '5000',
-    options           => 'check inter 2000 rise 2 fall 5',
+    options           => $balanceroptions,
   }
 
+  # Glance
+  haproxy::listen { 'glance-api':
+    ipaddress => '*',
+    ports     => '9292',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'glance-api':
+    listening_service => 'glance-api',
+    server_names      => $glance_api_servers,
+    ipaddresses       => $glance_api_servers,
+    ports             => '9292',
+    options           => $balanceroptions,
+  }
+  haproxy::listen { 'glance-reg':
+    ipaddress => '*',
+    ports     => '9191',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'glance-reg':
+    listening_service => 'glance-reg',
+    server_names      => $glance_api_servers,
+    ipaddresses       => $glance_api_servers,
+    ports             => '9191',
+    options           => $balanceroptions,
+  }
+
+  # Neutron
+  haproxy::listen { 'neutron':
+    ipaddress => '*',
+    ports     => '9696',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'neutron':
+    listening_service => 'neutron',
+    server_names      => $neutron_api_servers,
+    ipaddresses       => $neutron_api_servers,
+    ports             => '9696',
+    options           => $balanceroptions,
+  }
+
+  # Nova
+  haproxy::listen { 'nova-compute':
+    ipaddress => '*',
+    ports     => '8774',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'nova-compute':
+    listening_service => 'nova-compute',
+    server_names      => $nova_api_servers,
+    ipaddresses       => $nova_api_servers,
+    ports             => '8774',
+    options           => $balanceroptions,
+  }
+  haproxy::listen { 'nova-metadata':
+    ipaddress => '*',
+    ports     => '8775',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'nova-metadata':
+    listening_service => 'nova-metadata',
+    server_names      => $nova_api_servers,
+    ipaddresses       => $nova_api_servers,
+    ports             => '8775',
+    options           => $balanceroptions,
+  }
+
+  # Cinder
+  haproxy::listen { 'cinder':
+    ipaddress => '*',
+    ports     => '8776',
+    ssl       => $sslcert,
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'cinder':
+    listening_service => 'cinder',
+    server_names      => $cinder_api_servers,
+    ipaddresses       => $cinder_api_servers,
+    ports             => '8776',
+    options           => $balanceroptions,
+  }
+
+  # Horizon
   haproxy::balancermember { 'horizon':
     listening_service => 'horizon',
     server_names      => 'controller0.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
+    ipaddresses       => 'controller0.sal01.datacentred.co.uk',
     ports             => '80',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  haproxy::balancermember { 'glance-api':
-    listening_service => 'glance-api',
-    server_names      => 'controller0.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
-    ports             => '9292',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  haproxy::balancermember { 'glance-reg':
-    listening_service => 'glance-reg',
-    server_names      => 'controller0.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
-    ports             => '9191',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  haproxy::balancermember { 'neutron':
-    listening_service => 'neutron',
-    server_names      => 'controller1.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
-    ports             => '9696',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  haproxy::balancermember { 'nova-compute':
-    listening_service => 'nova-compute',
-    server_names      => 'controller1.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
-    ports             => '8774',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  haproxy::balancermember { 'nova-metadata':
-    listening_service => 'nova-metadata',
-    server_names      => 'controller1.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
-    ports             => '8775',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  haproxy::balancermember { 'cinder':
-    listening_service => 'cinder',
-    server_names      => 'controller1.sal01.datacentred.co.uk',
-    ipaddresses       => '10.10.160.161',
-    ports             => '8776',
     options           => 'check inter 2000 rise 2 fall 5',
   }
 }
