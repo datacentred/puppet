@@ -23,22 +23,22 @@ class dc_profile::openstack::nova_mq_logstash {
   }
 
   dc_logstash::client::register { 'rabbitmq_startup_error':
-    logs => "/var/log/rabbitmq/startup_err",
+    logs => '/var/log/rabbitmq/startup_err',
     type => 'rabbitmq_startup_error',
   }  
   
   dc_logstash::client::register { 'rabbitmq_startup_log':
-    logs => "/var/log/rabbitmq/startup_log",
+    logs => '/var/log/rabbitmq/startup_log',
     type => 'rabbitmq_startup_log',
   }
 
   dc_logstash::client::register { 'rabbitmq_shutdown_error':
-    logs => "/var/log/rabbitmq/shutdown_err",
+    logs => '/var/log/rabbitmq/shutdown_err',
     type => 'rabbitmq_shutdown_error',
   }
 
   dc_logstash::client::register { 'rabbitmq_shutdown_log':
-    logs => "/var/log/rabbitmq/shutdown_log",
+    logs => '/var/log/rabbitmq/shutdown_log',
     type => 'rabbitmq_shutdown_log',
   }
 
