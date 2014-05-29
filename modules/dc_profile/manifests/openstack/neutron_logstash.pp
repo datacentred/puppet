@@ -47,4 +47,19 @@ class dc_profile::openstack::neutron_logstash {
     type => 'neutron_openvswitch',
   }
 
+  dc_logstash::client::register { 'openvswitch_ovsdbserver_log':
+    logs => '/var/log/openvswitch/ovsdb-server.log',
+    type => 'openvswitch_ovsdbserver',
+  }
+
+  dc_logstash::client::register { 'openvswitch_ovsctl_log':
+    logs => '/var/log/openvswitch/ovs-ctl.log',
+    type => 'openvswitch_ovsvctl',
+  }
+
+  dc_logstash::client::register { 'openvswitch_ovsvswitchd':
+    logs => '/var/log/openvswitch/ovs-vswitchd.log',
+    type => 'openvswitch_ovsvswitchd',
+  }
+
 }
