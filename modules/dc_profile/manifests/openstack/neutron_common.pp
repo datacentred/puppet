@@ -10,6 +10,15 @@
 #
 class dc_profile::openstack::neutron_common {
 
+  # Amend sudoers entry for neutron_rootwrap so that the heartbeat
+  # stuff doesn't overwhelm us with spam unless something errors
+  file_line { 'neutron_sudoers_default':
+    path   => '/etc/sudoers.d/neutron_sudoers',
+    line   => 'Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info',
+    match  => 'Defaults:neutron !requiretty',
+    requre => Package['neutron-common'],
+  }
+
   file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
     ensure  => present,
     content => 'command[check_neutron_vswitch_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
