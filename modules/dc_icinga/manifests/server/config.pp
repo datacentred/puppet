@@ -405,7 +405,7 @@ class dc_icinga::server::config (
   }
 
   nagios_command { 'check_nova_ec2_api':
-    command_line => "/usr/lib/nagios/plugins/check_http -u /services/Cloud/ -H \$HOSTADDRESS$ -p 8773"
+    command_line => "/usr/lib/nagios/plugins/check_http -u /services/Cloud/ -e 400 -H \$HOSTADDRESS$ -p 8773"
   }
 
   nagios_command { 'check_nova_os_api':
