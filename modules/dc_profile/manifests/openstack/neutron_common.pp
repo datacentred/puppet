@@ -31,4 +31,6 @@ class dc_profile::openstack::neutron_common {
     notify  => Service['nagios-nrpe-server'],
   }
 
+  include dc_profile::openstack::neutron_logstash
+
 }
