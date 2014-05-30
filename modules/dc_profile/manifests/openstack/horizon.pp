@@ -42,4 +42,7 @@ class dc_profile::openstack::horizon {
   }
   contain 'dc_branding::openstack::horizon'
 
+  # Logstash config
+  include dc_profile::openstack::horizon_logstash
+
 }
