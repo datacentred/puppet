@@ -91,4 +91,7 @@ class dc_profile::openstack::glance {
   include dc_icinga::hostgroups
   realize External_facts::Fact['dc_hostgroup_glance']
 
+  # Logstash config
+  include dc_profile::openstack::glance_logstash
+
 }

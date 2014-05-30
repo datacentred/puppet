@@ -160,4 +160,6 @@ class dc_profile::openstack::keystone {
   include dc_icinga::hostgroups
   realize External_facts::Fact['dc_hostgroup_keystone']
 
+  # Logstash config
+  include dc_profile::openstack::keystone_logstash
 }
