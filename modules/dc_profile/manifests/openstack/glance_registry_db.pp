@@ -7,7 +7,7 @@
 # Actions:
 #
 # Requires:
-#   
+#
 # Sample Usage:
 #
 class dc_profile::openstack::glance_registry_db {
@@ -15,12 +15,12 @@ class dc_profile::openstack::glance_registry_db {
   include dc_mariadb
 
   $glance_reg_db   = hiera(glance_reg_db)
-  $glance_reg_user = hiera(glance_reg_user)
-  $glance_reg_pass = hiera(glance_reg_pass)
+  $glance_reg_db_user = hiera(glance_reg_db_user)
+  $glance_reg_db_pass = hiera(glance_reg_db_pass)
 
   dc_mariadb::db { $glance_reg_db:
-    user     => $glance_reg_user,
-    password => $glance_reg_pass,
+    user     => $glance_reg_db_user,
+    password => $glance_reg_db_pass,
     require  => Class['Dc_mariadb'],
   }
 
