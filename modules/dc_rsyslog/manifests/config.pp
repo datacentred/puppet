@@ -15,6 +15,7 @@ class dc_rsyslog::config {
     group   => 'root',
     mode    => '0644',
     content => template('dc_rsyslog/default.conf.erb'),
+    notify  => Service['rsyslog'],
   }
 
   file { '/etc/rsyslog.d/20-ufw.conf':
@@ -23,5 +24,6 @@ class dc_rsyslog::config {
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/dc_rsyslog/20-ufw.conf',
+    notify => Service['rsyslog'],
   }
 }
