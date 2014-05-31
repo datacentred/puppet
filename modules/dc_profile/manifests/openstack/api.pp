@@ -6,8 +6,9 @@
 #
 # Actions:
 #
-# Requires: datacentred-haproxy, with dev version of haproxy that
+# Requires: datacentred-haproxy, dev version of haproxy that
 #           includes SSL support
+#           keepalived
 #
 # Sample Usage:
 #
@@ -16,6 +17,36 @@ class dc_profile::openstack::api {
 
   include ::dc_ssl::haproxy
   include ::haproxy
+  include ::keepalived
+
+  # Configure keepalived role based on $::harole variable
+  # set per-host in Foreman
+  case $::harole {
+    'master': {
+      keepalived::vrrp::instance { 'VI_10':
+        interface          => 'eth1',
+        state              => 'MASTER',
+        priority           => '101',
+        virtual_router_id  => '50',
+        auth_type          => 'PASS',
+        auth_pass          => 'dcsal01',
+        virtual_ipaddress  => [ '172.16.252.200' ],
+      }
+    }
+    'slave': {
+      keepalived::vrrp::instance { 'VI_10':
+        interface          => 'eth1',
+        state              => 'SLAVE',
+        priority           => '100',
+        virtual_router_id  => '50',
+        auth_type          => 'PASS',
+        auth_pass          => 'dcsal01',
+        virtual_ipaddress  => [ '172.16.252.200' ],
+      }
+    }
+    default: {
+    }
+  }
 
   # Filesystem location of the SSL certificate
   $sslcert = '/etc/ssl/certs/haproxy.pem'
