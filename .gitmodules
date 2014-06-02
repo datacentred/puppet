@@ -172,9 +172,6 @@
 [submodule "modules/unicorn"]
 	path = modules/unicorn
 	url = https://github.com/datacentred/puppet-unicorn.git
-[submodule "modules/ruby"]
-	path = modules/ruby
-	url = https://github.com/jlyheden/puppet-ruby.git
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = git@github.com:datacentred/puppetlabs-mysql.git
