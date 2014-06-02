@@ -1,6 +1,7 @@
 ---
 cephdeploy::ceph_deploy_user:           "%{hiera('cephdeploy_user')}"
 cephdeploy::ceph_deploy_password:       'IcAvleajEwd0'
+cephdeploy::ceph_deploy_system_user:    true
 cephdeploy::ceph_monitor_fsid:          'd222d2b3-b4c4-4443-9717-0c4ccadae458'
 cephdeploy::mon_initial_members:        "%{hiera('cephdeploy_primary_mon')}"
 cephdeploy::ceph_monitor_address:       '10.10.104.101'
