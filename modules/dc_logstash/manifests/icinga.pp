@@ -16,9 +16,8 @@ class dc_logstash::icinga {
     require => Package['nagios-nrpe-server']
   }
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_http']
-  realize External_facts::Fact['dc_hostgroup_logstashes']
+  include dc_icinga::hostgroup_http
+  include dc_icinga::hostgroup_logstashes
 
 }
 

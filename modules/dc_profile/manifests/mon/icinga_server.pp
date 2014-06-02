@@ -12,13 +12,8 @@
 #
 class dc_profile::mon::icinga_server {
 
-  class { 'dc_icinga::server':
-    # todo: what is this dependency for??
-    require => Class['dc_profile::mon::icinga_client'],
-  }
-  contain 'dc_icinga::server'
+  contain dc_icinga::server
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_http']
+  include dc_icinga::hostgroup_http
 
 }

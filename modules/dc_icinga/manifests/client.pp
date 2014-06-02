@@ -14,21 +14,18 @@
 #
 class dc_icinga::client {
 
-  # Each client gets all the plugins on earth
-  package { 'nagios-plugins':
-    ensure => present,
-  }
+  include ::icinga::client
 
   # I am the current host, yes I am
-  @@nagios_host { $::hostname:
+  @@icinga::host { $::hostname:
     ensure          => present,
     alias           => $::fqdn,
     address         => $::ipaddress,
     use             => 'dc_host_generic',
     hostgroups      => template('dc_icinga/hostgroups.erb'),
     icon_image      => 'base/ubuntu.png',
-    icon_image_alt  => 'Ubuntu 12.04 LTS (precise)',
-    notes           => 'Ubuntu 12.04 LTS servers',
+    icon_image_alt  => 'Ubuntu 14.04 LTS (trusty)',
+    notes           => 'Ubuntu 14.04 LTS servers',
     statusmap_image => 'base/ubuntu.gd2',
     vrml_image      => 'ubuntu.png',
   }

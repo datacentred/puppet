@@ -33,7 +33,6 @@ class dc_profile::db::coredb {
   create_resources(postgresql::server::config_entry, hiera(postgresql_config))
 
   # And add in any monitoring
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_postgres']
+  include dc_icinga::hostgroup_postgres
 
 }

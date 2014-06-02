@@ -12,8 +12,7 @@
 #
 class dc_puppet::master::icinga {
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_puppetmaster']
-  realize External_facts::Fact['dc_hostgroup_foreman_proxy']
+  include dc_icinga::hostgroup_puppetmaster
+  include dc_icinga::hostgroup_foreman_proxy
 
 }

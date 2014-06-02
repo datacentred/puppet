@@ -27,8 +27,7 @@ class dc_postfix::gateway {
   contain dc_postfix::restrictions
   contain dc_postfix::nrpe
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_smtp']
-  realize External_facts::Fact['dc_hostgroup_postfix']
+  include dc_icinga::hostgroup_smtp
+  include dc_icinga::hostgroup_postfix
 
 }

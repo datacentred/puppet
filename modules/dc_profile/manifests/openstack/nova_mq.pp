@@ -37,8 +37,7 @@ class dc_profile::openstack::nova_mq {
   }
   contain 'nova::rabbitmq'
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_rabbitmq']
+  include dc_icinga::hostgroup_rabbitmq
 
   class { 'dc_profile::mon::rabbitmq_monuser':
     userid   => $rabbitmq_monuser,

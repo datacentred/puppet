@@ -44,7 +44,6 @@ class dc_profile::net::nfsserver {
   Nfs::Server::Export <<| tag == 'backups' |>>
 
   # Icinga config
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_nfs']
+  include dc_icinga::hostgroup_nfs
 
 }

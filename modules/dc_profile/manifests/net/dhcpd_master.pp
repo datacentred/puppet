@@ -46,7 +46,6 @@ class dc_profile::net::dhcpd_master {
 
   Dhcp::Pool { failover => 'dhcp-failover' }
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_dhcp']
+  include dc_icinga::hostgroup_dhcp
 
 }
