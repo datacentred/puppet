@@ -207,5 +207,5 @@
 	path = modules/keepalived
 	url = https://github.com/arioch/puppet-keepalived
 [submodule "modules/icinga"]
-	path = icinga
+	path = modules/icinga
 	url = https://github.com/datacentred/datacentred-icinga
