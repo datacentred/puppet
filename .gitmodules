@@ -172,9 +172,6 @@
 [submodule "modules/unicorn"]
 	path = modules/unicorn
 	url = https://github.com/datacentred/puppet-unicorn.git
-[submodule "modules/ruby"]
-	path = modules/ruby
-	url = https://github.com/jlyheden/puppet-ruby.git
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = git@github.com:datacentred/puppetlabs-mysql.git
@@ -200,6 +197,9 @@
 [submodule "modules/external_facts"]
 	path = modules/external_facts
 	url = https://github.com/datacentred/datacentred-external_facts
+[submodule "modules/ruby"]
+	path = modules/ruby
+	url = https://github.com/puppetlabs/puppetlabs-ruby.git
 [submodule "modules/haproxy"]
 	path = modules/haproxy
 	url = https://github.com/datacentred/puppetlabs-haproxy

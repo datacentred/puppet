@@ -25,7 +25,7 @@ define dc_rails::app (
   $secret_key_base = hiera(rails::server::secret_key)
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $rails_env = 'production'
-  $ruby = '2.0.0-p451'
+  $ruby = '2.1.2'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/"
   $bundler = "${home}.rbenv/shims/bundle"

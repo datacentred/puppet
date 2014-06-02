@@ -18,14 +18,14 @@ class dc_rails::server {
   $group = hiera(rails::user::name)
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $rails_env = 'production'
-  $ruby = '2.0.0-p451'
+  $ruby = '2.1.2'
   $home = "/home/${user}/"
   $log_base = '/var/log/rails/'
   $run_base = '/var/run/rails/'
 
   class { '::redis': }
   class { '::nginx': manage_repo => false }
-  class { '::ruby::dev': }
+
   class { '::dc_mariadb': }
 
   user { $user :
