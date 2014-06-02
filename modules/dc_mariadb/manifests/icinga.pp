@@ -19,8 +19,7 @@ class dc_mariadb::icinga {
     mysql_monitor_hostname => hiera(icinga_ip)
   }
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_mysql']
+  include dc_icinga::hostgroup_mysql
 
 }
 

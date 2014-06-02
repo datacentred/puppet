@@ -23,8 +23,7 @@ class dc_profile::foreman::foreman {
     ssl                   => true,
   } -> Class['dc_foreman']
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_https']
-  realize External_facts::Fact['dc_hostgroup_foreman']
+  include dc_icinga::hostgroup_https
+  include dc_icinga::hostgroup_foreman
 
 }

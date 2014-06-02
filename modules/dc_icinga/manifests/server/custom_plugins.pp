@@ -14,6 +14,7 @@ class dc_icinga::server::custom_plugins {
     mode    => '0755',
     purge   => false,
     recurse => 'remote',
+    require => Class['::icinga::client'],
   }
 
 }

@@ -28,8 +28,7 @@ class dc_profile::auth::ldap::server {
     rdata => $::fqdn,
   }
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_ldap']
+  include dc_icinga::hostgroup_ldap
 
   class { 'ldap::client':
     uri       => 'ldaps://127.0.0.1',

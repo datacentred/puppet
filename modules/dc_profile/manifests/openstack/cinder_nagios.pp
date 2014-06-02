@@ -33,7 +33,6 @@ class dc_profile::openstack::cinder_nagios {
     notify  => Service['nagios-nrpe-server'],
   }
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_cinder']
+  include dc_icinga::hostgroup_cinder
 
 }

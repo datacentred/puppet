@@ -25,8 +25,7 @@ class dc_profile::net::ntpgeneric {
     }
 
     # Setup monitoring
-    include dc_icinga::hostgroups
-    realize External_facts::Fact['dc_hostgroup_ntp']
+    include dc_icinga::hostgroup_ntp
 
     # Add CNAME entry
     @@dns_resource { "${localtimeservers[$::fqdn]['cname']}/CNAME":

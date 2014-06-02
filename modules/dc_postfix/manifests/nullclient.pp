@@ -23,6 +23,5 @@ class dc_postfix::nullclient {
 
     contain dc_postfix::nrpe
 
-    include dc_icinga::hostgroups
-    realize External_facts::Fact['dc_hostgroup_postfix']
+    include dc_icinga::hostgroup_postfix
 }

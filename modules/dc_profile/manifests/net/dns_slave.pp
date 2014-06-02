@@ -24,7 +24,6 @@ class dc_profile::net::dns_slave {
   }
   contain 'dc_dns'
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_dns']
+  include dc_icinga::hostgroup_dns
 
 }

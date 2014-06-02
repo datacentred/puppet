@@ -16,11 +16,9 @@
 #
 class dc_icinga::server {
 
-  anchor { 'dc_icinga::server::first': } ->
-  class { 'dc_icinga::server::install': } ->
-  class { 'dc_icinga::server::config': } ->
-  class { 'dc_icinga::server::service': } ->
-  anchor { 'dc_icinga::server::last': }
+  contain icinga::server
+  contain dc_icinga::server::install
+  contain dc_icinga::server::config
 
 }
 

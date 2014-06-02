@@ -95,8 +95,7 @@ class dc_profile::openstack::glance {
     notify  => Service['nagios-nrpe-server'],
   }
 
-  include dc_icinga::hostgroups
-  realize External_facts::Fact['dc_hostgroup_glance']
+  include dc_icinga::hostgroup_glance
 
   # Logstash config
   include dc_profile::openstack::glance_logstash
