@@ -12,11 +12,10 @@
 #
 class dc_profile::openstack::keystone_memcached {
 
-  include ::memcached
-
   class { 'memcached':
     max_memory => 4096,
   }
+  contain 'memcached'
 
   exported_vars::set { 'keystone_memcached':
     value => $::fqdn,
