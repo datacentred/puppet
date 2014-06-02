@@ -19,11 +19,14 @@ class dc_role::controller0 {
   contain dc_profile::openstack::neutron_db
   contain dc_profile::openstack::cinder_db
 
+  contain dc_profile::openstack::keystone_memcached
+
   contain dc_profile::openstack::keystone
   contain dc_profile::openstack::glance
   contain dc_profile::openstack::horizon
 
   Class['dc_profile::openstack::keystone_mariadb'] ->
+  Class['dc_profile::openstack::keystone_memcached'] ->
   Class['dc_profile::openstack::keystone']
 
   Class['dc_profile::openstack::glance_api_db'] ->

@@ -12,18 +12,21 @@
 #
 class dc_profile::openstack::keystone {
 
-  $keystone_db_pw = hiera(keystone_db_pw)
-  $keystone_db_host = hiera(keystone_db_host)
-  $os_service_tenant = hiera(os_service_tenant)
-  $os_region = hiera(os_region)
-  $sysmailaddress = hiera(sal01_internal_sysmail_address)
+  $keystone_db_pw     = hiera(keystone_db_pw)
+  $keystone_db_host   = hiera(keystone_db_host)
+  $os_service_tenant  = hiera(os_service_tenant)
+  $os_region          = hiera(os_region)
+  $sysmailaddress     = hiera(sal01_internal_sysmail_address)
+  $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost'])
 
   class { '::keystone':
-    require        => Dc_mariadb::Db['keystone'],
-    verbose        => true,
-    catalog_type   => 'sql',
-    admin_token    => hiera(keystone_admin_uuid),
-    sql_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
+    require          => Dc_mariadb::Db['keystone'],
+    verbose          => true,
+    catalog_type     => 'sql',
+    admin_token      => hiera(keystone_admin_uuid),
+    token_driver     => 'keystone.token.backends.memcache.Token',
+    memcache_servers => join($memcache_servers, ','),
+    sql_connection   => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
   }
 
   # Adds the admin credential to keystone.
