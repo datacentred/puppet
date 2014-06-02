@@ -25,7 +25,7 @@ class dc_profile::openstack::keystone {
     catalog_type     => 'sql',
     admin_token      => hiera(keystone_admin_uuid),
     token_driver     => 'keystone.token.backends.memcache.Token',
-    memcache_servers => $memcache_servers,
+    memcache_servers => join($memcache_servers, ','),
     sql_connection   => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
   }
 
