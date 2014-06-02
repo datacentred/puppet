@@ -78,9 +78,6 @@ class dc_profile::openstack::nova {
   }
   contain 'nova::api'
 
-  exported_vars::set { 'nova_api_ip':
-    value => $management_ip,
-  }
 
   class { '::nova::network::neutron':
     neutron_url            => "http://${neutron_server_host}:9696",
@@ -100,6 +97,16 @@ class dc_profile::openstack::nova {
     enabled => true,
   }
 
+  # Export variable for use by haproxy to front this
+  # API endpoint
+  exported_vars::set { 'nova_api':
+    value => $::fqdn,
+  }
+  # Export variable for used by neutron
+  exported_vars::set { 'nova_api_ip':
+    value => $management_ip,
+  }
+  # Exported variable used by nova-compute
   exported_vars::set { 'novnc_proxy_host':
     value => $::fqdn,
   }

@@ -87,6 +87,13 @@ class dc_profile::openstack::cinder {
     volume_group     => 'cindervg',
   }
 
+  # Export variable for use by haproxy to front this
+  # API endpoint
+  exported_vars::set { 'cinder_api':
+    value => $::fqdn,
+  }
+
+  # FIXME: This should target API servers once they're stood up
   class { '::cinder::glance':
     glance_api_servers => get_exported_var('', 'glance_api_server', ['localhost'])
   }
