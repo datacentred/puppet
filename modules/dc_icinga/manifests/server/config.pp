@@ -28,6 +28,18 @@ class dc_icinga::server::config {
   # Add custom plugins
   include dc_icinga::server::custom_plugins
 
+  # This particular plugin needs to be executed as
+  # root, so setuid.  It should be part of the generic
+  # class bu alas you get a circular dependency with
+  # the directory declaration in
+  # dc_icinga::server::custom_plugins
+  file { '/usr/lib/nagios/plugins/check_dhcp':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '4755',
+  }
+
   ######################################################################
   # Service periods
   ######################################################################
