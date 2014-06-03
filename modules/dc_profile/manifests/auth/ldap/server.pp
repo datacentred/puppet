@@ -15,10 +15,12 @@ class dc_profile::auth::ldap::server {
   include ::dc_ssl::slapd
   include ::dc_ldap
   include ::ldap::server
+  include ::ldap::client
 
   contain 'dc_ssl'
   contain 'dc_ssl::slapd'
   contain 'ldap::server'
+  contain 'ldap::client'
 
   Class['ldap::server::install'] -> Class['dc_ldap'] ~> Class['ldap::server::service']
   Class['dc_ssl'] ~> Class['ldap::server::service']
@@ -29,13 +31,6 @@ class dc_profile::auth::ldap::server {
   }
 
   include dc_icinga::hostgroup_ldap
-
-  class { 'ldap::client':
-    uri       => 'ldaps://127.0.0.1',
-    base      => hiera(ldap::server::suffix),
-    ssl       => true,
-    ssl_cert  => '/etc/ssl/certs/datacentred-ca.crt',
-  }
 
   $defaults = {
     ensure      => present,
