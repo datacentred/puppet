@@ -17,7 +17,7 @@ class dc_profile::openstack::keystone {
   $os_service_tenant  = hiera(os_service_tenant)
   $os_region          = hiera(os_region)
   $sysmailaddress     = hiera(sal01_internal_sysmail_address)
-  $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost'])
+  $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost:11211'])
 
   class { '::keystone':
     require          => Dc_mariadb::Db['keystone'],
