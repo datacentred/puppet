@@ -17,12 +17,12 @@ define dc_rails::app (
   $app_repo,
   $ssl_key,
   $ssl_cert,
+  $secret_key_base,
 ) {
 
   $user = hiera(rails::user::name)
   $password = hiera(rails::user::password)
   $group = hiera(rails::user::name)
-  $secret_key_base = hiera(rails::server::secret_key)
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $rails_env = 'production'
   $ruby = '2.1.2'
