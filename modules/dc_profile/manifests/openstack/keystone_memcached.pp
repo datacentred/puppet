@@ -16,8 +16,8 @@ class dc_profile::openstack::keystone_memcached {
 
   class { 'memcached':
     max_memory => 4096,
-    tcp_listen => $memcached_port,
-    udp_listen => $memcached_port,
+    tcp_port   => $memcached_port,
+    udp_port   => $memcached_port,
     logfile    => '/var/log/memcached_keystone.log',
   }
   contain 'memcached'
