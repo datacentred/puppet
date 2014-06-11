@@ -74,7 +74,9 @@ class dc_profile::openstack::nova_compute {
     migration_support => true,
   }
 
-  class { 'nova::compute::neutron': }
+  class { 'nova::compute::neutron': 
+    libvirt_vif_driver => 'nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver',
+  }
 
   # Configures nova.conf entries applicable to Neutron.
   class { 'nova::network::neutron':
