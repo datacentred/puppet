@@ -85,6 +85,7 @@ class dc_profile::openstack::nova_compute {
     neutron_admin_tenant_name => $os_service_tenant,
     neutron_admin_auth_url    => "http://${keystone_host}:35357/v2.0",
     neutron_region_name       => $os_region,
+    libvirt_vif_driver        => 'nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver',
   }
 
   file { '/etc/nagios/nrpe.d/nova_compute.cfg':
