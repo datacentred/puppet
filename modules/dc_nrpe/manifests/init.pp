@@ -74,7 +74,7 @@ class dc_nrpe (
 
   sudo::conf { 'check_puppetagent':
     priority => 10,
-    content  => "nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_puppetagent\n",
+    content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_puppetagent',
   }
 
 }
