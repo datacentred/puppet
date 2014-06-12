@@ -63,6 +63,12 @@ class dc_nrpe (
     notify  => Service['nagios-nrpe-server'],
   }
 
+  # Puppet checks
+
+  package { 'python-yaml':
+    ensure => installed,
+  }
+
   file { '/usr/lib/nagios/plugins/check_puppetagent':
     ensure  => file,
     require => Package['nagios-nrpe-server'],
