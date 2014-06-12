@@ -62,4 +62,19 @@ class dc_nrpe (
     source  => 'puppet:///modules/dc_nrpe/dc_common.cfg',
     notify  => Service['nagios-nrpe-server'],
   }
+
+  file { '/usr/lib/nagios/plugins/check_puppetagent':
+    ensure  => file,
+    require => Package['nagios-nrpe-server'],
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/dc_nrpe/check_puppetagent',
+  }
+
+  sudo::conf { 'check_puppetagent':
+    priority => 10,
+    content  => "nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_puppetagent\n",
+  }
+
 }
