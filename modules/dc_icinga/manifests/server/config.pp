@@ -238,6 +238,10 @@ class dc_icinga::server::config {
     description => 'Cinder Servers',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_hpblade':
+    description => 'HP Blades',
+  }
+
   ######################################################################
   # Commands
   ######################################################################
@@ -343,7 +347,7 @@ class dc_icinga::server::config {
   icinga::command { 'check_dc_ldap':
     command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -b ${ldap_server_suffix}"
   }
-  
+
   icinga::command { 'check_cinder_api_http':
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8776"
   }
