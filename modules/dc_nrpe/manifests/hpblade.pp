@@ -29,7 +29,7 @@ class dc_nrpe::hpblade {
 
   file { '/etc/nagios/nrpe.d/hpasm.cfg':
     ensure  => present,
-    content => 'command[check_hpasm]=/usr/lib/nagios/plugins/check_hpasm',
+    content => 'command[check_hpasm]=sudo /usr/lib/nagios/plugins/check_hpasm',
     require => Package['nagios-nrpe-server'],
     notify  => Service['nagios-nrpe-server'],
   }
