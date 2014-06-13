@@ -23,4 +23,6 @@ class dc_profile::hp::hpblade {
 
   contain dc_nrpe::hpblade
 
+  include dc_icinga::hostgroup_hpblade
+
 }
