@@ -21,4 +21,6 @@ class dc_profile::hp::hpblade {
     dhcp => true,
   }
 
+  contain dc_nrpe::hpblade
+
 }
