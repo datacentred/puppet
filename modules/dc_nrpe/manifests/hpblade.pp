@@ -27,4 +27,11 @@ class dc_nrpe::hpblade {
     content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_hpasm',
   }
 
+  file { '/etc/nagios/nrpe.d/hpasm.cfg':
+    ensure  => present,
+    content => 'command[check_hpasm]=/usr/lib/nagios/plugins/check_hpasm',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
 }
