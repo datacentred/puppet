@@ -406,4 +406,11 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_cinder_api_http',
     service_description => 'Cinder API HTTP',
   }
+
+  icinga::service { 'check_hpasm':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_hpblade',
+    check_command       => 'check_nrpe_1arg!check_hpasm',
+    service_description => 'HP Blade Hardware Health',
+  }
 }
