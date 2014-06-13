@@ -18,7 +18,7 @@ class dc_profile::openstack::keepalived {
   $vrhash = hiera(virtual_routers)
 
   # Set in Foreman per-host
-  $priority = '150'
+  $priority = $::vrpriority
 
   keepalived::vrrp::instance { 'os_api_int':
       interface          => 'eth0',
