@@ -12,11 +12,11 @@
 #
 class dc_profile::util::semaphores {
 
-  $semaphores = "/var/lib/puppet/semaphores"
+  $semaphores = '/var/lib/puppet/semaphores'
 
-  file {"$semaphores":
+  file {"${semaphores}":
     ensure  => directory,
-    mode    => '754',
+    mode    => '0754',
     require => Package['puppet'],
   }
 
