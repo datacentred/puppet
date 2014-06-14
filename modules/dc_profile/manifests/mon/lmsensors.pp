@@ -24,7 +24,7 @@ class dc_profile::mon::lmsensors {
       }
 
       exec { '/usr/sbin/sensors-detect':
-        command     => "/usr/bin/yes YES | /usr/sbin/sensors-detect > ${dc_profile::util::semaphores}/${title}",
+        command     => "/usr/bin/yes YES | /usr/sbin/sensors-detect > ${dc_profile::util::semaphores::semaphores}/${title}",
         require     => Package['lm-sensors'],
         notify      => [ Service['lm-sensors'], Exec['module-init-tools'] ],
         creates     => "${dc_profile::util::semaphores}/${title}",
