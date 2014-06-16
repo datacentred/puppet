@@ -32,7 +32,7 @@ class dc_profile::mon::lmsensors {
       }
 
       exec { 'module-init-tools':
-        command     => 'service module-init-tools restart',
+        command     => '/usr/sbin/service module-init-tools restart',
         refreshonly => true,
       }
 
