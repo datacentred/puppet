@@ -19,7 +19,7 @@ class dc_profile::mon::lmsensors {
       package { 'lm-sensors':
         ensure => installed,
       } ~>
-      runonce { 'sensors-detect':
+      dc_profile::util::runonce { 'sensors-detect':
         command     => 'yes YES | sensors-detect',
         notify      => [ Service['lm-sensors'], Service['module-init-tools'] ],
         refreshonly => true,
