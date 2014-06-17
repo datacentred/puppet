@@ -10,10 +10,9 @@
 #
 # Sample Usage:
 #
-define dc_profile::util::runonce ( $command, $requires = [], $refreshonly = undef ) {
+define dc_profile::util::runonce ( $command, $refreshonly = undef ) {
 
   $semaphore_dir = '/var/lib/puppet/semaphores'
-  $requires += [ File[$semaphore_dir] ]
 
   if ! defined( File[$semaphore_dir] ) {
 
@@ -29,7 +28,7 @@ define dc_profile::util::runonce ( $command, $requires = [], $refreshonly = unde
   exec { $command:
     unless      => "ls ${semaphore_dir}/${title}",
     path        => '/bin:/usr/bin:/sbin:/usr/sbin',
-    require     => $requires,
+    require     => File[$semaphore_dir],
     refreshonly => $refreshonly,
   } ~>
 
