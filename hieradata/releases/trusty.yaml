@@ -1,0 +1,41 @@
+dc_puppet::params::version: 'latest'
+repo_list:
+  trusty_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty'
+    repos: 'main restricted universe multiverse'
+  trusty_updates_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-updates'
+    repos: 'main restricted universe multiverse'
+  trusty_security_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-security'
+    repos: 'main restricted universe'
+  puppetlabs_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('puppet_mirror_path')}"
+    release: 'trusty'
+    repos: 'main dependencies'
+    key: '4BD6EC30'
+    key_source: 'https://apt.puppetlabs.com/keyring.gpg'
+  postgres_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('postgres_mirror_path')}"
+    release: 'trusty-pgdg'
+    repos: 'main'
+    key: 'ACCC4CF8'
+    key_source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+  mariadb_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('mariadb_mirror_path')}"
+    release: 'trusty'
+    repos: 'main'
+    key: '1BB943DB'
+    key_server: 'keyserver.ubuntu.com'
+  foreman_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
+    release: 'trusty'
+    repos: '1.5'
+    key: 'E775FF07'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+
+collectd::version: 5.4.0-3ubuntu2datacentred1
+apache::mod::passenger::mod_package_ensure: '4.0.37-2'
