@@ -14,7 +14,10 @@
     storeconfigs   = true
     storeconfigs_backend = <%= scope.lookupvar('::dc_puppet::params::storeconfigs_backend') %>
 <% end -%>
-
+<% if @directory_environments -%>
+    environmentpath = $confdir/environments
+<% else -%>
     manifest       = /etc/puppet/environments/$environment/manifests/site.pp
     modulepath     = /etc/puppet/environments/$environment/modules
     config_version =
+<% end -%>
