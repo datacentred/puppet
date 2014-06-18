@@ -1,18 +1,19 @@
-# Class: dc_profile::openstack::api
+# Class: dc_profile::openstack::haproxy
 #
-# OpenStack Front-End API server
+# Configures HAproxy with SSL support
+# for the various OpenStack API endpoints
 #
 # Parameters:
 #
 # Actions:
 #
-# Requires: datacentred-haproxy, with dev version of haproxy that
+# Requires: datacentred-haproxy, dev version of haproxy that
 #           includes SSL support
 #
 # Sample Usage:
 #
 
-class dc_profile::openstack::api {
+class dc_profile::openstack::haproxy {
 
   include ::dc_ssl::haproxy
   include ::haproxy
