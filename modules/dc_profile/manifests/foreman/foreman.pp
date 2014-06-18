@@ -23,6 +23,11 @@ class dc_profile::foreman::foreman {
     ssl                   => true,
   } -> Class['dc_foreman']
 
+  package { 'foreman-compute':
+    ensure  => installed,
+    require => Class['::foreman'],
+  }
+
   include dc_icinga::hostgroup_https
   include dc_icinga::hostgroup_foreman
 
