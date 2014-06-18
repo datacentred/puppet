@@ -242,6 +242,9 @@ class dc_icinga::server::config {
     description => 'HP Blades',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_lmsensors':
+    description => 'Hardware Sensors',
+  }
   ######################################################################
   # Commands
   ######################################################################
