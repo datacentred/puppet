@@ -28,6 +28,16 @@ class dc_profile::foreman::foreman {
     require => Class['::foreman'],
   }
 
+  package { 'ruby-foreman-discovery':
+    ensure  => installed,
+    require => Class['::foreman'],
+  }
+
+  package { 'ruby-foreman-hooks':
+    ensure  => installed,
+    require => Class['::foreman'],
+  }
+
   include dc_icinga::hostgroup_https
   include dc_icinga::hostgroup_foreman
 
