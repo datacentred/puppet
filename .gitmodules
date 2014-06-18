@@ -209,3 +209,6 @@
 [submodule "modules/icinga"]
 	path = modules/icinga
 	url = https://github.com/datacentred/datacentred-icinga
+[submodule "modules/runonce"]
+	path = modules/runonce
+	url = https://github.com/datacentred/datacentred-runonce
