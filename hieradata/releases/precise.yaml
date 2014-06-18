@@ -1,0 +1,51 @@
+---
+repo_list:
+  precise_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'precise'
+    repos: 'main restricted universe multiverse'
+  precise_updates_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'precise-updates'
+    repos: 'main restricted universe multiverse'
+  precise_security_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'precise-security'
+    repos: 'main restricted universe'
+  puppetlabs_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('puppet_mirror_path')}"
+    release: 'precise'
+    repos: 'main dependencies'
+  rsyslog_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('rsyslog_mirror_path')}"
+    release: 'precise'
+    repos: 'main'
+    key: '5234BF2B'
+    key_server: 'keyserver.ubuntu.com'
+  postgres_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('postgres_mirror_path')}"
+    release: 'precise-pgdg'
+    repos: 'main'
+    key: 'ACCC4CF8'
+    key_source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+  mariadb_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('mariadb_mirror_path')}"
+    release: 'precise'
+    repos: 'main'
+    key: '1BB943DB'
+    key_server: 'keyserver.ubuntu.com'
+  passenger:
+    location: 'https://oss-binaries.phusionpassenger.com/apt/passenger'
+    release: 'precise'
+    repos: 'main'
+    key: '561F9B9CAC40B2F7'
+    key_server: 'keyserver.ubuntu.com'
+  foreman_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
+    release: 'precise'
+    repos: 'stable'
+    key: 'E775FF07'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+
+collectd::version: installed
+apache::mod::passenger::mod_package_ensure: '1:4.0.42-1~precise1'
