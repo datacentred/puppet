@@ -413,4 +413,11 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_nrpe_1arg!check_hpasm',
     service_description => 'HP Blade Hardware Health',
   }
+
+  icinga::service { 'check_lmsensors':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_lmsensors',
+    check_command       => 'check_nrpe_1arg!check_sensors',
+    service_description => 'Hardware Health',
+  }
 }
