@@ -1,5 +1,0 @@
-class dc_ldap (
-) {
-
-
-}
