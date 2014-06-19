@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
     hostname = args[0].strip
     if hostname =~ ip_addr_re then return hostname end
     begin
-        Resolv.getaddress hostname
+      Resolv.getaddress hostname
     rescue Resolv::ResolvError
       return ''
     end
