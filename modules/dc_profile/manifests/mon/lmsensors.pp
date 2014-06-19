@@ -21,12 +21,24 @@ class dc_profile::mon::lmsensors {
       } ~>
       runonce { 'sensors-detect':
         command     => 'yes YES | sensors-detect',
-        notify      => [ Service['lm-sensors'], Service['module-init-tools'] ],
+        notify      => [ Service['lm-sensors'], Service['module-load'] ],
         refreshonly => true,
       }
 
-      service { 'module-init-tools':
-        enable      => false,
+      case $::lsbdistcodename {
+
+        precise: {
+          service { 'module-load':
+            name   => 'module-init-tools',
+            enable => false,
+          }
+        }
+        trusty: {
+          service { 'module-load':
+            name   => 'kmod',
+            enable => false,
+          }
+        }
       }
 
       service { 'lm-sensors':
