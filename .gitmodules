@@ -212,3 +212,6 @@
 [submodule "modules/runonce"]
 	path = modules/runonce
 	url = https://github.com/datacentred/datacentred-runonce
+[submodule "modules/filemapper"]
+	path = modules/filemapper
+	url = https://github.com/adrienthebo/puppet-filemapper
