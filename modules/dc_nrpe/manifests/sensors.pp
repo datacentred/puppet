@@ -1,4 +1,4 @@
-# Class: dc_nrpe::lmsensors
+# Class: dc_nrpe::sensors
 #
 # lm-sensors specific nrpe configuration
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_nrpe::lmsensors {
+class dc_nrpe::sensors {
 
   sudo::conf { 'check_sensors':
     priority => 10,
