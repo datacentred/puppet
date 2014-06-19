@@ -33,6 +33,9 @@ class dc_profile::mon::lmsensors {
         enable  => true,
         require => Package['lm-sensors'],
       }
+
+      include dc_nrpe::sensors
+      include dc_icinga::hostgroup_lmsensors
     }
 
     default: { }
