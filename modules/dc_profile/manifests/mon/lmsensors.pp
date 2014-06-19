@@ -33,7 +33,7 @@ class dc_profile::mon::lmsensors {
             enable => false,
           }
         }
-        trusty: {
+        default: {
           service { 'module-load':
             name   => 'kmod',
             enable => false,
