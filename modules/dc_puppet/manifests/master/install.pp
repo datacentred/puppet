@@ -17,11 +17,11 @@ class dc_puppet::master::install {
   $ssl_valid_file = '/var/lib/puppet/ssl_valid'
 
   # Delete the old SSL certs only if we've not provisioned
-  exec { 'dc_puppet::master::install delete certs':
-    command => "rm -rf ${dc_puppet::params::ssldir}",
-    path    => '/bin',
-    creates => $ssl_valid_file,
-  } ->
+  #exec { 'dc_puppet::master::install delete certs':
+  #  command => "rm -rf ${dc_puppet::params::ssldir}",
+  #  path    => '/bin',
+  #  creates => $ssl_valid_file,
+  #} ->
 
   # Don't want this running as it will block apache
   file { '/etc/default/puppetmaster':
@@ -34,12 +34,12 @@ class dc_puppet::master::install {
 
   # Flag that we have provisioned so that the exec above
   # is not run on subsequent runs
-  file { $ssl_valid_file:
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0440',
-    require => Package[$dc_puppet::params::master_package],
-  }
+  #file { $ssl_valid_file:
+  #  ensure  => file,
+  #  owner   => 'root',
+  #  group   => 'root',
+  #  mode    => '0440',
+  #  require => Package[$dc_puppet::params::master_package],
+  #}
 
 }
