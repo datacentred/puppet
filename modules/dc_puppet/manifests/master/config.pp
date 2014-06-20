@@ -13,9 +13,10 @@
 class dc_puppet::master::config {
 
   include dc_puppet::params
-  $dir            = $dc_puppet::params::dir
-  $envdir         = $dc_puppet::params::envdir
-  $production_env = "${envdir}/production"
+  $dir                    = $dc_puppet::params::dir
+  $envdir                 = $dc_puppet::params::envdir
+  $directory_environments = $dc_puppet::params::directory_environments
+  $production_env         = "${envdir}/production"
 
   # Generate the certs
   contain dc_puppet::master::ca
