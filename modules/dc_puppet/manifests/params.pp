@@ -81,7 +81,6 @@ class dc_puppet::params (
   $foreman_url          = "https://foreman.${::domain}"
 
   # Whether to use directory environments
-  # NOTE: config environments are deprecated
-  $directory_environments = false
+  $directory_environments = true
 
 }
