@@ -91,6 +91,10 @@ class dc_foreman_proxy (
     notify  => Service['foreman-proxy'],
   }
 
+  sudo::conf { 'foreman-proxy':
+    content => 'foreman-proxy ALL=(ALL) NOPASSWD:ALL',
+  }
+
 
   if $::fqdn != $::puppetmaster {
 

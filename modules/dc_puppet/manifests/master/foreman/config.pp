@@ -43,4 +43,9 @@ class dc_puppet::master::foreman::config {
     content => template('dc_puppet/master/foreman/foreman-report_v2.rb.erb'),
   }
 
+  # Foreman 1.5 needs this, puppet 3.6 doesn't create it
+  file { "${dir}/autosign.conf":
+    ensure => file,
+  }
+
 }
