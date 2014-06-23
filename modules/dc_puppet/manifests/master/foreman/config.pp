@@ -46,6 +46,9 @@ class dc_puppet::master::foreman::config {
   # Foreman 1.5 needs this, puppet 3.6 doesn't create it
   file { "${dir}/autosign.conf":
     ensure => file,
+    owner  => 'puppet',
+    group  => 'puppet',
+    mode   => '0664',
   }
 
 }
