@@ -15,10 +15,10 @@ class dc_profile::openstack::proxyip {
 
   $int_if   = 'eth0'
   $ext_if   = 'eth1'
-  $domain   = 'vagrant.local'
+  $domain   = 'datacentred.co.uk'
   $ip       = get_ip_addr("${::hostname}.${domain}")
-  
-  package { 'ifupdown-extra': }
+
+  package { 'ifupdown-extra':
     ensure => 'latest',
   }
 
@@ -34,8 +34,7 @@ class dc_profile::openstack::proxyip {
     netmask   => '255.255.255.248',
     onboot    => true,
   }
-  
-  # Finally, configure the necessary routes
+
   network_route { '10.10.0.0/16':
     ensure    => 'present',
     gateway   => '10.10.160.254',
@@ -44,5 +43,5 @@ class dc_profile::openstack::proxyip {
     network   => 'default',
     require   => Package['ifupdown-extra'],
   }
-    
+
 }
