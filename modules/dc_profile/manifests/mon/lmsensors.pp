@@ -29,12 +29,14 @@ class dc_profile::mon::lmsensors {
 
         precise: {
           service { 'module-load':
+            ensure => running,
             name   => 'module-init-tools',
             enable => false,
           }
         }
         default: {
           service { 'module-load':
+            ensure => running,
             name   => 'kmod',
             enable => false,
           }
