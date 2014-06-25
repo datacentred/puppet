@@ -78,7 +78,8 @@ class dc_puppet::params (
   $puppetdb_url         = "puppetdb.${::domain}"
 
   # Where foreman lives
-  $foreman_url          = "https://foreman.${::domain}"
+  # TODO: unhack me
+  $foreman_url          = "https://foreman-2.${::domain}"
 
   # Whether to use directory environments
   $directory_environments = false
