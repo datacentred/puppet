@@ -167,7 +167,7 @@ def foreman_get(path):
 
 def foreman_post(path, post):
     """POST to the foreman"""
-    url = 'https://{0}.{1}{2}'.format(FOREMAN_HOST, DOMAIN, path)
+    url = 'https://{0}{1}'.format(FOREMAN_HOST, path)
     request = urllib2.Request(url)
     # Add in the plain-text authorization header
     auth = base64.encodestring("{0}:{1}".format(FOREMAN_USER, FOREMAN_PASS))
