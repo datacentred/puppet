@@ -1,0 +1,22 @@
+class dc_profile::net::phpipam {
+  include php
+  include php::pear
+  include php::extension::mysql
+  include php::extension::ldap
+
+  include apache
+  include apache::mod::php
+  include apache::mod::rewrite
+
+  include ::phpipam
+
+  apache::vhost { 'phpipam':
+    servername     => "phpipam.${::domain}",
+    docroot        => '/opt/phpipam/latest',
+    override       => 'all',
+  }
+
+  @@dns_resource { "phpipam.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
+}
