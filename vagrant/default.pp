@@ -1,4 +1,4 @@
 # Use this file to define the puppet modules you want to test
 
 contain dc_role::generic
-contain dc_profile::auth::radius::server
+contain dc_profile::net::phpipam
