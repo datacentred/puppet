@@ -8,15 +8,15 @@ class phpipam(
 
   include wget
 
-  file { '/opt/phpipam':
+  file { '/var/phpipam':
     ensure => directory,
   } ->
 
-  file { '/opt/phpipam/versions':
+  file { '/var/phpipam/versions':
     ensure => directory,
   } ->
 
-  file { "/opt/phpipam/versions/${version}":
+  file { "/var/phpipam/versions/${version}":
     ensure => directory,
   } ->
 
@@ -26,17 +26,17 @@ class phpipam(
   } ->
 
   exec { "extract_phpipam_${version}":
-    command => "/bin/tar -xvf /tmp/phpipam-${version}.zip -C /opt/phpipam/versions/${version}",
-    creates => "/opt/phpipam/versions/${version}/phpipam",
+    command => "/bin/tar -xvf /tmp/phpipam-${version}.zip -C /var/phpipam/versions/${version}",
+    creates => "/var/phpipam/versions/${version}/phpipam",
   } ->
 
-  file { "/opt/phpipam/versions/${version}/phpipam/config.php":
+  file { "/var/phpipam/versions/${version}/phpipam/config.php":
     content => template('phpipam/config.php.erb')
   } ->
 
-  file { '/opt/phpipam/latest':
+  file { '/var/phpipam/latest':
     ensure => symlink,
-    target => "/opt/phpipam/versions/${version}/phpipam",
+    target => "/var/phpipam/versions/${version}/phpipam",
   }
 
 }
