@@ -22,7 +22,7 @@ class dc_profile::openstack::keepalived {
 
   keepalived::vrrp::instance { 'os_api_int':
       interface          => 'eth0',
-      state              => 'MASTER',
+      state              => 'SLAVE',
       priority           => $priority,
       virtual_router_id  => $vrhash['os_api_int']['id'],
       virtual_ipaddress  => [ $vrhash['os_api_int']['vip'] ],
@@ -30,7 +30,7 @@ class dc_profile::openstack::keepalived {
 
   keepalived::vrrp::instance { 'os_api_ext':
       interface          => 'eth1',
-      state              => 'MASTER',
+      state              => 'SLAVE',
       priority           => $priority,
       virtual_router_id  => $vrhash['os_api_ext']['id'],
       virtual_ipaddress  => [ $vrhash['os_api_ext']['vip'] ],
