@@ -12,6 +12,6 @@
 #
 class dc_role::mailgateway {
 
-  contain dc_profile::net::mailgateway
+  contain dc_profile::net::mail
 
 }
