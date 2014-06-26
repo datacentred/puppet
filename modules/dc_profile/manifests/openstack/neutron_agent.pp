@@ -5,7 +5,7 @@
 #
 # Actions: Installs the OpenStack Neutron agent components
 #
-# Requires: neutron, vswitch, ethtool
+# Requires: neutron, vswitch, ethtool, puppet-network
 #
 # Sample Usage:
 #
@@ -63,7 +63,19 @@ class dc_profile::openstack::neutron_agent {
     # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
     include ethtool
     ethtool { $uplink_if:
-      gro => 'disabled',
+      gro     => 'disabled',
+      require => Network_config['$ext_if'],
+    }
+
+    # Ensure configuration is in place so that the external (bridged)
+    # is actually brought up at boot
+    network_config { $uplink_if:
+      ensure  => 'present',
+      method  => 'manual',
+      options =>  { 'up'    => 'ip link set dev $IFACE up',
+                    'down'  => 'ip link set dev $IFACE down',
+                  }
+
     }
 
     class { 'neutron::agents::ovs':
