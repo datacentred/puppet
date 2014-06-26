@@ -5,7 +5,7 @@
 #
 # Actions: Installs the OpenStack Neutron agent components
 #
-# Requires: neutron, vswitch, ethtool
+# Requires: neutron, vswitch, ethtool, puppet-network
 #
 # Sample Usage:
 #
@@ -66,11 +66,21 @@ class dc_profile::openstack::neutron_agent {
       gro => 'disabled',
     }
 
+    # Ensure configuration is in place so that the external (bridged)
+    # is actually brought up at boot
+    network_config { $uplink_if:
+      ensure  => 'present',
+      method  => 'manual',
+      options =>  { 'up'    => 'ip link set dev $IFACE up',
+                    'down'  => 'ip link set dev $IFACE down',
+                  },
+    }
+
     class { 'neutron::agents::ovs':
-      bridge_uplinks        => ["br-ex:${uplink_if}"],
-      bridge_mappings       => ['default:br-ex'],
-      local_ip              => $integration_ip,
-      enable_tunneling      => true,
+      bridge_uplinks    => ["br-ex:${uplink_if}"],
+      bridge_mappings   => ['default:br-ex'],
+      local_ip          => $integration_ip,
+      enable_tunneling  => true,
     }
 
     class { 'neutron::agents::dhcp':
