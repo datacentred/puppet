@@ -8,9 +8,15 @@ class network_weathermap(
     package { 'unzip': }
   }
 
-  file { 
-    ['/opt/network-weathermap', 
-     '/opt/network-weathermap/versions']: 
+  file { '/var/www/network-weathermap':
+    ensure => directory,
+  } ->
+
+  file { '/var/www/network-weathermap/versions':
+    ensure => directory,
+  } ->
+
+  file { "/var/www/network-weathermap/versions/${version}":
     ensure => directory,
   } ->
 
@@ -20,15 +26,13 @@ class network_weathermap(
   } ->
 
   exec { "extract_network_weathermap_${version}":
-    command => "/usr/bin/unzip /tmp/php-weathermap-${version}.zip -d /opt/network-weathermap/versions/${version}",
-    creates => "/opt/network-weathermap/versions/${version}",
+    command => "/usr/bin/unzip /tmp/php-weathermap-${version}.zip -d /var/www/network-weathermap/versions/${version}",
+    creates => "/var/www/network-weathermap/versions/${version}/weathermap",
     require => Package['unzip'],
-  } -> 
+  } ->
 
-
-  file { '/opt/network-weathermap/latest':
+  file { '/var/www/network-weathermap/latest':
     ensure => symlink,
-    target => "/opt/network-weathermap/versions/${version}/weathermap",
+    target => "/var/www/network-weathermap/versions/${version}/weathermap",
   }
-
 }
