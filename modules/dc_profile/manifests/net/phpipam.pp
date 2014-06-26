@@ -11,9 +11,10 @@ class dc_profile::net::phpipam {
   include ::phpipam
 
   apache::vhost { 'phpipam':
-    servername     => "phpipam.${::domain}",
-    docroot        => '/var/www/phpipam/latest',
-    override       => 'all',
+    servername => "phpipam.${::domain}",
+    docroot    => '/var/www/phpipam/latest',
+    override   => 'all',
+    port       => 80,
   }
 
   @@dns_resource { "phpipam.${::domain}/CNAME":
