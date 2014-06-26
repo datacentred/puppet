@@ -63,8 +63,7 @@ class dc_profile::openstack::neutron_agent {
     # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
     include ethtool
     ethtool { $uplink_if:
-      gro     => 'disabled',
-      require => Network_config['$ext_if'],
+      gro => 'disabled',
     }
 
     # Ensure configuration is in place so that the external (bridged)
@@ -74,15 +73,14 @@ class dc_profile::openstack::neutron_agent {
       method  => 'manual',
       options =>  { 'up'    => 'ip link set dev $IFACE up',
                     'down'  => 'ip link set dev $IFACE down',
-                  }
-
+                  },
     }
 
     class { 'neutron::agents::ovs':
-      bridge_uplinks        => ["br-ex:${uplink_if}"],
-      bridge_mappings       => ['default:br-ex'],
-      local_ip              => $integration_ip,
-      enable_tunneling      => true,
+      bridge_uplinks    => ["br-ex:${uplink_if}"],
+      bridge_mappings   => ['default:br-ex'],
+      local_ip          => $integration_ip,
+      enable_tunneling  => true,
     }
 
     class { 'neutron::agents::dhcp':
