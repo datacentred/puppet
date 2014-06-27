@@ -24,7 +24,7 @@ class dc_profile::wordpress::server {
       'wwww0.datacentred.co.uk'],
     try_files        => ['$uri', '$uri/', '/index.php?q=$uri&$args'],
     vhost_cfg_append => {
-      'error_page 500 502 503 504' => '/50x.html',
+      'error_page 500 502 503 504'  => '/50x.html',
       'error_page 404'              => '/404.html',
       'port_in_redirect'            => 'off',
     }
