@@ -1,6 +1,6 @@
-# Class: dc_profile::wordpress::database
+# Class: dc_wordpress::database
 #
-# Customer-facing website database definition
+# Setup mariadb server and a wordpress database 
 #
 # Parameters:
 #
@@ -10,19 +10,19 @@
 #
 # Sample Usage:
 #
-class dc_profile::wordpress::database {
-
+class dc_wordpress::database (
+  $db_user = undef,
+  $db_pass = undef,
+  $db_host = undef,
+  $db_name = undef,
+) {
+  
   contain dc_mariadb
 
-  $wordpress_db      = hiera(wordpress_db)
-  $wordpress_db_user = hiera(wordpress_db_user)
-  $wordpress_db_pass = hiera(wordpress_db_pass)
-  $wordpress_host    = hiera(wordpress_host)
-
-  dc_mariadb::db { $wordpress_db:
-    user     => $wordpress_db_user,
-    password => $wordpress_db_pass,
-    host     => $wordpress_host,
+  dc_mariadb::db { $db_name:
+    user     => $db_user,
+    password => $db_pass,
+    host     => $db_host,
     require  => Class['Dc_mariadb'],
   }
 }

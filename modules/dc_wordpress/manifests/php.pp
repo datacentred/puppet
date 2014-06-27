@@ -1,6 +1,6 @@
-# Class: dc_profile::wordpress::php
+# Class: dc_wordpress::php
 #
-# Setup the php backend for the customer-facing website
+# Setup the php backend for a wordpress website
 #
 # Parameters:
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_profile::wordpress::php {
+class dc_wordpress::php {
 
   include php::fpm
   include php::extension::mysql
@@ -32,5 +32,4 @@ class dc_profile::wordpress::php {
     require                => Class ['php::fpm'],
     before                 => Class ['php::extension::mysql'],
   }
-
 }

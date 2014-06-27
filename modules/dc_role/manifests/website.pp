@@ -11,9 +11,6 @@
 #
 class dc_role::website {
 
-  include dc_profile::wordpress::database
-  include dc_profile::wordpress::server
-  include dc_profile::wordpress::php
-
+  include dc_profile::wordpress::datacentred
 }
 
