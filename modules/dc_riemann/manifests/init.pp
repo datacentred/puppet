@@ -18,11 +18,15 @@ class dc_riemann {
 
   class { 'riemann':
     config_file => '/etc/riemann.config',
-    require     => File['/etc/riemann.config'],
+    require     => [ File['/etc/riemann.config'], Package['ruby-dev'] ],
   }
 
   class { 'riemann::dash':
     host => $::ipaddress,
+  }
+
+  package { 'ruby-dev':
+    ensure => 'installed',
   }
 
   file { '/etc/riemann.config':
