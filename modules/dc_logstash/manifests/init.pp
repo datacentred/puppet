@@ -14,8 +14,11 @@ class dc_logstash {
   # Basic class for installing Logstash
   class { '::logstash': }
 
-  exec { '/usr/sbin/usermod -a -G puppet logstash':
-    unless  => '/usr/bin/groups logstash | /bin/grep puppet',
+  # Patch the module's init script in order for us to be able to read Puppet's
+  # SSL certs.
+  exec { 'logstash patch upstart':
+    command => '/bin/sed -ie "s/LS_GROUP=logstash/LS_GROUP=puppet/" /etc/init.d/logstash',
+    onlyif  => '/bin/grep "LS_GROUP=logstash" /etc/init.d/logstash',
     require => [ Package['logstash'], Package['puppet'] ],
     notify  => Service['logstash'],
   }
