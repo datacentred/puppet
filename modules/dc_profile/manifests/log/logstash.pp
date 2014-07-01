@@ -19,4 +19,8 @@ class dc_profile::log::logstash {
     rdata => $::fqdn,
   }
 
+  @@dns_resource { "logstash.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
+
 }
