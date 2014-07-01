@@ -14,23 +14,10 @@ class dc_logstash {
   # Basic class for installing Logstash
   class { '::logstash': }
 
-  # On precise upstart doesn't respect supplementary groups
-  # so we have to hack the upstart config to force execution
-  # as puppet to allow access to the SSL certs.  This has
-  # alledgedly been fixed upstream, so just use UNIX standards
-  if $::lsbdistcodename == 'precise' {
-    exec { 'logstash patch upstart':
-      command => '/bin/sed -ie "s/setgid logstash/setgid puppet/" /etc/init/logstash.conf',
-      onlyif  => '/bin/grep "setgid logstash" /etc/init/logstash.conf',
-      require => [ Package['logstash'], Package['puppet'] ],
-      notify  => Service['logstash'],
-    }
-  } else {
-    exec { '/usr/sbin/usermod -a -G puppet logstash':
-      unless  => '/usr/bin/groups logstash | /bin/grep puppet',
-      require => [ Package['logstash'], Package['puppet'] ],
-      notify  => Service['logstash'],
-    }
+  exec { '/usr/sbin/usermod -a -G puppet logstash':
+    unless  => '/usr/bin/groups logstash | /bin/grep puppet',
+    require => [ Package['logstash'], Package['puppet'] ],
+    notify  => Service['logstash'],
   }
 
   # Add directory and install patterns for filters and parsers
@@ -46,13 +33,8 @@ class dc_logstash {
     require => Class['::logstash'],
   }
 
-  # the package for logstash-contrib has broken dependencies currently
-  # so hacky manual method for now
-  exec { 'install-contrib':
-    creates => '/opt/logstash/lib/logstash/outputs/riemann.rb',
-    cwd     => '/opt/logstash',
-    command => '/opt/logstash/bin/plugin install contrib',
-    require => Class['::logstash'],
+  package { 'logstash-contrib':
+    ensure => installed,
   }
 
   # Add config files
@@ -67,6 +49,8 @@ class dc_logstash {
   class { 'dc_logstash::config::filter_grok_mysql_err':}
 
   # Add icinga config
-  class { 'dc_logstash::icinga': }
+  unless $::is_vagrant {
+    class { 'dc_logstash::icinga': }
+  }
 
 }
