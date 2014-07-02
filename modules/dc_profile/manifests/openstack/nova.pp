@@ -22,12 +22,10 @@ class dc_profile::openstack::nova {
 
   $nova_mq_username           = hiera(nova_mq_username)
   $nova_mq_password           = hiera(nova_mq_password)
-  $rabbitmq_monuser            = hiera(rabbitmq_monuser)
-  $rabbitmq_monuser_password   = hiera(rabbitmq_monuser_password)
+  $rabbitmq_monuser           = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password  = hiera(rabbitmq_monuser_password)
   $nova_mq_port               = hiera(nova_mq_port)
   $nova_mq_vhost              = hiera(nova_mq_vhost)
-
-  $glance_api_servers         = get_exported_var('', 'glance_api_server', ['localhost:9292'])
 
   $nova_db_user               = hiera(nova_db_user)
   $nova_db_pass               = hiera(nova_db_pass)
@@ -56,7 +54,7 @@ class dc_profile::openstack::nova {
 
   class { '::nova':
     database_connection => $nova_database,
-    glance_api_servers  => join($glance_api_servers, ','),
+    glance_api_servers  => "osapi.${::fqdn}",
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,

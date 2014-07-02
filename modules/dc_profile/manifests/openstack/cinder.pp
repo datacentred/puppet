@@ -93,9 +93,8 @@ class dc_profile::openstack::cinder {
     value => $::fqdn,
   }
 
-  # FIXME: This should target API servers once they're stood up
   class { '::cinder::glance':
-    glance_api_servers => get_exported_var('', 'glance_api_server', ['localhost'])
+    glance_api_servers => "osapi.${::fqdn}",
   }
 
   # Nagios config
