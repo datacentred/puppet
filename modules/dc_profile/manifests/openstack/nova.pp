@@ -54,7 +54,7 @@ class dc_profile::openstack::nova {
 
   class { '::nova':
     database_connection => $nova_database,
-    glance_api_servers  => "osapi.${::fqdn}",
+    glance_api_servers  => "osapi.${::domain}",
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,

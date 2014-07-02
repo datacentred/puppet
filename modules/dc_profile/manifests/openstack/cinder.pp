@@ -94,7 +94,7 @@ class dc_profile::openstack::cinder {
   }
 
   class { '::cinder::glance':
-    glance_api_servers => "osapi.${::fqdn}",
+    glance_api_servers => "osapi.${::domain}",
   }
 
   # Nagios config

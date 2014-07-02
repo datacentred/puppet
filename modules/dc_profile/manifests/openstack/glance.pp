@@ -15,6 +15,7 @@ class dc_profile::openstack::glance {
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_glance_password = hiera(keystone_glance_password)
 
+  $os_api    = "osapi.${::domain}"
   $os_region = hiera(os_region)
 
   $glance_api_db      = hiera(glance_api_db)
@@ -51,11 +52,6 @@ class dc_profile::openstack::glance {
   exported_vars::set { 'glance_api':
     value => $::fqdn,
   }
-  # Used by Nova
-  # FIXME: Can be removed once API servers are stood up
-  exported_vars::set { 'glance_api_server':
-    value => "${::fqdn}:${glance_port}",
-  }
 
   class { 'glance::registry':
     auth_type         => 'keystone',
@@ -75,9 +71,9 @@ class dc_profile::openstack::glance {
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
-    public_url    => "http://${::fqdn}:${glance_port}",
-    admin_url     => "http://${::fqdn}:${glance_port}",
-    internal_url  => "http://${::fqdn}:${glance_port}",
+    public_url    => "http://${os_api}:${glance_port}",
+    admin_url     => "http://${os_api}:${glance_port}",
+    internal_url  => "http://${os_api}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
