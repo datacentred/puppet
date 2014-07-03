@@ -35,7 +35,7 @@ class dc_profile::openstack::glance {
   $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
 
   class { 'glance::api':
-    registry_host     => 'localhost',
+    registry_host     => $osapi,
     auth_type         => 'keystone',
     auth_host         => $osapi,
     auth_uri          => "http://${osapi}:5000/v2.0",
