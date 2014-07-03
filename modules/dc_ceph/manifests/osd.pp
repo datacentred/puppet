@@ -47,6 +47,8 @@ class dc_ceph::osd (
     ceph_primary_mon       => $ceph_primary_mon,
     ceph_cluster_interface => $ceph_cluster_interface,
     ceph_cluster_network   => $ceph_cluster_network,
+    glance_ceph_pool       => undef,
+    cinder_rbd_pool        => undef,
   }
 
 }
