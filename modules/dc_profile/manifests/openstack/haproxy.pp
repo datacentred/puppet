@@ -50,6 +50,18 @@ class dc_profile::openstack::haproxy {
     ports             => '5000',
     options           => $balanceroptions,
   }
+  haproxy::listen { 'keystone-auth':
+    ipaddress => '*',
+    ports     => '35357',
+    options   => $listeneroptions,
+  }
+  haproxy::balancermember { 'keystone-auth':
+    listening_service => 'keystone',
+    server_names      => $keystone_api_servers,
+    ipaddresses       => $keystone_api_servers,
+    ports             => '35357',
+    options           => $balanceroptions,
+  }
 
   # Glance
   haproxy::listen { 'glance-api':
