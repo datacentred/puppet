@@ -12,7 +12,6 @@
 class dc_profile::openstack::neutron_agent {
   $os_region                  = hiera(os_region)
 
-  $keystone_host              = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_neutron_password  = hiera(keystone_neutron_password)
 
   $nova_api_ip                = get_exported_var('', 'nova_api_ip', ['localhost'])
@@ -28,6 +27,9 @@ class dc_profile::openstack::neutron_agent {
   $neutron_db_host            = hiera(neutron_db_host)
   $neutron_db_user            = hiera(neutron_db_user)
   $neutron_db_pass            = hiera(neutron_db_pass)
+
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
 
   # Hard coded exported variable name
   $nova_mq_ev                 = 'nova_mq_node'
@@ -110,7 +112,7 @@ class dc_profile::openstack::neutron_agent {
 
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
-      auth_url      => "http://${keystone_host}:35357/v2.0",
+      auth_url      => "http://${osapi}:35357/v2.0",
       auth_password => $keystone_neutron_password,
       auth_region   => $os_region,
       metadata_ip   => $nova_api_ip,
