@@ -36,4 +36,12 @@ class dc_profile::openstack::keepalived {
       virtual_ipaddress  => [ $vrhash['os_api_ext']['vip'] ],
   }
 
+  # Set up some DNS entries for our VIPs
+  # Internal
+  @@dns_resource { "osapi.${::domain}/A":
+    rdata => $vrhash['os_api_int']['vip'],
+  }
+
+  # TODO: External RR once we decide how we're handling DNS
+
 }

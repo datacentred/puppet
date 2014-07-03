@@ -25,7 +25,6 @@ class dc_profile::openstack::nova_compute {
   $nova_db_host               = hiera(nova_db_host)
   $nova_db                    = hiera(nova_db)
 
-  $glance_api_servers         = get_exported_var('', 'glance_api_server', ['localhost:9292'])
   $novnc_proxy_host           = get_exported_var('', 'novnc_proxy_host', ['localhost'])
 
   $keystone_host              = get_exported_var('', 'keystone_host', ['localhost'])
@@ -53,7 +52,7 @@ class dc_profile::openstack::nova_compute {
   class { '::nova':
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
-    glance_api_servers  => join($glance_api_servers, ','),
+    glance_api_servers  => "osapi.${::domain}",
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
@@ -74,7 +73,7 @@ class dc_profile::openstack::nova_compute {
     migration_support => true,
   }
 
-  class { 'nova::compute::neutron': 
+  class { 'nova::compute::neutron':
     libvirt_vif_driver => 'nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver',
   }
 
