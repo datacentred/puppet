@@ -12,10 +12,8 @@
 #
 class dc_profile::openstack::glance {
 
-  $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_glance_password = hiera(keystone_glance_password)
 
-  $os_api    = "osapi.${::domain}"
   $os_region = hiera(os_region)
 
   $glance_api_db      = hiera(glance_api_db)
@@ -28,6 +26,9 @@ class dc_profile::openstack::glance {
   $glance_reg_db_pass = hiera(glance_reg_db_pass)
   $glance_reg_db_host = hiera(glance_reg_db_host)
 
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
+
   $glance_port = '9292'
 
   $glance_api_database = "mysql://${glance_api_db_user}:${glance_api_db_pass}@${glance_api_db_host}/${glance_api_db}"
@@ -36,8 +37,8 @@ class dc_profile::openstack::glance {
   class { 'glance::api':
     registry_host     => 'localhost',
     auth_type         => 'keystone',
-    auth_host         => $keystone_host,
-    auth_uri          => "http://${keystone_host}:5000/v2.0",
+    auth_host         => $osapi,
+    auth_uri          => "http://${osapi}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
     keystone_password => $keystone_glance_password,
@@ -55,8 +56,8 @@ class dc_profile::openstack::glance {
 
   class { 'glance::registry':
     auth_type         => 'keystone',
-    auth_host         => $keystone_host,
-    auth_uri          => "http://${keystone_host}:5000/v2.0",
+    auth_host         => $osapi,
+    auth_uri          => "http://${osapi}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
     keystone_password => $keystone_glance_password,
@@ -71,9 +72,9 @@ class dc_profile::openstack::glance {
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
-    public_url    => "http://${os_api}:${glance_port}",
-    admin_url     => "http://${os_api}:${glance_port}",
-    internal_url  => "http://${os_api}:${glance_port}",
+    public_url    => "http://${osapi}:${glance_port}",
+    admin_url     => "http://${osapi}:${glance_port}",
+    internal_url  => "http://${osapi}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
