@@ -12,14 +12,14 @@
 #
 # Sample Usage:
 #
+# TODO: Enable SSL endpoints once we've stood up the necessary
+# infrastructure
 
 class dc_profile::openstack::haproxy {
 
-  include ::dc_ssl::haproxy
   include ::haproxy
 
   # Filesystem location of the SSL certificate
-  $sslcert = '/etc/ssl/certs/haproxy.pem'
 
   # Default haproxy options applicable to all listeners
   $listeneroptions =  {
@@ -41,9 +41,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'keystone':
     ipaddress => '*',
     ports     => '5000',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'keystone':
     listening_service => 'keystone',
@@ -57,9 +55,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'glance-api':
     ipaddress => '*',
     ports     => '9292',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'glance-api':
     listening_service => 'glance-api',
@@ -71,9 +67,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'glance-reg':
     ipaddress => '*',
     ports     => '9191',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'glance-reg':
     listening_service => 'glance-reg',
@@ -87,9 +81,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'neutron':
     ipaddress => '*',
     ports     => '9696',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'neutron':
     listening_service => 'neutron',
@@ -103,9 +95,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'nova-compute':
     ipaddress => '*',
     ports     => '8774',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'nova-compute':
     listening_service => 'nova-compute',
@@ -117,9 +107,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'nova-metadata':
     ipaddress => '*',
     ports     => '8775',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'nova-metadata':
     listening_service => 'nova-metadata',
@@ -133,9 +121,7 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'cinder':
     ipaddress => '*',
     ports     => '8776',
-    ssl       => $sslcert,
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'cinder':
     listening_service => 'cinder',
@@ -148,10 +134,8 @@ class dc_profile::openstack::haproxy {
   # Horizon
   haproxy::listen { 'horizon':
     ipaddress => '*',
-    ports     => '443',
-    ssl       => $sslcert,
+    ports     => '80',
     options   => $listeneroptions,
-    require   => File[$sslcert],
   }
   haproxy::balancermember { 'horizon':
     listening_service => 'horizon',
