@@ -12,7 +12,6 @@
 #
 class dc_profile::openstack::cinder {
 
-  $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_cinder_password = hiera(keystone_cinder_password)
 
   $cinder_db        = hiera(cinder_db)
@@ -30,6 +29,9 @@ class dc_profile::openstack::cinder {
   # Hard coded exported variable name
   $nova_mq_ev                 = 'nova_mq_node'
 
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
+
   $cinder_port = '8776'
 
   class {'::cinder':
@@ -46,7 +48,7 @@ class dc_profile::openstack::cinder {
 
   class {'::cinder::api':
     keystone_enabled   => true,
-    keystone_auth_host => $keystone_host,
+    keystone_auth_host => $osapi,
     keystone_user      => 'cinder',
     keystone_password  => $keystone_cinder_password,
     os_region_name     => $os_region,
@@ -56,17 +58,17 @@ class dc_profile::openstack::cinder {
 
   @@keystone_endpoint { "${os_region}/cinder":
     ensure       => present,
-    public_url   => "http://${::fqdn}:${cinder_port}/v1/%(tenant_id)s",
-    admin_url    => "http://${::fqdn}:${cinder_port}/v1/%(tenant_id)s",
-    internal_url => "http://${::fqdn}:${cinder_port}/v1/%(tenant_id)s",
+    public_url   => "http://${osapi}:${cinder_port}/v1/%(tenant_id)s",
+    admin_url    => "http://${osapi}:${cinder_port}/v1/%(tenant_id)s",
+    internal_url => "http://${osapi}:${cinder_port}/v1/%(tenant_id)s",
     tag          => 'cinder_endpoint',
   }
 
   @@keystone_endpoint { "${os_region}/cinderv2":
     ensure       => present,
-    public_url   => "http://${::fqdn}:${cinder_port}/v2/%(tenant_id)s",
-    admin_url    => "http://${::fqdn}:${cinder_port}/v2/%(tenant_id)s",
-    internal_url => "http://${::fqdn}:${cinder_port}/v2/%(tenant_id)s",
+    public_url   => "http://${osapi}:${cinder_port}/v2/%(tenant_id)s",
+    admin_url    => "http://${osapi}:${cinder_port}/v2/%(tenant_id)s",
+    internal_url => "http://${osapi}:${cinder_port}/v2/%(tenant_id)s",
     tag          => 'cinder_endpoint',
   }
 
@@ -94,7 +96,7 @@ class dc_profile::openstack::cinder {
   }
 
   class { '::cinder::glance':
-    glance_api_servers => "osapi.${::domain}",
+    glance_api_servers => $osapi,
   }
 
   # Nagios config

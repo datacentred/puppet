@@ -36,11 +36,12 @@ class dc_profile::openstack::nova {
   $nova_admin_user            = hiera(nova_admin_user)
   $nova_enabled_apis          = hiera(nova_enabled_apis)
 
-  $keystone_host              = get_exported_var('', 'keystone_host', ['localhost'])
-
   $neutron_server_host        = hiera(neutron_server_host)
   $neutron_secret             = hiera(neutron_secret)
   $neutron_metadata_secret    = hiera(neutron_metadata_secret)
+
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
 
   $ec2_port = '8773'
   $nova_port = '8774'
@@ -54,7 +55,7 @@ class dc_profile::openstack::nova {
 
   class { '::nova':
     database_connection => $nova_database,
-    glance_api_servers  => "osapi.${::domain}",
+    glance_api_servers  => $osapi,
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
@@ -70,17 +71,16 @@ class dc_profile::openstack::nova {
     admin_user                           => $nova_admin_user,
     admin_password                       => $keystone_nova_password,
     enabled_apis                         => $nova_enabled_apis,
-    auth_host                            => $keystone_host,
-    auth_uri                             => "http://${keystone_host}:5000/v2.0",
+    auth_host                            => $osapi,
+    auth_uri                             => "http://${osapi}:5000/v2.0",
     neutron_metadata_proxy_shared_secret => $neutron_metadata_secret,
   }
   contain 'nova::api'
 
-
   class { '::nova::network::neutron':
-    neutron_url            => "http://${neutron_server_host}:9696",
+    neutron_url            => "http://${osapi}:9696",
     neutron_region_name    => $os_region,
-    neutron_admin_auth_url => "http://${keystone_host}:35357/v2.0",
+    neutron_admin_auth_url => "http://${osapi}:35357/v2.0",
     neutron_admin_password => $keystone_neutron_password,
   }
   contain 'nova::network::neutron'
@@ -111,17 +111,17 @@ class dc_profile::openstack::nova {
 
   @@keystone_endpoint { "${os_region}/nova":
     ensure        => present,
-    public_url    => "http://${::fqdn}:${nova_port}/v2/%(tenant_id)s",
-    admin_url     => "http://${::fqdn}:${nova_port}/v2/%(tenant_id)s",
-    internal_url  => "http://${::fqdn}:${nova_port}/v2/%(tenant_id)s",
+    public_url    => "http://${osapi}:${nova_port}/v2/%(tenant_id)s",
+    admin_url     => "http://${osapi}:${nova_port}/v2/%(tenant_id)s",
+    internal_url  => "http://${osapi}:${nova_port}/v2/%(tenant_id)s",
     tag           => 'nova_endpoint',
   }
 
   @@keystone_endpoint { "${os_region}/nova_ec2":
     ensure        => present,
-    public_url    => "http://${::fqdn}:${ec2_port}/services/Cloud",
-    admin_url     => "http://${::fqdn}:${ec2_port}/services/Admin",
-    internal_url  => "http://${::fqdn}:${ec2_port}/services/Cloud",
+    public_url    => "http://${osapi}:${ec2_port}/services/Cloud",
+    admin_url     => "http://${osapi}:${ec2_port}/services/Admin",
+    internal_url  => "http://${osapi}:${ec2_port}/services/Cloud",
     tag           => 'nova_endpoint',
   }
 

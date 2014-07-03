@@ -19,6 +19,9 @@ class dc_profile::openstack::keystone {
   $sysmailaddress     = hiera(sal01_internal_sysmail_address)
   $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost:11211'])
 
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
+
   class { '::keystone':
     require          => Dc_mariadb::Db['keystone'],
     verbose          => true,
@@ -39,9 +42,9 @@ class dc_profile::openstack::keystone {
 
   # Installs the service user endpoint.
   class { '::keystone::endpoint':
-    public_url   => "http://${::fqdn}:5000",
-    internal_url => "http://${::fqdn}:5000",
-    admin_url    => "http://${::fqdn}:35357",
+    public_url   => "http://${osapi}:5000",
+    internal_url => "http://${osapi}:5000",
+    admin_url    => "http://${osapi}:35357",
     region       => $os_region,
   }
 
@@ -92,8 +95,8 @@ class dc_profile::openstack::keystone {
     roles  => 'admin',
   }
   keystone_service { 'cinder':
-    ensure     => present,
-    type       => 'volume',
+    ensure      => present,
+    type        => 'volume',
     description => 'Cinder Volume Service',
   }
   keystone_service { 'cinderv2':

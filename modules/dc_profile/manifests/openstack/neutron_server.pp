@@ -12,7 +12,6 @@ class dc_profile::openstack::neutron_server {
 
   $os_region          = hiera(os_region)
 
-  $keystone_host      = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_neutron_password = hiera(keystone_neutron_password)
 
   $nova_mq_username   = hiera(nova_mq_username)
@@ -31,6 +30,9 @@ class dc_profile::openstack::neutron_server {
   $nova_mq_ev         = 'nova_mq_node'
 
   $neutron_port       = '9696'
+
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
 
   $management_ip      = $::ipaddress_eth0
   $integration_ip     = $::ipaddress_eth1
@@ -57,7 +59,7 @@ class dc_profile::openstack::neutron_server {
 
   # configure authentication
   class { 'neutron::server':
-      auth_host           => $keystone_host,
+      auth_host           => $osapi,
       auth_password       => $keystone_neutron_password,
       database_connection => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
       mysql_module        => '2.2',
@@ -91,11 +93,12 @@ class dc_profile::openstack::neutron_server {
 
   # Export Keystone endpoint details
   # Might need revisiting once we have an external (public) network defined
+  # TODO: SSL
   @@keystone_endpoint { "${os_region}/neutron":
     ensure       => present,
-    public_url   => "http://${::fqdn}:${neutron_port}",
-    admin_url    => "http://${::fqdn}:${neutron_port}",
-    internal_url => "http://${::fqdn}:${neutron_port}",
+    public_url   => "http://${osapi}:${neutron_port}",
+    admin_url    => "http://${osapi}:${neutron_port}",
+    internal_url => "http://${osapi}:${neutron_port}",
     tag          => 'neutron_endpoint',
   }
 
