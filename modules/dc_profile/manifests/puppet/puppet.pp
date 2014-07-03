@@ -17,8 +17,10 @@ class dc_profile::puppet::puppet {
 
   # TODO: Remove this virtual resource declaration once we
   # roll out a second Puppetmaster
-  @@dns_resource { "puppet.${::domain}/CNAME":
-    rdata => $::fqdn,
+  if $::puppetmaster_stage {
+    @@dns_resource { "puppet.${::domain}/CNAME":
+      rdata => $::fqdn,
+    }
   }
 
 }
