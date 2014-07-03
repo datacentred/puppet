@@ -41,7 +41,7 @@ class dc_ceph::osd (
 
   exec { "/usr/local/bin/journal-provision ${ceph_journal_disk} ${ceph_num_osds} ${ceph_journal_size}": } ->
 
-  cephdeploy::osd { $osds:
+  cephdeploy::osd { $ceph_osds:
     setup_pools            => $ceph_setup_pools,
     ceph_deploy_user       => $ceph_deploy_user,
     ceph_primary_mon       => $ceph_primary_mon,
