@@ -71,9 +71,9 @@ class dc_profile::openstack::glance {
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
-    public_url    => "http://${os_api}:${glance_port}",
-    admin_url     => "http://${os_api}:${glance_port}",
-    internal_url  => "http://${os_api}:${glance_port}",
+    public_url    => "https://${os_api}:${glance_port}",
+    admin_url     => "https://${os_api}:${glance_port}",
+    internal_url  => "https://${os_api}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
