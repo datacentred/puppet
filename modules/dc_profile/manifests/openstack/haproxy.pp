@@ -56,7 +56,7 @@ class dc_profile::openstack::haproxy {
     options   => $listeneroptions,
   }
   haproxy::balancermember { 'keystone-auth':
-    listening_service => 'keystone',
+    listening_service => 'keystone-auth',
     server_names      => $keystone_api_servers,
     ipaddresses       => $keystone_api_servers,
     ports             => '35357',
