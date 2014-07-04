@@ -21,7 +21,14 @@ class dc_profile::net::ssh {
 
   sshd_config { 'AllowGroups':
     ensure => present,
-    value  => ['sysadmin', 'git', 'postgres', 'barman', 'juniperbackup'],
+    value  => [
+      'sysadmin',
+      'git',
+      'postgres',
+      'barman',
+      'juniperbackup',
+      'ceph-deploy'
+    ],
     notify => Service['ssh']
   }
 
