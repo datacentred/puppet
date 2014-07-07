@@ -29,6 +29,7 @@ class dc_profile::openstack::haproxy {
   # Keystone
   haproxy::listen { 'keystone':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '5000',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -44,6 +45,7 @@ class dc_profile::openstack::haproxy {
   }
   haproxy::listen { 'keystone-auth':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '35357',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -61,6 +63,7 @@ class dc_profile::openstack::haproxy {
   # Glance
   haproxy::listen { 'glance-api':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '9292',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -76,6 +79,7 @@ class dc_profile::openstack::haproxy {
   }
   haproxy::listen { 'glance-reg':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '9191',
     options   => {
       'option'  => ['tcpka', 'tcplog'],
@@ -93,6 +97,7 @@ class dc_profile::openstack::haproxy {
   # Neutron
   haproxy::listen { 'neutron':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '9696',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -110,6 +115,7 @@ class dc_profile::openstack::haproxy {
   # Nova
   haproxy::listen { 'nova-compute':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '8774',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -125,6 +131,7 @@ class dc_profile::openstack::haproxy {
   }
   haproxy::listen { 'nova-metadata':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '8775',
     options   => $listeneroptions,
   }
@@ -139,6 +146,7 @@ class dc_profile::openstack::haproxy {
   # Cinder
   haproxy::listen { 'cinder':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '8776',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -156,6 +164,7 @@ class dc_profile::openstack::haproxy {
   # Horizon
   haproxy::listen { 'horizon':
     ipaddress => '*',
+    mode      => 'http',
     ports     => '80',
     options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
@@ -168,5 +177,15 @@ class dc_profile::openstack::haproxy {
     ipaddresses       => 'controller0.sal01.datacentred.co.uk',
     ports             => '80',
     options           => 'check inter 2000 rise 2 fall 5',
+  }
+
+  # HAProxy Statistics
+  haproxy::listen { 'haproxy-stats':
+    ipaddress => '*',
+    mode      => 'http',
+    ports     => '1936',
+    options   => {
+      'stats' => ['enable', 'uri /'],
+    },
   }
 }
