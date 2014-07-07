@@ -19,17 +19,6 @@ class dc_profile::openstack::haproxy {
 
   include ::haproxy
 
-  # Filesystem location of the SSL certificate
-
-  # Default haproxy options applicable to all listeners
-  $listeneroptions =  {
-                        'option'  => ['tcpka', 'httpchk', 'tcplog'],
-                        'balance' => 'source',
-                      }
-
-  # Default haproxy options applicable to all balancermembers
-  $balanceroptions = 'check inter 2000 rise 2 fall 5'
-
   # Gather our API endpoints
   $keystone_api_servers = get_exported_var('', 'keystone_host', ['localhost'])
   $glance_api_servers   = get_exported_var('', 'glance_api', ['localhost'])
@@ -41,80 +30,98 @@ class dc_profile::openstack::haproxy {
   haproxy::listen { 'keystone':
     ipaddress => '*',
     ports     => '5000',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'keystone':
     listening_service => 'keystone',
     server_names      => $keystone_api_servers,
     ipaddresses       => $keystone_api_servers,
     ports             => '5000',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
   haproxy::listen { 'keystone-auth':
     ipaddress => '*',
     ports     => '35357',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'keystone-auth':
     listening_service => 'keystone-auth',
     server_names      => $keystone_api_servers,
     ipaddresses       => $keystone_api_servers,
     ports             => '35357',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Glance
   haproxy::listen { 'glance-api':
     ipaddress => '*',
     ports     => '9292',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'glance-api':
     listening_service => 'glance-api',
     server_names      => $glance_api_servers,
     ipaddresses       => $glance_api_servers,
     ports             => '9292',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
   haproxy::listen { 'glance-reg':
     ipaddress => '*',
     ports     => '9191',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'glance-reg':
     listening_service => 'glance-reg',
     server_names      => $glance_api_servers,
     ipaddresses       => $glance_api_servers,
     ports             => '9191',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Neutron
   haproxy::listen { 'neutron':
     ipaddress => '*',
     ports     => '9696',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'neutron':
     listening_service => 'neutron',
     server_names      => $neutron_api_servers,
     ipaddresses       => $neutron_api_servers,
     ports             => '9696',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Nova
   haproxy::listen { 'nova-compute':
     ipaddress => '*',
     ports     => '8774',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'nova-compute':
     listening_service => 'nova-compute',
     server_names      => $nova_api_servers,
     ipaddresses       => $nova_api_servers,
     ports             => '8774',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
   haproxy::listen { 'nova-metadata':
     ipaddress => '*',
@@ -126,34 +133,40 @@ class dc_profile::openstack::haproxy {
     server_names      => $nova_api_servers,
     ipaddresses       => $nova_api_servers,
     ports             => '8775',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Cinder
   haproxy::listen { 'cinder':
     ipaddress => '*',
     ports     => '8776',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'cinder':
     listening_service => 'cinder',
     server_names      => $cinder_api_servers,
     ipaddresses       => $cinder_api_servers,
     ports             => '8776',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Horizon
   haproxy::listen { 'horizon':
     ipaddress => '*',
     ports     => '80',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'horizon':
     listening_service => 'horizon',
     server_names      => 'controller0.sal01.datacentred.co.uk',
     ipaddresses       => 'controller0.sal01.datacentred.co.uk',
     ports             => '80',
-    options           => $balanceroptions,
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 }

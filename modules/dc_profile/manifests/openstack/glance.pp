@@ -37,7 +37,7 @@ class dc_profile::openstack::glance {
   # TODO: OpenStack triage alert.  For some reason this works locally but generates
   #       a 500 (internal server error) when run via the proxy
   class { 'glance::api':
-    registry_host     => 'localhost',
+    registry_host     => $osapi,
     auth_type         => 'keystone',
     auth_host         => $osapi,
     auth_uri          => "http://${osapi}:5000/v2.0",
