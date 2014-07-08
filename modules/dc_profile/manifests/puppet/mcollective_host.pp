@@ -72,6 +72,14 @@ class dc_profile::puppet::mcollective_host {
     }
     contain 'mcollective'
 
+    # Enable keepalive packets to stop agents timing out
+    mcollective::server::setting { ‘registration’:
+      value => 'agentlist',
+    }
+    mcollective::server::setting { ‘registrationinterval’:
+      value => '900',
+    }
+
   }
 
 }
