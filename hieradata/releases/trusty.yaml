@@ -36,6 +36,12 @@ repo_list:
     repos: '1.5'
     key: 'E775FF07'
     key_source: 'http://deb.theforeman.org/foreman.asc'
+  ceph_firefly_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ceph_firefly_mirror_path')}"
+    release: 'trusty'
+    repos: 'main'
+    key: '17ED316D'
+    key_server: 'keyserver.ubuntu.com'
 
 collectd::version: 5.4.0-3ubuntu2datacentred1
 apache::mod::passenger::mod_package_ensure: '4.0.37-2'

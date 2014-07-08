@@ -46,6 +46,12 @@ repo_list:
     repos: 'stable'
     key: 'E775FF07'
     key_source: 'http://deb.theforeman.org/foreman.asc'
+  ceph_emperor_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ceph_emperor_mirror_path')}"
+    release: 'precise'
+    repos: 'main'
+    key: '17ED316D'
+    key_server: 'keyserver.ubuntu.com'
 
 collectd::version: installed
 apache::mod::passenger::mod_package_ensure: '1:4.0.42-1~precise1'
