@@ -72,6 +72,13 @@ class dc_profile::puppet::mcollective_host {
     }
     contain 'mcollective'
 
+    mcollective::server::setting { 'registration':
+      value => 'agentlist',
+    }
+    mcollective::server::setting { 'registerinterval':
+      value => 900,
+    }
+
   }
 
 }
