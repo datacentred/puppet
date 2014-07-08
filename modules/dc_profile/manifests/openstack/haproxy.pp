@@ -133,7 +133,10 @@ class dc_profile::openstack::haproxy {
     ipaddress => '*',
     mode      => 'http',
     ports     => '8775',
-    options   => $listeneroptions,
+    options   => {
+      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'balance' => 'source',
+    },
   }
   haproxy::balancermember { 'nova-metadata':
     listening_service => 'nova-metadata',
