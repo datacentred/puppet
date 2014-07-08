@@ -15,7 +15,7 @@ FWHOME=/usr/local/lib/firmware
 IPMIFW=$FWHOME/X8DTT220.ima
 ### BIOS Firmware.  Note that this should be a dump (via flashrom) from a configured
 ### machine, and should match the NVRAM dump taken below.
-BIOSFW=$FWHOME/dcbios_21b.bin
+BIOSFW=$FWHOME/bios_21b.bin
 ### NVRAM settings.  See above.
 NVRAM=$FWHOME/dcnvram_080714.bin
 
