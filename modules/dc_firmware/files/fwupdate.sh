@@ -71,7 +71,7 @@ function update_bios {
 	# Updates motherboard BIOS to version passed as $1
 	echo "Beginning BIOS update process, hit Ctrl-C to cancel... "
 	sleep 5
-	$FLASHROM -w $1
+	$FLASHROM -w $1 -p internal
 	echo "... done!"
 }
 
@@ -79,7 +79,7 @@ function verify_bios {
 	# Function to verify current BIOS
 	# Returns 0 if successful
 	echo "Verifying BIOS against $1 ..."
-	$FLASHROM -v $1 
+	$FLASHROM -v $1 -p internal
 }
 
 function check_bios_version {
