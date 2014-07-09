@@ -17,6 +17,11 @@ class dc_firmware {
 
     physical: {
 
+      File {
+        owner => 'root',
+        group => 'root',
+      }
+
       package { 'flashrom':
         ensure => installed,
       }
