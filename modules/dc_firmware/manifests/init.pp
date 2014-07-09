@@ -61,6 +61,7 @@ class dc_firmware {
         source  => 'puppet:///modules/dc_firmware/firmware',
         recurse => true,
       }
+
     }
 
     default: {}
