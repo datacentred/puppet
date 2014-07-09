@@ -1,4 +1,5 @@
 /hieradata/*.yaml                                 filter=private diff=private
+hieradata/modules/cephdeploy.yaml                 filter=private diff=private
 /modules/dc_mcollective/files/certs/*             filter=private diff=private
 /modules/dc_mcollective/files/private_keys/*      filter=private diff=private
 /modules/dc_mcollective/files/client_certs/*      filter=private diff=private
