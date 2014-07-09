@@ -13,20 +13,9 @@
 # [Remember: No empty lines between comments and class definition]i
 class dc_firmware {
 
-  include stdlib
-
   case $::virtual {
 
     physical: {
-
-      case $::lsbdistcodename {
-        'precise': {
-          $module_service = 'module-init-tools'
-        }
-        default: {
-          $module_service = 'kmod'
-        }
-      }
 
       File {
         owner => 'root',
@@ -73,28 +62,6 @@ class dc_firmware {
         recurse => true,
       }
 
-      exec { 'module_refresh':
-        command     => "/usr/sbin/service ${module_service} restart",
-        refreshonly => true,
-      }
-
-      file_line { 'ipmi_msghandler':
-        line   => 'ipmi_msghandler',
-        path   => '/etc/modules',
-        notify => Exec['module_refresh'],
-      }
-
-      file_line { 'ipmi_devintf':
-        line   => 'ipmi_devintf',
-        path   => '/etc/modules',
-        notify => Exec['module_refresh'],
-      }
-
-      file_line { 'ipmi_si':
-        line   => 'ipmi_si',
-        path   => '/etc/modules',
-        notify => Exec['module_refresh'],
-      }
     }
 
     default: {}
