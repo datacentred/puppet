@@ -62,6 +62,8 @@ class dc_firmware {
         recurse => true,
       }
 
+      contain dc_firmware::modules
+
     }
 
     default: {}
