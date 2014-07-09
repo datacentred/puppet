@@ -20,7 +20,6 @@ class dc_profile {
   contain dc_profile::util::timezone
   contain dc_profile::util::locale
   contain dc_profile::util::facter
-  contain dc_profile::util::firmware
 
   if $::is_vagrant == undef {
     contain dc_profile::auth::admins
