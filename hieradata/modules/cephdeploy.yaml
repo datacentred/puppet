@@ -1,18 +1,1 @@
----
-cephdeploy::ceph_deploy_user:           "%{hiera('cephdeploy_user')}"
-cephdeploy::ceph_deploy_password:       'IcAvleajEwd0'
-cephdeploy::ceph_deploy_system_user:    true
-cephdeploy::ceph_monitor_fsid:          'd222d2b3-b4c4-4443-9717-0c4ccadae458'
-cephdeploy::mon_initial_members:        "%{hiera('cephdeploy_primary_mon')}"
-cephdeploy::ceph_monitor_address:       '10.10.104.101'
-cephdeploy::ceph_public_network:        "%{hiera('cephdeploy_public_network')}"
-cephdeploy::ceph_cluster_network:       "%{hiera('cephdeploy_cluster_network')}"
-cephdeploy::ceph_install_repositories:  false
-cephdeploy::ceph_cluster_name:          "%{hiera('cephdeploy_cluster')}"
-cephdeploy::has_compute:                false
-
-cephdeploy::mon::ceph_deploy_user:      "%{hiera('cephdeploy_user')}"
-cephdeploy::mon::ceph_public_interface: 'eth0'
-cephdeploy::mon::ceph_public_network:   "%{hiera('cephdeploy_public_network')}"
-cephdeploy::mon::ceph_primary_mon:      "%{hiera('cephdeploy_primary_mon')}"
-cephdeploy::mon::ceph_cluster_name:     "%{hiera('cephdeploy_cluster')}"
+DCCRYPTOkmY993vVTwdfgKmVSuyq71HCzVxgT8bfvt6gIBM60DrlFqp8OT9T6zuWy/Sk1eJlFf/dNq6nJYJJu7TphwyUPZFAzINnan5dSMkaA9xCRKkEWfXJQ9v7Bd7AysEw6+g/5pCNiYTRdWT3n1EMTa4eumTWU9d7Xh320AlpDW7U+CKaNbahJ3vbbCUKJWdqaTjWYJe7QefURIAfA+kCGuB+FsWCIs5vviZA2AGxM/STb5sI+wW5xVqS3GUJhwazLqPP1E9CufHHofYeBGaGy6E/AEYGI5kVLx94JorzBU4tRQk+8qCl4ggsgwHrEI5mPR1Dabk/iFfEC+BNBagUHa5Obxl+OIi6KklDJlxKwl2j/EhLZS6TIuTD5OmaMWISnf+KRIpgYnxcX0j7EPpW64SsX3wgTyt/DOhn3AIt3fRBzvL4+mgWO6Al88srPDzoLcZwdyndrL4cl5kEonb/pyouT0ZKBMAIiVg5RU848HRx8GDkIGy8l2K+fGCoNaW49lkrZolJJqUD0bQOPEw8p7EdGzKu7fTAaTcU3qNJs0zMrNAp1j9rgMrefW25l6Uavp49kS1YHXxO0Vk6e/8qimeRmEcLRPd08QYzc7zNS/R+KudCQ6c9vJkuSk73Vw+B/6eipYoHvRFA3yNyjlOygL+qA9vG9ucWzDFSuRjloKVqigCK9MGvEDQo1FPuQ+Zs9aZAYX3yllRrFh0gsgOX1AIR3kki07FGGCSuR5HvMovBuiODJZdKnLwhh9Ii7qebhnfTw6o42bkcS/P8evQwoV2hDb1Bjg517oDOQ1bJTzycM46i+Y5nSx4pizpItXh5TFzfayZnGvLjjlYj2ntLgkNSxCrhWNE36F+k2B+1I+xIp8KElz/rnWujDJjadF153x9PX9Pj2BGAoZjCKYGncNvr45sk6QvLiT+uYErp+gp+HO3sfS1c0R3MWS62FRXq+DS7aEU14e9KypfmtRCpr06G7SNtGSQtLol/3dLyJFaDoLTC5gm1x7fpwB8OYLyd0YjyL98J3bXPg5xBr0NQnbGGyDDfBiKGATjN/u1Aphx0+Mpv1yoXCOlx93120TB8N5OGY9OB5tbJQRIKfJ1Zs1n20Ix9BsxrXrd+kQvXx0tafnpuqrW605IXELDXkE5v45mME4CL6EaoiESMr41QOj2RoF0AJniNCq612myANWGhmLERIEYxSyX2QLF6LbXuYtGxVMvHksQnHI39CwM0sIqz7sg84D8jTNVar7HeagWrYAyb9ymkpniU4aw0ItAONcY+VDpO2Pnyhk5lB7ZWKtybX8uDvqqhjYpIfnJQtU3t3bnASHs6Ozak1efLyj1H5CZrgpNHBbqYQMhrqABTrYNZ1u1kB3JDNx83p+4D1JjKPstKhJsuRnoCd7nCIjaDNujkJSYVA7A9dYg+1BgAlBd+4MCJBvsEsrzum7GyhZcc3lby7DYecHa+f++HcSPOZr+bZoWp3MP4LUM6cUf25oapCmkEUPWRSgczwrmoXbBJqkE/+BR1Ix6oAk2RATL/cix9
