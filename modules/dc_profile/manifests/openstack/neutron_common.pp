@@ -42,8 +42,7 @@ class dc_profile::openstack::neutron_common {
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
-  }
 
-  include dc_profile::openstack::neutron_logstash
-  
+    include dc_profile::openstack::neutron_logstash
+  }
 }
