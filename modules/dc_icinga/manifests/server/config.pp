@@ -24,6 +24,7 @@ class dc_icinga::server::config {
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap::server::suffix)
+  $ldap_server = "ldap.${::domain}"
 
   # Add custom plugins
   include dc_icinga::server::custom_plugins
@@ -38,6 +39,26 @@ class dc_icinga::server::config {
     owner  => 'root',
     group  => 'root',
     mode   => '4755',
+  }
+
+  # Icinga web configuration for LDAP users
+  package { 'php-net-ldap':
+    ensure => installed,
+    notify => Service['apache2'],
+  }
+
+  file { '/usr/share/icinga-web/app/modules/AppKit/config/auth.xml':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('dc_icinga/auth.xml.erb'),
+    notify  => Exec['clearcache.sh'],
+  }
+
+  exec { 'clearcache.sh':
+    command     => '/usr/lib/icinga-web/bin/clearcache.sh',
+    refreshonly => true,
   }
 
   ######################################################################
