@@ -33,6 +33,12 @@ class dc_ipmi (
   $ipmi_network_vlan_tag        = undef,
   ) {
 
+  unless $::boardmanufacturer == 'Supermicro'
+  {
+    $fail_msg = "This module only supports Supermicro IPMI"
+    fail("Unsupported board manufacturer: ${::boardmanufacturer}. ${msg}")
+  }
+
   # We want to load the kernel modules before installing ipmitool
   # so that it can start the ipmi services
   kmod::install { 'ipmi_devintf':
