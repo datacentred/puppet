@@ -1,9 +1,9 @@
 # Class: dc_ipmi
 #
-# Configure Supermicro IPMI. This module ensures that ipmitool is installed
-# and loads the ipmi kernel modules. It also runs a python script which
-# configures the hostname of ipmi to "<hostname>-ipmi" and enables RADIUS
-# authentication
+# This module configures the bits of IPMI that can't be configured using 
+# ipmitool such as RADIUS authentication and changing the hostname. 
+# It ensures that ipmitool is installed and relevant kernel modules are loaded.
+# Finally, depending on the parameters we do the network configuration.
 #
 # Parameters:
 #
@@ -33,7 +33,8 @@ class dc_ipmi (
   $ipmi_network_vlan_tag        = undef,
   ) {
 
-
+  # We want to load the kernel modules before installing ipmitool
+  # so that it can start the ipmi services
   kmod::install { 'ipmi_devintf':
     ensure => 'present',
   } ->
@@ -46,6 +47,8 @@ class dc_ipmi (
     ensure => 'installed',
   } ->
 
+  # We want to configure everything else before network configuration, because
+  # it can sometimes reset our http session
   ipmi_radius {$::ipmi_ipaddress:
     ensure    => present,
     username  => $ipmi_username,
@@ -84,7 +87,6 @@ class dc_ipmi (
   # Else force the user to specify all static network properties
   else
   {
-    # Change only the hostname
     if ($ipmi_network_enable_vlan == false)
     {
       ipmi_network { $::ipmi_ipaddress:

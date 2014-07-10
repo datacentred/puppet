@@ -113,7 +113,7 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
                                      @login_payload, setcookie=false)
     if status == '200' && check_response_code(response.body) == '0'
       cookie = parse_response_for('SESSION_COOKIE', response.body)
-      if cookie == nil
+      unless cookie
         raise "Server didn't return a valid cookie after login."
       end
     else
@@ -142,7 +142,7 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
       end
   end
 
-  def ipmi_request(uri, type, payload=[], setcookie=true)
+  def ipmi_request(uri, type, payload=[], set_cookie=true)
 
     url = "http://#{@resource[:name]}#{uri}"
 
@@ -155,7 +155,7 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
 
     request.add_field('content-type', 'application/x-www-form-urlencoded')
 
-    if setcookie == true
+    if set_cookie == true
       request.add_field('Cookie', "SessionCookie=#{@cookie}")
     end
 

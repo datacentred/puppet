@@ -9,7 +9,10 @@ Puppet::Type.newtype(:ipmi_network) do
     isnamevar
     validate do |value|
       unless value =~ /\A(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\Z/
-        raise ArgumentError, 'ipmi_network::name invalid. Should be a valid ip address'
+        raise ArgumentError, "ipmi_network::name #{value} invalid. " +
+                             "Should be a valid ip address. " + 
+                             "Check if 'ipmitool lan print' " + 
+                             "gives you a valid ip address."
       end
     end
   end

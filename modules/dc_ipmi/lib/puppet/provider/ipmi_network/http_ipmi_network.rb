@@ -117,19 +117,9 @@ desc "Support for Network configuration on the IPMI interface."
 
   def set_network_cfg
 
-    if @resource[:enable_vlan] == true
-      @network_payload['EnableVLAN'] = 1
-    else
-      @network_payload['EnableVLAN'] = 0
-    end
-
-    if @resource[:dhcp] == true
-      @network_payload['IPAddrSource'] = 2
-    else
-      @network_payload['IPAddrSource'] = 1
-    end
-
-    @network_payload['ChannelNum'] = @resource[:channel]
+    @network_payload['EnableVLAN']   = @resource[:enable_vlan] ? 1 : 0
+    @network_payload['IPAddrSource'] = @resource[:dhcp] ? 2 : 1
+    @network_payload['ChannelNum']   = @resource[:channel]
 
     response, status = ipmi_request(NETWORK_SET_URI, "POST", @network_payload)
     if status != '200'
@@ -165,7 +155,7 @@ desc "Support for Network configuration on the IPMI interface."
                                      @login_payload, setcookie=false)
     if status == '200' && check_response_code(response.body) == '0'
       cookie = parse_response_for('SESSION_COOKIE', response.body)
-      if cookie == nil
+      unless cookie
         raise "Server didn't return a valid cookie after login."
       end
     else
@@ -194,7 +184,7 @@ desc "Support for Network configuration on the IPMI interface."
       end
   end
 
-  def ipmi_request(uri, type, payload=[], setcookie=true)
+  def ipmi_request(uri, type, payload=[], set_cookie=true)
 
     url = "http://#{@resource[:name]}#{uri}"
 
@@ -207,7 +197,7 @@ desc "Support for Network configuration on the IPMI interface."
 
     request.add_field('content-type', 'application/x-www-form-urlencoded')
 
-    if setcookie == true
+    if set_cookie == true
       request.add_field('Cookie', "SessionCookie=#{@cookie}")
     end
 
