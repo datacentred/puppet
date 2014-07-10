@@ -2,7 +2,7 @@
 #
 # This module configures the bits of IPMI that can't be configured using 
 # ipmitool such as RADIUS authentication and changing the hostname. 
-# It ensures that the relevant kernel modules are loaded.
+# It ensures that ipmitool is installed and relevant kernel modules are loaded.
 # Finally, depending on the parameters we do the network configuration.
 #
 # Parameters:
@@ -47,6 +47,10 @@ class dc_ipmi (
 
   kmod::install { 'ipmi_si':
     ensure => 'present',
+  } ->
+
+  package { 'ipmitool':
+    ensure => 'installed',
   } ->
 
   # We want to configure everything else before network configuration, because
