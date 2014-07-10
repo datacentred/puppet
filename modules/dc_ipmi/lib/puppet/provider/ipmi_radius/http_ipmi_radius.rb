@@ -155,7 +155,7 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
 
     request.add_field('content-type', 'application/x-www-form-urlencoded')
 
-    if set_cookie == true
+    if set_cookie
       request.add_field('Cookie', "SessionCookie=#{@cookie}")
     end
 

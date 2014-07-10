@@ -197,7 +197,7 @@ desc "Support for Network configuration on the IPMI interface."
 
     request.add_field('content-type', 'application/x-www-form-urlencoded')
 
-    if set_cookie == true
+    if set_cookie
       request.add_field('Cookie', "SessionCookie=#{@cookie}")
     end
 
