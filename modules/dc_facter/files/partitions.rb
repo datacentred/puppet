@@ -120,7 +120,7 @@ if Facter.value(:kernel) == 'Linux'
     end
   end
 
-  Facter.add('partitions') do
+  Facter.add('partitionstr') do
     confine :kernel => :linux
     setcode { partitions.values.join(',') }
   end
