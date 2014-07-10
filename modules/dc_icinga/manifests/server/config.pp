@@ -40,6 +40,26 @@ class dc_icinga::server::config {
     mode   => '4755',
   }
 
+  # Icinga web configuration for LDAP users
+  package { 'php-net-ldap':
+    ensure => installed,
+    notify => Service['apache2'],
+  }
+
+  file { '/usr/share/icinga-web/app/modules/AppKit/config/auth.xml':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('dc_icinga/auth.xml.erb'),
+    notify  => Exec['clearcache.sh'],
+  }
+
+  exec { 'clearcache.sh':
+    command     => '/usr/lib/icinga-web/bin/clearcache.sh',
+    refreshonly => true,
+  }
+
   ######################################################################
   # Service periods
   ######################################################################
