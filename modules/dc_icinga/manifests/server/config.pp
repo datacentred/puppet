@@ -24,6 +24,7 @@ class dc_icinga::server::config {
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap::server::suffix)
+  $ldap_server = "ldap.${::domain}"
 
   # Add custom plugins
   include dc_icinga::server::custom_plugins
