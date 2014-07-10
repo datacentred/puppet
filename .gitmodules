@@ -215,3 +215,6 @@
 [submodule "modules/filemapper"]
 	path = modules/filemapper
 	url = https://github.com/adrienthebo/puppet-filemapper
+[submodule "modules/kmod"]
+	path = modules/kmod
+	url = https://github.com/camptocamp/puppet-kmod.git
