@@ -19,9 +19,6 @@ class dc_role::compute_node {
   Class['dc_profile::openstack::neutron_agent'] ->
   Class['dc_profile::openstack::nova_compute']
 
-  if $::environment == 'production'
-  {
-    include dc_icinga::hostgroup_nova_compute
-  }
+  include dc_icinga::hostgroup_nova_compute
 
 }
