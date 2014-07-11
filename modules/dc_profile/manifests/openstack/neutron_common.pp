@@ -20,27 +20,32 @@ class dc_profile::openstack::neutron_common {
     subscribe => Package['neutron-common'],
   }
 
-  file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
-    ensure  => present,
-    content => 'command[check_neutron_vswitch_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
+  if defined( Class['dc_profile::mon::icinga_client'] )
+  {
+    file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
+      ensure  => present,
+      content => 'command[check_neutron_vswitch_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+    }
+
+    file { '/etc/nagios/nrpe.d/os_ovswitch_proc.cfg':
+      ensure  => present,
+      content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovs-vswitchd',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+    }
+
+    file { '/etc/nagios/nrpe.d/os_ovswitch_server_proc.cfg':
+      ensure  => present,
+      content => 'command[check_ovswitch_server_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovsdb-server',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
+    }
   }
 
-  file { '/etc/nagios/nrpe.d/os_ovswitch_proc.cfg':
-    ensure  => present,
-    content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovs-vswitchd',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
+  if defined( Class['dc_profile::log::logstash_forwarder'] )
+  {
+    include dc_profile::openstack::neutron_logstash
   }
-
-  file { '/etc/nagios/nrpe.d/os_ovswitch_server_proc.cfg':
-    ensure  => present,
-    content => 'command[check_ovswitch_server_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovsdb-server',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
-  }
-
-  include dc_profile::openstack::neutron_logstash
-
 }
