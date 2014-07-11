@@ -90,7 +90,7 @@ class dc_profile::openstack::nova_compute {
     neutron_region_name       => $os_region,
   }
 
-  if $::environment == 'production'
+  if defined( Class['dc_profile::mon::icinga_client'] )
   {
     file { '/etc/nagios/nrpe.d/nova_compute.cfg':
       ensure  => present,

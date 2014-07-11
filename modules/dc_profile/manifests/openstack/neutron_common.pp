@@ -20,7 +20,7 @@ class dc_profile::openstack::neutron_common {
     subscribe => Package['neutron-common'],
   }
 
-  if $::environment == 'production'
+  if defined( Class['dc_profile::mon::icinga_client'] )
   {
     file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
       ensure  => present,
@@ -42,7 +42,7 @@ class dc_profile::openstack::neutron_common {
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
-
-    include dc_profile::openstack::neutron_logstash
   }
+
+  include dc_profile::openstack::neutron_logstash
 }

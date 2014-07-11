@@ -125,7 +125,7 @@ class dc_profile::openstack::neutron_agent {
       use_namespaces => true,
     }
 
-    if $::environment == 'production'
+    if defined( Class['dc_profile::mon::icinga_client'])
     {
       file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
         ensure  => present,
