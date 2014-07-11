@@ -44,5 +44,8 @@ class dc_profile::openstack::neutron_common {
     }
   }
 
-  include dc_profile::openstack::neutron_logstash
+  if defined( Class['dc_profile::log::logstash_forwarder'] )
+  {
+    include dc_profile::openstack::neutron_logstash
+  }
 }
