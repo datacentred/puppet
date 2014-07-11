@@ -44,7 +44,6 @@ class dc_icinga::server::config {
   # Icinga web configuration for LDAP users
   package { 'php-net-ldap':
     ensure => installed,
-    notify => Service['apache2'],
   }
 
   file { '/usr/share/icinga-web/app/modules/AppKit/config/auth.xml':
