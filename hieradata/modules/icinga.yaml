@@ -1,3 +1,4 @@
 ---
 icinga::server::allow_empty_hostgroup_assignment: 1
 icinga::server::use_timezone: 'Europe/London'
+icinga::server::check_external_commands: 1

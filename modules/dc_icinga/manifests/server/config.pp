@@ -60,6 +60,16 @@ class dc_icinga::server::config {
     refreshonly => true,
   }
 
+  # Fix permissions on command file directory
+
+  file { '/var/lib/icinga/rw':
+    ensure => directory,
+    owner  => 'nagios',
+    group  => 'www-data',
+    mode   => '2710',
+    notify => Service['icinga'],
+  }
+
   ######################################################################
   # Service periods
   ######################################################################
