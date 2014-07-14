@@ -1,9 +1,9 @@
-require 'facter'
 Facter.add(:ipmi_ipaddress) do
-  confine :boardmanufacturer => 'Supermicro'
   setcode do
-    output = `ipmitool lan print`
-    match = /^IP Address\s*:\s*([\w\.]+)/.match(output)
-    match ? match[1] : "undefined"
+    ipaddress = nil
+    if output = Facter::Util::Resolution.exec('ipmitool lan print 2>&1')
+      ipaddress = /^IP Address\s*:\s*([\w\.]+)/.match(output)[1]
+    end
+    ipaddress
   end
 end
