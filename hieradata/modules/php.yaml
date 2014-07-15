@@ -1,0 +1,3 @@
+---
+php::apache::settings:
+  - 'set .Date/date.timezone Europe/London'
