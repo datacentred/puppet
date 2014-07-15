@@ -57,13 +57,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Keystone',
   }
 
-  icinga::service { 'check_ping':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_ping!100.0,20%!500.0,60%',
-    service_description => 'Ping',
-  }
-
   icinga::service { 'check_ssh':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_generic',
