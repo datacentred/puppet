@@ -317,10 +317,6 @@ class dc_icinga::server::config {
     command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS\$:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
   }
 
-  icinga::command { 'check_foreman_dc':
-    command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_pw}"
-  }
-
   icinga::command { 'check_nova_ec2_api':
     command_line => "/usr/lib/nagios/plugins/check_http -u /services/Cloud/ -e 400 -H \$HOSTADDRESS$ -p 8773"
   }
