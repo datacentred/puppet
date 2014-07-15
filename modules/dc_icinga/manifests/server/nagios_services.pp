@@ -141,13 +141,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'NFS',
   }
 
-  icinga::service { 'check_foreman':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_foreman',
-    check_command       => 'check_foreman_dc',
-    service_description => 'Foreman',
-  }
-
   icinga::service { 'check_smtp':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_smtp',
