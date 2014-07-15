@@ -16,10 +16,6 @@ class dc_icinga::server::install {
     ensure => present,
   }
 
-  package { 'python-keystoneclient':
-    ensure => present,
-  }
-
   package { 'nfs-common':
     ensure => present,
   }
@@ -37,6 +33,28 @@ class dc_icinga::server::install {
 
   package { 'libjson-perl':
     ensure => present,
+  }
+
+  # RabbitMQ plugins need libnagios-plugin-perl
+  package { 'libnagios-plugin-perl':
+    ensure => latest,
+  }
+
+  # Python packages for Openstack checks
+  package { 'python-keystoneclient':
+    ensure => installed,
+  }
+
+  package { 'python-neutronclient':
+    ensure => installed,
+  }
+
+  package { 'python-novaclient':
+    ensure => installed,
+  }
+
+  package { 'python-cinderclient':
+    ensure => installed,
   }
 
 }
