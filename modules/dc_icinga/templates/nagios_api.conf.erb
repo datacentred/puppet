@@ -1,0 +1,12 @@
+# Ubuntu upstart file at /etc/init/nagios.api.conf
+
+respawn
+respawn limit 15 5
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+setuid nagios
+setgid nagios
+
+exec nagios-api -p 24554 -f /var/run/nagios_api/nagios_api.pid -s /var/cache/nagios3/status.dat -l /var/log/nagios_api/output.log

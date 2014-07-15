@@ -19,6 +19,7 @@ class dc_icinga::server {
   contain icinga::server
   contain dc_icinga::server::install
   contain dc_icinga::server::config
+  contain dc_icinga::server::api
 
 }
 
