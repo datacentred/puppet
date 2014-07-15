@@ -1,10 +1,5 @@
 class dc_icinga::server::custom_plugins {
 
-  # RabbitMQ plugins need libnagios-plugin-perl
-  package { 'libnagios-plugin-perl':
-    ensure => latest,
-  }
-
   # Custom nagios plugins directory
   file { '/usr/lib/nagios/plugins':
     ensure  => directory,

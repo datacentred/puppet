@@ -57,13 +57,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Keystone',
   }
 
-  icinga::service { 'check_ping':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_ping!100.0,20%!500.0,60%',
-    service_description => 'Ping',
-  }
-
   icinga::service { 'check_ssh':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_generic',
@@ -146,13 +139,6 @@ class dc_icinga::server::nagios_services {
     hostgroup_name      => 'dc_hostgroup_nfs',
     check_command       => 'check_nfs_dc',
     service_description => 'NFS',
-  }
-
-  icinga::service { 'check_foreman':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_foreman',
-    check_command       => 'check_foreman_dc',
-    service_description => 'Foreman',
   }
 
   icinga::service { 'check_smtp':

@@ -121,8 +121,8 @@ class dc_icinga::server::config {
     process_perf_data            => '1',
     retain_status_information    => '1',
     retain_nonstatus_information => '1',
-    check_command                => 'check-host-alive',
-    max_check_attempts           => '10',
+    check_command                => 'check_ping!100.0,20%!500.0,60%',
+    max_check_attempts           => '2',
     notification_interval        => '0',
     notification_period          => 'dc_timeperiod_24x7',
     notification_options         => 'd,u,r',
@@ -315,10 +315,6 @@ class dc_icinga::server::config {
 
   icinga::command { 'check_keystone_dc':
     command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS\$:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
-  }
-
-  icinga::command { 'check_foreman_dc':
-    command_line => "/usr/lib/nagios/plugins/check_foreman -H \$HOSTADDRESS$ -l icinga -a ${foreman_icinga_pw}"
   }
 
   icinga::command { 'check_nova_ec2_api':
