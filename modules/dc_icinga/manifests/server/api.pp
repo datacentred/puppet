@@ -53,6 +53,12 @@ class dc_icinga::server::api {
     group   => 'nagios',
     mode    => '0770'
   } ->
+  file { '/var/log/nagios_api/output.log':
+    ensure  => file,
+    owner   => 'nagios',
+    group   => 'nagios',
+    mode    => '0770'
+  } ->
   file { '/var/run/nagios_api/':
     ensure  => directory,
     owner   => 'nagios',
