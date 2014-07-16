@@ -427,4 +427,11 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_nova_instance',
     service_description => 'Nova Instance Creation',
   }
+
+  icinga::service { 'check_cinder_volume':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_cinder_volume',
+    service_description => 'Cinder Volume Creation',
+  }
 }
