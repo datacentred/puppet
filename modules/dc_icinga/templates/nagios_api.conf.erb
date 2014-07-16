@@ -9,4 +9,4 @@ stop on runlevel [06]
 setuid nagios
 setgid nagios
 
-exec nagios-api -p 24554 -f /var/run/nagios_api/nagios_api.pid -s /var/lib/icinga/status.dat -l /var/log/nagios_api/output.log -c /var/lib/icinga/rw/icinga.cmd
+exec nagios-api -p 24554 -f /var/run/nagios_api/nagios_api.pid -s /var/lib/icinga/status.dat -l /var/log/nagios_api/output.log -c /var/lib/icinga/rw/icinga.cmd -b 127.0.0.1

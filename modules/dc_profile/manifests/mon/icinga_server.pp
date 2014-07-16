@@ -54,4 +54,9 @@ class dc_profile::mon::icinga_server {
     ],
   }
 
+  apache::vhost { 'icinga-api':
+    servername  => "api.icinga.${::domain}",
+    proxy_dest  => 'http://localhost:24554',
+  }
+
 }
