@@ -410,6 +410,11 @@ class dc_icinga::server::config {
   icinga::command { 'check_cinder_volume':
     command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url http://\$HOSTADDRESS\$:${keystone_port}/v2.0 --endpoint_url http://\$HOSTADDRESS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}"
   }
+
+  icinga::command { 'check_cinder_api_connect':
+    command_line => "/usr/lib/nagios/plugins/check_cinder-ap.sh -H http://\$HOSTADDRESS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+  }
+  ######################################################################
   ######################################################################
   ######################################################################
 
