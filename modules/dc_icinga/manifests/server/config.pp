@@ -23,6 +23,7 @@ class dc_icinga::server::config {
   $keystone_icinga_tenant = hiera(keystone_icinga_tenant)
   $keystone_port = hiera(keystone_port)
   $nova_osapi_port = hiera(nova_osapi_port)
+  $glance_api_port = hiera(glance_api_port)
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
