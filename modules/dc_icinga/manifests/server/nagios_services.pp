@@ -406,4 +406,25 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_nrpe_1arg!check_sensors',
     service_description => 'Hardware Health',
   }
+
+  icinga::service { 'check_nova_api_connect':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_nova_api_connect',
+    service_description => 'Nova API Connection',
+  }
+
+  icinga::service { 'check_glance_api_connect':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_glance_api_connect',
+    service_description => 'Glance API Connection',
+  }
+
+  icinga::service { 'check_nova_instance':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_nova_instance',
+    service_description => 'Nova Instance Creation',
+  }
 }
