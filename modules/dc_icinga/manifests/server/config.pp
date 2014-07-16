@@ -22,7 +22,7 @@ class dc_icinga::server::config {
   $keystone_icinga_user = hiera(keystone_icinga_user)
   $keystone_icinga_tenant = hiera(keystone_icinga_tenant)
   $keystone_port = hiera(keystone_port)
-  $nova_host = hiera(nova_host)
+  $ha_api_host = hiera(ha_api_host)
   $nova_osapi_port = hiera(nova_osapi_port)
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
@@ -391,12 +391,17 @@ class dc_icinga::server::config {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://${keystone_host}:${keystone_port}/v2.0 -E http://${nova_host}:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://${os_api_host}:${keystone_port}/v2.0 -E http://${os_api_host}:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
   }
 
   icinga::command { 'check_nova_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://${keystone_host}:${keystone_port}/v2.0 -E http://${nova_host}:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://${os_api_host}:${keystone_port}/v2.0 -E http://${os_api_host}:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
+
+  icinga::command { 'check_glance_api_connect':
+    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://${os_api_host}:${keystone_port}/v2.0 -E http://${os_api_host}:${glance_api_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+  }
+  ######################################################################
   ######################################################################
   ######################################################################
   ######################################################################
