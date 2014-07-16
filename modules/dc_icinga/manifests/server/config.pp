@@ -24,6 +24,7 @@ class dc_icinga::server::config {
   $keystone_port = hiera(keystone_port)
   $nova_osapi_port = hiera(nova_osapi_port)
   $glance_api_port = hiera(glance_api_port)
+  $cinder_api_port = hiera(cinder_api_port)
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
@@ -405,6 +406,11 @@ class dc_icinga::server::config {
   icinga::command { 'check_glance_api_connect':
     command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
+
+  icinga::command { 'check_cinder_volume':
+    command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url http://\$HOSTADDRESS\$:${keystone_port}/v2.0 --endpoint_url http://\$HOSTADDRESS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}"
+  }
+  ######################################################################
   ######################################################################
 
   include dc_icinga::server::nagios_services
