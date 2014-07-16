@@ -394,15 +394,15 @@ class dc_icinga::server::config {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://\$HOSTADDRESS\$\:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$\:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
   }
 
   icinga::command { 'check_nova_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://\$HOSTADDRESS\$\:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$\:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_glance_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://\$HOSTADDRESS\$\:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$\:${glance_api_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${glance_api_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
   ######################################################################
 
