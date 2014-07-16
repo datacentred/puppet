@@ -57,4 +57,8 @@ class dc_icinga::server::install {
     ensure => installed,
   }
 
+  package { 'curl':
+    ensure => installed,
+  }
+
 }
