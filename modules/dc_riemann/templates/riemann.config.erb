@@ -1,32 +1,30 @@
 ; vim: filetype=clojure
 
-(logging/init :file "/var/log/riemann.log")
+(logging/init {:file "/var/log/riemann.log"}
 
-; everything is available on the public interface
-; probably not the best idea for a production system
-(tcp-server :host "0.0.0.0")
-(udp-server :host "0.0.0.0")
-(ws-server :host "0.0.0.0")
-(repl-server :host "0.0.0.0")
+; Listen on the local interface over TCP (5555), UDP (5555), and websockets
+; (5556)
+(let [host "0.0.0.0"]
+  (tcp-server   {:host host})
+  (udp-server   {:host host})
+  (ws-server    {:host host})
+  (repl-server  {:host host}))
 
 (periodically-expire 10)
 
-(let [client (tcp-client)
-  ; Keep events for 5 minutes by default
-  index (default :ttl 300 (update-index (index)))]
-
+(let [index (default :ttl 300 (index))]
+  ; Inbound events will be passed to these streams:
   (streams
-    (with {:metric_f 1 :host nil :state "ok" :service "events/sec"}
+    ; Index all events immediately.
+    index
+
+    ; Calculate an overall rate of events.
+    (with {:metric 1 :host nil :state "ok" :service "events/sec"}
       (rate 5 index))
 
-    (where (service #"^per")
-      (percentiles 5 [0 0.5 0.95 0.99 1]
-        index))
     ; Log expired events.
     (expired
       (fn [event] (info "expired" event)))
-
-    index
 ))
 
 (def directory (clojure.java.io/file "<%= @riemann_config_dir %>"))
