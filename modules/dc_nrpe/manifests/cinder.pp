@@ -51,21 +51,21 @@ class dc_nrpe::cinder {
     }
 
     file { '/usr/lib/nagios/plugins/check_cinder-volume.sh':
-      ensure => file,
-      source => 'puppet:///modules/dc_nrpe/check_cinder-volume.sh',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755',
+      ensure  => file,
+      source  => 'puppet:///modules/dc_nrpe/check_cinder-volume.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
 
     file { '/usr/lib/nagios/plugins/check_cinder-scheduler.sh':
-      ensure => file,
-      source => 'puppet:///modules/dc_nrpe/check_cinder-scheduler.sh',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755',
+      ensure  => file,
+      source  => 'puppet:///modules/dc_nrpe/check_cinder-scheduler.sh',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
