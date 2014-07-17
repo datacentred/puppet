@@ -38,7 +38,7 @@ class dc_nrpe::neutron {
 
     sudo::conf { 'check_neutron_server':
       priority    => 10,
-      content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_neutron-server.sh',
+      content     => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_neutron-server.sh',
     }
 
     file { '/usr/lib/nagios/plugins/check_neutron-server.sh':
