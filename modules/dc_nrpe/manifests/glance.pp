@@ -15,9 +15,9 @@ class dc_nrpe::glance {
 
   if defined(Class['dc_icinga::hostgroup_glance']) {
 
-    file { '/etc/nagios/nrpe.d/glance_scheduler_netstat.cfg':
+    file { '/etc/nagios/nrpe.d/glance_registry_netstat.cfg':
       ensure  => present,
-      content => 'command[check_glance_scheduler_netstat]=/usr/lib/nagios/plugins/check_glance-scheduler.sh',
+      content => 'command[check_glance_registry_netstat]=/usr/lib/nagios/plugins/check_glance-registry.sh',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
@@ -36,9 +36,9 @@ class dc_nrpe::glance {
       notify  => Service['nagios-nrpe-server'],
     }
 
-    file { '/usr/lib/nagios/plugins/check_glance-scheduler.sh':
+    file { '/usr/lib/nagios/plugins/check_glance-registry.sh':
       ensure  => file,
-      source  => 'puppet:///modules/dc_nrpe/check_glance-scheduler.sh',
+      source  => 'puppet:///modules/dc_nrpe/check_glance-registry.sh',
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
