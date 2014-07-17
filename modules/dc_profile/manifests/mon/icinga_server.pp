@@ -56,6 +56,8 @@ class dc_profile::mon::icinga_server {
 
   apache::vhost { 'icinga-api':
     servername  => "api.icinga.${::domain}",
+    docroot     => '/usr/share/icinga-web/pub',
+    port        => 80,
     proxy_pass => [
       { 'path' => '/schedule_downtime', 'url' => 'http://localhost:24554/schedule_downtime' },
       { 'path' => '/cancel_downtime',   'url' => 'http://localhost:24554/cancel_downtime' },
