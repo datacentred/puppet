@@ -84,5 +84,7 @@ class dc_nrpe (
   }
 
   contain dc_nrpe::cinder
+  contain dc_nrpe::glance
+  contain dc_nrpe::neutron
 
 }
