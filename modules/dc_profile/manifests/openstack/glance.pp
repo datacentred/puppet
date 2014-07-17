@@ -80,20 +80,6 @@ class dc_profile::openstack::glance {
     tag           => 'glance_endpoint',
   }
 
-  file { '/etc/nagios/nrpe.d/glance_api_proc.cfg':
-    ensure  => present,
-    content => 'command[check_glance_api_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -u glance -a glance-api',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
-  }
-
-  file { '/etc/nagios/nrpe.d/glance_registry_proc.cfg':
-    ensure  => present,
-    content => 'command[check_glance_registry_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -u glance -a glance-registry',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
-  }
-
   include dc_icinga::hostgroup_glance
 
   # Logstash config
