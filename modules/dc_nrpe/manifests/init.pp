@@ -83,4 +83,8 @@ class dc_nrpe (
     content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_puppetagent',
   }
 
+  contain dc_nrpe::cinder
+  contain dc_nrpe::glance
+  contain dc_nrpe::neutron
+
 }
