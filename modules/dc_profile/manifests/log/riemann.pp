@@ -19,4 +19,16 @@ class dc_profile::log::riemann{
     require => Class['dc_riemann'],
   }
 
+  $token = hiera(riemann_hipchat_auth_token)
+  $room  = "Riemann"
+  $from  = "Riemann"
+
+  dc_riemann::hipchat_stream { 'syslog-hipchat':
+    event   => '(or (state "3")(state "2")(state "1"))',
+    token   => $token,
+    room    => $room,
+    from    => $from,
+    require => Class['dc_riemann'],
+  }
+
 }

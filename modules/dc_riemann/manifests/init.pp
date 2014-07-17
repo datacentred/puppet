@@ -17,12 +17,15 @@ class dc_riemann {
   $riemann_config_dir = '/etc/riemann.conf.d'
 
   class { 'riemann':
+    # Specify the latest version, because the package default is old
+    version     => '0.2.5',
     config_file => '/etc/riemann.config',
     require     => [ File['/etc/riemann.config'], Package['ruby-dev'] ],
   }
 
   class { 'riemann::dash':
     host => $::ipaddress,
+    require => Class['riemann'],
   }
 
   package { 'ruby-dev':

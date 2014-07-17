@@ -1,0 +1,9 @@
+(streams
+ (by :service
+  (where <%= @event %>
+   (rollup <%= @rollup %> <%= @waittime %>
+      (hipchat {:token "<%= @token %>"
+                :room "<%= @room %>"
+                :from "<%= @from %>"
+                :notify <%= @hipchat_notify %>
+               })))))
