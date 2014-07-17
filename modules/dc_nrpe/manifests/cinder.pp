@@ -56,6 +56,8 @@ class dc_nrpe::cinder {
       owner  => 'root',
       group  => 'root',
       mode   => '0755',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
     }
 
     file { '/usr/lib/nagios/plugins/check_cinder-scheduler.sh':
@@ -64,6 +66,8 @@ class dc_nrpe::cinder {
       owner  => 'root',
       group  => 'root',
       mode   => '0755',
+      require => Package['nagios-nrpe-server'],
+      notify  => Service['nagios-nrpe-server'],
     }
   }
 }
