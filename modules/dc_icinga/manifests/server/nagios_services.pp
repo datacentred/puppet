@@ -434,4 +434,11 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_cinder_volume',
     service_description => 'Cinder Volume Creation',
   }
+
+  icinga::service { 'check_cinder_api_connect':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_cinder_api_connect',
+    service_description => 'Cinder API Connection',
+  }
 }

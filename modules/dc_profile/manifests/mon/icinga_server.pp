@@ -55,7 +55,7 @@ class dc_profile::mon::icinga_server {
   }
 
   apache::vhost { 'icinga-api':
-    servername  => "api.icinga.${::domain}",
+    servername  => "api-icinga.${::domain}",
     docroot     => '/usr/share/icinga-web/pub',
     port        => 80,
     proxy_pass => [
@@ -64,7 +64,7 @@ class dc_profile::mon::icinga_server {
     ],
   }
 
-  @@dns_resource { "api.icinga.${::domain}/CNAME":
+  @@dns_resource { "api-icinga.${::domain}/CNAME":
     rdata => $::fqdn,
   }
 
