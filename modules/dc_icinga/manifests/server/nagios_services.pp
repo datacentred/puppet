@@ -225,6 +225,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron Server',
   }
 
+  icinga::service { 'check_neutron_server_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_server',
+    check_command       => 'check_nrpe_1arg!check_neutron_server_netstat',
+    service_description => 'Neutron Server Netstat',
+  }
+
   icinga::service { 'check_neutron_api':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_neutron_server',
@@ -386,6 +393,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Glance Registry Server Process',
   }
 
+  icinga::service { 'check_glance_registry_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_nrpe_1arg!check_glance_registry_netstat',
+    service_description => 'Glance Registry Netstat',
+  }
+
   icinga::service { 'check_dc_ldap':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_ldap',
@@ -412,6 +426,20 @@ class dc_icinga::server::nagios_services {
     hostgroup_name      => 'dc_hostgroup_cinder',
     check_command       => 'check_nrpe_1arg!check_cinder_volume_proc',
     service_description => 'Cinder Volume Server Process',
+  }
+
+  icinga::service { 'check_cinder_volume_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_cinder',
+    check_command       => 'check_nrpe_1arg!check_cinder_volume_netstat',
+    service_description => 'Cinder Volume Server Netstat',
+  }
+
+  icinga::service { 'check_cinder_scheduler_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_cinder',
+    check_command       => 'check_nrpe_1arg!check_cinder_scheduler_netstat',
+    service_description => 'Cinder Scheduler Netstat',
   }
 
   icinga::service { 'check_cinder_api_http':
