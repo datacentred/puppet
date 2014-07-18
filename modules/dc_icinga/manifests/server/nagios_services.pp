@@ -155,13 +155,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Postfix Mail Queue',
   }
 
-  icinga::service { 'check_nova_compute':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute',
-    check_command       => 'check_nrpe_1arg!check_nova_compute_proc',
-    service_description => 'Nova Compute Process',
-  }
-
   icinga::service { 'check_neutron_vswitch_agent':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node, dc_hostgroup_neutron_server',
@@ -239,6 +232,20 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron API',
   }
 
+  icinga::service { 'check_nova_compute':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_nova_compute_proc',
+    service_description => 'Nova Compute Process',
+  }
+
+  icinga::service { 'check_nova_compute_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_nova_compute_netstat',
+    service_description => 'Nova Compute Netstat',
+  }
+
   icinga::service { 'check_nova_conductor':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_server',
@@ -251,6 +258,27 @@ class dc_icinga::server::nagios_services {
     hostgroup_name      => 'dc_hostgroup_nova_server',
     check_command       => 'check_nrpe_1arg!check_nova_scheduler',
     service_description => 'Nova Scheduler',
+  }
+
+  icinga::service { 'check_nova_scheduler_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_scheduler_netstat',
+    service_description => 'Nova Scheduler Netstat',
+  }
+
+  icinga::service { 'check_nova_conductor_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_conductor_netstat',
+    service_description => 'Nova Conductor Netstat',
+  }
+
+  icinga::service { 'check_nova_consoleauth_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_nova_consoleauth_netstat',
+    service_description => 'Nova Consoleauth Netstat',
   }
 
   icinga::service { 'check_nova_consoleauth':

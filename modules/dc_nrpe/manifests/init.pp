@@ -86,6 +86,7 @@ class dc_nrpe (
   contain dc_nrpe::cinder
   contain dc_nrpe::glance
   contain dc_nrpe::neutron
-  contain dc_nrpe::nova
+  contain dc_nrpe::nova_compute
+  contain dc_nrpe::nova_server
 
 }
