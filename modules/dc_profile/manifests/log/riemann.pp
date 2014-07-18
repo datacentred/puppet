@@ -20,8 +20,8 @@ class dc_profile::log::riemann{
   }
 
   $token = hiera(riemann_hipchat_auth_token)
-  $room  = "Riemann"
-  $from  = "Riemann"
+  $room  = 'Riemann'
+  $from  = 'Riemann'
 
   dc_riemann::hipchat_stream { 'syslog-hipchat':
     event   => '(or (state "4")(state "3")(state "2")(state "1"))',
