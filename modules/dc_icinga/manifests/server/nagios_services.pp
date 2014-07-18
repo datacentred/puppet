@@ -428,6 +428,20 @@ class dc_icinga::server::nagios_services {
     service_description => 'Cinder Volume Server Process',
   }
 
+  icinga::service { 'check_cinder_volume_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_cinder',
+    check_command       => 'check_nrpe_1arg!check_cinder_volume_netstat',
+    service_description => 'Cinder Volume Server Netstat',
+  }
+
+  icinga::service { 'check_cinder_scheduler_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_cinder',
+    check_command       => 'check_nrpe_1arg!check_cinder_scheduler_netstat',
+    service_description => 'Cinder Scheduler Netstat',
+  }
+
   icinga::service { 'check_cinder_api_http':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_cinder',
