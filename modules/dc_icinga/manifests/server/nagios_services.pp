@@ -386,6 +386,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Glance Registry Server Process',
   }
 
+  icinga::service { 'check_glance_registry_netstat':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_glance',
+    check_command       => 'check_nrpe_1arg!check_glance_registry_netstat',
+    service_description => 'Glance Registry Netstat',
+  }
+
   icinga::service { 'check_dc_ldap':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_ldap',
