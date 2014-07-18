@@ -20,7 +20,7 @@ class dc_nrpe::neutron {
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $keystone_icinga_user     = hiera(keystone_icinga_user)
 
-  if defined(Class['dc_icinga::hostgroup_neutron']) {
+  if defined(Class['dc_icinga::hostgroup_neutron_server']) {
 
     file { '/etc/nagios/nrpe.d/neutron_server_netstat.cfg':
       ensure  => present,
