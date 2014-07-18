@@ -17,9 +17,14 @@ class dc_nrpe::glance {
 
     file { '/etc/nagios/nrpe.d/glance_registry_netstat.cfg':
       ensure  => present,
-      content => 'command[check_glance_registry_netstat]=/usr/lib/nagios/plugins/check_glance-registry.sh',
+      content => 'command[check_glance_registry_netstat]=sudo /usr/lib/nagios/plugins/check_glance-registry.sh',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
+    }
+
+    sudo::conf { 'check_glance_registry_netstat':
+      priority    => 10,
+      content     => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_glance-registry.sh',
     }
 
     file { '/etc/nagios/nrpe.d/glance_api_proc.cfg':
