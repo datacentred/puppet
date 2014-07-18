@@ -16,8 +16,8 @@ class dc_nrpe::cinder {
   if defined(Class['dc_icinga::hostgroup_cinder']) {
 
     sudo::conf { 'check_cinder_scheduler_netstat':
-      priority      => 10,
-      content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_cinder_scheduler.sh',
+      priority => 10,
+      content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_cinder_scheduler.sh',
     }
 
     file { '/etc/nagios/nrpe.d/cinder_scheduler_proc.cfg':
