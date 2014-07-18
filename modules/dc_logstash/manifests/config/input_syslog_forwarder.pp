@@ -5,7 +5,7 @@
 class dc_logstash::config::input_syslog_forwarder {
 
   logstash::configfile { 'input_syslog_forwarder':
-    content => template('dc_logstash/input_syslog_forwarder.erb'),
+    source => 'puppet:///modules/dc_logstash/input_syslog_forwarder',
     order   => '10',
   }
 
