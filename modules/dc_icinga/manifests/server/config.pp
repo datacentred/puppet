@@ -17,18 +17,6 @@
 #
 class dc_icinga::server::config {
 
-  $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
-  $keystone_icinga_password = hiera(keystone_icinga_password)
-  $keystone_icinga_user = hiera(keystone_icinga_user)
-  $keystone_icinga_tenant = hiera(keystone_icinga_tenant)
-  $keystone_port = hiera(keystone_port)
-  $nova_osapi_port = hiera(nova_osapi_port)
-  $glance_api_port = hiera(glance_api_port)
-  $cinder_api_port = hiera(cinder_api_port)
-  $foreman_icinga_pw = hiera(foreman_icinga_pw)
-  $rabbitmq_monuser = hiera(rabbitmq_monuser)
-  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
-  $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap::server::suffix)
   $ldap_server = "ldap.${::domain}"
 
