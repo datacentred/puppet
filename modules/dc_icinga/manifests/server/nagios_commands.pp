@@ -28,7 +28,6 @@ class dc_icinga::server::nagios_commands {
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap::server::suffix)
-  $ldap_server = "ldap.${::domain}"
 
   ######################################################################
   # Commands
@@ -84,6 +83,14 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8775"
   }
 
+  icinga::command { 'check_nova_instance':
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T   ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
+  }
+
+  icinga::command { 'check_nova_api_connect':
+    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+  }
+
   icinga::command { 'check_neutron_api':
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 9696"
   }
@@ -128,28 +135,20 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_http -e 401 -H \$HOSTADDRESS$ -p 9191"
   }
 
+  icinga::command { 'check_glance_api_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8776"
+  }
+
+  icinga::command { 'check_glance_api_connect':
+    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+  }
+
   icinga::command { 'check_dc_ldap':
     command_line => "/usr/lib/nagios/plugins/check_ldap -H \$HOSTADDRESS$ -b ${ldap_server_suffix}"
   }
 
   icinga::command { 'check_cinder_api_http':
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8776"
-  }
-
-  icinga::command { 'check_glance_api_http':
-    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8776"
-  }
-
-  icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
-  }
-
-  icinga::command { 'check_nova_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
-  }
-
-  icinga::command { 'check_glance_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_cinder_volume':
