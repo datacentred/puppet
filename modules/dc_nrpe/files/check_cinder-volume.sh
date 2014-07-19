@@ -26,7 +26,7 @@ STATE_OK=0
 STATE_WARNING=1
 STATE_CRITICAL=2
 STATE_UNKNOWN=3
-DEAMON='icinder-volume'
+DEAMON='cinder-volume'
 
 usage ()
 {
