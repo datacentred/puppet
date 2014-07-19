@@ -17,7 +17,12 @@ class dc_nrpe::cinder {
 
     sudo::conf { 'check_cinder_scheduler_netstat':
       priority => 10,
-      content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_cinder_scheduler.sh',
+      content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_cinder-scheduler.sh',
+    }
+
+    sudo::conf { 'check_cinder_volume_netstat':
+      priority => 10,
+      content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_cinder-volume.sh',
     }
 
     file { '/etc/nagios/nrpe.d/cinder_scheduler_proc.cfg':
@@ -50,7 +55,7 @@ class dc_nrpe::cinder {
 
     file { '/etc/nagios/nrpe.d/cinder_volume_netstat.cfg':
       ensure  => present,
-      content => 'command[check_cinder_volume_netstat]=/usr/lib/nagios/plugins/check_cinder-volume.sh',
+      content => 'command[check_cinder_volume_netstat]=sudo /usr/lib/nagios/plugins/check_cinder-volume.sh',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
