@@ -15,16 +15,16 @@ class dc_profile::log::riemann{
   class { 'dc_riemann': }
 
   dc_riemann::email_stream { 'syslog-errors':
-    event   => '(or (state "3")(state "2")(state "1"))',
+    event   => '(or (state "2")(state "1")(state "0"))',
     require => Class['dc_riemann'],
   }
 
   $token = hiera(riemann_hipchat_auth_token)
-  $room  = "Riemann"
-  $from  = "Riemann"
+  $room  = 'Riemann'
+  $from  = 'Riemann'
 
   dc_riemann::hipchat_stream { 'syslog-hipchat':
-    event   => '(or (state "3")(state "2")(state "1"))',
+    event   => '(or (state "4")(state "3")(state "2")(state "1")(state "0"))',
     token   => $token,
     room    => $room,
     from    => $from,
