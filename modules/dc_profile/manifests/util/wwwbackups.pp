@@ -18,7 +18,13 @@ class dc_profile::util::wwwbackups {
     ensure => installed;
   }
 
+  # default backup account
   user { 'backup':
+    ensure => present,
+    home   => '/var/backups',
+  }
+
+  user { 'wwwbackup':
     ensure     => present,
     comment    => 'Account used to backup related actions',
     home       => '/var/storage/backups/www.datacentred.co.uk',
@@ -26,11 +32,11 @@ class dc_profile::util::wwwbackups {
   }
 
   cron { 'rsync_backup':
-    user    => 'backup',
+    user    => 'wwwbackup',
     command => "/usr/bin/rsync -ae 'ssh -i ~/.ssh/dcwebsite.pem' ubuntu@www.datacentred.co.uk:/srv/backup/* ~/",
     hour    => 4,
     minute  => 0,
-    require => [ User['backup'], Package['rsync'] ],
+    require => [ User['wwwbackup'], Package['rsync'] ],
   }
 
 }
