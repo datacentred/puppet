@@ -14,6 +14,8 @@
 #
 class dc_profile::util::wwwbackups {
 
+  $wwwbackup_home = '/var/storage/backups/www.datacentred.co.uk'
+
   package { 'rsync':
     ensure => installed;
   }
@@ -28,13 +30,13 @@ class dc_profile::util::wwwbackups {
   user { 'wwwbackup':
     ensure     => present,
     comment    => 'Account used for backups related to the DC website',
-    home       => '/var/storage/backups/www.datacentred.co.uk',
+    home       => $wwwbackup_home,
     managehome => true,
   }
 
   cron { 'rsync_backup':
     user    => 'wwwbackup',
-    command => "/usr/bin/rsync -ae 'ssh -i ~/.ssh/dcwebsite.pem' ubuntu@www.datacentred.co.uk:/srv/backup/* ~/",
+    command => "/usr/bin/rsync -ae 'ssh -i ${wwwbackup_home}/.ssh/dcwebsite.pem' ubuntu@www.datacentred.co.uk:/srv/backup/* ~/",
     hour    => 4,
     minute  => 0,
     require => [ User['wwwbackup'], Package['rsync'] ],
