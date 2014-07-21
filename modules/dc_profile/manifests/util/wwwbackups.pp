@@ -20,13 +20,14 @@ class dc_profile::util::wwwbackups {
 
   # default backup account
   user { 'backup':
-    ensure => present,
-    home   => '/var/backups',
+    ensure  => present,
+    comment => 'backup',
+    home    => '/var/backups',
   }
 
   user { 'wwwbackup':
     ensure     => present,
-    comment    => 'Account used to backup related actions',
+    comment    => 'Account used for backups related to the DC website',
     home       => '/var/storage/backups/www.datacentred.co.uk',
     managehome => true,
   }
