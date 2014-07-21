@@ -26,6 +26,11 @@ class dc_profile::mon::icinga_server {
   $nagios_api_username = hiera(nagios_api_username)
   $nagios_api_password = hiera(nagios_api_password)
 
+  httpauth { $nagios_api_username:
+    file     => '/etc/apache2/api-icinga.htpasswd',
+    password => $nagios_api_password,
+  }
+
   apache::vhost { 'icinga-web':
     servername  => "icinga.${::domain}",
     docroot     => '/usr/share/icinga-web/pub',
@@ -59,17 +64,27 @@ class dc_profile::mon::icinga_server {
 
   apache::vhost { 'icinga-api':
     servername  => "api-icinga.${::domain}",
-    docroot     => '/usr/share/icinga-web/pub',
+    docroot     => '/var/www/html',
     port        => 80,
+    directories => [{ path           => '/schedule_downtime',
+                      provider       => 'location',
+                      auth_name      => 'Icinga API',
+                      auth_type      => 'basic',
+                      auth_user_file => '/etc/apache2/api-icinga.htpasswd',
+                      require        => 'valid-user',
+                    },
+                    { path           => '/cancel_downtime',
+                      provider       => 'location',
+                      auth_name      => 'Icinga API',
+                      auth_type      => 'basic',
+                      auth_user_file => '/etc/apache2/api-icinga.htpasswd',
+                      require        => 'valid-user',
+                    },
+    ],
     proxy_pass  => [
       { 'path' => '/schedule_downtime', 'url' => 'http://localhost:24554/schedule_downtime' },
       { 'path' => '/cancel_downtime',   'url' => 'http://localhost:24554/cancel_downtime' },
     ],
-    custom_fragment => "
-    <Location />
-    AuthBasicFake ${nagios_api_username} ${nagios_api_password}
-    </Location>
-    ",
   }
 
   @@dns_resource { "api-icinga.${::domain}/CNAME":
