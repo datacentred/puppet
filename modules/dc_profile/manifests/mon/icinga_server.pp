@@ -23,6 +23,9 @@ class dc_profile::mon::icinga_server {
 
   contain dc_icinga::hostgroup_http
 
+  $nagios_api_username = hiera(nagios_api_username)
+  $nagios_api_password = hiera(nagios_api_password)
+
   apache::vhost { 'icinga-web':
     servername  => "icinga.${::domain}",
     docroot     => '/usr/share/icinga-web/pub',
@@ -62,11 +65,11 @@ class dc_profile::mon::icinga_server {
       { 'path' => '/schedule_downtime', 'url' => 'http://localhost:24554/schedule_downtime' },
       { 'path' => '/cancel_downtime',   'url' => 'http://localhost:24554/cancel_downtime' },
     ],
-    custom_fragment => '
+    custom_fragment => "
     <Location />
-    AuthBasicFake %{hiera(nagios_api_username)} %{hiera(nagios_api_password)}
+    AuthBasicFake ${nagios_api_username} ${nagios_api_password}
     </Location>
-    ',
+    ",
   }
 
   @@dns_resource { "api-icinga.${::domain}/CNAME":
