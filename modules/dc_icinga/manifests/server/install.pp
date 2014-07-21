@@ -61,4 +61,8 @@ class dc_icinga::server::install {
     ensure => installed,
   }
 
+  package { 'bc':
+    ensure => installed,
+  }
+
 }
