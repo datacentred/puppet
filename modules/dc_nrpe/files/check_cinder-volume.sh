@@ -55,9 +55,16 @@ then
     exit $STATE_UNKNOWN
 fi
 
-PID=$(ps -ef | awk "BEGIN {FS=\" \"}{if (/python(2.7)? [^ ]+${DEAMON}/) {print \$2 ; exit}}")
+MASTER_PID=$(ps -ef | awk "BEGIN {FS=\" \"}{if (/python(2.7)? [^ ]+${DEAMON}/) {print \$2 ; exit}}")
 
-if [ -z $PID ]; then
+if [ -z $MASTER_PID ]; then
+    echo "$DEAMON is not running."
+    exit $STATE_CRITICAL
+fi
+
+CHILD_PID=$(ps h --ppid ${MASTER_PID} -o pid)
+
+if [ -z $CHILD_PID ]; then
     echo "$DEAMON is not running."
     exit $STATE_CRITICAL
 fi
@@ -68,7 +75,7 @@ if [ "$(id -u)" != "0" ]; then
 else
 
     #Need root to "run netstat -p"
-    if ! KEY=$(netstat -epta 2>/dev/null | awk "{if (/amqp.*${PID}\/python/) {print ; exit}}") || test -z "$KEY"
+    if ! KEY=$(netstat -epta 2>/dev/null | awk "{if (/amqp.*${CHILD_PID}\/python/) {print ; exit}}") || test -z "$KEY"
     then
         echo "$DEAMON is not connected to AMQP"
         exit $STATE_CRITICAL
