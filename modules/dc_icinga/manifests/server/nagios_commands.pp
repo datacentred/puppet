@@ -156,7 +156,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_cinder_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_cinder-ap.sh -H http://\$HOSTADDRESS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_cinder-api.sh -H http://\$HOSTADDRESS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
 }
