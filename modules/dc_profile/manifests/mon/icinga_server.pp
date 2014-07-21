@@ -58,10 +58,15 @@ class dc_profile::mon::icinga_server {
     servername  => "api-icinga.${::domain}",
     docroot     => '/usr/share/icinga-web/pub',
     port        => 80,
-    proxy_pass => [
+    proxy_pass  => [
       { 'path' => '/schedule_downtime', 'url' => 'http://localhost:24554/schedule_downtime' },
       { 'path' => '/cancel_downtime',   'url' => 'http://localhost:24554/cancel_downtime' },
     ],
+    custom_fragment => '
+    <Location />
+    AuthBasicFake %{hiera(nagios_api_username)} %{hiera(nagios_api_password)}
+    </Location>
+    ',
   }
 
   @@dns_resource { "api-icinga.${::domain}/CNAME":
