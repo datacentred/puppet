@@ -62,7 +62,7 @@ if [ -z $MASTER_PID ]; then
     exit $STATE_CRITICAL
 fi
 
-CHILD_PID=$(ps h --ppid ${PID} -o pid)
+CHILD_PID=$(ps h --ppid ${MASTER_PID} -o pid)
 
 if [ -z $CHILD_PID ]; then
     echo "$DEAMON is not running."
