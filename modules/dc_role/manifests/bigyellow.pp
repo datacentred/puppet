@@ -20,5 +20,6 @@ class dc_role::bigyellow {
   contain dc_profile::net::puppies
   contain dc_profile::net::robocopy
   contain dc_profile::net::tftpserver
+  contain dc_profile::util::wwwbackups
 
 }
