@@ -5,8 +5,11 @@
 class dc_logstash::client::syslog {
 
   dc_logstash::client::register { 'syslog':
-    logs => '/var/log/syslog',
-    type => 'syslog',
+    logs          => '/var/log/syslog',
+    fields        => {
+      'type'      => 'syslog',
+      'shipper'   => 'logstash-forwarder',
+      'logsource' => $::hostname,
+    }
   }
-
 }
