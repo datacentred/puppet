@@ -1,0 +1,13 @@
+Module : dc_stdlib
+Author : matt
+ ____________________________________ 
+
+sorted_json
+
+This function takes data, outputs making sure the hash keys are sorted
+ 
+*Examples:*
+ 
+sorted_json({'key'=>'value'})
+ 
+Would return: {'key':'value'}
