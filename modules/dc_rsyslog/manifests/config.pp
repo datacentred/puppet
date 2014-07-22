@@ -1,5 +1,3 @@
-# Install json-based configuration file for native logstash
-# updates
 class dc_rsyslog::config {
 
   file { '/etc/rsyslog.d':
@@ -10,12 +8,12 @@ class dc_rsyslog::config {
   }
 
   file { '/etc/rsyslog.d/50-default.conf':
-    path    => '/etc/rsyslog.d/50-default.conf',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('dc_rsyslog/default.conf.erb'),
-    notify  => Service['rsyslog'],
+    path   => '/etc/rsyslog.d/50-default.conf',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/dc_rsyslog/50-default.conf',
+    notify => Service['rsyslog'],
   }
 
   file { '/etc/rsyslog.d/20-ufw.conf':
