@@ -28,6 +28,13 @@ class dc_profile::mon::icinga_server {
   $nagios_api_username = hiera(nagios_api_username)
   $nagios_api_password = hiera(nagios_api_password)
 
+  file { '/etc/apache2/api-icinga.htpasswd':
+    ensure => present,
+    owner  => 'www-data',
+    group  => 'www-data',
+    mode   => '0600'
+  } ->
+
   httpauth { $nagios_api_username:
     file     => '/etc/apache2/api-icinga.htpasswd',
     password => $nagios_api_password,
