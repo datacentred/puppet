@@ -1,2 +1,0 @@
----
-dc_logstash::forwarder_input_port: '55515'
