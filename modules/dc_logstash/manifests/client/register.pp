@@ -2,7 +2,7 @@ define dc_logstash::client::register ($order='10', $logs, $fields) {
 
   validate_hash($fields)
 
-  $json_type = sorted_json($fields)
+  $json_fields = sorted_json($fields)
 
   concat::fragment { "logstash_forwarder_log_${name}":
     target  => '/etc/logstash-forwarder',
