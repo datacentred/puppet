@@ -13,6 +13,8 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_nrpe::logstash {
 
+  $logstash_forwarder_port = hiera(logstash_forwarder_port)
+
   if defined(Class['dc_logstash::client::forwarder']) {
 
     sudo::conf { 'check_logstash_forwarder_netstat':
