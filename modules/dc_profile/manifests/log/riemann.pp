@@ -20,7 +20,7 @@ class dc_profile::log::riemann{
   }
 
   $token = hiera(riemann_hipchat_auth_token)
-  $room  = 'Riemann'
+  $room  = 'Monitoring'
   $from  = 'Riemann'
 
   dc_riemann::hipchat_stream { 'syslog-hipchat':
