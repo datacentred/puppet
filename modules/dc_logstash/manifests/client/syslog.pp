@@ -8,8 +8,6 @@ class dc_logstash::client::syslog {
     logs          => '/var/log/syslog',
     fields        => {
       'type'      => 'syslog',
-      'shipper'   => 'logstash-forwarder',
-      'logsource' => $::hostname,
     }
   }
 }
