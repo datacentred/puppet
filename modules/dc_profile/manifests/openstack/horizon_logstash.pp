@@ -13,8 +13,10 @@
 class dc_profile::openstack::horizon_logstash {
 
   dc_logstash::client::register { 'horizon_log':
-    logs => '/var/log/horizon/horizon.log',
-    type => 'horizon',
+    logs   => '/var/log/horizon/horizon.log',
+    fields => {
+      'type'   => 'horizon',
+    }
   }
 
 }
