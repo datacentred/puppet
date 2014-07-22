@@ -88,5 +88,6 @@ class dc_nrpe (
   contain dc_nrpe::neutron
   contain dc_nrpe::nova_compute
   contain dc_nrpe::nova_server
+  contain dc_nrpe::logstash
 
 }
