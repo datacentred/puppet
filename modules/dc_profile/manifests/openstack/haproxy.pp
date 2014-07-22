@@ -20,6 +20,7 @@ class dc_profile::openstack::haproxy {
   include ::haproxy
 
   # Gather our API endpoints
+  $horizon_servers      = get_exported_var('', 'horizon_host', ['localhost'])
   $keystone_api_servers = get_exported_var('', 'keystone_host', ['localhost'])
   $glance_api_servers   = get_exported_var('', 'glance_api', ['localhost'])
   $neutron_api_servers  = get_exported_var('', 'neutron_api', ['localhost'])
@@ -176,8 +177,8 @@ class dc_profile::openstack::haproxy {
   }
   haproxy::balancermember { 'horizon':
     listening_service => 'horizon',
-    server_names      => 'controller0.sal01.datacentred.co.uk',
-    ipaddresses       => 'controller0.sal01.datacentred.co.uk',
+    server_names      => $horizon_servers,
+    ipaddresses       => $horizon_servers,
     ports             => '80',
     options           => 'check inter 2000 rise 2 fall 5',
   }
