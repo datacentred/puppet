@@ -1,4 +1,4 @@
-define dc_logstash::client::register ($order='10', $logs, $fields) {
+define dc_logstash::client::register ($logs, $fields, $order='10') {
 
   validate_hash($fields)
 
