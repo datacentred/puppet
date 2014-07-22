@@ -16,6 +16,8 @@ class dc_profile::openstack::horizon {
   $horizon_secret_key = hiera(horizon_secret_key)
 
   class { '::horizon':
+    fqdn                  => $::fqdn,
+    servername            => "horizon.${::domain}",
     secret_key            => $horizon_secret_key,
     keystone_url          => "http://${keystone_host}:5000/v2.0",
     keystone_default_role => '_member_',
@@ -29,6 +31,11 @@ class dc_profile::openstack::horizon {
     require => Class['::horizon'],
   }
   contain 'dc_branding::openstack::horizon'
+
+  # Export variable for use by haproxy
+  exported_vars::set { 'horizon_servers':
+    value => $::fqdn,
+  }
 
   # Logstash config
   include dc_profile::openstack::horizon_logstash
