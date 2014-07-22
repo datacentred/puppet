@@ -33,7 +33,7 @@ class dc_profile::openstack::horizon {
   contain 'dc_branding::openstack::horizon'
 
   # Export variable for use by haproxy
-  exported_vars::set { 'horizon_servers':
+  exported_vars::set { 'horizon_host':
     value => $::fqdn,
   }
 
