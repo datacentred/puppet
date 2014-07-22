@@ -35,12 +35,21 @@ class dc_profile::openstack::proxyip {
     onboot    => true,
   }
 
+  network_route { 'default':
+    ensure    => present,
+    gateway   => '85.199.252.49',
+    interface => $ext_if,
+    netmask   => '255.255.255.248',
+    network   => 'default',
+    require   => Package['ifupdown-extra'],
+  }
+
   network_route { '10.10.0.0/16':
     ensure    => 'present',
     gateway   => '10.10.160.254',
     interface => $int_if,
     netmask   => '255.255.255.0',
-    network   => 'default',
+    network   => '10.10.0.0/16',
     require   => Package['ifupdown-extra'],
   }
 
