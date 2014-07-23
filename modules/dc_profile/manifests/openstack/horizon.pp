@@ -15,11 +15,14 @@ class dc_profile::openstack::horizon {
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $horizon_secret_key = hiera(horizon_secret_key)
 
+  # OpenStack API endpoint
+  $osapi       = "osapi.${::domain}"
+
   class { '::horizon':
     fqdn                  => ['openstack.datacentred.io', "osapi.${::domain}", $::fqdn],
     servername            => 'openstack.datacentred.io',
     secret_key            => $horizon_secret_key,
-    keystone_url          => "https://${keystone_host}:5000/v2.0",
+    keystone_url          => "https://${osapi}:5000/v2.0",
     keystone_default_role => '_member_',
     django_debug          => true,
     api_result_limit      => 1000,
