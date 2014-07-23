@@ -16,6 +16,7 @@ class dc_profile::openstack::nova_mq_logstash {
     logs   => "/var/log/rabbitmq/rabbit@${::hostname}.log",
     fields => {
       'type'   => 'rabbitmq_log',
+      'tags' => [ 'rabbitmq', 'oslofmt' ]
     }
   }
 
@@ -23,6 +24,7 @@ class dc_profile::openstack::nova_mq_logstash {
     logs   => "/var/log/rabbitmq/rabbit@${::hostname}-sasl.log",
     fields => {
       'type' => 'rabbitmq_sasl_log',
+      'tags' => [ 'rabbitmq', 'oslofmt' ]
     }
   }
 
@@ -30,6 +32,7 @@ class dc_profile::openstack::nova_mq_logstash {
     logs   => '/var/log/rabbitmq/startup_err',
     fields => {
       'type' => 'rabbitmq_startup_error',
+      'tags' => [ 'rabbitmq', 'oslofmt' ]
     }
   }
 
@@ -37,6 +40,7 @@ class dc_profile::openstack::nova_mq_logstash {
     logs   => '/var/log/rabbitmq/startup_log',
     fields => {
       'type' => 'rabbitmq_startup_log',
+      'tags' => [ 'rabbitmq', 'oslofmt' ]
     }
   }
 
@@ -44,6 +48,7 @@ class dc_profile::openstack::nova_mq_logstash {
     logs   => '/var/log/rabbitmq/shutdown_err',
     fields => {
       'type' => 'rabbitmq_shutdown_error',
+      'tags' => [ 'rabbitmq', 'oslofmt' ]
     }
   }
 
@@ -51,6 +56,7 @@ class dc_profile::openstack::nova_mq_logstash {
     logs   => '/var/log/rabbitmq/shutdown_log',
     fields => {
       'type' => 'rabbitmq_shutdown_log',
+      'tags' => [ 'rabbitmq', 'oslofmt' ]
     }
   }
 

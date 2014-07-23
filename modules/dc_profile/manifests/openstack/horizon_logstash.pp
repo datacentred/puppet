@@ -15,8 +15,24 @@ class dc_profile::openstack::horizon_logstash {
   dc_logstash::client::register { 'horizon_log':
     logs   => '/var/log/horizon/horizon.log',
     fields => {
-      'type'   => 'horizon',
+      'type' => 'horizon',
+      'tags' => ['horizon'],
     }
   }
 
+  dc_logstash::client::register { 'horizon_access_log':
+    logs   => '/var/log/apache2/horizon_access.log',
+    fields => {
+      'type' => 'horizon',
+      'tags' => ['horizon'],
+    }
+  }
+
+  dc_logstash::client::register { 'horizon_error_log':
+    logs   => '/var/log/apache2/horizon_error.log',
+    fields => {
+      'type' => 'horizon',
+      'tags' => ['horizon'],
+    }
+  }
 }
