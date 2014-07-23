@@ -37,6 +37,10 @@ class dc_profile::openstack::proxyip {
           "set iface[. = '${ext_if}']/post-down[1] 'ip route replace default via 10.10.160.254'",
           "set iface[. = '${ext_if}']/post-down[2] 'ip route del 10.10.0.0/16 via 10.10.160.254'",
       ],
+  } ~>
+  exec { "restart-${ext_if}":
+    command     => "/sbin/ifdown ${ext_if} ; /sbin/ifup ${ext_if}",
+    refreshonly => true,
   }
 
 }
