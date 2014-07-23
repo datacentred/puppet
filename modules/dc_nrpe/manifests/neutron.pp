@@ -24,7 +24,7 @@ class dc_nrpe::neutron {
 
     file { '/etc/nagios/nrpe.d/neutron_server_netstat.cfg':
       ensure  => present,
-      content => "command[check_neutron_server_netstat]=sudo /usr/lib/nagios/plugins/check_neutron-server.sh -H http://${os_api_host}:${keystone_port}/v2.0 -E http://${os_api_host}:${neutron_api_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}",
+      content => "command[check_neutron_server_netstat]=sudo /usr/lib/nagios/plugins/check_neutron-server.sh -H https://${os_api_host}:${keystone_port}/v2.0 -E https://${os_api_host}:${neutron_api_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}",
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
