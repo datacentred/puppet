@@ -23,7 +23,7 @@ class dc_profile::openstack::proxyip {
   # to exist.
   $ip       = get_ip_addr("${::hostname}.${domain}")
 
-  augeas{ $ext_if :
+  augeas { $ext_if :
       context => '/files/etc/network/interfaces',
       changes => [
           "set auto[child::1 = '${ext_if}']/1 ${ext_if}",
