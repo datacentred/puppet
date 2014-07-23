@@ -84,11 +84,11 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T   ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H https://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E https://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
   }
 
   icinga::command { 'check_nova_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H https://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E https://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_neutron_api':
@@ -140,7 +140,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_glance_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H http://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E http://\$HOSTADDRESS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H https://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E https://\$HOSTADDRESS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_dc_ldap':
@@ -152,11 +152,11 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_cinder_volume':
-    command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url http://\$HOSTADDRESS\$:${keystone_port}/v2.0 --endpoint_url http://\$HOSTADDRESS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTADDRESS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTADDRESS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_cinder_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_cinder-api.sh -H http://\$HOSTADDRESS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_cinder-api.sh -H https://\$HOSTADDRESS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
 }
