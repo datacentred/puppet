@@ -16,8 +16,8 @@ class dc_profile::openstack::horizon {
   $horizon_secret_key = hiera(horizon_secret_key)
 
   class { '::horizon':
-    fqdn                  => $::fqdn,
-    servername            => "osapi.${::domain}",
+    fqdn                  => ['openstack.datacentred.io', "osapi.${::domain}", $::fqdn],
+    servername            => 'openstack.datacentred.io',
     secret_key            => $horizon_secret_key,
     keystone_url          => "https://${keystone_host}:5000/v2.0",
     keystone_default_role => '_member_',
