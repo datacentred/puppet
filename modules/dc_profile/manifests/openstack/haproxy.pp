@@ -180,6 +180,12 @@ class dc_profile::openstack::haproxy {
     ipaddress    => '*',
     mode         => 'http',
     ports        => '443',
+    bind_options => [
+      'ssl',
+      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'ciphers "HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM"',
+    ],
     options      => {
       'option'   => ['tcpka', 'httpchk', 'tcplog'],
       'balance'  => 'source',
