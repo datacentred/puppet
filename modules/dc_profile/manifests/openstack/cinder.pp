@@ -58,17 +58,17 @@ class dc_profile::openstack::cinder {
 
   @@keystone_endpoint { "${os_region}/cinder":
     ensure       => present,
-    public_url   => "http://${osapi}:${cinder_port}/v1/%(tenant_id)s",
-    admin_url    => "http://${osapi}:${cinder_port}/v1/%(tenant_id)s",
-    internal_url => "http://${osapi}:${cinder_port}/v1/%(tenant_id)s",
+    public_url   => "https://${osapi}:${cinder_port}/v1/%(tenant_id)s",
+    admin_url    => "https://${osapi}:${cinder_port}/v1/%(tenant_id)s",
+    internal_url => "https://${osapi}:${cinder_port}/v1/%(tenant_id)s",
     tag          => 'cinder_endpoint',
   }
 
   @@keystone_endpoint { "${os_region}/cinderv2":
     ensure       => present,
-    public_url   => "http://${osapi}:${cinder_port}/v2/%(tenant_id)s",
-    admin_url    => "http://${osapi}:${cinder_port}/v2/%(tenant_id)s",
-    internal_url => "http://${osapi}:${cinder_port}/v2/%(tenant_id)s",
+    public_url   => "https://${osapi}:${cinder_port}/v2/%(tenant_id)s",
+    admin_url    => "https://${osapi}:${cinder_port}/v2/%(tenant_id)s",
+    internal_url => "https://${osapi}:${cinder_port}/v2/%(tenant_id)s",
     tag          => 'cinder_endpoint',
   }
 

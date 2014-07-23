@@ -40,7 +40,7 @@ class dc_profile::openstack::glance {
     registry_host     => $osapi,
     auth_type         => 'keystone',
     auth_host         => $osapi,
-    auth_uri          => "http://${osapi}:5000/v2.0",
+    auth_uri          => "https://${osapi}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
     keystone_password => $keystone_glance_password,
@@ -59,7 +59,7 @@ class dc_profile::openstack::glance {
   class { 'glance::registry':
     auth_type         => 'keystone',
     auth_host         => $osapi,
-    auth_uri          => "http://${osapi}:5000/v2.0",
+    auth_uri          => "https://${osapi}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
     keystone_password => $keystone_glance_password,
@@ -74,9 +74,9 @@ class dc_profile::openstack::glance {
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
-    public_url    => "http://${osapi}:${glance_port}",
-    admin_url     => "http://${osapi}:${glance_port}",
-    internal_url  => "http://${osapi}:${glance_port}",
+    public_url    => "https://${osapi}:${glance_port}",
+    admin_url     => "https://${osapi}:${glance_port}",
+    internal_url  => "https://${osapi}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
