@@ -72,6 +72,7 @@ class dc_profile::openstack::nova {
     admin_password                       => $keystone_nova_password,
     enabled_apis                         => $nova_enabled_apis,
     auth_host                            => $osapi,
+    auth_protocol                        => 'https',
     auth_uri                             => "https://${osapi}:5000/v2.0",
     neutron_metadata_proxy_shared_secret => $neutron_metadata_secret,
   }

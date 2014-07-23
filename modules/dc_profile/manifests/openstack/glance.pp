@@ -40,6 +40,7 @@ class dc_profile::openstack::glance {
     registry_host     => $osapi,
     auth_type         => 'keystone',
     auth_host         => $osapi,
+    auth_protocol     => 'https',
     auth_uri          => "https://${osapi}:5000/v2.0",
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
