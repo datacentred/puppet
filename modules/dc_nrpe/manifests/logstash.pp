@@ -22,7 +22,7 @@ class dc_nrpe::logstash {
 
   file { '/etc/nagios/nrpe.d/logstash_forwarder_netstat.cfg':
     ensure  => present,
-    content => 'command[check_logstash_forwarder_netstat]=/usr/lib/nagios/plugins/check_logstash-forwarder.sh',
+    content => 'command[check_logstash_forwarder_netstat]=sudo /usr/lib/nagios/plugins/check_logstash-forwarder.sh',
     require => Package['nagios-nrpe-server'],
     notify  => Service['nagios-nrpe-server'],
   }
