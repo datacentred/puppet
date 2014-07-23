@@ -19,7 +19,7 @@ class dc_profile::openstack::horizon {
     fqdn                  => $::fqdn,
     servername            => "osapi.${::domain}",
     secret_key            => $horizon_secret_key,
-    keystone_url          => "http://${keystone_host}:5000/v2.0",
+    keystone_url          => "https://${keystone_host}:5000/v2.0",
     keystone_default_role => '_member_',
     django_debug          => true,
     api_result_limit      => 1000,

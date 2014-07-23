@@ -42,9 +42,9 @@ class dc_profile::openstack::keystone {
 
   # Installs the service user endpoint.
   class { '::keystone::endpoint':
-    public_url   => "http://${osapi}:5000",
-    internal_url => "http://${osapi}:5000",
-    admin_url    => "http://${osapi}:35357",
+    public_url   => "https://${osapi}:5000",
+    internal_url => "https://${osapi}:5000",
+    admin_url    => "https://${osapi}:35357",
     region       => $os_region,
   }
 
