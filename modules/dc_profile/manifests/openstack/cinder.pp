@@ -47,13 +47,14 @@ class dc_profile::openstack::cinder {
   }
 
   class {'::cinder::api':
-    keystone_enabled   => true,
-    keystone_auth_host => $osapi,
-    keystone_user      => 'cinder',
-    keystone_password  => $keystone_cinder_password,
-    os_region_name     => $os_region,
-    package_ensure     => present,
-    enabled            => true,
+    keystone_enabled       => true,
+    keystone_auth_host     => $osapi,
+    keystone_auth_protocol => 'https',
+    keystone_user          => 'cinder',
+    keystone_password      => $keystone_cinder_password,
+    os_region_name         => $os_region,
+    package_ensure         => present,
+    enabled                => true,
   }
 
   @@keystone_endpoint { "${os_region}/cinder":
