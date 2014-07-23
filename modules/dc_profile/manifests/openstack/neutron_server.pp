@@ -90,9 +90,9 @@ class dc_profile::openstack::neutron_server {
   # TODO: SSL
   @@keystone_endpoint { "${os_region}/neutron":
     ensure       => present,
-    public_url   => "http://${osapi}:${neutron_port}",
-    admin_url    => "http://${osapi}:${neutron_port}",
-    internal_url => "http://${osapi}:${neutron_port}",
+    public_url   => "https://${osapi}:${neutron_port}",
+    admin_url    => "https://${osapi}:${neutron_port}",
+    internal_url => "https://${osapi}:${neutron_port}",
     tag          => 'neutron_endpoint',
   }
 

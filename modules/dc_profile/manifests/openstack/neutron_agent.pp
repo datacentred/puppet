@@ -98,7 +98,7 @@ class dc_profile::openstack::neutron_agent {
 
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
-      auth_url      => "http://${osapi}:35357/v2.0",
+      auth_url      => "https://${osapi}:35357/v2.0",
       auth_password => $keystone_neutron_password,
       auth_region   => $os_region,
       metadata_ip   => $nova_api_ip,
