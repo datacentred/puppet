@@ -17,7 +17,7 @@ class dc_profile::openstack::horizon {
 
   class { '::horizon':
     fqdn                  => $::fqdn,
-    servername            => "horizon.${::domain}",
+    servername            => "osapi.${::domain}",
     secret_key            => $horizon_secret_key,
     keystone_url          => "http://${keystone_host}:5000/v2.0",
     keystone_default_role => '_member_',
