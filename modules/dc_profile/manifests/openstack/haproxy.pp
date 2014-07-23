@@ -18,6 +18,7 @@
 class dc_profile::openstack::haproxy {
 
   include ::haproxy
+  include ::dc_ssl::haproxy
 
   # Gather our API endpoints
   $horizon_servers      = get_exported_var('', 'horizon_host', ['localhost'])
@@ -166,13 +167,23 @@ class dc_profile::openstack::haproxy {
   }
 
   # Horizon
+  haproxy::listen { 'horizon-non-ssl-redirect':
+    ipaddress    => '*',
+    mode         => 'http',
+    ports        => '80',
+    options      => {
+      'redirect' => 'scheme https if !{ ssl_fc }',
+    }
+  }
+
   haproxy::listen { 'horizon':
-    ipaddress => '*',
-    mode      => 'http',
-    ports     => '80',
-    options   => {
-      'option'  => ['tcpka', 'httpchk', 'tcplog'],
-      'balance' => 'source',
+    ipaddress    => '*',
+    mode         => 'http',
+    ports        => '443',
+    options      => {
+      'option'   => ['tcpka', 'httpchk', 'tcplog'],
+      'balance'  => 'source',
+      'rspadd'   => 'Strict-Transport-Security:\ max-age=60',
     },
   }
   haproxy::balancermember { 'horizon':
@@ -192,4 +203,6 @@ class dc_profile::openstack::haproxy {
       'stats' => ['enable', 'uri /'],
     },
   }
+
+  Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
 }
