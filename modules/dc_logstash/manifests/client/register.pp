@@ -3,7 +3,6 @@ define dc_logstash::client::register ($logs, $fields, $order='10') {
   validate_hash($fields)
 
   $default_fields = {
-    'logsource' => $::hostname,
     'shipper'   => 'logstash-forwarder' }
 
   $merged_fields = merge($default_fields, $fields)
