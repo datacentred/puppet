@@ -29,8 +29,9 @@ class dc_profile::openstack::cinder {
   # Hard coded exported variable name
   $nova_mq_ev                 = 'nova_mq_node'
 
-  # OpenStack API endpoint
-  $osapi       = "osapi.${::domain}"
+  # OpenStack API endpoints
+  $osapi_private = "osapi.${::domain}"
+  $osapi_public  = 'openstack.datacentred.io'
 
   $cinder_port = '8776'
 
@@ -48,7 +49,7 @@ class dc_profile::openstack::cinder {
 
   class {'::cinder::api':
     keystone_enabled       => true,
-    keystone_auth_host     => $osapi,
+    keystone_auth_host     => $osapi_private,
     keystone_auth_protocol => 'https',
     keystone_user          => 'cinder',
     keystone_password      => $keystone_cinder_password,
@@ -59,17 +60,17 @@ class dc_profile::openstack::cinder {
 
   @@keystone_endpoint { "${os_region}/cinder":
     ensure       => present,
-    public_url   => "https://${osapi}:${cinder_port}/v1/%(tenant_id)s",
-    admin_url    => "https://${osapi}:${cinder_port}/v1/%(tenant_id)s",
-    internal_url => "https://${osapi}:${cinder_port}/v1/%(tenant_id)s",
+    public_url   => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
+    admin_url    => "https://${osapi_private}:${cinder_port}/v1/%(tenant_id)s",
+    internal_url => "https://${osapi_private}:${cinder_port}/v1/%(tenant_id)s",
     tag          => 'cinder_endpoint',
   }
 
   @@keystone_endpoint { "${os_region}/cinderv2":
     ensure       => present,
-    public_url   => "https://${osapi}:${cinder_port}/v2/%(tenant_id)s",
-    admin_url    => "https://${osapi}:${cinder_port}/v2/%(tenant_id)s",
-    internal_url => "https://${osapi}:${cinder_port}/v2/%(tenant_id)s",
+    public_url   => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
+    admin_url    => "https://${osapi_private}:${cinder_port}/v2/%(tenant_id)s",
+    internal_url => "https://${osapi_private}:${cinder_port}/v2/%(tenant_id)s",
     tag          => 'cinder_endpoint',
   }
 
@@ -97,7 +98,7 @@ class dc_profile::openstack::cinder {
   }
 
   class { '::cinder::glance':
-    glance_api_servers => $osapi,
+    glance_api_servers => $osapi_private,
   }
 
   # Nagios config

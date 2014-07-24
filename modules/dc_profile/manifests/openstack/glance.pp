@@ -26,23 +26,22 @@ class dc_profile::openstack::glance {
   $glance_reg_db_pass = hiera(glance_reg_db_pass)
   $glance_reg_db_host = hiera(glance_reg_db_host)
 
-  # OpenStack API endpoint
-  $osapi       = "osapi.${::domain}"
+  # OpenStack API endpoints
+  $osapi_private = "osapi.${::domain}"
+  $osapi_public  = 'openstack.datacentred.io'
 
   $glance_port = '9292'
 
   $glance_api_database = "mysql://${glance_api_db_user}:${glance_api_db_pass}@${glance_api_db_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
 
-  # TODO: OpenStack triage alert.  For some reason this works locally but generates
-  #       a 500 (internal server error) when run via the proxy
   class { 'glance::api':
-    registry_host            => $osapi,
+    registry_host            => $osapi_private,
     registry_client_protocol => 'https',
     auth_type                => 'keystone',
-    auth_host                => $osapi,
+    auth_host                => $osapi_private,
     auth_protocol            => 'https',
-    auth_uri                 => "https://${osapi}:5000/v2.0",
+    auth_uri                 => "https://${osapi_private}:5000/v2.0",
     keystone_tenant          => 'services',
     keystone_user            => 'glance',
     keystone_password        => $keystone_glance_password,
@@ -60,8 +59,8 @@ class dc_profile::openstack::glance {
 
   class { 'glance::registry':
     auth_type         => 'keystone',
-    auth_host         => $osapi,
-    auth_uri          => "https://${osapi}:5000/v2.0",
+    auth_host         => $osapi_private,
+    auth_uri          => "https://${osapi_private}:5000/v2.0",
     auth_protocol     => 'https',
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
@@ -77,9 +76,9 @@ class dc_profile::openstack::glance {
 
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
-    public_url    => "https://${osapi}:${glance_port}",
-    admin_url     => "https://${osapi}:${glance_port}",
-    internal_url  => "https://${osapi}:${glance_port}",
+    public_url    => "https://${osapi_public}:${glance_port}",
+    admin_url     => "https://${osapi_private}:${glance_port}",
+    internal_url  => "https://${osapi_private}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
