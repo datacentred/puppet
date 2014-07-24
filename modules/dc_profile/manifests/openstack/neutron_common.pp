@@ -10,15 +10,7 @@
 #
 class dc_profile::openstack::neutron_common {
 
-  # Limit the amount of spam that the neutron heartbeat generates
-  # See https://bugs.launchpad.net/neutron/+bug/1310571 as an
-  # example description
-  file_line { 'neutron_sudoers_default':
-    path      => '/etc/sudoers.d/neutron_sudoers',
-    line      => 'Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info',
-    match     => 'Defaults:neutron !requiretty',
-    subscribe => Package['neutron-common'],
-  }
+  include dc_profile::auth::sudoers_neutron
 
   if defined( Class['dc_profile::mon::icinga_client'] )
   {

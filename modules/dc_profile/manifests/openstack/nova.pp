@@ -40,6 +40,8 @@ class dc_profile::openstack::nova {
   $neutron_secret             = hiera(neutron_secret)
   $neutron_metadata_secret    = hiera(neutron_metadata_secret)
 
+  include dc_profile::auth::sudoers_nova
+
   # OpenStack API endpoints
   $osapi_private = "osapi.${::domain}"
   $osapi_public  = 'openstack.datacentred.io'

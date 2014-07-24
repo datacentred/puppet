@@ -44,6 +44,8 @@ class dc_profile::openstack::nova_compute {
 
   $nova_database              = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
+  include dc_profile::auth::sudoers_nova
+
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
     path    => '/var/lib/nova/instances',
