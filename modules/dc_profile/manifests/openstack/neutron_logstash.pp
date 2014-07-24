@@ -16,7 +16,7 @@ class dc_profile::openstack::neutron_logstash {
     logs     => '/var/log/neutron/server.log',
     fields   => {
       'type' => 'neutron_server',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -24,7 +24,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/neutron/metadata-agent.log',
     fields => {
       'type' => 'neutron_metadata',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -32,7 +32,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/neutron/l3-agent.log',
     fields => {
       'type' => 'neutron_l3',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -40,7 +40,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/neutron/dhcp-agent.log',
     fields => {
       'type' => 'neutron_dhcp',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -48,7 +48,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/neutron/metering_agent.log',
     fields => {
       'type' => 'neutron_metering',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -56,7 +56,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/neutron/neutron-netns-cleanup.log',
     fields => {
       'type' => 'neutron_netns_cleanup',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -64,7 +64,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/neutron/openvswitch-agent.log',
     fields => {
       'type' => 'neutron_openvswitch',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -72,7 +72,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/openvswitch/ovsdb-server.log',
     fields => {
       'type' => 'openvswitch_ovsdbserver',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -80,7 +80,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/openvswitch/ovs-ctl.log',
     fields => {
       'type' => 'openvswitch_ovsvctl',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -88,7 +88,7 @@ class dc_profile::openstack::neutron_logstash {
     logs   => '/var/log/openvswitch/ovs-vswitchd.log',
     fields => {
       'type' => 'openvswitch_ovsvswitchd',
-      'tags' => [ 'neutron', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 

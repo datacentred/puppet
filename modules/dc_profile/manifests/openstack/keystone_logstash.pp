@@ -16,7 +16,7 @@ class dc_profile::openstack::keystone_logstash {
     logs     => '/var/log/keystone/keystone.log',
     fields   => {
       'type' => 'keystone',
-      'tags' => [ 'keystone', 'keystonefmt' ],
+      'tags' => 'keystonefmt',
     }
   }
 

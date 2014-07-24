@@ -16,7 +16,7 @@ class dc_profile::openstack::nova_logstash {
     logs   => '/var/log/nova/nova-api.log',
     fields => {
       'type' => 'nova-api',
-      'tags' => [ 'nova', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -24,7 +24,7 @@ class dc_profile::openstack::nova_logstash {
     logs   => '/var/log/nova/nova-conductor.log',
     fields => {
       'type' => 'nova-conductor',
-      'tags' => [ 'nova', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -32,7 +32,7 @@ class dc_profile::openstack::nova_logstash {
     logs   => '/var/log/nova/nova-scheduler.log',
     fields => {
       'type' => 'nova-scheduler',
-      'tags' => [ 'nova', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -40,7 +40,7 @@ class dc_profile::openstack::nova_logstash {
     logs   => '/var/log/nova/nova-cert.log',
     fields => {
       'type' => 'nova-cert',
-      'tags' => [ 'nova', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -48,7 +48,7 @@ class dc_profile::openstack::nova_logstash {
     logs   => '/var/log/nova/nova-manage.log',
     fields => {
       'type' => 'nova-manage',
-      'tags' => [ 'nova', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
@@ -56,7 +56,7 @@ class dc_profile::openstack::nova_logstash {
     logs   => '/var/log/nova/nova-consoleauth.log',
     fields => {
       'type' => 'nova-consoleauth',
-      'tags' => [ 'nova', 'oslofmt' ]
+      'tags' => 'oslofmt',
     }
   }
 
