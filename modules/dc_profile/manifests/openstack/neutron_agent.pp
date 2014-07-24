@@ -28,8 +28,9 @@ class dc_profile::openstack::neutron_agent {
   $neutron_db_user            = hiera(neutron_db_user)
   $neutron_db_pass            = hiera(neutron_db_pass)
 
-  # OpenStack API endpoint
-  $osapi       = "osapi.${::domain}"
+  # OpenStack API endpoints
+  $osapi_private = "osapi.${::domain}"
+  $osapi_public  = 'openstack.datacentred.io'
 
   # Hard coded exported variable name
   $nova_mq_ev                 = 'nova_mq_node'
@@ -98,7 +99,7 @@ class dc_profile::openstack::neutron_agent {
 
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
-      auth_url      => "https://${osapi}:35357/v2.0",
+      auth_url      => "https://${osapi_private}:35357/v2.0",
       auth_password => $keystone_neutron_password,
       auth_region   => $os_region,
       metadata_ip   => $nova_api_ip,
