@@ -16,7 +16,7 @@ class dc_profile::openstack::glance_logstash {
     logs   => '/var/log/glance/api.log',
     fields => {
       'type' => 'glance_api',
-      'tags' => ['glance', 'oslofmt'],
+      'tags' => 'oslofmt',
     }
   }
 
@@ -24,7 +24,7 @@ class dc_profile::openstack::glance_logstash {
     logs => '/var/log/glance/scheduler.log',
     fields => {
       'type' => 'glance_scheduler',
-      'tags' => ['glance', 'oslofmt'],
+      'tags' => 'oslofmt',
     }
   }
 
