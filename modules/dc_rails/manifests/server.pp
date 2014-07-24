@@ -23,7 +23,7 @@ class dc_rails::server {
   $log_base = '/var/log/rails/'
   $run_base = '/var/run/rails/'
 
-  class { '::redis': }
+  include ::redis
   class { '::nginx': manage_repo => false }
 
   class { '::dc_mariadb': }

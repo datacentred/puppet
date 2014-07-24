@@ -12,7 +12,7 @@
 #
 class dc_profile::hubot::marvin {
 
-  class { 'redis': }
+  include ::redis
 
   package { 'node':} ->
   package { 'nodejs-legacy':} ->
