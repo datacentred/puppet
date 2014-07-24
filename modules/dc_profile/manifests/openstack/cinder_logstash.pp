@@ -16,7 +16,6 @@ class dc_profile::openstack::cinder_logstash {
     logs     => '/var/log/cinder/cinder-manage.log',
     fields   => {
       'type' => 'cinder_manage',
-      'tags' => 'oslofmt',
     }
   }
 
@@ -24,7 +23,6 @@ class dc_profile::openstack::cinder_logstash {
     logs => '/var/log/cinder/cinder-scheduler.log',
     fields   => {
       'type' => 'cinder_scheduler',
-      'tags' => 'oslofmt',
     }
   }
 
@@ -32,7 +30,6 @@ class dc_profile::openstack::cinder_logstash {
     logs => '/var/log/cinder/cinder-api.log',
     fields   => {
       'type' => 'cinder_api',
-      'tags' => 'oslofmt',
     }
   }
 
@@ -40,7 +37,6 @@ class dc_profile::openstack::cinder_logstash {
     logs => '/var/log/cinder/cinder-volume.log',
     fields   => {
       'type' => 'cinder_volume',
-      'tags' => 'oslofmt',
     }
   }
 
