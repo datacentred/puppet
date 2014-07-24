@@ -35,6 +35,8 @@ class dc_profile::openstack::cinder {
 
   $cinder_port = '8776'
 
+  include dc_profile::auth::sudoers_cinder
+
   class {'::cinder':
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
     sql_connection      => "mysql://${cinder_db_user}:${cinder_db_pass}@${cinder_db_host}/${cinder_db}?charset=utf8",
