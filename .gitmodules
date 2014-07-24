@@ -224,3 +224,6 @@
 [submodule "modules/hubot"]
 	path = modules/hubot
 	url = https://github.com/evenup/evenup-hubot.git
+[submodule "modules/nodejs"]
+	path = modules/nodejs
+	url = https://github.com/puppetlabs/puppetlabs-nodejs.git
