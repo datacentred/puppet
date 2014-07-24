@@ -1,30 +1,53 @@
 filter {
-  if "oslofmt" in [tags] {
-    multiline {
-      negate => true
-      pattern => "^%{TIMESTAMP_ISO8601} "
-      what => "previous"
+# Add in group tags we didn't add in forwarder due to bug
+# https://github.com/elasticsearch/logstash-forwarder/issues/65
+# By grouping the logs using tags we can then search all the related logs in kibana
+    if [type] =~ /cinder/ {
+        mutate {
+            add_tag => [ "cinder" ]
+        }
     }
-    multiline {
-      negate => false
-      pattern => "^%{TIMESTAMP_ISO8601}%{SPACE}%{NUMBER}?%{SPACE}?TRACE"
-      what => "previous"
+    else if [type] =~ /neutron/ or [type] =~ /openvswitch/ {
+        mutate {
+            add_tag => [ "neutron" ]
+        }
     }
-    grok {
-      # Do multiline matching as the above mutliline filter may add newlines
-      # to the log messages.
-      # TODO move the LOGLEVELs into a proper grok pattern.
-      match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
-      add_field => { "received_at" => "%{@timestamp}" }
+    else if [type] =~ /glance/ {
+        mutate {
+            add_tag => [ "glance" ]
+        }
     }
+    else if [type] =~ /nova/ {
+        mutate {
+            add_tag => [ "nova" ]
+        }
+    }
+    if "oslofmt" in [tags] {
+        multiline {
+            negate => true
+            pattern => "^%{TIMESTAMP_ISO8601} "
+            what => "previous"
+        }
+        multiline {
+            negate => false
+            pattern => "^%{TIMESTAMP_ISO8601}%{SPACE}%{NUMBER}?%{SPACE}?TRACE"
+            what => "previous"
+        }
+        grok {
+            # Do multiline matching as the above mutliline filter may add newlines
+            # to the log messages.
+            # TODO move the LOGLEVELs into a proper grok pattern.
+            match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
+            add_field => { "received_at" => "%{@timestamp}" }
+        }
 
-  } else if "keystonefmt" in [tags] {
-    grok {
-      # Do multiline matching as the above mutliline filter may add newlines
-      # to the log messages.
-      # TODO move the LOGLEVELs into a proper grok pattern.
-      match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
-      add_field => { "received_at" => "%{@timestamp}" }
+    } else if "keystonefmt" in [tags] {
+        grok {
+            # Do multiline matching as the above mutliline filter may add newlines
+            # to the log messages.
+            # TODO move the LOGLEVELs into a proper grok pattern.
+            match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
+            add_field => { "received_at" => "%{@timestamp}" }
+        }
     }
-}
 }
