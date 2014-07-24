@@ -2,24 +2,29 @@ filter {
 # Add in group tags we didn't add in forwarder due to bug
 # https://github.com/elasticsearch/logstash-forwarder/issues/65
 # By grouping the logs using tags we can then search all the related logs in kibana
-    if [type] =~ /cinder/ {
+    if [type] =~ /cinder.*/ {
         mutate {
-            add_tag => [ "cinder" ]
+            add_tag => [ "cinder", "oslofmt" ]
         }
     }
-    else if [type] =~ /neutron/ or [type] =~ /openvswitch/ {
+    else if [type] =~ /neutron.*/ or [type] =~ /openvswitch.*/ {
         mutate {
-            add_tag => [ "neutron" ]
+            add_tag => [ "neutron", "oslofmt" ]
         }
     }
-    else if [type] =~ /glance/ {
+    else if [type] =~ /glance.*/ {
         mutate {
-            add_tag => [ "glance" ]
+            add_tag => [ "glance", "oslofmt" ]
         }
     }
-    else if [type] =~ /nova/ {
+    else if [type] =~ /nova.*/ {
         mutate {
-            add_tag => [ "nova" ]
+            add_tag => [ "nova", "oslofmt" ]
+        }
+    }
+    else if [type] =~ /keystone.*/ {
+        mutate {
+            add_tag => [ "keystone", "keystonefmt" ]
         }
     }
     if "oslofmt" in [tags] {
