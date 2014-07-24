@@ -221,3 +221,6 @@
 [submodule "modules/httpauth"]
 	path = modules/httpauth
 	url = git@github.com:jamtur01/puppet-httpauth.git
+[submodule "modules/hubot"]
+	path = modules/hubot
+	url = https://github.com/evenup/evenup-hubot.git
