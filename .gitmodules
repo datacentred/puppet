@@ -227,3 +227,6 @@
 [submodule "modules/nodejs"]
 	path = modules/nodejs
 	url = https://github.com/puppetlabs/puppetlabs-nodejs.git
+[submodule "modules/git"]
+	path = modules/git
+	url = https://github.com/mxhero/puppet-git.git
