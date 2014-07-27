@@ -43,6 +43,7 @@ class dc_logstash {
   # Add config files
 
   class { 'dc_logstash::config::input_forwarder':}
+  class { 'dc_logstash::config::input_syslog':}
   class { 'dc_logstash::config::filter_grok_syslog':}
   class { 'dc_logstash::config::output_elasticsearch':}
   class { 'dc_logstash::config::output_riemann':}
