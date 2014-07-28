@@ -35,6 +35,14 @@ class dc_icinga::server::nagios_commands {
   # Define custom commands not provided by nagios-plugins
   ######################################################################
 
+  icinga::command { 'notify-service-by-pagerduty':
+    command_line => '/usr/share/pdagent-integrations/bin/pd-nagios -n service -k $CONTACTPAGER$ -t "$NOTIFICATIONTYPE$" -f SERVICEDESC="$SERVICEDESC$" -f SERVICESTATE="$SERVICESTATE$" -f HOSTNAME="$HOSTNAME$" -f SERVICEOUTPUT="$SERVICEOUTPUT$"',
+  }
+
+  icinga::command { 'notify-host-by-pagerduty':
+    command_line => '/usr/share/pdagent-integrations/bin/pd-nagios -n host -k $CONTACTPAGER$ -t "$NOTIFICATIONTYPE$" -f HOSTNAME="$HOSTNAME$" -f HOSTSTATE="$HOSTSTATE$"',
+  }
+
   icinga::command { 'notify-host-by-email':
     command_line => '/usr/bin/printf "%b" "***** Icinga *****\n\nNotification Type: $NOTIFICATIONTYPE$\nHost: $HOSTNAME$\nState: $HOSTSTATE$\nAddress: $HOSTADDRESS$\nInfo: $HOSTOUTPUT$\n\nDate/Time: $LONGDATETIME$\n" | /usr/bin/mail -s "** $NOTIFICATIONTYPE$ Host Alert: $HOSTNAME$ is $HOSTSTATE$ **" $CONTACTEMAIL$',
   }

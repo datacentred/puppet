@@ -103,6 +103,18 @@ class dc_icinga::server::config {
     host_notification_commands    => 'notify-host-by-email',
   }
 
+  icinga::contact { 'pagerduty':
+    description                   => 'PagerDuty Pseudo-Contact',
+    pager                         => 'c7aa97ef9ba14c158f9e08363da71a59',
+    contactgroups                 => 'dc_admins',
+    service_notification_period   => 'dc_timeperiod_24x7',
+    host_notification_period      => 'dc_timeperiod_24x7',
+    service_notification_options  => 'w,u,c,r',
+    host_notification_options     => 'd,r',
+    service_notification_commands => 'notify-service-by-pagerduty',
+    host_notification_commands    => 'notify-host-by-pagerduty',
+  }
+
   ######################################################################
   # Host templates
   ######################################################################
