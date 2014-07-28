@@ -156,8 +156,8 @@ class dc_profile::openstack::haproxy {
       'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
     },
   }
-  haproxy::balancermember { 'glance-reg-internal':
-    listening_service => 'glance-reg-internal',
+  haproxy::balancermember { 'glance-registry-internal':
+    listening_service => 'glance-registry-internal',
     server_names      => $glance_api_servers,
     ipaddresses       => $glance_api_servers,
     ports             => '9191',
