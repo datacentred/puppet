@@ -20,8 +20,9 @@ class dc_profile::mon::icinga_server {
   contain php::apache
 
   contain dc_icinga::server
-
   contain dc_icinga::hostgroup_http
+
+  contain pagerduty
 
   ::apache::mod { 'authn_core': }
 
