@@ -112,7 +112,7 @@ class dc_profile::openstack::haproxy {
     listening_service => 'keystone-admin-internal',
     server_names      => $keystone_api_servers,
     ipaddresses       => $keystone_api_servers,
-    ports             => '5000',
+    ports             => '35357',
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
