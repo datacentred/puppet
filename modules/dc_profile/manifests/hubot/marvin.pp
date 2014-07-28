@@ -31,7 +31,7 @@ class dc_profile::hubot::marvin {
                        'HUBOT_PAGERDUTY_SCHEDULE_ID'     => hiera(hubot::marvin::pagerduty::schedule_id),
                        'HUBOT_PAGERDUTY_SERVICE_API_KEY' => hiera(hubot::marvin::pagerduty::service_api_key),
                        'HUBOT_PAGERDUTY_SUBDOMAIN'       => hiera(hubot::marvin::pagerduty::subdomain),
-                       'HUBOT_ICINGA_HOST'               => hiera(nagios_api_host)
+                       'HUBOT_ICINGA_HOST'               => hiera(nagios_api_host),
                        'HUBOT_ICINGA_USER'               => hiera(nagios_api_username),
                        'HUBOT_ICINGA_PASSWORD'           => hiera(nagios_api_password),
                        'HUBOT_OPTS'                      => '-a hipchat',
