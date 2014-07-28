@@ -32,13 +32,16 @@ class dc_profile::openstack::haproxy {
   $internal_bind_servers = [$::ipaddress_eth0, get_ip_addr("osapi.${domain}")]
   $external_bind_servers = [$::ipaddress_eth1, get_ip_addr('openstack.datacentred.io')]
 
+  # Ensure HAProxy is restarted whenever SSL certificates are changed
+  Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
+
   # Allow Linux to bind to IPs which don't yet exist
   sysctl { 'net.ipv4.ip_nonlocal_bind':
     ensure    => present,
     value     => '1',
   }
 
-  # Redirect all horizon requests to SSL
+  # Redirect all non-SSL requests to SSL
   haproxy::listen { 'http-to-https-redirect':
     ipaddress => '*',
     mode      => 'http',
@@ -59,7 +62,7 @@ class dc_profile::openstack::haproxy {
     ports        => '1936',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -75,7 +78,7 @@ class dc_profile::openstack::haproxy {
     ports        => '5000',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -99,7 +102,7 @@ class dc_profile::openstack::haproxy {
     ports        => '35357',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -123,7 +126,7 @@ class dc_profile::openstack::haproxy {
     ports        => '9292',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -147,7 +150,7 @@ class dc_profile::openstack::haproxy {
     ports        => '9191',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -171,7 +174,7 @@ class dc_profile::openstack::haproxy {
     ports        => '9696',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -195,7 +198,7 @@ class dc_profile::openstack::haproxy {
     ports        => '8774',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -219,7 +222,7 @@ class dc_profile::openstack::haproxy {
     ports        => '8775',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -243,7 +246,7 @@ class dc_profile::openstack::haproxy {
     ports        => '8776',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -267,7 +270,7 @@ class dc_profile::openstack::haproxy {
     ports        => '443',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -295,7 +298,7 @@ class dc_profile::openstack::haproxy {
     ports        => '5000',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -319,7 +322,7 @@ class dc_profile::openstack::haproxy {
     ports        => '9292',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -343,7 +346,7 @@ class dc_profile::openstack::haproxy {
     ports        => '9696',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -367,7 +370,7 @@ class dc_profile::openstack::haproxy {
     ports        => '8774',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -391,7 +394,7 @@ class dc_profile::openstack::haproxy {
     ports        => '8776',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
@@ -415,7 +418,7 @@ class dc_profile::openstack::haproxy {
     ports        => '443',
     bind_options => [
       'ssl',
-      'crt /etc/ssl/certs/openstack_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {

@@ -16,11 +16,12 @@ class dc_profile::openstack::horizon {
   $horizon_secret_key = hiera(horizon_secret_key)
 
   # OpenStack API endpoints
-  $osapi_private = "osapi.${::domain}"
-  $osapi_public  = 'openstack.datacentred.io'
+  $horizon_private = "horizon.${::domain}" 
+  $osapi_private   = "osapi.${::domain}"
+  $osapi_public    = 'openstack.datacentred.io'
 
   class { '::horizon':
-    fqdn                    => [$osapi_public, $osapi_private, $::fqdn],
+    fqdn                    => [$osapi_public, $osapi_private, $horizon_private, $::fqdn],
     servername              => $osapi_private,
     secret_key              => $horizon_secret_key,
     keystone_url            => "https://${osapi_private}:5000/v2.0",
