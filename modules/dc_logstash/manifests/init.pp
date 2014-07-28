@@ -52,6 +52,7 @@ class dc_logstash {
   class { 'dc_logstash::config::filter_grok_apache_err':}
   class { 'dc_logstash::config::filter_grok_mysql_err':}
   class { 'dc_logstash::config::filter_grok_openstack':}
+  class { 'dc_logstash::config::filter_grok_native_syslog':}
 
   # Add icinga config
   unless $::is_vagrant {
