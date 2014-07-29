@@ -26,8 +26,7 @@ class dc_profile::openstack::glance {
   $glance_reg_db_pass = hiera(glance_reg_db_pass)
   $glance_reg_db_host = hiera(glance_reg_db_host)
 
-  # OpenStack API endpoints
-  $osapi_private = "osapi.${::domain}"
+  # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
   $glance_port = '9292'
@@ -36,12 +35,12 @@ class dc_profile::openstack::glance {
   $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
 
   class { 'glance::api':
-    registry_host            => $osapi_private,
+    registry_host            => $osapi_public,
     registry_client_protocol => 'https',
     auth_type                => 'keystone',
-    auth_host                => $osapi_private,
+    auth_host                => $osapi_public,
     auth_protocol            => 'https',
-    auth_uri                 => "https://${osapi_private}:5000/v2.0",
+    auth_uri                 => "https://${osapi_public}:5000/v2.0",
     keystone_tenant          => 'services',
     keystone_user            => 'glance',
     keystone_password        => $keystone_glance_password,
@@ -59,8 +58,8 @@ class dc_profile::openstack::glance {
 
   class { 'glance::registry':
     auth_type         => 'keystone',
-    auth_host         => $osapi_private,
-    auth_uri          => "https://${osapi_private}:5000/v2.0",
+    auth_host         => $osapi_public,
+    auth_uri          => "https://${osapi_public}:5000/v2.0",
     auth_protocol     => 'https',
     keystone_tenant   => 'services',
     keystone_user     => 'glance',
@@ -77,8 +76,8 @@ class dc_profile::openstack::glance {
   @@keystone_endpoint { "${os_region}/glance":
     ensure        => present,
     public_url    => "https://${osapi_public}:${glance_port}",
-    admin_url     => "https://${osapi_private}:${glance_port}",
-    internal_url  => "https://${osapi_private}:${glance_port}",
+    admin_url     => "https://${osapi_public}:${glance_port}",
+    internal_url  => "https://${osapi_public}:${glance_port}",
     tag           => 'glance_endpoint',
   }
 
