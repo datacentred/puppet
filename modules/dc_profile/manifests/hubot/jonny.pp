@@ -30,7 +30,7 @@ class dc_profile::hubot::jonny {
                        'HUBOT_OPTS'                      => '-a hipchat',
                       },
     git_source          => 'git@github.com:datacentred/jonny.git',
-    ssh_privatekey_file => 'puppet:///modules/dc_puppet/keys/marvin/id_rsa',
+    ssh_privatekey_file => 'puppet:///modules/dc_puppet/keys/jonny/id_rsa',
     nodejs_manage_repo  => false,
     bot_name            => 'jonny',
     display_name        => 'Jonny',
