@@ -1,5 +1,5 @@
 filter {
-  if [type] == "syslog" {
+  if [type] == "native_syslog" {
     grok {
       match => [ "message", "%{SYSLOGLINE}" ]
       add_field => [ "received_at", "%{@timestamp}" ]

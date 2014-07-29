@@ -8,7 +8,7 @@ class dc_logstash::config::input_syslog {
 
   logstash::configfile { 'input_syslog':
     content => template('dc_logstash/input_syslog.erb'),
-    order   => '10',
+    order   => '01',
   }
 
 }
