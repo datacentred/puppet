@@ -35,8 +35,7 @@ class dc_profile::openstack::nova_compute {
 
   $management_ip              = $::ipaddress_eth0
 
-  # OpenStack API endpoints
-  $osapi_private = "osapi.${::domain}"
+  # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
   # Hard coded exported variable name
@@ -57,7 +56,7 @@ class dc_profile::openstack::nova_compute {
   class { '::nova':
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
-    glance_api_servers  => "https://${osapi_private}:9292",
+    glance_api_servers  => "https://${osapi_public}:9292",
     rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
     rabbit_userid       => $nova_mq_username,
     rabbit_password     => $nova_mq_password,
@@ -85,11 +84,11 @@ class dc_profile::openstack::nova_compute {
   # Configures nova.conf entries applicable to Neutron.
   class { 'nova::network::neutron':
     neutron_auth_strategy     => 'keystone',
-    neutron_url               => "https://${osapi_private}:9696",
+    neutron_url               => "https://${osapi_public}:9696",
     neutron_admin_username    => $neutron_admin_user,
     neutron_admin_password    => $keystone_neutron_password,
     neutron_admin_tenant_name => $os_service_tenant,
-    neutron_admin_auth_url    => "https://${osapi_private}:35357/v2.0",
+    neutron_admin_auth_url    => "https://${osapi_public}:35357/v2.0",
     neutron_region_name       => $os_region,
   }
 

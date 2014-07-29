@@ -29,8 +29,7 @@ class dc_profile::openstack::neutron_server {
   # Hard coded exported variable name
   $nova_mq_ev         = 'nova_mq_node'
 
-  # OpenStack API endpoints
-  $osapi_private = "osapi.${::domain}"
+  # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
   $neutron_port       = '9696'
@@ -60,7 +59,7 @@ class dc_profile::openstack::neutron_server {
 
   # configure authentication
   class { 'neutron::server':
-      auth_host           => $osapi_private,
+      auth_host           => $osapi_public,
       auth_protocol       => 'https',
       auth_password       => $keystone_neutron_password,
       database_connection => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
@@ -93,8 +92,8 @@ class dc_profile::openstack::neutron_server {
   @@keystone_endpoint { "${os_region}/neutron":
     ensure       => present,
     public_url   => "https://${osapi_public}:${neutron_port}",
-    admin_url    => "https://${osapi_private}:${neutron_port}",
-    internal_url => "https://${osapi_private}:${neutron_port}",
+    admin_url    => "https://${osapi_public}:${neutron_port}",
+    internal_url => "https://${osapi_public}:${neutron_port}",
     tag          => 'neutron_endpoint',
   }
 

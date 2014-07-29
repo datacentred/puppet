@@ -19,8 +19,7 @@ class dc_profile::openstack::keystone {
   $sysmailaddress     = hiera(sal01_internal_sysmail_address)
   $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost:11211'])
 
-  # OpenStack API endpoints
-  $osapi_private = "osapi.${::domain}"
+  # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
   $keystone_public_port  = '5000'
@@ -47,8 +46,8 @@ class dc_profile::openstack::keystone {
   # Installs the service user endpoint.
   class { '::keystone::endpoint':
     public_url   => "https://${osapi_public}:${keystone_public_port}",
-    internal_url => "https://${osapi_private}:${keystone_public_port}",
-    admin_url    => "https://${osapi_private}:${keystone_private_port}",
+    internal_url => "https://${osapi_public}:${keystone_public_port}",
+    admin_url    => "https://${osapi_public}:${keystone_private_port}",
     region       => $os_region,
   }
 
