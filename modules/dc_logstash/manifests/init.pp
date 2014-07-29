@@ -12,7 +12,9 @@
 class dc_logstash {
 
   # Basic class for installing Logstash
-  class { '::logstash': }
+  class { '::logstash':
+    init_defaults_file => 'puppet:///modules/dc_logstash/logstash_default',
+  }
 
   # Patch the module's init script in order for us to be able to read Puppet's
   # SSL certs.
