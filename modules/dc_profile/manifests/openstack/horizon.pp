@@ -28,7 +28,6 @@ class dc_profile::openstack::horizon {
     django_debug            => true,
     api_result_limit        => 1000,
     neutron_options         => { 'enable_lb' => true, 'enable_vpn' => true },
-    openstack_endpoint_type => 'internalURL',
   }
   contain 'horizon'
 
