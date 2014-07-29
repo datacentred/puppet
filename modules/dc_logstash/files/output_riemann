@@ -2,7 +2,7 @@ output {
   if [type] == "syslog" {
   riemann {
       riemann_event   => {
-        "description" => "%{message}"
+        "description" => "%{syslog_message}"
         "service"     => "%{program}"
         "state"       => "%{syslog_severity_code}"
       }
