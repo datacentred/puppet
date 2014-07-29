@@ -1,7 +1,7 @@
 class dc_postfix::ratelimit {
 
   postfix::config { 'default_destination_rate_delay':
-    value => '3s',
+    value => '5s',
   }
   postfix::config { 'default_destination_concurrency_limit':
     value => '10',
