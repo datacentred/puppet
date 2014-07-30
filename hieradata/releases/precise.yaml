@@ -44,7 +44,7 @@ repo_list:
     location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
     release: 'precise'
     repos: 'stable'
-    key: 'E775FF07'
+    key: '1AA043B8'
     key_source: 'http://deb.theforeman.org/foreman.asc'
   ceph_emperor_mirror:
     location: "%{hiera('mirror_server')}/%{hiera('ceph_emperor_mirror_path')}"
