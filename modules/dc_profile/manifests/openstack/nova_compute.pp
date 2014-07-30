@@ -62,7 +62,6 @@ class dc_profile::openstack::nova_compute {
     rabbit_password     => $nova_mq_password,
     rabbit_virtual_host => $nova_mq_vhost,
     rabbit_port         => $nova_mq_port,
-    use_syslog          => true,
   }
 
   class { '::nova::compute':
