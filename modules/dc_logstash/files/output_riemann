@@ -3,7 +3,7 @@ output {
   riemann {
       riemann_event   => {
         "description" => "%{syslog_message}"
-        "service"     => "%{program}"
+        "service"     => "%{syslog_program}"
         "state"       => "%{syslog_severity_code}"
       }
     }
