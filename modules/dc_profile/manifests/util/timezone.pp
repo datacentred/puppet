@@ -17,4 +17,7 @@ class dc_profile::util::timezone {
     target => '/usr/share/zoneinfo/GB-Eire',
   }
 
+  file {'/etc/timezone':
+    content => "Europe/London\n",
+  }
 }
