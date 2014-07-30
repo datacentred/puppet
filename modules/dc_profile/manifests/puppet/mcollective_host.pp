@@ -52,6 +52,17 @@ class dc_profile::puppet::mcollective_host {
     }
   }
 
+  # Copy in unpackaged plugins
+  file { '/usr/share/mcollective/plugins/mcollective/agent':
+    ensure  => directory,
+    source  => 'puppet:///modules/dc_mcollective/agent',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    purge   => false,
+    recurse => 'remote',
+  }
+
   # The message queues will have their own definition of
   # the mcollective class so prevent them from defining
   # the default configuration
