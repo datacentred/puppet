@@ -7,8 +7,14 @@ class dc_logstash::client::forwarder {
   $ls_host = hiera(logstash_server)
   $ls_port = hiera(logstash_forwarder_port)
 
+  $lf_version = $::lsbdistcodename ? {
+    'precise' => '0.3.1-datacentred-precise',
+    default   => '0.3.1-datacentred',
+  }
+
   package { 'logstash-forwarder':
-    ensure => installed,
+    ensure => $lf_version,
+    notify => Service['logstash-forwarder'],
   }
 
   concat { '/etc/logstash-forwarder':
