@@ -17,6 +17,14 @@ class dc_profile::hubot::marvin {
   package { 'node':} ->
   package { 'nodejs-legacy':} ->
   package {'npm':} ->
+  package {'cron':
+    ensure   => present,
+    provider => 'npm',
+  } ->
+  package {'time':
+    ensure   => present,
+    provider => 'npm',
+  } ->
 
   file { '/usr/local/bin/node':
     ensure => 'link',
