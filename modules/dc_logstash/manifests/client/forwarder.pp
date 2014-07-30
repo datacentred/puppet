@@ -10,11 +10,13 @@ class dc_logstash::client::forwarder {
   if $::lsbdistcodename == 'precise' {
     package { 'logstash-forwarder':
       ensure => '0.3.1-datacentred-precise',
+      notify => Service['logstash-forwarder'],
     }
   }
   else {
     package { 'logstash-forwarder':
       ensure => '0.3.1-datacentred',
+      notify => Service['logstash-forwarder'],
     }
   }
 
