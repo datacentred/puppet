@@ -61,6 +61,7 @@ class dc_profile::puppet::mcollective_host {
     mode    => '0644',
     purge   => false,
     recurse => 'remote',
+    notify => Service['mcollective'],
   }
 
   # The message queues will have their own definition of
