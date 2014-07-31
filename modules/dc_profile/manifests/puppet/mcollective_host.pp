@@ -17,39 +17,33 @@ class dc_profile::puppet::mcollective_host {
   $mco_ssl_path                  = 'modules/dc_mcollective'
 
   # Install various plugins on all hosts
-  # Use the standard ubuntu packages on trusty
+  # Remove the standard ubuntu packages on trusty
   if $::lsbdistcodename == 'trusty' {
     package { [
       'mcollective-plugins-puppetd',
-    ]:
-      ensure => purged,
-    } ->
-    package { [
       'mcollective-plugins-filemgr',
       'mcollective-plugins-iptables',
       'mcollective-plugins-nettest',
       'mcollective-plugins-nrpe',
       'mcollective-plugins-package',
-      'mcollective-puppet-agent',
       'mcollective-plugins-service',
     ]:
-      ensure => latest,
-      notify => Service['mcollective'],
+      ensure => purged,
     }
   }
-  else {
-    package { [
-      'mcollective-filemgr-agent',
-      'mcollective-iptables-agent',
-      'mcollective-nettest-agent',
-      'mcollective-nrpe-agent',
-      'mcollective-package-agent',
-      'mcollective-puppet-agent',
-      'mcollective-service-agent',
-    ]:
-      ensure => latest,
-      notify => Service['mcollective'],
-    }
+
+  package { [
+    'mcollective-filemgr-agent',
+    'mcollective-iptables-agent',
+    'mcollective-nettest-agent',
+    'mcollective-nrpe-agent',
+    'mcollective-package-agent',
+    'mcollective-puppet-agent',
+    'mcollective-service-agent',
+    'mcollective-shell-agent',
+  ]:
+    ensure => latest,
+    notify => Service['mcollective'],
   }
 
   # Copy in unpackaged plugins
