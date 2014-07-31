@@ -28,8 +28,8 @@ class dc_profile::openstack::haproxy {
   $nova_api_servers      = get_exported_var('', 'nova_api', ['localhost'])
   $cinder_api_servers    = get_exported_var('', 'cinder_api', ['localhost'])
 
-  $haproxy_stats_user = hiera($haproxy_stats_user)
-  $haproxy_stats_password = hiera($haproxy_stats_password)
+  $haproxy_stats_user = hiera(haproxy_stats_user)
+  $haproxy_stats_password = hiera(haproxy_stats_password)
 
   # Ensure HAProxy is restarted whenever SSL certificates are changed
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
