@@ -1,3 +1,7 @@
+# Class: dc_rally::install
+#
+# Takes care of installing Rally and subsequently Tempest from GitHub
+#
 class dc_rally::install (
   $username   = $dc_rally::params::username,
   $rallyhome  = $dc_rally::params::rallyhome,
