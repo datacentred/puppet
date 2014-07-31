@@ -18,7 +18,7 @@ class dc_rally::config (
     command => "/usr/local/bin/rally deployment create --filename ${rallyhome}/dcdev.json --name=DataCentred",
     user    => $username,
     creates => "${rallyhome}/.rally/globals",
-  } ~>
+  } ->
   exec { 'deploy_tempest':
     command => '/usr/local/bin/rally-manage tempest install',
     user    => $username,
