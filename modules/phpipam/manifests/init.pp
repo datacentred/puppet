@@ -4,6 +4,7 @@ class phpipam(
   $db_user = 'phpipam',
   $db_pass = 'phpipam',
   $db_name = 'phpipam',
+  $base = '/',
 ) {
 
   ensure_packages(['git'])
@@ -17,6 +18,10 @@ class phpipam(
 
   file { '/var/www/phpipam/config.php':
     content => template('phpipam/config.php.erb')
+  } ->
+
+  file { '/var/www/phpipam/.htaccess':
+    content => template('phpipam/.htaccess.erb')
   }
 
 }
