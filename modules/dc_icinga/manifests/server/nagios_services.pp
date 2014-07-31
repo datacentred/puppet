@@ -35,7 +35,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_puppetagent':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_generic',
     check_command       => 'check_nrpe_1arg!check_puppetagent',
     service_description => 'Puppet Agent',
@@ -457,7 +457,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_logstash_forwarder_netstat':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_generic',
     check_command       => 'check_nrpe_1arg!check_logstash_forwarder_netstat',
     service_description => 'Logstash Forwarder Connection',
