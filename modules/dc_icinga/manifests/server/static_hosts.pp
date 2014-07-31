@@ -15,8 +15,6 @@ class dc_icinga::server::static_hosts (
   $hostdefs = {}
 ){
 
-  include icinga::client
-
   Icinga::Host {
     ensure  => present,
     alias   => "${title}.${::domain}",
@@ -24,5 +22,7 @@ class dc_icinga::server::static_hosts (
   }
 
   create_resources('icinga::host', $hostdefs)
+
+  include dc_icinga::hostgroup_apcpdu
 
 }
