@@ -84,9 +84,12 @@ class dc_icinga::server::config {
   ######################################################################
 
   icinga::contactgroup { 'dc_admins':
-    description => 'Icinga Administrators',
+    description => 'On Call Pagerduty',
   }
 
+  icinga::contactgroup { 'dc_admins_email':
+    description => 'Email Notification Only',
+  }
   ######################################################################
   # Contacts
   ######################################################################
@@ -94,7 +97,7 @@ class dc_icinga::server::config {
   icinga::contact { 'sysadmin':
     description                   => 'System Administrators',
     email                         => hiera(sal01_internal_sysmail_address),
-    contactgroups                 => 'dc_admins',
+    contactgroups                 => 'dc_admins_email',
     service_notification_period   => 'dc_timeperiod_24x7',
     host_notification_period      => 'dc_timeperiod_24x7',
     service_notification_options  => 'w,u,c,r',
@@ -132,7 +135,7 @@ class dc_icinga::server::config {
     notification_interval        => '0',
     notification_period          => 'dc_timeperiod_24x7',
     notification_options         => 'd,u,r',
-    contact_groups               => 'dc_admins',
+    contact_groups               => 'dc_admins,dc_admins_email',
     register                     => '0',
   }
 
@@ -161,7 +164,32 @@ class dc_icinga::server::config {
     max_check_attempts           => '4',
     notification_period          => 'dc_timeperiod_24x7',
     notification_options         => 'w,u,c,r',
-    contact_groups               => 'dc_admins',
+    contact_groups               => 'dc_admins,dc_admins_email',
+    register                     => '0',
+  }
+
+  icinga::service { 'dc_service_secondary':
+    active_checks_enabled        => '1',
+    passive_checks_enabled       => '1',
+    parallelize_check            => '1',
+    obsess_over_service          => '1',
+    check_freshness              => '0',
+    notifications_enabled        => '1',
+    event_handler_enabled        => '1',
+    flap_detection_enabled       => '1',
+    failure_prediction_enabled   => '1',
+    process_perf_data            => '1',
+    retain_status_information    => '1',
+    retain_nonstatus_information => '1',
+    notification_interval        => '0',
+    is_volatile                  => '0',
+    check_period                 => 'dc_timeperiod_24x7',
+    normal_check_interval        => '5',
+    retry_check_interval         => '1',
+    max_check_attempts           => '10',
+    notification_period          => 'dc_timeperiod_24x7',
+    notification_options         => 'w,u,c,r',
+    contact_groups               => 'dc_admins_email',
     register                     => '0',
   }
 
