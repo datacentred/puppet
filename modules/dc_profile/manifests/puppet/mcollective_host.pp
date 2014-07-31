@@ -33,17 +33,17 @@ class dc_profile::puppet::mcollective_host {
   }
 
   package { [
-      'mcollective-filemgr-agent',
-      'mcollective-iptables-agent',
-      'mcollective-nettest-agent',
-      'mcollective-nrpe-agent',
-      'mcollective-package-agent',
-      'mcollective-puppet-agent',
-      'mcollective-service-agent',
-      'mcollective-shell-agent',
-    ]:
-      ensure => latest,
-      notify => Service['mcollective'],
+    'mcollective-filemgr-agent',
+    'mcollective-iptables-agent',
+    'mcollective-nettest-agent',
+    'mcollective-nrpe-agent',
+    'mcollective-package-agent',
+    'mcollective-puppet-agent',
+    'mcollective-service-agent',
+    'mcollective-shell-agent',
+  ]:
+    ensure => latest,
+    notify => Service['mcollective'],
   }
 
   # Copy in unpackaged plugins
