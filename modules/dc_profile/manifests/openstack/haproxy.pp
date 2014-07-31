@@ -28,6 +28,9 @@ class dc_profile::openstack::haproxy {
   $nova_api_servers      = get_exported_var('', 'nova_api', ['localhost'])
   $cinder_api_servers    = get_exported_var('', 'cinder_api', ['localhost'])
 
+  $haproxy_stats_user = hiera($haproxy_stats_user)
+  $haproxy_stats_password = hiera($haproxy_stats_password)
+
   # Ensure HAProxy is restarted whenever SSL certificates are changed
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
 
@@ -58,9 +61,11 @@ class dc_profile::openstack::haproxy {
       'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
-    options      => {
+    options    => {
       'stats'  => ['enable', 'uri /'],
       'rspadd' => 'Strict-Transport-Security:\ max-age=60',
+      'stats'  => 'hide-version',
+      'stats'  => "auth ${haproxy_stats_user}:${haproxy_stats_password}",
     },
   }
 
