@@ -6,7 +6,8 @@ class dc_rally::config (
   $auth_url     = $dc_rally::params::auth_url,
   $rallyhome    = $dc_rally::params::rallyhome,
   $username     = $dc_rally::params::username,
-  $password     = undef
+  $password     = undef,
+  $tenant       = $dc_rally::params::tenant
 ) inherits dc_rally::params {
 
   file { "${rallyhome}/dcdev.json":
