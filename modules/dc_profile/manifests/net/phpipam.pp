@@ -12,7 +12,7 @@ class dc_profile::net::phpipam {
 
   apache::vhost { 'phpipam':
     servername => "phpipam.${::domain}",
-    docroot    => '/var/www/phpipam/latest',
+    docroot    => '/var/www/phpipam',
     override   => 'all',
     port       => 80,
   }
