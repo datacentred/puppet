@@ -7,12 +7,7 @@ class dc_gdash::install {
   }
 
   # Packages necessary to clone the GDash repo and use Bundler
-  package { ['ruby-dev', 
-            'git', 
-            'ruby-bundler', 
-            ]:
-    ensure => installed,
-  }
+  ensure_packages(['ruby-dev', 'git', 'ruby-bundler'])
 
   # Clone GDash repo from GitHub
   vcsrepo { 'gdash_github':
