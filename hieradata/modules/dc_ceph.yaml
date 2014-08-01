@@ -1,16 +1,1 @@
----
-dc_ceph::osd::ceph_setup_pools:       false
-dc_ceph::osd::ceph_deploy_user:       "%{hiera('cephdeploy_user')}"
-dc_ceph::osd::ceph_primary_mon:       "%{hiera('cephdeploy_primary_mon')}"
-dc_ceph::osd::ceph_cluster_interface: 'eth1'
-dc_ceph::osd::ceph_cluster_network:   "%{hiera('cephdeploy_cluster_network')}"
-
-dc_ceph::osd::ceph_journal_disk:  '/dev/sdg'
-dc_ceph::osd::ceph_journal_size:  '10'
-dc_ceph::osd::ceph_num_osds:      '5'
-dc_ceph::osd::ceph_osds:
-  - '/dev/sdb:/dev/sdg1'
-  - '/dev/sdc:/dev/sdg2'
-  - '/dev/sdd:/dev/sdg3'
-  - '/dev/sde:/dev/sdg4'
-  - '/dev/sdf:/dev/sdg5'
+DCCRYPTOo5hgpMoBVRVlPUtHNuKP1qzknwilekyERqnA/yxGlzf5oiSBr4FhtJSAxawvdogUwEy/0lr8i0Uc+kHvlEmpJQ/bojUlk/woOUFUxCnDAO6i/+QPGXcryPgh7tQlVqhiCikQnIFREqGpPg4oZR5noKKjlY/SWpyPmLcSqptCQ+RCpw9x604sOuFitvPFCsYpFy9uLX7J96NDYbzyySjUCfTaKBrhPy1L0CBIImEwk4dm8afhwHAZktyfRW8OZt25ID+A+79inW2O378XrjinYRpsyaNgFP5CF+OhR9RBa5tHsdqWic55itkwa+PTnb6mWanDTlzT76mF1EpnGoBeO4Xtr08YlaSvsXOzYcQmVG9ZkoZwa+tVqTko51rELmhK/cm8ugkToUesqc4ounHBUAvR6oXy25OCf0FOQLjBZ1DWOjwrC2s03sTQthCoyjBi69TrmVhhl71QQMtzcwFMECimJfSw1kVkuHQvxjp6Z2bAMwLOVFeyDObST/1BH2zpo1CqoLN0UXquC8i9kZcBvP1yhy/Lu7Lawsf9a4R0JqDlN6aBqc/bBq67i3v9m+Ex1z84x7EDxr6J2+9Bv/92xhIGsXtWgiR6t8oXLAE5PoGLErVbeK45P4fBAjOkiPDiHh0XlsLMmRGkRXljoeqriTvmtQ1YFvH34DlH3wLnGFVPdykwxxeegw3ekZ8E3yo0DYH0hEKf055fBwwy6OhXtyZ/s/8JGERHWoV9pdEulaTkj0+xWHVkm4iE1HS05Hs+x2HnK2WA1jCIqKks7EtLk52N+/QA+JYlyBb+OWQKbqM=
