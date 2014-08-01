@@ -14,7 +14,6 @@ class dc_role::osapi {
   contain dc_profile::openstack::proxyip
   contain dc_profile::openstack::haproxy
   contain dc_profile::openstack::keepalived
-  contain dc_profile::openstack::osapi_nagios
 
   Class['Dc_profile::Openstack::Proxyip'] ~>
   Class['Dc_profile::Openstack::Keepalived'] ~>

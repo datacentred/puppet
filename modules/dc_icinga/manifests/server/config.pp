@@ -314,6 +314,10 @@ class dc_icinga::server::config {
     description => 'Openstack API Endpoints',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_apcpdu':
+    description => 'APC PDU',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
