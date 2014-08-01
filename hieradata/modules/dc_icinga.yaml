@@ -1,0 +1,8 @@
+---
+dc_icinga::server::static_hosts::hostdefs:
+    pdu-03:
+        hostgroups: 'dc_hostgroup_apcpdu'
+        use: 'dc_host_generic'
+    pdu-04:
+        hostgroups: 'dc_hostgroup_apcpdu'
+        use: 'dc_host_generic'
