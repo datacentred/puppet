@@ -15,12 +15,13 @@ class dc_icinga::server::static_hosts (
   $hostdefs = {}
 ){
 
-  Icinga::Host {
-    ensure      => present,
-    #    address => inline_template("<% _erbout.concat(Resolv::DNS.open.getaddress('${title}.${::domain}').to_s) %>"),
+  $defaults = {
+    'ensure'  => 'present',
+    'address' => "get_ip_addr(${title}.${::domain})",
+    'use'     => 'dc_host_device',
   }
 
-  create_resources('icinga::host', $hostdefs)
+  create_resources('icinga::host', $hostdefs, $defaults)
 
   include dc_icinga::hostgroup_apcpdu
 
