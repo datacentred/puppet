@@ -42,7 +42,6 @@ class dc_profile::hubot::marvin {
                        'HUBOT_ICINGA_HOST'               => hiera(nagios_api_host),
                        'HUBOT_ICINGA_USER'               => hiera(nagios_api_username),
                        'HUBOT_ICINGA_PASSWORD'           => hiera(nagios_api_password),
-                       'HUBOT_OPTS'                      => '-a hipchat',
                       },
     git_source          => 'git@github.com:datacentred/marvin.git',
     ssh_privatekey_file => 'puppet:///modules/dc_puppet/keys/marvin/id_rsa',
