@@ -16,6 +16,7 @@
 define dc_riemann::hipchat_stream (
   $waittime       = 3600,
   $rollup         = 3,
+  $whitelist      = undef,
   $event          = undef,
   $token          = undef,
   $room           = undef,
