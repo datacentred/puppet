@@ -1,4 +1,1 @@
----
-icinga::server::allow_empty_hostgroup_assignment: 1
-icinga::server::use_timezone: 'Europe/London'
-icinga::server::check_external_commands: 1
+DCCRYPTOnHgmqdKS8HfimIKKaWZlxGD/UBgbNuNkZ0UhB6bseD+ncu8baefKFhgzzmNzKskW9dNAmQwWvwV8q+Rnenh2rSG6k/HTxGD5XxO1mYcixlBppnMnSMxPDH4QQpME77HDf/AVwc1gc3/r0l7P4wSPI22kphIE1/OwB8sxzaSbHV1wNrKSr+yWFYA5X/7u5I7NxwbiXKwjV4hYrjPlGvXCJQ==
