@@ -20,7 +20,7 @@ class dc_icinga::server::static_hosts (
     #address => get_ip_addr("${title}.${::domain}"),
   }
 
-  create_resources('icinga::host', $hostdefs)
+  create_resources('icinga::host', $hostdefs, $defaults)
 
   include dc_icinga::hostgroup_apcpdu
 
