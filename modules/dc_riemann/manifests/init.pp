@@ -24,7 +24,7 @@ class dc_riemann {
   }
 
   class { 'riemann::dash':
-    host => $::ipaddress,
+    host    => $::ipaddress,
     require => Class['riemann'],
   }
 

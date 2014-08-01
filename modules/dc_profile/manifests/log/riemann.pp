@@ -25,12 +25,12 @@ class dc_profile::log::riemann{
   $from  = 'Riemann'
 
   dc_riemann::hipchat_stream { 'syslog-hipchat':
-    event   => '(or (state "4")(state "3")(state "2")(state "1")(state "0"))',
+    event     => '(or (state "4")(state "3")(state "2")(state "1")(state "0"))',
     whitelist => '/etc/riemann.conf.d/riemann.whitelist',
-    token   => $token,
-    room    => $room,
-    from    => $from,
-    require => Class['dc_riemann'],
+    token     => $token,
+    room      => $room,
+    from      => $from,
+    require   => Class['dc_riemann'],
   }
 
 }
