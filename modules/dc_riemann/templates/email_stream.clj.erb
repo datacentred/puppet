@@ -14,5 +14,6 @@
 (streams
  (by :service
   (where <%= @event %>
-   (rollup <%= @rollup %> <%= @waittime %>
-    (email "<%= @sysmailaddress %>" )))))
+   (where (description (re-pattern whitelist_pattern))
+    (rollup <%= @rollup %> <%= @waittime %>
+     (email "<%= @sysmailaddress %>" ))))))

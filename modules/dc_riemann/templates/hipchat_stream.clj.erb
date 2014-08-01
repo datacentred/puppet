@@ -12,9 +12,10 @@
 (streams
  (by :service
   (where <%= @event %>
-   (rollup <%= @rollup %> <%= @waittime %>
+   (where (description (re-pattern whitelist_pattern))
+    (rollup <%= @rollup %> <%= @waittime %>
       (hipchat {:token "<%= @token %>"
                 :room "<%= @room %>"
                 :from "<%= @from %>"
                 :notify <%= @hipchat_notify %>
-               })))))
+               }))))))
