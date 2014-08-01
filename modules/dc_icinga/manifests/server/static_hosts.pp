@@ -16,8 +16,9 @@ class dc_icinga::server::static_hosts (
 ){
 
   $defaults = {
-    ensure  => present,
-    #address => get_ip_addr("${title}.${::domain}"),
+    'ensure'  => 'present',
+    'address' => "get_ip_addr(${title}.${::domain})",
+    'use'     => 'dc_host_device'
   }
 
   create_resources('icinga::host', $hostdefs, $defaults)
