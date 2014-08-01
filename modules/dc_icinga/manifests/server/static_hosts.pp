@@ -12,12 +12,12 @@
 #
 #
 class dc_icinga::server::static_hosts (
-  $hostdefs = {}
+  $hostdefs,
 ){
 
-  Icinga::Host {
-    ensure      => present,
-    #    address => inline_template("<% _erbout.concat(Resolv::DNS.open.getaddress('${title}.${::domain}').to_s) %>"),
+  $defaults = {
+    ensure  => present,
+    #address => get_ip_addr("${title}.${::domain}"),
   }
 
   create_resources('icinga::host', $hostdefs)
