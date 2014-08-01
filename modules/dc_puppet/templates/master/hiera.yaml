@@ -1,6 +1,6 @@
 :hierarchy:
-    - "modules/%{calling_module}"
     - "releases/%{lsbdistcodename}"
+    - "modules/%{calling_module}"
     - "%{environment}"
     - common
 :backends:
