@@ -27,7 +27,7 @@ class dc_icinga::server::nagios_commands {
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
-  $ldap_server_suffix = hiera(ldap::server::suffix)
+  $ldap_server_suffix = hiera(ldap_suffix)
 
   ######################################################################
   # Commands
