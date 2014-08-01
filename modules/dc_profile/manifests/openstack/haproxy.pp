@@ -62,12 +62,13 @@ class dc_profile::openstack::haproxy {
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options    => {
-      'stats'  => ['enable', 'uri /'],
+      'stats'  => [
+        'enable',
+        'uri /',
+        'hide-version',
+        "auth ${haproxy_stats_user}:${haproxy_stats_password}",
+      ],
       'rspadd' => 'Strict-Transport-Security:\ max-age=60',
-
-      # HA proxy module needs fixing to take an array of hashes before this will work
-      #'stats'  => 'hide-version',
-      #'stats'  => "auth ${haproxy_stats_user}:${haproxy_stats_password}",
     },
   }
 
