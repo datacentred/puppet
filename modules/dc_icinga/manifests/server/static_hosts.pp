@@ -18,7 +18,7 @@ class dc_icinga::server::static_hosts (
   Icinga::Host {
     ensure  => present,
     alias   => "${title}.${::domain}",
-    address => inline_template("<% _erbout.concat(Resolv::DNS.open.getaddress('${title}').to_s) %>"),
+    address => inline_template("<% _erbout.concat(Resolv::DNS.open.getaddress('${title}.${::domain}').to_s) %>"),
   }
 
   create_resources('icinga::host', $hostdefs)
