@@ -139,6 +139,23 @@ class dc_icinga::server::config {
     register                     => '0',
   }
 
+  icinga::host { 'dc_host_device':
+    notifications_enabled        => '1',
+    event_handler_enabled        => '1',
+    flap_detection_enabled       => '1',
+    failure_prediction_enabled   => '1',
+    process_perf_data            => '1',
+    retain_status_information    => '1',
+    retain_nonstatus_information => '1',
+    check_command                => 'check_ping!100.0,20%!500.0,60%',
+    max_check_attempts           => '2',
+    notification_interval        => '0',
+    notification_period          => 'dc_timeperiod_24x7',
+    notification_options         => 'd,u,r',
+    contact_groups               => 'dc_admins,dc_admins_email',
+    register                     => '0',
+  }
+
   ######################################################################
   # Service templates
   ######################################################################
