@@ -24,7 +24,7 @@ class dc_riemann {
   }
 
   class { 'riemann::dash':
-    host => $::ipaddress,
+    host    => $::ipaddress,
     require => Class['riemann'],
   }
 
@@ -41,6 +41,13 @@ class dc_riemann {
     ensure => directory,
     owner  => 'riemann',
     group  => 'riemann',
+  }
+
+  file { '/etc/riemann.conf.d/riemann.whitelist':
+    ensure => file,
+    owner  => 'riemann',
+    group  => 'riemann',
+    source => 'puppet:///modules/dc_riemann/riemann.whitelist',
   }
 }
 

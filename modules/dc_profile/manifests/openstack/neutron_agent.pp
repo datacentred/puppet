@@ -70,12 +70,17 @@ class dc_profile::openstack::neutron_agent {
 
     # Ensure configuration is in place so that the external (bridged)
     # is actually brought up at boot
-    network_config { $uplink_if:
-      ensure  => 'present',
-      method  => 'manual',
-      options =>  { 'up'    => 'ip link set dev $IFACE up',
-                    'down'  => 'ip link set dev $IFACE down',
-                  },
+    augeas { $uplink_if:
+      context => '/files/etc/network/interfaces',
+      changes => [
+          "set auto[child::1 = '${uplink_if}']/1 ${uplink_if}",
+          "set iface[. = '${uplink_if}'] ${uplink_if}",
+          "set iface[. = '${uplink_if}']/family inet",
+          "set iface[. = '${uplink_if}']/method manual",
+          "set iface[. = '${uplink_if}'] ${uplink_if}",
+          "set iface[. = '${uplink_if}']/up 'ip link set dev ${uplink_if} up'",
+          "set iface[. = '${uplink_if}']/down 'ip link set dev ${uplink_if} down'",
+      ],
     }
 
     class { 'neutron::agents::ovs':

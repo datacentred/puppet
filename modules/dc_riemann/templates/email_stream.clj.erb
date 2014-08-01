@@ -1,6 +1,19 @@
+(use 'clojure.java.io)
+
+(defn get_messages [filename]
+  (with-open [rdr (reader filename)]
+    (doall (line-seq rdr))))
+
+(def messages (get_messages "<%= @whitelist %>"))
+
+(def whitelist_pattern
+  (str "^((?!(" (clojure.string/join "|" messages) ")).)*$"))
+
 (def email(mailer { :from "<%= @fromaddress %>" }))
+
 (streams
  (by :service
   (where <%= @event %>
-   (rollup <%= @rollup %> <%= @waittime %>
-    (email "<%= @sysmailaddress %>" )))))
+   (where (description (re-pattern whitelist_pattern))
+    (rollup <%= @rollup %> <%= @waittime %>
+     (email "<%= @sysmailaddress %>" ))))))

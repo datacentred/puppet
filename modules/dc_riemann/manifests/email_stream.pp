@@ -18,6 +18,7 @@ define dc_riemann::email_stream (
   $waittime    = 3600,
   $rollup      = 3,
   $event       = undef,
+  $whitelist   = undef,
 ){
 
   $sysmailaddress = hiera(sal01_internal_sysmail_address)
