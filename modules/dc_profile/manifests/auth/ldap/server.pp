@@ -10,7 +10,11 @@
 #
 # Sample Usage:
 #
-class dc_profile::auth::ldap::server {
+class dc_profile::auth::ldap::server (
+  $suffix,
+  $rootdn,
+  $rootpw,
+) {
   include ::dc_ssl
   include ::dc_ssl::slapd
   include ::dc_ldap
@@ -36,9 +40,9 @@ class dc_profile::auth::ldap::server {
     ensure      => present,
     host        => '127.0.0.1',
     port        => 636,
-    base        => hiera(ldap::server::suffix),
-    username    => hiera(ldap::server::rootdn),
-    password    => hiera(ldap::server::rootpw),
+    base        => $suffix,
+    username    => $rootdn,
+    password    => $rootpw,
     self_signed => true,
   }
 
