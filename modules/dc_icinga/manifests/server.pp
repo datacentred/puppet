@@ -20,7 +20,6 @@ class dc_icinga::server {
   contain dc_icinga::server::install
   contain dc_icinga::server::config
   contain dc_icinga::server::api
-  contain dc_icinga::server::static_hosts
 
 }
 
