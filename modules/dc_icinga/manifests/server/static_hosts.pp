@@ -19,7 +19,7 @@ class dc_icinga::server::static_hosts (
 
   $defaults = {
     ensure  => present,
-    address => get_ip_addr("${title}.${domain}"),
+    address => get_ip_addr("www.google.com"),
   }
 
   create_resources('icinga::host', $hostdefs, $defaults)
