@@ -18,8 +18,8 @@ class dc_icinga::server::static_hosts (
   include dc_icinga::hostgroup_apcpdu
 
   $defaults = {
-    'ensure'  => 'present',
-    'address' => get_ip_addr("${title}.${domain}"),
+    ensure  => present,
+    address => get_ip_addr("${title}.${domain}"),
   }
 
   create_resources('icinga::host', $hostdefs, $defaults)
