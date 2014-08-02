@@ -15,13 +15,13 @@ class dc_icinga::server::static_hosts (
   $hostdefs,
 ){
 
+  include dc_icinga::hostgroup_apcpdu
+
   $defaults = {
     'ensure'  => 'present',
-    'use'     => 'dc_host_device'
+    'address' => get_ip_addr("${title}.${domain}"),
   }
 
   create_resources('icinga::host', $hostdefs, $defaults)
-
-  include dc_icinga::hostgroup_apcpdu
 
 }
