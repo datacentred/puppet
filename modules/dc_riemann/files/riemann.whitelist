@@ -1,2 +1,3 @@
 Ignoring invalid UTF-8 byte sequences in data to be sent to PuppetDB
 DHCP packet received on [a-zA-Z0-9-_]+ which has no address
+Can't create new lease file: Permission denied
