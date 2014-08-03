@@ -14,7 +14,7 @@
 define dc_icinga::server::static_host (
     $use        = 'dc_host_device',
     $hostgroups = undef,
-    $address    = ip_get_addr("${title}.${::domain}"),
+    $address    = get_ip_addr("${title}.${::domain}"),
 ){
 
   icinga::host { $title :
