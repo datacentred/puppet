@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-# [Remember: No empty lines between comments and class definition]i
+# [Remember: No empty lines between comments and class definition]
 class dc_firmware {
 
   case $::virtual {
@@ -34,9 +34,7 @@ class dc_firmware {
         ensure => installed,
       }
 
-      package { 'ipmitool':
-        ensure => installed,
-      }
+      contain dc_firmware::ipmitool
 
       file { '/usr/local/bin/Yafuflash':
         ensure => file,
