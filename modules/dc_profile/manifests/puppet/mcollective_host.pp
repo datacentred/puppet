@@ -16,23 +16,7 @@ class dc_profile::puppet::mcollective_host {
   $mco_middleware_admin_password = hiera(mco_middleware_admin_password)
   $mco_ssl_path                  = 'modules/dc_mcollective'
 
-  # Install various plugins on all hosts
-  # Remove the standard ubuntu packages on trusty
-  if $::lsbdistcodename == 'trusty' {
-    package { [
-      'mcollective-plugins-puppetd',
-      'mcollective-plugins-filemgr',
-      'mcollective-plugins-iptables',
-      'mcollective-plugins-nettest',
-      'mcollective-plugins-nrpe',
-      'mcollective-plugins-package',
-      'mcollective-plugins-service',
-    ]:
-      ensure => purged,
-    }
-  }
-
-  package { [
+  $plugins = [
     'mcollective-filemgr-agent',
     'mcollective-iptables-agent',
     'mcollective-nettest-agent',
@@ -41,7 +25,33 @@ class dc_profile::puppet::mcollective_host {
     'mcollective-puppet-agent',
     'mcollective-service-agent',
     'mcollective-shell-agent',
-  ]:
+  ]
+
+  # Install various plugins on all hosts
+  # Remove the standard ubuntu packages on trusty
+  if $::lsbdistcodename == 'trusty' {
+
+    $old_plugins = [
+      'mcollective-plugins-puppetd',
+      'mcollective-plugins-filemgr',
+      'mcollective-plugins-iptables',
+      'mcollective-plugins-nettest',
+      'mcollective-plugins-nrpe',
+      'mcollective-plugins-package',
+      'mcollective-plugins-service',
+    ]
+
+    # Temp hack
+    exec { '/usr/bin/apt-get -y purge mcollective-package-agent': } ->
+
+    package { $old_plugins:
+      ensure => purged,
+    }
+
+    Package[$old_plugins] -> Package[$plugins]
+  }
+
+  package { $plugins:
     ensure => latest,
     notify => Service['mcollective'],
   }
