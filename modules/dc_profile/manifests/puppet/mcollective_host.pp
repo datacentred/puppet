@@ -41,6 +41,9 @@ class dc_profile::puppet::mcollective_host {
       'mcollective-plugins-service',
     ]
 
+    # Temp hack
+    exec { '/usr/bin/apt-get purge mcollective-package-agent': } ->
+
     package { $old_plugins:
       ensure => purged,
     }
