@@ -27,29 +27,29 @@ class dc_profile::puppet::mcollective_host {
     'mcollective-shell-agent',
   ]
 
-  # Install various plugins on all hosts
-  # Remove the standard ubuntu packages on trusty
-  if $::lsbdistcodename == 'trusty' {
-
-    $old_plugins = [
-      'mcollective-plugins-puppetd',
-      'mcollective-plugins-filemgr',
-      'mcollective-plugins-iptables',
-      'mcollective-plugins-nettest',
-      'mcollective-plugins-nrpe',
-      'mcollective-plugins-package',
-      'mcollective-plugins-service',
-    ]
-
-    # Temp hack
-    exec { '/usr/bin/apt-get -y purge mcollective-package-agent': } ->
-
-    package { $old_plugins:
-      ensure => purged,
-    }
-
-    Package[$old_plugins] -> Package[$plugins]
-  }
+#  # Install various plugins on all hosts
+#  # Remove the standard ubuntu packages on trusty
+#  if $::lsbdistcodename == 'trusty' {
+#  
+#    $old_plugins = [
+#      'mcollective-plugins-puppetd',
+#      'mcollective-plugins-filemgr',
+#      'mcollective-plugins-iptables',
+#      'mcollective-plugins-nettest',
+#      'mcollective-plugins-nrpe',
+#      'mcollective-plugins-package',
+#      'mcollective-plugins-service',
+#    ]
+#
+#    # Temp hack
+#    exec { '/usr/bin/apt-get -y purge mcollective-package-agent': } ->
+#
+#    package { $old_plugins:
+#      ensure => purged,
+#    }
+#
+#    Package[$old_plugins] -> Package[$plugins]
+#  }
 
   package { $plugins:
     ensure => latest,
