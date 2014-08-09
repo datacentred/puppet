@@ -12,7 +12,7 @@ class dc_profile::openstack::neutron_common {
 
   include dc_profile::auth::sudoers_neutron
 
-  if defined( Class['dc_profile::mon::icinga_client'] )
+  if defined( Class['::dc_profile::mon::icinga_client'] )
   {
     file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
       ensure  => present,
@@ -36,7 +36,7 @@ class dc_profile::openstack::neutron_common {
     }
   }
 
-  if defined( Class['dc_profile::log::logstash_forwarder'] )
+  if defined( Class['::dc_profile::log::logstash_forwarder'] )
   {
     include dc_profile::openstack::neutron_logstash
   }
