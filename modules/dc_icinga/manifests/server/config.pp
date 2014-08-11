@@ -215,8 +215,7 @@ class dc_icinga::server::config {
   ######################################################################
 
   icinga::hostgroup { 'dc_hostgroup_generic':
-    description => 'All Hosts',
-    members     => '*',
+    description => 'All Server Hosts',
   }
 
   icinga::hostgroup { 'dc_hostgroup_http':
