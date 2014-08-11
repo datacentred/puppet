@@ -20,12 +20,26 @@ class dc_profile::log::riemann{
     require   => Class['dc_riemann'],
   }
 
+  dc_riemann::oslog_email_stream { 'oslog-errors':
+    event     => '(or (state "CRITICAL")(state "ERROR"))',
+    whitelist => '/etc/riemann.conf.d/riemann.whitelist',
+    require   => Class['dc_riemann'],
+  }
+
   $token = hiera(riemann_hipchat_auth_token)
   $room  = 'Monitoring'
   $from  = 'Riemann'
 
   dc_riemann::syslog_hipchat_stream { 'syslog-hipchat':
     event     => '(or (state "4")(state "3")(state "2")(state "1")(state "0"))',
+    whitelist => '/etc/riemann.conf.d/riemann.whitelist',
+    token     => $token,
+    room      => $room,
+    from      => $from,
+    require   => Class['dc_riemann'],
+  }
+  dc_riemann::oslog_hipchat_stream { 'oslog-hipchat':
+    event     => '(or (state "WARNING")(state "CRITICAL")(state "ERROR"))',
     whitelist => '/etc/riemann.conf.d/riemann.whitelist',
     token     => $token,
     room      => $room,
