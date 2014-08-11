@@ -19,7 +19,7 @@ class dc_icinga::client {
   # I am the current host, yes I am
   @@icinga::host { $::hostname:
     ensure          => present,
-    alias           => $::fqdn,
+    description     => $::fqdn,
     address         => $::ipaddress,
     use             => 'dc_host_generic',
     hostgroups      => template('dc_icinga/hostgroups.erb'),
