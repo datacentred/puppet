@@ -13,7 +13,7 @@
 # Event requires a string formatted correctly for riemann, see the template
 #
 # [Remember: No empty lines between comments and class definition]
-define dc_riemann::hipchat_stream (
+define dc_riemann::syslog_hipchat_stream (
   $waittime       = 3600,
   $rollup         = 3,
   $whitelist      = undef,
@@ -28,7 +28,7 @@ define dc_riemann::hipchat_stream (
     ensure  => file,
     owner   => 'riemann',
     group   => 'riemann',
-    content => template('dc_riemann/hipchat_stream.clj.erb'),
+    content => template('dc_riemann/syslog_hipchat_stream.clj.erb'),
     notify  => Service['riemann'],
   }
 }

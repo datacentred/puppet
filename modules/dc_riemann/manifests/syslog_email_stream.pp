@@ -13,7 +13,7 @@
 # Event requires a string formatted correctly for riemann, see the template
 #
 # [Remember: No empty lines between comments and class definition]
-define dc_riemann::email_stream (
+define dc_riemann::syslog_email_stream (
   $fromaddress = "riemann@${::fqdn}",
   $waittime    = 3600,
   $rollup      = 3,
@@ -27,7 +27,7 @@ define dc_riemann::email_stream (
     ensure  => file,
     owner   => 'riemann',
     group   => 'riemann',
-    content => template('dc_riemann/email_stream.clj.erb'),
+    content => template('dc_riemann/syslog_email_stream.clj.erb'),
     notify  => Service['riemann'],
   }
 }
