@@ -9,3 +9,15 @@ output {
     }
   }
 }
+output {
+  if "keystonefmt" in [tags] or "oslofmt" in [tags] {
+    riemann {
+      riemann_event   => {
+        "description" => "%{logmessage}"
+        "service"     => "%{type}"
+        "state"       => "%{loglevel}"
+      }
+    }
+  }
+}
+

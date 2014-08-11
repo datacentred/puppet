@@ -1,0 +1,21 @@
+(use 'clojure.java.io)
+
+(defn get_messages [filename]
+  (with-open [rdr (reader filename)]
+    (doall (line-seq rdr))))
+
+(def messages (get_messages "<%= @whitelist %>"))
+
+(def whitelist_pattern
+  (str "^((?!(" (clojure.string/join "|" messages) ")).)*$"))
+
+(streams
+ (by :service
+  (where <%= @event %>
+   (where (description (re-pattern whitelist_pattern))
+    (rollup <%= @rollup %> <%= @waittime %>
+      (hipchat {:token "<%= @token %>"
+                :room "<%= @room %>"
+                :from "<%= @from %>"
+                :notify <%= @hipchat_notify %>
+               }))))))

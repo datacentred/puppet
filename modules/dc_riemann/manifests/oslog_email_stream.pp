@@ -1,6 +1,6 @@
-# Class: dc_riemann::hipchat_stream
+# Class: dc_riemann::oslog_email_stream
 #
-# Defines a hipchat output stream
+# Defines an email output stream
 #
 # Parameters:
 #
@@ -13,22 +13,21 @@
 # Event requires a string formatted correctly for riemann, see the template
 #
 # [Remember: No empty lines between comments and class definition]
-define dc_riemann::hipchat_stream (
-  $waittime       = 3600,
-  $rollup         = 3,
-  $whitelist      = undef,
-  $event          = undef,
-  $token          = undef,
-  $room           = undef,
-  $from           = undef,
-  $hipchat_notify = 0,
+define dc_riemann::oslog_email_stream (
+  $fromaddress = "riemann@${::fqdn}",
+  $waittime    = 3600,
+  $rollup      = 3,
+  $event       = undef,
+  $whitelist   = undef,
 ){
+
+  $sysmailaddress = hiera(sal01_internal_sysmail_address)
 
   file { "${dc_riemann::riemann_config_dir}/${title}.clj":
     ensure  => file,
     owner   => 'riemann',
     group   => 'riemann',
-    content => template('dc_riemann/hipchat_stream.clj.erb'),
+    content => template('dc_riemann/oslog_email_stream.clj.erb'),
     notify  => Service['riemann'],
   }
 }
