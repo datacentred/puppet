@@ -25,17 +25,13 @@ class dc_profile::openstack::ceilometer_agent {
     auth_region   => $os_region,
   }
 
-  class { '::ceilometer::agent::compute':
-  }
+  class { '::ceilometer::agent::compute': }
 
-  class { '::ceilometer::agent::central':
-  }
+  class { '::ceilometer::agent::central': }
 
-  class { '::ceilometer::alarm::notifier':
-  }
+  class { '::ceilometer::alarm::notifier': }
 
-  class { '::ceilometer::alarm::evaluator':
-  }
+  class { '::ceilometer::alarm::evaluator': }
 
   # Purge 1 month old meters
   class { '::ceilometer::expirer':
@@ -43,7 +39,6 @@ class dc_profile::openstack::ceilometer_agent {
   }
 
   # Install notification agent
-  class { '::ceilometer::agent::notification':
-  }
+  class { '::ceilometer::agent::notification': }
 
 }
