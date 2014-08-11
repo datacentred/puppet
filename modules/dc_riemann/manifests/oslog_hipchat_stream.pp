@@ -1,4 +1,4 @@
-# Class: dc_riemann::syslog_hipchat_stream
+# Class: dc_riemann::oslog_hipchat_stream
 #
 # Defines a hipchat output stream
 #
@@ -13,7 +13,7 @@
 # Event requires a string formatted correctly for riemann, see the template
 #
 # [Remember: No empty lines between comments and class definition]
-define dc_riemann::syslog_hipchat_stream (
+define dc_riemann::oslog_hipchat_stream (
   $waittime       = 3600,
   $rollup         = 3,
   $whitelist      = undef,
