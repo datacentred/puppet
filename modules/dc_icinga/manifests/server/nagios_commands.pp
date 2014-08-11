@@ -92,7 +92,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H https://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E https://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.sh -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -E https://\$HOSTALIAS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r"
   }
 
   icinga::command { 'check_nova_api_connect':
