@@ -229,4 +229,4 @@
 	url = https://github.com/mxhero/puppet-git.git
 [submodule "modules/augeasproviders"]
 	path = modules/augeasproviders
-	url = git@github.com:hercules-team/augeasproviders.git
+	url = https://github.com/hercules-team/augeasproviders.git
