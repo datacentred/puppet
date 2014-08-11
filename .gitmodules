@@ -233,3 +233,6 @@
 [submodule "modules/neutron"]
 	path = modules/neutron
 	url = https://github.com/datacentred/puppet-neutron.git
+[submodule "modules/ceilometer"]
+	path = modules/ceilometer
+	url = https://github.com/datacentred/puppet-ceilometer.git
