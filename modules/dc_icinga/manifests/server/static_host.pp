@@ -12,15 +12,17 @@
 #
 #
 define dc_icinga::server::static_host (
-    $use        = 'dc_host_device',
-    $hostgroups = undef,
-    $address    = get_ip_addr("${title}.${::domain}"),
+    $use         = 'dc_host_device',
+    $hostgroups  = undef,
+    $address     = get_ip_addr("${title}.${::domain}"),
+    $description = "${title}.${::domain}",
 ){
 
   icinga::host { $title :
-    hostgroups => $hostgroups,
-    use        => $use,
-    address    => $address,
+    hostgroups  => $hostgroups,
+    use         => $use,
+    address     => $address,
+    description => $description,
   }
 
 }
