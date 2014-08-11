@@ -73,7 +73,6 @@ class dc_profile::openstack::neutron_agent {
     augeas { $uplink_if:
       context => '/files/etc/network/interfaces',
       changes => [
-          "set auto[child::1 = '${uplink_if}']/1 ${uplink_if}",
           "set iface[. = '${uplink_if}'] ${uplink_if}",
           "set iface[. = '${uplink_if}']/family inet",
           "set iface[. = '${uplink_if}']/method manual",
