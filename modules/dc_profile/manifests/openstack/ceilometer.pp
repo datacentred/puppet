@@ -13,6 +13,7 @@
 class dc_profile::openstack::ceilometer {
 
   $ceilometer_secret = hiera(ceilometer_secret)
+  $ceilometer_port = '8777'
 
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_ceilometer_password = hiera(keystone_ceilometer_password)
@@ -44,6 +45,14 @@ class dc_profile::openstack::ceilometer {
     keystone_protocol => 'https',
     keystone_user     => 'ceilometer',
     keystone_password => $keystone_ceilometer_password,
+  }
+
+  @@ceilometer_endpoint { "${os_region}/ceilometer":
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${ceilometer_port}",
+    admin_url    => "https://${osapi_public}:${ceilometer_port}",
+    internal_url => "https://${osapi_public}:${ceilometer_port}",
+    tag          => 'ceilometer_endpoint',
   }
 
 }
