@@ -59,6 +59,7 @@ class dc_lmsensors {
             mode    => '0644',
             source  => 'puppet:///modules/dc_lmsensors/jc42.conf',
             require => Package['lm-sensors'],
+            notify  => Service['lm-sensors'],
           }
 
       }
