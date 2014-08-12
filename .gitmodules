@@ -127,9 +127,6 @@
 [submodule "modules/file_concat"]
 	path = modules/file_concat
 	url = https://github.com/electrical/puppet-lib-file_concat
-[submodule "modules/neutron"]
-	path = modules/neutron
-	url = https://github.com/stackforge/puppet-neutron.git
 [submodule "modules/ceph"]
 	path = modules/ceph
 	url = https://github.com/stackforge/puppet-ceph
@@ -233,3 +230,6 @@
 [submodule "modules/sysdig"]
 	path = modules/sysdig
 	url = https://github.com/garethr/garethr-sysdig.git
+[submodule "modules/neutron"]
+	path = modules/neutron
+	url = https://github.com/datacentred/puppet-neutron.git
