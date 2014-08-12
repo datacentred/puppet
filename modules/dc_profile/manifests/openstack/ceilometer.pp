@@ -18,6 +18,11 @@ class dc_profile::openstack::ceilometer {
   $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_ceilometer_password = hiera(keystone_ceilometer_password)
 
+  $ceilometer_db      = hiera(ceilometer_db)
+  $ceilometer_db_user = hiera(ceilometer_db_user)
+  $ceilometer_db_pass = hiera(ceilometer_db_pass)
+  $ceilometer_db_host = hiera(ceilometer_db_host)
+
   $nova_mq_username   = hiera(nova_mq_username)
   $nova_mq_password   = hiera(nova_mq_password)
   $nova_mq_port       = hiera(nova_mq_port)
@@ -38,6 +43,11 @@ class dc_profile::openstack::ceilometer {
     rabbit_password     => $nova_mq_password,
     rabbit_port         => $nova_mq_port,
     rabbit_virtual_host => $nova_mq_vhost,
+  }
+
+  class { '::ceilometer::db':
+    database_connection  => "mysql://${ceilometer_db_user}:${ceilometer_db_pass}@${ceilometer_db_host}/${ceilometer_db}",
+    require              => Dc_maria::Db[$ceilometer_db]
   }
 
   class { '::ceilometer::api':
