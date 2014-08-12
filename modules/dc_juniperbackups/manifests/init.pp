@@ -37,16 +37,16 @@ class dc_juniperbackups {
     backup => false,
   }
 
-  file { '/usr/local/sbin/junipercopy.sh':
+  file { '/usr/local/sbin/juniperbackup.sh':
     ensure  => file,
     owner   => root,
     group   => root,
     mode    => '0744',
-    content => template('dc_juniperbackup/junipercopy.sh.erb'),
+    content => template('dc_juniperbackup/juniperbackup.sh.erb'),
   }
 
   cron { 'nfscopy':
-    command => '/usr/local/sbin/junipercopy.sh',
+    command => '/usr/local/sbin/juniperbackup.sh',
     user    => root,
     hour    => 4,
     minute  => 0,
