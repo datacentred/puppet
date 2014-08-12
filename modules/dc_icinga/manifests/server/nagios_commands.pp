@@ -96,7 +96,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H https://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E https://\$HOSTADDRESS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_nova-api.sh -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -E https://\$HOSTALIAS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_neutron_api':
@@ -148,7 +148,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_glance_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H https://\$HOSTADDRESS\$:${keystone_port}/v2.0 -E https://\$HOSTADDRESS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_glance-api.sh -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -E https://\$HOSTALIAS\$:${glance_api_port}/v1 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_dc_ldap':
