@@ -55,12 +55,12 @@ class dc_juniperbackups {
 
   @@file { "${::hostname}-juniperbackup":
     ensure  => directory,
-    path    => "${storagedir}/backups/$::hostname-juniperbackup",
+    path    => "${storagedir}/backups/${::hostname}-juniperbackup",
     require => File["${storagedir}/backups"],
     tag     => 'backups',
   }
 
-  @@nfs::server::export { "${storagedir}/backups/$::hostname-juniperbackup":
+  @@nfs::server::export { "${storagedir}/backups/${::hostname}-juniperbackup":
     ensure  => present,
     require => File["${::hostname}-juniperbackup"],
     clients => "${::ipaddress}(rw,insecure,async,no_root_squash,no_subtree_check)",
