@@ -230,3 +230,6 @@
 [submodule "modules/augeasproviders"]
 	path = modules/augeasproviders
 	url = https://github.com/hercules-team/augeasproviders.git
+[submodule "modules/sysdig"]
+	path = modules/sysdig
+	url = https://github.com/garethr/garethr-sysdig.git
