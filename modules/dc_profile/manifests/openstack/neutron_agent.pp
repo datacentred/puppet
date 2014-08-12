@@ -90,7 +90,8 @@ class dc_profile::openstack::neutron_agent {
     }
 
     class { 'neutron::agents::dhcp':
-      enabled => true,
+      enabled     => true,
+      dhcp_domain => 'ark.datacentred.io',
     }
 
     class { 'neutron::agents::l3':
