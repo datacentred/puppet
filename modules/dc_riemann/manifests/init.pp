@@ -48,6 +48,7 @@ class dc_riemann {
     owner  => 'riemann',
     group  => 'riemann',
     source => 'puppet:///modules/dc_riemann/riemann.whitelist',
+    notify => Service['riemann'],
   }
 }
 
