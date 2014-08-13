@@ -1,0 +1,28 @@
+# Class: dc_nrpe::smartd
+#
+# smartd specific nrpe configuration
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+# [Remember: No empty lines between comments and class definition]
+class dc_nrpe::smartd {
+
+  sudo::conf { 'check_dev_smart':
+    priority => 10,
+    content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_dev_smart',
+  }
+
+  file { '/etc/nagios/nrpe.d/smartd.cfg':
+    ensure  => present,
+    content => 'command[check_ide_smart]=sudo /usr/lib/nagios/plugins/check_dev_smart',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
+  }
+
+}
