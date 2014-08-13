@@ -12,7 +12,7 @@ class dc_profile::openstack::neutron_common {
 
   include dc_profile::auth::sudoers_neutron
 
-  if ( $::dc_hostgroup_neutron_agent == true ) or ( $::dc_hostgroup_neutron_server == true ) {
+  if ( $::dc_hostgroup_neutron_agent != undef ) or ( $::dc_hostgroup_neutron_server != undef ) {
 
     file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
       ensure  => present,
