@@ -22,6 +22,7 @@ class dc_profile {
   contain dc_profile::util::facter
   contain dc_profile::util::firmware
   contain dc_profile::perf::sysdig
+  contain dc_profile::util::grub
 
   if $::is_vagrant == undef {
     contain dc_profile::auth::admins
