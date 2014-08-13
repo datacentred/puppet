@@ -18,6 +18,7 @@ class dc_mdadm {
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/dc_mdadm/mdadm',
+    notify => Exec['/usr/sbin/update-initramfs'],
   }
 
   exec { '/usr/sbin/update-initramfs':
