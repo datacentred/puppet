@@ -91,14 +91,15 @@ class dc_profile::openstack::nova_compute {
     neutron_region_name       => $os_region,
   }
 
-  if defined( Class['dc_profile::mon::icinga_client'] )
-  {
+  if $::dc_hostgroup_nova_compute == true {
+
     file { '/etc/nagios/nrpe.d/nova_compute.cfg':
       ensure  => present,
       content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
+
   }
 
   # Logstash config

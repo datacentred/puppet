@@ -130,8 +130,8 @@ class dc_profile::openstack::neutron_agent {
       use_namespaces => true,
     }
 
-    if defined( Class['dc_profile::mon::icinga_client'])
-    {
+    if $::dc_hostgroup_neutron_node == true {
+
       file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
         ensure  => present,
         content => 'command[check_neutron_dhcp_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-dhcp-agent',

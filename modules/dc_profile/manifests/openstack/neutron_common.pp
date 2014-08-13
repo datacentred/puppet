@@ -12,8 +12,8 @@ class dc_profile::openstack::neutron_common {
 
   include dc_profile::auth::sudoers_neutron
 
-  if defined( Class['::dc_profile::mon::icinga_client'] )
-  {
+  if ( $::dc_hostgroup_neutron_agent == true ) or ( $::dc_hostgroup_neutron_server == true ) {
+
     file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
       ensure  => present,
       content => 'command[check_neutron_vswitch_agent]=/usr/lib/nagios/plugins/check_procs -c 1 -u neutron -a neutron-openvswitch-agent',
@@ -34,10 +34,10 @@ class dc_profile::openstack::neutron_common {
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
+
   }
 
-  if defined( Class['::dc_profile::log::logstash_forwarder'] )
-  {
+  if $::environment == 'production' {
     include dc_profile::openstack::neutron_logstash
   }
 }
