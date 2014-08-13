@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+# 
+# Check SMART status of all available hard drives
+#
+# This script can only be ran in DataCentred puppet environment as
+# it relies on internal facts and binaries in our infrastructure.
+
+import subprocess, sys, re
+
+def exit_program(result, message):
+  sys.stdout.write(message + "\n")
+  sys.exit(0)
+  
+# Get the output from 'facter disks'
+try:
+  facter_proc = subprocess.Popen(['facter', 'disks'], stdout=subprocess.PIPE)
+# Make sure facter ran OK
+except OSError:
+  exit_program(3, "UNKNOWN: couldn't run 'facter disks'")
+
+# Make sure the fact actually exists
+facter_output = facter_proc.stdout.read().rstrip()
+if facter_output == '':
+  exit_program(3, "UNKNOWN: no fact about available disks")
+
+# Get a list of all devices and transform the result into device files
+devices = ["/dev/" + device_name for device_name in facter_output.split(',')]
+
+# This is a list of the smartctl output for each device
+check_results = []
+
+# Run the nagios core plugin check_ide_smart on each device
+for device in devices:
+  check_command = "/usr/lib/nagios/plugins/check_ide_smart -d " + device + " -n"
+
+  try:
+    check_proc = subprocess.Popen(check_command.split(), stdout=subprocess.PIPE)
+  except OSError:
+    # Make sure /usr/lib/nagios/plugins/check_ide_smart ran OK
+    exit_program(3, "UNKNOWN: couldn't run check_ide_smart")
+
+  check_results.append(check_proc.stdout.read().rstrip() + " on device " + device)
+
+
+# Status variables
+state         = ""
+code          = -1
+no_tests      = 0
+no_good_tests = 0 
+no_fail_tests = 0
+warning_devices = []
+critical_devices = []
+
+# We report a bad state if one or more report (WARNING|CRITICAL|UNKNOWN)
+#
+# Precedence rules: UNKNOWN > CRITICAL > WARNING > OK
+#
+# These rules mean that a higher precedence state will override the overall
+# state regardless of the states of the other devices.
+# 
+# The code tries to be smart and calculate the number of test failures.
+# In case we get a bad return without number of tests, we immediately exit
+# and report the result
+for result in check_results:
+  # Set the state and the code
+  if "OK" in result:
+    if state != "CRITICAL" and state != "UNKNOWN" and state != "WARNING":
+      state = "OK"
+      code = 0
+    match = re.search(r"(\d+)/(\d+) tests passed", result)
+    if match != None:
+      no_good_tests += int(match.group(1))
+      no_tests += int(match.group(2))
+  elif "WARNING" in result:
+    if state != "CRITICAL" and state != "UNKNOWN":
+      state = "WARNING"
+      code = 1
+    match = re.search(r"(\d+)/(\d+) tests failed. on device (.+)", result)
+    if match != None:
+      no_fail_tests += int(match.group(1))
+      no_tests += int(match.group(2))
+    else:
+      exit_program(code, result)
+    warning_devices.append(match.group(3))
+  elif "CRITICAL" in result:
+    if state != "UNKNOWN":
+      state = "CRITICAL"
+      code = 2
+    match = re.search(r"(\d+)/(\d+) tests failed. on device (.+)", result)
+    if match != None:
+      no_fail_tests += int(match.group(1))
+      no_tests += int(match.group(2))
+    else:
+      exit_program(code, result)
+    critical_devices.append(match.group(3))
+  elif "UNKNOWN" in result: 
+    exit_program(3, result)
+  else:
+    exit_program(3, "UNKNOWN: check_ide_smart returned unknown status")
+
+if state == "OK":
+  service_status_line = "%s: Operational. (%s/%s tests passed) on all devices" \
+                        % (state, no_good_tests, no_tests)
+elif state == "WARNING":
+  service_status_line = "%s: Harddrive Advisories Detected. %s/%s tests failed on devices: %s" \
+                        % (state, no_fail_tests, no_tests, ",".join(warning_devices))
+elif state == "CRITICAL":
+  service_status_line = "%s: Harddrive PreFailures Detected. %s/%s tests failed on devices: %s" \
+                        % (state, no_fail_tests, no_tests, ",".join(critical_devices))
+elif state == "UNKNOWN": 
+  service_status_line = "UNKNOWN: One or more devices reported unknown state"
+
+exit_program(code, service_status_line)
+
