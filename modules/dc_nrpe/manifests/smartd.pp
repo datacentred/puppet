@@ -25,4 +25,12 @@ class dc_nrpe::smartd {
     notify  => Service['nagios-nrpe-server'],
   }
 
+  file { '/usr/lib/nagios/plugins/check_dev_smart':
+    ensure  => file,
+    source  => 'puppet:///modules/dc_nrpe/check_dev_smart',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => Package['nagios-nrpe-server'],
+  }
 }
