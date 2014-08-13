@@ -11,8 +11,8 @@
 class dc_profile::openstack::neutron_common {
 
   include dc_profile::auth::sudoers_neutron
+  include dc_profile::openstack::neutron_logstash
 
-  # TODO: This still seems a bit hacky
   if $::environment == 'production' {
     file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
       ensure  => present,
@@ -34,7 +34,5 @@ class dc_profile::openstack::neutron_common {
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
-
-    include dc_profile::openstack::neutron_logstash
   }
 }
