@@ -42,7 +42,7 @@ class dc_juniperbackups {
     owner   => root,
     group   => root,
     mode    => '0744',
-    content => template('dc_juniperbackup/juniperbackup.sh.erb'),
+    content => template('dc_juniperbackups/juniperbackup.sh.erb'),
   }
 
   cron { 'nfscopy':
