@@ -91,7 +91,7 @@ class dc_profile::openstack::nova_compute {
     neutron_region_name       => $os_region,
   }
 
-  if $::dc_hostgroup_nova_compute == true {
+  if $::dc_hostgroup_nova_compute != undef {
 
     file { '/etc/nagios/nrpe.d/nova_compute.cfg':
       ensure  => present,

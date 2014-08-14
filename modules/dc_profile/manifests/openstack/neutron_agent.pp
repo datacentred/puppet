@@ -130,7 +130,7 @@ class dc_profile::openstack::neutron_agent {
       use_namespaces => true,
     }
 
-    if $::dc_hostgroup_neutron_node == true {
+    if $::dc_hostgroup_neutron_node != undef {
 
       file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
         ensure  => present,
