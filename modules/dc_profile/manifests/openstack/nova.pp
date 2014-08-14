@@ -107,7 +107,7 @@ class dc_profile::openstack::nova {
   exported_vars::set { 'nova_api_ip':
     value => $management_ip,
   }
-  # Exported variable used by nova-compute
+  # Exported variable used by haproxy for novnc proxy hosts
   exported_vars::set { 'novnc_proxy_host':
     value => $::fqdn,
   }
