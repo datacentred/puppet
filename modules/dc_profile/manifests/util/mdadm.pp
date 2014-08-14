@@ -12,8 +12,6 @@
 #
 class dc_profile::util::mdadm {
 
-  if $::software_raid != undef {
-    include dc_mdadm
-  }
+  include dc_mdadm
 
 }
