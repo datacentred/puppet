@@ -306,7 +306,6 @@ class dc_profile::openstack::haproxy {
     bind_options => [
       'ssl',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
