@@ -102,6 +102,14 @@ class dc_profile::openstack::cinder {
     glance_api_servers => $osapi_public,
   }
 
+  # Set default quotas
+  # Set to 200GB temporarily until we have a larger backing store
+  class { '::cinder::quota':
+    quota_volumes   => '10',
+    quota_snapshots => '10',
+    quota_gigabytes => '200',
+  }
+
   # Nagios config
   include dc_profile::openstack::cinder_nagios
 
