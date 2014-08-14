@@ -67,10 +67,7 @@ class dc_profile::perf::graphite {
   apache::vhost { 'graphite':
     servername                  => "graphite.${::domain}",
     docroot                     => '/opt/graphite/webapp',
-    directories                 => {
-      path    => '/opt/graphite/webapp',
-      headers => 'Set Access-Control-Allow-Origin "*"',
-    },
+    headers => 'Set Access-Control-Allow-Origin "*"',
     port                        => 80,
     wsgi_application_group      => '%{GLOBAL}',
     wsgi_daemon_process         => 'graphite',
