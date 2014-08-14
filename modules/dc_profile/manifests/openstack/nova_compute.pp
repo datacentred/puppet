@@ -25,7 +25,7 @@ class dc_profile::openstack::nova_compute {
   $nova_db_host               = hiera(nova_db_host)
   $nova_db                    = hiera(nova_db)
 
-  $novnc_proxy_host           = get_exported_var('', 'novnc_proxy_host', ['localhost'])
+  $novnc_proxy_host           = 'openstack.datacentred.io'
 
   $keystone_neutron_password  = hiera(keystone_neutron_password)
 

@@ -27,8 +27,9 @@ class dc_profile::openstack::haproxy {
   $neutron_api_servers   = get_exported_var('', 'neutron_api', ['localhost'])
   $nova_api_servers      = get_exported_var('', 'nova_api', ['localhost'])
   $cinder_api_servers    = get_exported_var('', 'cinder_api', ['localhost'])
+  $novnc_proxy_servers   = get_exported_var('', 'novnc_proxy_host', ['localhost'])
 
-  $haproxy_stats_user = hiera(haproxy_stats_user)
+  $haproxy_stats_user     = hiera(haproxy_stats_user)
   $haproxy_stats_password = hiera(haproxy_stats_password)
 
   # Ensure HAProxy is restarted whenever SSL certificates are changed
@@ -61,7 +62,7 @@ class dc_profile::openstack::haproxy {
       'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
-    options    => {
+    options      => {
       'stats'  => [
         'enable',
         'uri /',
@@ -296,4 +297,29 @@ class dc_profile::openstack::haproxy {
     ports             => '80',
     options           => 'check inter 2000 rise 2 fall 5',
   }
+
+  # NoVNC Proxy
+  haproxy::listen { 'novncproxy':
+    ipaddress    => '*',
+    mode         => 'http',
+    ports        => '6080',
+    bind_options => [
+      'ssl',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+    ],
+    options      => {
+      'option'  => ['tcpka', 'tcplog'],
+      'balance' => 'source',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+    },
+  }
+  haproxy::balancermember { 'novncproxy':
+    listening_service => 'novncproxy',
+    server_names      => $novnc_proxy_servers,
+    ipaddresses       => $novnc_proxy_servers,
+    ports             => '6080',
+    options           => 'check inter 2000 rise 2 fall 5',
+  }
+
 }
