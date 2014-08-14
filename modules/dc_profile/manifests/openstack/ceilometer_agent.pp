@@ -27,18 +27,4 @@ class dc_profile::openstack::ceilometer_agent {
 
   class { '::ceilometer::agent::compute': }
 
-  class { '::ceilometer::agent::central': }
-
-  class { '::ceilometer::alarm::notifier': }
-
-  class { '::ceilometer::alarm::evaluator': }
-
-  # Purge 1 month old meters
-  class { '::ceilometer::expirer':
-    time_to_live => '2592000'
-  }
-
-  # Install notification agent
-  class { '::ceilometer::agent::notification': }
-
 }
