@@ -31,7 +31,7 @@ class dc_profile::openstack::ceilometer {
   $os_region = hiera(os_region)
 
   # Hard coded exported variable name
-  $nova_mq_ev                 = 'nova_mq_node'
+  $nova_mq_ev = 'nova_mq_node'
 
   # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
@@ -57,6 +57,27 @@ class dc_profile::openstack::ceilometer {
     keystone_password => $keystone_ceilometer_password,
   }
 
+  # Export variable for use by haproxy to front this
+  # API endpoint
+  exported_vars::set { 'ceilometer_api':
+    value => $::fqdn,
+  }
+
+  class { '::ceilometer::agent::auth':
+    auth_url      => "https://${osapi_public}:5000/v2.0",
+    auth_user     => 'ceilometer',
+    auth_password => $keystone_ceilometer_password,
+    auth_region   => $os_region,
+  }
+
+  class { '::ceilometer::agent::central': }
+
+  # Purge 1 month old meters
+  class { '::ceilometer::expirer':
+    time_to_live => '2592000'
+  }
+
+  # Virtual resource for the Keystone API endpoint creation
   @@ceilometer_endpoint { "${os_region}/ceilometer":
     ensure       => present,
     public_url   => "https://${osapi_public}:${ceilometer_port}",
