@@ -21,6 +21,7 @@ class dc_profile {
   contain dc_profile::util::locale
   contain dc_profile::util::facter
   contain dc_profile::util::firmware
+  contain dc_profile::util::mdadm
   contain dc_profile::perf::sysdig
 
   if $::is_vagrant == undef {
