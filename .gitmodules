@@ -129,7 +129,7 @@
 	url = https://github.com/electrical/puppet-lib-file_concat
 [submodule "modules/ceph"]
 	path = modules/ceph
-	url = https://github.com/stackforge/puppet-ceph
+	url = https://github.com/datacentred/datacentred-ceph
 [submodule "modules/gcc"]
 	path = modules/gcc
 	url = https://github.com/puppetlabs/puppetlabs-gcc
