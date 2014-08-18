@@ -72,6 +72,8 @@ class dc_profile::openstack::ceilometer {
 
   class { '::ceilometer::agent::central': }
 
+  class { '::ceilometer::collector': }
+
   # Purge 1 month old meters
   class { '::ceilometer::expirer':
     time_to_live => '2592000'
