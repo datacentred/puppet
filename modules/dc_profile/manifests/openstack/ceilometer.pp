@@ -47,7 +47,7 @@ class dc_profile::openstack::ceilometer {
 
   class { '::ceilometer::db':
     database_connection  => "mysql://${ceilometer_db_user}:${ceilometer_db_pass}@${ceilometer_db_host}/${ceilometer_db}",
-    require              => Dc_maria::Db[$ceilometer_db]
+    require              => Dc_mariadb::Db[$ceilometer_db]
   }
 
   class { '::ceilometer::api':
