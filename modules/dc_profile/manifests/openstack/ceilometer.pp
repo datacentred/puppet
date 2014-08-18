@@ -78,7 +78,7 @@ class dc_profile::openstack::ceilometer {
   }
 
   # Virtual resource for the Keystone API endpoint creation
-  @@ceilometer_endpoint { "${os_region}/ceilometer":
+  @@keystone_endpoint { "${os_region}/ceilometer":
     ensure       => present,
     public_url   => "https://${osapi_public}:${ceilometer_port}",
     admin_url    => "https://${osapi_public}:${ceilometer_port}",
