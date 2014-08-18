@@ -335,7 +335,7 @@ class dc_profile::openstack::haproxy {
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
-      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
     },
