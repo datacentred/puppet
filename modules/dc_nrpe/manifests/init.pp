@@ -59,7 +59,7 @@ class dc_nrpe (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    source  => 'puppet:///modules/dc_nrpe/dc_common.cfg',
+    content => template('dc_nrpe/dc_common.cfg.erb'),
     notify  => Service['nagios-nrpe-server'],
   }
 
