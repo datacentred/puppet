@@ -51,7 +51,7 @@ class dc_profile::openstack::ceilometer {
   }
 
   class { '::ceilometer::api':
-    keystone_host     => $keystone_host,
+    keystone_host     => $osapi_public,
     keystone_protocol => 'https',
     keystone_user     => 'ceilometer',
     keystone_password => $keystone_ceilometer_password,
