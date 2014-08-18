@@ -152,6 +152,25 @@ class dc_profile::openstack::keystone {
   }
   Keystone_endpoint <<| tag == 'neutron_endpoint' |>>
 
+  # Ceilometer bits
+  keystone_user { 'ceilometer':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_ceilometer_password),
+    email    => $sysmailaddress,
+    tenant   => $os_service_tenant,
+  }
+  keystone_user_role { "ceilometer@${os_service_tenant}":
+    ensure  => present,
+    roles   => 'admin',
+  }
+  keystone_service { 'ceilometer':
+    ensure      => present,
+    type        => 'metering',
+    description => 'Ceilometer Telemetry Service',
+  }
+  Keystone_endpoint <<| tag == 'ceilometer_endpoint' |>>
+
   # Icinga monitoring
   keystone_tenant { 'icinga':
     ensure  => present,
