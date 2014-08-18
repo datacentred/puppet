@@ -2,7 +2,7 @@
 #
 # A rados gateway
 #
-class dc_roll::radosgw {
+class dc_role::radosgw {
 
   include ::dc_profile::radosgw
   contain 'dc_profile::radosgw'
