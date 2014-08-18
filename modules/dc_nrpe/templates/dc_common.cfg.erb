@@ -1,5 +1,5 @@
 command[check_users]=/usr/lib/nagios/plugins/check_users -w 5 -c 10
-command[check_load]=/usr/lib/nagios/plugins/check_load -w 15,10,5 -c 30,25,20
+command[check_load]=/usr/lib/nagios/plugins/check_load -w <%= @processorcount.to_i * 3 %>,<%= @processorcount.to_i * 2 %>,<%= @processorcount.to_i %> -c <%= @processorcount.to_i * 6 %>,<%= @processorcount.to_i * 4 %>,<%= @processorcount.to_i * 2 %>
 command[check_total_procs]=/usr/lib/nagios/plugins/check_procs -w 400 -c 500
 command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w 20% -c 10%
 command[check_puppetagent]=sudo /usr/lib/nagios/plugins/check_puppetagent -w 1860 -c 2700
