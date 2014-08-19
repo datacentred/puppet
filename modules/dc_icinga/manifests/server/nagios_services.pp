@@ -13,6 +13,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Disk Space',
   }
 
+  icinga::service { 'check_dev_smart':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_generic',
+    check_command       => 'check_nrpe_1arg!check_dev_smart',
+    service_description => 'Hard Disk Health',
+  }
+
   icinga::service { 'check_load':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_generic',
