@@ -12,7 +12,9 @@
 #
 class dc_profile::ceph::mon {
 
-  contain ceph::mon
+  include ::ceph::mon
+  contain 'ceph::mon'
+
   contain dc_ceph::exports
   contain dc_ceph::keybackup
 
