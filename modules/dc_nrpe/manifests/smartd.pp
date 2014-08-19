@@ -24,8 +24,8 @@ class dc_nrpe::smartd {
 
   file { '/etc/nagios/nrpe.d/smartd.cfg':
     ensure  => present,
-    content => 'command[check_ide_smart]=sudo /usr/lib/nagios/plugins/check_dev_smart',
-    require => Package['nagios-nrpe-server'],
+    content => 'command[check_dev_smart]=sudo /usr/lib/nagios/plugins/check_dev_smart',
+    require => Package['nagios-nrpe-server', 'smartmontools'],
     notify  => Service['nagios-nrpe-server'],
   }
 
