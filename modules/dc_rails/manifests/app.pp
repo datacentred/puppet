@@ -108,19 +108,21 @@ define dc_rails::app (
   } ->
 
   unicorn::app { $app_name:
-    approot          => $app_home,
-    pidfile          => "${$rundir}unicorn.pid",
-    socket           => "${$rundir}unicorn.sock",
-    user             => $user,
-    config_file      => "${app_home}config/unicorn.rb",
-    logdir           => $logdir,
-    group            => $group,
-    preload_app      => false,
-    rack_env         => $rails_env,
-    secret_key_base  => $secret_key_base,
-    db_password      => $db_password,
-    source           => $unicorn,
-    subscribe        => Vcsrepo[$app_home],
+    approot              => $app_home,
+    pidfile              => "${$rundir}unicorn.pid",
+    socket               => "${$rundir}unicorn.sock",
+    user                 => $user,
+    config_file          => "${app_home}config/unicorn.rb",
+    logdir               => $logdir,
+    group                => $group,
+    preload_app          => false,
+    rack_env             => $rails_env,
+    secret_key_base      => $secret_key_base,
+    db_password          => $db_password,
+    jira_password        => $jira_password,
+    strongbox_passphrase => $strongbox_passphrase,
+    source               => $unicorn,
+    subscribe            => Vcsrepo[$app_home],
   } ->
 
   exec { "rake db:create ${$app_name}":
