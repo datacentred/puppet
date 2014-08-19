@@ -4,7 +4,7 @@
 #
 class dc_role::radosgw {
 
-  include ::dc_profile::radosgw
-  contain 'dc_profile::radosgw'
+  include ::dc_profile::ceph::radosgw
+  contain 'dc_profile::ceph::radosgw'
 
 }
