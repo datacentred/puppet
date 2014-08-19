@@ -34,7 +34,6 @@ def smart_capable(device):
   elif re.search("Device supports SMART and is Disabled", smartctl_output):
     return False
   else:
-    print smartctl_output
     exit_program(3, "UNKNOWN: unexpected output from smartctl -i " + device)
   return True
   
