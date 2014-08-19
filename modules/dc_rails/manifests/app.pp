@@ -24,6 +24,8 @@ define dc_rails::app (
   $password = hiera(rails::user::password)
   $group = hiera(rails::user::name)
   $db_password = hiera(dc_mariadb::maria_root_pw)
+  $jira_password = hiera(jira::stronghold::password)
+  $strongbox_passphrase = hiera(rails::server::stronghold::api_key_passphrase)
   $rails_env = 'production'
   $ruby = '2.1.2'
   $home = "/home/${user}/"
