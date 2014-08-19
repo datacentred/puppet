@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if grep -q <%= @mountpoint %> /proc/mounts; then
-  rsync -rpt --delete /home/<%= @cephdeploy_user %>/bootstrap <%= @mountpoint %>
-  rsync -rpt --delete /home/<%= @cephdeploy_user %>/zapped <%= @mountpoint %>
+  ceph auth list > <%= @mountpoint %>/keys
 else
   msg='Hello from <%= @fqdn %> my ceph backup mounts seem broken, help!'
   echo $msg | mail -s 'Ceph Key Backup Failure' <%= @sos_address %>
 fi
 
+# vim: set syntax=sh ts=2 et:
