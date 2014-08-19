@@ -36,5 +36,6 @@ class dc_nrpe::smartd {
     group   => 'root',
     mode    => '0755',
     require => Package['nagios-nrpe-server', 'smartmontools'],
+    notify  => Service['nagios-nrpe-server'],
   }
 }
