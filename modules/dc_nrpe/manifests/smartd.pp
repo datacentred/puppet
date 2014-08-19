@@ -38,4 +38,14 @@ class dc_nrpe::smartd {
     require => Package['nagios-nrpe-server', 'smartmontools'],
     notify  => Service['nagios-nrpe-server'],
   }
+
+  file { '/usr/lib/nagios/plugins/check_ide_smart':
+    ensure  => file,
+    source  => 'puppet:///modules/dc_nrpe/check_ide_smart',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => Package['nagios-nrpe-server', 'smartmontools'],
+    notify  => Service['nagios-nrpe-server'],
+  }
 }
