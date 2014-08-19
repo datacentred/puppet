@@ -1,17 +1,17 @@
 #!/bin/sh
 
 # Check the remote directory is mounted and mount if it's not there
-if ! grep -q <%= @juniper_backups %>-remote /proc/mounts
+if ! grep -q <%= @juniper_directory %>-remote /proc/mounts
 then
-    if mount <%= @juniper_backups %>-remote
+    if mount <%= @juniper_directory %>-remote
     then
-        rsync -a --delete <%= @juniper_backups %> <%= @juniper_backups %>-remote
+        rsync -a --delete <%= @juniper_directory %> <%= @juniper_directory %>-remote
     else
         echo "Cannot mount remote directory"
         exit 1
     fi
 fi
-if ! umount <%= @juniper_backups %>-remote
+if ! umount <%= @juniper_directory %>-remote
 then
     echo "Cannot unmount remote directory"
     exit 1
