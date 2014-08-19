@@ -12,6 +12,6 @@
 #
 class dc_profile::ceph::osd {
 
-  contain dc_ceph::osd
+  include ::ceph::osd
 
 }
