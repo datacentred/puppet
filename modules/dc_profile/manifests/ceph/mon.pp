@@ -13,10 +13,8 @@
 class dc_profile::ceph::mon {
 
   include ::ceph::mon
-  contain 'ceph::mon'
-
-  contain dc_ceph::exports
-  contain dc_ceph::keybackup
+  include ::dc_ceph::exports
+  include ::dc_ceph::keybackup
 
   Class['ceph::mon'] ->
   Class['dc_ceph::exports'] ->
