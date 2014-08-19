@@ -7,43 +7,62 @@
 
 import subprocess, sys, re
 
-def exit_program(result, message):
+# Exit in expected format for nagios checks
+def exit_program(code, message):
   sys.stdout.write(message + "\n")
-  sys.exit(0)
+  sys.exit(code)
+
+# Run a shell command and return the output
+def run_command(command):
+  try:
+    proc = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+  except OSError:
+    exit_program(3, "UNKNOWN: couldn't run " + command)
+  return proc.stdout.read().rstrip()
+
+# Returns true if a device is smart capable. False otherwise
+def smart_capable(device):
+  smartctl_output = run_command("smartctl -i " + device)
+  result = re.findall("SMART support is: (.*)", smartctl_output)
+  if result:
+    if result[0] != 'Available - device has SMART capability.':
+      return False
+    if result[1] != 'Enabled':
+      return False
+  elif re.search("Device does not support SMART", smartctl_output):
+    return False
+  else:
+    print smartctl_output
+    exit_program(3, "UNKNOWN: unexpected output from smartctl -i " + device)
+  return True
   
 # Get the output from 'facter disks'
-try:
-  facter_proc = subprocess.Popen(['facter', 'disks'], stdout=subprocess.PIPE)
-# Make sure facter ran OK
-except OSError:
-  exit_program(3, "UNKNOWN: couldn't run 'facter disks'")
+facter_output = run_command("facter disks")
 
 # Make sure the fact actually exists
-facter_output = facter_proc.stdout.read().rstrip()
 if facter_output == '':
   exit_program(3, "UNKNOWN: no fact about available disks")
 
 # Get a list of all devices and transform the result into device files
 devices = ["/dev/" + device_name for device_name in facter_output.split(',')]
 
+# Make sure the node's disks have smart capability.
+# If not, return an OK state so we don't get alerting
+for device in devices:
+  if "c0d0" in device or not smart_capable(device):
+    exit_program(0, "OK: (unknown) device has no smart capability or it is disabled")
+
 # This is a list of the smartctl output for each device
 check_results = []
 
 # Run the nagios core plugin check_ide_smart on each device
 for device in devices:
-  check_command = "/usr/lib/nagios/plugins/check_ide_smart -d " + device + " -n"
-
-  try:
-    check_proc = subprocess.Popen(check_command.split(), stdout=subprocess.PIPE)
-  except OSError:
-    # Make sure /usr/lib/nagios/plugins/check_ide_smart ran OK
-    exit_program(3, "UNKNOWN: couldn't run check_ide_smart")
-
-  check_results.append(check_proc.stdout.read().rstrip() + " on device " + device)
-
+  check_output = run_command ("/usr/lib/nagios/plugins/check_ide_smart -d " + device + " -n")
+  # Append to the list of results
+  check_results.append(check_output + " on device " + device)
 
 # Status variables
-state         = ""
+state         = ''
 code          = -1
 no_tests      = 0
 no_good_tests = 0 
@@ -58,6 +77,9 @@ critical_devices = []
 # These rules mean that a higher precedence state will override the overall
 # state regardless of the states of the other devices.
 # 
+# In the case of an unknown state returned from check_ide_smart, we still 
+# return 2 (CRITICAL) code
+# 
 # The code tries to be smart and calculate the number of test failures.
 # In case we get a bad return without number of tests, we immediately exit
 # and report the result
@@ -68,7 +90,7 @@ for result in check_results:
       state = "OK"
       code = 0
     match = re.search(r"(\d+)/(\d+) tests passed", result)
-    if match != None:
+    if match:
       no_good_tests += int(match.group(1))
       no_tests += int(match.group(2))
   elif "WARNING" in result:
@@ -76,27 +98,26 @@ for result in check_results:
       state = "WARNING"
       code = 1
     match = re.search(r"(\d+)/(\d+) tests failed. on device (.+)", result)
-    if match != None:
+    if match:
       no_fail_tests += int(match.group(1))
       no_tests += int(match.group(2))
     else:
       exit_program(code, result)
     warning_devices.append(match.group(3))
   elif "CRITICAL" in result:
-    if state != "UNKNOWN":
-      state = "CRITICAL"
-      code = 2
+    state = "CRITICAL"
+    code = 2
     match = re.search(r"(\d+)/(\d+) tests failed. on device (.+)", result)
-    if match != None:
+    if match:
       no_fail_tests += int(match.group(1))
       no_tests += int(match.group(2))
     else:
       exit_program(code, result)
     critical_devices.append(match.group(3))
   elif "UNKNOWN" in result: 
-    exit_program(3, result)
+    exit_program(2, result)
   else:
-    exit_program(3, "UNKNOWN: check_ide_smart returned unknown status")
+    exit_program(2, "CRITICAL: check_ide_smart returned unknown status")
 
 if state == "OK":
   service_status_line = "%s: Operational. (%s/%s tests passed) on all devices" \
@@ -108,7 +129,7 @@ elif state == "CRITICAL":
   service_status_line = "%s: Harddrive PreFailures Detected. %s/%s tests failed on devices: %s" \
                         % (state, no_fail_tests, no_tests, ",".join(critical_devices))
 elif state == "UNKNOWN": 
-  service_status_line = "UNKNOWN: One or more devices reported unknown state"
+  service_status_line = "CRITICAL: One or more devices reported unknown state"
 
 exit_program(code, service_status_line)
 
