@@ -13,6 +13,10 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_nrpe::smartd {
 
+  package {'smartmontools':
+    ensure => installed
+  }
+
   sudo::conf { 'check_dev_smart':
     priority => 10,
     content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_dev_smart',
@@ -31,6 +35,6 @@ class dc_nrpe::smartd {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => Package['nagios-nrpe-server'],
+    require => Package['nagios-nrpe-server', 'smartmontools'],
   }
 }
