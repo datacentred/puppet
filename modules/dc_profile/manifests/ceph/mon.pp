@@ -12,11 +12,11 @@
 #
 class dc_profile::ceph::mon {
 
-  contain cephdeploy::mon
+  contain ceph::mon
   contain dc_ceph::exports
   contain dc_ceph::keybackup
 
-  Class['cephdeploy::mon'] ->
+  Class['ceph::mon'] ->
   Class['dc_ceph::exports'] ->
   Class['dc_ceph::keybackup']
 
