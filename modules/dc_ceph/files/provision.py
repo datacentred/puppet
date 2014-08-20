@@ -81,16 +81,3 @@ for index in range(0, num):
             print 'ERROR: Unable to create partition {0}'.format(partition)
             sys.exit(1)
 
-    # Check to see if the file system exists and create it if it doesn't
-    try:
-        subprocess.check_call(['xfs_admin', '-l', '{0}{1}'.format(dev, partition)])
-    except:
-        print 'INFO: Creating filesystem on partition {0}'.format(partition)
-        try:
-            subprocess.check_call([
-                'mkfs.xfs', '-f', '{0}{1}'.format(dev, partition)
-            ])
-        except:
-            print 'ERROR: Unable to create file system on partition {0}'.format(index)
-            sys.exit(1)
-
