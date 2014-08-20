@@ -161,7 +161,7 @@ define dc_rails::app (
     owner   => 'root',
     group   => 'root',
     mode    => '0400',
-    notify  => Service["sidekiq_${$app_name}"]
+    notify  => Service["sidekiq_${app_name}"]
   }
 
   service { "sidekiq_${$app_name}":
@@ -169,7 +169,7 @@ define dc_rails::app (
     enable     => true,
     hasrestart => true,
     subscribe  => Unicorn::App[$app_name],
-    require    => File["/etc/init/sidekiq_${$app_name}.conf"],
+    require    => File["/etc/init/sidekiq_${app_name}.conf"],
   }
 
 }
