@@ -160,7 +160,7 @@ define dc_rails::app (
     content => template('dc_rails/sidekiq.upstart.erb'),
     owner   => 'root',
     group   => 'root',
-    mode    => '0555',
+    mode    => '0500',
     notify  => Service["sidekiq_${$app_name}"]
   } ->
 
