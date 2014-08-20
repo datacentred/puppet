@@ -1,6 +1,7 @@
-dc_hostgroup_generic<% -%>
+<% arr = ['dc_hostgroup_generic'] -%>
 <% scope.to_hash.keys.each do |k| -%>
-<% if k =~ /(dc_hostgroup_[\w\d_]+)/ -%>
-<%= ',' + $1 -%>
+<%   if k =~ /(dc_hostgroup_[\w\d_]+)/ -%>
+<%     arr << $1 -%>
+<%   end -%>
 <% end -%>
-<% end -%>
+<%= arr.sort.join(',') %>
