@@ -12,12 +12,13 @@
 #
 # Sample Usage:
 #
-class dc_ceph::keybackup {
+class dc_ceph::keybackup (
+  $primary_mon,
+) {
 
-  if $::hostname == hiera(cephdeploy_primary_mon) {
+  if $::hostname == $primary_mon {
 
     $sos_address      = hiera(sal01_internal_sysmail_address)
-    $cephdeploy_user  = hiera(cephdeploy_user)
     $mountpoint       = '/var/ceph-keybackup'
 
     include ::nfs::client
