@@ -172,9 +172,6 @@
 [submodule "modules/graphite"]
 	path = modules/graphite
 	url = https://github.com/datacentred/puppet-graphite
-[submodule "modules/cephdeploy"]
-	path = modules/cephdeploy
-	url = https://github.com/datacentred/puppet-cephdeploy
 [submodule "modules/logrotate"]
 	path = modules/logrotate
 	url = https://github.com/blkperl/puppet-logrotate.git
