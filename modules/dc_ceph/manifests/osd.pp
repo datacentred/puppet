@@ -34,7 +34,7 @@ class dc_ceph::osd (
   } ->
 
   exec { "/usr/local/bin/journal-provision ${journal_disk} ${num_osds} ${journal_size}": 
-    unless => "[ `sfdisk -l ${journal_disk}|grep ^${journal_disk}|wc -l` -eq ${num_osds} ]",
+    unless => "[ `sgdisk -p ${journal_disk}|grep osd|wc -l` -eq ${num_osds} ]",
   }
 
 }
