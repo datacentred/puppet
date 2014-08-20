@@ -153,6 +153,23 @@ define dc_rails::app (
     refreshonly => true,
     subscribe   => Vcsrepo[$app_home],
     environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
+  } ->
+
+  file { "/etc/init/sidekiq_${app_name}.conf":
+    ensure  => 'present',
+    content => template('dc_rails/sidekiq.upstart.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0400',
+    notify  => Service["sidekiq_${app_name}"]
+  }
+
+  service { "sidekiq_${app_name}":
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    subscribe  => Unicorn::App[$app_name],
+    require    => File["/etc/init/sidekiq_${app_name}.conf"],
   }
 
 }
