@@ -13,9 +13,9 @@
 # Sample Usage:
 #
 class dc_ceph::osd (
-  $ceph_journal_disk,
-  $ceph_journal_size,
-  $ceph_num_osds,
+  $journal_disk,
+  $journal_size,
+  $num_osds,
 ){
 
   Exec {
@@ -33,6 +33,6 @@ class dc_ceph::osd (
     mode   => '0755',
   } ->
 
-  exec { "/usr/local/bin/journal-provision ${ceph_journal_disk} ${ceph_num_osds} ${ceph_journal_size}": }
+  exec { "/usr/local/bin/journal-provision ${journal_disk} ${num_osds} ${journal_size}": }
 
 }
