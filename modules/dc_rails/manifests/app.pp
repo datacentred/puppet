@@ -162,7 +162,7 @@ define dc_rails::app (
     group   => 'root',
     mode    => '0400',
     notify  => Service["sidekiq_${$app_name}"]
-  } ->
+  }
 
   service { "sidekiq_${$app_name}":
     ensure     => running,
