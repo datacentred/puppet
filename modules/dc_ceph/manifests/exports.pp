@@ -10,9 +10,11 @@
 #
 # Sample Usage:
 #
-class dc_ceph::exports {
+class dc_ceph::exports (
+  $primary_mon,
+) {
 
-  if $::hostname == hiera(cephdeploy_primary_mon) {
+  if $::hostname == $primary_mon {
 
     $storagedir = hiera(storagedir)
 
