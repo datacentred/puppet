@@ -155,7 +155,7 @@ define dc_rails::app (
     environment => ["RAILS_ENV=${rails_env}", "DB_PASSWORD='${db_password}'"],
   } ->
 
-  file { "/etc/init/sidekiq_${$app_name}.conf":
+  file { "/etc/init/sidekiq_${app_name}.conf":
     ensure  => 'present',
     content => template('dc_rails/sidekiq.upstart.erb'),
     owner   => 'root',
@@ -164,7 +164,7 @@ define dc_rails::app (
     notify  => Service["sidekiq_${app_name}"]
   }
 
-  service { "sidekiq_${$app_name}":
+  service { "sidekiq_${app_name}":
     ensure     => running,
     enable     => true,
     hasrestart => true,
