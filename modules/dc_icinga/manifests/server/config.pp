@@ -342,6 +342,10 @@ class dc_icinga::server::config {
     description => 'Ceph Object Storage Daemon',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_ceph_rgw':
+    description => 'Ceph Rados Gateway',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
