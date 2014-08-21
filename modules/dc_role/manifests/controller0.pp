@@ -25,7 +25,6 @@ class dc_role::controller0 {
   contain dc_profile::openstack::keystone
   contain dc_profile::openstack::glance
   contain dc_profile::openstack::horizon
-  contain dc_profile::openstack::ceilometer
 
   Class['dc_profile::openstack::keystone_mariadb'] ->
   Class['dc_profile::openstack::keystone_memcached'] ->
@@ -37,7 +36,10 @@ class dc_role::controller0 {
   Class['dc_profile::openstack::glance_registry_db'] ->
   Class['dc_profile::openstack::glance']
 
-  Class['dc_profile::openstack::ceilometer_db'] ->
-  Class['dc_profile::openstack::ceilometer']
+  service { ['ceilometer-collector', 'ceilometer-api', 'ceilometer-agent-central']:
+    ensure    => stopped,
+    hasstatus => true,
+    enable    => false,
+  }
 
 }
