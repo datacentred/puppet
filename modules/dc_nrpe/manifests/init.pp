@@ -90,5 +90,6 @@ class dc_nrpe (
   contain dc_nrpe::nova_server
   contain dc_nrpe::logstash
   contain dc_nrpe::smartd
+  contain dc_nrpe::ceph
 
 }
