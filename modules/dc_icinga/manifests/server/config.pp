@@ -334,6 +334,10 @@ class dc_icinga::server::config {
     description => 'APC PDU',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_ceph_mon':
+    description => 'Ceph Monitor',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 

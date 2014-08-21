@@ -511,4 +511,19 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_cinder_api_connect',
     service_description => 'Cinder API Connection',
   }
+
+  #icinga::service { 'check_ceph_health':
+  #  use                 => 'dc_service_generic',
+  #  hostgroup_name      => 'dc_hostgroup_ceph_mon',
+  #  check_command       => 'check_nrpe_1arg!check_ceph_health',
+  #  service_description => 'Ceph Cluster Health',
+  #}
+
+  #icinga::service { 'check_ceph_mon':
+  #  use                 => 'dc_service_generic',
+  #  hostgroup_name      => 'dc_hostgroup_ceph_mon',
+  #  check_command       => 'check_nrpe_1arg!check_ceph_mon',
+  #  service_description => 'Ceph Monitor Status',
+  #}
+
 }
