@@ -538,5 +538,6 @@ class dc_icinga::server::nagios_services {
     hostgroup_name      => 'dc_hostgroup_ceph_rgw',
     check_command       => 'check_nrpe_1arg!check_ceph_rgw',
     service_description => 'Ceph Rados Gatway Status',
+  }
 
 }
