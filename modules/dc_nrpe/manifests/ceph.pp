@@ -8,11 +8,11 @@ class dc_nrpe::ceph {
   }
 
   file { '/usr/lib/nagios/plugins/check_ceph_health':
-    source => 'puppet://modules/dc_nrpe/check_ceph_health',
+    source => 'puppet:///modules/dc_nrpe/check_ceph_health',
   }
 
   file { '/usr/lib/nagios/plugins/check_ceph_mon':
-    source => 'puppet://modules/dc_nrpe/check_ceph_mon',
+    source => 'puppet:///modules/dc_nrpe/check_ceph_mon',
   }
 
 }
