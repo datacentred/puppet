@@ -15,4 +15,12 @@ class dc_nrpe::ceph {
     source => 'puppet:///modules/dc_nrpe/check_ceph_mon',
   }
 
+  file { '/usr/lib/nagios/plugins/check_ceph_osd':
+    source => 'puppet:///modules/dc_nrpe/check_ceph_osd',
+  }
+
+  file { '/usr/lib/nagios/plugins/check_ceph_rgw':
+    source => 'puppet:///modules/dc_nrpe/check_ceph_rgw',
+  }
+
 }
