@@ -24,7 +24,7 @@ class dc_role::compute_node {
   service { 'ceilometer-agent-compute':
     ensure    => stopped,
     hasstatus => true,
-    enable    => true,
+    enable    => false,
   }
 
 }
