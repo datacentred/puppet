@@ -338,6 +338,10 @@ class dc_icinga::server::config {
     description => 'Ceph Monitor',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_ceph_osd':
+    description => 'Ceph Object Storage Daemon',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 

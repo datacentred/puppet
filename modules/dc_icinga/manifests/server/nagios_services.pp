@@ -526,4 +526,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'Ceph Monitor Status',
   }
 
+  icinga::service { 'check_ceph_osd':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_ceph_osd',
+    check_command       => 'check_nrpe_1arg!check_ceph_osd',
+    service_description => 'Ceph Object Storage Daemon Status',
+  }
+
 }
