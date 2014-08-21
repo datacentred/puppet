@@ -3,3 +3,5 @@ command[check_load]=/usr/lib/nagios/plugins/check_load -w <%= @processorcount.to
 command[check_total_procs]=/usr/lib/nagios/plugins/check_procs -w 400 -c 500
 command[check_all_disks]=/usr/lib/nagios/plugins/check_disk -w 20% -c 10%
 command[check_puppetagent]=sudo /usr/lib/nagios/plugins/check_puppetagent -w 1860 -c 2700
+command[check_ceph_health]=/usr/lib/nagios/plugins/check_ceph_health
+command[check_ceph_mon]=/usr/lib/nagios/plugins/check_ceph_mon -H <%= @ipaddress %> -I <%= @hostname %>
