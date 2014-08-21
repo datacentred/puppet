@@ -5,6 +5,8 @@
 class dc_profile::ceph::radosgw {
 
   include ::ceph::radosgw
+  include ::dc_icinga::hostgroup_ceph_rgw
+
   contain 'ceph::radosgw'
 
 }
