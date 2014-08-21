@@ -36,4 +36,10 @@ class dc_role::controller0 {
   Class['dc_profile::openstack::glance_registry_db'] ->
   Class['dc_profile::openstack::glance']
 
+  service { ['ceilometer-collector', 'ceilometer-api', 'ceilometer-agent-central']:
+    ensure    => stopped,
+    hasstatus => true,
+    enable    => false,
+  }
+
 }
