@@ -18,10 +18,8 @@ class dc_nrpe (
 ){
 
   include dc_profile::net::xinetd
-
-  package { 'nagios-nrpe-server':
-    ensure  => installed,
-  }
+  
+  contain dc_nrpe::install
 
   file { '/etc/nagios/nrpe.cfg':
     ensure  => file,
