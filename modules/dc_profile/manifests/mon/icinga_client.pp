@@ -12,11 +12,14 @@
 #
 class dc_profile::mon::icinga_client {
 
-  $icinga_ip = hiera(icinga_ip)
+  include dc_nrpe::install
 
-  class { '::dc_nrpe':
-    allowed_hosts => "127.0.0.1 ${icinga_ip}/32",
-  } ->
-  class { '::dc_icinga::client': }
+  if $::environment == 'production' {
+    $icinga_ip = hiera(icinga_ip)
+    class { '::dc_nrpe':
+      allowed_hosts => "127.0.0.1 ${icinga_ip}/32",
+    } ->
+    class { '::dc_icinga::client': }
+  }
 
 }
