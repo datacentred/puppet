@@ -92,7 +92,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_nova-instance.sh -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -E https://\$HOSTALIAS\$:${nova_osapi_port}/v2 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password} -N icinga -I CirrOS\\ 0.3.2\\ x86_64 -F m1.tiny -r\" -e 550 -t 60 -i 600"
+    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --image_name CirrOS\ 0.3.2\ x86_64 --flavor_name m1.tiny --force_delete\" -e 900 -t 180 -i 600"
   }
 
   icinga::command { 'check_nova_api_connect':
@@ -160,7 +160,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_cinder_volume':
-    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}\" -e 550 -t 60 -i 600"
+    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}\" -e 900 -t 180 -i 600"
   }
 
   icinga::command { 'check_cinder_api_connect':
