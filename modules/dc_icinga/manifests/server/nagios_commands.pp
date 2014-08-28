@@ -28,6 +28,9 @@ class dc_icinga::server::nagios_commands {
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap_suffix)
+  $haproxy_stats_user = hiera(haproxy_stats_user)
+  $haproxy_stats_password = hiera(haproxy_stats_password)
+
 
   ######################################################################
   # Commands
@@ -92,7 +95,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --image_name CirrOS\ 0.3.2\ x86_64 --flavor_name m1.tiny --force_delete\" -e 900 -t 180 -i 600"
+    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --image_name CirrOS\\ 0.3.2\\ x86_64 --flavor_name m1.tiny --force_delete\" -e 900 -t 180 -i 600"
   }
 
   icinga::command { 'check_nova_api_connect':
@@ -166,6 +169,11 @@ class dc_icinga::server::nagios_commands {
   icinga::command { 'check_cinder_api_connect':
     command_line => "/usr/lib/nagios/plugins/check_cinder-api.sh -H https://\$HOSTALIAS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
+
+  icinga::command { 'check_haproxy':
+    command_line => "/usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/;csv\" -U ${haproxy_stats_user} -P ${haproxy_stats_password}"
+  }
+
 
 }
 

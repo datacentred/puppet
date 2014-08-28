@@ -381,6 +381,10 @@ class dc_icinga::server::config {
     description => 'Ceph Rados Gateway',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_haproxy':
+    description => 'HA Proxy Node',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
