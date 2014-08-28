@@ -11,7 +11,8 @@ class dc_collectd::agent {
   # Compile array of interface names.  If it's a bridge or OVS
   # interface then it'll have had the hyphen swapped out for an underscore
   # by Facter.  We need to change that back before we do anything else.
-  $_interfaces = regsubst(regsubst(split($::interfaces, ','), 'br_', 'br-', 'G'), 'ovs_', 'ovs-', 'G')
+  # Remove any of the Openstack internal interfaces
+  $_interfaces = reject(regsubst(regsubst(split($::interfaces, ','), 'br_', 'br-', 'G'), 'ovs_', 'ovs-', 'G'), '^qvo.*|^qvb.*|^tap.*|^qbr.*')
 
   class { 'collectd::plugin::load': }
   class { 'collectd::plugin::memory': }
@@ -24,7 +25,7 @@ class dc_collectd::agent {
 
   # Get all our mount points into an array
   $mounts_array = split($::mounts, ',')
-  
+
   class { 'collectd::plugin::df':
     mountpoints => $mounts_array
   }
