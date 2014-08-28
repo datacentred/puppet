@@ -540,4 +540,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'Ceph Rados Gateway Status',
   }
 
+  icinga::service { 'check_haproxy':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_haproxy',
+    check_command       => 'check_haproxy',
+    service_description => 'HAProxy Status',
+  }
+
 }
