@@ -1,9 +1,9 @@
 #
 class dc_profile::db::galera {
 
-  $galera_servers = hiera(dcdbs_galera_cluster)
+  $galera_servers = hiera(galera_cluster_nodes)
   $galera_master = $galera_servers[0]
-  $root_password = hiera(dcdbs_galera_root_pw)
+  $root_password = hiera(galera_cluster_root_pw)
 
   file { '/srv/mysql':
     ensure  => directory,
@@ -20,7 +20,7 @@ class dc_profile::db::galera {
     galera_master         => $galera_master,
     galera_servers        => $galera_servers,
     vendor_type           => 'mariadb',
-    root_password         => 'dcsal01',
+    root_password         => $root_password,
     configure_firewall    => false,
     configure_repo        => true,
     local_ip              => $::ipaddress_eth1,
