@@ -66,7 +66,7 @@ class dc_icinga::server::config {
 
   # Change defaults for nrpe checks
   # Increase timeout and send unknown on socket timeout
-  file { '/etc/nagios-plugins/check_nrpe.cfg':
+  file { '/etc/nagios-plugins/config/check_nrpe.cfg':
     ensure => file,
     owner  => 'root',
     group  => 'root',
