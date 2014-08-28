@@ -233,7 +233,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_neutron_server_netstat':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_nrpe',
     hostgroup_name      => 'dc_hostgroup_neutron_server',
     check_command       => 'check_nrpe_1arg!check_neutron_server_netstat',
     service_description => 'Neutron Server Netstat',
