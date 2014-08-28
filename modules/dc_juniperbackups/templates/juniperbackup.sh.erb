@@ -5,7 +5,7 @@ if ! grep -q <%= @juniper_directory %>-remote /proc/mounts
 then
     if mount <%= @juniper_directory %>-remote
     then
-        rsync -a --delete <%= @juniper_directory %> <%= @juniper_directory %>-remote
+        rsync -a --no-o --no-g --delete <%= @juniper_directory %>/ <%= @juniper_directory %>-remote/
     else
         echo "Cannot mount remote directory"
         exit 1
