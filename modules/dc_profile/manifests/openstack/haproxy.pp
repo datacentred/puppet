@@ -324,29 +324,29 @@ class dc_profile::openstack::haproxy {
   }
 
   # Ceilometer
-  haproxy::listen { 'ceilometer':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8777',
-    bind_options => [
-      'ssl',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
-    ],
-    options      => {
-      'option'  => ['tcpka', 'tcplog'],
-      'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
-    },
-  }
-  haproxy::balancermember { 'ceilometer':
-    listening_service => 'ceilometer',
-    server_names      => $ceilometer_api_servers,
-    ipaddresses       => $ceilometer_api_servers,
-    ports             => '8777',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
+  #haproxy::listen { 'ceilometer':
+  #  ipaddress    => '*',
+  #  mode         => 'http',
+  #  ports        => '8777',
+  #  bind_options => [
+  #    'ssl',
+  #    'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+  #    'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+  #    'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+  #  ],
+  #  options      => {
+  #    'option'  => ['tcpka', 'tcplog'],
+  #    'balance' => 'source',
+  #    'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+  #  },
+  #}
+  #haproxy::balancermember { 'ceilometer':
+  #  listening_service => 'ceilometer',
+  #  server_names      => $ceilometer_api_servers,
+  #  ipaddresses       => $ceilometer_api_servers,
+  #  ports             => '8777',
+  #  options           => 'check inter 2000 rise 2 fall 5',
+  #}
 
   include dc_icinga::hostgroup_haproxy
 }
