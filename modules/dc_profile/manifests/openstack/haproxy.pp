@@ -348,4 +348,5 @@ class dc_profile::openstack::haproxy {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
+  include dc_icinga::hostgroup_haproxy
 }
