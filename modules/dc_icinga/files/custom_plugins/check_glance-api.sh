@@ -119,8 +119,8 @@ if [[ ! "$IMAGES" == *status* ]]; then
     echo "Unable to list images"
     exit $STATE_CRITICAL
 else
-    if [ `echo ${TIME}'>'10 | bc -l` -gt 0 ]; then
-        echo "Get images took 10 seconds, it's too long.|response_time=${TIME}"
+    if [ `echo ${TIME}'>'30 | bc -l` -gt 0 ]; then
+        echo "Get images took 30 seconds, it's too long.|response_time=${TIME}"
         exit $STATE_WARNING
     else
         echo "Get images, Glance API is working: list $N_IMAGES images in $TIME seconds.|response_time=${TIME}"
