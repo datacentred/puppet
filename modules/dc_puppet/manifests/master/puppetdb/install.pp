@@ -15,7 +15,7 @@ class dc_puppet::master::puppetdb::install {
   include dc_puppet::params
 
   package { 'puppetdb-terminus':
-    ensure => installed,
+    ensure => $dc_puppet::params::puppetdb_version,
   }
 
 }

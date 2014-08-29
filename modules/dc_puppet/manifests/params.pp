@@ -1,17 +1,22 @@
-# Class: dc_puppet::params
+# == Class: dc_puppet::params
 #
 # Puppet parameters
 #
-# Parameters:
+# === Parameters
 #
-# Actions:
+# [*version*]
+#   Version of puppet master and agent packages to install
 #
-# Requires:
+# [*puppetdb_version*]
+#   Version of puppetdb we are running
 #
-# Sample Usage:
+# [*puppetdb_url*]
+#   FQDN of the puppetdb server
 #
 class dc_puppet::params (
   $version = 'latest',
+  $puppetdb_version,
+  $puppetdb_url,
 ) {
 
   # Puppet configuration directory
@@ -73,9 +78,6 @@ class dc_puppet::params (
 
   # Which store configs backend to use
   $storeconfigs_backend = 'puppetdb'
-
-  # Where puppet db lives
-  $puppetdb_url         = "puppetdb.${::domain}"
 
   # Where foreman lives
   # TODO: unhack me
