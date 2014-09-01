@@ -191,7 +191,5 @@ class dc_profile::openstack::keystone {
   include dc_icinga::hostgroup_keystone
 
   # Logstash config
-  if $::environment == 'production' {
-    include dc_profile::openstack::keystone_logstash
-  }
+  include dc_profile::openstack::keystone_logstash
 }

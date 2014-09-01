@@ -114,8 +114,6 @@ class dc_profile::openstack::cinder {
   include dc_profile::openstack::cinder_nagios
 
   # Logstash config
-  if $::environment == 'production' {
-    include dc_profile::openstack::cinder_logstash
-  }
+  include dc_profile::openstack::cinder_logstash
 
 }

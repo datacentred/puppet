@@ -132,8 +132,6 @@ class dc_profile::openstack::nova {
   include dc_profile::openstack::nova_nagios
 
   # Logstash config
-  if $::environment == 'production' {
-    include dc_profile::openstack::nova_logstash
-  }
+  include dc_profile::openstack::nova_logstash
 
 }
