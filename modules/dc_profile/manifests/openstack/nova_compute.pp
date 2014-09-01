@@ -104,6 +104,8 @@ class dc_profile::openstack::nova_compute {
   }
 
   # Logstash config
-  include dc_profile::openstack::nova_compute_logstash
+  if $::environment == 'production' {
+    include dc_profile::openstack::nova_compute_logstash
+  }
 
 }

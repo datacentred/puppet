@@ -42,6 +42,8 @@ class dc_profile::openstack::horizon {
   }
 
   # Logstash config
-  include dc_profile::openstack::horizon_logstash
+  if $::environment == 'production' {
+    include dc_profile::openstack::horizon_logstash
+  }
 
 }
