@@ -92,7 +92,10 @@ class dc_profile::openstack::nova_compute {
     neutron_region_name       => $os_region,
   }
 
-  if $::dc_hostgroup_nova_compute != undef {
+  if $::environment == 'production' {
+
+    # Logstash config
+    include dc_profile::openstack::nova_compute_logstash
 
     file { '/etc/nagios/nrpe.d/nova_compute.cfg':
       ensure  => present,
@@ -100,10 +103,6 @@ class dc_profile::openstack::nova_compute {
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
-
   }
-
-  # Logstash config
-  include dc_profile::openstack::nova_compute_logstash
 
 }

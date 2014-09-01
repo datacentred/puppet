@@ -12,7 +12,9 @@ class dc_profile::openstack::neutron_common {
 
   include dc_profile::auth::sudoers_neutron
 
-  if ( $::dc_hostgroup_neutron_agent != undef ) or ( $::dc_hostgroup_neutron_server != undef ) {
+  if $::environment == 'production' {
+
+    include dc_profile::openstack::neutron_logstash
 
     file { '/etc/nagios/nrpe.d/os_neutron_vswitch_agent.cfg':
       ensure  => present,
@@ -34,10 +36,5 @@ class dc_profile::openstack::neutron_common {
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
-
-  }
-
-  if $::environment == 'production' {
-    include dc_profile::openstack::neutron_logstash
   }
 }
