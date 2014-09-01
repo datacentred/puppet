@@ -83,7 +83,9 @@ class dc_profile::openstack::glance {
 
   include dc_icinga::hostgroup_glance
 
-  # Logstash config
-  include dc_profile::openstack::glance_logstash
+  if $::environment == 'production' {
+    # Logstash config
+    include dc_profile::openstack::glance_logstash
+  }
 
 }
