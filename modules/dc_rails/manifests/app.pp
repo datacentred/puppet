@@ -18,6 +18,7 @@ define dc_rails::app (
   $ssl_key,
   $ssl_cert,
   $secret_key_base,
+  $rails_env,
 ) {
 
   $user = hiera(rails::user::name)
@@ -26,7 +27,6 @@ define dc_rails::app (
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $jira_password = hiera(jira::stronghold::password)
   $strongbox_passphrase = hiera(rails::server::stronghold::api_key_passphrase)
-  $rails_env = 'production'
   $ruby = '2.1.2'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/"
