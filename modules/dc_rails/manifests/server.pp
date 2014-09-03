@@ -26,7 +26,7 @@ class dc_rails::server {
   include ::redis
   class { '::nginx': manage_repo => false }
 
-  class { '::dc_mariadb': maria_root_pw => '' }
+  class { '::dc_mariadb': maria_root_pw => undef }
 
   user { $user :
     ensure     => present,
