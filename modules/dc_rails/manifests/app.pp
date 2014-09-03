@@ -29,7 +29,7 @@ define dc_rails::app (
   $strongbox_passphrase = hiera(rails::server::stronghold::api_key_passphrase)
   $ruby = '2.1.2'
   $home = "/home/${user}/"
-  $app_home = "${home}${app_name}/"
+  $app_home = "${home}${app_name}/current/"
   $bundler = "${home}.rbenv/shims/bundle"
   $unicorn = "${home}.rbenv/shims/unicorn"
   $log_base = '/var/log/rails/'
