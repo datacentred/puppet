@@ -19,7 +19,7 @@ class dc_profile::rails::stronghold {
     ssl_key         => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.key',
     ssl_cert        => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.crt',
     secret_key_base => hiera(rails::server::stronghold::secret_key_base),
-    rails_env       => 'production',
+    rails_env       => 'staging',
   }
 
 }
