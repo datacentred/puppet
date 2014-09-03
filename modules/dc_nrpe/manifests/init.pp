@@ -6,7 +6,7 @@
 #
 # Actions:
 #
-# Requires:
+# Requires: puppetlabs-xinetd
 #
 # Sample Usage:
 #
@@ -17,39 +17,39 @@ class dc_nrpe (
   $ensure_nagios = stopped,
 ){
 
-  include dc_profile::net::xinetd
-
   package { 'nagios-nrpe-server':
     ensure  => installed,
-  }
-
-  file { '/etc/nagios/nrpe.cfg':
-    ensure  => file,
-    require => Package['nagios-nrpe-server'],
-    before  => File['/etc/xinetd.d/nrpe'],
-    path    => '/etc/nagios/nrpe.cfg',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/dc_nrpe/nrpe.cfg',
-    notify  => Service['nagios-nrpe-server'],
   }
 
   service { 'nagios-nrpe-server':
     ensure  => stopped,
     require => Package['nagios-nrpe-server'],
-    before  => File['/etc/xinetd.d/nrpe'],
     enable  => false,
   }
 
-  file { '/etc/xinetd.d/nrpe':
+  xinetd::service { 'nrpe':
+    server         => '/usr/sbin/nrpe',
+    port           => '5666',
+    flags          => 'REUSE',
+    service_type   => 'UNLISTED',
+    socket_type    => 'stream',
+    wait           => 'no',
+    user           => 'nagios',
+    group          => 'nagios',
+    server_args    => '-c /etc/nagios/nrpe.cfg --inetd',
+    log_on_failure => '+= USERID',
+    disable        => 'no',
+    only_from      => $allowed_hosts,
+  }
+
+  file { '/etc/nagios/nrpe.cfg':
     ensure  => file,
-    require => Package['xinetd'],
-    path    => '/etc/xinetd.d/nrpe',
+    require => Package['nagios-nrpe-server'],
+    path    => '/etc/nagios/nrpe.cfg',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('dc_nrpe/nrpe.xinetd.erb'),
+    source  => 'puppet:///modules/dc_nrpe/nrpe.cfg',
     notify  => Service['xinetd'],
   }
 
@@ -60,7 +60,7 @@ class dc_nrpe (
     group   => 'root',
     mode    => '0644',
     content => template('dc_nrpe/dc_common.cfg.erb'),
-    notify  => Service['nagios-nrpe-server'],
+    notify  => Service['xinetd'],
   }
 
   # Puppet checks
