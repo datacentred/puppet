@@ -35,7 +35,7 @@ class dc_profile::openstack::galera {
     root_password      => $root_password,
     configure_firewall => false,
     configure_repo     => true,
-    local_ip           => $::ipaddress_eth0,
+    local_ip           => $::ipaddress_bond0,
     bind_address       => '*',
     require            => File['/var/lib/mysql'],
     override_options   => {
