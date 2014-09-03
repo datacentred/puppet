@@ -233,3 +233,9 @@
 [submodule "modules/ceilometer"]
 	path = modules/ceilometer
 	url = https://github.com/datacentred/puppet-ceilometer.git
+[submodule "modules/galera"]
+	path = modules/galera
+	url = https://github.com/michaeltchapman/puppet-galera.git
+[submodule "modules/xinetd"]
+	path = modules/xinetd
+	url = https://github.com/puppetlabs/puppetlabs-xinetd.git
