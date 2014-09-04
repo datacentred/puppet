@@ -63,7 +63,7 @@ class dc_profile::openstack::neutron_server {
       auth_protocol          => 'https',
       auth_password          => $keystone_neutron_password,
       database_connection    => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
-      database_max_pool_size => '30',
+      database_max_pool_size => '50',
       mysql_module           => '2.2',
   }
 
