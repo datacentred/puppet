@@ -33,7 +33,7 @@ class dc_nrpe::smartd {
   {
     file { '/etc/nagios/smart_devices':
       ensure  => present,
-      content => $::disks
+      content => $::disks,
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
