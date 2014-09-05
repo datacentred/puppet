@@ -31,9 +31,9 @@ class dc_nrpe::smartd {
 
   if $::disks
   {
-    file { '/usr/lib/nagios/plugins/check_dev_smart':
+    file { '/etc/nagios/smart_devices':
       ensure  => present,
-      content  => $::disks,
+      content => $::disks
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
@@ -42,7 +42,7 @@ class dc_nrpe::smartd {
     }
   }
 
-  file { '/etc/nagios/smart_devices':
+  file { '/usr/lib/nagios/plugins/check_dev_smart':
     ensure  => file,
     source  => 'puppet:///modules/dc_nrpe/check_dev_smart',
     owner   => 'root',
