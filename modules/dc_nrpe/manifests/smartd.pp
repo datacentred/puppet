@@ -32,7 +32,7 @@ class dc_nrpe::smartd {
   if $::disks
   {
     file { '/etc/nagios/smart_devices':
-      ensure  => present,
+      ensure  => file,
       content => "$::disks",
       owner   => 'root',
       group   => 'root',
