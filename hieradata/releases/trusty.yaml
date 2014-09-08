@@ -1,4 +1,3 @@
-dc_puppet::params::version: 'latest'
 repo_list:
   trusty_mirror:
     location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
