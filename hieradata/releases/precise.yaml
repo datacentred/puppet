@@ -1,5 +1,4 @@
 ---
-dc_puppet::params::version: '3.4.3-1puppetlabs1'
 repo_list:
   precise_mirror:
     location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
