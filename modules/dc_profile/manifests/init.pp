@@ -1,6 +1,6 @@
 # Class: dc_profile
 #
-# Base image, all host receive these bits
+# Base image, all host receive these components
 #
 # Parameters:
 #
