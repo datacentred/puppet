@@ -29,6 +29,19 @@ class dc_nrpe::smartd {
     notify  => Service['nagios-nrpe-server'],
   }
 
+  if $::disks
+  {
+    file { '/etc/nagios/smart_devices':
+      ensure  => file,
+      content => "$::disks",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      require => Package['nagios-nrpe-server', 'smartmontools'],
+      notify  => Service['nagios-nrpe-server'],
+    }
+  }
+
   file { '/usr/lib/nagios/plugins/check_dev_smart':
     ensure  => file,
     source  => 'puppet:///modules/dc_nrpe/check_dev_smart',

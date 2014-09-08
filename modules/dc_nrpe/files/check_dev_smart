@@ -5,7 +5,7 @@
 # This script can only be ran in DataCentred puppet environment as
 # it relies on internal facts and binaries in our infrastructure.
 
-import subprocess, sys, re
+import subprocess, sys, re, os.path
 
 # Exit in expected format for nagios checks
 def exit_program(code, message):
@@ -36,9 +36,14 @@ def smart_capable(device):
   else:
     exit_program(3, "UNKNOWN: unexpected output from smartctl -i " + device)
   return True
+
+# Make sure the file with the list of devices exists
+if os.path.isfile('/etc/nagios/smart_devices') == False:
+  exit_program(3, "UNKNOWN: /etc/nagios/smart_devices doesn't exist")
   
 # Get the output from 'facter disks'
-facter_output = run_command("facter disks")
+with open('/etc/nagios/smart_devices') as f:
+  facter_output = f.read()
 
 # Make sure the fact actually exists
 if facter_output == '':
