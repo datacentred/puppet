@@ -28,8 +28,14 @@ class dc_profile::openstack::rabbitmq {
   class { '::rabbitmq':
     wipe_db_on_cookie_change => true,
     config_cluster           => true,
+    admin_enable             => true,
     cluster_nodes            => $cluster_nodes,
     cluster_node_type        => $cluster_node_type,
+  }
+
+  exec { 'configure-ha-queue-policy':
+    command     => '/usr/sbin/rabbitmqctl set_policy HA \'^(?!amq\\.).*\' \'{"ha-mode": "all"}\'',
+    require     => Class['::rabbitmq'],
   }
 
 }
