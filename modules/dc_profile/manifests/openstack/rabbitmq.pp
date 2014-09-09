@@ -42,6 +42,13 @@ class dc_profile::openstack::rabbitmq {
     group  => 'rabbitmq',
   }
 
+  # rabbitmq application account needs puppet group
+  # membership in order to use the latter's SSL keys
+  user { 'rabbitmq':
+    groups  => 'puppet',
+    require => Class['::rabbitmq'],
+  }
+
   class { '::rabbitmq':
     wipe_db_on_cookie_change     => true,
     config_cluster               => true,
@@ -53,7 +60,7 @@ class dc_profile::openstack::rabbitmq {
     ssl_cacert                   => '/var/lib/puppet/ssl/certs/ca.pem',
     ssl_cert                     => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
     ssl_key                      => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
-    ssl_verify                   => true,
+    ssl_verify                   => 'verify_peer',
     ssl_fail_if_no_peer_cert     => true,
     environment_variables        => {
       'RABBITMQ_NODE_IP_ADDRESS' => $mgmt_ip,
