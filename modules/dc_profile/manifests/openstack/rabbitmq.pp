@@ -15,7 +15,7 @@ class dc_profile::openstack::rabbitmq {
   $osdbmq_rabbitmq_user = hiera(osdbmq_rabbitmq_user)
   $osdbmq_rabbitmq_pw = hiera(osdbmq_rabbitmq_pw)
 
-  $mgmt_ip = $::ipaddress_eth1
+  $mgmt_ip = $::ipaddress_bond0
 
   # Return just the hostname from the FQDN stored in Hiera
   $cluster_nodes = regsubst(hiera(osdbmq_members), '\.(.*)', '', 'G')
