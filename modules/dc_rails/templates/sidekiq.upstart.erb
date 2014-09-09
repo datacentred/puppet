@@ -8,5 +8,6 @@ chdir <%= @app_home %>
 
 env DB_PASSWORD=<%= @db_password %>
 env RAILS_ENV=<%= @rails_env %>
+env JIRA_PASSWORD=<%= @jira_password %>
 
 exec <%= @home %>/.rbenv/shims/bundle exec sidekiq
