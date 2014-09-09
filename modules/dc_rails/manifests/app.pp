@@ -172,4 +172,12 @@ define dc_rails::app (
     require    => File["/etc/init/sidekiq_${app_name}.conf"],
   }
 
+  service { "clockwork_${app_name}":
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    subscribe  => Unicorn::App[$app_name],
+    require    => File["/etc/init/clockwork_${app_name}.conf"],
+  }
+
 }
