@@ -13,5 +13,6 @@
 class dc_role::osdbmq {
 
   contain dc_profile::openstack::galera
+  contain dc_profile::openstack::rabbitmq
 
 }
