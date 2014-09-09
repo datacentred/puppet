@@ -6,4 +6,4 @@ setgid rails
 
 chdir <%= @app_home %>
 
-exec <%= @home %>/.rbenv/shims/bundle exec clockwork <%= @home %>/clock.rb
+exec <%= @home %>/.rbenv/shims/bundle exec clockwork <%= @app_home %>/clock.rb
