@@ -30,14 +30,9 @@ class dc_profile::openstack::rabbitmq {
 
   # Sit our message queues on some SSD shiz
   file { '/srv/rabbitmq':
-    ensure  => directory,
-    recurse => true,
-  }
-
-  file { '/var/lib/rabbitmq':
-    ensure  => link,
-    target  => '/srv/rabbitmq',
-    require => File['/srv/rabbitmq'],
+    ensure => directory,
+    owner  => 'rabbitmq',
+    group  => 'rabbitmq',
   }
 
   class { '::rabbitmq':
@@ -53,17 +48,17 @@ class dc_profile::openstack::rabbitmq {
     ssl_key                  => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
     ssl_verify               => true,
     ssl_fail_if_no_peer_cert => true,
-    require                  => File['/srv/rabbitmq'],
-  }
-
+    environment_variables    => {
+      'RABBITMQ_MNESIA_BASE' => '/srv/rabbitmq',
+      'RABBITMQ_MNESIA_DIR'  => '/srv/rabbitmq',
+    }
+  } ->
   rabbitmq_user { $osdbmq_rabbitmq_user:
     admin    => true,
     password => $osdbmq_rabbitmq_pw,
-  }
-
+  } ->
   exec { 'configure-ha-queue-policy':
     command => '/usr/sbin/rabbitmqctl set_policy HA \'^(?!amq\\.).*\' \'{"ha-mode": "all"}\'',
-    unless  => '/usr/sbin/rabbitmqctl list_policies -p HA',
     require => Class['::rabbitmq'],
   }
 
