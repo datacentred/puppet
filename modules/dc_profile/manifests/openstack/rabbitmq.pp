@@ -46,7 +46,6 @@ class dc_profile::openstack::rabbitmq {
   # membership in order to use the latter's SSL keys
   user { 'rabbitmq':
     groups  => 'puppet',
-    require => Class['::rabbitmq'],
   }
 
   class { '::rabbitmq':
