@@ -24,8 +24,9 @@ class dc_ceph::keybackup (
     include ::nfs::client
 
     Nfs::Client::Mount <<| nfstag == 'ceph-keybackup' |>> {
-      ensure => mounted,
-      mount  => $mountpoint,
+      ensure  => present,
+      options => 'noauto,_netdev',
+      mount   => $mountpoint,
     }
 
     file { '/usr/local/bin/ceph-keybackup':
