@@ -172,6 +172,15 @@ define dc_rails::app (
     require    => File["/etc/init/sidekiq_${app_name}.conf"],
   }
 
+  file { "/etc/init/clockwork_${app_name}.conf":
+    ensure  => 'present',
+    content => template('dc_rails/clockwork.upstart.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0400',
+    notify  => Service["clockwork_${app_name}"]
+  }
+
   service { "clockwork_${app_name}":
     ensure     => running,
     enable     => true,
