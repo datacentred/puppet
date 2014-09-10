@@ -4,6 +4,9 @@ stop on runlevel [!2345]
 setuid rails
 setgid rails
 
+env DB_PASSWORD=<%= @db_password %>
+env RAILS_ENV=<%= @rails_env %>
+
 chdir <%= @app_home %>
 
 exec <%= @home %>/.rbenv/shims/bundle exec clockwork <%= @app_home %>/clock.rb
