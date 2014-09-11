@@ -1,1 +1,6 @@
 .vagrant
+vagrant/
+Vagrantfile
+*~
+.vagrantuser
+*.swp
