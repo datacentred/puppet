@@ -116,7 +116,7 @@ class dc_postgresql::config {
       address     => '127.0.0.1/32',
       auth_method => 'trust',
       tag         => 'slave',
-      order       => '099'
+      order       => '099',
     }
 
   }
