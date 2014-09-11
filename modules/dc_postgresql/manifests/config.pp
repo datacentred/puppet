@@ -31,7 +31,7 @@ class dc_postgresql::config {
 
     # If we have the backup server key and the backup server has our backup key we can assume it's all configured
 
-    if member(query_nodes("Ssh_authorized_key[barman_key]"), $::fqdn) and member(query_nodes("Ssh_authorized_key[postgres_backup_key${::hostname}]"), $dc_postgresql::params::backup_server) {
+    if member(query_nodes('Ssh_authorized_key[barman_key]'), $::fqdn) and member(query_nodes("Ssh_authorized_key[postgres_backup_key${::hostname}]"), $dc_postgresql::params::backup_server) {
       postgresql::server::config_entry { 'archive_command':
         value => "rsync -a %p barman@${dc_postgresql::params::backup_server}:${dc_postgresql::params::backup_path}/${::hostname}/incoming/%f",
       }
