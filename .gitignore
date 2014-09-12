@@ -4,4 +4,4 @@ Vagrantfile
 *~
 .vagrantuser
 *.swp
-ctags
+tags
