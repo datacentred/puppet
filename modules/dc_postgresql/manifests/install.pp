@@ -23,4 +23,8 @@ class dc_postgresql::install {
     postgres_password          => $dc_postgresql::params::postgres_password,
   }
 
+  package { 'postgresql-contrib':
+    ensure => installed,
+  }
+
 }
