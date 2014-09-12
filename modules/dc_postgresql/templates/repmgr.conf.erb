@@ -1,0 +1,4 @@
+cluster=<%= scope.lookupvar('dc_postgresql::params::cluster_name') %>
+node=<%= @node_id %>
+node_name=<%= @hostname %>
+conninfo='host=<%= @fqdn %> user=repmgr dbname=repmgr'

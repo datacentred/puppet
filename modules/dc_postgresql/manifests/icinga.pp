@@ -13,14 +13,24 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_postgresql::icinga {
 
-  $icinga_ip = hiera(icinga_ip)
-
-  # A test database for Nagios to probe
-  dc_postgresql::db { 'nagiostest':
-    user           => 'nagios',
-    password       => 'nagios',
-    access_address => "${icinga_ip}/32",
+  postgresql::server::role { 'nagios':
+    password_hash => postgresql_password('nagios', $dc_postgresql::params::icinga_password),
   }
+
+  postgresql::server::database_grant { 'nagios':
+    privilege => 'ALL',
+    db        => 'nagiostest',
+    role      => 'nagios',
+    require   => Postgresql::Server::Database['nagiostest'],
+  }
+
+  postgresql::server::database { 'nagiostest':
+    dbname  => 'nagiostest',
+    owner   => 'nagios',
+    require => Postgresql::Server::Role['nagios'],
+  }
+
+  include dc_icinga::hostgroup_postgres
 
 }
 
