@@ -33,6 +33,7 @@
 class dc_postgresql::params (
   $postgres_password,
   $pgdata,
+  $pg_bindir,
   $backup_path,
   $backup_server,
   $cluster_name,

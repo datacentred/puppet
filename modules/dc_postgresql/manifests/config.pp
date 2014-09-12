@@ -107,13 +107,13 @@ class dc_postgresql::config {
 
     Postgresql::Server::Pg_hba_rule <<| tag == 'slave' |>>
 
-    # Allow repmgr localhost access
+    # Allow repmgr access
     postgresql::server::pg_hba_rule { 'repmgr local ipv4':
-      description => 'repmgr access from localhost',
+      description => 'repmgr access from local ip',
       type        => 'host',
       database    => 'repmgr',
       user        => 'repmgr',
-      address     => '127.0.0.1/32',
+      address     => "${::ipaddress}/32",
       auth_method => 'trust',
       tag         => 'slave',
       order       => '099',
@@ -133,7 +133,7 @@ class dc_postgresql::config {
       type        => 'host',
       database    => 'repmgr',
       user        => 'repmgr',
-      address     => "${::ipaddress_eth1}/32",
+      address     => "${::ipaddress}/32",
       auth_method => 'trust',
       tag         => 'slave',
       order       => '099',
@@ -144,7 +144,7 @@ class dc_postgresql::config {
       type        => 'host',
       database    => 'replication',
       user        => 'repmgr',
-      address     => "${::ipaddress_eth1}/32",
+      address     => "${::ipaddress}/32",
       auth_method => 'trust',
       tag         => 'slave',
       order       => '099',
@@ -165,12 +165,12 @@ class dc_postgresql::config {
       value => 'on',
     }
     ->
-    postgresql::server::pg_hba_rule { 'repmgr from localhost':
-      description => 'repmgr access from localhost',
+    postgresql::server::pg_hba_rule { 'repmgr local ipv4':
+      description => 'repmgr access from local ip',
       type        => 'host',
       database    => 'repmgr',
       user        => 'repmgr',
-      address     => '127.0.0.1/32',
+      address     => "${::ipaddress}/32",
       auth_method => 'trust',
       tag         => 'slave',
       order       => '099',
