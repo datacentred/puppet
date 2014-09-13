@@ -91,9 +91,6 @@
 [submodule "modules/keystone"]
 	path = modules/keystone
 	url = https://github.com/spjmurray/puppet-keystone
-[submodule "modules/cinder"]
-	path = modules/cinder
-	url = https://github.com/stackforge/puppet-cinder
 [submodule "modules/bundler"]
 	path = modules/bundler
 	url = https://github.com/puppetlabs-operations/puppet-bundler.git
@@ -242,3 +239,6 @@
 [submodule "modules/glance"]
 	path = modules/glance
 	url = https://github.com/stackforge/puppet-glance.git
+[submodule "modules/cinder"]
+	path = modules/cinder
+	url = https://github.com/stackforge/puppet-cinder.git
