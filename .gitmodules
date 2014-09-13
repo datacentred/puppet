@@ -88,9 +88,6 @@
 [submodule "modules/exported_vars"]
 	path = modules/exported_vars
 	url = https://github.com/example42/puppet-exported_vars
-[submodule "modules/keystone"]
-	path = modules/keystone
-	url = https://github.com/spjmurray/puppet-keystone
 [submodule "modules/bundler"]
 	path = modules/bundler
 	url = https://github.com/puppetlabs-operations/puppet-bundler.git
@@ -242,3 +239,6 @@
 [submodule "modules/neutron"]
 	path = modules/neutron
 	url = https://github.com/stackforge/puppet-neutron.git
+[submodule "modules/keystone"]
+	path = modules/keystone
+	url = https://github.com/stackforge/puppet-keystone.git
