@@ -239,3 +239,6 @@
 [submodule "modules/passwordless_ssh"]
 	path = modules/passwordless_ssh
 	url = https://github.com/datacentred/datacentred-passwordless_ssh
+[submodule "modules/nova"]
+	path = modules/nova
+	url = https://github.com/stackforge/puppet-nova.git
