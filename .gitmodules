@@ -91,9 +91,6 @@
 [submodule "modules/keystone"]
 	path = modules/keystone
 	url = https://github.com/spjmurray/puppet-keystone
-[submodule "modules/glance"]
-	path = modules/glance
-	url = https://github.com/spjmurray/puppet-glance
 [submodule "modules/cinder"]
 	path = modules/cinder
 	url = https://github.com/stackforge/puppet-cinder
@@ -242,3 +239,6 @@
 [submodule "modules/nova"]
 	path = modules/nova
 	url = https://github.com/stackforge/puppet-nova.git
+[submodule "modules/glance"]
+	path = modules/glance
+	url = https://github.com/stackforge/puppet-glance.git
