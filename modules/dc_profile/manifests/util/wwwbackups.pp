@@ -33,6 +33,7 @@ class dc_profile::util::wwwbackups {
     comment    => 'Account used for backups related to the DC website',
     home       => $wwwbackup_home,
     managehome => true,
+    system     => true,
   }
 
   cron { 'rsync_backup':
