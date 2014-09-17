@@ -25,6 +25,7 @@ class dc_profile::util::wwwbackups {
     ensure  => present,
     comment => 'backup',
     home    => '/var/backups',
+    system  => true,
   }
 
   user { 'wwwbackup':
