@@ -51,8 +51,8 @@ class dc_profile::mon::icinga_server {
         path       => '/usr/share/icinga-web/app/modules/$1/pub/styles/$2',
       },
       {
-        aliasmatch => '/modules/([A-Za-z0-9]+)/resources/images/([A-Za-z_\-0-9]+\.(?:png|gif|jpg))$',
-        path       => '/usr/share/icinga-web/app/modules/$1/pub/images/$2',
+        aliasmatch => '/icinga-web/images/([A-Za-z0-9]+)/([A-Za-z_\-0-9]+\.(?:png|gif|jpg))$',
+        path       => '/usr/share/icinga-web/pub/images/$1/$2',
       },
       {
         alias      => '/js/ext3/',
