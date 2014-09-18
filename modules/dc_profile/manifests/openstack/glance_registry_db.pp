@@ -12,8 +12,6 @@
 #
 class dc_profile::openstack::glance_registry_db {
 
-  include dc_mariadb
-
   $glance_reg_db   = hiera(glance_reg_db)
   $glance_reg_db_user = hiera(glance_reg_db_user)
   $glance_reg_db_pass = hiera(glance_reg_db_pass)
@@ -21,7 +19,6 @@ class dc_profile::openstack::glance_registry_db {
   dc_mariadb::db { $glance_reg_db:
     user     => $glance_reg_db_user,
     password => $glance_reg_db_pass,
-    require  => Class['Dc_mariadb'],
   }
 
 }

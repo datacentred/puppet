@@ -12,13 +12,12 @@
 #
 class dc_profile::openstack::keystone_mariadb {
 
-  include dc_mariadb
-
   $keystone_db_pw = hiera(keystone_db_pw)
 
   dc_mariadb::db { 'keystone':
     user     => 'keystone',
     password => $keystone_db_pw,
+    require => Class['::galera']
   }
 
 }
