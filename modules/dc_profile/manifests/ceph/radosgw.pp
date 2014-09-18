@@ -14,7 +14,7 @@ class dc_profile::ceph::radosgw {
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => 443,
-    options           => 'check'
+    options           => 'check ssl ca-file /var/lib/puppet/ssl/certs/ca.pem'
   }
 
 }
