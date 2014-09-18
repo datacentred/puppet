@@ -35,7 +35,7 @@ class dc_profile::ceph::radosgw_lb (
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
-      'option'  => ['tcpka', 'httpchk GET', 'tcplog'],
+      'option'  => ['tcpka', 'httpchk GET / HTTP/1.1', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
     },
