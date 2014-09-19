@@ -20,4 +20,7 @@ class dc_dhcp::params (
   $ssh_public_key,
   $secondary_dhcp_host,
 ) {
+
+  private()
+
 }

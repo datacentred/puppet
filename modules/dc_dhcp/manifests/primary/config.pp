@@ -4,6 +4,8 @@
 #
 class dc_dhcp::primary::config {
 
+  private()
+
   include ::dc_dhcp::params
 
   file { '/etc/default/dhcp_sync_agent':
