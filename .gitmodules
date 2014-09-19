@@ -239,3 +239,6 @@
 [submodule "modules/xinetd"]
 	path = modules/xinetd
 	url = https://github.com/puppetlabs/puppetlabs-xinetd.git
+[submodule "modules/passwordless_ssh"]
+	path = modules/passwordless_ssh
+	url = https://github.com/datacentred/datacentred-passwordless_ssh

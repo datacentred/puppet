@@ -1,0 +1,48 @@
+#!/bin/bash
+
+PIDFILE=/var/run/dhcp_sync_agent.pid
+DAEMON=/usr/local/bin/dhcp_sync_agent.py
+USER=dhcp_sync_agent
+DESC="DHCP Sync Agent"
+
+. /lib/lsb/init-functions
+. /etc/default/dhcp_sync_agent
+
+start_daemon() {
+  log_begin_msg "Starting $DESC"
+  start-stop-daemon --start --background --pidfile $PIDFILE --make-pidfile -c $USER -g $USER --startas $DAEMON -- -h $SECONDARY_HOST
+  log_end_msg $?
+}
+
+stop_daemon() {
+  log_begin_msg "Stopping $DESC"
+  start-stop-daemon --stop --pidfile $PIDFILE --retry=INT/20/KILL/5
+  log_end_msg 0
+}
+
+daemon_status() {
+  status_of_proc -p $PIDFILE "$DAEMON" hipbot
+}
+
+case "$1" in
+  start)
+    start_daemon
+    ;;
+  stop)
+    stop_daemon
+    ;;
+  restart)
+    stop_daemon
+    start_daemon
+    ;;
+  status)
+    daemon_status $?
+    exit
+    ;;
+  *)
+    echo "Usage: /etc/init.d/dhcp_sync_agent {start|stop|restart|status}" >&2
+    exit 1
+  ;;
+esac
+
+# vi: ts=2 et:
