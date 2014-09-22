@@ -34,6 +34,7 @@ class dc_mariadb::collectd {
   }
 
   # Add custom fact to provide a list of databases
+  # TODO: This should live in /var/lib/puppet/lib/facter!!! [SM]
   file { '/usr/lib/ruby/vendor_ruby/facter/mysql.rb':
     ensure  => file,
     content => template('dc_mariadb/mysql.rb.erb'),
