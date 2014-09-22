@@ -44,6 +44,12 @@ class dc_postgresql::config {
         auth_method => 'md5',
         order       => '099',
       }
+      @@barman::server { "${::hostname}":
+        conninfo     => "user=postgres host=${::hostname} password=${dc_postgresql::params::postgres_password}",
+        ssh_command  => "ssh postgres@${::hostname}",
+        compression  => 'bzip2',
+        custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
+      }
     }
     else {
       postgresql::server::config_entry { 'archive_command':
