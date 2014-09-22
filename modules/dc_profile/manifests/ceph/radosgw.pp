@@ -12,7 +12,7 @@ class dc_profile::ceph::radosgw {
   @@haproxy::balancermember { $fqdn:
     listening_service => 'radosgw',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => $::ipaddress_p1p1,
     ports             => 443,
     options           => 'check ssl ca-file /var/lib/puppet/ssl/certs/ca.pem'
   }
