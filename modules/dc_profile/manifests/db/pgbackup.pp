@@ -35,14 +35,9 @@ class dc_profile::db::pgbackup {
     home    => hiera(barman_path),
   }
 
-  barman::server { 'db0':
-    conninfo     => "user=postgres host=db0 password=${db0_postgres_pw}",
-    ssh_command  => 'ssh postgres@db0',
-    compression  => 'bzip2',
-    custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
-  }
+  Barman::Server <<| tag == 'postgres_backup_config' |>>
 
-  Ssh_authorized_key <<| tag == 'postgres' |>>
+  Ssh_authorized_key <<| tag == 'postgres_backup_key' |>>
 
   cron { 'barman-backup-friday':
     ensure  => present,
