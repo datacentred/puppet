@@ -66,7 +66,7 @@ class dc_postgresql::keys {
         key     => $backup_key_elements[1],
         user    => 'barman',
         options => "from=\"${::ipaddress}\"",
-        tag     => postgres,
+        tag     => postgres_backup_key,
       }
     }
   }
