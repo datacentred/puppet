@@ -17,7 +17,7 @@ class dc_postgresql::config {
 
   # FIXME get the master to generate and export the cluster name
 
-  if $dc_postgresql::params::cluster_master_node == $::fqdn {
+  if $dc_postgresql::params::cluster_master_node == $::hostname {
 
     $node_id = '0'
 
@@ -31,7 +31,7 @@ class dc_postgresql::config {
 
     # If we have the backup server key and the backup server has our backup key we can assume it's all configured and configure our side
 
-    if member(query_nodes("Ssh_authorized_key[barman_key_${::dc_postgresql::params::backup_server}]"), $::fqdn) and member(query_nodes("Ssh_authorized_key[postgres_backup_key_${::hostname}]"), "${dc_postgresql::params::backup_server}.${::domain}") {
+    if member(query_nodes("Ssh_authorized_key[barman_key_${::dc_postgresql::params::backup_server}]"), "${::hostname}.${::domain}") and member(query_nodes("Ssh_authorized_key[postgres_backup_key_${::hostname}]"), "${dc_postgresql::params::backup_server}.${::domain}") {
       postgresql::server::config_entry { 'archive_command':
         value => "rsync -a %p barman@${dc_postgresql::params::backup_server}:${dc_postgresql::params::backup_path}/${::hostname}/incoming/%f",
       }
@@ -128,10 +128,10 @@ class dc_postgresql::config {
 
   }
 
-  elsif member($dc_postgresql::params::cluster_standby_nodes, $::fqdn) {
+  elsif member($dc_postgresql::params::cluster_standby_nodes, $::hostname) {
 
     # Find the index in the array for this host, then increment as the master node is 0 and use this as the node_id
-    $node_id = array_index($dc_postgresql::params::cluster_standby_nodes, $::fqdn) + 1
+    $node_id = array_index($dc_postgresql::params::cluster_standby_nodes, $::hostname) + 1
 
     # FIXME make these users have passwords and do md5 auth
 
@@ -189,7 +189,7 @@ class dc_postgresql::config {
   # We're not the master or a standby so just configure the basics for backup if the backup server is configured
   else {
 
-    if member(query_nodes('Ssh_authorized_key[barman_key]'), $::fqdn) and member(query_nodes("Ssh_authorized_key[postgres_backup_key${::hostname}]"), $dc_postgresql::params::backup_server) {
+    if member(query_nodes("Ssh_authorized_key[barman_key_${dc_postgresql::params::backup_server}]"), "${::hostname}.${::domain}") and member(query_nodes("Ssh_authorized_key[postgres_backup_key_${::hostname}]"), "$dc_postgresql::params::backup_server.${::domain}") {
       postgresql::server::config_entry { 'archive_command':
         value => "rsync -a %p barman@${dc_postgresql::params::backup_server}:${dc_postgresql::params::backup_path}/${::hostname}/incoming/%f",
       }
