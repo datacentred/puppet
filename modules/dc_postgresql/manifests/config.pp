@@ -48,7 +48,8 @@ class dc_postgresql::config {
         conninfo     => "user=postgres host=${::hostname} password=${dc_postgresql::params::postgres_password}",
         ssh_command  => "ssh postgres@${::hostname}",
         compression  => 'bzip2',
-        custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS'
+        custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS',
+        tag          => postgres_backup_config,
       }
     }
     else {
@@ -200,6 +201,13 @@ class dc_postgresql::config {
         address     => template('dc_postgresql/getipaddr.erb'),
         auth_method => 'md5',
         order       => '099',
+      }
+      @@barman::server { "${::hostname}":
+        conninfo     => "user=postgres host=${::hostname} password=${dc_postgresql::params::postgres_password}",
+        ssh_command  => "ssh postgres@${::hostname}",
+        compression  => 'bzip2',
+        custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS',
+        tag          => postgres_backup_config,
       }
     }
     else {
