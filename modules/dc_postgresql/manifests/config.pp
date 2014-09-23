@@ -14,6 +14,7 @@
 class dc_postgresql::config {
 
   include ::dc_postgresql::params
+  $backup_server = "${dc_postgresql::params::backup_server}.${::domain}"
 
   # FIXME get the master to generate and export the cluster name
 
