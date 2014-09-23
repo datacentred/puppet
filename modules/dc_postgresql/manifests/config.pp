@@ -40,7 +40,7 @@ class dc_postgresql::config {
         type        => 'host',
         database    => 'all',
         user        => 'postgres',
-        address     => template('dc_postgresql/getipaddr.erb'),
+        address     => get_ip_addr("${dc_postgresql::params::backup_server}.${::domain}"),
         auth_method => 'md5',
         order       => '099',
       }
@@ -198,7 +198,7 @@ class dc_postgresql::config {
         type        => 'host',
         database    => 'all',
         user        => 'postgres',
-        address     => template('dc_postgresql/getipaddr.erb'),
+        address     => get_ip_addr("${dc_postgresql::params::backup_server}.${::domain}"),
         auth_method => 'md5',
         order       => '099',
       }
