@@ -12,21 +12,20 @@
 #
 class dc_profile::openstack::keystone {
 
+  # OpenStack API and loadbalancer endpoint
+  $osapi_public  = 'openstack.datacentred.io'
+
+  $keystone_db_host   = $osapi_public
   $keystone_db_pw     = hiera(keystone_db_pw)
-  $keystone_db_host   = hiera(keystone_db_host)
   $os_service_tenant  = hiera(os_service_tenant)
   $os_region          = hiera(os_region)
   $sysmailaddress     = hiera(sal01_internal_sysmail_address)
   $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost:11211'])
 
-  # OpenStack API endpoint
-  $osapi_public  = 'openstack.datacentred.io'
-
   $keystone_public_port  = '5000'
   $keystone_private_port = '35357'
 
   class { '::keystone':
-    require          => Dc_mariadb::Db['keystone'],
     verbose          => true,
     catalog_type     => 'sql',
     admin_token      => hiera(keystone_admin_uuid),
@@ -188,10 +187,10 @@ class dc_profile::openstack::keystone {
     tenant   => 'icinga',
   }
 
-  include dc_icinga::hostgroup_keystone
+  # include dc_icinga::hostgroup_keystone
 
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::keystone_logstash
-  }
+  # if $::environment == 'production' {
+  #   # Logstash config
+  #   include dc_profile::openstack::keystone_logstash
+  # }
 }

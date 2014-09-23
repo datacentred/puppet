@@ -12,36 +12,34 @@
 #
 class dc_profile::openstack::nova_compute {
 
-  $os_region                  = hiera(os_region)
-  $os_service_tenant          = hiera(os_service_tenant)
-
-  $nova_mq_username           = hiera(nova_mq_username)
-  $nova_mq_password           = hiera(nova_mq_password)
-  $nova_mq_port               = hiera(nova_mq_port)
-  $nova_mq_vhost              = hiera(nova_mq_vhost)
-
-  $nova_db_user               = hiera(nova_db_user)
-  $nova_db_pass               = hiera(nova_db_pass)
-  $nova_db_host               = hiera(nova_db_host)
-  $nova_db                    = hiera(nova_db)
-
-  $novnc_proxy_host           = 'openstack.datacentred.io'
-
-  $keystone_neutron_password  = hiera(keystone_neutron_password)
-
-  $neutron_admin_user         = hiera(neutron_admin_user)
-  $neutron_server_host        = hiera(neutron_server_host)
-  $neutron_secret             = hiera(neutron_secret)
-
-  $management_ip              = $::ipaddress_eth0
-
-  # OpenStack API endpoint
+  # OpenStack API and loadbalancer endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
-  # Hard coded exported variable name
-  $nova_mq_ev                 = 'nova_mq_node'
+  $os_region         = hiera(os_region)
+  $os_service_tenant = hiera(os_service_tenant)
 
-  $nova_database              = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
+  $rabbitmq_hosts    = hiera(osdbmq_members)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pass)
+  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
+
+  $nova_db_user = hiera(nova_db_user)
+  $nova_db_pass = hiera(nova_db_pass)
+  $nova_db_host = $osapi_public
+  $nova_db      = hiera(nova_db)
+
+  $novnc_proxy_host = 'openstack.datacentred.io'
+
+  $keystone_neutron_password = hiera(keystone_neutron_password)
+
+  $neutron_admin_user  = hiera(neutron_admin_user)
+  $neutron_server_host = hiera(neutron_server_host)
+  $neutron_secret      = hiera(neutron_secret)
+
+  $management_ip = $::ipaddress_eth0
+
+  $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
   include dc_profile::auth::sudoers_nova
 
@@ -57,11 +55,11 @@ class dc_profile::openstack::nova_compute {
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
     glance_api_servers  => "https://${osapi_public}:9292",
-    rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
-    rabbit_userid       => $nova_mq_username,
-    rabbit_password     => $nova_mq_password,
-    rabbit_virtual_host => $nova_mq_vhost,
-    rabbit_port         => $nova_mq_port,
+    rabbit_hosts        => $rabbitmq_hosts,
+    rabbit_userid       => $rabbitmq_username,
+    rabbit_password     => $rabbitmq_password,
+    rabbit_virtual_host => $rabbitmq_vhost,
+    rabbit_port         => $rabbitmq_port,
   }
 
   class { '::nova::compute':
