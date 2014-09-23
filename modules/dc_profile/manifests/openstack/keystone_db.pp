@@ -18,7 +18,7 @@ class dc_profile::openstack::keystone_db {
     user     => 'keystone',
     password => $keystone_db_pw,
     host     => '%',
-    require  => Class['::galera']
+    require  => Class['::galera'],
   }
 
 }

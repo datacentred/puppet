@@ -19,6 +19,8 @@ class dc_profile::openstack::glance_api_db {
   dc_mariadb::db { $glance_api_db:
     user     => $glance_api_db_user,
     password => $glance_api_db_pass,
+    host     => '%',
+    require  => Class['::galera'],
   }
 
 }
