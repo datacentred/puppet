@@ -30,6 +30,8 @@ class dc_profile::openstack::haproxy {
   $novnc_proxy_servers   = get_exported_var('', 'novnc_proxy_host', ['localhost'])
   $ceilometer_api_servers = get_exported_var('', 'ceilometer_api', ['localhost'])
 
+  $galera_cluster_members = hiera(osdbmq_members)
+
   $haproxy_stats_user     = hiera(haproxy_stats_user)
   $haproxy_stats_password = hiera(haproxy_stats_password)
 
@@ -323,6 +325,24 @@ class dc_profile::openstack::haproxy {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
+  # Galera
+  haproxy::listen { 'galera':
+    ipaddress    => '*',
+    mode         => 'tcp',
+    ports        => '3306',
+    options      => {
+      'option'  => ['httpchk'],
+      'balance' => 'source',
+    },
+  }
+  haproxy::balancermember { 'galera':
+    listening_service => 'galera',
+    server_names      => $galera_cluster_members,
+    ipaddresses       => $galera_cluster_members,
+    ports             => '3306',
+    options           => 'check port 9200 inter 2000 rise 2 fall 5',
+  }
+
   # Ceilometer
   #haproxy::listen { 'ceilometer':
   #  ipaddress    => '*',
@@ -348,5 +368,5 @@ class dc_profile::openstack::haproxy {
   #  options           => 'check inter 2000 rise 2 fall 5',
   #}
 
-  include dc_icinga::hostgroup_haproxy
+  #include dc_icinga::hostgroup_haproxy
 }
