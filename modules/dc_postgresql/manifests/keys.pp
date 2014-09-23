@@ -56,6 +56,15 @@ class dc_postgresql::keys {
 
     Ssh_authorized_key <<| tag == 'barman' |>>
 
+    file { "${dc_postgresql::params::pgdata}/../../.ssh/config":
+        ensure  => file,
+        content => template('dc_postgresql/backup_ssh_config.erb'),
+        owner   => 'postgres',
+        group   => 'postgres',
+        mode    => '0600',
+        require => Package['postgresql-server'],
+    }
+
     if $::postgres_key {
 
       $backup_key_elements = split($::postgres_key, ' ')
