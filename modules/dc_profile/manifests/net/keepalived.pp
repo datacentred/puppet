@@ -10,10 +10,11 @@
 #
 # Sample Usage:
 #
-class dc_profile::net::keepalived {
+class dc_profile::net::keepalived (
+  $keepalived_hash, 
+) {
 	
   include ::keepalived
-  $keepalived_hash = hiera(keepalived_platform_services)
 	
   # Set in Foreman per-host
   $priority = $::keepalived_priority
