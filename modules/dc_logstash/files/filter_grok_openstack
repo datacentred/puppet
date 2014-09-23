@@ -28,21 +28,21 @@ filter {
         }
     }
     if "oslofmt" in [tags] {
-        multiline {
-            negate => true
-            pattern => "^%{TIMESTAMP_ISO8601} "
-            what => "previous"
-        }
-        multiline {
-            negate => false
-            pattern => "^%{TIMESTAMP_ISO8601}%{SPACE}%{NUMBER}?%{SPACE}?TRACE"
-            what => "previous"
-        }
+    #    multiline {
+    #        negate => true
+    #        pattern => "^%{TIMESTAMP_ISO8601} "
+    #        what => "previous"
+    #    }
+    #    multiline {
+    #        negate => false
+    #        pattern => "^%{TIMESTAMP_ISO8601}%{SPACE}%{NUMBER}?%{SPACE}?TRACE"
+    #        what => "previous"
+    #    }
         grok {
-            # Do multiline matching as the above mutliline filter may add newlines
+    #        # Do multiline matching as the above mutliline filter may add newlines
             # to the log messages.
             # TODO move the LOGLEVELs into a proper grok pattern.
-            match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
+           match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
             add_field => { "received_at" => "%{@timestamp}" }
         }
 
