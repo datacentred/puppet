@@ -15,41 +15,39 @@
 #
 class dc_profile::openstack::nova {
 
-  $keystone_nova_password     = hiera(keystone_nova_password)
-  $keystone_neutron_password  = hiera(keystone_neutron_password)
+  $keystone_nova_password    = hiera(keystone_nova_password)
+  $keystone_neutron_password = hiera(keystone_neutron_password)
 
-  $os_region                  = hiera(os_region)
+  $os_region = hiera(os_region)
 
-  $nova_mq_username           = hiera(nova_mq_username)
-  $nova_mq_password           = hiera(nova_mq_password)
-  $rabbitmq_monuser           = hiera(rabbitmq_monuser)
-  $rabbitmq_monuser_password  = hiera(rabbitmq_monuser_password)
-  $nova_mq_port               = hiera(nova_mq_port)
-  $nova_mq_vhost              = hiera(nova_mq_vhost)
+  $rabbitmq_username         = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password         = hiera(osdbmq_rabbitmq_pass)
+  $rabbitmq_monuser          = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
+  $rabbitmq_hosts              = hiera(osdbmq_members)
+  $rabbitmq_port             = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost            = hiera(osdbmq_rabbitmq_vhost)
 
-  $nova_db_user               = hiera(nova_db_user)
-  $nova_db_pass               = hiera(nova_db_pass)
-  $nova_db_host               = hiera(nova_db_host)
-  $nova_db                    = hiera(nova_db)
+  $nova_db_user = hiera(nova_db_user)
+  $nova_db_pass = hiera(nova_db_pass)
+  $nova_db_host = hiera(nova_db_host)
+  $nova_db      = hiera(nova_db)
 
-  $nova_admin_tenant          = hiera(nova_admin_tenant)
-  $nova_admin_user            = hiera(nova_admin_user)
-  $nova_enabled_apis          = hiera(nova_enabled_apis)
+  $nova_admin_tenant = hiera(nova_admin_tenant)
+  $nova_admin_user   = hiera(nova_admin_user)
+  $nova_enabled_apis = hiera(nova_enabled_apis)
 
-  $neutron_server_host        = hiera(neutron_server_host)
-  $neutron_secret             = hiera(neutron_secret)
-  $neutron_metadata_secret    = hiera(neutron_metadata_secret)
+  $neutron_server_host     = hiera(neutron_server_host)
+  $neutron_secret          = hiera(neutron_secret)
+  $neutron_metadata_secret = hiera(neutron_metadata_secret)
 
   include dc_profile::auth::sudoers_nova
 
   # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
-  $ec2_port = '8773'
+  $ec2_port  = '8773'
   $nova_port = '8774'
-
-  # Hard coded exported variable name
-  $nova_mq_ev = 'nova_mq_node'
 
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
@@ -58,11 +56,11 @@ class dc_profile::openstack::nova {
   class { '::nova':
     database_connection => $nova_database,
     glance_api_servers  => "https://${osapi_public}:9292",
-    rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
-    rabbit_userid       => $nova_mq_username,
-    rabbit_password     => $nova_mq_password,
-    rabbit_port         => $nova_mq_port,
-    rabbit_virtual_host => $nova_mq_vhost,
+    rabbit_hosts        => $rabbitmq_hosts,
+    rabbit_userid       => $rabbitmq_username,
+    rabbit_password     => $rabbitmq_password,
+    rabbit_port         => $rabbitmq_port,
+    rabbit_virtual_host => $rabbitmq_vhost,
     use_syslog          => true,
   }
   contain 'nova'
@@ -129,11 +127,11 @@ class dc_profile::openstack::nova {
   }
 
   # Nagios config
-  include dc_profile::openstack::nova_nagios
+  # include dc_profile::openstack::nova_nagios
 
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::nova_logstash
-  }
+  # if $::environment == 'production' {
+  #   # Logstash config
+  #   include dc_profile::openstack::nova_logstash
+  # }
 
 }
