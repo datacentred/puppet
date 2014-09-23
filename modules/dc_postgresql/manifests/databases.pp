@@ -15,7 +15,7 @@ class dc_postgresql::databases {
 
   include ::dc_postgresql::params
 
-  if $dc_postgresql::params::cluster_master_node == $::fqdn {
+  if $dc_postgresql::params::cluster_master_node == $::hostname {
 
     create_resources(postgresql::server::db, $dc_postgresql::params::databases)
 

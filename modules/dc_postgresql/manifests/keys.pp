@@ -15,7 +15,7 @@ class dc_postgresql::keys {
 
   include ::dc_postgresql::params
 
-  if member($dc_postgresql::params::cluster_standby_nodes, $::fqdn) or $dc_postgresql::params::cluster_master_node == $::fqdn {
+  if member($dc_postgresql::params::cluster_standby_nodes, "${::hostname}.${::domain}") or $dc_postgresql::params::cluster_master_node == $::hostname {
 
     Ssh_authorized_key <<| tag == postgres_cluster |>>
 
@@ -35,7 +35,7 @@ class dc_postgresql::keys {
     }
   }
 
-  if member($dc_postgresql::params::cluster_standby_nodes, $::fqdn) {
+  if member($dc_postgresql::params::cluster_standby_nodes, "${::hostname}.${::domain}") {
 
     if $::postgres_key {
 
@@ -52,7 +52,7 @@ class dc_postgresql::keys {
   }
 
   # We're either the master or not a cluster member so apply the backup config unless we're on vagrant
-  if $::virtual != 'virtualbox' and ( ( $dc_postgresql::params::cluster_master_node == $fqdn ) or ( ! member($dc_postgresql::params::cluster_standby_nodes, $::fqdn) ) ){
+  if $::virtual != 'virtualbox' and ( ( $dc_postgresql::params::cluster_master_node == $::hostname ) or ( ! member($dc_postgresql::params::cluster_standby_nodes, $::hostname) ) ){
 
     Ssh_authorized_key <<| tag == 'barman' |>>
 
