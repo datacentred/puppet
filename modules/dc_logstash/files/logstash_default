@@ -9,10 +9,10 @@
 #LS_HOME=/var/lib/logstash
 
 # Arguments to pass to logstash agent
-#LS_OPTS=""
+LS_OPTS="-w 4"
 
 # Arguments to pass to java
-LS_HEAP_SIZE="1000m"
+LS_HEAP_SIZE="2000m"
 #LS_JAVA_OPTS="-Djava.io.tmpdir=$HOME"
 
 # pidfiles aren't used for upstart; this is for sysv users.
