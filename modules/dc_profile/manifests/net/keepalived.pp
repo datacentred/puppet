@@ -20,7 +20,7 @@ class dc_profile::net::keepalived (
   $priority = $::keepalived_priority
 
   keepalived::vrrp::instance { "keepalived_${::hostname}" :
-    interface 		   => $keepalived_hash['interface'],
+    interface 	       => $keepalived_hash['interface'],
     state              => 'SLAVE',
     priority           => $priority,
     virtual_router_id  => $keepalived_hash['virtual_router_id'],
