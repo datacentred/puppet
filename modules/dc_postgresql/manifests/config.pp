@@ -14,6 +14,7 @@
 class dc_postgresql::config {
 
   include ::dc_postgresql::params
+  $backup_server_ip = get_ip_addr("${dc_postgresql::params::backup_server}.${::domain}")
 
   # FIXME get the master to generate and export the cluster name
 
@@ -35,12 +36,13 @@ class dc_postgresql::config {
       postgresql::server::config_entry { 'archive_command':
         value => "rsync -a %p barman@${dc_postgresql::params::backup_server}:${dc_postgresql::params::backup_path}/${::hostname}/incoming/%f",
       }
+
       postgresql::server::pg_hba_rule { 'allow barman to access all db':
         description => "Open up all for access from ${dc_postgresql::params::backup_server}",
         type        => 'host',
         database    => 'all',
         user        => 'postgres',
-        address     => get_ip_addr("${dc_postgresql::params::backup_server}.${::domain}"),
+        address     => "${backup_server_ip}/32",
         auth_method => 'md5',
         order       => '099',
       }
@@ -198,7 +200,7 @@ class dc_postgresql::config {
         type        => 'host',
         database    => 'all',
         user        => 'postgres',
-        address     => get_ip_addr("${dc_postgresql::params::backup_server}.${::domain}"),
+        address     => "${backup_server_ip}/32",
         auth_method => 'md5',
         order       => '099',
       }
