@@ -1,1 +1,1 @@
-<% ipInt = Socket.gethostbyname(@backup_server)[3] %><%= "%d.%d.%d.%d" % [ipInt[0], ipInt[1], ipInt[2], ipInt[3]] + '/32'-%>
+<% ipInt = Socket.gethostbyname(@backup_server.@domain)[3] %><%= "%d.%d.%d.%d" % [ipInt[0], ipInt[1], ipInt[2], ipInt[3]] + '/32'-%>
