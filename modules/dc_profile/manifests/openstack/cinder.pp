@@ -19,15 +19,12 @@ class dc_profile::openstack::cinder {
   $cinder_db_user   = hiera(cinder_db_user)
   $cinder_db_pass   = hiera(cinder_db_pass)
 
-  $nova_mq_username   = hiera(nova_mq_username)
-  $nova_mq_password   = hiera(nova_mq_password)
-  $nova_mq_port       = hiera(nova_mq_port)
-  $nova_mq_vhost      = hiera(nova_mq_vhost)
+  $rabbitmq_username   = hiera(rabbitmq_username)
+  $rabbitmq_password   = hiera(rabbitmq_password)
+  $rabbitmq_port       = hiera(rabbitmq_port)
+  $rabbitmq_vhost      = hiera(rabbitmq_vhost)
 
   $os_region = hiera(os_region)
-
-  # Hard coded exported variable name
-  $nova_mq_ev                 = 'nova_mq_node'
 
   # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
@@ -40,11 +37,11 @@ class dc_profile::openstack::cinder {
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
     database_connection => "mysql://${cinder_db_user}:${cinder_db_pass}@${cinder_db_host}/${cinder_db}?charset=utf8",
     mysql_module        => '2.2',
-    rabbit_hosts        => get_exported_var('', $nova_mq_ev, []),
-    rabbit_userid       => $nova_mq_username,
-    rabbit_password     => $nova_mq_password,
-    rabbit_port         => $nova_mq_port,
-    rabbit_virtual_host => $nova_mq_vhost,
+    rabbit_hosts        => $rabbit_hosts,
+    rabbit_userid       => $rabbitmq_username,
+    rabbit_password     => $rabbitmq_password,
+    rabbit_port         => $rabbitmq_port,
+    rabbit_virtual_host => $rabbitmq_vhost,
     package_ensure      => present,
   }
 

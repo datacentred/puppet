@@ -10,24 +10,22 @@
 #
 class dc_profile::openstack::neutron_server {
 
-  $os_region          = hiera(os_region)
+  $os_region = hiera(os_region)
 
   $keystone_neutron_password = hiera(keystone_neutron_password)
 
-  $nova_mq_username   = hiera(nova_mq_username)
-  $nova_mq_password   = hiera(nova_mq_password)
-  $nova_mq_port       = hiera(nova_mq_port)
-  $nova_mq_vhost      = hiera(nova_mq_vhost)
+  $rabbit_hosts      = hiera(osdbmq_members)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pass)
+  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
-  $neutron_secret     = hiera(neutron_secret)
+  $neutron_secret = hiera(neutron_secret)
 
-  $neutron_db         = hiera(neutron_db)
-  $neutron_db_host    = hiera(neutron_db_host)
-  $neutron_db_user    = hiera(neutron_db_user)
-  $neutron_db_pass    = hiera(neutron_db_pass)
-
-  # Hard coded exported variable name
-  $nova_mq_ev         = 'nova_mq_node'
+  $neutron_db      = hiera(neutron_db)
+  $neutron_db_host = hiera(neutron_db_host)
+  $neutron_db_user = hiera(neutron_db_user)
+  $neutron_db_pass = hiera(neutron_db_pass)
 
   # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
@@ -41,11 +39,11 @@ class dc_profile::openstack::neutron_server {
   class { 'neutron':
       enabled               => true,
       bind_host             => '0.0.0.0',
-      rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
-      rabbit_user           => $nova_mq_username,
-      rabbit_password       => $nova_mq_password,
-      rabbit_port           => $nova_mq_port,
-      rabbit_virtual_host   => $nova_mq_vhost,
+      rabbit_hosts          => $rabbit_hosts,
+      rabbit_user           => $rabbitmq_username,
+      rabbit_password       => $rabbitmq_password,
+      rabbit_port           => $rabbitmq_port,
+      rabbit_virtual_host   => $rabbitmq_vhost,
       allow_overlapping_ips => true,
       verbose               => true,
       debug                 => false,
@@ -68,8 +66,7 @@ class dc_profile::openstack::neutron_server {
   }
 
   # Nagios stuff
-
-  include dc_icinga::hostgroup_neutron_server
+  # include dc_icinga::hostgroup_neutron_server
 
   # Configure Neutron for OVS
   class { 'neutron::agents::ovs':
@@ -87,9 +84,7 @@ class dc_profile::openstack::neutron_server {
     value => $::fqdn,
   }
 
-  # Export Keystone endpoint details
-  # Might need revisiting once we have an external (public) network defined
-  # TODO: SSL
+  # Export endpoint details for Keystone
   @@keystone_endpoint { "${os_region}/neutron":
     ensure       => present,
     public_url   => "https://${osapi_public}:${neutron_port}",

@@ -88,18 +88,6 @@
 [submodule "modules/exported_vars"]
 	path = modules/exported_vars
 	url = https://github.com/example42/puppet-exported_vars
-[submodule "modules/keystone"]
-	path = modules/keystone
-	url = https://github.com/spjmurray/puppet-keystone
-[submodule "modules/nova"]
-	path = modules/nova
-	url = https://github.com/spjmurray/puppet-nova
-[submodule "modules/glance"]
-	path = modules/glance
-	url = https://github.com/spjmurray/puppet-glance
-[submodule "modules/cinder"]
-	path = modules/cinder
-	url = https://github.com/stackforge/puppet-cinder
 [submodule "modules/bundler"]
 	path = modules/bundler
 	url = https://github.com/puppetlabs-operations/puppet-bundler.git
@@ -227,9 +215,6 @@
 [submodule "modules/sysdig"]
 	path = modules/sysdig
 	url = https://github.com/garethr/garethr-sysdig.git
-[submodule "modules/neutron"]
-	path = modules/neutron
-	url = https://github.com/datacentred/puppet-neutron.git
 [submodule "modules/ceilometer"]
 	path = modules/ceilometer
 	url = https://github.com/datacentred/puppet-ceilometer.git
@@ -242,3 +227,18 @@
 [submodule "modules/passwordless_ssh"]
 	path = modules/passwordless_ssh
 	url = https://github.com/datacentred/datacentred-passwordless_ssh
+[submodule "modules/nova"]
+	path = modules/nova
+	url = https://github.com/stackforge/puppet-nova.git
+[submodule "modules/glance"]
+	path = modules/glance
+	url = https://github.com/stackforge/puppet-glance.git
+[submodule "modules/cinder"]
+	path = modules/cinder
+	url = https://github.com/stackforge/puppet-cinder.git
+[submodule "modules/neutron"]
+	path = modules/neutron
+	url = https://github.com/stackforge/puppet-neutron.git
+[submodule "modules/keystone"]
+	path = modules/keystone
+	url = https://github.com/stackforge/puppet-keystone.git

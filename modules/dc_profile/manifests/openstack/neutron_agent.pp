@@ -10,34 +10,33 @@
 # Sample Usage:
 #
 class dc_profile::openstack::neutron_agent {
-  $os_region                  = hiera(os_region)
+  $os_region = hiera(os_region)
 
-  $keystone_neutron_password  = hiera(keystone_neutron_password)
+  $keystone_neutron_password = hiera(keystone_neutron_password)
 
-  $nova_api_ip                = get_exported_var('', 'nova_api_ip', ['localhost'])
-  $nova_mq_username           = hiera(nova_mq_username)
-  $nova_mq_password           = hiera(nova_mq_password)
-  $nova_mq_port               = hiera(nova_mq_port)
-  $nova_mq_vhost              = hiera(nova_mq_vhost)
+  $nova_api_ip = get_exported_var('', 'nova_api_ip', ['localhost'])
 
-  $neutron_secret             = hiera(neutron_secret)
-  $neutron_metadata_secret    = hiera(neutron_metadata_secret)
+  $rabbit_hosts      = hiera(osdbmq_members)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_username)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_password)
+  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
-  $neutron_db                 = hiera(neutron_db)
-  $neutron_db_host            = hiera(neutron_db_host)
-  $neutron_db_user            = hiera(neutron_db_user)
-  $neutron_db_pass            = hiera(neutron_db_pass)
+  $neutron_secret          = hiera(neutron_secret)
+  $neutron_metadata_secret = hiera(neutron_metadata_secret)
+
+  $neutron_db      = hiera(neutron_db)
+  $neutron_db_host = hiera(neutron_db_host)
+  $neutron_db_user = hiera(neutron_db_user)
+  $neutron_db_pass = hiera(neutron_db_pass)
 
   # OpenStack API endpoint
   $osapi_public  = 'openstack.datacentred.io'
 
-  # Hard coded exported variable name
-  $nova_mq_ev                 = 'nova_mq_node'
+  $neutron_port = '9696'
 
-  $neutron_port               = '9696'
-
-  $management_ip              = $::ipaddress_eth0
-  $integration_ip             = $::ipaddress_eth1
+  $management_ip  = $::ipaddress_eth0
+  $integration_ip = $::ipaddress_eth1
 
   # Physical interface plumbed into external network
   $uplink_if                  = 'eth2'
@@ -45,11 +44,11 @@ class dc_profile::openstack::neutron_agent {
   class { 'neutron':
     enabled               => true,
     bind_host             => '0.0.0.0',
-    rabbit_hosts          => get_exported_var('', $nova_mq_ev, []),
-    rabbit_user           => $nova_mq_username,
-    rabbit_password       => $nova_mq_password,
-    rabbit_port           => $nova_mq_port,
-    rabbit_virtual_host   => $nova_mq_vhost,
+    rabbit_hosts          => $rabbit_hosts,
+    rabbit_user           => $rabbitmq_username,
+    rabbit_password       => $rabbitmq_password,
+    rabbit_port           => $rabbitmq_port,
+    rabbit_virtual_host   => $rabbitmq_vhost,
     allow_overlapping_ips => true,
     verbose               => true,
     debug                 => false,
@@ -129,52 +128,6 @@ class dc_profile::openstack::neutron_agent {
       enabled        => true,
       use_namespaces => true,
     }
-
-    if $::environment == 'production' {
-
-      file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
-        ensure  => present,
-        content => 'command[check_neutron_dhcp_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-dhcp-agent',
-        require => Package['nagios-nrpe-server'],
-        notify  => Service['nagios-nrpe-server'],
-      }
-
-      file { '/etc/nagios/nrpe.d/os_neutron_l3_agent.cfg':
-        ensure  => present,
-        content => 'command[check_neutron_l3_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-l3-agent',
-        require => Package['nagios-nrpe-server'],
-        notify  => Service['nagios-nrpe-server'],
-      }
-
-      file { '/etc/nagios/nrpe.d/os_neutron_metadata_agent.cfg':
-        ensure  => present,
-        content => 'command[check_neutron_metadata_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -a /usr/bin/neutron-ns-metadata-proxy',
-        require => Package['nagios-nrpe-server'],
-        notify  => Service['nagios-nrpe-server'],
-      }
-
-      file { '/etc/nagios/nrpe.d/os_neutron_vpn_agent.cfg':
-        ensure  => present,
-        content => 'command[check_neutron_vpn_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-vpn-agent',
-        require => Package['nagios-nrpe-server'],
-        notify  => Service['nagios-nrpe-server'],
-      }
-
-      file { '/etc/nagios/nrpe.d/os_neutron_lbaas_agent.cfg':
-        ensure  => present,
-        content => 'command[check_neutron_lbaas_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-lbaas-agent',
-        require => Package['nagios-nrpe-server'],
-        notify  => Service['nagios-nrpe-server'],
-      }
-
-      file { '/etc/nagios/nrpe.d/os_neutron_metering_agent.cfg':
-        ensure  => present,
-        content => 'command[check_neutron_metering_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-metering-agent',
-        require => Package['nagios-nrpe-server'],
-        notify  => Service['nagios-nrpe-server'],
-      }
-    }
-
   }
   else  {
     # We're a compute node, so just configure the OVS basics
@@ -183,5 +136,50 @@ class dc_profile::openstack::neutron_agent {
       enable_tunneling => true,
     }
   }
+
+#     if $::environment == 'production' {
+#
+#       file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
+#         ensure  => present,
+#         content => 'command[check_neutron_dhcp_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-dhcp-agent',
+#         require => Package['nagios-nrpe-server'],
+#         notify  => Service['nagios-nrpe-server'],
+#       }
+#
+#       file { '/etc/nagios/nrpe.d/os_neutron_l3_agent.cfg':
+#         ensure  => present,
+#         content => 'command[check_neutron_l3_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-l3-agent',
+#         require => Package['nagios-nrpe-server'],
+#         notify  => Service['nagios-nrpe-server'],
+#       }
+#
+#       file { '/etc/nagios/nrpe.d/os_neutron_metadata_agent.cfg':
+#         ensure  => present,
+#         content => 'command[check_neutron_metadata_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -a /usr/bin/neutron-ns-metadata-proxy',
+#         require => Package['nagios-nrpe-server'],
+#         notify  => Service['nagios-nrpe-server'],
+#       }
+#
+#       file { '/etc/nagios/nrpe.d/os_neutron_vpn_agent.cfg':
+#         ensure  => present,
+#         content => 'command[check_neutron_vpn_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-vpn-agent',
+#         require => Package['nagios-nrpe-server'],
+#         notify  => Service['nagios-nrpe-server'],
+#       }
+#
+#       file { '/etc/nagios/nrpe.d/os_neutron_lbaas_agent.cfg':
+#         ensure  => present,
+#         content => 'command[check_neutron_lbaas_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-lbaas-agent',
+#         require => Package['nagios-nrpe-server'],
+#         notify  => Service['nagios-nrpe-server'],
+#       }
+#
+#       file { '/etc/nagios/nrpe.d/os_neutron_metering_agent.cfg':
+#         ensure  => present,
+#         content => 'command[check_neutron_metering_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-metering-agent',
+#         require => Package['nagios-nrpe-server'],
+#         notify  => Service['nagios-nrpe-server'],
+#       }
+#     }
 
 }

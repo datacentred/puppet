@@ -7,23 +7,20 @@
 # Actions:
 #
 # Requires:
-#   
+#
 # Sample Usage:
 #
 class dc_profile::openstack::neutron_db {
 
-  contain dc_mariadb
-
   $neutron_db      = hiera(neutron_db)
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
-  $neutron_server  = hiera(neutron_server_host)
 
   dc_mariadb::db { $neutron_db:
     user     => $neutron_db_user,
     password => $neutron_db_pass,
-    host     => $neutron_server,
-    require  => Class['Dc_mariadb'],
+    host     => '%',
+    require  => Class['::galera'],
   }
 
 }
