@@ -26,13 +26,10 @@ class dc_profile::openstack::keystone {
   $keystone_private_port = '35357'
 
   class { '::keystone':
-    verbose          => true,
-    catalog_type     => 'sql',
-    admin_token      => hiera(keystone_admin_uuid),
-    token_driver     => 'keystone.token.backends.memcache.Token',
-    token_expiration => 7200,
-    memcache_servers => $memcache_servers,
-    sql_connection   => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
+    verbose             => true,
+    catalog_type        => 'sql',
+    admin_token         => hiera(keystone_admin_uuid),
+    database_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
   }
 
   # Adds the admin credential to keystone.
@@ -48,15 +45,6 @@ class dc_profile::openstack::keystone {
     internal_url => "https://${osapi_public}:${keystone_public_port}",
     admin_url    => "https://${osapi_public}:${keystone_private_port}",
     region       => $os_region,
-  }
-
-  # Set up DC admin users with the admin role in the 'openstack' tenant
-  $dcadminhash = hiera(admins)
-  $dcadmins = keys($dcadminhash)
-  dc_profile::openstack::keystone_dcadmins { $dcadmins:
-    hash   => $dcadminhash,
-    tenant => 'openstack',
-    role   => 'admin',
   }
 
   # Export variable for use by haproxy to front the Keystone
