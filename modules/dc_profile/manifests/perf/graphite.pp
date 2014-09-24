@@ -20,6 +20,14 @@ class dc_profile::perf::graphite (
 
   include apache
 
+  package { 'libpq-dev':
+    ensure => installed,
+  }
+
+  package { 'python-psycopg2':
+    ensure => installed,
+  }
+
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt.  We dedicate the lion's share of available disk
   # to /var, so that's the preference in this case.
@@ -32,7 +40,6 @@ class dc_profile::perf::graphite (
     target  => '/var/opt/graphite',
     require => File['/var/opt/graphite'],
   }
-
 
   class { '::graphite':
     gr_aggregator_line_interface => '0.0.0.0',
