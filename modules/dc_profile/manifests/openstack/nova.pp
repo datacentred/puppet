@@ -20,17 +20,20 @@ class dc_profile::openstack::nova {
 
   $os_region = hiera(os_region)
 
+  # OpenStack API and loadbalancer endpoint
+  $osapi_public  = 'openstack.datacentred.io'
+
   $rabbitmq_username         = hiera(osdbmq_rabbitmq_user)
   $rabbitmq_password         = hiera(osdbmq_rabbitmq_pass)
   $rabbitmq_monuser          = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
-  $rabbitmq_hosts              = hiera(osdbmq_members)
+  $rabbitmq_hosts            = hiera(osdbmq_members)
   $rabbitmq_port             = hiera(osdbmq_rabbitmq_port)
   $rabbitmq_vhost            = hiera(osdbmq_rabbitmq_vhost)
 
   $nova_db_user = hiera(nova_db_user)
   $nova_db_pass = hiera(nova_db_pass)
-  $nova_db_host = hiera(nova_db_host)
+  $nova_db_host = $osapi_public
   $nova_db      = hiera(nova_db)
 
   $nova_admin_tenant = hiera(nova_admin_tenant)
@@ -42,9 +45,6 @@ class dc_profile::openstack::nova {
   $neutron_metadata_secret = hiera(neutron_metadata_secret)
 
   include dc_profile::auth::sudoers_nova
-
-  # OpenStack API endpoint
-  $osapi_public  = 'openstack.datacentred.io'
 
   $ec2_port  = '8773'
   $nova_port = '8774'

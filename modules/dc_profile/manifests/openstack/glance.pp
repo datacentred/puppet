@@ -16,18 +16,19 @@ class dc_profile::openstack::glance {
 
   $os_region = hiera(os_region)
 
+  # OpenStack API and loadbalancer endpoint
+  $osapi_public  = 'openstack.datacentred.io'
+
   $glance_api_db      = hiera(glance_api_db)
   $glance_api_db_user = hiera(glance_api_db_user)
   $glance_api_db_pass = hiera(glance_api_db_pass)
-  $glance_api_db_host = hiera(glance_api_db_host)
+  $glance_api_db_host = $osapi_public
 
   $glance_reg_db      = hiera(glance_reg_db)
   $glance_reg_db_user = hiera(glance_reg_db_user)
   $glance_reg_db_pass = hiera(glance_reg_db_pass)
-  $glance_reg_db_host = hiera(glance_reg_db_host)
+  $glance_reg_db_host = $osapi_public
 
-  # OpenStack API endpoint
-  $osapi_public  = 'openstack.datacentred.io'
 
   $glance_port = '9292'
 
@@ -81,11 +82,11 @@ class dc_profile::openstack::glance {
     tag           => 'glance_endpoint',
   }
 
-  include dc_icinga::hostgroup_glance
+  # include dc_icinga::hostgroup_glance
 
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::glance_logstash
-  }
+  # if $::environment == 'production' {
+  #   # Logstash config
+  #   include dc_profile::openstack::glance_logstash
+  # }
 
 }

@@ -14,20 +14,21 @@ class dc_profile::openstack::cinder {
 
   $keystone_cinder_password = hiera(keystone_cinder_password)
 
+  # OpenStack API and loadbalancer endpoint
+  $osapi_public  = 'openstack.datacentred.io'
+
   $cinder_db        = hiera(cinder_db)
-  $cinder_db_host   = hiera(cinder_db_host)
+  $cinder_db_host   = $osapi_public
   $cinder_db_user   = hiera(cinder_db_user)
   $cinder_db_pass   = hiera(cinder_db_pass)
 
-  $rabbitmq_username   = hiera(rabbitmq_username)
-  $rabbitmq_password   = hiera(rabbitmq_password)
-  $rabbitmq_port       = hiera(rabbitmq_port)
-  $rabbitmq_vhost      = hiera(rabbitmq_vhost)
+  $rabbitmq_hosts    = hiera(osdbmq_members)
+  $rabbitmq_username = hiera(rabbitmq_username)
+  $rabbitmq_password = hiera(rabbitmq_password)
+  $rabbitmq_port     = hiera(rabbitmq_port)
+  $rabbitmq_vhost    = hiera(rabbitmq_vhost)
 
   $os_region = hiera(os_region)
-
-  # OpenStack API endpoint
-  $osapi_public  = 'openstack.datacentred.io'
 
   $cinder_port = '8776'
 
@@ -37,7 +38,7 @@ class dc_profile::openstack::cinder {
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
     database_connection => "mysql://${cinder_db_user}:${cinder_db_pass}@${cinder_db_host}/${cinder_db}?charset=utf8",
     mysql_module        => '2.2',
-    rabbit_hosts        => $rabbit_hosts,
+    rabbit_hosts        => $rabbitmq_hosts,
     rabbit_userid       => $rabbitmq_username,
     rabbit_password     => $rabbitmq_password,
     rabbit_port         => $rabbitmq_port,
@@ -84,10 +85,10 @@ class dc_profile::openstack::cinder {
   }
 
   # No RBD just yet! :(
-  class { 'cinder::volume::iscsi':
-    iscsi_ip_address => $::ipaddress_eth1,
-    volume_group     => 'cindervg',
-  }
+  #class { 'cinder::volume::iscsi':
+  #  iscsi_ip_address => $::ipaddress_eth1,
+  #  volume_group     => 'cindervg',
+  #}
 
   # Export variable for use by haproxy to front this
   # API endpoint
@@ -108,11 +109,11 @@ class dc_profile::openstack::cinder {
   }
 
   # Nagios config
-  include dc_profile::openstack::cinder_nagios
+  # include dc_profile::openstack::cinder_nagios
 
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::cinder_logstash
-  }
+  # if $::environment == 'production' {
+  #   # Logstash config
+  #   include dc_profile::openstack::cinder_logstash
+  # }
 
 }

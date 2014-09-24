@@ -12,11 +12,14 @@
 class dc_profile::openstack::neutron_agent {
   $os_region = hiera(os_region)
 
+  # OpenStack API and loadbalancer endpoint
+  $osapi_public  = 'openstack.datacentred.io'
+
   $keystone_neutron_password = hiera(keystone_neutron_password)
 
   $nova_api_ip = get_exported_var('', 'nova_api_ip', ['localhost'])
 
-  $rabbit_hosts      = hiera(osdbmq_members)
+  $rabbitmq_hosts    = hiera(osdbmq_members)
   $rabbitmq_username = hiera(osdbmq_rabbitmq_username)
   $rabbitmq_password = hiera(osdbmq_rabbitmq_password)
   $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
@@ -26,12 +29,10 @@ class dc_profile::openstack::neutron_agent {
   $neutron_metadata_secret = hiera(neutron_metadata_secret)
 
   $neutron_db      = hiera(neutron_db)
-  $neutron_db_host = hiera(neutron_db_host)
+  $neutron_db_host = $osapi_public
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
 
-  # OpenStack API endpoint
-  $osapi_public  = 'openstack.datacentred.io'
 
   $neutron_port = '9696'
 
@@ -44,7 +45,7 @@ class dc_profile::openstack::neutron_agent {
   class { 'neutron':
     enabled               => true,
     bind_host             => '0.0.0.0',
-    rabbit_hosts          => $rabbit_hosts,
+    rabbit_hosts          => $rabbitmq_hosts,
     rabbit_user           => $rabbitmq_username,
     rabbit_password       => $rabbitmq_password,
     rabbit_port           => $rabbitmq_port,
