@@ -1,6 +1,6 @@
 # Class: dc_profile::perf::graphite
 #
-# Installation of Graphite, specifying a MySQL backend for storage
+# Installation of Graphite, specifying a PostgreSQL backend for storage
 #
 # Parameters:
 #
@@ -10,11 +10,23 @@
 #
 # Sample Usage:
 #
-class dc_profile::perf::graphite {
+class dc_profile::perf::graphite (
+  $graphite_db_pw,
+  $graphite_secret_key,
+  $graphite_db_user,
+  $graphite_db_host,
+  $graphite_db_name,
+){
+
   include apache
 
-  $graphite_db_pw = hiera(graphite_db_pw)
-  $graphite_secret_key = hiera(graphite_secret_key)
+  package { 'libpq-dev':
+    ensure => installed,
+  }
+
+  package { 'python-psycopg2':
+    ensure => installed,
+  }
 
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt.  We dedicate the lion's share of available disk
@@ -41,11 +53,11 @@ class dc_profile::perf::graphite {
     gr_max_creates_per_minute    => inf,
     gr_enable_udp_listener       => true,
     gr_enable_carbon_aggregator  => false,
-    gr_django_db_engine          => 'django.db.backends.mysql',
-    gr_django_db_name            => 'graphite',
-    gr_django_db_user            => 'graphite',
+    gr_django_db_engine          => 'django.db.backends.postgresql_psycog2',
+    gr_django_db_name            => $graphite_db_name,
+    gr_django_db_user            => $graphite_db_user,
     gr_django_db_password        => $graphite_db_pw,
-    gr_django_db_host            => "db0.${::domain}",
+    gr_django_db_host            => "${graphite_db_host}.${::domain}",
     gr_django_db_port            => 3306,
     gr_storage_schemas           => [
       {
@@ -84,7 +96,7 @@ class dc_profile::perf::graphite {
     },
     wsgi_process_group          => graphite,
     wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
-  } 
+  }
 
   # Add an appropriate CNAME RR
   @@dns_resource { "graphite.${::domain}/CNAME":
