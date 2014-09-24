@@ -18,7 +18,7 @@ class dc_rails::server {
   $group = hiera(rails::user::name)
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $rails_env = 'production'
-  $ruby = '2.1.2'
+  $ruby = '2.1.3'
   $home = "/home/${user}/"
   $log_base = '/var/log/rails/'
   $run_base = '/var/run/rails/'
