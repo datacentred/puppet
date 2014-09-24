@@ -25,7 +25,8 @@ define dc_rails::app (
   $password = hiera(rails::user::password)
   $group = hiera(rails::user::name)
   $db_password = hiera(dc_mariadb::maria_root_pw)
-  $jira_password = hiera(jira::stronghold::password)
+  $sirportly_api_token = hiera(sirportly::stronghold::api_token)
+  $sirportly_api_secret = hiera(sirportly::stronghold::api_secret)
   $strongbox_passphrase = hiera(rails::server::stronghold::api_key_passphrase)
   $ruby = '2.1.2'
   $home = "/home/${user}/"
@@ -119,7 +120,8 @@ define dc_rails::app (
     rack_env             => $rails_env,
     secret_key_base      => $secret_key_base,
     db_password          => $db_password,
-    jira_password        => $jira_password,
+    sirportly_api_token  => $sirportly_api_token,
+    sirportly_api_secret => $sirportly_api_secret,
     strongbox_passphrase => $strongbox_passphrase,
     source               => $unicorn,
     subscribe            => Vcsrepo[$app_home],
