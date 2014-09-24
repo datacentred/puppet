@@ -24,7 +24,7 @@ class dc_profile::openstack::nova {
   $osapi_public  = 'openstack.datacentred.io'
 
   $rabbitmq_username         = hiera(osdbmq_rabbitmq_user)
-  $rabbitmq_password         = hiera(osdbmq_rabbitmq_pass)
+  $rabbitmq_password         = hiera(osdbmq_rabbitmq_pw)
   $rabbitmq_monuser          = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $rabbitmq_hosts            = hiera(osdbmq_members)
@@ -43,8 +43,6 @@ class dc_profile::openstack::nova {
   $neutron_server_host     = hiera(neutron_server_host)
   $neutron_secret          = hiera(neutron_secret)
   $neutron_metadata_secret = hiera(neutron_metadata_secret)
-
-  include dc_profile::auth::sudoers_nova
 
   $ec2_port  = '8773'
   $nova_port = '8774'

@@ -45,7 +45,7 @@ class dc_profile::openstack::glance {
     keystone_tenant          => 'services',
     keystone_user            => 'glance',
     keystone_password        => $keystone_glance_password,
-    sql_connection           => $glance_api_database,
+    database_connection      => $glance_api_database,
     use_syslog               => true,
     enabled                  => true,
   }
@@ -58,16 +58,16 @@ class dc_profile::openstack::glance {
   }
 
   class { 'glance::registry':
-    auth_type         => 'keystone',
-    auth_host         => $osapi_public,
-    auth_uri          => "https://${osapi_public}:5000/v2.0",
-    auth_protocol     => 'https',
-    keystone_tenant   => 'services',
-    keystone_user     => 'glance',
-    keystone_password => $keystone_glance_password,
-    sql_connection    => $glance_reg_database,
-    use_syslog        => true,
-    enabled           => true,
+    auth_type           => 'keystone',
+    auth_host           => $osapi_public,
+    auth_uri            => "https://${osapi_public}:5000/v2.0",
+    auth_protocol       => 'https',
+    keystone_tenant     => 'services',
+    keystone_user       => 'glance',
+    keystone_password   => $keystone_glance_password,
+    database_connection => $glance_reg_database,
+    use_syslog          => true,
+    enabled             => true,
   }
   contain 'glance::registry'
 

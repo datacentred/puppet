@@ -23,16 +23,14 @@ class dc_profile::openstack::cinder {
   $cinder_db_pass   = hiera(cinder_db_pass)
 
   $rabbitmq_hosts    = hiera(osdbmq_members)
-  $rabbitmq_username = hiera(rabbitmq_username)
-  $rabbitmq_password = hiera(rabbitmq_password)
-  $rabbitmq_port     = hiera(rabbitmq_port)
-  $rabbitmq_vhost    = hiera(rabbitmq_vhost)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
+  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
   $os_region = hiera(os_region)
 
   $cinder_port = '8776'
-
-  include dc_profile::auth::sudoers_cinder
 
   class {'::cinder':
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
