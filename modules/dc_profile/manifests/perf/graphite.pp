@@ -1,6 +1,6 @@
 # Class: dc_profile::perf::graphite
 #
-# Installation of Graphite, specifying a PostgreSQL backend for storage
+# Installation of Graphite, specifying a MySQL backend for storage
 #
 # Parameters:
 #
