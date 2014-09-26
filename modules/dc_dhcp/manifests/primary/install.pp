@@ -8,7 +8,7 @@ class dc_dhcp::primary::install {
 
   package { 'python-pyinotify':
     ensure => installed,
-  } 
+  }
 
   file { '/usr/local/bin/dhcp_sync_agent.py':
     ensure => file,

@@ -22,7 +22,7 @@ class dc_profile::openstack::nova_mq {
 
   # Export a variable to say we're part of a nova_mq cluster
   exported_vars::set { $nova_mq_ev:
-    value => "${::fqdn}",
+    value => $::fqdn,
   }
 
   # Create the MQ with the openstack user and password

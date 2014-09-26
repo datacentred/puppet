@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 class dc_profile::net::keepalived (
-  $keepalived_hash, 
+  $keepalived_hash,
 ) {
 
   include ::keepalived
