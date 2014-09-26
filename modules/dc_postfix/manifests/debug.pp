@@ -1,3 +1,5 @@
+# == Class: dc_postfix::debug
+#
 class dc_postfix::debug {
 
   postfix::config { 'debug_peer_list':

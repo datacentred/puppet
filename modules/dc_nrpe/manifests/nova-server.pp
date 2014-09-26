@@ -1,4 +1,4 @@
-# Class: dc_nrpe::nova
+# Class: dc_nrpe::nova-server
 #
 # Nova specific nrpe configuration
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_nrpe::nova {
+class dc_nrpe::nova-server {
 
   if defined(Class['dc_icinga::hostgroup_nova']) {
 
