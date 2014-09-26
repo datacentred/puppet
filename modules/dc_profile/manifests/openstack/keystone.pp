@@ -25,6 +25,12 @@ class dc_profile::openstack::keystone {
   $keystone_public_port  = '5000'
   $keystone_private_port = '35357'
 
+  $glance_port  = '9292'
+  $cinder_port  = '8776'
+  $neutron_port = '9696'
+  $ec2_port     = '8773'
+  $nova_port    = '8774'
+
   class { '::keystone':
     verbose             => true,
     catalog_type        => 'sql',
@@ -70,7 +76,12 @@ class dc_profile::openstack::keystone {
     type        => 'image',
     description => 'Glance Image Service',
   }
-  Keystone_endpoint <<| tag == 'glance_endpoint' |>>
+  keystone_endpoint { "${os_region}/glance":
+    ensure        => present,
+    public_url    => "https://${osapi_public}:${glance_port}",
+    admin_url     => "https://${osapi_public}:${glance_port}",
+    internal_url  => "https://${osapi_public}:${glance_port}",
+  }
 
   # Cinder
   keystone_user { 'cinder':
@@ -94,9 +105,20 @@ class dc_profile::openstack::keystone {
     type        => 'volumev2',
     description => 'Cinder Volume Service V2',
   }
-  Keystone_endpoint <<| tag == 'cinder_endpoint' |>>
+  keystone_endpoint { "${os_region}/cinder":
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
+    admin_url    => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
+    internal_url => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
+  }
+  keystone_endpoint { "${os_region}/cinderv2":
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
+    admin_url    => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
+    internal_url => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
+  }
 
-  # Nova bits
+  # Nova
   keystone_user { 'nova':
     ensure   => present,
     enabled  => true,
@@ -118,9 +140,20 @@ class dc_profile::openstack::keystone {
     type        => 'ec2',
     description => 'EC2 Service',
   }
-  Keystone_endpoint <<| tag == 'nova_endpoint' |>>
+  keystone_endpoint { "${os_region}/nova":
+    ensure        => present,
+    public_url    => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
+    admin_url     => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
+    internal_url  => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
+  }
+  keystone_endpoint { "${os_region}/nova_ec2":
+    ensure        => present,
+    public_url    => "https://${osapi_public}:${ec2_port}/services/Cloud",
+    admin_url     => "https://${osapi_public}:${ec2_port}/services/Admin",
+    internal_url  => "https://${osapi_public}:${ec2_port}/services/Cloud",
+  }
 
-  # Neutron bits
+  # Neutron
   keystone_user { 'neutron':
     ensure   => present,
     enabled  => true,
@@ -137,9 +170,14 @@ class dc_profile::openstack::keystone {
     type        => 'network',
     description => 'OpenStack Networking Service',
   }
-  Keystone_endpoint <<| tag == 'neutron_endpoint' |>>
+  keystone_endpoint { "${os_region}/neutron":
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${neutron_port}",
+    admin_url    => "https://${osapi_public}:${neutron_port}",
+    internal_url => "https://${osapi_public}:${neutron_port}",
+  }
 
-  # Ceilometer bits
+  # Ceilometer
   keystone_user { 'ceilometer':
     ensure   => present,
     enabled  => true,
@@ -156,24 +194,23 @@ class dc_profile::openstack::keystone {
     type        => 'metering',
     description => 'Ceilometer Telemetry Service',
   }
-  Keystone_endpoint <<| tag == 'ceilometer_endpoint' |>>
 
   # Icinga monitoring
-  keystone_tenant { 'icinga':
-    ensure  => present,
-    enabled => true,
-  }
-  keystone_user_role { 'icinga@icinga':
-    ensure => present,
-    roles  => admin,
-  }
-  keystone_user { 'icinga':
-    ensure   => present,
-    enabled  => true,
-    password => hiera(keystone_icinga_password),
-    email    => $sysmailaddress,
-    tenant   => 'icinga',
-  }
+#  keystone_tenant { 'icinga':
+#    ensure  => present,
+#    enabled => true,
+#  }
+#  keystone_user_role { 'icinga@icinga':
+#    ensure => present,
+#    roles  => admin,
+#  }
+#  keystone_user { 'icinga':
+#    ensure   => present,
+#    enabled  => true,
+#    password => hiera(keystone_icinga_password),
+#    email    => $sysmailaddress,
+#    tenant   => 'icinga',
+#  }
 
   # include dc_icinga::hostgroup_keystone
 

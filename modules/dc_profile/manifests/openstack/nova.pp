@@ -44,12 +44,9 @@ class dc_profile::openstack::nova {
   $neutron_secret          = hiera(neutron_secret)
   $neutron_metadata_secret = hiera(neutron_metadata_secret)
 
-  $ec2_port  = '8773'
-  $nova_port = '8774'
-
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
-  $management_ip              = $::ipaddress
+  $management_ip = $::ipaddress
 
   class { '::nova':
     database_connection => $nova_database,
@@ -85,11 +82,11 @@ class dc_profile::openstack::nova {
   contain 'nova::network::neutron'
 
   class { [
-    'nova::cert',
-    'nova::conductor',
-    'nova::consoleauth',
-    'nova::scheduler',
-    'nova::vncproxy'
+    '::nova::cert',
+    '::nova::conductor',
+    '::nova::consoleauth',
+    '::nova::scheduler',
+    '::nova::vncproxy'
   ]:
     enabled => true,
   }
@@ -108,21 +105,6 @@ class dc_profile::openstack::nova {
     value => $::fqdn,
   }
 
-  @@keystone_endpoint { "${os_region}/nova":
-    ensure        => present,
-    public_url    => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
-    admin_url     => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
-    internal_url  => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
-    tag           => 'nova_endpoint',
-  }
-
-  @@keystone_endpoint { "${os_region}/nova_ec2":
-    ensure        => present,
-    public_url    => "https://${osapi_public}:${ec2_port}/services/Cloud",
-    admin_url     => "https://${osapi_public}:${ec2_port}/services/Admin",
-    internal_url  => "https://${osapi_public}:${ec2_port}/services/Cloud",
-    tag           => 'nova_endpoint',
-  }
 
   # Nagios config
   # include dc_profile::openstack::nova_nagios

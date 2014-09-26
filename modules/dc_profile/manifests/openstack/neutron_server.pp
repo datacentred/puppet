@@ -30,8 +30,6 @@ class dc_profile::openstack::neutron_server {
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
 
-  $neutron_port       = '9696'
-
   $management_ip      = $::ipaddress
   $integration_ip     = $::ipaddress_p1p1
 
@@ -82,13 +80,5 @@ class dc_profile::openstack::neutron_server {
     value => $::fqdn,
   }
 
-  # Export endpoint details for Keystone
-  @@keystone_endpoint { "${os_region}/neutron":
-    ensure       => present,
-    public_url   => "https://${osapi_public}:${neutron_port}",
-    admin_url    => "https://${osapi_public}:${neutron_port}",
-    internal_url => "https://${osapi_public}:${neutron_port}",
-    tag          => 'neutron_endpoint',
-  }
 
 }
