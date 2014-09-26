@@ -36,7 +36,7 @@ class dc_profile::openstack::neutron_agent {
 
   $neutron_port = '9696'
 
-  $management_ip  = $::ipaddress_eth0
+  $management_ip  = $::ipaddress
   $integration_ip = $::ipaddress_eth1
 
   # Physical interface plumbed into external network

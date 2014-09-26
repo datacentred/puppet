@@ -32,8 +32,8 @@ class dc_profile::openstack::neutron_server {
 
   $neutron_port       = '9696'
 
-  $management_ip      = $::ipaddress_eth0
-  $integration_ip     = $::ipaddress_eth1
+  $management_ip      = $::ipaddress
+  $integration_ip     = $::ipaddress_p1p1
 
   # enable the neutron service
   class { 'neutron':

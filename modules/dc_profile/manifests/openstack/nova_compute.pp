@@ -37,7 +37,7 @@ class dc_profile::openstack::nova_compute {
   $neutron_server_host = hiera(neutron_server_host)
   $neutron_secret      = hiera(neutron_secret)
 
-  $management_ip = $::ipaddress_eth0
+  $management_ip = $::ipaddress
 
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 

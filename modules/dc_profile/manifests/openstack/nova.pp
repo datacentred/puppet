@@ -49,7 +49,7 @@ class dc_profile::openstack::nova {
 
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
-  $management_ip              = $::ipaddress_eth0
+  $management_ip              = $::ipaddress
 
   class { '::nova':
     database_connection => $nova_database,
