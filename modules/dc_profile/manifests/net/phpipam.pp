@@ -1,3 +1,5 @@
+# == Class: dc_profile::net::phpipam
+#
 class dc_profile::net::phpipam {
   include php
   include php::pear

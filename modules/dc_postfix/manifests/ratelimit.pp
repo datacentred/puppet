@@ -1,3 +1,5 @@
+# == Class: dc_postfix::ratelimit
+#
 class dc_postfix::ratelimit {
 
   postfix::config { 'default_destination_rate_delay':

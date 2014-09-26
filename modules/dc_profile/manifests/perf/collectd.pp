@@ -33,7 +33,7 @@ class dc_profile::perf::collectd {
     escapecharacter   => '.',
     storerates        => false,
     separateinstances => true,
-    protocol          => "tcp"
+    protocol          => 'tcp',
   }
 
   contain collectd

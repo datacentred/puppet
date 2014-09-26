@@ -1,3 +1,5 @@
+# == Class: dc_icinga::server::custom_plugins
+#
 class dc_icinga::server::custom_plugins {
 
   # Custom nagios plugins directory

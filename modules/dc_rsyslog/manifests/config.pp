@@ -1,3 +1,5 @@
+# == Class: dc_rsyslog::config
+#
 class dc_rsyslog::config {
 
   file { '/etc/rsyslog.d':

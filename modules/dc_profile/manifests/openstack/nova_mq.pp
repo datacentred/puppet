@@ -39,6 +39,9 @@ class dc_profile::openstack::nova_mq {
 
   include dc_icinga::hostgroup_rabbitmq
 
+  $rabbitmq_monuser = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
+
   class { 'dc_profile::mon::rabbitmq_monuser':
     userid   => $rabbitmq_monuser,
     password => $rabbitmq_monuser_password,

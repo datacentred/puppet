@@ -23,7 +23,7 @@ class dc_profile::hp::hpblade {
 
   if $::environment == 'production' {
     contain dc_nrpe::hpblade
-    include dc_icinga::hostgroup_hpblade 
+    include dc_icinga::hostgroup_hpblade
   }
 
 }

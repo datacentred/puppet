@@ -1,3 +1,5 @@
+# == Class: dc_logstash::icinga
+#
 class dc_logstash::icinga {
 
   file { '/usr/local/sbin/es_data_updating_check':

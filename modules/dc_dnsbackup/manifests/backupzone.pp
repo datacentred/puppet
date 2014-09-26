@@ -1,3 +1,5 @@
+# == Define: dc_dnsbackup::backupzone
+#
 define dc_dnsbackup::backupzone ($zonename,$master){
 
   include dc_dnsbackup

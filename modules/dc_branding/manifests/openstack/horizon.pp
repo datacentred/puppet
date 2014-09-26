@@ -55,7 +55,7 @@ class dc_branding::openstack::horizon (
 
   # Create the configuration file
   file { '/etc/openstack-dashboard/datacentred_theme.py':
-    ensure => file,
+    ensure  => file,
     content => template("${files_path}/datacentred_theme.py.erb"),
   }
 

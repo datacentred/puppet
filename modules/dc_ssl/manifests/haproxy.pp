@@ -1,3 +1,5 @@
+# == Class: dc_ssl::haproxy
+#
 class dc_ssl::haproxy {
 
   file { '/etc/ssl/certs/haproxy.pem':

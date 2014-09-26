@@ -1,3 +1,5 @@
+# == Class: dc_kibana::config
+#
 class dc_kibana::config {
  file { 'config.js':
     path    => '/var/www/kibana/config.js',

@@ -1,3 +1,5 @@
+# == Class: phpipam
+#
 class phpipam(
   $version = 'v1.1.0',
   $db_host = 'localhost',
@@ -9,7 +11,7 @@ class phpipam(
 
   ensure_packages(['git'])
 
-  vcsrepo { "/var/www/phpipam":
+  vcsrepo { '/var/www/phpipam':
     ensure   => present,
     provider => git,
     revision => $version,

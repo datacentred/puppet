@@ -1,3 +1,5 @@
+# == Class: dc_postfix::nrpe
+#
 class dc_postfix::nrpe {
 
   file { '/etc/nagios/nrpe.d/check_mailq_postfix.cfg':

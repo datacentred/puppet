@@ -14,7 +14,7 @@ class dc_dhcp::primary::install {
     ensure => file,
     owner  => 'root',
     group  => 'root',
-    mode   => '775',
+    mode   => '0775',
     source => 'puppet:///modules/dc_dhcp/dhcp_sync_agent.py',
   }
 
@@ -22,7 +22,7 @@ class dc_dhcp::primary::install {
     ensure => file,
     owner  => 'root',
     group  => 'root',
-    mode   => '775',
+    mode   => '0775',
     source => 'puppet:///modules/dc_dhcp/dhcp_sync_agent',
   }
 

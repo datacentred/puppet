@@ -19,8 +19,8 @@ define dc_gdash::overview (
   $hostpath = "${tplpath}/${_hostname}"
 
   file { $hostpath:
-    ensure  => directory,
-    purge => true,
+    ensure => directory,
+    purge  => true,
   }
 
   file { "${hostpath}/dash.yaml":

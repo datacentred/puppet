@@ -1,3 +1,5 @@
+# == Class: dc_postfix::virtual
+#
 class dc_postfix::virtual {
 
   $virtual_uid = hiera(postfix_virtual_uid)
@@ -35,10 +37,10 @@ class dc_postfix::virtual {
   postfix::hash { '/etc/postfix/valias':
     ensure    => present,
     map_owner => 'postfix',
-    content   => "${internal_sysmail_address} ${internal_sysmail_address}, ${external_sysmail_address}"
+    content   => "${internal_sysmail_address} ${internal_sysmail_address}, ${external_sysmail_address}",
   }
   postfix::config { 'virtual_alias_maps':
-    value => 'hash:/etc/postfix/valias'
+    value => 'hash:/etc/postfix/valias',
   }
 
 }

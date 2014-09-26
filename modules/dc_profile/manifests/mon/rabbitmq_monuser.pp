@@ -1,3 +1,5 @@
+# == Class: dc_profile::mon::rabbitmq_monuser
+#
 class dc_profile::mon::rabbitmq_monuser (
   $userid       = hiera(rabbitmq_monuser),
   $vhost = undef,
