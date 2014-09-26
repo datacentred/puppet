@@ -29,9 +29,6 @@ class dc_profile::openstack::glance {
   $glance_reg_db_pass = hiera(glance_reg_db_pass)
   $glance_reg_db_host = $osapi_public
 
-
-  $glance_port = '9292'
-
   $glance_api_database = "mysql://${glance_api_db_user}:${glance_api_db_pass}@${glance_api_db_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
 
@@ -73,14 +70,6 @@ class dc_profile::openstack::glance {
 
   # TODO: Temporary backend while boot-strapping CEPH
   contain glance::backend::file
-
-  @@keystone_endpoint { "${os_region}/glance":
-    ensure        => present,
-    public_url    => "https://${osapi_public}:${glance_port}",
-    admin_url     => "https://${osapi_public}:${glance_port}",
-    internal_url  => "https://${osapi_public}:${glance_port}",
-    tag           => 'glance_endpoint',
-  }
 
   # include dc_icinga::hostgroup_glance
 

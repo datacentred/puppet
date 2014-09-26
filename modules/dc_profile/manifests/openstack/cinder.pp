@@ -30,8 +30,6 @@ class dc_profile::openstack::cinder {
 
   $os_region = hiera(os_region)
 
-  $cinder_port = '8776'
-
   class {'::cinder':
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
     database_connection => "mysql://${cinder_db_user}:${cinder_db_pass}@${cinder_db_host}/${cinder_db}?charset=utf8",
@@ -55,21 +53,6 @@ class dc_profile::openstack::cinder {
     enabled                => true,
   }
 
-  @@keystone_endpoint { "${os_region}/cinder":
-    ensure       => present,
-    public_url   => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
-    admin_url    => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
-    internal_url => "https://${osapi_public}:${cinder_port}/v1/%(tenant_id)s",
-    tag          => 'cinder_endpoint',
-  }
-
-  @@keystone_endpoint { "${os_region}/cinderv2":
-    ensure       => present,
-    public_url   => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
-    admin_url    => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
-    internal_url => "https://${osapi_public}:${cinder_port}/v2/%(tenant_id)s",
-    tag          => 'cinder_endpoint',
-  }
 
   class {'::cinder::scheduler':
     scheduler_driver       => 'cinder.scheduler.simple.SimpleScheduler',
