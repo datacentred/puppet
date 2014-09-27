@@ -12,8 +12,6 @@
 #
 class dc_profile::db::pgbackup {
 
-  $storagedir = hiera(storagedir)
-
   if $::barman_key {
 
     $key_elements = split($::barman_key, ' ')
