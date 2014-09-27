@@ -12,10 +12,6 @@
 #
 class dc_profile::db::pgbackup {
 
-  $storagedir = hiera(storagedir)
-  $db0_postgres_pw = hiera(postgresql_password)
-  $keystone_postgres_pw = hiera(keystone_postgres_pw)
-
   if $::barman_key {
 
     $key_elements = split($::barman_key, ' ')
