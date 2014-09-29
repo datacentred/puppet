@@ -11,6 +11,5 @@
 # Sample Usage:
 #
 class dc_profile::perf::sysdig {
-  include ::sysdig
-  contain sysdig
+  contain ::sysdig
 }
