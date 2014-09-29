@@ -14,7 +14,8 @@
 #
 define dc_apache::vhost (
   $docroot,
-  $port = '80',
+  $port  = '80',
+  $cname = true,
 ) {
 
   # Note: apache will refuse to fire up a vhost without
@@ -31,11 +32,12 @@ define dc_apache::vhost (
     serveraliases => [ $title ],
   }
 
-  # Export the CNAME to the rest of the network
-  if $title != $::hostname {
-    @@dns_resource { "${title}.${::domain}/CNAME":
-      rdata => $::fqdn,
-    }
+  if $cname {
+    # Export the CNAME to the rest of the network
+      if $title != $::hostname {
+        @@dns_resource { "${title}.${::domain}/CNAME":
+          rdata => $::fqdn,
+        }
+      }
   }
-
 }
