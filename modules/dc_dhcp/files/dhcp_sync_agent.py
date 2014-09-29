@@ -43,6 +43,7 @@ class DHCPLeaseListener(pyinotify.ProcessEvent):
 		# Spit them out to a temporary file
 		fd = tempfile.NamedTemporaryFile()
 		fd.write(''.join(static_leases))
+		fd.flush()
 
 		# Send to the secondary and restart the daemon
 		try:
