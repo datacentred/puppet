@@ -59,6 +59,11 @@ $stdin.each_line do |line|
   else
     # We have been given a branch that needs to be created or updated. If the
     # environment exists, update it. Else, create it.
+    # Backup the branch to GitHub
+
+    Dir.chdir SOURCE_REPOSITORY
+    puts "[1;32m*[0m Backing up changes to GitHub ..."
+    %x{git push origin #{branchname}}
 
     if File.directory? environment_path
       # Update an existing environment. We do a fetch and then reset in the
@@ -101,10 +106,6 @@ $stdin.each_line do |line|
     puts "[1;32m*[0m Updating submodules ..."
     %x{git submodule update}
 
-    # Backup the branch to GitHub
-    Dir.chdir SOURCE_REPOSITORY
-    puts "[1;32m*[0m Backing up changes to GitHub ..."
-    %x{git push origin #{branchname}}
   end
 end
 
