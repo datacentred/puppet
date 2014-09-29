@@ -36,6 +36,4 @@ class dc_profile::perf::collectd {
     protocol          => 'tcp',
   }
 
-  contain collectd
-
 }
