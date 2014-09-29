@@ -66,8 +66,6 @@ class dc_profile::perf::graphite (
     require                      => File['/opt/graphite'],
   }
 
-  contain 'graphite'
-
   apache::vhost { 'graphite':
     servername                  => "graphite.${::domain}",
     docroot                     => '/opt/graphite/webapp',
