@@ -26,10 +26,10 @@ class dc_profile::net::dns_master {
 
   include dc_icinga::hostgroup_dns
 
-  Dns_resource <<||>>
+#  Dns_resource <<||>>
 
   # Create DNS records from a hash stored in Hiera
   # for anything 'static' we require
-#  create_resources(dns_resource, hiera(dns_records))
+  create_resources(dns_resource, hiera(dns_records))
 
 }
