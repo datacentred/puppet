@@ -1,3 +1,5 @@
+# == Class: dc_profile::perf::network_weathermap
+#
 class dc_profile::perf::network_weathermap {
   include php
   include php::pear

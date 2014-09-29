@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 class dc_dns (
-  $isslave = 'false',
+  $isslave = false,
 ) {
 
   $defaults = {

@@ -11,11 +11,11 @@
 # Sample Usage:
 #
 class dc_profile::net::keepalived (
-  $keepalived_hash, 
+  $keepalived_hash,
 ) {
-	
+
   include ::keepalived
-	
+
   # Set in Foreman per-host
   $priority = $::keepalived_priority
 

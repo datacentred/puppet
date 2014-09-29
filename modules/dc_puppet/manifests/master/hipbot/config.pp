@@ -27,18 +27,18 @@ class dc_puppet::master::hipbot::config (
     ]:
     ensure => directory,
   } ->
-  
+
   file { '/opt/hipbot/hipbot.py':
     ensure  => file,
     mode    => '0755',
     content => template('dc_puppet/master/hipbot/hipbot.py.erb'),
   } ->
-  
+
   file { '/opt/hipbot/robocopy.py':
     ensure  => file,
     content => template('dc_puppet/master/hipbot/robocopy.py.erb'),
   } ->
-  
+
   file { '/etc/init.d/hipbot':
     ensure => file,
     mode   => '0755',

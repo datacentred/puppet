@@ -22,18 +22,25 @@ define dc_gdash::diskperf (
   $tplpath = '/var/www/gdash/graph_templates/disk_perf'
   $hostpath="${tplpath}/${_hostname}"
 
-  ensure_resource('file', $hostpath, { 'ensure' => 'directory', 'purge' => 'true' })
+  ensure_resource('file', $hostpath, {
+    'ensure' => 'directory',
+    'purge'  => true,
+  })
 
   # Evaluate the template outside of the ensure_resource function
   # as it doesn't get evaluated for some reason
   $yaml = template('dc_gdash/disk.dash.yaml.erb')
 
-  ensure_resource('file', "${hostpath}/dash.yaml", { 'ensure' => 'present', 'content' => "$yaml", 'require' => "File[$hostpath]"}) 
-  
+  ensure_resource('file', "${hostpath}/dash.yaml", {
+    'ensure'  => 'present',
+    'content' => $yaml,
+    'require' => File[$hostpath],
+  })
+
   # Only graph merged ops for devices and not for partitions or raid devices
   if $disk =~ /^sd[a-z]+$/ {
 
-    file { "${hostpath}/disk_merged_ops.${disk}.graph": 
+    file { "${hostpath}/disk_merged_ops.${disk}.graph":
       content => template('dc_gdash/disk-merged_ops.graph.erb'),
       require => File[$hostpath],
     }
@@ -43,19 +50,19 @@ define dc_gdash::diskperf (
   # Software raid devices don't supply data for IO time
   if $disk !~ /^md[0-9].*/ {
 
-    file { "${hostpath}/disk_time.${disk}.graph": 
+    file { "${hostpath}/disk_time.${disk}.graph":
       content => template('dc_gdash/disk-time.graph.erb'),
       require => File[$hostpath],
     }
-  
+
   }
 
-  file { "${hostpath}/disk_octets.${disk}.graph": 
+  file { "${hostpath}/disk_octets.${disk}.graph":
     content => template('dc_gdash/disk-octets.graph.erb'),
     require => File[$hostpath],
   }
 
-  file { "${hostpath}/disk_ops.${disk}.graph": 
+  file { "${hostpath}/disk_ops.${disk}.graph":
     content => template('dc_gdash/disk-ops.graph.erb'),
     require => File[$hostpath],
   }

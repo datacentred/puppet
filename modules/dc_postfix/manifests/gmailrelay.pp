@@ -1,3 +1,5 @@
+# == Class: dc_postfix::gmailrelay
+#
 class dc_postfix::gmailrelay {
 
   $smart_host = hiera(smarthost)

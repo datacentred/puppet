@@ -22,7 +22,7 @@ class dc_profile::openstack::nova_mq {
 
   # Export a variable to say we're part of a nova_mq cluster
   exported_vars::set { $nova_mq_ev:
-    value => "${::fqdn}",
+    value => $::fqdn,
   }
 
   # Create the MQ with the openstack user and password
@@ -38,6 +38,9 @@ class dc_profile::openstack::nova_mq {
   contain 'nova::rabbitmq'
 
   include dc_icinga::hostgroup_rabbitmq
+
+  $rabbitmq_monuser = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
 
   class { 'dc_profile::mon::rabbitmq_monuser':
     userid   => $rabbitmq_monuser,

@@ -49,5 +49,6 @@ class dc_profile::net::dhcpd_slave {
   }
 
   include dc_icinga::hostgroup_dhcp
+  include dc_dhcp::secondary
 
 }

@@ -1,3 +1,5 @@
+# == Class: dc_postfix::networks
+#
 class dc_postfix::networks {
 
   $client_networks = join(hiera(client_networks), ', ')

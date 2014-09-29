@@ -33,7 +33,7 @@ class dc_ceph::osd (
     mode   => '0755',
   } ->
 
-  exec { "/usr/local/bin/journal-provision ${journal_disk} ${num_osds} ${journal_size}": 
+  exec { "/usr/local/bin/journal-provision ${journal_disk} ${num_osds} ${journal_size}":
     unless => "[ `sgdisk -p ${journal_disk}|grep osd|wc -l` -eq ${num_osds} ]",
   }
 

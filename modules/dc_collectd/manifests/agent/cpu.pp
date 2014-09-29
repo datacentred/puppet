@@ -1,3 +1,5 @@
+# == Class: dc_collectd::agent::cpu
+#
 class dc_collectd::agent::cpu {
 
   $cpu_array = split($::cpunumbers,',')

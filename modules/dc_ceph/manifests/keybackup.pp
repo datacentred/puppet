@@ -31,7 +31,7 @@ class dc_ceph::keybackup (
 
     file { '/usr/local/bin/ceph-keybackup':
       ensure  => file,
-      mode    => 744,
+      mode    => '0744',
       content => template('dc_ceph/ceph-keybackup.erb'),
     }
 

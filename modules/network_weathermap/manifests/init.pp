@@ -1,3 +1,5 @@
+# == Class: network_weathermap
+#
 class network_weathermap(
   $version = '0.97c'
 ) {

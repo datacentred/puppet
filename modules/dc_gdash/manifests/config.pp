@@ -1,3 +1,5 @@
+# == Class: dc_gdash::config
+#
 class dc_gdash::config {
 
   $whisper_root = $dc_gdash::params::whisper_root

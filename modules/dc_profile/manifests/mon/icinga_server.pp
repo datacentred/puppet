@@ -99,9 +99,15 @@ class dc_profile::mon::icinga_server {
                     },
     ],
     proxy_pass  => [
-      { 'path' => '/schedule_downtime', 'url' => 'http://localhost:24554/schedule_downtime' },
-      { 'path' => '/cancel_downtime',   'url' => 'http://localhost:24554/cancel_downtime' },
-      { 'path' => '/state',             'url' => 'http://localhost:24554/state' },
+      { 'path' => '/schedule_downtime',
+        'url'  => 'http://localhost:24554/schedule_downtime'
+      },
+      { 'path' => '/cancel_downtime',
+        'url'  => 'http://localhost:24554/cancel_downtime'
+      },
+      { 'path' => '/state',
+        'url'  => 'http://localhost:24554/state'
+      },
     ],
   }
 

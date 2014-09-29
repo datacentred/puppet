@@ -14,7 +14,7 @@ class dc_profile::util::semaphores {
 
   $semaphores = '/var/lib/puppet/semaphores'
 
-  file {"${semaphores}":
+  file { $semaphores:
     ensure  => directory,
     mode    => '0754',
     require => Package['puppet'],

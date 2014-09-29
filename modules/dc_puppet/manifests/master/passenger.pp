@@ -23,7 +23,7 @@ class dc_puppet::master::passenger {
 
   # puppet master packages are installed and the certs generated
   # create the rack application
-  file { [ $approot, $docroot, "$approot/tmp" ]:
+  file { [ $approot, $docroot, "${approot}/tmp" ]:
     ensure => directory,
     mode   => '0755',
   } ->

@@ -14,7 +14,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_wordpress ( 
+class dc_wordpress (
   $wordpress_vhost        = undef,
   $wordpress_server_names = [],
   $wordpress_db_user      = undef,
@@ -24,22 +24,22 @@ class dc_wordpress (
 ) {
 
   if ($wordpress_vhost == undef) {
-    fail("No virtual host specified for the wordpress server.")
+    fail('No virtual host specified for the wordpress server.')
   }
   if ($wordpress_server_names == []) {
-    fail("No server names specified for the wordpress virtual host.")
+    fail('No server names specified for the wordpress virtual host.')
   }
   if ($wordpress_db_user == undef) {
-    fail("No database user specified.")
+    fail('No database user specified.')
   }
   if ($wordpress_db_pass == undef) {
-    fail("No database password specified.")
+    fail('No database password specified.')
   }
   if ($wordpress_db_name == undef) {
-    fail("No database name specified.")
+    fail('No database name specified.')
   }
   if ($wordpress_db_name == undef) {
-    fail("No database host specified.")
+    fail('No database host specified.')
   }
 
   class { 'dc_wordpress::server':

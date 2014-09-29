@@ -20,7 +20,7 @@ class dc_profile::openstack::glance_logstash {
   }
 
   dc_logstash::client::register { 'glance_scheduler_log':
-    logs => '/var/log/glance/scheduler.log',
+    logs   => '/var/log/glance/scheduler.log',
     fields => {
       'type' => 'glance_scheduler',
     }

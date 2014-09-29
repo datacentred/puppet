@@ -46,7 +46,7 @@ class dc_mariadb (
       Class['dc_mariadb::exports'],
     ],
   }
-  
+
   unless $::is_vagrant {
     include dc_mariadb::collectd
   }

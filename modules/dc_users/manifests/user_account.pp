@@ -1,10 +1,10 @@
-#
+# == Define: dc_users::user_account
 define dc_users::user_account (
   $hash = undef,
 ) {
 
   if $hash[$title]['ensure'] == 'absent' {
-    
+
     # Full on deletion of everything to do with them
     exec { "userdel -r ${title}":
       onlyif => "grep ${title} /etc/passwd",

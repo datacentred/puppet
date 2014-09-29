@@ -34,7 +34,7 @@ class dc_wordpress::server (
     ensure   => present,
     www_root => '/usr/share/nginx/html',
     vhost    => $vhost,
-  } 
+  }
 
   nginx::resource::location { '~ \.php$':
     ensure              => present,

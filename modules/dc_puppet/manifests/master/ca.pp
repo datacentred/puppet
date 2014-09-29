@@ -1,3 +1,5 @@
+# == Class: dc_puppet::master::ca
+#
 class dc_puppet::master::ca {
 
   include ::dc_puppet::params
@@ -7,7 +9,6 @@ class dc_puppet::master::ca {
   exec { 'create_certs':
     command => "puppet cert --generate ${::fqdn}",
     unless  => "ls ${ssldir}/certs/${::fqdn}.pem",
-    path    => "/bin:/usr/bin",
   }
 
 }

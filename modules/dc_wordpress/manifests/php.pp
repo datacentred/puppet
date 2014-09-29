@@ -24,7 +24,7 @@ class dc_wordpress::php {
     listen_group           => 'www-data',
     listen_mode            => '0660',
     listen_allowed_clients => 'any',
-    pm_max_children        => '5', 
+    pm_max_children        => '5',
     pm_start_servers       => '2',
     pm_min_spare_servers   => '1',
     pm_max_spare_servers   => '3',

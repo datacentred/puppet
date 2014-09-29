@@ -67,9 +67,9 @@ class dc_rails::environment(
 
   # Hack to make rbenv rebuild shims
   exec { "force shims ${user} ${ruby}":
-    command  => '/bin/bash --login -c "echo"',
-    user     => $user,
-    group    => $group,
+    command     => '/bin/bash --login -c "echo"',
+    user        => $user,
+    group       => $group,
     refreshonly => true,
   }
 

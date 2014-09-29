@@ -1,3 +1,5 @@
+# == Class: dc_gdash::params
+#
 class dc_gdash::params {
   $graphite_server = hiera(graphite_server)
   $whisper_root = '/var/opt/graphite/storage/whisper'

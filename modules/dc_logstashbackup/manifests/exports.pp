@@ -15,17 +15,17 @@ class dc_logstashbackup::exports {
 
   $storagedir = hiera(storagedir)
 
-  @@file { "$::hostname-logstashbackup":
+  @@file { "${::hostname}-logstashbackup":
     ensure  => directory,
-    path    => "${storagedir}/backups/$::hostname-logstashbackup",
+    path    => "${storagedir}/backups/${::hostname}-logstashbackup",
     require => File["${storagedir}/backups"],
     tag     => 'backups',
   }
 
-  @@nfs::server::export { "${storagedir}/backups/$::hostname-logstashbackup":
+  @@nfs::server::export { "${storagedir}/backups/${::hostname}-logstashbackup":
     ensure  => present,
-    require => File["$::hostname-logstashbackup"],
-    clients => "$::ipaddress(rw,insecure,async,no_root_squash,no_subtree_check)",
+    require => File["${::hostname}-logstashbackup"],
+    clients => "${::ipaddress}(rw,insecure,async,no_root_squash,no_subtree_check)",
     tag     => 'backups',
   }
 

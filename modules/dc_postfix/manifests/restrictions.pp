@@ -1,3 +1,5 @@
+# == Class: dc_postfix::restrictions
+#
 class dc_postfix::restrictions {
 
   $external_sysmail_split = split(hiera(external_sysmail_address), '@')

@@ -1,8 +1,10 @@
 # Class: dc_ipmi
 #
-# This module configures the bits of IPMI that can't be configured using 
-# ipmitool such as RADIUS authentication and changing the hostname. 
-# It ensures that ipmitool is installed and relevant kernel modules are loaded.
+# This module configures the bits of IPMI that can't be configured using
+# ipmitool such as RADIUS authentication and changing the hostname.
+# It ensures that ipmitool is installed and relevant kernel modules are
+# loaded.
+#
 # Finally, depending on the parameters we do the network configuration.
 #
 # Parameters:
@@ -35,8 +37,8 @@ class dc_ipmi (
 
   unless $::boardmanufacturer == 'Supermicro'
   {
-    $fail_msg = "This module only supports Supermicro IPMI"
-    fail("Unsupported board manufacturer: ${::boardmanufacturer}. ${msg}")
+    $fail_msg = 'This module only supports Supermicro IPMI'
+    fail("Unsupported board manufacturer: ${::boardmanufacturer}. ${fail_msg}")
   }
 
   # We want to load the kernel modules before installing ipmitool
@@ -76,7 +78,7 @@ class dc_ipmi (
         dhcp        => $ipmi_network_enable_dhcp,
         enable_vlan => $ipmi_network_enable_vlan,
         hostname    => $ipmi_hostname,
-      } 
+      }
     }
     else
     {
@@ -87,7 +89,7 @@ class dc_ipmi (
         enable_vlan => $ipmi_network_enable_vlan,
         vlan_tag    => $ipmi_network_vlan_tag,
         hostname    => $ipmi_hostname,
-      } 
+      }
     }
   }
   # Else force the user to specify all static network properties
@@ -107,7 +109,7 @@ class dc_ipmi (
         secondary_dns_server => $ipmi_network_secondary_dns,
         default_tagetway     => $ipmi_network_default_gateway,
         domain_name          => $ipmi_network_domain_name,
-      } 
+      }
     }
     else
     {
@@ -124,7 +126,7 @@ class dc_ipmi (
         secondary_dns_server => $ipmi_network_secondary_dns,
         default_tagetway     => $ipmi_network_default_gateway,
         domain_name          => $ipmi_network_domain_name,
-      } 
+      }
     }
   }
 

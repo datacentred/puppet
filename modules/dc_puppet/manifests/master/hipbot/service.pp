@@ -1,6 +1,6 @@
 # Class: dc_puppet::master::hipbot::service
 #
-# Hipbot service 
+# Hipbot service
 #
 # Parameters:
 #

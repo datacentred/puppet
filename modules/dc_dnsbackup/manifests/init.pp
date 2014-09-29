@@ -52,7 +52,7 @@ class dc_dnsbackup(
   }
 
   anchor { 'dc_dnsbackup::first': } ->
-  class { dc_dnsbackup::exports: } ->
+  class { 'dc_dnsbackup::exports': } ->
   anchor { 'dc_dnsbackup::last': }
 
   Dc_dnsbackup::Backupzone <<| |>>

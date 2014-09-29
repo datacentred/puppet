@@ -1,3 +1,5 @@
+# == Class: dc_ssl::slapd
+#
 class dc_ssl::slapd {
 
   file { '/etc/ssl/certs/slapd-server.crt':

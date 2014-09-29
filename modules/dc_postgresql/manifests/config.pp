@@ -46,7 +46,7 @@ class dc_postgresql::config {
         auth_method => 'md5',
         order       => '099',
       }
-      @@barman::server { "${::hostname}":
+      @@barman::server { $::hostname:
         conninfo     => "user=postgres host=${::hostname} password=${dc_postgresql::params::postgres_password}",
         ssh_command  => "ssh postgres@${::hostname}",
         compression  => 'bzip2',
@@ -191,7 +191,7 @@ class dc_postgresql::config {
   # We're not the master or a standby so just configure the basics for backup if the backup server is configured
   else {
 
-    if member(query_nodes("Ssh_authorized_key[barman_key_${dc_postgresql::params::backup_server}]"), "${::hostname}.${::domain}") and member(query_nodes("Ssh_authorized_key[postgres_backup_key_${::hostname}]"), "$dc_postgresql::params::backup_server.${::domain}") {
+    if member(query_nodes("Ssh_authorized_key[barman_key_${dc_postgresql::params::backup_server}]"), "${::hostname}.${::domain}") and member(query_nodes("Ssh_authorized_key[postgres_backup_key_${::hostname}]"), "${dc_postgresql::params::backup_server}.${::domain}") {
       postgresql::server::config_entry { 'archive_command':
         value => "rsync -a %p barman@${dc_postgresql::params::backup_server}:${dc_postgresql::params::backup_path}/${::hostname}/incoming/%f",
       }
@@ -204,7 +204,7 @@ class dc_postgresql::config {
         auth_method => 'md5',
         order       => '099',
       }
-      @@barman::server { "${::hostname}":
+      @@barman::server { $::hostname:
         conninfo     => "user=postgres host=${::hostname} password=${dc_postgresql::params::postgres_password}",
         ssh_command  => "ssh postgres@${::hostname}",
         compression  => 'bzip2',

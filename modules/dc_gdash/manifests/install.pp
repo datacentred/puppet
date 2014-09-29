@@ -1,3 +1,5 @@
+# == Class: dc_gdash::install
+#
 class dc_gdash::install {
 
   # Create our base GDash installation directory
@@ -17,7 +19,7 @@ class dc_gdash::install {
     source   => 'https://github.com/ripienaar/gdash.git',
     require  => Package['git'],
   }
-    
+
   # Install the various gems upon which GDash depends
   bundler::install { $dc_gdash::gdash_root:
     user       => root,

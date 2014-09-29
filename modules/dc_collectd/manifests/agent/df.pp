@@ -1,3 +1,5 @@
+# == Class: dc_collectd::agent::df
+#
 class dc_collectd::agent::df {
 
   # convert root

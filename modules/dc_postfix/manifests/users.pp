@@ -1,3 +1,5 @@
+# == Class: dc_postfix::users
+#
 class dc_postfix::users {
 
   group { 'vmail':

@@ -22,15 +22,22 @@ define dc_gdash::cpu (
   $tplpath = '/var/www/gdash/graph_templates/cpu'
   $hostpath="${tplpath}/${_hostname}"
 
-  ensure_resource('file', $hostpath, { 'ensure' => 'directory', 'purge' => 'true' })
+  ensure_resource('file', $hostpath, {
+    'ensure' => 'directory',
+    'purge'  => true,
+  })
 
   # Evaluate the template outside of the ensure_resource function
   # as it doesn't get evaluated for some reason
   $yaml = template('dc_gdash/cpu.dash.yaml.erb')
 
-  ensure_resource('file', "${hostpath}/dash.yaml", { 'ensure' => 'present', 'content' => "$yaml", 'require' => "File[$hostpath]"}) 
+  ensure_resource('file', "${hostpath}/dash.yaml", {
+    'ensure'  => 'present',
+    'content' => $yaml,
+    'require' => File[$hostpath],
+  })
 
-  file { "${hostpath}/cpu.${cpu}.graph": 
+  file { "${hostpath}/cpu.${cpu}.graph":
     content => template('dc_gdash/cpu.graph.erb'),
     require => File[$hostpath],
   }
