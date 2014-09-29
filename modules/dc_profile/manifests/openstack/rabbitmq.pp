@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::nova_mq
+# Class: dc_profile::openstack::rabbitmq
 #
 # Install and configure a RabbitMQ cluster with mirrored queues
 #
@@ -15,7 +15,7 @@ class dc_profile::openstack::rabbitmq {
   $osdbmq_rabbitmq_user = hiera(osdbmq_rabbitmq_user)
   $osdbmq_rabbitmq_pw = hiera(osdbmq_rabbitmq_pw)
 
-  $mgmt_ip = $::ipaddress_bond0
+  $management_ip = $::ipaddress
 
   # Return just the hostname from the FQDN stored in Hiera
   $cluster_nodes = regsubst(hiera(osdbmq_members), '\.(.*)', '', 'G')
@@ -46,6 +46,8 @@ class dc_profile::openstack::rabbitmq {
   # membership in order to use the latter's SSL keys
   user { 'rabbitmq':
     groups  => 'puppet',
+    home    => '/srv/rabbitmq',
+    require => File['/srv/rabbitmq'],
   }
 
   class { '::rabbitmq':
@@ -62,7 +64,7 @@ class dc_profile::openstack::rabbitmq {
     ssl_verify                   => 'verify_peer',
     ssl_fail_if_no_peer_cert     => true,
     environment_variables        => {
-      'RABBITMQ_NODE_IP_ADDRESS' => $mgmt_ip,
+      'RABBITMQ_NODE_IP_ADDRESS' => $management_ip,
       'RABBITMQ_MNESIA_BASE'     => '/srv/rabbitmq',
       'RABBITMQ_MNESIA_DIR'      => "/srv/rabbitmq/${::hostname}",
     }
