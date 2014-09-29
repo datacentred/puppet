@@ -1,6 +1,6 @@
 # Class: dc_gdash::dashboards
 #
-# Creates top level dash folders 
+# Creates top level dash folders
 #
 #
 # Actions:
@@ -23,7 +23,7 @@ class dc_gdash::dashboards {
     ensure  => directory,
     notify  => Service['apache2'],
   }
-  
+
   file { $disktplpath:
     ensure  => directory,
     purge   => true,
@@ -58,14 +58,14 @@ class dc_gdash::dashboards {
     require => File[$tplpath],
     notify  => Service['apache2'],
   }
-  
+
   file { $cputplpath:
     ensure  => directory,
     purge   => true,
     require => File[$tplpath],
     notify  => Service['apache2'],
   }
-  
+
   file { $mysqltplpath:
     ensure  => directory,
     purge   => true,

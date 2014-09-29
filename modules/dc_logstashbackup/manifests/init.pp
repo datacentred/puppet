@@ -48,7 +48,7 @@ class dc_logstashbackup (
 
   file { 'logstashbackupmount':
     ensure => directory,
-    path   => "${logstashbackupmount}",
+    path   => $logstashbackupmount,
   }
 
   cron { 'logstashbackup':

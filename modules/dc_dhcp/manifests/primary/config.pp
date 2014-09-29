@@ -12,7 +12,7 @@ class dc_dhcp::primary::config {
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '775',
+    mode    => '0775',
     content => "SECONDARY_HOST=${dc_dhcp::params::secondary_dhcp_host}",
   }
 

@@ -1,3 +1,5 @@
+# == Class: dc_kibana::apache
+#
 class dc_kibana::apache {
 
   dc_apache::vhost { 'kibana':

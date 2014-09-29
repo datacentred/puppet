@@ -1,3 +1,5 @@
+# == Class: dc_packer::user
+#
 class dc_packer::user {
   user { 'packer':
     ensure     => present,

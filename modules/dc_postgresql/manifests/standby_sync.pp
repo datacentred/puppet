@@ -17,7 +17,7 @@ class dc_postgresql::standby_sync {
 
   $hosts = query_nodes("Ssh_authorized_key[postgres_cluster_key_${::hostname}]")
 
-  if member($hosts, "$dc_postgresql::params::cluster_master_node.${::domain}") {
+  if member($hosts, "${dc_postgresql::params::cluster_master_node}.${::domain}") {
 
     notify { 'Authorized keys found on master, checking if initial sync process has run': }
 

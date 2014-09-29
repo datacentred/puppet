@@ -1,3 +1,5 @@
+# == Define: dc_logstash::client::register
+#
 define dc_logstash::client::register ($logs, $fields, $order='10') {
 
   validate_hash($fields)

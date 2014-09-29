@@ -1,3 +1,5 @@
+# == Class: pagerduty
+#
 class pagerduty {
   package { 'pdagent':
     ensure  => installed,

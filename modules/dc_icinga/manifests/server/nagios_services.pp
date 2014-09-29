@@ -1,3 +1,5 @@
+# == Class: dc_icinga::server::nagios_services
+#
 class dc_icinga::server::nagios_services {
 
   # Define services

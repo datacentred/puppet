@@ -21,9 +21,11 @@ class dc_profile::wordpress::datacentred {
 
   # Server parameters
   $datacentred_vhost        = 'www.datacentred.co.uk'
-  $datacentred_server_names = ['www.datacentred.co.uk', 
-                               'datacentred.co.uk', 
-                               'www0.datacentred.co.uk']
+  $datacentred_server_names = [
+    'www.datacentred.co.uk',
+    'datacentred.co.uk',
+    'www0.datacentred.co.uk',
+  ]
 
   class { 'dc_wordpress':
     wordpress_vhost        => $datacentred_vhost,

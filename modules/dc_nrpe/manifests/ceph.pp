@@ -1,3 +1,5 @@
+# == Class: dc_nrpe::ceph
+#
 class dc_nrpe::ceph {
 
   File {

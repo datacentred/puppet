@@ -16,7 +16,7 @@ class dc_profile::openstack::horizon {
   $horizon_secret_key = hiera(horizon_secret_key)
 
   # OpenStack API endpoints
-  $horizon_private = "horizon.${::domain}" 
+  $horizon_private = "horizon.${::domain}"
   $osapi_public    = 'openstack.datacentred.io'
 
   class { '::horizon':
@@ -27,7 +27,10 @@ class dc_profile::openstack::horizon {
     keystone_default_role   => '_member_',
     django_debug            => true,
     api_result_limit        => 1000,
-    neutron_options         => { 'enable_lb' => true, 'enable_vpn' => true },
+    neutron_options         => {
+      'enable_lb'  => true,
+      'enable_vpn' => true
+    },
   }
   contain 'horizon'
 

@@ -1,3 +1,5 @@
+# == Class: dc_network_weathermap
+#
 class dc_network_weathermap {
   require network_weathermap
 

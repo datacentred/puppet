@@ -221,7 +221,7 @@ class dc_icinga::server::config {
   }
 
 
- icinga::service { 'dc_service_nrpe':
+  icinga::service { 'dc_service_nrpe':
     active_checks_enabled        => '1',
     passive_checks_enabled       => '1',
     parallelize_check            => '1',
@@ -245,7 +245,7 @@ class dc_icinga::server::config {
     contact_groups               => 'dc_admins,dc_admins_email',
     register                     => '0',
   }
- ######################################################################
+  ######################################################################
   # Host groups
   ######################################################################
 
