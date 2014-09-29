@@ -1,4 +1,4 @@
-# Class: dc_apache::vhost
+#Class: dc_apache::vhost
 #
 # Creates a DataCentred vhost
 #
@@ -14,7 +14,8 @@
 #
 define dc_apache::vhost (
   $docroot,
-  $port = '80',
+  $port  = '80',
+  $cname = true,
 ) {
 
   # Note: apache will refuse to fire up a vhost without
@@ -31,11 +32,15 @@ define dc_apache::vhost (
     serveraliases => [ $title ],
   }
 
-  # Export the CNAME to the rest of the network
-  if $title != $::hostname {
-    @@dns_resource { "${title}.${::domain}/CNAME":
-      rdata => $::fqdn,
+  if $cname {
+    # Test if the CNAME is already exported
+    if empty(query_nodes("Dns_resource[${title}.${::domain}/CNAME")) {
+      # Export the CNAME to the rest of the network
+      if $title != $::hostname {
+        @@dns_resource { "${title}.${::domain}/CNAME":
+          rdata => $::fqdn,
+        }
+      }
     }
   }
-
 }
