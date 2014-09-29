@@ -20,8 +20,10 @@ class dc_dhcp {
     ssh_private_key   => $dc_dhcp::params::ssh_private_key,
     ssh_public_key    => $dc_dhcp::params::ssh_public_key,
     sudo              => true,
-    sudo_users        => 'root',
-    sudo_applications => '/etc/init.d/isc-dhcp-server',
+    sudo_users        => 'ALL',
+    sudo_applications => 'ALL',
+    #sudo_users        => 'root',
+    #sudo_applications => '/etc/init.d/isc-dhcp-server',
   }
 
 }
