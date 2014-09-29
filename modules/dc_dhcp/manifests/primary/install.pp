@@ -26,4 +26,11 @@ class dc_dhcp::primary::install {
     source => 'puppet:///modules/dc_dhcp/dhcp_sync_agent',
   }
 
+  file { '/var/log/dhcp_sync_agent.log':
+    ensure => file,
+    owner  => 'dhcp_sync_agent',
+    group  => 'dhcp_sync_agent',
+    mode   => '0644',
+  }
+
 }
