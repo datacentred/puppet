@@ -47,5 +47,6 @@ class dc_profile::net::dhcpd_master {
   Dhcp::Pool { failover => 'dhcp-failover' }
 
   include dc_icinga::hostgroup_dhcp
+  include dc_dhcp::primary
 
 }
