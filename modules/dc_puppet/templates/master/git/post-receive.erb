@@ -82,6 +82,11 @@ $stdin.each_line do |line|
       %x{git clone #{SOURCE_REPOSITORY} #{environment_path} --branch #{branchname}}
     end
 
+    # Backup the branch to GitHub
+    Dir.chdir SOURCE_REPOSITORY
+    puts "[1;32m*[0m Backing up changes to GitHub ..."
+    %x{git push origin #{branchname}}
+
     # Set up the yaml data for our dynamic environment
     Dir.chdir environment_path
     if environment_name != "production"
@@ -101,10 +106,6 @@ $stdin.each_line do |line|
     puts "[1;32m*[0m Updating submodules ..."
     %x{git submodule update}
 
-    # Backup the branch to GitHub
-    Dir.chdir SOURCE_REPOSITORY
-    puts "[1;32m*[0m Backing up changes to GitHub ..."
-    %x{git push origin #{branchname}}
   end
 end
 
