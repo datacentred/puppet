@@ -59,6 +59,11 @@ $stdin.each_line do |line|
   else
     # We have been given a branch that needs to be created or updated. If the
     # environment exists, update it. Else, create it.
+    # Backup the branch to GitHub
+
+    Dir.chdir SOURCE_REPOSITORY
+    puts "[1;32m*[0m Backing up changes to GitHub ..."
+    %x{git push origin #{branchname}}
 
     if File.directory? environment_path
       # Update an existing environment. We do a fetch and then reset in the
@@ -81,11 +86,6 @@ $stdin.each_line do |line|
       puts "[1;32m*[0m Creating new environment #{environment_name} ..."
       %x{git clone #{SOURCE_REPOSITORY} #{environment_path} --branch #{branchname}}
     end
-
-    # Backup the branch to GitHub
-    Dir.chdir SOURCE_REPOSITORY
-    puts "[1;32m*[0m Backing up changes to GitHub ..."
-    %x{git push origin #{branchname}}
 
     # Set up the yaml data for our dynamic environment
     Dir.chdir environment_path
