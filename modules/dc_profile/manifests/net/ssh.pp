@@ -27,7 +27,8 @@ class dc_profile::net::ssh {
       'postgres',
       'barman',
       'juniperbackup',
-      'ceph-deploy'
+      'ceph-deploy',
+      'dhcp_sync_agent',
     ],
     notify => Service['ssh']
   }
