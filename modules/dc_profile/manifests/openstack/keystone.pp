@@ -20,7 +20,12 @@ class dc_profile::openstack::keystone {
   $os_service_tenant  = hiera(os_service_tenant)
   $os_region          = hiera(os_region)
   $sysmailaddress     = hiera(sal01_internal_sysmail_address)
-  $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost:11211'])
+
+  $rabbitmq_hosts    = hiera(osdbmq_members)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
+  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
   $keystone_public_port  = '5000'
   $keystone_private_port = '35357'
@@ -38,6 +43,11 @@ class dc_profile::openstack::keystone {
     catalog_type        => 'sql',
     admin_token         => hiera(keystone_admin_uuid),
     database_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
+    rabbit_hosts        => $rabbitmq_hosts,
+    rabbit_userid       => $rabbitmq_username,
+    rabbit_password     => $rabbitmq_password,
+    rabbit_port         => $rabbitmq_port,
+    rabbit_virtual_host => $rabbitmq_vhost,
   }
 
   # Adds the admin credential to keystone.
