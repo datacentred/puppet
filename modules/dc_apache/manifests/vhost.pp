@@ -32,17 +32,12 @@ define dc_apache::vhost (
     serveraliases => [ $title ],
   }
 
-  $cname_string = "${title}.${::domain}"
-
   if $cname {
-    # Test if the CNAME is already exported
-    if empty(query_nodes("Dns_resource[${cname_string}/CNAME]")) {
       # Export the CNAME to the rest of the network
       if $title != $::hostname {
         @@dns_resource { "${cname_string}/CNAME":
           rdata => $::fqdn,
         }
       }
-    }
   }
 }
