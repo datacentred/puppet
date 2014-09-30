@@ -80,4 +80,10 @@ class dc_profile::openstack::rabbitmq {
     require  => Class['::rabbitmq'],
   }
 
+  rabbitmq_user_permissions { "${osdbmq_rabbitmq_user}@/":
+    configure_permission => '.*',
+    read_permission      => '.*',
+    write_permission     => '.*',
+  }
+
 }
