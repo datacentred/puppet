@@ -16,7 +16,6 @@ define dc_apache::vhost (
   $docroot,
   $port  = '80',
   $cname = true,
-  $cname_string = "$title.${::domain}",
 ) {
 
   # Note: apache will refuse to fire up a vhost without
@@ -32,6 +31,8 @@ define dc_apache::vhost (
     serveradmin   => hiera(sal01_internal_sysmail_address),
     serveraliases => [ $title ],
   }
+
+  $cname_string = "${title}.${::domain}"
 
   if $cname {
     # Test if the CNAME is already exported
