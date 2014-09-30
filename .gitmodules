@@ -242,3 +242,6 @@
 [submodule "modules/keystone"]
 	path = modules/keystone
 	url = https://github.com/stackforge/puppet-keystone.git
+[submodule "modules/elasticsearch"]
+	path = modules/elasticsearch
+	url = https://github.com/elasticsearch/puppet-elasticsearch.git
