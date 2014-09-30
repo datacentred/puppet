@@ -23,7 +23,7 @@ class dc_profile::openstack::haproxy_icehouse {
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
 
   # Keystone Auth
-  haproxy::listen { 'keystone-auth':
+  haproxy::listen { 'icehouse-keystone-auth':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '5000',
@@ -41,7 +41,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Keystone Admin
-  haproxy::listen { 'keystone-admin':
+  haproxy::listen { 'icehouse-keystone-admin':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '35357',
@@ -59,7 +59,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Glance API
-  haproxy::listen { 'glance-api':
+  haproxy::listen { 'icehouse-glance-api':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '9292',
@@ -77,7 +77,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Glance Registry
-  haproxy::listen { 'glance-registry':
+  haproxy::listen { 'icehouse-glance-registry':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '9191',
@@ -95,7 +95,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Neutron
-  haproxy::listen { 'neutron':
+  haproxy::listen { 'icehouse-neutron':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '9696',
@@ -113,7 +113,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Nova Compute
-  haproxy::listen { 'nova-compute':
+  haproxy::listen { 'icehouse-nova-compute':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '8774',
@@ -131,7 +131,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Nova Metadata
-  haproxy::listen { 'nova-metadata':
+  haproxy::listen { 'icehouse-nova-metadata':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '8775',
@@ -149,7 +149,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Cinder
-  haproxy::listen { 'cinder':
+  haproxy::listen { 'icehouse-cinder':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '8776',
@@ -167,7 +167,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Horizon
-  haproxy::listen { 'horizon':
+  haproxy::listen { 'icehouse-horizon':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '443',
@@ -185,7 +185,7 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # NoVNC Proxy
-  haproxy::listen { 'novncproxy':
+  haproxy::listen { 'icehouse-novncproxy':
     ipaddress    => '*',
     mode         => 'http',
     ports        => '6080',
