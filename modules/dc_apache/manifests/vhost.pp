@@ -16,7 +16,7 @@ define dc_apache::vhost (
   $docroot,
   $port  = '80',
   $cname = true,
-  $cname_string = $title,
+  $cname_string = "$title.${::domain}",
 ) {
 
   # Note: apache will refuse to fire up a vhost without
@@ -35,12 +35,10 @@ define dc_apache::vhost (
 
   if $cname {
     # Test if the CNAME is already exported
-    notify { "title is ${cname_string}":}
-    if empty(query_nodes("Dns_resource[${cname_string}]")) {
-      notify { "after function title is ${title}":}
+    if empty(query_nodes("Dns_resource[${cname_string}/CNAME]")) {
       # Export the CNAME to the rest of the network
       if $title != $::hostname {
-        @@dns_resource { "${cname_string}.${::domain}/CNAME":
+        @@dns_resource { "${cname_string}/CNAME":
           rdata => $::fqdn,
         }
       }
