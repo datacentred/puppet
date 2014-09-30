@@ -13,14 +13,19 @@
 class dc_profile::openstack::keystone {
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $keystone_db_host   = $osapi_public
   $keystone_db_pw     = hiera(keystone_db_pw)
   $os_service_tenant  = hiera(os_service_tenant)
   $os_region          = hiera(os_region)
   $sysmailaddress     = hiera(sal01_internal_sysmail_address)
-  $memcache_servers   = get_exported_var('', 'keystone_memcached', ['localhost:11211'])
+
+  $rabbitmq_hosts    = hiera(osdbmq_members)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
+  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
+  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
   $keystone_public_port  = '5000'
   $keystone_private_port = '35357'
@@ -31,11 +36,18 @@ class dc_profile::openstack::keystone {
   $ec2_port     = '8773'
   $nova_port    = '8774'
 
+  $management_ip = $::ipaddress
+
   class { '::keystone':
     verbose             => true,
     catalog_type        => 'sql',
     admin_token         => hiera(keystone_admin_uuid),
     database_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
+    rabbit_hosts        => $rabbitmq_hosts,
+    rabbit_userid       => $rabbitmq_username,
+    rabbit_password     => $rabbitmq_password,
+    rabbit_port         => $rabbitmq_port,
+    rabbit_virtual_host => $rabbitmq_vhost,
   }
 
   # Adds the admin credential to keystone.
@@ -53,10 +65,20 @@ class dc_profile::openstack::keystone {
     region       => $os_region,
   }
 
-  # Export variable for use by haproxy to front the Keystone
-  # endpoint
-  exported_vars::set { 'keystone_host':
-    value => $::fqdn,
+  # Add node into our loadbalancer
+  @@haproxy::balancermember { "${::fqdn}-keystone-auth":
+    listening_service => 'icehouse-keystone-auth',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '5000',
+    options           => 'check inter 2000 rise 2 fall 5'
+  }
+  @@haproxy::balancermember { "${::fqdn}-keystone-admin":
+    listening_service => 'icehouse-keystone-admin',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '35357',
+    options           => 'check inter 2000 rise 2 fall 5'
   }
 
   # Glance bits
