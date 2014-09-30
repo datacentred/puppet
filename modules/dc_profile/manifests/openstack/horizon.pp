@@ -32,13 +32,13 @@ class dc_profile::openstack::horizon {
     neutron_options       => { 'enable_lb' => true, 'enable_vpn' => true },
   }
 
-  class { '::dc_branding::openstack::horizon':
-    require => Class['::horizon'],
-  }
+#  class { '::dc_branding::openstack::horizon':
+#    require => Class['::horizon'],
+#  }
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
-    listening_service => 'horizon',
+    listening_service => 'icehouse-horizon',
     server_names      => $::hostname,
     ipaddresses       => $management_ip,
     ports             => '80',

@@ -72,7 +72,7 @@ class dc_profile::openstack::cinder {
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-cinder":
-    listening_service => 'cinder',
+    listening_service => 'icehouse-cinder',
     server_names      => $::hostname,
     ipaddresses       => $management_ip,
     ports             => '8776',
