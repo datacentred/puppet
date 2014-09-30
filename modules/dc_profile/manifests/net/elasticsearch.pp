@@ -17,7 +17,7 @@ class dc_profile::net::elasticsearch(
 
 class { '::elasticsearch':
   config => { 'cluster.name' => $dc_profile::net::elasticsearch::cluster_name,
-              'network.host' => $::ipaddress_eth1 },
+              'network.host' => $::ipaddress },
   manage_repo  => true,
   java_install => true,
   repo_version => $dc_profile::net::elasticsearch::es_version,
