@@ -13,7 +13,6 @@
 class dc_profile {
 
   contain dc_profile::editors::vim
-  contain dc_profile::net::hosts
   contain dc_profile::puppet::puppet
   contain dc_profile::util::external_facts
   contain dc_profile::util::timezone
@@ -23,6 +22,7 @@ class dc_profile {
   unless $::virtual == 'virtualbox' or $::virtual == 'vmware' {
     contain dc_profile::auth::admins
     contain dc_profile::net::ssh
+    contain dc_profile::net::hosts
     contain dc_profile::auth::sudoers
     contain dc_profile::util::firmware
     contain dc_profile::util::grub
