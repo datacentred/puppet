@@ -34,7 +34,8 @@ define dc_apache::vhost (
 
   if $cname {
     # Test if the CNAME is already exported
-    #  if empty(query_nodes("Dns_resource[${title}.${::domain}/CNAME]")) {
+    $cname_string = "${title}.${::domain}/CNAME"
+    if empty(query_nodes("Dns_resource[$cname_string]")) {
       # Export the CNAME to the rest of the network
       if $title != $::hostname {
         @@dns_resource { "${title}.${::domain}/CNAME":
@@ -42,5 +43,5 @@ define dc_apache::vhost (
         }
       }
     }
-    #}
+  }
 }
