@@ -34,21 +34,22 @@ class dc_logstash::client::courier {
     group  => 'root'
   }
 
-  concat { '/etc/log-courier.conf':
-    ensure => present,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644'
+  concat { '/etc/log-courier/log-courier.conf':
+    ensure  => present,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => File['/etc/log-courier'],
   }
 
   concat::fragment { 'log-courier-header':
-    target  => '/etc/log-courier.conf',
+    target  => '/etc/log-courier/log-courier.conf',
     content => template('dc_logstash/log-courier_client_header.erb'),
     order   => '01',
   }
 
   concat::fragment { 'log-courier-footer':
-    target  => '/etc/log-courier.conf',
+    target  => '/etc/log-courier/log-courier.conf',
     content => template('dc_logstash/log-courier_client_footer.erb'),
     order   => '99',
   }
