@@ -42,19 +42,17 @@ class dc_logstash::client::courier {
     require => File['/etc/log-courier'],
   }
 
-  concat::fragment { 'log-courier-header':
+  concat::fragment { 'log_courier_header':
     target  => '/etc/log-courier/log-courier.conf',
     content => template('dc_logstash/log-courier_client_header.erb'),
     order   => '01',
   }
 
-  concat::fragment { 'log-courier-footer':
+  concat::fragment { 'log_courier_footer':
     target  => '/etc/log-courier/log-courier.conf',
     content => template('dc_logstash/log-courier_client_footer.erb'),
     order   => '99',
   }
-
-  # FIXME put in a basic config, and enable the service
 
   #  service { 'log-courier':
   #  ensure    => running,
