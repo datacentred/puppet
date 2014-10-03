@@ -42,6 +42,9 @@ class dc_logstash {
     ensure => installed,
   }
 
+  # Install the server side log-courier components
+  class { 'dc_logstash::courier':}
+
   # Add config files
 
   class { 'dc_logstash::config::input_forwarder':}
