@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 class dc_profile::log::logstash_lbmember{
-  @@haproxy::balancermember { "{$::hostname}{$dc_profile::log::logstash_lbmember::service_name}":
+  @@haproxy::balancermember { "{$::hostname}_{$dc_profile::log::logstash_lbmember::service_name}":
     listening_service => $dc_profile::log::logstash_lbmember::service_name,
     ipaddresses       => $::ipaddress,
     server_names      => $::hostname,
