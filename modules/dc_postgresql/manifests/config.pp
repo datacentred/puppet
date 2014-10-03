@@ -47,7 +47,8 @@ class dc_postgresql::config {
         order       => '099',
       }
 
-      notify { "postgres_password is ${dc_postgresql::params::postgres_password}": }
+      $postgres_password=hiera(postgres_password)
+      notify { "postgres_password is ${postgres_password}": }
       notify { "backup_server is ${dc_postgresql::params::backup_server}": }
       notify { "environment is ${::environment}" : }
 
