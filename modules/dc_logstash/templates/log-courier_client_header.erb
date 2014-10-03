@@ -4,7 +4,7 @@
     },
     "network": {
         "transport": "tls",
-        "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @log_courier_port %>" ],
+        "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @ls_courier_port %>" ],
         "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
         "ssl key": "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem",
         "ssl ca": "/var/lib/puppet/ssl/certs/ca.pem",
