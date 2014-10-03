@@ -46,6 +46,11 @@ class dc_postgresql::config {
         auth_method => 'md5',
         order       => '099',
       }
+
+      notify { "postgres_password is ${dc_postgresql::params::postgres_password}": }
+      notify { "backup_server is ${dc_postgresql::params::backup_server}": }
+      notify { "environment is ${::environment}" : }
+
       @@barman::server { $::hostname:
         conninfo     => "user=postgres host=${::hostname} password=${dc_postgresql::params::postgres_password}",
         ssh_command  => "ssh postgres@${::hostname}",
