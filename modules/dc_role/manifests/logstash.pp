@@ -16,5 +16,6 @@ class dc_role::logstash {
   contain dc_profile::log::logstash
   contain dc_profile::log::logstashbackup
   contain dc_profile::log::riemann
+  contain dc_profile::log::logstash_lbmember
 
 }
