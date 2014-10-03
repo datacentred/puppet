@@ -17,7 +17,7 @@ class dc_profile::openstack::glance {
   $os_region = hiera(os_region)
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $glance_api_db      = hiera(glance_api_db)
   $glance_api_db_user = hiera(glance_api_db_user)
@@ -31,6 +31,8 @@ class dc_profile::openstack::glance {
 
   $glance_api_database = "mysql://${glance_api_db_user}:${glance_api_db_pass}@${glance_api_db_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
+
+  $management_ip = $::ipaddress_eth0
 
   class { 'glance::api':
     registry_host            => $osapi_public,
@@ -48,12 +50,6 @@ class dc_profile::openstack::glance {
   }
   contain 'glance::api'
 
-  # Export variable for use by haproxy to front this
-  # API endpoint
-  exported_vars::set { 'glance_api':
-    value => $::fqdn,
-  }
-
   class { 'glance::registry':
     auth_type           => 'keystone',
     auth_host           => $osapi_public,
@@ -67,6 +63,22 @@ class dc_profile::openstack::glance {
     enabled             => true,
   }
   contain 'glance::registry'
+
+  # Add this node into our loadbalancers
+  @@haproxy::balancermember { "${::fqdn}-glance-registry":
+    listening_service => 'icehouse-glance-registry',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '9191',
+    options           => 'check inter 2000 rise 2 fall 5',
+  }
+  @@haproxy::balancermember { "${::fqdn}-glance-api":
+    listening_service => 'icehouse-glance-api',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '9292',
+    options           => 'check inter 2000 rise 2 fall 5',
+  }
 
   # TODO: Temporary backend while boot-strapping CEPH
   contain glance::backend::file

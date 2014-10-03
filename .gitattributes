@@ -7,3 +7,4 @@ hieradata/modules/*.yaml                          filter=private diff=private
 /modules/dc_rails/files/deployer_keys/id_rsa      filter=private diff=private
 /modules/dc_puppet/files/keys/marvin/*            filter=private diff=private
 /modules/dc_puppet/files/keys/stronghold/*        filter=private diff=private
+/modules/dc_packer/files/scripts/puppet.sh        filter=private diff=private

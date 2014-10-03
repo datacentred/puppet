@@ -47,17 +47,15 @@ class DHCPLeaseListener(pyinotify.ProcessEvent):
 
 		# Send to the secondary and restart the daemon
 		try:
-			cmd = ['scp', fd.name, '{0}:/etc/dhcp/dhcpd.hosts'.format(host)]
+			cmd = ['scp', fd.name, '{0}:/tmp/dhcpd.hosts'.format(host)]
 			subprocess.check_call(cmd)
 		except subprocess.CalledProcessError:
 			logging.error('Unable to transfer static leases to remote host')
-			pass
 		try:
-			cmd = ['ssh', host, 'sudo /etc/init.d/isc-dhcp-server restart']
+			cmd = ['ssh', host, '/usr/local/bin/dhcp_sync_hosts.sh']
 			subprocess.check_call(cmd)
 		except subprocess.CalledProcessError:
-			logging.error('Unable to restart dhcp daemon on remote host')
-			pass
+			logging.error('Unable to run dhcp_sync_hosts')
 
 		# Clean up the temporary file
 		fd.close()

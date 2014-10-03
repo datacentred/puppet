@@ -15,7 +15,7 @@ class dc_profile::openstack::cinder {
   $keystone_cinder_password = hiera(keystone_cinder_password)
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $cinder_db        = hiera(cinder_db)
   $cinder_db_host   = $osapi_public
@@ -29,6 +29,8 @@ class dc_profile::openstack::cinder {
   $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
   $os_region = hiera(os_region)
+
+  $management_ip = $::ipaddress
 
   class {'::cinder':
     rpc_backend         => 'cinder.openstack.common.rpc.impl_kombu',
@@ -53,7 +55,6 @@ class dc_profile::openstack::cinder {
     enabled                => true,
   }
 
-
   class {'::cinder::scheduler':
     scheduler_driver       => 'cinder.scheduler.simple.SimpleScheduler',
     package_ensure         => present,
@@ -65,20 +66,17 @@ class dc_profile::openstack::cinder {
     enabled        => true,
   }
 
-  # No RBD just yet! :(
-  #class { 'cinder::volume::iscsi':
-  #  iscsi_ip_address => $::ipaddress_eth1,
-  #  volume_group     => 'cindervg',
-  #}
-
-  # Export variable for use by haproxy to front this
-  # API endpoint
-  exported_vars::set { 'cinder_api':
-    value => $::fqdn,
-  }
-
   class { '::cinder::glance':
     glance_api_servers => $osapi_public,
+  }
+
+  # Add this node into our loadbalancer
+  @@haproxy::balancermember { "${::fqdn}-cinder":
+    listening_service => 'icehouse-cinder',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '8776',
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Set default quotas

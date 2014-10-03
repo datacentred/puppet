@@ -30,8 +30,8 @@ class dc_profile::openstack::neutron_server {
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
 
-  $management_ip      = $::ipaddress
-  $integration_ip     = $::ipaddress_p1p1
+  $management_ip      = $::ipaddress_eth1
+  $integration_ip     = $::ipaddress_eth1
 
   # enable the neutron service
   class { 'neutron':
@@ -75,10 +75,13 @@ class dc_profile::openstack::neutron_server {
       tenant_network_type => 'gre',
   }
 
-  # Export variable for use by haproxy
-  exported_vars::set { 'neutron_api':
-    value => $::fqdn,
+  # Add this node's API services into our loadbalancer
+  @@haproxy::balancermember { "${::fqdn}-neutron":
+    listening_service => 'icehouse-neutron',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '9696',
+    options           => 'check inter 2000 rise 2 fall 5',
   }
-
 
 }

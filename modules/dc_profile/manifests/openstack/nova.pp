@@ -21,7 +21,7 @@ class dc_profile::openstack::nova {
   $os_region = hiera(os_region)
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $rabbitmq_username         = hiera(osdbmq_rabbitmq_user)
   $rabbitmq_password         = hiera(osdbmq_rabbitmq_pw)
@@ -58,7 +58,6 @@ class dc_profile::openstack::nova {
     rabbit_virtual_host => $rabbitmq_vhost,
     use_syslog          => true,
   }
-  contain 'nova'
 
   class { '::nova::api':
     enabled                              => true,
@@ -71,7 +70,6 @@ class dc_profile::openstack::nova {
     auth_uri                             => "https://${osapi_public}:5000/v2.0",
     neutron_metadata_proxy_shared_secret => $neutron_metadata_secret,
   }
-  contain 'nova::api'
 
   class { '::nova::network::neutron':
     neutron_url            => "https://${osapi_public}:9696",
@@ -79,7 +77,6 @@ class dc_profile::openstack::nova {
     neutron_admin_auth_url => "https://${osapi_public}:35357/v2.0",
     neutron_admin_password => $keystone_neutron_password,
   }
-  contain 'nova::network::neutron'
 
   class { [
     '::nova::cert',
@@ -91,20 +88,33 @@ class dc_profile::openstack::nova {
     enabled => true,
   }
 
-  # Export variable for use by haproxy to front this
-  # API endpoint
-  exported_vars::set { 'nova_api':
-    value => $::fqdn,
+  # Add the various services from this node into our loadbalancers
+  @@haproxy::balancermember { "${::fqdn}-compute":
+    listening_service => 'icehouse-nova-compute',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '8774',
+    options           => 'check inter 2000 rise 2 fall 5',
   }
+  @@haproxy::balancermember { "${::fqdn}-metadata":
+    listening_service => 'icehouse-nova-metadata',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '8775',
+    options           => 'check inter 2000 rise 2 fall 5',
+  }
+  @@haproxy::balancermember { "${::fqdn}-novnc":
+    listening_service => 'icehouse-novncproxy',
+    server_names      => $::hostname,
+    ipaddresses       => $management_ip,
+    ports             => '6080',
+    options           => 'check inter 2000 rise 2 fall 5',
+  }
+
   # Export variable for used by neutron
   exported_vars::set { 'nova_api_ip':
     value => $management_ip,
   }
-  # Exported variable used by haproxy for novnc proxy hosts
-  exported_vars::set { 'novnc_proxy_host':
-    value => $::fqdn,
-  }
-
 
   # Nagios config
   # include dc_profile::openstack::nova_nagios
