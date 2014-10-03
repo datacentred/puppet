@@ -1,0 +1,8 @@
+input {
+ courier {
+  port => 55516
+  ssl_certificate => "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem"
+  ssl_key => "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem"
+  type => "log-courier"
+ }
+}
