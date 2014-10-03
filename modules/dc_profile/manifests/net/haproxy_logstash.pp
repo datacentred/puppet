@@ -20,9 +20,7 @@ class dc_profile::net::haproxy_logstash (
     ipaddress => $haproxy_hash[ 'listen_ip' ],
     mode      => $haproxy_hash[ 'mode' ],
     ports     => $haproxy_hash[ 'listen_ports' ],
+
   }
-
-  Haproxy::Balancermember <<| |>>
-
 }
 
