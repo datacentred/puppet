@@ -1,96 +1,99 @@
-#!/bin/sh
-#
-# log-courier Log Courier
-#
-# chkconfig: 2345 90 10
-# description: Controls the Log Courier daemon
-#
+#! /bin/sh
 ### BEGIN INIT INFO
 # Provides:          log-courier
-# Required-Start:    $local_fs $remote_fs $syslog
-# Required-Stop:     $local_fs $remote_fs $syslog
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Log Courier
+# Short-Description: log-courier initscript
+# Description:       log-courier initscript
+#                    
 ### END INIT INFO
 
-# source function library
-. /etc/rc.d/init.d/functions
+# Author: Jordan Sissel <jordan.sissel@dreamhost.com>
 
-DAEMON='/usr/sbin/log-courier'
-DATA_DIR='/var/lib/log-courier'
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="log shipper"
+NAME=log-courier
+DAEMON=/usr/sbin/log-courier
 CONFIG_FILE='/etc/log-courier/log-courier.conf'
-PID_FILE='/var/run/log-courier.pid'
+DAEMON_ARGS="-config ${CONFIG_FILE}"
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+DATA_DIR=/var/lib/log-courier
+
+
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+COMMAND="cd /var/run; exec $DAEMON $DAEMON_ARGS"
 
 do_start() {
-    echo -n "Starting Log Courier: "
-    status -p $PID_FILE $DAEMON &>/dev/null
-    RC=$?
-    if [ $RC -eq 0 ]; then
-        success
-    else
-        cd $DATA_DIR
-        nohup ${DAEMON} -config="${CONFIG_FILE}" </dev/null &>/dev/null &
-        RC=$?
-        echo $! > ${PID_FILE}
-        [ $RC -eq 0 ] && success || failure
-    fi
-    echo
-    return $?
+  # Skip if it's already running
+  start-stop-daemon --start --quiet --pidfile $PIDFILE --exec /bin/sh --test > /dev/null || return 1
+
+  cd /var/run
+  # Actually start it now.
+  start-stop-daemon --start --quiet --make-pidfile --background \
+    --pidfile $PIDFILE --exec /bin/sh -- -c "$COMMAND" || return 2
 }
 
-do_reload() {
-    echo -n "Reloading Log Courier: "
-    killproc -p $PID_FILE $DAEMON -HUP
-    RC=$?
-    echo
+do_stop()
+{
+  start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE
+  RETVAL="$?"
+  [ "$RETVAL" = 2 ] && return 2
+  start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
+  [ "$?" = 2 ] && return 2
+  rm -f $PIDFILE
+  return "$RETVAL"
 }
 
 case "$1" in
-    start)
-        $0 configtest && do_start
-        RC=$?
+  start)
+    [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    do_start
+    case "$?" in
+      0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+      2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
     ;;
-    stop)
-        echo -n "Stopping Log Courier: "
-        killproc -p $PID_FILE -d 30 $DAEMON
-        RC=$?
-        echo
+  stop)
+    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+    do_stop
+    case "$?" in
+      0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
+      2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+    esac
     ;;
-    status)
-        echo "Log Courier status:"
-        status -p $PID_FILE $DAEMON
-        RC=$?
+  status)
+    status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?
     ;;
-    reload)
-        $0 configtest && do_reload
+  restart|force-reload)
+    log_daemon_msg "Restarting $DESC" "$NAME"
+    do_stop
+    case "$?" in
+      0|1)
+        do_start
+        case "$?" in
+          0) log_end_msg 0 ;;
+          1) log_end_msg 1 ;; # Old process is still running
+          *) log_end_msg 1 ;; # Failed to start
+        esac
+      ;;
+      *)
+        # Failed to stop
+        log_end_msg 1
+      ;;
+    esac
     ;;
-    restart)
-        $0 configtest
-        RC=$?
-        if [ $RC -eq 0 ]; then
-            $0 stop
-            do_start
-            RC=$?
-        fi
-    ;;
-    configtest)
-        echo -n "Configuration test: "
-        TESTRESULT=$( ${DAEMON} -config="${CONFIG_FILE}" -config-test )
-        RC=$?
-        if [ $RC -ne 0 ]; then
-            failure
-            echo
-            echo "${TESTRESULT}"
-        else
-            success
-            echo
-        fi
-    ;;
-    *)
-        echo "Usage: $0 start|stop|status|reload|restart|configtest"
-        exit 1
+  *)
+    echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+    exit 3
     ;;
 esac
 
-exit $RC
+:
+
