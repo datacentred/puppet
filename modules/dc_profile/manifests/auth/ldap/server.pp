@@ -15,16 +15,12 @@ class dc_profile::auth::ldap::server (
   $rootdn,
   $rootpw,
 ) {
-  include ::dc_ssl
-  include ::dc_ssl::slapd
-  include ::dc_ldap
-  include ::ldap::server
-  include ::ldap::client
-
-  contain 'dc_ssl'
-  contain 'dc_ssl::slapd'
-  contain 'ldap::server'
-  contain 'ldap::client'
+  contain ::dc_ssl
+  contain ::dc_ssl::slapd
+  contain ::dc_ldap
+  contain ::ldap::server
+  contain ::ldap::client
+  contain ::dc_icinga::hostgroup_ldap
 
   Class['ldap::server::install'] -> Class['dc_ldap'] ~> Class['ldap::server::service']
   Class['dc_ssl'] ~> Class['ldap::server::service']
@@ -33,8 +29,6 @@ class dc_profile::auth::ldap::server (
   @@dns_resource { "ldap.${::domain}/CNAME":
     rdata => $::fqdn,
   }
-
-  include dc_icinga::hostgroup_ldap
 
   $defaults = {
     ensure      => present,
