@@ -21,7 +21,7 @@ class dc_logstash {
   exec { 'logstash patch upstart':
     command => '/bin/sed -ie "s/LS_GROUP=logstash/LS_GROUP=puppet/" /etc/init.d/logstash',
     onlyif  => '/bin/grep "LS_GROUP=logstash" /etc/init.d/logstash',
-    require => [ Package['logstash'], Package['puppet'] ],
+    require => Package['logstash'],
     notify  => Service['logstash'],
   }
 
