@@ -465,12 +465,12 @@ class dc_icinga::server::nagios_services {
     service_description => 'HP Blade Hardware Health',
   }
 
-  icinga::service { 'check_logstash_forwarder_netstat':
-    use                 => 'dc_service_secondary',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_logstash_forwarder_netstat',
-    service_description => 'Logstash Forwarder Connection',
-  }
+  #  icinga::service { 'check_logstash_forwarder_netstat':
+  #  use                 => 'dc_service_secondary',
+  #  hostgroup_name      => 'dc_hostgroup_generic',
+  #  check_command       => 'check_nrpe_1arg!check_logstash_forwarder_netstat',
+  #  service_description => 'Logstash Forwarder Connection',
+  #}
 
   icinga::service { 'check_lmsensors':
     use                 => 'dc_service_generic',
