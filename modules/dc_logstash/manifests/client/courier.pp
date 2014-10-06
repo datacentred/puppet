@@ -57,7 +57,7 @@ class dc_logstash::client::courier {
   service { 'log-courier':
     ensure    => running,
     enable    => true,
-    require   => [ File['/usr/bin/log-courier'], File['/etc/init.d/log-courier'] ],
+    require   => [ File['/usr/sbin/log-courier'], File['/etc/init.d/log-courier'] ],
     subscribe => Concat['/etc/log-courier.conf'],
   }
 
