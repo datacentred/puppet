@@ -1,8 +1,8 @@
 {
-    "general": {
-        "log file": "/var/log/log-courier.log"
-    },
-    "network": {
+   "general": {
+       "log file": "/var/log/log-courier.log"
+   },
+   "network": {
         "transport": "tls",
         "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @ls_courier_port %>" ],
         "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
