@@ -1,6 +1,6 @@
 # Class: dc_profile::net::elasticsearch
 #
-# Configures elasticsearch
+# Configures elasticsearch and runs one instance
 #
 # Parameters:
 #
@@ -11,12 +11,11 @@
 # Sample Usage:
 #
 class dc_profile::net::elasticsearch(
-  $es_version,
-  $cluster_name
+  $cluster_name,
 ) {
 
   class { '::elasticsearch':
-    config       => { 'cluster.name' => $dc_profile::net::elasticsearch::cluster_name,
+    config       => { 'cluster.name' => $cluster_name,
                       'network.host' => $::ipaddress },
     java_install => true,
   }
