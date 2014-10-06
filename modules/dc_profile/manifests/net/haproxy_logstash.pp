@@ -14,7 +14,7 @@ class dc_profile::net::haproxy_logstash (
   $listeners = {}
 ) {
 
-  contain haproxy
+  contain ::haproxy
 
   create_resources(haproxy::listen, $listeners)
 
