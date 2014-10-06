@@ -25,6 +25,21 @@ class dc_logstash {
     notify  => Service['logstash'],
   }
 
+  # Stop logstash web from starting
+  file { '/etc/init/logstash-web.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/dc_logstash/logstash_web_init',
+    require => Package['logstash'],
+  }
+  ->
+  service {'logstash-web':
+    ensure => stopped,
+    enable => false,
+  }
+
   # Add directory and install patterns for filters and parsers
   $logstash_grok_patterns_dir = hiera(logstash_grok_patterns_dir)
 
