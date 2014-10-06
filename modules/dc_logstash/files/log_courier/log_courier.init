@@ -1,13 +1,13 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          skeleton
+# Provides:          log-courier
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Example initscript
-# Description:       This file should be used to construct scripts to be
-#                    placed in /etc/init.d.
+# Short-Description: log-courier initscript
+# Description:       log-courier initscript
+#                    
 ### END INIT INFO
 
 # Author: Jordan Sissel <jordan.sissel@dreamhost.com>
