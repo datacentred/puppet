@@ -54,11 +54,11 @@ class dc_logstash::client::courier {
     order   => '99',
   }
 
-  #  service { 'log-courier':
-  #  ensure    => running,
-  #  enable    => true,
-  #  require   => [ File['/usr/bin/log-courier'], File['/etc/init.d/log-courier'] ],
-  #  subscribe => Concat['/etc/log-courier.conf'],
-  #}
+  service { 'log-courier':
+    ensure    => running,
+    enable    => true,
+    require   => [ File['/usr/bin/log-courier'], File['/etc/init.d/log-courier'] ],
+    subscribe => Concat['/etc/log-courier.conf'],
+  }
 
 }
