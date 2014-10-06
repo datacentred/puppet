@@ -1,13 +1,13 @@
 {
    "general": {
-       "log file": "/var/log/log-courier.log"
+     "log file": "/var/log/log-courier.log"
    },
    "network": {
-        "transport": "tls",
-        "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @ls_courier_port %>" ],
-        "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
-        "ssl key": "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem",
-        "ssl ca": "/var/lib/puppet/ssl/certs/ca.pem",
-        "timeout": 15
+     "transport": "tls",
+     "servers": [ "<%= @ls_host %>.<%= @domain %>:<%= @ls_courier_port %>" ],
+     "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
+     "ssl key": "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem",
+     "ssl ca": "/var/lib/puppet/ssl/certs/ca.pem",
+     "timeout": 15
     },
   "files": [
