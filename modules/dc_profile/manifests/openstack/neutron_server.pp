@@ -13,7 +13,7 @@ class dc_profile::openstack::neutron_server {
   $os_region = hiera(os_region)
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $keystone_neutron_password = hiera(keystone_neutron_password)
 
@@ -30,8 +30,8 @@ class dc_profile::openstack::neutron_server {
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
 
-  $management_ip      = $::ipaddress_eth1
-  $integration_ip     = $::ipaddress_eth1
+  $management_ip      = $::ipaddress
+  $integration_ip     = $::ipaddress_p1p1
 
   # enable the neutron service
   class { 'neutron':
