@@ -50,7 +50,7 @@ class dc_profile::openstack::neutron_agent {
     allow_overlapping_ips => true,
     verbose               => true,
     debug                 => false,
-    core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
+    core_plugin           => 'openvswitch',
   }
 
   # If we're on a designated network node, configure the various
