@@ -1,4 +1,4 @@
-# Class: dc_profile::net::haproxy
+# Class: dc_profile::net::ps_haproxy
 #
 # Configures haproxy
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::net::haproxy_logstash (
+class dc_profile::net::ps_haproxy (
   $listeners = {}
 ) {
 
