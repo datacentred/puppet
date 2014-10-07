@@ -19,12 +19,16 @@ class dc_profile::openstack::haproxy_icehouse {
 
   include ::dc_ssl::haproxy
 
+  # Get the IP of the VIP to which we want haproxy to bind
+  $vrhash = hiera(virtual_routers)
+  $vip = $vrhash['compute_api_int']['vip']
+
   # Ensure HAProxy is restarted whenever SSL certificates are changed
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
 
   # Keystone Auth
   haproxy::listen { 'icehouse-keystone-auth':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '5000',
     bind_options => [
@@ -42,7 +46,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Keystone Admin
   haproxy::listen { 'icehouse-keystone-admin':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '35357',
     bind_options => [
@@ -60,7 +64,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Glance API
   haproxy::listen { 'icehouse-glance-api':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '9292',
     bind_options => [
@@ -78,7 +82,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Glance Registry
   haproxy::listen { 'icehouse-glance-registry':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '9191',
     bind_options => [
@@ -96,7 +100,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Neutron
   haproxy::listen { 'icehouse-neutron':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '9696',
     bind_options => [
@@ -114,7 +118,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Nova Compute
   haproxy::listen { 'icehouse-nova-compute':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '8774',
     bind_options => [
@@ -132,7 +136,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Nova Metadata
   haproxy::listen { 'icehouse-nova-metadata':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '8775',
     bind_options => [
@@ -150,7 +154,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Cinder
   haproxy::listen { 'icehouse-cinder':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '8776',
     bind_options => [
@@ -168,7 +172,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Horizon
   haproxy::listen { 'icehouse-horizon':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '443',
     bind_options => [
@@ -186,7 +190,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # NoVNC Proxy
   haproxy::listen { 'icehouse-novncproxy':
-    ipaddress    => '*',
+    ipaddress    => $vip,
     mode         => 'http',
     ports        => '6080',
     bind_options => [
@@ -202,8 +206,8 @@ class dc_profile::openstack::haproxy_icehouse {
   }
 
   # Galera
-  haproxy::listen { 'galera':
-    ipaddress    => '*',
+  haproxy::listen { 'icehouse-galera':
+    ipaddress    => $vip,
     mode         => 'tcp',
     ports        => '3306',
     options      => {
