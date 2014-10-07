@@ -18,8 +18,8 @@ class dc_profile::openstack::neutron_agent {
   $keystone_neutron_password = hiera(keystone_neutron_password)
 
   $rabbitmq_hosts    = hiera(osdbmq_members)
-  $rabbitmq_username = hiera(osdbmq_rabbitmq_username)
-  $rabbitmq_password = hiera(osdbmq_rabbitmq_password)
+  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
   $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
   $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
