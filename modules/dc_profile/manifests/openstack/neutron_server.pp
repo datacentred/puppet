@@ -61,6 +61,8 @@ class dc_profile::openstack::neutron_server {
       database_connection    => "mysql://${neutron_db_user}:${neutron_db_pass}@${neutron_db_host}/${neutron_db}?charset=utf8",
   }
 
+  include dc_profile::auth::sudoers_neutron
+
   # Nagios stuff
   # include dc_icinga::hostgroup_neutron_server
 

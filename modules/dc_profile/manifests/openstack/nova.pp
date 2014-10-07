@@ -59,6 +59,8 @@ class dc_profile::openstack::nova {
     use_syslog          => true,
   }
 
+  include dc_profile::auth::sudoers_nova
+
   class { '::nova::api':
     enabled                              => true,
     admin_tenant_name                    => $nova_admin_tenant,
