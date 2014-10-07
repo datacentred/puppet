@@ -40,13 +40,13 @@ class dc_profile::openstack::rabbitmq {
     system     => true,
   } ->
   file { '/var/lib/rabbitmq':
-    ensure  => link,
-    target  => '/srv/rabbitmq',
+    ensure => link,
+    target => '/srv/rabbitmq',
   } ->
   file { '/srv/rabbitmq/mnesia':
-    ensure  => directory,
-    owner   => 'rabbitmq',
-    group   => 'rabbitmq',
+    ensure => directory,
+    owner  => 'rabbitmq',
+    group  => 'rabbitmq',
   } ->
   class { '::rabbitmq':
     cluster_nodes     => $cluster_nodes,
