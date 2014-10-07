@@ -49,14 +49,16 @@ class dc_profile::openstack::rabbitmq {
     group   => 'rabbitmq',
   } ->
   class { '::rabbitmq':
-    cluster_nodes            => $cluster_nodes,
-    cluster_node_type        => $cluster_node_type,
-  } ~>
+    cluster_nodes     => $cluster_nodes,
+    cluster_node_type => $cluster_node_type,
+  }
+  contain ::rabbitmq
+
   exec { 'configure-ha-queue-policy':
     command => '/usr/sbin/rabbitmqctl set_policy HA \'^(?!amq\\.).*\' \'{"ha-mode": "all"}\'',
     require => Class['::rabbitmq'],
+    unless  => '/usr/sbin/rabbitmqctl list_policies | grep -q HA',
   }
-  contain ::rabbitmq
 
   rabbitmq_user { $osdbmq_rabbitmq_user:
     admin    => true,
