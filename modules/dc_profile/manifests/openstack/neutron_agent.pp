@@ -110,13 +110,6 @@ class dc_profile::openstack::neutron_agent {
       enabled => true,
     }
 
-    # Temporary VPNaaS fix until icehouse
-    file { '/etc/neutron/rootwrap.d/vpnaas.filters':
-      content => "[Filters]\n\nip: IpFilter, ip, root\nip_exec: IpNetnsExecFilter, ip, root\nopenswan: CommandFilter, ipsec, root\n",
-      require => Package['neutron-vpnaas-agent'],
-      notify  => Service['neutron-vpnaas-service'],
-    }
-
     class { 'neutron::agents::lbaas':
       enabled        => true,
       use_namespaces => true,
