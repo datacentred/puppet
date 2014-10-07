@@ -16,21 +16,30 @@ class dc_profile::perf::graphite (
   $graphite_db_user,
   $graphite_db_host,
   $graphite_db_name,
+  $new_ssd_config = 'false',
+  $cname = 'true',
 ){
 
   include apache
 
+  if $new_ssd_config == 'true' {
+    $graphite_link_path = '/srv/graphite'
+  }
+  else {
+    $graphite_link_path = '/var/opt/graphite'
+  }
+
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt.  We dedicate the lion's share of available disk
   # to /var, so that's the preference in this case.
-  file { '/var/opt/graphite':
+  file { $graphite_link_path:
     ensure => directory,
   }
 
   file { '/opt/graphite':
     ensure  => link,
-    target  => '/var/opt/graphite',
-    require => File['/var/opt/graphite'],
+    target  => $graphite_link_path,
+    require => File[$graphite_link_path],
   }
 
   class { '::graphite':
@@ -88,9 +97,11 @@ class dc_profile::perf::graphite (
     wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
   }
 
-  # Add an appropriate CNAME RR
-  @@dns_resource { "graphite.${::domain}/CNAME":
-    rdata => $::fqdn,
+  if $cname {
+    # Add an appropriate CNAME RR
+    @@dns_resource { "graphite.${::domain}/CNAME":
+      rdata => $::fqdn,
+    }
   }
 
 }
