@@ -16,13 +16,13 @@ class dc_profile::perf::graphite (
   $graphite_db_user,
   $graphite_db_host,
   $graphite_db_name,
-  $new_ssd_config = 'false',
-  $cname = 'true',
+  $new_ssd_config = false,
+  $cname = true,
 ){
 
   include apache
 
-  if $new_ssd_config == 'true' {
+  if $new_ssd_config == true {
     $graphite_link_path = '/srv/graphite'
   }
   else {
@@ -97,7 +97,7 @@ class dc_profile::perf::graphite (
     wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
   }
 
-  if $cname {
+  if $cname == true {
     # Add an appropriate CNAME RR
     @@dns_resource { "graphite.${::domain}/CNAME":
       rdata => $::fqdn,
