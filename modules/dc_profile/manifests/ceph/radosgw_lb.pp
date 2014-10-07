@@ -36,7 +36,7 @@ class dc_profile::ceph::radosgw_lb (
     ],
     options      => {
       'option'  => ['tcpka', "httpchk GET / HTTP/1.1\\r\\nHost:\\ ${::fqdn}", 'tcplog'],
-      'balance' => 'source',
+      'balance' => 'roundrobin',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
     },
   }
