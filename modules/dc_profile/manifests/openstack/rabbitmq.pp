@@ -30,48 +30,34 @@ class dc_profile::openstack::rabbitmq {
     $cluster_node_type = 'ram'
   }
 
-  # Sit our message queues on some SSD shiz
-  file { '/srv/rabbitmq':
+  # rabbitmq application account needs puppet group
+  # membership in order to use the latter's SSL keys
+  user { 'rabbitmq':
+    ensure     => present,
+    groups     => 'puppet',
+    home       => '/srv/rabbitmq',
+    managehome => true,
+    system     => true,
+  } ->
+  file { '/var/lib/rabbitmq':
+    ensure => link,
+    target => '/srv/rabbitmq',
+  } ->
+  file { '/srv/rabbitmq/mnesia':
     ensure => directory,
     owner  => 'rabbitmq',
     group  => 'rabbitmq',
   } ->
-  file { "/srv/rabbitmq/${::hostname}":
-    ensure => directory,
-    owner  => 'rabbitmq',
-    group  => 'rabbitmq',
-  }
-
-  # rabbitmq application account needs puppet group
-  # membership in order to use the latter's SSL keys
-  user { 'rabbitmq':
-    groups  => 'puppet',
-    home    => '/srv/rabbitmq',
-    require => File['/srv/rabbitmq'],
-  }
-
   class { '::rabbitmq':
-    wipe_db_on_cookie_change     => true,
-    config_cluster               => true,
-    admin_enable                 => true,
-    cluster_nodes                => $cluster_nodes,
-    cluster_node_type            => $cluster_node_type,
-    delete_guest_user            => true,
-    ssl                          => true,
-    ssl_cacert                   => '/var/lib/puppet/ssl/certs/ca.pem',
-    ssl_cert                     => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
-    ssl_key                      => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
-    ssl_verify                   => 'verify_peer',
-    ssl_fail_if_no_peer_cert     => true,
-    environment_variables        => {
-      'RABBITMQ_NODE_IP_ADDRESS' => $management_ip,
-      'RABBITMQ_MNESIA_BASE'     => '/srv/rabbitmq',
-      'RABBITMQ_MNESIA_DIR'      => "/srv/rabbitmq/${::hostname}",
-    }
-  } ~>
+    cluster_nodes     => $cluster_nodes,
+    cluster_node_type => $cluster_node_type,
+  }
+  contain ::rabbitmq
+
   exec { 'configure-ha-queue-policy':
     command => '/usr/sbin/rabbitmqctl set_policy HA \'^(?!amq\\.).*\' \'{"ha-mode": "all"}\'',
     require => Class['::rabbitmq'],
+    unless  => '/usr/sbin/rabbitmqctl list_policies | grep -q HA',
   }
 
   rabbitmq_user { $osdbmq_rabbitmq_user:
