@@ -13,11 +13,9 @@ class dc_profile::openstack::neutron_agent {
   $os_region = hiera(os_region)
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $keystone_neutron_password = hiera(keystone_neutron_password)
-
-  $nova_api_ip = get_exported_var('', 'nova_api_ip', ['localhost'])
 
   $rabbitmq_hosts    = hiera(osdbmq_members)
   $rabbitmq_username = hiera(osdbmq_rabbitmq_username)
@@ -33,14 +31,13 @@ class dc_profile::openstack::neutron_agent {
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
 
-
   $neutron_port = '9696'
 
   $management_ip  = $::ipaddress
-  $integration_ip = $::ipaddress_eth1
+  $integration_ip = $::ipaddress_p1p1
 
   # Physical interface plumbed into external network
-  $uplink_if                  = 'eth2'
+  $uplink_if                  = 'em2'
 
   class { 'neutron':
     enabled               => true,
@@ -91,7 +88,6 @@ class dc_profile::openstack::neutron_agent {
 
     class { 'neutron::agents::dhcp':
       enabled     => true,
-      dhcp_domain => 'ark.datacentred.io',
     }
 
     class { 'neutron::agents::l3':
@@ -106,18 +102,11 @@ class dc_profile::openstack::neutron_agent {
       auth_url      => "https://${osapi_public}:35357/v2.0",
       auth_password => $keystone_neutron_password,
       auth_region   => $os_region,
-      metadata_ip   => $nova_api_ip,
+      metadata_ip   => get_ip_addr($osapi_public),
     }
 
     class { 'neutron::agents::vpnaas':
       enabled => true,
-    }
-
-    # Temporary VPNaaS fix until icehouse
-    file { '/etc/neutron/rootwrap.d/vpnaas.filters':
-      content => "[Filters]\n\nip: IpFilter, ip, root\nip_exec: IpNetnsExecFilter, ip, root\nopenswan: CommandFilter, ipsec, root\n",
-      require => Package['neutron-vpnaas-agent'],
-      notify  => Service['neutron-vpnaas-service'],
     }
 
     class { 'neutron::agents::lbaas':
