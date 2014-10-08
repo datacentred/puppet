@@ -13,14 +13,14 @@
 class dc_profile::openstack::nova_compute {
 
   # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'openstack.datacentred.io'
+  $osapi_public  = 'compute.datacentred.io'
 
   $os_region         = hiera(os_region)
   $os_service_tenant = hiera(os_service_tenant)
 
   $rabbitmq_hosts    = hiera(osdbmq_members)
   $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
-  $rabbitmq_password = hiera(osdbmq_rabbitmq_pass)
+  $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
   $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
   $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
 
@@ -29,7 +29,7 @@ class dc_profile::openstack::nova_compute {
   $nova_db_host = $osapi_public
   $nova_db      = hiera(nova_db)
 
-  $novnc_proxy_host = 'openstack.datacentred.io'
+  $novnc_proxy_host = 'compute.datacentred.io'
 
   $keystone_neutron_password = hiera(keystone_neutron_password)
 
@@ -90,17 +90,17 @@ class dc_profile::openstack::nova_compute {
     neutron_region_name       => $os_region,
   }
 
-  if $::environment == 'production' {
-
-    # Logstash config
-    include dc_profile::openstack::nova_compute_logstash
-
-    file { '/etc/nagios/nrpe.d/nova_compute.cfg':
-      ensure  => present,
-      content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
-    }
-  }
+#  if $::environment == 'production' {
+#
+#    # Logstash config
+#    include dc_profile::openstack::nova_compute_logstash
+#
+#    file { '/etc/nagios/nrpe.d/nova_compute.cfg':
+#      ensure  => present,
+#      content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
+#      require => Package['nagios-nrpe-server'],
+#      notify  => Service['nagios-nrpe-server'],
+#    }
+#  }
 
 }
