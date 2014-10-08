@@ -35,6 +35,9 @@ class dc_profile::openstack::neutron_agent {
 
   $management_ip  = $::ipaddress
 
+  package { 'neutron-plugin-openvswitch':
+    ensure => installed,
+  }
 
   class { 'neutron':
     enabled               => true,
@@ -48,6 +51,7 @@ class dc_profile::openstack::neutron_agent {
     verbose               => true,
     debug                 => false,
     core_plugin           => 'openvswitch',
+    require               => Package['neutron-plugin-openvswitch'],
   }
 
   include dc_profile::auth::sudoers_neutron
@@ -117,10 +121,10 @@ class dc_profile::openstack::neutron_agent {
       use_namespaces => true,
     }
 
-    class { 'neutron::agents::metering':
-      enabled        => true,
-      use_namespaces => true,
-    }
+#    class { 'neutron::agents::metering':
+#      enabled        => true,
+#      use_namespaces => true,
+#    }
   }
   else  {
 
