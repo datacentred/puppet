@@ -12,7 +12,6 @@
 #
 class dc_profile::openstack::horizon {
 
-  $keystone_host      = get_exported_var('', 'keystone_host', ['localhost'])
   $horizon_secret_key = hiera(horizon_secret_key)
 
   # OpenStack API endpoints
@@ -29,12 +28,15 @@ class dc_profile::openstack::horizon {
     keystone_default_role => '_member_',
     django_debug          => true,
     api_result_limit      => 1000,
-    neutron_options       => { 'enable_lb' => true, 'enable_vpn' => true },
+    neutron_options       => { 'enable_firewall' => true,
+                               'enable_lb'       => true,
+                               'enable_vpn'      => true,
+                             }, 
   }
 
-#  class { '::dc_branding::openstack::horizon':
-#    require => Class['::horizon'],
-#  }
+  class { '::dc_branding::openstack::horizon':
+    require => Class['::horizon'],
+  }
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
