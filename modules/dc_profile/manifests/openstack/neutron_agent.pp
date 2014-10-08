@@ -34,10 +34,7 @@ class dc_profile::openstack::neutron_agent {
   $neutron_port = '9696'
 
   $management_ip  = $::ipaddress
-  $integration_ip = $::ipaddress_p2p1
 
-  # Physical interface plumbed into external network
-  $uplink_if                  = 'em2'
 
   class { 'neutron':
     enabled               => true,
@@ -60,8 +57,12 @@ class dc_profile::openstack::neutron_agent {
   # Note: network_node is defined at Host Group level via Foreman
   if $::network_node {
 
+    $integration_ip = $::ipaddress_p2p1
+
     # We also want to disable GRO on the external interface
     # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
+    # Physical interface plumbed into external network
+    $uplink_if = 'em2'
     include ethtool
     ethtool { $uplink_if:
       gro => 'disabled',
@@ -122,7 +123,10 @@ class dc_profile::openstack::neutron_agent {
     }
   }
   else  {
-    # We're a compute node, so just configure the OVS basics
+
+    # We're a compute node
+    $integration_ip = $::ipaddress_p1p1
+
     class { 'neutron::agents::ovs':
       local_ip         => $integration_ip,
       enable_tunneling => true,
