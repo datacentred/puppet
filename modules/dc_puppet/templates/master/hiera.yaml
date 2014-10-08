@@ -1,4 +1,5 @@
 :hierarchy:
+    - "hosts/%{hostname}"
     - "releases/%{lsbdistcodename}"
     - "modules/%{calling_module}"
     - "%{environment}"
