@@ -32,7 +32,7 @@ class dc_profile::openstack::glance {
   $glance_api_database = "mysql://${glance_api_db_user}:${glance_api_db_pass}@${glance_api_db_host}/${glance_api_db}"
   $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
 
-  $management_ip = $::ipaddress_eth0
+  $management_ip = $::ipaddress
 
   class { 'glance::api':
     registry_host            => $osapi_public,
