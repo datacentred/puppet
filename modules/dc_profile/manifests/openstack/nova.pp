@@ -113,11 +113,6 @@ class dc_profile::openstack::nova {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  # Export variable for used by neutron
-  exported_vars::set { 'nova_api_ip':
-    value => $management_ip,
-  }
-
   # Nagios config
   # include dc_profile::openstack::nova_nagios
 
