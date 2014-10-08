@@ -34,9 +34,9 @@ class dc_profile::openstack::horizon {
                              }, 
   }
 
-  class { '::dc_branding::openstack::horizon':
-    require => Class['::horizon'],
-  }
+#  class { '::dc_branding::openstack::horizon':
+#    require => Class['::horizon'],
+#  }
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
