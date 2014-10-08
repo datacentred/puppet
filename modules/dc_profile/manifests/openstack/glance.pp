@@ -19,18 +19,12 @@ class dc_profile::openstack::glance {
   # OpenStack API and loadbalancer endpoint
   $osapi_public  = 'compute.datacentred.io'
 
-  $glance_api_db      = hiera(glance_api_db)
-  $glance_api_db_user = hiera(glance_api_db_user)
-  $glance_api_db_pass = hiera(glance_api_db_pass)
-  $glance_api_db_host = $osapi_public
+  $glance_db      = hiera(glance_db)
+  $glance_db_user = hiera(glance_db_user)
+  $glance_db_pass = hiera(glance_db_pass)
+  $glance_db_host = $osapi_public
 
-  $glance_reg_db      = hiera(glance_reg_db)
-  $glance_reg_db_user = hiera(glance_reg_db_user)
-  $glance_reg_db_pass = hiera(glance_reg_db_pass)
-  $glance_reg_db_host = $osapi_public
-
-  $glance_api_database = "mysql://${glance_api_db_user}:${glance_api_db_pass}@${glance_api_db_host}/${glance_api_db}"
-  $glance_reg_database = "mysql://${glance_reg_db_user}:${glance_reg_db_pass}@${glance_reg_db_host}/${glance_reg_db}"
+  $glance_database = "mysql://${glance_db_user}:${glance_db_pass}@${glance_db_host}/${glance_db}"
 
   $management_ip = $::ipaddress
 
@@ -44,7 +38,7 @@ class dc_profile::openstack::glance {
     keystone_tenant          => 'services',
     keystone_user            => 'glance',
     keystone_password        => $keystone_glance_password,
-    database_connection      => $glance_api_database,
+    database_connection      => $glance_database,
     use_syslog               => true,
     enabled                  => true,
   }
@@ -58,7 +52,7 @@ class dc_profile::openstack::glance {
     keystone_tenant     => 'services',
     keystone_user       => 'glance',
     keystone_password   => $keystone_glance_password,
-    database_connection => $glance_reg_database,
+    database_connection => $glance_database,
     use_syslog          => true,
     enabled             => true,
   }
