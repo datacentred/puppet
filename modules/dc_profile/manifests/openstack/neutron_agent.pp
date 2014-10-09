@@ -88,7 +88,7 @@ class dc_profile::openstack::neutron_agent {
       ],
     }
 
-    class { 'neutron::agents::ovs':
+    class { 'neutron::agents::ml2::ovs':
       bridge_uplinks    => ["br-ex:${uplink_if}"],
       bridge_mappings   => ['default:br-ex'],
       local_ip          => $integration_ip,
@@ -132,7 +132,7 @@ class dc_profile::openstack::neutron_agent {
     # We're a compute node
     $integration_ip = $::ipaddress_p1p1
 
-    class { 'neutron::agents::ovs':
+    class { 'neutron::agents::ml2::ovs':
       local_ip         => $integration_ip,
       enable_tunneling => true,
     }
