@@ -49,7 +49,6 @@ class dc_profile::openstack::keystone {
     rabbit_password     => $rabbitmq_password,
     rabbit_port         => $rabbitmq_port,
     rabbit_virtual_host => $rabbitmq_vhost,
-    rabbit_use_ssl      => true,
   }
 
   # Adds the admin credential to keystone.
