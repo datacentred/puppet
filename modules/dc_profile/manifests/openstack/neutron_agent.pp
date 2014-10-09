@@ -47,6 +47,7 @@ class dc_profile::openstack::neutron_agent {
     verbose               => true,
     debug                 => false,
     core_plugin           => 'ml2',
+    service_plugins       => [ 'router', 'firewall', 'lbaas', 'vpnaas' ],
   }
 
   # Enable ML2 plugin

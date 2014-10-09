@@ -46,11 +46,7 @@ class dc_profile::openstack::neutron_server {
       verbose               => true,
       debug                 => false,
       core_plugin           => 'ml2',
-      service_plugins       => [ 'neutron.services.vpn.plugin.VPNDriverPlugin',
-                                  'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
-                                  'neutron.services.firewall.fwaas_plugin.FirewallPlugin',
-                                  'neutron.services.metering.metering_plugin.MeteringPlugin',
-                                ],
+      service_plugins       => [ 'router', 'firewall', 'lbaas', 'vpnaas' ],
   }
 
   # configure authentication
