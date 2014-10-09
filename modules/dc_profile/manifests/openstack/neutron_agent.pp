@@ -46,6 +46,7 @@ class dc_profile::openstack::neutron_agent {
     allow_overlapping_ips => true,
     verbose               => true,
     debug                 => false,
+    core_plugin           => 'ml2',
   }
 
   # Enable ML2 plugin
