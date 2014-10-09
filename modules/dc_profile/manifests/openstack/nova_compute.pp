@@ -86,6 +86,8 @@ class dc_profile::openstack::nova_compute {
     neutron_admin_tenant_name => $os_service_tenant,
     neutron_admin_auth_url    => "https://${osapi_public}:35357/v2.0",
     neutron_region_name       => $os_region,
+    vif_plugging_is_fatal     => false,
+    vif_plugging_timeout      => '0',
   }
 
 #  if $::environment == 'production' {
