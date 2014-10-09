@@ -68,10 +68,10 @@ class dc_profile::openstack::neutron_server {
 
   # Enable ML2 plugin
   class { 'neutron::plugins::ml2':
-      type_drivers         => 'gre',
-      tenant_network_types => 'gre',
+      type_drivers         => [ 'gre' ],
+      tenant_network_types => [ 'gre' ],
       mechanism_drivers    => [ 'openvswitch' ],
-      tunnel_id_ranges     => '1:1000',
+      tunnel_id_ranges     => [ '1:1000' ],
   }
 
   # Add this node's API services into our loadbalancer
