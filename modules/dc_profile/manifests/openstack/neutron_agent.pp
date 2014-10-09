@@ -51,6 +51,9 @@ class dc_profile::openstack::neutron_agent {
   }
 
   # Enable ML2 plugin
+  file { '/etc/default/neutron-server':
+    ensure  => present,
+  }
   class { 'neutron::plugins::ml2':
       type_drivers         => [ 'gre' ],
       tenant_network_types => [ 'gre' ],
