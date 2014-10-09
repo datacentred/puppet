@@ -55,10 +55,10 @@ class dc_profile::openstack::neutron_agent {
 
   # Enable ML2 plugin
   class { 'neutron::plugins::ml2':
-      type_drivers        => 'gre',
-      tenant_network_type => 'gre',
-      mechanism_drivers   => 'openvswitch',
-      tunnel_id_ranges    => '1:1000',
+      type_drivers         => 'gre',
+      tenant_network_types => 'gre',
+      mechanism_drivers    => 'openvswitch',
+      tunnel_id_ranges     => '1:1000',
   }
 
   include dc_profile::auth::sudoers_neutron
