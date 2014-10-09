@@ -35,10 +35,6 @@ class dc_profile::openstack::neutron_agent {
 
   $management_ip  = $::ipaddress
 
-  package { 'neutron-plugin-openvswitch':
-    ensure => installed,
-  }
-
   class { '::neutron':
     enabled               => true,
     bind_host             => '0.0.0.0',
@@ -50,7 +46,6 @@ class dc_profile::openstack::neutron_agent {
     allow_overlapping_ips => true,
     verbose               => true,
     debug                 => false,
-    require               => Package['neutron-plugin-openvswitch'],
   }
 
   # Enable ML2 plugin
