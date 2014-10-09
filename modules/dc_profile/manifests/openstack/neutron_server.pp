@@ -34,7 +34,7 @@ class dc_profile::openstack::neutron_server {
   $integration_ip     = $::ipaddress_p1p1
 
   # enable the neutron service
-  class { 'neutron':
+  class { '::neutron':
       enabled               => true,
       bind_host             => '0.0.0.0',
       rabbit_hosts          => $rabbitmq_hosts,
@@ -45,7 +45,6 @@ class dc_profile::openstack::neutron_server {
       allow_overlapping_ips => true,
       verbose               => true,
       debug                 => false,
-      core_plugin           => 'neutron.plugins.openvswitch.ovs_neutron_plugin.OVSNeutronPluginV2',
       service_plugins       =>  [ 'neutron.services.vpn.plugin.VPNDriverPlugin',
                                   'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
                                   'neutron.services.firewall.fwaas_plugin.FirewallPlugin',

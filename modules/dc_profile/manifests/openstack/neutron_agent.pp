@@ -39,7 +39,7 @@ class dc_profile::openstack::neutron_agent {
     ensure => installed,
   }
 
-  class { 'neutron':
+  class { '::neutron':
     enabled               => true,
     bind_host             => '0.0.0.0',
     rabbit_hosts          => $rabbitmq_hosts,
@@ -50,7 +50,6 @@ class dc_profile::openstack::neutron_agent {
     allow_overlapping_ips => true,
     verbose               => true,
     debug                 => false,
-    core_plugin           => 'openvswitch',
     require               => Package['neutron-plugin-openvswitch'],
   }
 
@@ -101,7 +100,6 @@ class dc_profile::openstack::neutron_agent {
       enabled                  => true,
       use_namespaces           => true,
       router_delete_namespaces => true,
-      interface_driver         => 'neutron.agent.linux.interface.OVSInterfaceDriver',
     }
 
     class { 'neutron::agents::metadata':
