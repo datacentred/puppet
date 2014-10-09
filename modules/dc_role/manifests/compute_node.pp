@@ -19,12 +19,6 @@ class dc_role::compute_node {
   Class['dc_profile::openstack::neutron_agent'] ->
   Class['dc_profile::openstack::nova_compute']
 
-  include dc_icinga::hostgroup_nova_compute
-
-  service { 'ceilometer-agent-compute':
-    ensure    => stopped,
-    hasstatus => true,
-    enable    => false,
-  }
+#  include dc_icinga::hostgroup_nova_compute
 
 }
