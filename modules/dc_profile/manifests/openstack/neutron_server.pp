@@ -45,7 +45,8 @@ class dc_profile::openstack::neutron_server {
       allow_overlapping_ips => true,
       verbose               => true,
       debug                 => false,
-      service_plugins       =>  [ 'neutron.services.vpn.plugin.VPNDriverPlugin',
+      core_plugin           => 'ml2',
+      service_plugins       => [ 'neutron.services.vpn.plugin.VPNDriverPlugin',
                                   'neutron.services.loadbalancer.plugin.LoadBalancerPlugin',
                                   'neutron.services.firewall.fwaas_plugin.FirewallPlugin',
                                   'neutron.services.metering.metering_plugin.MeteringPlugin',
@@ -65,15 +66,12 @@ class dc_profile::openstack::neutron_server {
   # Nagios stuff
   # include dc_icinga::hostgroup_neutron_server
 
-  # Configure Neutron for OVS
-  class { 'neutron::agents::ovs':
-    local_ip         => $integration_ip,
-    enable_tunneling => true,
-  }
-
-  # Enable the Open VSwitch plugin server
-  class { 'neutron::plugins::ovs':
+  # Enable ML2 plugin
+  class { 'neutron::plugins::ml2':
+      type_drivers        => 'gre',
       tenant_network_type => 'gre',
+      mechanism_drivers   => 'openvswitch',
+      tunnel_id_ranges    => '1:1000',
   }
 
   # Add this node's API services into our loadbalancer
