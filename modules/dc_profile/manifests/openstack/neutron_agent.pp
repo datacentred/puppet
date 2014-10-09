@@ -101,12 +101,6 @@ class dc_profile::openstack::neutron_agent {
       enabled     => true,
     }
 
-    class { 'neutron::agents::l3':
-      enabled                  => true,
-      use_namespaces           => true,
-      router_delete_namespaces => true,
-    }
-
     class { 'neutron::agents::metadata':
       shared_secret => $neutron_metadata_secret,
       auth_url      => "https://${osapi_public}:35357/v2.0",
