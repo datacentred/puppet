@@ -42,12 +42,14 @@ class dc_profile::openstack::keystone {
     verbose             => true,
     catalog_type        => 'sql',
     admin_token         => hiera(keystone_admin_uuid),
+    token_provider      => 'keystone.token.providers.uuid.Provider',
     database_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
     rabbit_hosts        => $rabbitmq_hosts,
     rabbit_userid       => $rabbitmq_username,
     rabbit_password     => $rabbitmq_password,
     rabbit_port         => $rabbitmq_port,
     rabbit_virtual_host => $rabbitmq_vhost,
+    rabbit_use_ssl      => true,
   }
 
   # Adds the admin credential to keystone.
