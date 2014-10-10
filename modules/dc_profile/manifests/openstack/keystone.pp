@@ -36,13 +36,45 @@ class dc_profile::openstack::keystone {
   $ec2_port     = '8773'
   $nova_port    = '8774'
 
+  $keystone_signing_key  = hiera(keystone_signing_key)
+  $keystone_signing_cert = hiera(keystone_signing_cert)
+  $keystone_ca_key       = hiera(keystone_ca_key)
+
   $management_ip = $::ipaddress
+
+  # Ensure that the various PKI-related certificates and keys
+  # are the same across all nodes running Keystone
+  file { '/etc/keystone/ssl/private/signing_key.pem':
+    content => $keystone_signing_key,
+    mode    => '0600',
+    owner   => 'keystone',
+    group   => 'keystone',
+    require => Package['keystone'],
+    notify  => Service['keystone'],
+  }
+  file { '/etc/keystone/ssl/certs/signing_cert.pem':
+    content => $keystone_signing_key,
+    mode    => '0600',
+    owner   => 'keystone',
+    group   => 'keystone',
+    require => Package['keystone'],
+    notify  => Service['keystone'],
+  }
+  file { '/etc/keystone/ssl/private/cakey.pem':
+    content => $keystone_ca_key,
+    mode    => '0600',
+    owner   => 'keystone',
+    group   => 'keystone',
+    require => Package['keystone'],
+    notify  => Service['keystone'],
+  }
 
   class { '::keystone':
     verbose             => true,
     catalog_type        => 'sql',
     admin_token         => hiera(keystone_admin_uuid),
-    token_provider      => 'keystone.token.providers.uuid.Provider',
+    enable_pki_setup    => false,
+    token_provider      => 'keystone.token.providers.pki.Provider',
     database_connection => "mysql://keystone:${keystone_db_pw}@${keystone_db_host}/keystone",
     rabbit_hosts        => $rabbitmq_hosts,
     rabbit_userid       => $rabbitmq_username,
