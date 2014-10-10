@@ -45,13 +45,22 @@ class dc_profile::openstack::galera {
     },
   }
 
+  # We only want to be our designated master to be actively written to,
+  # unless it's failed of course.
+  if $::fqdn == $galera_master {
+    $haproxy_options = 'check port 9200 inter 30000 rise 2 fall 5'
+  }
+  else {
+    $haproxy_options = 'check port 9200 inter 30000 rise 2 fall 5 backup'
+  }
+
   # Export our haproxy balancermember resource
   @@haproxy::balancermember { "${::fqdn}-galera":
     listening_service => 'icehouse-galera',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '3306',
-    options           => 'check port 9200 inter 2000 rise 2 fall 5',
+    options           => $haproxy_options,
   }
 
 }
