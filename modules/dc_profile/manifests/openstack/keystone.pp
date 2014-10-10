@@ -53,7 +53,7 @@ class dc_profile::openstack::keystone {
     notify  => Service['keystone'],
   }
   file { '/etc/keystone/ssl/certs/signing_cert.pem':
-    content => $keystone_signing_key,
+    content => $keystone_signing_cert,
     mode    => '0600',
     owner   => 'keystone',
     group   => 'keystone',
