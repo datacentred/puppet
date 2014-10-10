@@ -207,12 +207,14 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Galera
   haproxy::listen { 'icehouse-galera':
-    ipaddress    => $vip,
-    mode         => 'tcp',
-    ports        => '3306',
-    options      => {
-      'option'  => ['httpchk'],
-      'balance' => 'source',
+    ipaddress => $vip,
+    mode      => 'tcp',
+    ports     => '3306',
+    options   => {
+      'option'         => ['httpchk'],
+      'balance'        => 'source',
+      'timeout client' => '30000s',
+      'timeout server' => '30000s',
     },
   }
 
