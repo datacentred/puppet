@@ -18,7 +18,8 @@ class dc_profile::openstack::nova_compute {
   $os_region         = hiera(os_region)
   $os_service_tenant = hiera(os_service_tenant)
 
-  $rabbitmq_hosts    = hiera(osdbmq_members)
+  $osdbmq_members    = hiera(osdbmq_members)
+
   $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
   $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
   $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
@@ -55,11 +56,12 @@ class dc_profile::openstack::nova_compute {
     database_connection => $nova_database,
     image_service       => 'nova.image.glance.GlanceImageService',
     glance_api_servers  => "https://${osapi_public}:9292",
-    rabbit_hosts        => $rabbitmq_hosts,
+    rabbit_hosts        => $osdbmq_members,
     rabbit_userid       => $rabbitmq_username,
     rabbit_password     => $rabbitmq_password,
     rabbit_virtual_host => $rabbitmq_vhost,
     rabbit_port         => $rabbitmq_port,
+    memcached_servers   => $osdbmq_members,
   }
 
   class { '::nova::compute':

@@ -23,11 +23,12 @@ class dc_profile::openstack::nova {
   # OpenStack API and loadbalancer endpoint
   $osapi_public  = 'compute.datacentred.io'
 
+  $osdbmq_members            = hiera(osdbmq_members)
+
   $rabbitmq_username         = hiera(osdbmq_rabbitmq_user)
   $rabbitmq_password         = hiera(osdbmq_rabbitmq_pw)
   $rabbitmq_monuser          = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
-  $rabbitmq_hosts            = hiera(osdbmq_members)
   $rabbitmq_port             = hiera(osdbmq_rabbitmq_port)
   $rabbitmq_vhost            = hiera(osdbmq_rabbitmq_vhost)
 
@@ -51,11 +52,12 @@ class dc_profile::openstack::nova {
   class { '::nova':
     database_connection => $nova_database,
     glance_api_servers  => "https://${osapi_public}:9292",
-    rabbit_hosts        => $rabbitmq_hosts,
+    rabbit_hosts        => $osdbmq_members,
     rabbit_userid       => $rabbitmq_username,
     rabbit_password     => $rabbitmq_password,
     rabbit_port         => $rabbitmq_port,
     rabbit_virtual_host => $rabbitmq_vhost,
+    memcached_servers   => $osdbmq_members,
     use_syslog          => true,
   }
 
