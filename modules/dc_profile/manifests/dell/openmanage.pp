@@ -18,7 +18,7 @@ class dc_profile::dell::openmanage {
   }
 
   service { 'dataeng':
-    ensure  => true,
+    ensure  => running,
     enable  => true,
     require => Package['srvadmin-all'],
   }
