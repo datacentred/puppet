@@ -14,6 +14,7 @@ class dc_role::osdbmq {
 
   contain dc_profile::openstack::galera
   contain dc_profile::openstack::rabbitmq
+  contain dc_profile::openstack::memcached
 
   contain dc_profile::openstack::keystone_db
   contain dc_profile::openstack::cinder_db
