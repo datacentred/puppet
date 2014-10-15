@@ -34,10 +34,6 @@ class dc_profile::openstack::horizon {
                              }, 
   }
 
-#  class { '::dc_branding::openstack::horizon':
-#    require => Class['::horizon'],
-#  }
-
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
     listening_service => 'icehouse-horizon',
@@ -47,9 +43,9 @@ class dc_profile::openstack::horizon {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-#  if $::environment == 'production' {
-#    # Logstash config
-#    include dc_profile::openstack::horizon_logstash
-#  }
+  if $::environment == 'production' {
+    # Logstash config
+    include dc_profile::openstack::horizon_logstash
+  }
 
 }

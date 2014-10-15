@@ -254,26 +254,27 @@ class dc_profile::openstack::keystone {
   }
 
   # Icinga monitoring
-#  keystone_tenant { 'icinga':
-#    ensure  => present,
-#    enabled => true,
-#  }
-#  keystone_user_role { 'icinga@icinga':
-#    ensure => present,
-#    roles  => admin,
-#  }
-#  keystone_user { 'icinga':
-#    ensure   => present,
-#    enabled  => true,
-#    password => hiera(keystone_icinga_password),
-#    email    => $sysmailaddress,
-#    tenant   => 'icinga',
-#  }
+  keystone_tenant { 'icinga':
+    ensure  => present,
+    enabled => true,
+  }
+  keystone_user_role { 'icinga@icinga':
+    ensure => present,
+    roles  => admin,
+  }
+  keystone_user { 'icinga':
+    ensure   => present,
+    enabled  => true,
+    password => hiera(keystone_icinga_password),
+    email    => $sysmailaddress,
+    tenant   => 'icinga',
+  }
 
-  # include dc_icinga::hostgroup_keystone
+ include dc_icinga::hostgroup_keystone
 
-  # if $::environment == 'production' {
-  #   # Logstash config
-  #   include dc_profile::openstack::keystone_logstash
-  # }
+ if $::environment == 'production' {
+   # Logstash config
+   include dc_profile::openstack::keystone_logstash
+ }
+
 }

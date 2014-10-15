@@ -116,11 +116,11 @@ class dc_profile::openstack::nova {
   }
 
   # Nagios config
-  # include dc_profile::openstack::nova_nagios
+  include dc_profile::openstack::nova_nagios
 
-  # if $::environment == 'production' {
-  #   # Logstash config
-  #   include dc_profile::openstack::nova_logstash
-  # }
+  if $::environment == 'production' {
+    # Logstash config
+    include dc_profile::openstack::nova_logstash
+  }
 
 }
