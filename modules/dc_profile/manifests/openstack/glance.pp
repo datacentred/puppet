@@ -81,11 +81,11 @@ class dc_profile::openstack::glance {
     package_ensure      => 'present',
   }
 
-  # include dc_icinga::hostgroup_glance
+  include dc_icinga::hostgroup_glance
 
-  # if $::environment == 'production' {
-  #   # Logstash config
-  #   include dc_profile::openstack::glance_logstash
-  # }
+  if $::environment == 'production' {
+    # Logstash config
+    include dc_profile::openstack::glance_logstash
+  }
 
 }
