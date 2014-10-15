@@ -191,9 +191,6 @@
 [submodule "modules/filemapper"]
 	path = modules/filemapper
 	url = https://github.com/adrienthebo/puppet-filemapper
-[submodule "modules/kmod"]
-	path = modules/kmod
-	url = https://github.com/camptocamp/puppet-kmod.git
 [submodule "modules/vcsrepo"]
 	path = modules/vcsrepo
 	url = https://github.com/datacentred/puppetlabs-vcsrepo.git
@@ -245,3 +242,6 @@
 [submodule "modules/galera"]
 	path = modules/galera
 	url = https://github.com/datacentred/puppet-galera
+[submodule "modules/kmod"]
+	path = modules/kmod
+	url = https://github.com/datacentred/puppet-kmod.git

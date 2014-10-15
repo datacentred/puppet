@@ -45,12 +45,8 @@ class dc_lmsensors {
         enable  => true,
       }
 
-      # The jc42 module is not always autodetected so force it
+      # X8DTT-H = Compute / Storage nodes
       if $::boardproductname == 'X8DTT-H' {
-
-          kmod::load { 'jc42':
-            ensure => 'present',
-          }
 
           file { '/etc/sensors.d/jc42.conf':
             ensure  => 'file',
