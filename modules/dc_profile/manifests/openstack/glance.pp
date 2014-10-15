@@ -74,8 +74,12 @@ class dc_profile::openstack::glance {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  # TODO: Temporary backend while boot-strapping CEPH
-  contain glance::backend::file
+  class { '::glance::backend::rbd':
+    rbd_store_ceph_conf => '/etc/ceph/ceph.conf',
+    rbd_store_user      => 'glance',
+    rbd_store_pool      => 'glance',
+    package_ensure      => 'present',
+  }
 
   # include dc_icinga::hostgroup_glance
 
