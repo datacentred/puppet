@@ -43,8 +43,6 @@ class dc_profile::openstack::neutron_server {
       rabbit_port           => $rabbitmq_port,
       rabbit_virtual_host   => $rabbitmq_vhost,
       allow_overlapping_ips => true,
-      verbose               => true,
-      debug                 => false,
       core_plugin           => 'ml2',
       service_plugins       => [ 'router', 'firewall', 'lbaas', 'vpnaas' ],
   }
