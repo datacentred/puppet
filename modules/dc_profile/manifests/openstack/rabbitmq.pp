@@ -15,6 +15,9 @@ class dc_profile::openstack::rabbitmq {
   $osdbmq_rabbitmq_user = hiera(osdbmq_rabbitmq_user)
   $osdbmq_rabbitmq_pw = hiera(osdbmq_rabbitmq_pw)
 
+  $rabbitmq_monuser = hiera(rabbitmq_monuser)
+  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
+
   $management_ip = $::ipaddress
 
   # Return just the hostname from the FQDN stored in Hiera
@@ -70,6 +73,13 @@ class dc_profile::openstack::rabbitmq {
     configure_permission => '.*',
     read_permission      => '.*',
     write_permission     => '.*',
+  }
+
+  # Required for Icinga monitoring
+  rabbitmq_user { $rabbitmq_monuser:
+    admin    => true,
+    password => $rabbitmq_monuser_password,
+    require  => Class['::rabbitmq'],
   }
 
   # Icinga checks
