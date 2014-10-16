@@ -25,7 +25,7 @@ class dc_profile::openstack::neutron_common {
 
     file { '/etc/nagios/nrpe.d/os_ovswitch_proc.cfg':
       ensure  => present,
-      content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 2: -C ovs-vswitchd',
+      content => 'command[check_ovswitch_proc]=/usr/lib/nagios/plugins/check_procs -w 1: -C ovs-vswitchd',
       require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
