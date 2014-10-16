@@ -72,4 +72,7 @@ class dc_profile::openstack::rabbitmq {
     write_permission     => '.*',
   }
 
+  # Icinga checks
+  include dc_icinga::hostgroup_rabbitmq
+
 }
