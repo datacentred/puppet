@@ -79,7 +79,7 @@ class dc_profile::openstack::rabbitmq {
   rabbitmq_user { $rabbitmq_monuser:
     admin    => true,
     password => $rabbitmq_monuser_password,
-    require  => Class['::rabbimq'],
+    require  => Class['::rabbitmq'],
   }
 
   # Icinga checks
