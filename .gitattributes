@@ -1,5 +1,6 @@
 /hieradata/*.yaml                                 filter=private diff=private
 hieradata/modules/*.yaml                          filter=private diff=private
+hieradata/hosts/*.yaml                            filter=private diff=private
 /modules/dc_mcollective/files/certs/*             filter=private diff=private
 /modules/dc_mcollective/files/private_keys/*      filter=private diff=private
 /modules/dc_mcollective/files/client_certs/*      filter=private diff=private
