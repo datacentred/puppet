@@ -59,6 +59,7 @@ class dc_profile::openstack::neutron_server {
 
   # Nagios stuff
   include dc_icinga::hostgroup_neutron_server
+  include dc_nrpe::neutron
 
   # Enable ML2 plugin
   class { 'neutron::plugins::ml2':

@@ -20,5 +20,6 @@ class dc_role::compute_node {
   Class['dc_profile::openstack::nova_compute']
 
   include dc_icinga::hostgroup_nova_compute
+  include dc_nrpe::nova_compute
 
 }
