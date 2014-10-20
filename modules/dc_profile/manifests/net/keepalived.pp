@@ -24,8 +24,8 @@ class dc_profile::net::keepalived (
     virtual_ipaddress  => $keepalived_hash['virtual_ipaddress'],
   }
 
-  @@dns_resource { "yes.${::domain}/CNAME":
-    rdata => $keepalived_hash['virtual_ipaddress'],
+  @@dns_resource { $keepalived_hash['virtual_ipaddress'] :
+    rdata => "yes.${::domain}/CNAME",
   }
 
 }
