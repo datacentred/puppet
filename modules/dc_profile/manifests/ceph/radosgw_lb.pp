@@ -12,14 +12,10 @@ class dc_profile::ceph::radosgw_lb (
   include ::keepalived
   include ::dc_ssl::haproxy
 
-  # TODO: match() function in 3.7+
-  $keepalived_instance_id = inline_template('<%= /\d+$/.match(@hostname) %>')
-  $keepalived_priority = 100 - $keepalived_instance_id
-
   keepalived::vrrp::instance { "VI_${keepalived_virtual_router_id}":
     interface          => $keepalived_interface,
     state              => 'SLAVE',
-    priority           => $keepalived_priority,
+    priority           => '100',
     virtual_router_id  => $keepalived_virtual_router_id,
     virtual_ipaddress  => $keepalived_virtual_ipaddress,
   }
