@@ -71,7 +71,6 @@ class dc_profile::openstack::keystone {
   }
 
   class { '::keystone':
-    verbose             => true,
     catalog_type        => 'sql',
     admin_token         => hiera(keystone_admin_uuid),
     enable_pki_setup    => false,
