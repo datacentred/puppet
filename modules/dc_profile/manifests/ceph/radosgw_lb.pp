@@ -26,6 +26,7 @@ class dc_profile::ceph::radosgw_lb (
     ports        => '443',
     bind_options => [
       'ssl',
+      'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
