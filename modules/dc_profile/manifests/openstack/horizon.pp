@@ -26,7 +26,6 @@ class dc_profile::openstack::horizon {
     secret_key            => $horizon_secret_key,
     keystone_url          => "https://${osapi_public}:5000/v2.0",
     keystone_default_role => '_member_',
-    django_debug          => true,
     api_result_limit      => 1000,
     neutron_options       => { 'enable_firewall' => true,
                                'enable_lb'       => true,
