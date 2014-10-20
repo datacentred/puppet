@@ -16,13 +16,10 @@ class dc_profile::net::keepalived (
 
   include ::keepalived
 
-  # Set in Foreman per-host
-  $priority = $::keepalived_priority
-
   keepalived::vrrp::instance { "keepalived_${::hostname}" :
     interface          => $keepalived_hash['interface'],
     state              => 'SLAVE',
-    priority           => $priority,
+    priority           => '100',
     virtual_router_id  => $keepalived_hash['virtual_router_id'],
     virtual_ipaddress  => $keepalived_hash['virtual_ipaddress'],
   }
