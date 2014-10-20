@@ -13,7 +13,7 @@
 class dc_role::graphite_ssd {
 
   class { 'dc_profile::perf::graphite':
-    graphite_db_host => $hostname,
+    graphite_db_host => $::hostname,
     new_ssd_config   => true,
     cname            => false,
   }
