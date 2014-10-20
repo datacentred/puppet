@@ -24,6 +24,6 @@ class dc_profile::perf::gdash {
     servername => "gdash.${::domain}",
     docroot    => '/var/www/gdash/public',
     port       => 80,
-    cname      => 'false',
+    cname      => false,
   }
 }
