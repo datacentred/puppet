@@ -20,9 +20,10 @@ class dc_profile::perf::gdash {
     graphite_server => hiera(graphite_server),
   }
 
-  apache::vhost { 'gdash':
+  dc_apache::vhost { 'gdash':
     servername => "gdash.${::domain}",
     docroot    => '/var/www/gdash/public',
     port       => 80,
+    cname      => false,
   }
 }
