@@ -21,7 +21,7 @@ class dc_role::graphite_ssd {
  #contain dc_profile::perf::collectd::poller
  #contain dc_profile::perf::network_weathermap
  #contain dc_profile::net::phpipam
- contain dc_profile::db::coredb_mysql
- contain dc_role::generic
+  contain dc_profile::db::coredb_mysql
+  contain dc_role::generic
 
 }
