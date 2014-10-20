@@ -17,31 +17,32 @@ class dc_profile::openstack::keepalived {
 
   $vrhash = hiera(virtual_routers)
 
-  # Set in Foreman per-host
-  $priority = $::vrpriority
-
   keepalived::vrrp::instance { 'os_api_int':
-      interface          => 'eth0',
-      state              => 'SLAVE',
-      priority           => $priority,
-      virtual_router_id  => $vrhash['os_api_int']['id'],
-      virtual_ipaddress  => [ $vrhash['os_api_int']['vip'] ],
+    interface          => 'eth0',
+    state              => 'SLAVE',
+    virtual_router_id  => $vrhash['os_api_int']['id'],
+    virtual_ipaddress  => [ $vrhash['os_api_int']['vip'] ],
   }
 
   keepalived::vrrp::instance { 'compute_api_int':
-      interface          => 'eth0',
-      state              => 'SLAVE',
-      priority           => $priority,
-      virtual_router_id  => $vrhash['compute_api_int']['id'],
-      virtual_ipaddress  => [ $vrhash['compute_api_int']['vip'] ],
+    interface          => 'eth0',
+    state              => 'SLAVE',
+    virtual_router_id  => $vrhash['compute_api_int']['id'],
+    virtual_ipaddress  => [ $vrhash['compute_api_int']['vip'] ],
   }
 
   keepalived::vrrp::instance { 'os_api_ext':
-      interface          => 'eth1',
-      state              => 'SLAVE',
-      priority           => $priority,
-      virtual_router_id  => $vrhash['os_api_ext']['id'],
-      virtual_ipaddress  => [ $vrhash['os_api_ext']['vip'] ],
+    interface          => 'eth1',
+    state              => 'SLAVE',
+    virtual_router_id  => $vrhash['os_api_ext']['id'],
+    virtual_ipaddress  => [ $vrhash['os_api_ext']['vip'] ],
+  }
+
+  keepalived::vrrp::instance { 'compute_api_ext':
+    interface         => 'eth1',
+    state             => 'SLAVE',
+    virtual_router_id => $vrhash['compute_api_ext']['id'],
+    virtual_ipaddress => [ $vrhash['compute_api_ext']['vip'] ],
   }
 
 }
