@@ -23,8 +23,7 @@ class dc_graphite (
   include apache
 
   # Another hack as the Graphite module we're using is hardcoded to install
-  # everything under /opt.  We dedicate the lion's share of available disk
-  # to /var, so that's the preference in this case.
+  # everything under /opt, so link it to where we need it
   file { $graphite_link_path:
     ensure => directory,
   }
