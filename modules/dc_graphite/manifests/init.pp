@@ -16,18 +16,11 @@ class dc_graphite (
   $graphite_db_user,
   $graphite_db_host,
   $graphite_db_name,
-  $new_ssd_config,
+  $graphite_link_path,
   $cname,
 ){
 
   include apache
-
-  if $new_ssd_config == true {
-    $graphite_link_path = '/srv/graphite'
-  }
-  else {
-    $graphite_link_path = '/var/opt/graphite'
-  }
 
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt.  We dedicate the lion's share of available disk
