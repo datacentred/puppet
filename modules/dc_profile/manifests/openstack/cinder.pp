@@ -30,6 +30,8 @@ class dc_profile::openstack::cinder {
 
   $os_region = hiera(os_region)
 
+  $cinder_rbd_uuid = hiera(cinder_rbd_uuid)
+
   $management_ip = $::ipaddress
 
   class {'::cinder':
@@ -55,9 +57,9 @@ class dc_profile::openstack::cinder {
   }
 
   class {'::cinder::scheduler':
-    scheduler_driver       => 'cinder.scheduler.simple.SimpleScheduler',
-    package_ensure         => present,
-    enabled                => true,
+    scheduler_driver => 'cinder.scheduler.simple.SimpleScheduler',
+    package_ensure   => present,
+    enabled          => true,
   }
 
   class {'::cinder::volume':
@@ -67,6 +69,12 @@ class dc_profile::openstack::cinder {
 
   class { '::cinder::glance':
     glance_api_servers => $osapi_public,
+  }
+  
+  class { '::cinder::backend::rbd':
+    rbd_pool        => 'cinder.volume',
+    rbd_user        => 'cinder',
+    rbd_secret_uuid => $cinder_rbd_uuid,
   }
 
   # Add this node into our loadbalancer
