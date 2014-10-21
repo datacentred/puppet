@@ -24,14 +24,14 @@ class dc_graphite (
 
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt, so link it to where we need it
-  file { $dc_graphite::graphite_link_path:
+  file { $graphite_link_path:
     ensure => directory,
   }
 
   file { '/opt/graphite':
     ensure  => link,
-    target  => $dc_graphite::graphite_link_path,
-    require => File[$dc_graphite::graphite_link_path],
+    target  => $graphite_link_path,
+    require => File[$graphite_link_path],
   }
 
   class { '::graphite':
@@ -40,17 +40,17 @@ class dc_graphite (
     gr_web_server                => 'none',
     gr_timezone                  => 'GB-Eire',
     gr_apache_24                 => true,
-    secret_key                   => $dc_graphite::graphite_secret_key,
+    secret_key                   => $graphite_secret_key,
     gr_max_cache_size            => inf,
     gr_max_updates_per_second    => inf,
     gr_max_creates_per_minute    => inf,
     gr_enable_udp_listener       => true,
     gr_enable_carbon_aggregator  => false,
     gr_django_db_engine          => 'django.db.backends.mysql',
-    gr_django_db_name            => $dc_graphite::graphite_db_name,
-    gr_django_db_user            => $dc_graphite::graphite_db_user,
-    gr_django_db_password        => $dc_graphite::graphite_db_pw,
-    gr_django_db_host            => "${dc_graphite::graphite_db_host}.${::domain}",
+    gr_django_db_name            => $graphite_db_name,
+    gr_django_db_user            => $graphite_db_user,
+    gr_django_db_password        => $graphite_db_pw,
+    gr_django_db_host            => "${graphite_db_host}.${::domain}",
     gr_django_db_port            => 3306,
     gr_storage_schemas           => [
       {
@@ -89,7 +89,7 @@ class dc_graphite (
     wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
   }
 
-  if $dc_graphite::cname == true {
+  if $cname == true {
     # Add an appropriate CNAME RR
     @@dns_resource { "graphite.${::domain}/CNAME":
       rdata => $::fqdn,
