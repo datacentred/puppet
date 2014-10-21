@@ -17,7 +17,9 @@ class dc_graphite (
   $graphite_db_host,
   $graphite_db_name,
   $graphite_link_path,
-  $cname,
+  $graphite_manage_cname,
+  $graphite_manage_db,
+  $mysql_pw,
 ){
 
   include apache
@@ -89,7 +91,22 @@ class dc_graphite (
     wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
   }
 
-  if $cname == true {
+  if $graphite_manage_db == true {
+    class { '::dc_mariadb':
+      maria_root_pw => $mysql_pw,
+    }
+    contain 'dc_mariadb'
+
+    dc_maria::db { "graphite_${hostname}":
+      user     => $graphite_db_user,
+      password => $graphite_db_pw,
+      host     => $graphite_db_host,
+      grant    => ['ALL'],
+      require  => Class['::dc_mariadb'],
+    }
+  }
+
+  if $graphite_manage_cname == true {
     # Add an appropriate CNAME RR
     @@dns_resource { "graphite.${::domain}/CNAME":
       rdata => $::fqdn,
