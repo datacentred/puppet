@@ -19,6 +19,7 @@ class dc_graphite (
   $graphite_link_path,
   $graphite_manage_cname,
   $graphite_manage_db,
+  $graphite_webapp_name,
   $mysql_pw,
 ){
 
@@ -70,7 +71,7 @@ class dc_graphite (
   }
 
   apache::vhost { 'graphite':
-    servername                  => "graphite.${::domain}",
+    servername                  => "${graphite_webapp_name}.${::domain}",
     docroot                     => '/opt/graphite/webapp',
     headers                     => 'Set Access-Control-Allow-Origin "*"',
     port                        => 80,
