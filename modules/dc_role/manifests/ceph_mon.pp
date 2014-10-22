@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::ceph_mon {
+class dc_role::ceph_mon inherits dc_role {
 
   contain dc_profile::ceph::mon
 

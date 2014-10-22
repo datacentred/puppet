@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::postgresql {
+class dc_role::postgresql inherits dc_role {
 
   contain dc_profile::db::postgresql
 

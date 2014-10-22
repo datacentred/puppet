@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::osdbmq {
+class dc_role::osdbmq inherits dc_role {
 
   contain dc_profile::openstack::galera
   contain dc_profile::openstack::rabbitmq

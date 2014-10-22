@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::controller1 {
+class dc_role::controller1 inherits dc_role {
 
   contain dc_profile::openstack::nova_mq
   contain dc_profile::openstack::nova

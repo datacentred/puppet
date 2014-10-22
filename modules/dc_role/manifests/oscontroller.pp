@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::oscontroller {
+class dc_role::oscontroller inherits dc_role {
 
   contain dc_profile::openstack::keystone
   contain dc_profile::openstack::cinder

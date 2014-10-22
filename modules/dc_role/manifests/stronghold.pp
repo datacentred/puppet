@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::stronghold {
+class dc_role::stronghold inherits dc_role {
 
   contain dc_profile::rails::stronghold
 }

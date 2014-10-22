@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::bigyellow {
+class dc_role::bigyellow inherits dc_role {
 
   contain dc_profile::db::pgbackup
   contain dc_profile::img::packer

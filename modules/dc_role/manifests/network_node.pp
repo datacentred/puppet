@@ -12,7 +12,7 @@
 #
 # Sample Usage:
 #
-class dc_role::network_node {
+class dc_role::network_node inherits dc_role {
 
   contain dc_profile::openstack::neutron_agent
   contain dc_profile::openstack::neutron_common

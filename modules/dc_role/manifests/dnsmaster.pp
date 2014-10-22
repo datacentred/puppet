@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::dnsmaster {
+class dc_role::dnsmaster inherits dc_role {
 
   contain dc_profile::net::dnsbackup
   contain dc_profile::net::dns_master

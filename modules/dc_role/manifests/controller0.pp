@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::controller0 {
+class dc_role::controller0 inherits dc_role {
 
   contain dc_profile::openstack::keystone_mariadb
   contain dc_profile::openstack::glance_api_db
