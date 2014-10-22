@@ -38,4 +38,10 @@ class dc_role {
     }
   }
 
+  ## Include classes dependant on hardware
+  ## TODO: Refactor this into a 'hardware' profile
+  if $::productname =~ "ProLiant BL" {
+    include dc_profile::hp::hpblade
+  }
+
 }
