@@ -15,12 +15,4 @@ class dc_profile::log::logstash {
 
   class { 'dc_logstash': }
 
-  @@dns_resource { "syslog.${::domain}/CNAME":
-    rdata => $::fqdn,
-  }
-
-  @@dns_resource { "logstash.${::domain}/CNAME":
-    rdata => $::fqdn,
-  }
-
 }
