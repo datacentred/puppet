@@ -98,7 +98,7 @@ class dc_graphite (
     }
     contain 'dc_mariadb'
 
-    dc_maria::db { "graphite_${hostname}":
+    dc_mariadb::db { "graphite_${hostname}":
       user     => $graphite_db_user,
       password => $graphite_db_pw,
       host     => $graphite_db_host,
