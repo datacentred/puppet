@@ -40,8 +40,6 @@ class dc_profile::openstack::nova_compute {
 
   $management_ip = $::ipaddress
 
-  $libvirt_rbd_uuid = hiera(nova_libvirt_rbd_uuid)
-
   $nova_database = "mysql://${nova_db_user}:${nova_db_pass}@${nova_db_host}/${nova_db}"
 
   include dc_profile::auth::sudoers_nova
@@ -72,13 +70,6 @@ class dc_profile::openstack::nova_compute {
     vncproxy_host                 => $novnc_proxy_host,
     vncserver_proxyclient_address => $management_ip,
     vncproxy_protocol             => 'https',
-  }
-
-  class { '::nova::compute::rbd':
-    libvirt_images_rbd_pool => 'cinder.vms',
-    libvirt_rbd_user        => 'cinder',
-    libvirt_rbd_secret_uuid => $libvirt_rbd_uuid,
-    rbd_keyring             => 'client.cinder',
   }
 
   class { 'nova::compute::libvirt':
