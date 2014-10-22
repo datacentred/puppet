@@ -101,7 +101,7 @@ class dc_graphite (
     dc_mariadb::db { 'graphite':
       user     => $graphite_db_user,
       password => $graphite_db_pw,
-      host     => $::hostname,
+      host     => "${::hostname}.${::domain}",
       grant    => ['ALL'],
       require  => Class['::dc_mariadb'],
     }
