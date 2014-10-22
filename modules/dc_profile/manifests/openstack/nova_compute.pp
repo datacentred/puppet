@@ -22,24 +22,33 @@ class dc_profile::openstack::nova_compute {
     require => Class['::Nova'],
   }
 
+  # Configure Ceph client
+  ceph::client { 'cinder':
+    perms => 'osd \"allow rwx\" mon \"allow rwx\"',
+  }
+
   include ::nova
   include ::nova::compute
   include ::nova::compute::libvirt
   include ::nova::compute::neutron
   include ::nova::compute::rbd
   include ::nova::network::neutron
+  
+  # Make sure the Ceph client configuration is in place
+  # before we do any of the Nova rbd-related configuration
+  Ceph::Client['cinder'] ->
+  Class['::nova::compute::rbd']
 
-  if $::environment == 'production' {
-
-  # Logstash config
-  include dc_profile::openstack::nova_compute_logstash
-
-  file { '/etc/nagios/nrpe.d/nova_compute.cfg':
-    ensure  => present,
-    content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
-  }
-}
+#  if $::environment == 'production' {
+#    # Logstash config
+#    include dc_profile::openstack::nova_compute_logstash
+#  
+#    file { '/etc/nagios/nrpe.d/nova_compute.cfg':
+#      ensure  => present,
+#      content => 'command[check_nova_compute_proc]=/usr/lib/nagios/plugins/check_procs -c 1: -u nova -a nova-compute',
+#      require => Package['nagios-nrpe-server'],
+#      notify  => Service['nagios-nrpe-server'],
+#    }
+#  }
 
 }
