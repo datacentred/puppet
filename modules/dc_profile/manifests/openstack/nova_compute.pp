@@ -26,6 +26,7 @@ class dc_profile::openstack::nova_compute {
   include ::nova::compute
   include ::nova::compute::libvirt
   include ::nova::compute::neutron
+  include ::nova::compute::rbd
   include ::nova::network::neutron
 
   if $::environment == 'production' {
