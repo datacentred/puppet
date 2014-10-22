@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::database {
+class dc_role::database inherits dc_role {
 
   contain dc_profile::db::coredb
   contain dc_profile::db::coredb_mysql

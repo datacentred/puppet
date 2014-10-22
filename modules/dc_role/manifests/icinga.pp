@@ -12,7 +12,7 @@
 #
 # Sample Usage:
 #
-class dc_role::icinga {
+class dc_role::icinga inherits dc_role {
 
   # Make the NSCA daemon  dependant on the icinga server as it requires the
   # nagios user to run

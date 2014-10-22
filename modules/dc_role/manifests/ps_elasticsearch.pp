@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::ps_elasticsearch {
+class dc_role::ps_elasticsearch inherits dc_role {
 
   contain dc_profile::net::elasticsearch
 

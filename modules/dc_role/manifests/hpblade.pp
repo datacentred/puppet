@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::hpblade {
+class dc_role::hpblade inherits dc_role {
 
   contain dc_profile::hp::hpblade
 

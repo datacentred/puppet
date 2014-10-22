@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::graphite {
+class dc_role::graphite inherits dc_role {
 
   contain dc_profile::perf::graphite
   contain dc_profile::perf::gdash
