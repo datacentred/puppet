@@ -30,7 +30,7 @@ class dc_profile::net::dhcpd_master {
     omapi_key            => 'omapi_key',
     omapi_secret         => $omapi_secret,
     ddns                 => true,
-    dhcp_conf_fragments => { 'one-lease-per-client' => 'true' }
+    dhcp_conf_fragments  => { 'one-lease-per-client' => 'true' }
   }
 
   class { 'dhcp::ddns':
