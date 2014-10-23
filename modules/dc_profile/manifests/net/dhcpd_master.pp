@@ -24,12 +24,13 @@ class dc_profile::net::dhcpd_master {
       $::domain,
       '0.0.10.in-addr.arpa',
     ],
-    nameservers  => [$nameservers],
-    ntpservers   => [$localtimeservers],
-    interfaces   => ['bond0'],
-    omapi_key    => 'omapi_key',
-    omapi_secret => $omapi_secret,
-    ddns         => true,
+    nameservers          => [$nameservers],
+    ntpservers           => [$localtimeservers],
+    interfaces           => ['bond0'],
+    omapi_key            => 'omapi_key',
+    omapi_secret         => $omapi_secret,
+    ddns                 => true,
+    dhcp_conf_fragments => { 'one-lease-per-client' => 'true' }
   }
 
   class { 'dhcp::ddns':
