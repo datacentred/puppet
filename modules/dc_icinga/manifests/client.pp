@@ -16,10 +16,16 @@ class dc_icinga::client {
 
   include ::icinga::client
 
-  # I am the current host, yes I am
+  ## If we have a role associated, include it in the node description
+  if $::role {
+    $description = "${::fqdn} - ${::role}"
+  } else {
+    $description = $::fqdn
+  }
+
   @@icinga::host { $::hostname:
     ensure          => present,
-    description     => $::fqdn,
+    description     => $description,
     address         => $::ipaddress,
     use             => 'dc_host_generic',
     hostgroups      => template('dc_icinga/hostgroups.erb'),
