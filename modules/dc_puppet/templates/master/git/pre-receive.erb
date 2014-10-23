@@ -4,7 +4,7 @@ $stdin.each_line do |line|
   oldrev, newrev, refname = line.split(" ")
   branchname = refname.sub(%r{^refs/heads/(.*$)}) { $1 }
   if branchname == 'master'
-    echo "[1;31m*** ACCESS DENIED ***[0m"
+    puts "[1;31m*** ACCESS DENIED ***[0m"
     exit 1
   end
 end
