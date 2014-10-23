@@ -34,7 +34,7 @@ class dc_profile::net::dhcpd_master {
       one_lease_per_client => {
         target  => "${dhcp_dir}/dhcpd.conf",
         content => "one-lease-per-client true;",
-        order   => 60,
+        order   => 02,
       }
     }
   }
