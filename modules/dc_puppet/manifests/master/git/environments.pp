@@ -58,4 +58,11 @@ class dc_puppet::master::git::environments {
     group   => 'git',
   }
 
+  file { "${repo}/hooks/pre-receive":
+    content => template('dc_puppet/master/git/pre-receive.erb'),
+    mode    => '0700',
+    owner   => 'git',
+    group   => 'git',
+  }
+
 }
