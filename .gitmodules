@@ -242,3 +242,6 @@
 [submodule "modules/kmod"]
 	path = modules/kmod
 	url = https://github.com/datacentred/puppet-kmod.git
+[submodule "modules/openstacklib"]
+	path = modules/openstacklib
+	url = https://github.com/stackforge/puppet-openstacklib.git
