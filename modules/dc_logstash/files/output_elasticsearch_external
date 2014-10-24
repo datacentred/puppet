@@ -1,0 +1,14 @@
+output {
+  elasticsearch {
+    cluster => logstash_platform_services # string (optional)
+    embedded => false
+    protocol => http # string, one of ["node", "transport", "http"] (optional)
+#    flush_size => ... # number (optional), default: 5000
+#    index => ... # string (optional), default: "logstash-%{+YYYY.MM.dd}"
+#    index_type => ... # string (optional)
+#    manage_template => ... # boolean (optional), default: true
+#    node_name => ... # string (optional)
+#    port => ... # string (optional)
+#    workers => ... # number (optional), default: 1
+  }
+}
