@@ -37,4 +37,17 @@ class dc_ceph::osd (
     unless => "[ `sgdisk -p ${journal_disk}|grep osd|wc -l` -eq ${num_osds} ]",
   }
 
+  # OSD location hook script
+  file { '/usr/local/bin/location_hook.py':
+    source => 'puppet:///modules/dc_ceph/location_hook.py',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  # OSD location fact specified in the ENC
+  external_facts::fact { 'crush_location':
+    value => $::crush_location,
+  }
+
 }
