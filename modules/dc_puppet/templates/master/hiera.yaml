@@ -1,5 +1,6 @@
 :hierarchy:
     - "nodes/%{hostname}"
+    - "roles/%{role}"
     - "releases/%{lsbdistcodename}"
     - "modules/%{calling_module}"
     - "%{environment}"
