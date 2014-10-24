@@ -9,7 +9,9 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_logstash {
+class dc_logstash (
+  $es_embedded,
+){
 
   # Basic class for installing Logstash
   class { '::logstash':
@@ -58,25 +60,30 @@ class dc_logstash {
   }
 
   # Install the server side log-courier components
-  class { 'dc_logstash::courier':}
+  contain ::dc_logstash::courier
 
   # Add config files
 
-  class { 'dc_logstash::config::input_courier':}
-  class { 'dc_logstash::config::input_syslog':}
-  class { 'dc_logstash::config::filter_grok_syslog':}
-  class { 'dc_logstash::config::output_elasticsearch':}
-  class { 'dc_logstash::config::output_riemann':}
-  class { 'dc_logstash::config::output_riemann_dev':}
-  class { 'dc_logstash::config::filter_grok_apache':}
-  class { 'dc_logstash::config::filter_grok_apache_err':}
-  class { 'dc_logstash::config::filter_grok_mysql_err':}
-  class { 'dc_logstash::config::filter_grok_openstack':}
-  class { 'dc_logstash::config::filter_grok_native_syslog':}
+  contain ::dc_logstash::config::input_courier
+  contain ::dc_logstash::config::input_syslog
+  contain ::dc_logstash::config::filter_grok_syslog
+  if $::es_embedded == true {
+    contain ::dc_logstash::config::output_elasticsearch
+  }
+  else {
+    contain ::dc_logstash::config::output_elasticsearch_external
+  }
+  contain ::dc_logstash::config::output_riemann
+  contain ::dc_logstash::config::output_riemann_dev
+  contain ::dc_logstash::config::filter_grok_apache
+  contain ::dc_logstash::config::filter_grok_apache_err
+  contain ::dc_logstash::config::filter_grok_mysql_err
+  contain ::dc_logstash::config::filter_grok_openstack
+  contain ::dc_logstash::config::filter_grok_native_syslog
 
   # Add icinga config
   unless $::is_vagrant {
-    class { 'dc_logstash::icinga': }
+    contain ::dc_logstash::icinga
   }
 
 }
