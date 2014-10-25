@@ -218,9 +218,6 @@
 [submodule "modules/passwordless_ssh"]
 	path = modules/passwordless_ssh
 	url = https://github.com/datacentred/datacentred-passwordless_ssh
-[submodule "modules/nova"]
-	path = modules/nova
-	url = https://github.com/stackforge/puppet-nova.git
 [submodule "modules/glance"]
 	path = modules/glance
 	url = https://github.com/stackforge/puppet-glance.git
@@ -245,3 +242,6 @@
 [submodule "modules/openstacklib"]
 	path = modules/openstacklib
 	url = https://github.com/stackforge/puppet-openstacklib.git
+[submodule "modules/nova"]
+	path = modules/nova
+	url = https://github.com/datacentred/puppet-nova
