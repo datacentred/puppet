@@ -9,9 +9,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_logstash (
-  $es_embedded,
-){
+class dc_logstash {
 
   # Basic class for installing Logstash
   class { '::logstash':
@@ -67,12 +65,7 @@ class dc_logstash (
   contain ::dc_logstash::config::input_courier
   contain ::dc_logstash::config::input_syslog
   contain ::dc_logstash::config::filter_grok_syslog
-  if $::es_embedded == true {
-    contain ::dc_logstash::config::output_elasticsearch
-  }
-  else {
-    contain ::dc_logstash::config::output_elasticsearch_external
-  }
+  contain ::dc_logstash::config::output_elasticsearch
   contain ::dc_logstash::config::output_riemann
   contain ::dc_logstash::config::output_riemann_dev
   contain ::dc_logstash::config::filter_grok_apache
