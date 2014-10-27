@@ -2,11 +2,17 @@
 #
 # Server side configuration for elasticsearch output
 #
-class dc_logstash::config::output_elasticsearch {
+class dc_logstash::config::output_elasticsearch (
+  $cluster,
+  $embedded,
+  $protocol,
+){
+
+
 
   logstash::configfile { 'output_elasticsearch':
-    source => 'puppet:///modules/dc_logstash/output_elasticsearch',
-    order  => '20',
+    content => template("dc_logstash/output_elasticsearch.erb"),
+    order   => '20',
   }
 
 }
