@@ -18,6 +18,7 @@ class dc_profile::openstack::ceilometer {
   include ::ceilometer::agent::central
   include ::ceilometer::collector
   include ::ceilometer::expirer
+  include ::ceilometer::db
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-ceilometer":
