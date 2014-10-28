@@ -20,11 +20,11 @@ class dc_profile::openstack::ceilometer {
   include ::ceilometer::expirer
 
   # Add this node into our loadbalancer
-  @@haproxy::balancermember { "${::fqdn}-cinder":
-    listening_service => 'icehouse-cinder',
+  @@haproxy::balancermember { "${::fqdn}-ceilometer":
+    listening_service => 'icehouse-ceilometer',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
-    ports             => '8776',
+    ports             => '8777',
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
