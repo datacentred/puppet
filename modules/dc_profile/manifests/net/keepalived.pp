@@ -12,6 +12,7 @@
 #
 class dc_profile::net::keepalived (
   $keepalived_hash,
+  $platform_services::keepalived::virtual_ipaddress,
 ) {
 
   include ::keepalived
@@ -21,6 +22,6 @@ class dc_profile::net::keepalived (
     state              => 'SLAVE',
     priority           => '100',
     virtual_router_id  => $keepalived_hash['virtual_router_id'],
-    virtual_ipaddress  => $keepalived_hash['virtual_ipaddress'],
+    virtual_ipaddress  => $platform_services::keepalived::virtual_ipaddress,
   }
 }
