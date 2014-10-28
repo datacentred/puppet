@@ -4,7 +4,6 @@
 #
 class dc_role::radosgw_lb inherits dc_role {
 
-  include ::dc_profile::ceph::radosgw_lb
-  contain dc_profile::ceph::radosgw_lb
+  include ::dc_profile::net::loadbalancer
 
 }
