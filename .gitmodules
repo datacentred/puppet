@@ -245,3 +245,6 @@
 [submodule "modules/nova"]
 	path = modules/nova
 	url = https://github.com/datacentred/puppet-nova
+[submodule "modules/sshkeys"]
+	path = modules/sshkeys
+	url = https://github.com/jtopjian/puppet-sshkeys.git
