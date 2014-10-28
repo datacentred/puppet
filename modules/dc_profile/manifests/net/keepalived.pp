@@ -16,6 +16,12 @@ class dc_profile::net::keepalived (
 
   include ::keepalived
 
+  # Allow Linux to bind to IPs which don't yet exist
+  sysctl { 'net.ipv4.ip_nonlocal_bind':
+    ensure    => present,
+    value     => '1',
+  }
+
   keepalived::vrrp::instance { "keepalived_${::hostname}" :
     interface          => $keepalived_hash['interface'],
     state              => 'SLAVE',
