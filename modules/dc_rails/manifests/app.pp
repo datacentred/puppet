@@ -28,7 +28,7 @@ define dc_rails::app (
   $sirportly_api_token = hiera(sirportly::stronghold::api_token)
   $sirportly_api_secret = hiera(sirportly::stronghold::api_secret)
   $strongbox_passphrase = hiera(rails::server::stronghold::api_key_passphrase)
-  $ruby = '2.1.2'
+  $ruby = '2.1.4'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/current/"
   $bundler = "${home}.rbenv/shims/bundle"
