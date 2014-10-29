@@ -27,12 +27,11 @@ define dc_rails::app (
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $sirportly_api_token = hiera(sirportly::stronghold::api_token)
   $sirportly_api_secret = hiera(sirportly::stronghold::api_secret)
-  $strongbox_passphrase = hiera(rails::server::stronghold::api_key_passphrase)
   $ruby = '2.1.4'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/current/"
   $bundler = "${home}.rbenv/shims/bundle"
-  $unicorn = "bundler"
+  $unicorn = "${home}.rbenv/shims/bundle exec unicorn"
   $log_base = '/var/log/rails/'
   $logdir = "${log_base}${app_name}/"
   $run_base = '/var/run/rails/'
