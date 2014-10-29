@@ -32,7 +32,7 @@ define dc_rails::app (
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/current/"
   $bundler = "${home}.rbenv/shims/bundle"
-  $unicorn = "${home}.rbenv/shims/unicorn"
+  $unicorn = "${home}.rbenv/shims/bundle exec unicorn"
   $log_base = '/var/log/rails/'
   $logdir = "${log_base}${app_name}/"
   $run_base = '/var/run/rails/'
