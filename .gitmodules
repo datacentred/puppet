@@ -250,4 +250,4 @@
 	url = https://github.com/stackforge/puppet-ceilometer.git
 [submodule "modules/mongodb"]
 	path = modules/mongodb
-	url = https://github.com/puppetlabs/puppetlabs-mongodb.git
+	url = https://github.com/datacentred/puppetlabs-mongodb.git
