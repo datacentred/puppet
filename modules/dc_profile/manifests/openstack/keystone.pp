@@ -83,8 +83,8 @@ class dc_profile::openstack::keystone {
     rabbit_virtual_host => $rabbitmq_vhost,
     token_driver        => 'keystone.token.backends.memcache.Token',
     memcache_servers    => $osdbmq_members,
-    public_endpoint     => "https://${osapi_public}:%(public_port)s/"
-    admin_endpoint      => "https://${osapi_public}:%(public_port)s/"
+    public_endpoint     => "https://${osapi_public}:%(public_port)s/",
+    admin_endpoint      => "https://${osapi_public}:%(public_port)s/",
   }
 
   # Adds the admin credential to keystone.
