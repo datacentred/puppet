@@ -83,8 +83,8 @@ class dc_profile::openstack::keystone {
     rabbit_virtual_host => $rabbitmq_vhost,
     token_driver        => 'keystone.token.backends.memcache.Token',
     memcache_servers    => $osdbmq_members,
-    public_endpoint     => "https://${osapi_public}:%(public_port)s/",
-    admin_endpoint      => "https://${osapi_public}:%(public_port)s/",
+    public_endpoint     => "https://${osapi_public}:${keystone_public_port}",
+    admin_endpoint      => "https://${osapi_public}:${keystone_private_port}",
   }
 
   # Adds the admin credential to keystone.
@@ -136,10 +136,10 @@ class dc_profile::openstack::keystone {
     description => 'Glance Image Service',
   }
   keystone_endpoint { "${os_region}/glance":
-    ensure        => present,
-    public_url    => "https://${osapi_public}:${glance_port}",
-    admin_url     => "https://${osapi_public}:${glance_port}",
-    internal_url  => "https://${osapi_public}:${glance_port}",
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${glance_port}",
+    admin_url    => "https://${osapi_public}:${glance_port}",
+    internal_url => "https://${osapi_public}:${glance_port}",
   }
 
   # Cinder
@@ -200,16 +200,16 @@ class dc_profile::openstack::keystone {
     description => 'EC2 Service',
   }
   keystone_endpoint { "${os_region}/nova":
-    ensure        => present,
-    public_url    => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
-    admin_url     => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
-    internal_url  => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
+    admin_url    => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
+    internal_url => "https://${osapi_public}:${nova_port}/v2/%(tenant_id)s",
   }
   keystone_endpoint { "${os_region}/nova_ec2":
-    ensure        => present,
-    public_url    => "https://${osapi_public}:${ec2_port}/services/Cloud",
-    admin_url     => "https://${osapi_public}:${ec2_port}/services/Admin",
-    internal_url  => "https://${osapi_public}:${ec2_port}/services/Cloud",
+    ensure       => present,
+    public_url   => "https://${osapi_public}:${ec2_port}/services/Cloud",
+    admin_url    => "https://${osapi_public}:${ec2_port}/services/Admin",
+    internal_url => "https://${osapi_public}:${ec2_port}/services/Cloud",
   }
 
   # Neutron
@@ -221,8 +221,8 @@ class dc_profile::openstack::keystone {
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "neutron@${os_service_tenant}":
-    ensure  => present,
-    roles   => 'admin',
+    ensure => present,
+    roles  => 'admin',
   }
   keystone_service { 'neutron':
     ensure      => present,
@@ -245,8 +245,8 @@ class dc_profile::openstack::keystone {
     tenant   => $os_service_tenant,
   }
   keystone_user_role { "ceilometer@${os_service_tenant}":
-    ensure  => present,
-    roles   => 'admin',
+    ensure => present,
+    roles  => 'admin',
   }
   keystone_service { 'ceilometer':
     ensure      => present,
@@ -271,11 +271,11 @@ class dc_profile::openstack::keystone {
     tenant   => 'icinga',
   }
 
- include dc_icinga::hostgroup_keystone
-
- if $::environment == 'production' {
-   # Logstash config
-   include dc_profile::openstack::keystone_logstash
- }
+  include dc_icinga::hostgroup_keystone
+  
+  if $::environment == 'production' {
+    # Logstash config
+    include dc_profile::openstack::keystone_logstash
+  }
 
 }
