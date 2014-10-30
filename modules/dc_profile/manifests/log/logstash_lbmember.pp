@@ -25,10 +25,10 @@ class dc_profile::log::logstash_lbmember{
     ports             => '5544',
   }
 
-  @@haproxy::balancermember { "${::hostname}_forwarder":
-    listening_service => 'forwarder',
+  @@haproxy::balancermember { "${::hostname}_courier":
+    listening_service => 'courier',
     ipaddresses       => $::ipaddress,
     server_names      => $::hostname,
-    ports             => '55515',
+    ports             => '55516',
   }
 }
