@@ -15,11 +15,12 @@ class dc_profile::openstack::mongodb {
   include ::mongodb::server
   include ::mongodb::replset
 
-  $ceilometer_db_password = hiera(ceilometer_db_password)
-
-  mongodb_database  { 'ceilometer':
+  mongodb::db { 'ceilometer':
     user     => 'ceilometer',
-    password => $ceilometer_db_password,
+    password => hiera(ceilometer_db_password),
   }
+
+  Mongodb_replset['ceilometer'] ->
+  Mongodb::Db['ceilometer']
     
 }
