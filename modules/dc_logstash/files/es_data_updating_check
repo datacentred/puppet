@@ -37,9 +37,9 @@ opts.each do |opt, arg|
   end
 end
 
-def check_file( file, substring )
-  File.open( file ) do |io|
-    io.each {|line| line.chomp! ; return true if line.include? substring}
+def check_file(path, substring)
+  File.open(path).each do |line|
+    return true if line.chomp.include? substring
   end
   false
 end
