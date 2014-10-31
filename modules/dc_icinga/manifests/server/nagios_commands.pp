@@ -174,6 +174,10 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password}"
   }
 
+  icinga::command { 'check_elasticsearch':
+    command_line => "/usr/lib/nagios/plugins/check_elasticsearch.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password}"
+  }
+
 
 }
 

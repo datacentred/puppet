@@ -549,4 +549,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'HAProxy Status',
   }
 
+  icinga::service { 'check_elasticsearch':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_elasticsearch',
+    check_command       => 'check_elasticsearch',
+    service_description => 'Elasticsearch Status',
+  }
+
 }
