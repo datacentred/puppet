@@ -37,14 +37,14 @@ opts.each do |opt, arg|
   end
 end
 
-def check_file(path, substring)
+def check_file_contains(path, substring)
   File.open(path).each do |line|
     return true if line.chomp.include? substring
   end
   false
 end
 
-if check_file( "/etc/logstash/conf.d/logstash.conf", "embedded => true" )
+if check_file_contains( "/etc/logstash/conf.d/logstash.conf", "embedded => true" )
   begin
     uri = URI.parse("http://#{args[:host]}:#{args[:port]}/#{args[:index]}/_search")
     payload={"query" => {"range" =>
