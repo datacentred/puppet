@@ -44,7 +44,7 @@ def check_file(path, substring)
   false
 end
 
-if check_file( "/etc/logstash/conf.d/logstash.conf", "embedded => true" ) == true
+if check_file( "/etc/logstash/conf.d/logstash.conf", "embedded => true" )
   begin
     uri = URI.parse("http://#{args[:host]}:#{args[:port]}/#{args[:index]}/_search")
     payload={"query" => {"range" =>
@@ -67,7 +67,7 @@ if check_file( "/etc/logstash/conf.d/logstash.conf", "embedded => true" ) == tru
       outstring = "CRTICAL:  Did not receive a response HTTP Code: #{response.code}"
       exit_code = 2
     end
-  rescue Exception => e
+  rescue StandardError => e
     outstring = "Error: #{e.message}"
     exit_code = 2
   end
