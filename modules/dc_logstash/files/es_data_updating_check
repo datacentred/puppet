@@ -37,11 +37,11 @@ opts.each do |opt, arg|
   end
 end
 
-def check_file( file, string )
-File.open( file ) do |io|
-io.each {|line| line.chomp! ; return true if line.include? string}
-end
-false
+def check_file( file, substring )
+  File.open( file ) do |io|
+    io.each {|line| line.chomp! ; return true if line.include? substring}
+  end
+  false
 end
 
 if check_file( "/etc/logstash/conf.d/logstash.conf", "embedded => true" ) == true
