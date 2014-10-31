@@ -209,9 +209,6 @@
 [submodule "modules/sysdig"]
 	path = modules/sysdig
 	url = https://github.com/garethr/garethr-sysdig.git
-[submodule "modules/ceilometer"]
-	path = modules/ceilometer
-	url = https://github.com/datacentred/puppet-ceilometer.git
 [submodule "modules/xinetd"]
 	path = modules/xinetd
 	url = https://github.com/puppetlabs/puppetlabs-xinetd.git
@@ -248,3 +245,9 @@
 [submodule "modules/sshkeys"]
 	path = modules/sshkeys
 	url = https://github.com/jtopjian/puppet-sshkeys.git
+[submodule "modules/ceilometer"]
+	path = modules/ceilometer
+	url = https://github.com/stackforge/puppet-ceilometer.git
+[submodule "modules/mongodb"]
+	path = modules/mongodb
+	url = https://github.com/datacentred/puppetlabs-mongodb.git
