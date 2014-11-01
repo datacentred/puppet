@@ -20,6 +20,15 @@ class dc_profile::openstack::mongodb {
     password => hiera(ceilometer_db_password),
   }
 
+  # Deploy our keyfile before we attempt to configure
+  # the replicaset
+  file { '/etc/mongodb.keyfile':
+    content => hiera(ceilometer_mongodb_keyfile),
+    mode    => 0600,
+    owner   => 'mongodb',
+    group   => 'mongodb',
+    require => Package['mongodb-server'],
+  } ->
   Mongodb_replset['ceilometer'] ->
   Mongodb::Db['ceilometer']
     
