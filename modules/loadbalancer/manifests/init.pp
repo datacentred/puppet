@@ -13,11 +13,6 @@ class loadbalancer (
   include ::keepalived
   include ::dc_ssl::haproxy
 
-  sysctl { 'net.ipv4.ip_nonlocal_bind':
-    ensure => present,
-    value  => '1',
-  }
-
   keepalived::vrrp::instance { "VI_${keepalived_virtual_router_id}":
     interface         => $keepalived_interface,
     state             => 'SLAVE',
