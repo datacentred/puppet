@@ -13,7 +13,7 @@
 #
 #   sysctls::values:
 #     net.ipv4.ip_forward:
-#       value: 1
+#       value: '1'
 #
 class sysctls (
   $values,
