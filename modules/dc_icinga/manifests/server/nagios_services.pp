@@ -553,7 +553,7 @@ class dc_icinga::server::nagios_services {
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_elasticsearch',
     check_command       => 'check_elasticsearch',
-    service_description => 'Elasticsearch Status',
+    service_description => 'Elasticsearch updating',
   }
 
 }
