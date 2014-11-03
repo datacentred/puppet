@@ -2,7 +2,7 @@
 #
 class dc_elasticsearch::icinga {
 
-  file { '/usr/local/sbin/es_data_updating_check':
+  file { '/usr/lib/nagios/plugins/es_data_updating_check':
     ensure => present,
     owner  => 'root',
     group  => 'root',

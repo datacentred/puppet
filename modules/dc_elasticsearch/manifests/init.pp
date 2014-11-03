@@ -1,4 +1,4 @@
-# Class: dc_profile::net::elasticsearch
+# Class: dc_elasticsearch
 #
 # Configures elasticsearch and runs one instance
 #

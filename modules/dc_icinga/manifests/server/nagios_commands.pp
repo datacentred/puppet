@@ -175,7 +175,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_elasticsearch':
-    command_line => "/usr/local/sbin/check_elasticsearch.rb"
+    command_line => '/usr/lib/nagios/plugins/check_elasticsearch.rb'
   }
 
 
