@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 class dc_elasticsearch (
-  $es_hash
+  $es_hash,
 ) {
 
   $half_RAM = floor($::memorysize_mb/2)
