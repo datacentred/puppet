@@ -27,6 +27,9 @@ define dc_rails::app (
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $sirportly_api_token = hiera(sirportly::stronghold::api_token)
   $sirportly_api_secret = hiera(sirportly::stronghold::api_secret)
+  $openstack_stronghold_username = hiera(openstack::stronghold_username),
+  $openstack_stronghold_password = hiera(openstack::stronghold_password),
+  $openstack_stronghold_tenant   = hiera(openstack::stronghold_tenant),
   $ruby = '2.1.4'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/current/"
@@ -122,6 +125,9 @@ define dc_rails::app (
     sirportly_api_token  => $sirportly_api_token,
     sirportly_api_secret => $sirportly_api_secret,
     strongbox_passphrase => $strongbox_passphrase,
+    openstack_stronghold_username => $openstack_stronghold_username,
+    openstack_stronghold_password => $openstack_stronghold_password,
+    openstack_stronghold_tenant   => $openstack_stronghold_tenant,
     source               => $unicorn,
     subscribe            => Vcsrepo[$app_home],
   } ->
