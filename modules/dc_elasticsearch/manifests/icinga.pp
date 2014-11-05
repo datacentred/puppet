@@ -7,15 +7,7 @@ class dc_elasticsearch::icinga {
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
-    source => 'puppet:///modules/dc_elasticsearch/es_data_updating_check'
-  }
-
-  file { '/etc/nagios/nrpe.d/elasticsearch.cfg':
-    ensure  => present,
-    owner   => 'root',
-    group   => 'root',
-    source  => 'puppet:///modules/dc_elasticsearch/elasticsearch.cfg',
-    require => Package['nagios-nrpe-server']
+    source => 'puppet:///modules/dc_elasticsearch/es_data_updating_check.rb'
   }
 
   include dc_icinga::hostgroup_http
