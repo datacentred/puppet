@@ -1,4 +1,4 @@
-# Class: dc_profile::net::elasticsearch
+# Class: dc_elasticsearch
 #
 # Configures elasticsearch and runs one instance
 #
@@ -10,8 +10,8 @@
 #
 # Sample Usage:
 #
-class dc_profile::net::elasticsearch (
-  $es_hash
+class dc_elasticsearch (
+  $es_hash,
 ) {
 
   $half_RAM = floor($::memorysize_mb/2)
@@ -25,6 +25,11 @@ class dc_profile::net::elasticsearch (
     config        => $::es_hash,
     java_install  =>  true,
     init_defaults => $config_hash,
+  }
+
+  # Add icinga config
+  unless $::is_vagrant {
+    contain ::dc_elasticsearch::icinga
   }
 
   elasticsearch::instance { 'es-01': }
