@@ -27,9 +27,9 @@ define dc_rails::app (
   $db_password = hiera(dc_mariadb::maria_root_pw)
   $sirportly_api_token = hiera(sirportly::stronghold::api_token)
   $sirportly_api_secret = hiera(sirportly::stronghold::api_secret)
-  $openstack_stronghold_username = hiera(openstack::stronghold_username),
-  $openstack_stronghold_password = hiera(openstack::stronghold_password),
-  $openstack_stronghold_tenant   = hiera(openstack::stronghold_tenant),
+  $openstack_stronghold_username = hiera(dc_rails::openstack::stronghold_username)
+  $openstack_stronghold_password = hiera(dc_rails::openstack::stronghold_password)
+  $openstack_stronghold_tenant   = hiera(dc_rails::openstack::stronghold_tenant)
   $ruby = '2.1.4'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/current/"
