@@ -164,20 +164,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Postfix Mail Queue',
   }
 
-  icinga::service { 'check_neutron_vswitch_agent':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node, dc_hostgroup_neutron_server',
-    check_command       => 'check_nrpe_1arg!check_neutron_vswitch_agent',
-    service_description => 'Neutron Agent',
-  }
-
-  icinga::service { 'check_ovswitch_proc':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node, dc_hostgroup_neutron_server',
-    check_command       => 'check_nrpe_1arg!check_ovswitch_proc',
-    service_description => 'Open vSwitch',
-  }
-
   icinga::service { 'check_ovswitch_server_proc':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_compute, dc_hostgroup_neutron_node, dc_hostgroup_neutron_server',
