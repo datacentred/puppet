@@ -134,33 +134,7 @@ class dc_profile::openstack::neutron_agent {
   # Icinga monitoring
   if $::environment == 'production' {
 
-    file { '/etc/nagios/nrpe.d/os_neutron_dhcp_agent.cfg':
-      ensure  => present,
-      content => 'command[check_neutron_dhcp_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-dhcp-agent',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
-    }
-
-    file { '/etc/nagios/nrpe.d/os_neutron_metadata_agent.cfg':
-      ensure  => present,
-      content => 'command[check_neutron_metadata_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -a /usr/bin/neutron-ns-metadata-proxy',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
-    }
-
-    file { '/etc/nagios/nrpe.d/os_neutron_vpn_agent.cfg':
-      ensure  => present,
-      content => 'command[check_neutron_vpn_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-vpn-agent',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
-    }
-
-    file { '/etc/nagios/nrpe.d/os_neutron_lbaas_agent.cfg':
-      ensure  => present,
-      content => 'command[check_neutron_lbaas_agent]=/usr/lib/nagios/plugins/check_procs -c 1: -u neutron -a /usr/bin/neutron-lbaas-agent',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
-    }
+    include dc_nrpe::neutron_agent
 
   }
 
