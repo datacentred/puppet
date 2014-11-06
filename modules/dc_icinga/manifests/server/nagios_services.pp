@@ -192,12 +192,12 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron DHCP Agent',
   }
 
-  #icinga::service { 'check_neutron_l3_agent':
-  #  use                 => 'dc_service_generic',
-  #  hostgroup_name      => 'dc_hostgroup_neutron_node',
-  #  check_command       => 'check_nrpe_1arg!check_neutron_l3_agent',
-  #  service_description => 'Neutron L3 Agent',
-  #}
+  icinga::service { 'check_neutron_l3_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_l3_agent',
+    service_description => 'Neutron L3 Agent',
+  }
 
   icinga::service { 'check_neutron_metadata_agent':
     use                 => 'dc_service_generic',
@@ -220,12 +220,12 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron LBAAS Agent',
   }
 
-  #icinga::service { 'check_neutron_metering_agent':
-  #  use                 => 'dc_service_generic',
-  #  hostgroup_name      => 'dc_hostgroup_neutron_node',
-  #  check_command       => 'check_nrpe_1arg!check_neutron_metering_agent',
-  #  service_description => 'Neutron Metering Agent',
-  #}
+  icinga::service { 'check_neutron_metering_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_metering_agent',
+    service_description => 'Neutron Metering Agent',
+  }
 
   icinga::service { 'check_neutron_server':
     use                 => 'dc_service_generic',
