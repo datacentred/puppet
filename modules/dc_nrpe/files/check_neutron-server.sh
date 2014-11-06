@@ -137,7 +137,7 @@ else
         exit $STATE_CRITICAL
     else
         if [ $TIME -gt 10 ]; then
-            echo "WARNING: GET /networks from Neutron API took more than 10 seconds, it's too long."
+            echo "WARNING: GET /networks from Neutron API took more than 10 seconds, it's too long. ${TIME}s"
             exit $STATE_WARNING
         else
             echo "OK: Neutron server is up and running (PID ${PID})"
