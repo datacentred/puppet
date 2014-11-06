@@ -12,11 +12,10 @@
 #
 class dc_profile::mon::icinga_client {
 
-  $icinga_ip = hiera(icinga_ip)
+  include ::dc_nrpe
+  include ::dc_icinga::client
 
-  class { '::dc_nrpe':
-    allowed_hosts => "127.0.0.1 ${icinga_ip}/32",
-  } ->
-  class { '::dc_icinga::client': }
+  Class['::dc_nrpe'] ->
+  Class['::dc_icinga::client']
 
 }
