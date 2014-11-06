@@ -42,9 +42,10 @@ class dc_profile::openstack::horizon {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::horizon_logstash
+  unless $::is_vagrant {
+    if $::environment == 'production' {
+      include dc_profile::openstack::horizon_logstash
+    }
   }
 
 }

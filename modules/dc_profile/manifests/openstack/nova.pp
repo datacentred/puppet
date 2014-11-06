@@ -115,12 +115,11 @@ class dc_profile::openstack::nova {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  # Nagios config
-  include dc_profile::openstack::nova_nagios
-
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::nova_logstash
+  unless $::is_vagrant {
+    include dc_profile::openstack::nova_nagios
+    if $::environment == 'production' {
+      include dc_profile::openstack::nova_logstash
+    }
   }
 
 }
