@@ -12,6 +12,7 @@
 #
 class dc_role::ps_elasticsearch inherits dc_role {
 
-  contain dc_profile::net::elasticsearch
+  contain dc_elasticsearch
+  contain dc_elasticsearch::lbmember
 
 }

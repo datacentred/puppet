@@ -3,7 +3,7 @@
 # Server side configuration for elasticsearch output
 #
 class dc_logstash::config::output_elasticsearch (
-  $cluster,
+  $host,
   $embedded,
   $protocol,
 ){
