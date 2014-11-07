@@ -385,6 +385,10 @@ class dc_icinga::server::config {
     description => 'HA Proxy Node',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_elasticsearch':
+    description => 'Elasticsearch Node',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
