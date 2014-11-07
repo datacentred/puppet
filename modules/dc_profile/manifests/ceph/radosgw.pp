@@ -7,13 +7,6 @@ class dc_profile::ceph::radosgw {
   include ::dc_icinga::hostgroup_ceph_rgw
 
   contain ::ceph::radosgw
-
-  @@haproxy::balancermember { $::fqdn:
-    listening_service => 'radosgw',
-    server_names      => $::hostname,
-    ipaddresses       => $::ipaddress_p1p1,
-    ports             => 443,
-    options           => 'check ssl ca-file /var/lib/puppet/ssl/certs/ca.pem',
-  }
+  contain ::loadbalancer::members
 
 }
