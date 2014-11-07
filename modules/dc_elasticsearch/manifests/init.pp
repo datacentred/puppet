@@ -23,7 +23,7 @@ class dc_elasticsearch (
 
   class { '::elasticsearch':
     config        => $::es_hash,
-    java_install  =>  true,
+    java_install  => true,
     init_defaults => $config_hash,
   }
 
