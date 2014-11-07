@@ -271,11 +271,11 @@ class dc_profile::openstack::keystone {
     tenant   => 'icinga',
   }
 
-  include dc_icinga::hostgroup_keystone
-  
-  if $::environment == 'production' {
-    # Logstash config
-    include dc_profile::openstack::keystone_logstash
+  unless $::is_vagrant {
+    include dc_icinga::hostgroup_keystone
+    if $::environment == 'production' {
+      include dc_profile::openstack::keystone_logstash
+    }
   }
 
 }
