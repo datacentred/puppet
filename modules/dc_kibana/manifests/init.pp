@@ -3,7 +3,7 @@
 # Install and configure Kibana web-based front-end to Elasticsearch
 #
 class dc_kibana (
-  $elasticsearch_host = '',
+  $elasticsearch_host,
 ){
 
   include dc_kibana::apache
