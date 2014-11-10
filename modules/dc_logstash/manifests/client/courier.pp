@@ -2,16 +2,17 @@
 #
 # Install and configure log-courier
 #
-class dc_logstash::client::courier {
-
-  $ls_host = hiera(logstash_server)
-  $ls_courier_port = hiera(logstash_courier_port)
+class dc_logstash::client::courier (
+  $logcourier_version,
+  $ls_host,
+  $ls_courier_port,
+){
 
   file { '/usr/sbin/log-courier':
     ensure => file,
     owner  => 'root',
     group  => 'root',
-    source => 'puppet:///modules/dc_logstash/log_courier/log-courier',
+    source => "puppet:///modules/dc_logstash/log_courier/log-courier-${logcourier_version}",
   }
 
   file { '/etc/init.d/log-courier':
