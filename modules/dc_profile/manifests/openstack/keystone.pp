@@ -31,11 +31,12 @@ class dc_profile::openstack::keystone {
   $keystone_public_port  = '5000'
   $keystone_private_port = '35357'
 
-  $glance_port  = '9292'
-  $cinder_port  = '8776'
-  $neutron_port = '9696'
-  $ec2_port     = '8773'
-  $nova_port    = '8774'
+  $glance_port     = '9292'
+  $cinder_port     = '8776'
+  $neutron_port    = '9696'
+  $ec2_port        = '8773'
+  $nova_port       = '8774'
+  $ceilometer_port = '8777'
 
   $keystone_signing_key  = hiera(keystone_signing_key)
   $keystone_signing_cert = hiera(keystone_signing_cert)
@@ -252,6 +253,12 @@ class dc_profile::openstack::keystone {
     ensure      => present,
     type        => 'metering',
     description => 'Ceilometer Telemetry Service',
+  }
+  keystone_endpoint { "${os_region/ceilometer":
+    ensure => present,
+    public_url   => "https://${osapi_public}:${ceilometer_port}",
+    admin_url    => "https://${osapi_public}:${ceilometer_port}",
+    internal_url => "https://${osapi_public}:${ceilometer_port}",
   }
 
   # Icinga monitoring
