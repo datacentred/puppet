@@ -22,12 +22,14 @@ class dc_elasticsearch (
   }
 
   class { '::elasticsearch':
-    config        => $::es_hash,
+    config        => $es_hash,
     java_install  => true,
     init_defaults => $config_hash,
   }
 
-  include ::dc_icinga::hostgroup_elasticsearch
+  unless $::is_vagrant {
+    include ::dc_icinga::hostgroup_elasticsearch
+  }
 
   elasticsearch::instance { 'es-01': }
 }
