@@ -71,27 +71,27 @@ class dc_profile::openstack::keystone {
     options           => 'check inter 2000 rise 2 fall 5'
   }
 
-  # Icinga monitoring
-  keystone_tenant { 'icinga':
-    ensure  => present,
-    enabled => true,
-  }
-  keystone_user_role { 'icinga@icinga':
-    ensure => present,
-    roles  => admin,
-  }
-  keystone_user { 'icinga':
-    ensure   => present,
-    enabled  => true,
-    password => hiera(keystone_icinga_password),
-    tenant   => 'icinga',
-  }
+  unless $::is_vagrant {
+    include dc_icinga::hostgroup_keystone
+    if $::environment == 'production' {
+      include dc_profile::openstack::keystone_logstash
 
-#  unless $::is_vagrant {
-#    include dc_icinga::hostgroup_keystone
-#    if $::environment == 'production' {
-#      include dc_profile::openstack::keystone_logstash
-#    }
-#  }
+      # Keystone tenancy and accounts for Icinga monitoring
+      keystone_tenant { 'icinga':
+        ensure  => present,
+        enabled => true,
+      }
+      keystone_user_role { 'icinga@icinga':
+        ensure => present,
+        roles  => admin,
+      }
+      keystone_user { 'icinga':
+        ensure   => present,
+        enabled  => true,
+        password => hiera(keystone_icinga_password),
+        tenant   => 'icinga',
+      }
+    }
+  }
 
 }
