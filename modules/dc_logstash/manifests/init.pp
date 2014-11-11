@@ -11,6 +11,8 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_logstash {
 
+  include dc_logstash::params
+
   # Basic class for installing Logstash
   class { '::logstash':
     init_defaults_file => 'puppet:///modules/dc_logstash/logstash_default',
@@ -40,10 +42,7 @@ class dc_logstash {
     enable => false,
   }
 
-  # Add directory and install patterns for filters and parsers
-  $logstash_grok_patterns_dir = hiera(logstash_grok_patterns_dir)
-
-  file { $logstash_grok_patterns_dir:
+  file { $dc_logstash::params::logstash_grok_patterns_dir:
     ensure  => directory,
     owner   => 'root',
     group   => 'root',

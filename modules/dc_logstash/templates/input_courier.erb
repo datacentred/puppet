@@ -1,8 +1,8 @@
 input {
  courier {
-    port => <%= ${hiera('logcourier_port')} %>
-    ssl_certificate => "/var/lib/puppet/ssl/certs/<%= scope.lookupvar('dc_logstash::params::logstash_cert_alias') %>.pem"
-    ssl_key => "/var/lib/puppet/ssl/private_keys/<%= scope.lookupvar('dc_logstash::params::logstash_cert_alias') %>.pem"
-    type => "log-courier"
+ port => <%= scope.lookupvar('dc_logstash::params::logcourier_port') %>
+  ssl_certificate => "/var/lib/puppet/ssl/certs/<%= scope.lookupvar('dc_logstash::params::logstash_cert_alias') %>.pem"
+  ssl_key => "/var/lib/puppet/ssl/private_keys/<%= scope.lookupvar('dc_logstash::params::logstash_cert_alias') %>.pem"
+  type => "log-courier"
  }
 }

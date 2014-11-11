@@ -4,7 +4,7 @@
 #
 class dc_logstash::config::input_syslog {
 
-  $logstash_syslog_port = hiera(logstash_syslog_port)
+  include dc_logstash::params
 
   logstash::configfile { 'input_syslog':
     content => template('dc_logstash/input_syslog.erb'),
