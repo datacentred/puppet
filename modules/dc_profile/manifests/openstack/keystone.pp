@@ -53,20 +53,17 @@ class dc_profile::openstack::keystone {
     notify  => Service['keystone'],
   }
 
-  # Add node into our loadbalancer
-  $management_ip = $::ipaddress
-
   @@haproxy::balancermember { "${::fqdn}-keystone-auth":
     listening_service => 'icehouse-keystone-auth',
     server_names      => $::hostname,
-    ipaddresses       => $management_ip,
+    ipaddresses       => $::ipaddress,
     ports             => '5000',
     options           => 'check inter 2000 rise 2 fall 5'
   }
   @@haproxy::balancermember { "${::fqdn}-keystone-admin":
     listening_service => 'icehouse-keystone-admin',
     server_names      => $::hostname,
-    ipaddresses       => $management_ip,
+    ipaddresses       => $::ipaddress,
     ports             => '35357',
     options           => 'check inter 2000 rise 2 fall 5'
   }
