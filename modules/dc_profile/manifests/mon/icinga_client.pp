@@ -15,7 +15,9 @@ class dc_profile::mon::icinga_client {
   include ::dc_nrpe
   include ::dc_icinga::client
 
-  Class['::dc_nrpe'] ->
-  Class['::dc_icinga::client']
+  # Client installs nagios plugins directory
+  # nrpe populates it
+  Class['::dc_icinga::client'] ->
+  Class['::dc_nrpe']
 
 }

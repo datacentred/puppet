@@ -131,11 +131,6 @@ class dc_profile::openstack::neutron_agent {
     }
   }
 
-  # Icinga monitoring
-  if $::environment == 'production' {
-
-    include dc_nrpe::neutron_agent
-
-  }
+  include dc_nrpe::neutron_agent
 
 }

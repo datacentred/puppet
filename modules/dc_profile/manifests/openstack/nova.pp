@@ -115,8 +115,10 @@ class dc_profile::openstack::nova {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
+  include ::dc_nrpe::nova_server
+  include ::dc_icinga::hostgroup_nova_server
+
   unless $::is_vagrant {
-    include dc_profile::openstack::nova_nagios
     if $::environment == 'production' {
       include dc_profile::openstack::nova_logstash
     }

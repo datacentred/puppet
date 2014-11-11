@@ -19,8 +19,7 @@ class dc_profile::auth::sudoers_neutron {
   # example description
   sudo::conf { 'neutron':
     priority => 10,
-    content  => 'Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
-neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap',
+    content  => 'Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap',
   }
 
 }

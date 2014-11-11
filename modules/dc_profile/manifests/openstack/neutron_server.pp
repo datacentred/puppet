@@ -57,12 +57,8 @@ class dc_profile::openstack::neutron_server {
 
   include dc_profile::auth::sudoers_neutron
 
-  unless $is_vagrant {
-    include dc_nrpe::neutron
-    if $::environment == 'production' {
-      include dc_icinga::hostgroup_neutron_server
-    }
-  }
+  include dc_nrpe::neutron
+  include dc_icinga::hostgroup_neutron_server
 
   # Enable ML2 plugin
   class { 'neutron::plugins::ml2':
