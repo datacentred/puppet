@@ -1,8 +1,8 @@
 input {
  courier {
   port => 55516
-  ssl_certificate => "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem"
-  ssl_key => "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem"
+  ssl_certificate => "/var/lib/puppet/ssl/certs/<%= @logstash_cert %>.pem"
+  ssl_key => "/var/lib/puppet/ssl/private_keys/<%= @logstash_cert %>.pem"
   type => "log-courier"
  }
 }
