@@ -3,7 +3,7 @@
 # Server side configuration for log_courier input
 #
 class dc_logstash::config::input_courier (
-  $logstash_cert = $fqdn
+  $logstash_cert_alias = $fqdn
   ) {
 
   logstash::configfile { 'input_courier':
