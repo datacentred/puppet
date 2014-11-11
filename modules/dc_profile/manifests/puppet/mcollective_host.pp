@@ -41,7 +41,6 @@ class dc_profile::puppet::mcollective_host {
     mode    => '0644',
     purge   => false,
     recurse => 'remote',
-    require => Class['mcollective'], # For the parent directory
     notify  => Service['mcollective'],
   }
 
