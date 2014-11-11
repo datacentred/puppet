@@ -12,12 +12,6 @@
 #
 class dc_profile::openstack::keystone {
 
-  $keystone_signing_key  = hiera(keystone_signing_key)
-  $keystone_signing_cert = hiera(keystone_signing_cert)
-  $keystone_ca_key       = hiera(keystone_ca_key)
-
-  $management_ip = $::ipaddress
-
   contain ::keystone
   contain ::keystone::roles::admin
   contain ::keystone::endpoint
@@ -27,6 +21,10 @@ class dc_profile::openstack::keystone {
   create_resources(keystone_user_role, hiera(keystone_user_roles))
   create_resources(keystone_service, hiera(keystone_services))
   create_resources(keystone_endpoint, hiera(keystone_endpoints))
+
+  $keystone_signing_key  = hiera(keystone_signing_key)
+  $keystone_signing_cert = hiera(keystone_signing_cert)
+  $keystone_ca_key       = hiera(keystone_ca_key)
 
   # Ensure that the various PKI-related certificates and keys
   # are the same across all nodes running Keystone
@@ -56,6 +54,8 @@ class dc_profile::openstack::keystone {
   }
 
   # Add node into our loadbalancer
+  $management_ip = $::ipaddress
+
   @@haproxy::balancermember { "${::fqdn}-keystone-auth":
     listening_service => 'icehouse-keystone-auth',
     server_names      => $::hostname,
