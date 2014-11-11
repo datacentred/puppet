@@ -6,6 +6,7 @@ class dc_role {
   include dc_profile::apt::repos
   include dc_profile::auth::rootpw
   include dc_profile::editors::vim
+  include dc_profile::mon::icinga_client
   include dc_profile::puppet::puppet
   include dc_profile::util::external_facts
   include dc_profile::util::timezone
@@ -30,7 +31,6 @@ class dc_role {
       include dc_profile::puppet::mcollective_host
       include dc_profile::perf::collectd::agent
       include dc_profile::net::mail
-      include dc_profile::mon::icinga_client
       include dc_profile::mon::nsca_client
       include dc_profile::mon::lmsensors
       include dc_profile::log::rsyslog_client

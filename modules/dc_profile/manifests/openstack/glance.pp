@@ -81,11 +81,12 @@ class dc_profile::openstack::glance {
     package_ensure      => 'present',
   }
 
+  include ::dc_nrpe::glance
+  include ::dc_icinga::hostgroup_glance
+
   unless $::is_vagrant {
-    include ::dc_nrpe::glance
     if $::environment == 'production' {
       include ::dc_profile::openstack::glance_logstash
-      include ::dc_icinga::hostgroup_glance
     }
   }
 

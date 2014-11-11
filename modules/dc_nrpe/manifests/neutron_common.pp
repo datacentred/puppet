@@ -1,16 +1,6 @@
-# Class: dc_profile::auth::sudoers_neutron
+# == Class: dc_nrpe::neutron_common
 #
-# Grant sudo rights to neutron
-#
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-class dc_profile::auth::sudoers_neutron {
+class dc_nrpe::neutron_common {
 
   include sudo
 
@@ -21,6 +11,13 @@ class dc_profile::auth::sudoers_neutron {
     priority => 10,
     content  => 'Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
 neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap',
+  }
+
+  file { '/etc/nagios/nrpe.d/neutron_common.cfg':
+    ensure => present,
+    source => 'puppet://modules/dc_nrpe/neutron_common.cfg',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['nagios-nrpe-server'],
   }
 
 }
