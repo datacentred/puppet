@@ -7,6 +7,8 @@ class loadbalancer (
   $keepalived_virtual_router_id,
   $keepalived_virtual_ipaddress,
   $haproxy_listeners,
+  $haproxy_stats_user     = $::haproxy_stats_user,
+  $haproxy_stats_password = $::haproxy_stats_password,
 ) {
 
   include ::haproxy
@@ -19,6 +21,22 @@ class loadbalancer (
     priority          => '100',
     virtual_router_id => $keepalived_virtual_router_id,
     virtual_ipaddress => $keepalived_virtual_ipaddress,
+  }
+
+  # HAProxy Statistics
+  haproxy::listen { 'haproxy-stats':
+    ipaddress => '*',
+    mode      => 'http',
+    ports     => '1936',
+    options   => {
+      'stats'  => [
+        'enable',
+        'uri /',
+        'hide-version',
+        "auth ${haproxy_stats_user}:${haproxy_stats_password}",
+      ],
+      'rspadd' => 'Strict-Transport-Security:\ max-age=60',
+    },
   }
 
   create_resources('haproxy::listen', $haproxy_listeners)
