@@ -12,8 +12,9 @@ class dc_nrpe::configure {
   }
 
   file { '/etc/nagios/nrpe.d':
-    ensure => directory,
-    purge  => true,
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
   }
 
   concat { '/etc/nagios/nrpe.d/dc_nrpe_check.cfg':
