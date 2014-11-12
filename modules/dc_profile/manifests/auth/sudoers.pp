@@ -19,4 +19,13 @@ class dc_profile::auth::sudoers {
     content  => '%sysadmin ALL=(ALL) NOPASSWD: ALL',
   }
 
+  if $::is_vagrant {
+
+    sudo::conf { 'vagrant':
+      priority => 10,
+      content  => 'vagrant ALL=(ALL) NOPASSWD: ALL',
+    }
+
+  }
+
 }

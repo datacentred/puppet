@@ -18,7 +18,7 @@ define dc_nrpe::check (
       priority => 10,
       content  => "nagios ALL=NOPASSWD:${path}",
     }
-    $sudo_command = 'sudo'
+    $sudo_command = 'sudo '
   } else {
     $sudo_command = ''
   }
@@ -35,7 +35,7 @@ define dc_nrpe::check (
   }
 
   # Create the check
-  $command = "command[${name}]=${sudo_command} ${path} ${args}"
+  $command = "command[${name}]=${sudo_command}${path} ${args}\n"
 
   concat::fragment { $name:
     target  => '/etc/nagios/nrpe.d/dc_nrpe_check.cfg',
