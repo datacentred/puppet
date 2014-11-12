@@ -20,6 +20,15 @@ class dc_profile::openstack::cinder {
   include ::cinder::volume
   include ::cinder::volume::rbd
 
+  ceph::client { 'cinder':
+    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=cinder.images\" mon \"allow r\"'
+  }
+
+  # Ensure Ceph is configured before we do anything with Cinder, and
+  # restart the cinder-volume service if anything changes
+  Ceph::Client['cinder'] ~>
+  Class['::cinder::volume']
+
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-cinder":
     listening_service => 'icehouse-cinder',
