@@ -35,8 +35,9 @@ class dc_profile::openstack::nova_compute {
   include ::nova::network::neutron
   
   # Make sure the Ceph client configuration is in place
-  # before we do any of the Nova rbd-related configuration
-  Ceph::Client['cinder'] ->
+  # before we do any of the Nova rbd-related configuration, and
+  # restart if there's any changes
+  Ceph::Client['cinder'] ~>
   Class['::nova::compute::rbd']
 
   include ::dc_nrpe::nova_compute
