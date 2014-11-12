@@ -4,7 +4,7 @@
 #
 class dc_logstash::config::output_riemann_dev {
 
-  $riemann_dev_host = hiera(riemann_dev_host)
+  include dc_logstash::params
 
   logstash::configfile { 'output_riemann_dev':
     content => template('dc_logstash/output_riemann_dev.erb'),

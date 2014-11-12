@@ -4,14 +4,13 @@
 #
 class dc_logstash::client::courier {
 
-  $ls_host = hiera(logstash_server)
-  $ls_courier_port = hiera(logstash_courier_port)
+  include dc_logstash::params
 
   file { '/usr/sbin/log-courier':
     ensure => file,
     owner  => 'root',
     group  => 'root',
-    source => 'puppet:///modules/dc_logstash/log_courier/log-courier',
+    source => "puppet:///modules/dc_logstash/log_courier/log-courier-${dc_logstash::params::logcourier_version}",
   }
 
   file { '/etc/init.d/log-courier':
