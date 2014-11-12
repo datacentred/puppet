@@ -2,6 +2,10 @@
 #
 class dc_nrpe::common {
 
+  package { 'python-yaml':
+    ensure => installed,
+  }
+
   $lw1  = $::processorcount * 3
   $lw5  = $::processorcount * 2
   $lw15 = $::processorcount
