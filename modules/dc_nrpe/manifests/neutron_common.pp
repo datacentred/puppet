@@ -2,14 +2,19 @@
 #
 class dc_nrpe::neutron_common {
 
-  include ::sudo
-  include ::dc_profile::auth::sudoers_neutron
+  dc_nrpe::check { 'check_neutron_vswitch_agent':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-c 1 -u neutron -a neutron-openvswitch-agent',
+  }
 
-  file { '/etc/nagios/nrpe.d/neutron_common.cfg':
-    ensure  => present,
-    source  => 'puppet:///modules/dc_nrpe/neutron_common.cfg',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
+  dc_nrpe::check { 'check_ovswitch_proc':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-w 1: -C ovs-vswitchd',
+  }
+
+  dc_nrpe::check { 'check_ovswitch_server_proc':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-w 1: -C ovsdb-server',
   }
 
 }
