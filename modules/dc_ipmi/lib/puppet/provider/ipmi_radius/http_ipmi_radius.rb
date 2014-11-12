@@ -84,6 +84,11 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
 
   def get_radius_cfg
 
+    @radius_payload['PORTNUM'] = @resource[:portnum]
+    @radius_payload['TIMEOUT'] = @resource[:timeout]
+    @radius_payload['IP']      = @resource[:ipaddress]
+    @radius_payload['SECRET']  = @resource[:secret]
+
     response, status = ipmi_request(RADIUS_GET_URI, "GET")
     if status != '200'
       raise "IPMI server error: #{status}."
@@ -142,13 +147,16 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
       end
   end
 
-  def ipmi_request(uri, type, payload=[], set_cookie=true)
+  def ipmi_request(uri, type, payload={}, set_cookie=true)
 
     url = "http://#{@resource[:name]}#{uri}"
 
     if type == 'POST'
       request = Net::HTTP::Post.new(url)
-      payload = URI.encode_www_form(payload)
+      # payload = URI.encode_www_form(payload)
+      # replace the following line with the line above, when we migrate Ruby to
+      # 1.9.3
+      payload = payload.map{|k,v| "#{k}=#{v}"}.join('&')
     else
       request = Net::HTTP::Get.new(url)
     end

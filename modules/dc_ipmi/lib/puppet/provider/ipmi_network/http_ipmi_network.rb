@@ -184,13 +184,16 @@ desc "Support for Network configuration on the IPMI interface."
       end
   end
 
-  def ipmi_request(uri, type, payload=[], set_cookie=true)
+  def ipmi_request(uri, type, payload={}, set_cookie=true)
 
     url = "http://#{@resource[:name]}#{uri}"
 
     if type == 'POST'
       request = Net::HTTP::Post.new(url)
-      payload = URI.encode_www_form(payload)
+      # payload = URI.encode_www_form(payload)
+      # replace the following line with the line above, when we migrate Ruby to
+      # 1.9.3
+      payload = payload.map{|k,v| "#{k}=#{v}"}.join('&')
     else
       request = Net::HTTP::Get.new(url)
     end

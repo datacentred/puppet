@@ -1,4 +1,4 @@
-# Class: dc_profile::supermicro::ipmi
+# Class: dc_profile::hardware::ipmi::supermicro
 #
 # Configure RADIUS authentication and networking on Supermicro IPMI
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_profile::supermicro::ipmi {
+class dc_profile::hardware::ipmi::supermicro {
 
   # Database parameters
   $ipmi_hostname            = "${::hostname}-ipmi"
