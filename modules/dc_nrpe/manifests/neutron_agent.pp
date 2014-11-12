@@ -17,7 +17,7 @@ class dc_nrpe::neutron_agent {
     args => '-c 1: -u neutron -a /usr/bin/neutron-vpn-agent',
   }
 
-  dc_nrpe::check { 'check_neutron_lbaas_agent',
+  dc_nrpe::check { 'check_neutron_lbaas_agent':
     path => '/usr/lib/nagios/plugins/check_procs',
     args => '-c 1: -u neutron -a /usr/bin/neutron-lbaas-agent',
   }
