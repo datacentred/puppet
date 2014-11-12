@@ -14,6 +14,7 @@ class dc_profile::ceph::osd {
 
   include ::dc_ceph::osd
   include ::ceph::osd
+  include ::dc_nrpe::ceph
   include ::dc_icinga::hostgroup_ceph_osd
 
   # Proprietary additions first to partition the

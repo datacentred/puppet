@@ -5,6 +5,7 @@ class dc_role {
   include dc_profile::apt::dpkg
   include dc_profile::apt::repos
   include dc_profile::auth::rootpw
+  include dc_profile::auth::sudoers
   include dc_profile::editors::vim
   include dc_profile::mon::icinga_client
   include dc_profile::puppet::puppet
@@ -19,7 +20,6 @@ class dc_role {
     include dc_profile::auth::admins
     include dc_profile::net::ssh
     include dc_profile::net::hosts
-    include dc_profile::auth::sudoers
     include dc_profile::util::firmware
     include dc_profile::util::grub
     include dc_profile::perf::sysdig
