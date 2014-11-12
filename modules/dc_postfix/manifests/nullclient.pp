@@ -21,7 +21,5 @@ class dc_postfix::nullclient {
       satellite           => true,
     }
 
-    contain dc_postfix::nrpe
-
     include dc_icinga::hostgroup_postfix
 }

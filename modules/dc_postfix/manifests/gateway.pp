@@ -25,7 +25,6 @@ class dc_postfix::gateway {
   contain dc_postfix::gmailrelay
   contain dc_postfix::ratelimit
   contain dc_postfix::restrictions
-  contain dc_postfix::nrpe
 
   include dc_icinga::hostgroup_smtp
   include dc_icinga::hostgroup_postfix
