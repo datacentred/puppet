@@ -63,7 +63,7 @@ check_results = []
 
 # Run the nagios core plugin check_ide_smart on each device
 for device in devices:
-  check_output = run_command ("/usr/lib/nagios/plugins/check_ide_smart -d " + device)
+  check_output = run_command ("/usr/local/bin/check_ide_smart -d " + device)
   # Append to the list of results
   check_results.append(check_output + " on device " + device)
 
