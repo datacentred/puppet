@@ -10,7 +10,7 @@ class dc_nrpe::neutron (
 ) {
 
   dc_nrpe::check { 'check_neutron_server_netstat':
-    path   => '/usr/lib/nagios/plugins/check_neutron-server.sh',
+    path   => '/usr/local/bin/check_neutron-server.sh',
     source => 'puppet:///modules/dc_nrpe/check_neutron-server.sh',
     args   => "-H https://${os_api_host}:${keystone_port}/v2.0 -E https://${os_api_host}:${neutron_api_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}",
     sudo   => true,
