@@ -37,43 +37,32 @@ opts.each do |opt, arg|
   end
 end
 
-def check_file_contains(path, substring)
-  File.open(path).each do |line|
-    return true if line.chomp.include? substring
-  end
-  false
-end
 
-if check_file_contains( "/etc/logstash/conf.d/logstash.conf", "embedded => true" )
-  begin
-    uri = URI.parse("http://#{args[:host]}:#{args[:port]}/#{args[:index]}/_search")
-    payload={"query" => {"range" =>
-                        {"@timestamp"=>
-                          {"from"=>Time.at(Time.now.to_i-args[:seconds]).utc.strftime("%FT%TZ"),
-                            "to"=>Time.at(Time.now.to_i+args[:seconds]).utc.strftime("%FT%TZ")
-            }}}}
-    req = Net::HTTP::Post.new(uri.path, initheader = {'Content-Type' =>'application/json'})
-    req.body = payload.to_json
-    response = Net::HTTP.new(uri.host, uri.port).start {|http| http.request(req) }
-    if response.code == "200"
-      if JSON.parse(response.body)['hits']['total'] > 0
-        outstring = "OK: Data is updating"
-        exit_code = 0
-      else
-        outstring = "CRITICAL: Data is not updating"
-        exit_code = 2
-      end
+begin
+  uri = URI.parse("http://#{args[:host]}:#{args[:port]}/#{args[:index]}/_search")
+  payload={"query" => {"range" =>
+                      {"@timestamp"=>
+                        {"from"=>Time.at(Time.now.to_i-args[:seconds]).utc.strftime("%FT%TZ"),
+                          "to"=>Time.at(Time.now.to_i+args[:seconds]).utc.strftime("%FT%TZ")
+          }}}}
+  req = Net::HTTP::Post.new(uri.path, initheader = {'Content-Type' =>'application/json'})
+  req.body = payload.to_json
+  response = Net::HTTP.new(uri.host, uri.port).start {|http| http.request(req) }
+  if response.code == "200"
+    if JSON.parse(response.body)['hits']['total'] > 0
+      outstring = "OK: Data is updating"
+      exit_code = 0
     else
-      outstring = "CRTICAL:  Did not receive a response HTTP Code: #{response.code}"
+      outstring = "CRITICAL: Data is not updating"
       exit_code = 2
     end
-  rescue StandardError => e
-    outstring = "Error: #{e.message}"
+  else 
+    outstring = "CRTICAL:  Did not receive a response HTTP Code: #{response.code}"
     exit_code = 2
   end
-else
-  outstring = "OK: External elasticsearch in use"
-  exit_code = 0
+rescue Exception => e
+  outstring = "Error: #{e.message}"
+  exit_code = 2
 end
 
 puts outstring

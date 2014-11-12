@@ -1,0 +1,6 @@
+input {
+    syslog {
+        port => <%= scope.lookupvar('dc_logstash::server::logstash_syslog_port') %>
+        type => "native_syslog"
+    }
+}

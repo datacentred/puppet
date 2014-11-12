@@ -34,7 +34,7 @@ class dc_role {
       include dc_profile::mon::nsca_client
       include dc_profile::mon::lmsensors
       include dc_profile::log::rsyslog_client
-      include dc_profile::log::logstash_forwarder
+      include dc_profile::log::log_courier
       include dc_profile::log::logrotate
     }
   }

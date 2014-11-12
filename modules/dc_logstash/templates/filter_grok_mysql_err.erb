@@ -1,8 +1,0 @@
-filter {
- if [type] == "mysql_error" {
-  grok {
-   patterns_dir => ['<%= @logstash_grok_patterns_dir %>']
-   match => [ "message", "%{MYSQLERROR}" ]
-  }
- }
-}

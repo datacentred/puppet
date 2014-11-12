@@ -1,0 +1,8 @@
+filter {
+ if [type] == "mysql_error" {
+  grok {
+   patterns_dir => ['<%= scope.lookupvar('dc_logstash::server::logstash_grok_patterns_dir') %>']
+   match => [ "message", "%{MYSQLERROR}" ]
+  }
+ }
+}
