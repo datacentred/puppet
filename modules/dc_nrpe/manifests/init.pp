@@ -44,11 +44,12 @@ class dc_nrpe (
     only_from               => $allowed_hosts,
   }
 
-  concat { '/etc/nrpe.d/dc_nrpe_check.cfg':
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    notify => Service['xinetd'],
+  concat { '/etc/nagios/nrpe.d/dc_nrpe_check.cfg':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['nagios-nrpe-server'],
+    notify  => Service['xinetd'],
   }
 
   file { '/etc/nagios/nrpe.cfg':

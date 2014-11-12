@@ -25,7 +25,7 @@ define dc_nrpe::check (
 
   # Install the check
   if $source {
-    file { $source:
+    file { $path:
       ensure => file,
       source => $source,
       owner  => 'root',
@@ -35,10 +35,10 @@ define dc_nrpe::check (
   }
 
   # Create the check
-  $command = "command[]=${sudo_command} ${path} ${args}"
+  $command = "command[${name}]=${sudo_command} ${path} ${args}"
 
   concat::fragment { $name:
-    target  => '/etc/nrpe.d/dc_nrpe_check.cfg',
+    target  => '/etc/nagios/nrpe.d/dc_nrpe_check.cfg',
     content => $command,
   }
 
