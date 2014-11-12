@@ -1,16 +1,5 @@
-# Class: dc_nrpe::neutron
+# == Class: dc_nrpe::neutron
 #
-# Neutron specific nrpe configuration
-#
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
 class dc_nrpe::neutron (
   $keystone_port,
   $os_api_host,
