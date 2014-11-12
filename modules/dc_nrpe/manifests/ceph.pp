@@ -7,19 +7,19 @@ class dc_nrpe::ceph {
   }
 
   sudo::conf { 'check_ceph_health':
-    content     => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_health',
+    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_health',
   }
 
   sudo::conf { 'check_ceph_mon':
-    content     => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_mon',
+    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_mon',
   }
 
   sudo::conf { 'check_ceph_osd':
-    content     => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_osd',
+    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_osd',
   }
 
   sudo::conf { 'check_ceph_rgw':
-    content     => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_rgw',
+    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_rgw',
   }
 
   File {
