@@ -38,7 +38,7 @@ class dc_profile::openstack::nova_compute {
   # before we do any of the Nova rbd-related configuration, and
   # restart if there's any changes
   Ceph::Client['cinder'] ~>
-  Class['::nova::compute::rbd']
+  Class['::nova::compute']
 
   include ::dc_nrpe::nova_compute
   if $::environment == 'production' {
