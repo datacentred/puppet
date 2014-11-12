@@ -12,7 +12,8 @@
 #
 class dc_profile::net::mail {
 
-  include dc_postfix
+  include ::dc_postfix
+  include ::dc_nrpe::postfix
 
   package { 'nullmailer':
     ensure => purged,
