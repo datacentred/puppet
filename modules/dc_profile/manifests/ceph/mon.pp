@@ -15,6 +15,7 @@ class dc_profile::ceph::mon {
   include ::ceph::mon
   include ::dc_ceph::exports
   include ::dc_ceph::keybackup
+  include ::dc_nrpe::ceph
   include ::dc_icinga::hostgroup_ceph_mon
 
   Class['ceph::mon'] ->

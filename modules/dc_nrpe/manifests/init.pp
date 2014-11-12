@@ -44,6 +44,13 @@ class dc_nrpe (
     only_from               => $allowed_hosts,
   }
 
+  concat { '/etc/nrpe.d/dc_nrpe_check.cfg':
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    notify => Service['xinetd'],
+  }
+
   file { '/etc/nagios/nrpe.cfg':
     ensure  => file,
     require => Package['nagios-nrpe-server'],
@@ -90,6 +97,5 @@ class dc_nrpe (
   contain dc_nrpe::nova_server
   contain dc_nrpe::logstash
   contain dc_nrpe::smartd
-  contain dc_nrpe::ceph
 
 }

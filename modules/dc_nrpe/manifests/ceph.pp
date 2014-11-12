@@ -2,47 +2,30 @@
 #
 class dc_nrpe::ceph {
 
-  Sudo::Conf {
-    priority => 10,
-  }
-
-  sudo::conf { 'check_ceph_health':
-    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_health',
-  }
-
-  sudo::conf { 'check_ceph_mon':
-    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_mon',
-  }
-
-  sudo::conf { 'check_ceph_osd':
-    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_osd',
-  }
-
-  sudo::conf { 'check_ceph_rgw':
-    content => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_ceph_rgw',
-  }
-
-  File {
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-  }
-
-  file { '/usr/lib/nagios/plugins/check_ceph_health':
+  dc_nrpe::check { 'check_ceph_health':
+    path   => '/usr/local/bin/check_ceph_health',
     source => 'puppet:///modules/dc_nrpe/check_ceph_health',
+    sudo   => true,
   }
 
-  file { '/usr/lib/nagios/plugins/check_ceph_mon':
+  dc_nrpe::check { 'check_ceph_mon':
+    path   => '/usr/local/bin/check_ceph_mon',
     source => 'puppet:///modules/dc_nrpe/check_ceph_mon',
+    args   => "-H ${::ipaddress_p1p1} -I ${::hostname}",
+    sudo   => true,
   }
 
-  file { '/usr/lib/nagios/plugins/check_ceph_osd':
+  dc_nrpe::check { 'check_ceph_osd':
+    path   => '/usr/local/bin/check_ceph_osd',
     source => 'puppet:///modules/dc_nrpe/check_ceph_osd',
+    args   => "-H ${::ipaddress_p1p1}",
+    sudo   => true,
   }
 
-  file { '/usr/lib/nagios/plugins/check_ceph_rgw':
+  dc_nrpe::check { 'check_ceph_rgw':
+    path   => '/usr/local/bin/check_ceph_rgw',
     source => 'puppet:///modules/dc_nrpe/check_ceph_rgw',
+    args   => "-i radosgw.${::hostname}",
   }
 
 }
