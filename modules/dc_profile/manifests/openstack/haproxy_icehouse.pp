@@ -144,10 +144,10 @@ class dc_profile::openstack::haproxy_icehouse {
   # Nova Metadata
   # TODO: Renable SSL for this service when we go to Juno
   haproxy::listen { 'icehouse-nova-metadata':
-    ipaddress    => [ $internal_vip, $external_vip ],
-    mode         => 'http',
-    ports        => '8775',
-    options      => {
+    ipaddress => [ $internal_vip, $external_vip ],
+    mode      => 'http',
+    ports     => '8775',
+    options   => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
     },
@@ -211,7 +211,7 @@ class dc_profile::openstack::haproxy_icehouse {
 
   # Galera
   haproxy::listen { 'icehouse-galera':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress => [ $internal_vip, $external_vip ],
     mode      => 'tcp',
     ports     => '3306',
     options   => {
@@ -219,6 +219,25 @@ class dc_profile::openstack::haproxy_icehouse {
       'balance'        => 'source',
       'timeout client' => '30000s',
       'timeout server' => '30000s',
+    },
+  }
+
+  # Ceilometer
+  haproxy::listen { 'icehouse-ceilometer':
+    ipaddress    => '*',
+    mode         => 'http',
+    ports        => '8777',
+    bind_options => [
+      'ssl',
+      'no-sslv3',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+    ],
+    options      => {
+      'option'  => ['tcpka', 'tcplog'],
+      'balance' => 'source',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
     },
   }
 
