@@ -83,6 +83,7 @@ def main():
     #print ceph_health
 
     # exec command
+    os.environ['HOME'] = '/root'
     p = subprocess.Popen(ceph_health,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     output, err = p.communicate()
 
