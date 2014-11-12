@@ -63,36 +63,13 @@ class dc_nrpe (
     notify  => Service['xinetd'],
   }
 
-  file { '/etc/nagios/nrpe.d/dc_common.cfg':
-    ensure  => file,
-    require => Package['nagios-nrpe-server'],
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => template('dc_nrpe/dc_common.cfg.erb'),
-    notify  => Service['xinetd'],
-  }
-
   # Puppet checks
 
   package { 'python-yaml':
     ensure => installed,
   }
 
-  file { '/usr/lib/nagios/plugins/check_puppetagent':
-    ensure  => file,
-    require => Package['nagios-nrpe-server'],
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    source  => 'puppet:///modules/dc_nrpe/check_puppetagent',
-  }
-
-  sudo::conf { 'check_puppetagent':
-    priority => 10,
-    content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_puppetagent',
-  }
-
+  contain dc_nrpe::common
   contain dc_nrpe::glance
   contain dc_nrpe::neutron
   contain dc_nrpe::nova_server
