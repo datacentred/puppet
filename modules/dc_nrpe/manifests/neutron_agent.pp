@@ -2,11 +2,29 @@
 #
 class dc_nrpe::neutron_agent {
 
-  file { '/etc/nagios/nrpe.d/neutron_agent.cfg':
-    ensure  => present,
-    source  => 'puppet:///modules/dc_nrpe/neutron_agent.cfg',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
+  dc_nrpe::check { 'check_neutron_dhcp_agent':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-c 1: -u neutron -a /usr/bin/neutron-dhcp-agent',
+  }
+
+  dc_nrpe::check { 'check_neutron_metadata_agent':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-c 1: -a /usr/bin/neutron-ns-metadata-proxy',
+  }
+
+  dc_nrpe::check { 'check_neutron_vpn_agent':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-c 1: -u neutron -a /usr/bin/neutron-vpn-agent',
+  }
+
+  dc_nrpe::check { 'check_neutron_lbaas_agent',
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-c 1: -u neutron -a /usr/bin/neutron-lbaas-agent',
+  }
+
+  dc_nrpe::check { 'check_neutron_metering_agent':
+    path => '/usr/lib/nagios/plugins/check_procs',
+    args => '-c 1: -u neutron -a /usr/bin/neutron-metering-agent',
   }
 
 }

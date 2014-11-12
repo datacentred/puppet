@@ -69,7 +69,7 @@ if [ "$(id -u)" != "0" ]; then
 else
 
     #Need root to "run netstat -p"
-    if ! KEY=$(netstat -epta 2>/dev/null | awk "{if (/:<%= @logstash_forwarder_port %>.*${PID}\/$DAEMON/) {print ; exit}}") || test -z "$KEY"
+    if ! KEY=$(netstat -epta 2>/dev/null | awk "{if (/:55515.*${PID}\/$DAEMON/) {print ; exit}}") || test -z "$KEY"
     then
         echo "$DEAMON is not connected to Logstash"
         exit $STATE_CRITICAL

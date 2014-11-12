@@ -2,14 +2,9 @@
 #
 class dc_nrpe::puppetdb {
 
-  file { '/etc/nagios/nrpe.d/puppetdb.cfg':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/dc_nrpe/puppetdb.cfg',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
+  dc_nrpe::check { 'check_puppetdb':
+    path => '/usr/lib/nagios/plugins/check_http',
+    args => '-H localhost -p 8080',
   }
 
 }
