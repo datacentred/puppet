@@ -1,4 +1,4 @@
 puppet
 ======
 
-Document me
+1000 Pull requests - buy cake!!
