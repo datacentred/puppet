@@ -83,7 +83,9 @@ class dc_logstash::server (
 
   # Add icinga config
   unless $::is_vagrant {
-    contain ::dc_logstash::server::icinga
+    if dc_logstash::params::elasticsearch_embedded {
+      contain ::dc_logstash::server::icinga
+    }
   }
 
 }
