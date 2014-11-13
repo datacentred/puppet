@@ -1,7 +1,7 @@
 output {
   elasticsearch {
-    host => <%= scope.lookupvar('dc_logstash::server::elasticsearch_host') %>
-    embedded => <%= scope.lookupvar('dc_logstash::server::elasticsearch_embedded') %>
-    protocol => <%= scope.lookupvar('dc_logstash::server::elasticsearch_protocol') %>
+    host => <%= @elasticsearch_host %>
+    embedded => <%= @elasticsearch_embedded %>
+    protocol => <%= @elasticsearch_protocol %>
   }
 }

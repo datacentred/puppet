@@ -1,7 +1,7 @@
 output {
   if [type] == "syslog" {
   riemann {
-      host => "<%= scope.lookupvar('dc_logstash::server::riemann_dev_host') %>"
+      host => "<%= @riemann_dev_host %>"
       riemann_event   => {
         "description" => "%{syslog_message}"
         "service"     => "%{syslog_program}"
@@ -13,7 +13,7 @@ output {
 output {
   if "keystonefmt" in [tags] or "oslofmt" in [tags] {
     riemann {
-      host => "<%= scope.lookupvar('dc_logstash::server::riemann_dev_host') %>"
+      host => "<%= @riemann_dev_host %>"
       riemann_event   => {
         "description" => "%{logmessage}"
         "service"     => "%{type}"
