@@ -18,6 +18,8 @@ class dc_profile::openstack::neutron_agent {
 
   include dc_nrpe::neutron_agent
 
+  include dc_profile::auth::sudoers_neutron
+
   # A bug in the ML2 plugin deployment means that this file needs to be
   # present
   file { '/etc/default/neutron-server':
@@ -29,8 +31,6 @@ class dc_profile::openstack::neutron_agent {
   package { 'conntrack':
     ensure => installed,
   }
-
-  include dc_profile::auth::sudoers_neutron
 
   # If we're on a designated network node, configure the various
   # additional Neutron agents for L3, DHCP and metadata functionality
