@@ -7,8 +7,8 @@ class loadbalancer (
   $keepalived_virtual_router_id,
   $keepalived_virtual_ipaddress,
   $haproxy_listeners,
-  $haproxy_stats_user     = $::haproxy_stats_user,
-  $haproxy_stats_password = $::haproxy_stats_password,
+  $haproxy_stats_user,
+  $haproxy_stats_password,
 ) {
 
   include ::haproxy
