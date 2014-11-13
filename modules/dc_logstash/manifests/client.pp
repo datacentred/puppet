@@ -59,7 +59,7 @@ class dc_logstash::client (
     ensure    => running,
     enable    => true,
     require   => [ File['/usr/sbin/log-courier'], File['/etc/init.d/log-courier'] ],
-    subscribe => Concat['/etc/log-courier/log-courier.conf'],
+    subscribe => [ Concat['/etc/log-courier/log-courier.conf'], File['/usr/sbin/log-courier'] ],
   }
 
 }
