@@ -1,0 +1,7 @@
+output {
+  elasticsearch {
+    host => <%= @elasticsearch_host %>
+    embedded => <%= @elasticsearch_embedded %>
+    protocol => <%= @elasticsearch_protocol %>
+  }
+}

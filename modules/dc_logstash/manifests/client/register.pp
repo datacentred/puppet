@@ -14,6 +14,6 @@ define dc_logstash::client::register ($logs, $fields, $order='10') {
   concat::fragment { "log_courier_log_${name}":
     target  => '/etc/log-courier/log-courier.conf',
     order   => $order,
-    content => template('dc_logstash/log-courier_client_log.erb'),
+    content => template('dc_logstash/client/log-courier_client_log.erb'),
   }
 }

@@ -1,0 +1,8 @@
+input {
+ courier {
+     port => <%= @logcourier_port %>
+     ssl_certificate => "/var/lib/puppet/ssl/certs/<%= @logstash_cert_alias %>.pem"
+     ssl_key => "/var/lib/puppet/ssl/private_keys/<%= @logstash_cert_alias %>.pem"
+     type => "log-courier"
+ }
+}

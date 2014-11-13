@@ -1,0 +1,24 @@
+output {
+  if [type] == "syslog" {
+  riemann {
+      host => "<%= @riemann_dev_host %>"
+      riemann_event   => {
+        "description" => "%{syslog_message}"
+        "service"     => "%{syslog_program}"
+        "state"       => "%{syslog_severity_code}"
+      }
+    }
+  }
+}
+output {
+  if "keystonefmt" in [tags] or "oslofmt" in [tags] {
+    riemann {
+      host => "<%= @riemann_dev_host %>"
+      riemann_event   => {
+        "description" => "%{logmessage}"
+        "service"     => "%{type}"
+        "state"       => "%{loglevel}"
+      }
+    }
+  }
+}
