@@ -15,6 +15,13 @@ class dc_logstash::client (
     source => "puppet:///modules/dc_logstash/log_courier/log-courier-${logcourier_version}",
   }
 
+  file { '/usr/sbin/lc-admin':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    source => 'puppet:///modules/dc_logstash/log_courier/lc-admin',
+  }
+
   file { '/etc/init.d/log-courier':
     ensure => file,
     owner  => 'root',
