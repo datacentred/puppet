@@ -13,7 +13,7 @@ class dc_nrpe::cinder {
   }
 
   dc_nrpe::check { 'check_cinder_api_proc':
-    path => '/usr/lib/nagios/plugins/check_procs':
+    path => '/usr/lib/nagios/plugins/check_procs',
     args => '-c 1: -u cinder -a cinder-api',
   }
 
