@@ -10,68 +10,37 @@
 # Sample Usage:
 #
 class dc_profile::openstack::neutron_agent {
-  $os_region = hiera(os_region)
 
-  # OpenStack API and loadbalancer endpoint
-  $osapi_public  = 'compute.datacentred.io'
+  # Top-level Neutron configuration common to all
+  include ::neutron
+  include ::neutron::plugins::ml2
+  include ::neutron::agents::ml2::ovs
 
-  $keystone_neutron_password = hiera(keystone_neutron_password)
+  include dc_nrpe::neutron_agent
 
-  $rabbitmq_hosts    = hiera(osdbmq_members)
-  $rabbitmq_username = hiera(osdbmq_rabbitmq_user)
-  $rabbitmq_password = hiera(osdbmq_rabbitmq_pw)
-  $rabbitmq_port     = hiera(osdbmq_rabbitmq_port)
-  $rabbitmq_vhost    = hiera(osdbmq_rabbitmq_vhost)
+  include dc_profile::auth::sudoers_neutron
 
-  $neutron_secret          = hiera(neutron_secret)
-  $neutron_metadata_secret = hiera(neutron_metadata_secret)
-
-  $neutron_db      = hiera(neutron_db)
-  $neutron_db_host = $osapi_public
-  $neutron_db_user = hiera(neutron_db_user)
-  $neutron_db_pass = hiera(neutron_db_pass)
-
-  $neutron_port = '9696'
-
-  $management_ip  = $::ipaddress
-
-  class { '::neutron':
-    enabled               => true,
-    bind_host             => '0.0.0.0',
-    rabbit_hosts          => $rabbitmq_hosts,
-    rabbit_user           => $rabbitmq_username,
-    rabbit_password       => $rabbitmq_password,
-    rabbit_port           => $rabbitmq_port,
-    rabbit_virtual_host   => $rabbitmq_vhost,
-    allow_overlapping_ips => true,
-    core_plugin           => 'ml2',
-    service_plugins       => [ 'router', 'firewall', 'lbaas', 'vpnaas' ],
-  }
-
-  # Enable ML2 plugin
+  # A bug in the ML2 plugin deployment means that this file needs to be
+  # present
   file { '/etc/default/neutron-server':
     ensure  => present,
   }
-  class { 'neutron::plugins::ml2':
-      type_drivers         => [ 'gre' ],
-      tenant_network_types => [ 'gre' ],
-      mechanism_drivers    => [ 'openvswitch' ],
-      tunnel_id_ranges     => [ '1:1000' ],
-  }
 
-  include dc_profile::auth::sudoers_neutron
+  # We also need conntrack - it's a missing dependancy for the neutron
+  # packages
+  package { 'conntrack':
+    ensure => installed,
+  }
 
   # If we're on a designated network node, configure the various
   # additional Neutron agents for L3, DHCP and metadata functionality
   # Note: network_node is defined at Host Group level via Foreman
   if $::network_node {
-
-    $integration_ip = $::ipaddress_p2p1
-
-    # We also want to disable GRO on the external interface
+    # We want to disable GRO on the external interface
     # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
     # Physical interface plumbed into external network
     $uplink_if = 'em2'
+
     include ethtool
     ethtool { $uplink_if:
       gro => 'disabled',
@@ -91,46 +60,11 @@ class dc_profile::openstack::neutron_agent {
       ],
     }
 
-    class { 'neutron::agents::ml2::ovs':
-      bridge_uplinks    => ["br-ex:${uplink_if}"],
-      bridge_mappings   => ['default:br-ex'],
-      local_ip          => $integration_ip,
-      enable_tunneling  => true,
-    }
-
-    class { 'neutron::agents::dhcp':
-      enabled     => true,
-    }
-
-    class { 'neutron::agents::metadata':
-      shared_secret => $neutron_metadata_secret,
-      auth_url      => "https://${osapi_public}:35357/v2.0",
-      auth_password => $keystone_neutron_password,
-      auth_region   => $os_region,
-      metadata_ip   => get_ip_addr($osapi_public),
-    }
-
-    class { 'neutron::agents::vpnaas':
-      enabled => true,
-    }
-
-    class { 'neutron::agents::lbaas':
-      enabled        => true,
-      use_namespaces => true,
-    }
+    include ::neutron::agents::dhcp
+    include ::neutron::agents::vpnaas
+    include ::neutron::agents::lbaas
+    include ::neutron::agents::metadata
 
   }
-  else  {
-
-    # We're a compute node
-    $integration_ip = $::ipaddress_p1p1
-
-    class { 'neutron::agents::ml2::ovs':
-      local_ip         => $integration_ip,
-      enable_tunneling => true,
-    }
-  }
-
-  include dc_nrpe::neutron_agent
 
 }
