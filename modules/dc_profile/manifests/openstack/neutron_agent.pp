@@ -14,6 +14,7 @@ class dc_profile::openstack::neutron_agent {
   # Top-level Neutron configuration common to all
   include ::neutron
   include ::neutron::plugins::ml2
+  include ::neutron::agents::ml2::ovs
 
   include dc_nrpe::neutron_agent
 
@@ -59,25 +60,11 @@ class dc_profile::openstack::neutron_agent {
       ],
     }
 
-    class { 'neutron::agents::ml2::ovs':
-      bridge_uplinks => ["br-ex:${uplink_if}"],
-      local_ip       => $::ipaddress_p2p1,
-    }
-
     include ::neutron::agents::dhcp
     include ::neutron::agents::vpnaas
     include ::neutron::agents::lbaas
+    include ::neutron::agents::metadata
 
-    class { 'neutron::agents::metadata':
-      metadata_ip   => get_ip_addr(hiera(os_api_public)),
-    }
-
-  }
-  else  {
-    # We're a compute node, so just configure the basics
-    class { 'neutron::agents::ml2::ovs':
-      local_ip         => $::ipaddress_p1p1,
-    }
   }
 
 }
