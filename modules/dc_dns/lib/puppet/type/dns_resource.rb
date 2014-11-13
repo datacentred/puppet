@@ -19,7 +19,7 @@ Puppet::Type.newtype(:dns_resource) do
   newparam(:name) do
     desc 'Unique identifier in the form "<name>/<type>"'
     validate do |value|
-      unless value =~ /^[a-z0-9\-\.]+\/(A|PTR|CNAME)$/
+      unless value =~ /^[a-z0-9\-\.\*]+\/(A|PTR|CNAME)$/
         raise ArgumentError, 'dns_resource::name invalid'
       end
     end
