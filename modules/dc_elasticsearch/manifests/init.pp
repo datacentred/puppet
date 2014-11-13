@@ -27,9 +27,7 @@ class dc_elasticsearch (
     init_defaults => $config_hash,
   }
 
-  unless $::is_vagrant {
-    include ::dc_icinga::hostgroup_elasticsearch
-  }
+  include ::dc_icinga::hostgroup_elasticsearch
 
   elasticsearch::instance { 'es-01': }
 }
