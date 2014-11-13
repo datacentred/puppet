@@ -2,13 +2,6 @@
 #
 class dc_nrpe::smartd {
 
-  # TODO: This set of checks relies on nagios.  This must be cleaned!!
-  dc_nrpe::check { 'check_dev_smart':
-    path   => '/usr/lib/nagios/plugins/check_dev_smart',
-    source => 'puppet:///modules/dc_nrpe/check_dev_smart',
-    sudo   => true,
-  }
-
   package {'smartmontools':
     ensure => installed
   }
@@ -21,19 +14,25 @@ class dc_nrpe::smartd {
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      require => Package['nagios-nrpe-server', 'smartmontools'],
+      require => Package['nagios-nrpe-server'],
       notify  => Service['nagios-nrpe-server'],
     }
   }
 
-
-  file { '/usr/lib/nagios/plugins/check_ide_smart':
+  file { '/usr/local/bin/check_ide_smart':
     ensure  => file,
     source  => 'puppet:///modules/dc_nrpe/check_ide_smart',
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => Package['nagios-nrpe-server', 'smartmontools'],
+    require => Package['nagios-nrpe-server'],
     notify  => Service['nagios-nrpe-server'],
   }
+
+  dc_nrpe::check { 'check_dev_smart':
+    path   => '/usr/local/bin/check_dev_smart',
+    source => 'puppet:///modules/dc_nrpe/check_dev_smart',
+    sudo   => true,
+  }
+
 }
