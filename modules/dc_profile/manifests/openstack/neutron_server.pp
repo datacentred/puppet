@@ -25,7 +25,7 @@ class dc_profile::openstack::neutron_server {
   @@haproxy::balancermember { "${::fqdn}-neutron":
     listening_service => 'icehouse-neutron',
     server_names      => $::hostname,
-    ipaddresses       => $::fqdn,
+    ipaddresses       => $::ipaddress,
     ports             => '9696',
     options           => 'check inter 2000 rise 2 fall 5',
   }
