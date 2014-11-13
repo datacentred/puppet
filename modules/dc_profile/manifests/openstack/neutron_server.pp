@@ -13,13 +13,13 @@ class dc_profile::openstack::neutron_server {
   # Enable Neutron server services
   include ::neutron
   include ::neutron::server
+  include ::neutron::server::notifications
   include ::neutron::plugins::ml2
-  include ::neutron::notifications
 
   include dc_profile::auth::sudoers_neutron
 
-  include dc_nrpe::neutron
-  include dc_icinga::hostgroup_neutron_server
+  # include dc_nrpe::neutron
+  # include dc_icinga::hostgroup_neutron_server
 
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
