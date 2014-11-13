@@ -68,8 +68,9 @@ class dc_profile::openstack::keystone {
     options           => 'check inter 2000 rise 2 fall 5'
   }
 
+  include ::dc_icinga::hostgroup_keystone
+
   unless $::is_vagrant {
-    include dc_icinga::hostgroup_keystone
     if $::environment == 'production' {
       include dc_profile::openstack::keystone_logstash
 
