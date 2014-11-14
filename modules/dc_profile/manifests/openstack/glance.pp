@@ -15,6 +15,7 @@ class dc_profile::openstack::glance {
   contain ::glance::api
   contain ::glance::registry
   contain ::glance::backend::rbd
+  contain ::glance::notify::rabbitmq
 
   # Add this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-glance-registry":
