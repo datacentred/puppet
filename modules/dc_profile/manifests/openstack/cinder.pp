@@ -18,6 +18,7 @@ class dc_profile::openstack::cinder {
   include ::cinder::glance
   include ::cinder::quota
   include ::cinder::volume
+  include ::cinder::ceilometer
   include ::cinder::volume::rbd
 
   ceph::client { 'cinder':
