@@ -16,6 +16,7 @@ class dc_profile::openstack::ceilometer {
   include ::ceilometer::api
   include ::ceilometer::agent::auth
   include ::ceilometer::agent::central
+  include ::ceilometer::agent::notification
   include ::ceilometer::collector
   include ::ceilometer::expirer
   include ::ceilometer::db
