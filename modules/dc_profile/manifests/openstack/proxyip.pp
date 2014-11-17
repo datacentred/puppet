@@ -15,7 +15,7 @@ class dc_profile::openstack::proxyip {
 
   $int_if   = 'eth0'
   $ext_if   = 'eth1'
-  $domain   = 'datacentred.co.uk'
+  $domain   = 'datacentred.io'
 
   # Externally facing interface has a statically-assigned IP address
   # which we obtain from DNS.  You need to ensure that this interface

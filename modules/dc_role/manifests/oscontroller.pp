@@ -19,6 +19,7 @@ class dc_role::oscontroller inherits dc_role {
   contain dc_profile::openstack::neutron_server
   contain dc_profile::openstack::horizon
   contain dc_profile::openstack::ceilometer
+  contain dc_profile::openstack::heat
 
   Class['dc_profile::openstack::keystone'] ->
   Class['dc_profile::openstack::glance'] ->
@@ -26,6 +27,7 @@ class dc_role::oscontroller inherits dc_role {
   Class['dc_profile::openstack::nova'] ->
   Class['dc_profile::openstack::neutron_server'] ->
   Class['dc_profile::openstack::ceilometer'] ->
-  Class['dc_profile::openstack::horizon']
+  Class['dc_profile::openstack::horizon'] ->
+  Class['dc_profile::openstack::heat']
 
 }
