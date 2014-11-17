@@ -18,6 +18,7 @@ class dc_profile::openstack::keystone {
 
   # Data defined in the openstack_keystone role
   create_resources(keystone_user, hiera(keystone_users))
+  create_resources(keystone_role, hiera(keystone_role))
   create_resources(keystone_user_role, hiera(keystone_user_roles))
   create_resources(keystone_service, hiera(keystone_services))
   create_resources(keystone_endpoint, hiera(keystone_endpoints))
