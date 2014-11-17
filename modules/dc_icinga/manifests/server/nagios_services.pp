@@ -255,13 +255,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Nova Scheduler Netstat',
   }
 
-  icinga::service { 'check_nova_conductor_netstat':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_server',
-    check_command       => 'check_nrpe_1arg!check_nova_conductor_netstat',
-    service_description => 'Nova Conductor Netstat',
-  }
-
   icinga::service { 'check_nova_consoleauth_netstat':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_server',
