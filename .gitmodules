@@ -251,3 +251,6 @@
 [submodule "modules/mongodb"]
 	path = modules/mongodb
 	url = https://github.com/datacentred/puppetlabs-mongodb
+[submodule "modules/heat"]
+	path = modules/heat
+	url = https://github.com/stackforge/puppet-heat.git
