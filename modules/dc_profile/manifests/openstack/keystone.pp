@@ -22,6 +22,9 @@ class dc_profile::openstack::keystone {
   create_resources(keystone_service, hiera(keystone_services))
   create_resources(keystone_endpoint, hiera(keystone_endpoints))
 
+  $roles = hiera(keystone_roles)
+  keystone_role { $roles: }
+
   $keystone_signing_key  = hiera(keystone_signing_key)
   $keystone_signing_cert = hiera(keystone_signing_cert)
   $keystone_ca_key       = hiera(keystone_ca_key)
