@@ -33,7 +33,7 @@ class dc_profile::openstack::nova_compute {
   include ::nova::compute::neutron
   include ::nova::compute::rbd
   include ::nova::network::neutron
-  include ::nova::scheduler
+  include ::nova::scheduler::filter
   
   # Make sure the Ceph client configuration is in place
   # before we do any of the Nova rbd-related configuration, and
