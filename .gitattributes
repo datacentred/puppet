@@ -2,10 +2,10 @@
 hieradata/modules/*.yaml                          filter=private diff=private
 hieradata/nodes/*.yaml                            filter=private diff=private
 hieradata/roles/*.yaml                            filter=private diff=private
-/modules/dc_mcollective/files/certs/*             filter=private diff=private
-/modules/dc_mcollective/files/private_keys/*      filter=private diff=private
-/modules/dc_mcollective/files/client_certs/*      filter=private diff=private
-/modules/dc_puppet/templates/master/git/id_rsa    filter=private diff=private
+/modules/dc_ssl/files/mcollective/certs/*             filter=private diff=private
+/modules/dc_ssl/files/mcollective/private_keys/*      filter=private diff=private
+/modules/dc_ssl/files/mcollective/client_certs/*      filter=private diff=private
+/modules/puppet/templates/master/git/id_rsa    filter=private diff=private
 /modules/dc_rails/files/deployer_keys/id_rsa      filter=private diff=private
 /modules/dc_puppet/files/keys/marvin/*            filter=private diff=private
 /modules/dc_puppet/files/keys/stronghold/*        filter=private diff=private
