@@ -8,12 +8,6 @@ class dc_nrpe::nova_server {
     sudo   => true,
   }
 
-  dc_nrpe::check { 'check_nova_conductor_netstat':
-    path   => '/usr/local/bin/check_nova-conductor.sh',
-    source => 'puppet:///modules/dc_nrpe/check_nova-conductor.sh',
-    sudo   => true,
-  }
-
   dc_nrpe::check { 'check_nova_consoleauth_netstat':
     path   => '/usr/local/bin/check_nova-consoleauth.sh',
     source => 'puppet:///modules/dc_nrpe/check_nova-consoleauth.sh',
