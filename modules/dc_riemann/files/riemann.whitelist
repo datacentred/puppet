@@ -6,4 +6,4 @@ Can\'t create new lease file: Permission denied
 \[\-\] \[instance: [a-zA-Z0-9-]+\] Instance not resizing[,] skipping migration\.
 ^.*dhcp-failover rejected: incoming update is less critical than outgoing update$
 ^.*Please use the the default quota class for default quota.$
-^.*FAILED: Has an address record but no DHCID, not mine
+^.*FAILED: Has an address record but no DHCID, not mine.$
