@@ -31,10 +31,20 @@ class dc_profile::net::aptmirror {
     ensure => directory,
   }
 
+  # Use enabled = false so that we can redirect the stdout in a custom cron job
   class { 'apt_mirror':
+    enabled   => false,
     base_path => $base_path,
     var_path  => '/var/spool/apt-mirror/var',
     require   => File[$base_path],
+  }
+
+  cron { "apt-mirror-${::hostname}":
+    ensure  => 'present',
+    user    => 'root',
+    command => '/usr/bin/apt-mirror /etc/apt/mirror.list >/dev/null',
+    minute  => 0,
+    hour    => 4,
   }
 
   $mirror_defaults = {
