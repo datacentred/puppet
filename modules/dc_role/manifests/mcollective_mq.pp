@@ -12,6 +12,4 @@
 #
 class dc_role::mcollective_mq inherits dc_role {
 
-  contain dc_profile::puppet::mcollective_mq
-
 }
