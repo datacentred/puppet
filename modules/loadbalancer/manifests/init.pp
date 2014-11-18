@@ -3,9 +3,7 @@
 # Provides a keepalived haproxy load balancer
 #
 class loadbalancer (
-  $keepalived_interface,
-  $keepalived_virtual_router_id,
-  $keepalived_virtual_ipaddress,
+  $keepalived_interfaces,
   $haproxy_listeners,
   $haproxy_stats_user = undef,
   $haproxy_stats_password = undef,
@@ -16,13 +14,11 @@ class loadbalancer (
   include ::keepalived
   include ::dc_ssl::haproxy
 
-  keepalived::vrrp::instance { "VI_${keepalived_virtual_router_id}":
-    interface         => $keepalived_interface,
-    state             => 'SLAVE',
-    priority          => '100',
-    virtual_router_id => $keepalived_virtual_router_id,
-    virtual_ipaddress => $keepalived_virtual_ipaddress,
+  $keepalived_defaults = {
+    'state'    => 'SLAVE',
+    'priority' => 100,
   }
+  create_resources('keepalived::vrrp::instance', $keepalived_interfaces, $keepalived_defaults)
 
   if $haproxy_stats_ipaddress != undef {
     haproxy::listen { 'haproxy-stats':
