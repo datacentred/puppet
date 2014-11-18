@@ -193,7 +193,7 @@ def do_check(cache_file, expire, interval):
 
     # Exit if cache is expired
     if _cache_is_expired(cache, expire):
-        return CRITICAL, "CRITICAL - Cache file expired %s" % cache_file, run_cmd
+        return UNKNOWN, "UNKNOWN - Cache file expired %s" % cache_file, run_cmd
 
     # Format output
     output = ' - '.join([cache.get('stdout', ''), cache.get('stderr', '')])
