@@ -39,7 +39,7 @@ class dc_profile::net::aptmirror {
     require   => File[$base_path],
   }
 
-  cron { "apt-mirror-${hostname}":
+  cron { "apt-mirror-${::hostname}":
     ensure  => 'present',
     user    => 'root',
     command => '/usr/bin/apt-mirror /etc/apt/mirror.list >/dev/null',
