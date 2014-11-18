@@ -28,7 +28,7 @@ class dc_role {
 
     ## Only include these classes in production
     if $::environment == 'production' {
-      include dc_profile::puppet::mcollective_host
+      include dc_profile::puppet::mcollective
       include dc_profile::perf::collectd::agent
       include dc_profile::net::mail
       include dc_profile::mon::nsca_client
