@@ -40,7 +40,7 @@ class dc_nrpe::common {
     sudo   => true,
   }
 
-    dc_nrpe::check { 'check_log_courier':
+  dc_nrpe::check { 'check_log_courier':
     path   => '/usr/local/bin/check_log_courier',
     source => 'puppet:///modules/dc_nrpe/check_log_courier.py',
     sudo   => true,
