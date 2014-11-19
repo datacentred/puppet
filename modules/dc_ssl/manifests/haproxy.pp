@@ -22,8 +22,4 @@ class dc_ssl::haproxy {
     source => 'puppet:///modules/dc_ssl/haproxy/STAR_datacentred_io.pem',
   }
 
-  file { '/etc/ssl/certs/logstash.sal01.datacentred.co.uk.pem':
-    source => 'puppet:///modules/dc_ssl/haproxy/logstash.sal01.datacentred.co.uk.pem',
-  }
-
 }
