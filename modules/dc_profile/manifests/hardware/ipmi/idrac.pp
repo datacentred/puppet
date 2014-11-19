@@ -13,21 +13,14 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_profile::hardware::ipmi::idrac {
 
-  # Install racadm
-  include dc_ipmi::dell::racadm
-
-  service { 'dataeng':
-    ensure  => running,
-    enable  => true,
-    require => Class['dc_ipmi::dell::racadm'],
-  }
-
+  # Install racadm and start dataeng service
+  include dc_profile::dell::openmanage
   # Create a symlink to racadm in /usr/bin/racadm
   # because drac_setting expects it to be set
   file {'/usr/bin/racadm':
     ensure => 'link',
     target => '/opt/dell/srvadmin/sbin/racadm',
-    require => Class['dc_ipmi::dell::racadm'],
+    require => Class['dc_profile::dell::openmanage'],
   }
 
   # set the hostname
