@@ -12,7 +12,6 @@ class loadbalancer (
 
   include ::haproxy
   include ::keepalived
-  include ::dc_ssl::haproxy
 
   $keepalived_defaults = {
     'state'    => 'SLAVE',
