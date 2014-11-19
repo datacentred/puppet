@@ -13,10 +13,6 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_profile::hardware::ipmi::idrac {
 
-  $ldap_server     = hiera(ipmi::authentication::server)
-  $ldap_base_dn    = hiera(ldap_suffix)
-  $ldap_role_group = hiera(ipmi::authentication::ldap_role_group)
-
   # Install racadm and start dataeng service
   include dc_profile::dell::openmanage
   # Create a symlink to racadm in /usr/bin/racadm
@@ -41,7 +37,7 @@ class dc_profile::hardware::ipmi::idrac {
 
   # this should be in hiera
   drac_setting { 'cfgldap/cfgLdapServer':
-    object_value => $ldap_server,
+    object_value => '10.10.192.111',
     require => Service['dataeng'],
   }
 
@@ -51,7 +47,7 @@ class dc_profile::hardware::ipmi::idrac {
   }
 
   drac_setting { 'cfgldap/cfgLdapBaseDN':
-    object_value => $ldap_base_dn,
+    object_value => 'dc=datacentred,dc=co,dc=uk',
     require => Service['dataeng'],
   }
 
@@ -61,7 +57,7 @@ class dc_profile::hardware::ipmi::idrac {
   }
 
   drac_setting { 'cfgldaprolegroup/1/cfgLdapRoleGroupDN':
-    object_value => $ldap_role_group,
+    object_value => 'cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk',
     require => Service['dataeng'],
   }
 
