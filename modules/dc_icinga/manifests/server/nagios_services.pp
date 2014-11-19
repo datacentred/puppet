@@ -522,10 +522,10 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_log_courier':
-  use                 => 'dc_service_generic',
-  hostgroup_name      => 'dc_hostgroup_log_courier',
-  check_command       => 'check_nrpe_1arg!check_log_courier',
-  service_description => 'Log-courier status',
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_log_courier',
+    check_command       => 'check_nrpe_1arg!check_log_courier',
+    service_description => 'Log-courier status',
   }
 
 }
