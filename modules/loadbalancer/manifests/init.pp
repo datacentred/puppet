@@ -8,8 +8,6 @@ class loadbalancer (
   $haproxy_stats_user = undef,
   $haproxy_stats_password = undef,
   $haproxy_stats_ipaddress = undef,
-  $ssl_cert_file = undef,
-  $ssl_cert_contents = undef,
 ) {
 
   include ::haproxy
