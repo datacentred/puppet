@@ -16,5 +16,6 @@ class dc_elasticsearch::lbmember{
     ipaddresses       => $::ipaddress,
     server_names      => $::hostname,
     ports             => '9200',
+    options           => 'check',
   }
 }

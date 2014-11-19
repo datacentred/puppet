@@ -8,6 +8,7 @@ class loadbalancer (
   $haproxy_stats_user = undef,
   $haproxy_stats_password = undef,
   $haproxy_stats_ipaddress = undef,
+  $ssl_cert_file = undef,
 ) {
 
   include ::haproxy
@@ -22,10 +23,16 @@ class loadbalancer (
 
   if $haproxy_stats_ipaddress != undef {
     haproxy::listen { 'haproxy-stats':
-      ipaddress => $haproxy_stats_ipaddress,
-      mode      => 'http',
-      ports     => '1936',
-      options   => {
+      ipaddress    => $haproxy_stats_ipaddress,
+      mode         => 'http',
+      ports        => '1936',
+      bind_options => [
+      'ssl',
+      'no-sslv3',
+      "crt ${ssl_cert_location}",
+      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+    ],
+      options      => {
         'stats'  => [
           'enable',
           'uri /',

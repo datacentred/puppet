@@ -16,6 +16,7 @@ class dc_profile::log::logstash_lbmember{
     ipaddresses       => $::ipaddress,
     server_names      => $::hostname,
     ports             => '80',
+    options           => 'check',
   }
 
   @@haproxy::balancermember { "${::hostname}_syslog":
@@ -23,6 +24,7 @@ class dc_profile::log::logstash_lbmember{
     ipaddresses       => $::ipaddress,
     server_names      => $::hostname,
     ports             => '5544',
+    options           => 'check',
   }
 
   @@haproxy::balancermember { "${::hostname}_courier":
@@ -30,5 +32,6 @@ class dc_profile::log::logstash_lbmember{
     ipaddresses       => $::ipaddress,
     server_names      => $::hostname,
     ports             => '55516',
+    options           => 'check',
   }
 }
