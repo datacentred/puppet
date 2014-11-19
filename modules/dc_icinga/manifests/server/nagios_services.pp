@@ -24,7 +24,7 @@ class dc_icinga::server::nagios_services {
 
   icinga::service { 'check_load':
     use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
+    hostgroup_name      => 'dc_hostgroup_generic,!dc_hostgroup_nova_compute',
     check_command       => 'check_nrpe_1arg!check_load',
     service_description => 'Load Average',
   }
