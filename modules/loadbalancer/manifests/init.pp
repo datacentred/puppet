@@ -12,7 +12,6 @@ class loadbalancer (
 
   include ::haproxy
   include ::keepalived
-  include ::dc_ssl::haproxy
 
   $keepalived_defaults = {
     'state'    => 'SLAVE',
@@ -22,10 +21,16 @@ class loadbalancer (
 
   if $haproxy_stats_ipaddress != undef {
     haproxy::listen { 'haproxy-stats':
-      ipaddress => $haproxy_stats_ipaddress,
-      mode      => 'http',
-      ports     => '1936',
-      options   => {
+      ipaddress    => $haproxy_stats_ipaddress,
+      mode         => 'http',
+      ports        => '1936',
+      bind_options => [
+      'ssl',
+      'no-sslv3',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+    ],
+      options      => {
         'stats'  => [
           'enable',
           'uri /',

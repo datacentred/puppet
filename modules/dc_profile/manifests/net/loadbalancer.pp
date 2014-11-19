@@ -5,5 +5,6 @@
 class dc_profile::net::loadbalancer{
 
   include ::loadbalancer
+  include ::dc_ssl::haproxy
 
 }
