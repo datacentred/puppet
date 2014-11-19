@@ -22,11 +22,7 @@ class loadbalancer (
   }
   create_resources('keepalived::vrrp::instance', $keepalived_interfaces, $keepalived_defaults)
 
-  if $haproxy_stats_ipaddress != undef and $ssl_cert_file != undef {
-    file { $ssl_cert_file :
-      ensure   => file,
-      contents => $ssl_cert_contents
-    }
+  if $haproxy_stats_ipaddress != undef {
     haproxy::listen { 'haproxy-stats':
       ipaddress    => $haproxy_stats_ipaddress,
       mode         => 'http',
@@ -34,7 +30,7 @@ class loadbalancer (
       bind_options => [
       'ssl',
       'no-sslv3',
-      "crt ${ssl_cert_file}",
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
       options      => {
