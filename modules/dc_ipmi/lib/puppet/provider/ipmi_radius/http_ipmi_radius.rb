@@ -71,7 +71,7 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
 
   RADIUS_SET_URI   = '/rpc/setradiuscfg.asp'
   RADIUS_GET_URI   = '/rpc/getradiuscfg.asp'
-  LOGIN_URI        = '/rpc/WEBSES/create.asp'
+  RADIUS_LOGIN_URI = '/rpc/WEBSES/create.asp'
 
   def set_radius_cfg
 
@@ -114,7 +114,7 @@ Puppet::Type.type(:ipmi_radius).provide(:http_ipmi_radius) do
     @login_payload['WEBVAR_USERNAME'] = @resource[:username]
     @login_payload['WEBVAR_PASSWORD'] = @resource[:password]
 
-    response, status =  ipmi_request(LOGIN_URI, "POST", 
+    response, status =  ipmi_request(RADIUS_LOGIN_URI, "POST", 
                                      @login_payload, setcookie=false)
     if status == '200' && check_response_code(response.body) == '0'
       cookie = parse_response_for('SESSION_COOKIE', response.body)

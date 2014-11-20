@@ -1,4 +1,4 @@
-# Class: dc_profile::hardware::ipmi::idrac
+# Class: dc_ipmi::dell::idrac
 #
 # Configure LDAP authentication and hostname on DELL iDRAC
 #
@@ -11,23 +11,21 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_profile::hardware::ipmi::idrac {
+class dc_ipmi::dell::idrac(
+  $ldap_server,
+  $ldap_basedn,
+  $ldap_port,
+  $ldap_role_group
+) {
 
-  # Install racadm
-  include dc_ipmi::dell::racadm
-
-  service { 'dataeng':
-    ensure  => running,
-    enable  => true,
-    require => Class['dc_ipmi::dell::racadm'],
-  }
-
+  # Install racadm and start dataeng service
+  include dc_profile::dell::openmanage
   # Create a symlink to racadm in /usr/bin/racadm
   # because drac_setting expects it to be set
   file {'/usr/bin/racadm':
     ensure => 'link',
     target => '/opt/dell/srvadmin/sbin/racadm',
-    require => Class['dc_ipmi::dell::racadm'],
+    require => Class['dc_profile::dell::openmanage'],
   }
 
   # set the hostname
@@ -42,19 +40,18 @@ class dc_profile::hardware::ipmi::idrac {
     require => Service['dataeng'],
   }
 
-  # this should be in hiera
   drac_setting { 'cfgldap/cfgLdapServer':
-    object_value => '10.10.192.111',
+    object_value => $ldap_server,
     require => Service['dataeng'],
   }
 
   drac_setting { 'cfgldap/cfgLdapPort':
-    object_value => 636,
+    object_value => $ldap_port,
     require => Service['dataeng'],
   }
 
   drac_setting { 'cfgldap/cfgLdapBaseDN':
-    object_value => 'dc=datacentred,dc=co,dc=uk',
+    object_value => $ldap_basedn,
     require => Service['dataeng'],
   }
 
@@ -64,7 +61,7 @@ class dc_profile::hardware::ipmi::idrac {
   }
 
   drac_setting { 'cfgldaprolegroup/1/cfgLdapRoleGroupDN':
-    object_value => 'cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk',
+    object_value => $ldap_role_group,
     require => Service['dataeng'],
   }
 

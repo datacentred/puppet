@@ -113,7 +113,7 @@ desc "Support for Network configuration on the IPMI interface."
 
   NETWORK_SET_URI   = '/rpc/setnwconfig.asp'
   NETWORK_GET_URI   = '/rpc/getnwconfig.asp'
-  LOGIN_URI         = '/rpc/WEBSES/create.asp'
+  NETWORK_LOGIN_URI = '/rpc/WEBSES/create.asp'
 
   def set_network_cfg
 
@@ -151,7 +151,7 @@ desc "Support for Network configuration on the IPMI interface."
     @login_payload['WEBVAR_USERNAME'] = @resource[:username]
     @login_payload['WEBVAR_PASSWORD'] = @resource[:password]
 
-    response, status =  ipmi_request(LOGIN_URI, "POST", 
+    response, status =  ipmi_request(NETWORK_LOGIN_URI, "POST", 
                                      @login_payload, setcookie=false)
     if status == '200' && check_response_code(response.body) == '0'
       cookie = parse_response_for('SESSION_COOKIE', response.body)
