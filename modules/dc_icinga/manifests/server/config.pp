@@ -389,10 +389,6 @@ class dc_icinga::server::config {
     description => 'Elasticsearch Node',
   }
 
-  icinga::hostgroup { 'dc_hostgroup_log_courier':
-    description => 'Log-courier',
-  }
-
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
