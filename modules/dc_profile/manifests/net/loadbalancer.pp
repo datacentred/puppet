@@ -13,8 +13,5 @@ class dc_profile::net::loadbalancer{
       creates => "/etc/ssl/certs/${::fqdn}.pem"
     }
   }
-  else {
-    include dc_ssl::haproxy
-  }
 
 }
