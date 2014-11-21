@@ -18,7 +18,7 @@ class loadbalancer (
     'state'    => 'SLAVE',
     'priority' => 100,
   }
-  create_resources('keepalived::vrrp::instance'/, $keepalived_interfaces, $keepalived_defaults)
+  create_resources('keepalived::vrrp::instance', $keepalived_interfaces, $keepalived_defaults)
 
   if ($haproxy_stats_ipaddress != undef) and (haproxy_stats_ssl_cert != undef) {
     haproxy::listen { 'haproxy-stats':
@@ -27,7 +27,7 @@ class loadbalancer (
       ports        => '1936',
       bind_options => [
       'ssl',
-      'no-sslv3',/
+      'no-sslv3',
       "crt ${haproxy_stats_ssl_cert}",
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
