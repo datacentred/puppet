@@ -8,7 +8,7 @@ define loadbalancer::member (
 
   # NOTE: Yes it's a coding standard violation but a bug exists
   # somewhere with implicit type conversion
-  @@haproxy::balancermember { $::fqdn:
+  @@haproxy::balancermember { "${::fqdn}_${name}":
     listening_service => $name,
     server_names      => $::hostname,
     ipaddresses       => $ipaddresses,
