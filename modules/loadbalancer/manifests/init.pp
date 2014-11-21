@@ -8,6 +8,7 @@ class loadbalancer (
   $haproxy_stats_user = undef,
   $haproxy_stats_password = undef,
   $haproxy_stats_ipaddress = undef,
+  $haproxy_stats_ssl_cert = undef,
 ) {
 
   include ::haproxy
@@ -19,7 +20,7 @@ class loadbalancer (
   }
   create_resources('keepalived::vrrp::instance', $keepalived_interfaces, $keepalived_defaults)
 
-  if $haproxy_stats_ipaddress != undef {
+  if ($haproxy_stats_ipaddress != undef) and (haproxy_stats_ssl_cert != undef) {
     haproxy::listen { 'haproxy-stats':
       ipaddress    => $haproxy_stats_ipaddress,
       mode         => 'http',
@@ -27,7 +28,7 @@ class loadbalancer (
       bind_options => [
       'ssl',
       'no-sslv3',
-      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+      "crt ${haproxy_stats_ssl_cert}",
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
       options      => {
