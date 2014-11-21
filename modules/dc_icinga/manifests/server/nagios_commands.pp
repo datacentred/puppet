@@ -171,7 +171,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_haproxy':
-    command_line => "/usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password}"
+    command_line => "/usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password} -C /var/lib/puppet/ssl/certs/ca.pem"
   }
 
   icinga::command { 'check_es_updating':

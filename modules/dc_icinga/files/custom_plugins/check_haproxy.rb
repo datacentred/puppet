@@ -44,6 +44,10 @@ op = OptionParser.new do |opts|
     options.password = v
   end
 
+  opts.on("-C", "--ca-cert [CA CERTIFICATE]", "CA certificate to validate with when using SSL") do |v|
+    options.ca_cert = v
+  end
+
   opts.on("-w", "--warning [WARNING]", "Pct of active sessions (eg 85, 90)") do |v|
     options.warning = v
   end
@@ -84,7 +88,13 @@ if options.warning && options.critical && options.warning.to_i > options.critica
   exit UNKNOWN
 end
 
-open(options.url, :http_basic_authentication => [options.user, options.password]) do |f|
+default_options = {
+  :http_basic_authentication => [options.user, options.password]
+}
+if options.ca_cert
+  default_options[:ssl_ca_cert] = options.ca_cert
+end
+open(options.url, default_options) do |f|
   f.each do |line|
 
     if line =~ /^# /
