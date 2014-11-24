@@ -1,4 +1,4 @@
-# Class: dc_profile::log::logstashbackup
+# Class: dc_elasticsearch::elasticsearch_backup
 #
 # Performs backups of all the logs
 #
