@@ -19,7 +19,7 @@ class dc_profile::openstack::nova {
   include ::nova::scheduler
   include ::nova::vncproxy
 
-  nova_config { 'default_floating_pool':
+  nova_config { 'DEFAULT/default_floating_pool':
     value => 'ext-net',
   }
 
