@@ -29,8 +29,8 @@ class dc_profile::openstack::nova_compute {
 
   # Workaround to get our rbd key into libvirt
   exec { 'set-virsh-secret-value':
-    command     => "/usr/bin/virsh secret-set-value --secret $(cat /etc/nova/virsh.secret) --base64 $(sed -n -e 's/^.*key\ \= //p' /etc/ceph/ceph.client.cinder.keyring)",
-    onlyif      => "/usr/bin/virsh secret-list | grep $(cat /etc/nova/virsh.secret)",
+    command     => '/usr/bin/virsh secret-set-value --secret $(cat /etc/nova/virsh.secret) --base64 $(sed -n -e \'s/^.*key\ \= //p\' /etc/ceph/ceph.client.cinder.keyring)',
+    onlyif      => '/usr/bin/virsh secret-list | grep $(cat /etc/nova/virsh.secret)',
     subscribe   => File['/etc/ceph/ceph.client.cinder.keyring'],
     refreshonly => true,
   }
