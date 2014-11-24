@@ -14,6 +14,7 @@ class dc_role::ps_haproxy inherits dc_role {
 
   include ::dc_profile::util::sysctls
   include ::dc_profile::net::loadbalancer
+  include ::dc_profile::net::loadbalancer_stats
   include ::dc_icinga::hostgroup_haproxy
 
   Class['dc_profile::util::sysctls'] ->
