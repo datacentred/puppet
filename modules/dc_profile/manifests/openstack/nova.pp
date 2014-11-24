@@ -19,6 +19,10 @@ class dc_profile::openstack::nova {
   include ::nova::scheduler
   include ::nova::vncproxy
 
+  nova_config { 'default_floating_pool':
+    value => 'ext-net',
+  }
+
   include dc_profile::auth::sudoers_nova
 
   # Add the various services from this node into our loadbalancers
