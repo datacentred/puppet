@@ -5,7 +5,7 @@
 # Seasons don't fear the reaper
 # Nor do the wind, the sun or the rain
 #
-# === Parameters ===
+# === Parameters
 #
 # [*threshold*]
 #   Time in seconds beyond which we determine the kernel has hung.
