@@ -14,5 +14,6 @@ class dc_role::ps_elasticsearch inherits dc_role {
 
   contain dc_elasticsearch
   contain dc_elasticsearch::lbmember
+  contain dc_elasticsearch::elasticsearch_backup
 
 }
