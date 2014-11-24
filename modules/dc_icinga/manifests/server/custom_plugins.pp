@@ -14,4 +14,9 @@ class dc_icinga::server::custom_plugins {
     require => Class['::icinga::client'],
   }
 
+  sudo::conf { 'check_haproxy':
+    priority => 10,
+    content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_haproxy.rb',
+  }
+
 }
