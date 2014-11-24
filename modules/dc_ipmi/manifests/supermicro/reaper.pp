@@ -5,7 +5,15 @@
 # Seasons don't fear the reaper
 # Nor do the wind, the sun or the rain
 #
-class dc_ipmi::supermicro::reaper {
+# === Parameters ===
+#
+# [*threshold*]
+#   Time in seconds beyond which we determine the kernel has hung.
+#   Default 30 minutes
+#
+class dc_ipmi::supermicro::reaper (
+  $threshold = 1800,
+) {
 
   file { '/usr/local/bin/ipmi_reaper':
     source => 'puppet:///modules/dc_ipmi/ipmi_reaper',
@@ -15,7 +23,7 @@ class dc_ipmi::supermicro::reaper {
   }
 
   cron { 'ipmi_reaper':
-    command => '/usr/local/bin/ipmi_reaper',
+    command => "/usr/local/bin/ipmi_reaper ${threshold}",
     user    => 'root',
     minute  => 0,
   }
