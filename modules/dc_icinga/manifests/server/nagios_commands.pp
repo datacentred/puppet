@@ -170,8 +170,12 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_cinder-api.sh -H https://\$HOSTALIAS\$ -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
+  sudo::conf { 'check_haproxy':
+      priority => 10,
+      content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_haproxy.rb',
+  }
   icinga::command { 'check_haproxy':
-    command_line => "/usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password} -C /var/lib/puppet/ssl/certs/ca.pem"
+    command_line => "sudo /usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password} -C /var/lib/puppet/ssl/certs/ca.pem"
   }
 
   icinga::command { 'check_es_updating':
