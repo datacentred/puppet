@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+import subprocess
+import sys
+import syslog
+import re
+
+def main(argv):
+	threshold = argv[0]
+	output = subprocess.check_output(['ps', '-eo', 'args,etimes'])
+	for line in re.split(r'\n', output):
+		if re.search(r'ipmitool', line):
+			time = re.split(r'\s+', line)[-1]
+			if int(time) > int(threshold):
+				subprocess.call(['modprobe', '-r', 'ipmi_si'])
+				subprocess.call(['modprobe', 'ipmi_si'])
+				syslog.syslog(
+					syslog.LOG_NOTICE,
+					'ipmi_reaper has harvested a soul'
+				)
+
+if __name__ == '__main__':
+	main(sys.argv[1:])
+
+# vi: ts=4 noet:
