@@ -254,3 +254,6 @@
 [submodule "modules/heat"]
 	path = modules/heat
 	url = https://github.com/stackforge/puppet-heat.git
+[submodule "modules/ulimit"]
+	path = modules/ulimit
+	url = https://github.com/arioch/puppet-ulimit
