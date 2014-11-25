@@ -220,6 +220,30 @@ class dc_icinga::server::config {
     register                     => '0',
   }
 
+  icinga::service { 'dc_service_slowcheck':
+    active_checks_enabled        => '1',
+    passive_checks_enabled       => '1',
+    parallelize_check            => '1',
+    obsess_over_service          => '1',
+    check_freshness              => '0',
+    notifications_enabled        => '1',
+    event_handler_enabled        => '1',
+    flap_detection_enabled       => '1',
+    failure_prediction_enabled   => '1',
+    process_perf_data            => '1',
+    retain_status_information    => '1',
+    retain_nonstatus_information => '1',
+    notification_interval        => '0',
+    is_volatile                  => '0',
+    check_period                 => 'dc_timeperiod_24x7',
+    normal_check_interval        => '20',
+    retry_check_interval         => '1',
+    max_check_attempts           => '10',
+    notification_period          => 'dc_timeperiod_24x7',
+    notification_options         => 'w,u,c,r',
+    contact_groups               => 'dc_admins, dc_admins_email',
+    register                     => '0',
+  }
 
   icinga::service { 'dc_service_nrpe':
     active_checks_enabled        => '1',
