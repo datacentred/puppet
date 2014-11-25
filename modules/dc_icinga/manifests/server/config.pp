@@ -237,7 +237,7 @@ class dc_icinga::server::config {
     is_volatile                  => '0',
     check_period                 => 'dc_timeperiod_24x7',
     normal_check_interval        => '20',
-    retry_check_interval         => '1',
+    retry_check_interval         => '10',
     max_check_attempts           => '10',
     notification_period          => 'dc_timeperiod_24x7',
     notification_options         => 'w,u,c,r',
