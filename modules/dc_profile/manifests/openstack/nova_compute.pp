@@ -27,6 +27,14 @@ class dc_profile::openstack::nova_compute {
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=cinder.images\" mon \"allow r\"'
   }
 
+  # Workaround to get our rbd key into libvirt
+  exec { 'set-virsh-secret-value':
+    command     => '/usr/bin/virsh secret-set-value --secret $(cat /etc/nova/virsh.secret) --base64 $(sed -n -e \'s/^.*key\ \= //p\' /etc/ceph/ceph.client.cinder.keyring)',
+    unless      => '/usr/bin/virsh secret-list | grep $(cat /etc/nova/virsh.secret)',
+    subscribe   => File['/etc/ceph/ceph.client.cinder.keyring'],
+    refreshonly => true,
+  }
+
   include ::nova
   include ::nova::compute
   include ::nova::compute::libvirt
