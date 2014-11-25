@@ -64,6 +64,7 @@ class dc_profile::openstack::neutron_agent {
     include ::neutron::agents::vpnaas
     include ::neutron::agents::lbaas
     include ::neutron::agents::metadata
+    include ::neutron::agents::metering
     include ::neutron::services::fwaas
 
   }
