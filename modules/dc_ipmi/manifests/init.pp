@@ -41,6 +41,9 @@ class dc_ipmi (
   include dc_firmware::ipmitool
   Class['dc_firmware::modules'] -> Class ['dc_firmware::ipmitool']
 
+  # The ipmitool package needs to be installed before we do anything with IPMI
+  Package['ipmitool'] -> Ipmi_radius<||>
+
   # We want to configure everything else before network configuration, because
   # it can sometimes reset our http session
   ipmi_radius {$::ipmi_ipaddress:
