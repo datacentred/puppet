@@ -175,11 +175,11 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_es_updating':
-    command_line => "/usr/lib/nagios/plugins/es_data_updating_check.rb -H \$HOSTADDRESS$ -p 9200"
+    command_line => '/usr/lib/nagios/plugins/es_data_updating_check.rb -H \$HOSTADDRESS$ -p 9200'
   }
 
   icinga::command { 'check_es_cluster_health':
-    command_line => "check_elasticsearch -H \$HOSTALIAS\$ -m 2"
+    command_line => 'check_elasticsearch -H \$HOSTALIAS\$ -m 2'
   }
 
 }
