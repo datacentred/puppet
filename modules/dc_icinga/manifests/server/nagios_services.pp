@@ -531,7 +531,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_elasticsearch_cluster_health':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_elasticsearch',
-    check_command       => 'check_elasticsearch_cluster_health',
+    check_command       => 'check_es_cluster_health',
     service_description => 'Elasticsearch cluster health',
   }
 
