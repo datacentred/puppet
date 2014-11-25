@@ -21,6 +21,14 @@ class dc_elasticsearch (
     'ES_HEAP_SIZE' => "${half_RAM}${RAM_unit}",
   }
 
+  ulimit::rule {
+    'elasticsearch':
+      ulimit_domain => 'elasticsearch',
+      ulimit_type   => 'hard',
+      ulimit_item   => 'memlock',
+      ulimit_value  => 'unlimited';
+  }
+
   class { '::elasticsearch':
     config        => $es_hash,
     java_install  => true,
