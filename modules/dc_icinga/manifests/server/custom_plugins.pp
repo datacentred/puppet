@@ -19,4 +19,9 @@ class dc_icinga::server::custom_plugins {
     content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_haproxy.rb',
   }
 
+  package { 'nagios-plugin-elasticsearch':
+    ensure   => present,
+    provider => 'pip',
+  }
+
 }
