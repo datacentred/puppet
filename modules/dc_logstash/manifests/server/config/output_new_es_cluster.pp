@@ -6,7 +6,7 @@ class dc_logstash::server::config::output_new_es_cluster inherits dc_logstash::s
 
   logstash::configfile { 'output_new_es_cluster':
     source => 'puppet:///modules/dc_logstash/output_new_es_cluster',
-    order   => '20',
+    order   => '21',
   }
 
 }
