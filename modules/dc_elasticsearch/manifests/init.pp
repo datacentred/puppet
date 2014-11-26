@@ -14,11 +14,22 @@ class dc_elasticsearch (
   $es_hash,
 ) {
 
+  include ::ulimit
+
   $half_RAM = floor($::memorysize_mb/2)
   $RAM_unit = 'M'
+  $half_RAM_bytes = ($half_RAM * 1024 * 1024)
 
   $config_hash = {
-    'ES_HEAP_SIZE' => "${half_RAM}${RAM_unit}",
+    'ES_HEAP_SIZE'      => "${half_RAM}${RAM_unit}",
+    'MAX_LOCKED_MEMORY' => $half_RAM_bytes,
+  }
+
+  ulimit::rule { 'elasticsearch':
+      ulimit_domain => 'elasticsearch',
+      ulimit_type   => '-',
+      ulimit_item   => 'memlock',
+      ulimit_value  => $half_RAM_bytes,
   }
 
   class { '::elasticsearch':
