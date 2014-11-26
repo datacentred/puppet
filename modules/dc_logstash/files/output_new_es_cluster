@@ -1,0 +1,7 @@
+output {
+  elasticsearch {
+    host => logstash
+    embedded => false
+    protocol => http
+  }
+}
