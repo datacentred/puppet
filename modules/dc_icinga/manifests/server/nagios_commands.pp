@@ -179,7 +179,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_es_cluster_health':
-    command_line => 'check_elasticsearch -H \$HOSTALIAS\$ -m 2'
+    command_line => '/usr/local/bin/check_elasticsearch -H \$HOSTADDRESS$ -m 2'
   }
 
 }
