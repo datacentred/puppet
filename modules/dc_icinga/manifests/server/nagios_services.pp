@@ -430,13 +430,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'HP Blade Hardware Health',
   }
 
-  #  icinga::service { 'check_logstash_forwarder_netstat':
-  #  use                 => 'dc_service_secondary',
-  #  hostgroup_name      => 'dc_hostgroup_generic',
-  #  check_command       => 'check_nrpe_1arg!check_logstash_forwarder_netstat',
-  #  service_description => 'Logstash Forwarder Connection',
-  #}
-
   icinga::service { 'check_lmsensors':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_lmsensors',
@@ -445,35 +438,35 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_nova_api_connect':
-    use                 => 'dc_service_secondary',
+    use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_osapiendpoint',
     check_command       => 'check_nova_api_connect',
     service_description => 'Nova API Connection',
   }
 
   icinga::service { 'check_glance_api_connect':
-    use                 => 'dc_service_secondary',
+    use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_osapiendpoint',
     check_command       => 'check_glance_api_connect',
     service_description => 'Glance API Connection',
   }
 
   icinga::service { 'check_nova_instance':
-    use                 => 'dc_service_secondary',
+    use                 => 'dc_service_slowcheck',
     hostgroup_name      => 'dc_hostgroup_osapiendpoint',
     check_command       => 'check_nova_instance',
     service_description => 'Nova Instance Creation',
   }
 
   icinga::service { 'check_cinder_volume':
-    use                 => 'dc_service_secondary',
+    use                 => 'dc_service_slowcheck',
     hostgroup_name      => 'dc_hostgroup_osapiendpoint',
     check_command       => 'check_cinder_volume',
     service_description => 'Cinder Volume Creation',
   }
 
   icinga::service { 'check_cinder_api_connect':
-    use                 => 'dc_service_secondary',
+    use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_osapiendpoint',
     check_command       => 'check_cinder_api_connect',
     service_description => 'Cinder API Connection',

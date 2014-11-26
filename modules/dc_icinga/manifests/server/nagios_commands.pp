@@ -95,7 +95,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --image_name CirrOS\\ 0.3.3 --flavor_name m1.tiny --force_delete\" -e 900 -t 180 -i 600"
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --image_name CirrOS\\ 0.3.3 --flavor_name m1.tiny --force_delete"
   }
 
   icinga::command { 'check_nova_api_connect':
@@ -163,7 +163,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_cinder_volume':
-    command_line => "/usr/lib/nagios/plugins/cache_check.py -c \"/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}\" -e 900 -t 180 -i 600"
+    command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_cinder_api_connect':
@@ -175,11 +175,11 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_es_updating':
-    command_line => "/usr/lib/nagios/plugins/es_data_updating_check.rb -H \$HOSTADDRESS$ -p 9200"
+    command_line => '/usr/lib/nagios/plugins/es_data_updating_check.rb -H \$HOSTADDRESS$ -p 9200'
   }
 
   icinga::command { 'check_es_cluster_health':
-    command_line => "check_elasticsearch -H \$HOSTALIAS\$ -m 2"
+    command_line => 'check_elasticsearch -H \$HOSTALIAS\$ -m 2'
   }
 
 }
