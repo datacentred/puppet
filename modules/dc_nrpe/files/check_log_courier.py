@@ -27,7 +27,7 @@ if entries[1][(entries[0].index('Status'))] == 'Disconnected':
   print "CRITICAL: Publisher disconnected from logstash"
   sys.exit(CRITICAL)
 elif entries[1][(entries[0].index('Pending Payloads'))] > 5:
-  print "WARNING: There are more than 5 messages to to logstash pending"
+  print "WARNING: There are more than 5 messages to logstash pending"
   sys.exit(WARNING)
 elif (entries[1][(entries[0].index('Pending Payloads'))] <= 5) and (entries[1][(entries[0].index('Status'))] == 'Connected'):
   print "OK: Publisher connected to logstash, low number of pending payloads"
