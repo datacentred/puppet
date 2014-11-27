@@ -60,6 +60,11 @@ class dc_profile::openstack::neutron_agent {
       ],
     }
 
+    # Set default domain
+    neutron_dhcp_agent_config {
+      'DEFAULT/dhcp_domain': value => 'sal01.datacentred.io';
+    }
+
     include ::neutron::agents::dhcp
     include ::neutron::agents::vpnaas
     include ::neutron::agents::lbaas
