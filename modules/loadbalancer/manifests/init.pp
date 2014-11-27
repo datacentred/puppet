@@ -7,8 +7,10 @@ class loadbalancer (
   $haproxy_listeners,
 ) {
 
-  include ::haproxy
-  include ::keepalived
+  # Contain these classes as certificate generation may
+  # need to come before provisionage of these classes
+  contain ::haproxy
+  contain ::keepalived
 
   $keepalived_defaults = {
     'state'    => 'SLAVE',

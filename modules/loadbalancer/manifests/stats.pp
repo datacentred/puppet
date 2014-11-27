@@ -12,12 +12,12 @@ class loadbalancer::stats (
 
   if $ssl {
 
-    $cert = "/etc/ssl/certs/${::fqdn}.pem"
+    $cert = "/etc/ssl/private/${::fqdn}.crt"
 
-    exec { "cat ${ssl_cert} ${ssl_key} > ${cert}":
-      user    => 'root',
-      creates => $cert,
-      before  => Haproxy::Listen['haproxy-stats'],
+    loadbalancer::cert { $cert:
+      ssl_cert => $ssl_cert,
+      ssl_key  => $ssl_key,
+      before   => Haproxy::Listen['haproxy-stats'],
     }
 
     $bind_options = [
