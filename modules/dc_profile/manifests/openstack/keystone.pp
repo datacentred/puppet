@@ -16,6 +16,9 @@ class dc_profile::openstack::keystone {
   contain ::keystone::roles::admin
   contain ::keystone::endpoint
 
+  include apache
+  contain ::keystone::wsgi::apache
+
   # Data defined in the openstack_keystone role
   create_resources(keystone_user, hiera(keystone_users))
   create_resources(keystone_role, hiera(keystone_role))
