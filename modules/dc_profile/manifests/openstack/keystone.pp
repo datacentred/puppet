@@ -69,6 +69,12 @@ class dc_profile::openstack::keystone {
     options           => 'check inter 2000 rise 2 fall 5'
   }
 
+  # Increase number of open files for the keystone service
+  file_line { 'keystone_nofiles':
+    path => '/etc/init/keystone.conf',
+    line => 'limit nofile 4096 65536',
+  }
+
   include ::dc_icinga::hostgroup_keystone
 
   unless $::is_vagrant {
