@@ -31,4 +31,6 @@ class dc_role::osdbmq inherits dc_role {
   Class['dc_profile::openstack::nova_db'] ->
   Class['dc_profile::openstack::heat_db']
 
+  include ::sysctls
+
 }

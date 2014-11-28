@@ -30,4 +30,6 @@ class dc_role::oscontroller inherits dc_role {
   Class['dc_profile::openstack::horizon'] ->
   Class['dc_profile::openstack::heat']
 
+  include ::sysctls
+
 }
