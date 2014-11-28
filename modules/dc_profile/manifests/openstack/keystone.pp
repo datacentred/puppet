@@ -71,8 +71,9 @@ class dc_profile::openstack::keystone {
 
   # Increase number of open files for the keystone service
   file_line { 'keystone_nofiles':
-    path => '/etc/init/keystone.conf',
-    line => 'limit nofile 4096 65536',
+    path    => '/etc/init/keystone.conf',
+    line    => 'limit nofile 4096 65536',
+    require => Package['keystone'],
   }
 
   include ::dc_icinga::hostgroup_keystone
