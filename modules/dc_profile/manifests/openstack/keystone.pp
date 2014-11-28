@@ -74,6 +74,7 @@ class dc_profile::openstack::keystone {
     path    => '/etc/init/keystone.conf',
     line    => 'limit nofile 4096 65536',
     require => Package['keystone'],
+    before  => Service['keystone'],
   }
 
   include ::dc_icinga::hostgroup_keystone
