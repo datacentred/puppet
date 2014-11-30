@@ -163,7 +163,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_cinder_volume':
-    command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_cinder-volume.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${cinder_api_port}/v1 --tenant ${keystone_icinga_tenant} --user ${keystone_icinga_user} --password ${keystone_icinga_password} --force_delete"
   }
 
   icinga::command { 'check_cinder_api_connect':
