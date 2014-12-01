@@ -12,8 +12,8 @@ def main(argv):
 		if re.search(r'ipmitool', line):
 			time = re.split(r'\s+', line)[-1]
 			if int(time) > int(threshold):
-				subprocess.call(['modprobe', '-r', 'ipmi_si'])
-				subprocess.call(['modprobe', 'ipmi_si'])
+				subprocess.call(['/sbin/modprobe', '-r', 'ipmi_si'])
+				subprocess.call(['/sbin/modprobe', 'ipmi_si'])
 				syslog.syslog(
 					syslog.LOG_NOTICE,
 					'ipmi_reaper has harvested a soul'
