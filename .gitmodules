@@ -224,9 +224,6 @@
 [submodule "modules/neutron"]
 	path = modules/neutron
 	url = https://github.com/stackforge/puppet-neutron.git
-[submodule "modules/keystone"]
-	path = modules/keystone
-	url = https://github.com/stackforge/puppet-keystone.git
 [submodule "modules/elasticsearch"]
 	path = modules/elasticsearch
 	url = https://github.com/elasticsearch/puppet-elasticsearch.git
@@ -260,3 +257,6 @@
 [submodule "modules/lsyncd"]
 	path = modules/lsyncd
 	url = https://github.com/datacentred/puppet-lsyncd.git
+[submodule "modules/keystone"]
+	path = modules/keystone
+	url = https://github.com/datacentred/puppet-keystone.git
