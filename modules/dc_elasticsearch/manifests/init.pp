@@ -36,6 +36,7 @@ class dc_elasticsearch (
     config        => $es_hash,
     java_install  => true,
     init_defaults => $config_hash,
+    version       => '1.3.6',
   }
 
   include ::dc_icinga::hostgroup_elasticsearch
