@@ -35,6 +35,10 @@ repo_list:
     repos: '1.5'
     key: '3A85FC71'
     key_source: 'http://deb.theforeman.org/foreman.asc'
+  trusty_proposed:
+    location: 'http://archive.ubuntu.com/ubuntu/'
+    release: 'trusty-proposed'
+    repos: 'restricted main multiverse universe'
 
 collectd::version: 5.4.0-3ubuntu2datacentred1
 apache::mod::passenger::mod_package_ensure: '4.0.37-2'
