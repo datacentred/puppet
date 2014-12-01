@@ -1,7 +1,7 @@
 # Class: dc_profile::apt::apt
 #
 # Apt configuration, ensures default sources are
-# removed and unmanagaed files in sources.list.d
+# removed and unmanaged files in sources.list.d
 # are also removed
 #
 # Parameters:
@@ -14,6 +14,14 @@
 #
 class dc_profile::apt::apt {
   contain ::apt
+
+  # We've enabled the trusty-proposed repo, but let's not
+  # automatically pull in packages from there
+  apt::pin { 'trusty-proposed':
+    packages => '*',
+    release  => 'trusty-proposed',
+    priority => '400',
+  }
 
   # Ensure an apt-get update happens before any package installs
   Class['apt::update'] -> Package <| |>

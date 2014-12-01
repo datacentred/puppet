@@ -1,6 +1,6 @@
 # Class: dc_profile::apt::dpkg
 #
-# Ensure dpkg is configuired correctly
+# Ensure dpkg is configured correctly
 #
 # Parameters:
 #
