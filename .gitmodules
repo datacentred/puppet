@@ -257,3 +257,6 @@
 [submodule "modules/ulimit"]
 	path = modules/ulimit
 	url = https://github.com/arioch/puppet-ulimit
+[submodule "modules/lsyncd"]
+	path = modules/lsyncd
+	url = https://github.com/datacentred/puppet-lsyncd.git
