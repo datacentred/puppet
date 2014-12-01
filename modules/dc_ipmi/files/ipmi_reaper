@@ -4,20 +4,27 @@ import subprocess
 import sys
 import syslog
 import re
+import os
+import signal
 
 def main(argv):
 	threshold = argv[0]
-	output = subprocess.check_output(['ps', '-eo', 'args,etimes'])
+	output = subprocess.check_output(['ps', '-eo', 'pid,etimes,args'])
 	for line in re.split(r'\n', output):
-		if re.search(r'ipmitool', line):
-			time = re.split(r'\s+', line)[-1]
-			if int(time) > int(threshold):
-				subprocess.call(['/sbin/modprobe', '-r', 'ipmi_si'])
-				subprocess.call(['/sbin/modprobe', 'ipmi_si'])
-				syslog.syslog(
-					syslog.LOG_NOTICE,
-					'ipmi_reaper has harvested a soul'
-				)
+		fields = re.split(r'\s+', line.lstrip())
+		if len(fields) < 3:
+			continue
+		pid = fields[0]
+		etimes = fields[1]
+		cmd = fields[2]
+		if (cmd == '/usr/bin/ipmitool') and (int(etimes) > int(threshold)):
+			os.kill(pid, signal.SIGKILL)
+			subprocess.call(['/sbin/modprobe', '-r', 'ipmi_si'])
+			subprocess.call(['/sbin/modprobe', 'ipmi_si'])
+			syslog.syslog(
+				syslog.LOG_NOTICE,
+				'ipmi_reaper has harvested a soul'
+			)
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
