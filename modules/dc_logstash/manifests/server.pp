@@ -80,7 +80,6 @@ class dc_logstash::server (
   contain ::dc_logstash::server::config::filter_grok_mysql_err
   contain ::dc_logstash::server::config::filter_grok_openstack
   contain ::dc_logstash::server::config::filter_grok_native_syslog
-  contain ::dc_logstash::server::config::output_new_es_cluster
 
   # Add icinga config
   unless $::is_vagrant {
