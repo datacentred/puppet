@@ -15,8 +15,6 @@ class dc_profile::openstack::keystone {
   contain ::keystone
   contain ::keystone::roles::admin
   contain ::keystone::endpoint
-
-  include apache
   contain ::keystone::wsgi::apache
 
   # Data defined in the openstack_keystone role
