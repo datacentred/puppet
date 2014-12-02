@@ -23,7 +23,7 @@
 # Enable TFTP management
 :tftp: <%= @use_tftp %>
 <% if @use_tftp == true -%>
-:tftproot: <%= @tftproot %>
+:tftproot: <%= scope.lookupvar('dc_tftp::tftp_dir') %>
 <% end -%>
 #:tftproot: /var/lib/tftpboot
 # Defines the TFTP Servername to use, overrides the name in the subnet declaration
