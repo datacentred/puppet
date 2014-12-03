@@ -29,9 +29,4 @@ class dc_foreman_proxy::tftp inherits dc_foreman_proxy::install {
     mode    => '0775',
   }
 
-  #User['foreman-proxy'] {
-  #  groups  => [ 'puppet', $dc_tftp::tftp_group ],
-  #  require => Class['::dc_tftp'],
-  #}
-
 }
