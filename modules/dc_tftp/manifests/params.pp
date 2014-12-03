@@ -9,6 +9,5 @@ class dc_tftp::params (
   $tftp_sync_home,
   $tftp_user,
   $tftp_group,
-  $storage_dir,
   $dir_mode,
 ){}
