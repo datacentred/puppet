@@ -23,6 +23,8 @@ class dc_profile::net::foreman_proxy {
     omapi_secret => $omapi_secret,
   }
 
+  Class['::tftp'] -> Class['dc_foreman_proxy']
+
   include dc_icinga::hostgroup_foreman_proxy
 
 }
