@@ -24,7 +24,7 @@ class dc_profile::openstack::cinder {
   include dc_profile::auth::sudoers_cinder
 
   ceph::client { 'cinder':
-    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=cinder.images\" mon \"allow r\"'
+    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
   }
 
   # Ensure Ceph is configured before we do anything with Cinder, and
