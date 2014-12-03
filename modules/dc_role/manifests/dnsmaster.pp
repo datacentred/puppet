@@ -18,5 +18,4 @@ class dc_role::dnsmaster inherits dc_role {
   contain dc_profile::net::tftp_standalone
   contain dc_profile::net::foreman_proxy
 
-  Class['::tftp'] -> Class['::dc_foreman_proxy']
 }
