@@ -87,7 +87,7 @@ STATE_CRITICAL = 2
 STATE_UNKNOWN = 3
 
 default_image_name = 'cirros-0.3.0-x86_64-disk'
-default_flavor_name = 'm1.tiny'
+default_flavor_name = 'dc1.1x0'
 default_instance_name = 'monitoring_test'
 
 
