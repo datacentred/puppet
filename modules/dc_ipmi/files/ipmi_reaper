@@ -18,7 +18,7 @@ def main(argv):
 		etimes = fields[1]
 		cmd = fields[2]
 		if (cmd == '/usr/bin/ipmitool') and (int(etimes) > int(threshold)):
-			os.kill(pid, signal.SIGKILL)
+			os.kill(int(pid), signal.SIGKILL)
 			subprocess.call(['/sbin/modprobe', '-r', 'ipmi_si'])
 			subprocess.call(['/sbin/modprobe', 'ipmi_si'])
 			syslog.syslog(
