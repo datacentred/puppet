@@ -183,7 +183,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_ceilometer_api_http':
-    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8777"
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8777 -e 401"
   }
 
   icinga::command { 'check_ceilometer_api_connect':
