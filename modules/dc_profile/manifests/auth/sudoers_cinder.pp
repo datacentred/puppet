@@ -16,8 +16,7 @@ class dc_profile::auth::sudoers_cinder {
 
   sudo::conf { 'cinder':
     priority => 10,
-    content  => 'Defaults: cinder !requiretty
-cinder ALL=(root) NOPASSWD: /usr/bin/cinder-rootwrap',
+    content  => "Defaults: cinder !requiretty\ncinder ALL = (root) NOPASSWD: /usr/bin/cinder-rootwrap /etc/cinder/rootwrap.conf *",
   }
 
 }
