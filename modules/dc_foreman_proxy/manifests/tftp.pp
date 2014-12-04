@@ -18,7 +18,7 @@ class dc_foreman_proxy::tftp inherits dc_foreman_proxy::install {
     require => File[$dc_tftp::tftp_dir],
     owner   => $dc_tftp::tftp_user,
     group   => $dc_tftp::tftp_group,
-    mode    => '0775',
+    mode    => '2775',
   }
 
   file { "${dc_tftp::tftp_dir}/pxelinux.cfg":
@@ -26,7 +26,7 @@ class dc_foreman_proxy::tftp inherits dc_foreman_proxy::install {
     require => File[$dc_tftp::tftp_dir],
     owner   => $dc_tftp::tftp_user,
     group   => $dc_tftp::tftp_group,
-    mode    => '0775',
+    mode    => '2775',
   }
 
 }
