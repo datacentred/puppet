@@ -182,5 +182,13 @@ class dc_icinga::server::nagios_commands {
     command_line => '/usr/local/bin/check_elasticsearch -H \$HOSTADDRESS$ -m 2'
   }
 
+  icinga::command { 'check_ceilometer_api_http':
+    command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8777"
+  }
+
+  icinga::command { 'check_ceilometer_api_connect':
+    command_line => "/usr/lib/nagios/plugins/check_ceilometer_api_curl.sh -E https://\$HOSTALIAS\$:8777 -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+  }
+
 }
 

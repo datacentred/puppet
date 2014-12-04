@@ -192,12 +192,12 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron LBAAS Agent',
   }
 
-  #icinga::service { 'check_neutron_metering_agent':
-  #  use                 => 'dc_service_generic',
-  #  hostgroup_name      => 'dc_hostgroup_neutron_node',
-  #  check_command       => 'check_nrpe_1arg!check_neutron_metering_agent',
-  #  service_description => 'Neutron Metering Agent',
-  #}
+  icinga::service { 'check_neutron_metering_agent':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_metering_agent',
+    service_description => 'Neutron Metering Agent',
+  }
 
   icinga::service { 'check_neutron_server':
     use                 => 'dc_service_generic',
@@ -526,6 +526,55 @@ class dc_icinga::server::nagios_services {
     hostgroup_name      => 'dc_hostgroup_elasticsearch',
     check_command       => 'check_es_cluster_health',
     service_description => 'Elasticsearch cluster health',
+  }
+
+  icinga::service { 'check_ceilometer_compute_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_ceilometer_compute_proc',
+    service_description => 'Ceilometer Compute Agent',
+  }
+
+  icinga::service { 'check_ceilometer_notification_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_ceilometer_notification_proc',
+    service_description => 'Ceilometer Notification Agent',
+  }
+
+  icinga::service { 'check_ceilometer_central_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_ceilometer_central_proc',
+    service_description => 'Ceilometer Central Agent',
+  }
+
+  icinga::service { 'check_ceilometer_api_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_ceilometer_api_proc',
+    service_description => 'Ceilometer API Process',
+  }
+
+  icinga::service { 'check_ceilometer_collector_proc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_nrpe_1arg!check_ceilometer_collector_proc',
+    service_description => 'Ceilometer Collector',
+  }
+
+  icinga::service { 'check_ceilometer_api_http':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_server',
+    check_command       => 'check_ceilometer_api_http',
+    service_description => 'Ceilometer API HTTP Connection',
+  }
+
+  icinga::service { 'check_ceilometer_api_connect':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_ceilometer_api_connect',
+    service_description => 'Ceilometer API',
   }
 
 }
