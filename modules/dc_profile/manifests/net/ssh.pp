@@ -29,6 +29,7 @@ class dc_profile::net::ssh {
       'juniperbackup',
       'ceph-deploy',
       'dhcp_sync_agent',
+      'tftpsync',
     ],
     notify => Service['ssh']
   }
