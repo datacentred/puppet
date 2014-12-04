@@ -15,7 +15,7 @@ class dc_role::dnsmaster inherits dc_role {
   contain dc_profile::net::dnsbackup
   contain dc_profile::net::dns_master
   contain dc_profile::net::dhcpd_master
-  contain dc_profile::net::tftpserver
+  contain dc_profile::net::tftp_standalone
   contain dc_profile::net::foreman_proxy
 
 }
