@@ -2,22 +2,18 @@
 #
 class dc_postgresql::repmgr::master{
 
-  include ::dc_postgresql::params
+  # postgres configuration
+  include ::dc_postgresql::repmgr::db
+  include ::dc_postgresql::repmgr::local_connection
+  include ::dc_postgresql::repmgr::slave_connection
 
-  # run once we have been configured
+  # repmgr configuration
+  include ::dc_postgresql::repmgr::install
+  include ::dc_postgresql::repmgr::config
+  include ::dc_postgresql::repmgr::master::config
+
+  Class['::dc_postgresql::repmgr::install'] ->
   Class['::dc_postgresql::repmgr::config'] ->
-  Class['::dc_postgresql::repmgr::master']
-
-  # run once the database has been created
-  Class['::dc_postgresql::repmgr::db'] ->
-  Class['::dc_postgresql::repmgr::master']
-
-  # run when we are allowed to connect locally
-  Class['::dc_postgresql::repmgr::local_connection'] ->
-  Class['::dc_postgresql::repmgr::master']
-
-  runonce { 'register_master_repmgr':
-    command => "repmgr -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose master register",
-  }
+  Class['::dc_postgresql::repmgr::master::config']
 
 }

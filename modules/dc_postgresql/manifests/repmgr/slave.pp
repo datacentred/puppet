@@ -2,26 +2,19 @@
 #
 class dc_postgresql::repmgr::slave {
 
-  @@postgresql::server::pg_hba_rule { "repmgr from ${::hostname}":
-    description => "repmgr access from ${::hostname}",
-    type        => 'host',
-    database    => 'repmgr',
-    user        => 'repmgr',
-    address     => "${::ipaddress}/32",
-    auth_method => 'trust',
-    tag         => 'slave',
-    order       => '099',
-  }
+  # postgres configuration
+  include ::dc_postgresql::repmgr::local_connection
 
-  @@postgresql::server::pg_hba_rule { "replication from ${::hostname}":
-    description => "replication access from ${::hostname}",
-    type        => 'host',
-    database    => 'replication',
-    user        => 'repmgr',
-    address     => "${::ipaddress}/32",
-    auth_method => 'trust',
-    tag         => 'slave',
-    order       => '099',
-  }
+  # repmgr configuration
+  include ::dc_postgresql::repmgr::install
+  include ::dc_postgresql::repmgr::config
+  include ::dc_postgresql::repmgr::slave::hba
+  include ::dc_postgresql::repmgr::slave::sync
+  include ::dc_postgresql::repmgr::slave::config
+
+  Class['::dc_postgresql::repmgr::install'] ->
+  Class['::dc_postgresql::repmgr::config'] ->
+  Class['::dc_postgresql::repmgr::slave::config'] ->
+  Class['::dc_postgresql::repmgr::slave::sync']
 
 }

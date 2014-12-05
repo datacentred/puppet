@@ -6,6 +6,21 @@ class dc_postgresql::backup {
 
   include ::dc_postgresql::params
 
+  # We're either the master or not a cluster member so apply the backup config unless we're on vagrant
+  if $::virtual != 'virtualbox' {
+
+    Ssh_authorized_key <<| tag == 'barman' |>>
+
+    file { "${dc_postgresql::params::pghome}/.ssh/config":
+        ensure  => file,
+        content => template('dc_postgresql/backup_ssh_config.erb'),
+        owner   => 'postgres',
+        group   => 'postgres',
+        mode    => '0600',
+    }
+
+  }
+
   $backup_server_ip = get_ip_addr("${dc_postgresql::params::backup_server}.${::domain}")
 
   postgresql::server::config_entry { 'archive_command':
