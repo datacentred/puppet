@@ -6,6 +6,7 @@ import syslog
 import re
 import os
 import signal
+import time
 
 def main(argv):
 	threshold = argv[0]
@@ -19,6 +20,7 @@ def main(argv):
 		cmd = fields[2]
 		if (cmd == '/usr/bin/ipmitool') and (int(etimes) > int(threshold)):
 			os.kill(int(pid), signal.SIGKILL)
+			time.sleep(1)
 			subprocess.call(['/sbin/modprobe', '-r', 'ipmi_si'])
 			subprocess.call(['/sbin/modprobe', 'ipmi_si'])
 			syslog.syslog(
