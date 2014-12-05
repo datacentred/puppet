@@ -17,6 +17,12 @@ class dc_profile::openstack::keepalived {
 
   $vrhash = hiera(virtual_routers)
 
+  # Allow Linux to bind to IPs which don't yet exist
+  sysctl { 'net.ipv4.ip_nonlocal_bind':
+    ensure => present,
+    value  => '1',
+  }
+
   keepalived::vrrp::instance { 'os_api_int':
     interface         => 'eth0',
     state             => 'SLAVE',

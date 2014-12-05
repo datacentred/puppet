@@ -44,7 +44,7 @@ class dc_profile::openstack::galera {
 
   # Export our haproxy balancermember resource
   @@haproxy::balancermember { "${::fqdn}-galera":
-    listening_service => 'icehouse-galera',
+    listening_service => 'galera',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '3306',

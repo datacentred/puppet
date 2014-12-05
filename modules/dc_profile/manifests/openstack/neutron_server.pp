@@ -23,7 +23,7 @@ class dc_profile::openstack::neutron_server {
 
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
-    listening_service => 'icehouse-neutron',
+    listening_service => 'neutron',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '9696',
