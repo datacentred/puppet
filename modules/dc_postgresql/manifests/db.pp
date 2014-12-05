@@ -1,6 +1,10 @@
 # == Define: dc_postgresql::db
 #
-define dc_postgresql::db ($user,$password,$access_address='127.0.0.1/32'){
+define dc_postgresql::db (
+  $user,
+  $password,
+  $access_address = '127.0.0.1/32'
+) {
 
   postgresql::server::db { $title:
     user      => $user,
@@ -16,4 +20,5 @@ define dc_postgresql::db ($user,$password,$access_address='127.0.0.1/32'){
     address     => $access_address,
     auth_method => 'md5',
   }
+
 }

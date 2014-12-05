@@ -32,6 +32,7 @@
 #
 class dc_postgresql::params (
   $postgres_password,
+  $pghome = '/var/lib/postgresql',
   $pgdata,
   $pg_bindir,
   $backup_path,
@@ -43,6 +44,7 @@ class dc_postgresql::params (
   $ip_mask_allow_all_users = '0.0.0.0/0',
   $ip_mask_deny_postgres_user = '0.0.0.0/32',
   $databases = {},
+  $config_entries = {},
 ) {
 
   if $caller_module_name != $module_name {

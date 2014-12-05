@@ -1,4 +1,4 @@
-# Class: dc_postgresql::standby_sync
+# Class: dc_postgresql::slave::standby_sync
 #
 # Initial standby sync config
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_postgresql::standby_sync {
+class dc_postgresql::slave::standby_sync {
 
   include ::dc_postgresql::params
 
@@ -36,15 +36,13 @@ class dc_postgresql::standby_sync {
     service { 'repmgrd':
       ensure     => running,
       provider   => base,
-      start      => "/usr/bin/repmgrd -f ${dc_postgresql::params::pgdata}/../../repmgr/repmgr.conf --verbose --monitoring-history > ${dc_postgresql::params::pgdata}/../../repmgr/repmgr.log 2>&1 &",
+      start      => "/usr/bin/repmgrd -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose --monitoring-history > ${dc_postgresql::params::pghome}/repmgr/repmgr.log 2>&1 &",
       stop       => 'killall repmgrd',
       hasrestart => false,
       hasstatus  => false,
     }
 
-  }
-
-  else {
+  } else {
     warning('Authorized key not found on master')
   }
 
