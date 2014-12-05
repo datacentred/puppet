@@ -18,10 +18,14 @@ class dc_foreman_proxy::install {
 
   if $dc_foreman_proxy::use_tftp {
     $tftp_groups = [ 'tftp' ]
+  } else {
+    $tftp_groups = []
   }
 
   if $dc_foreman_proxy::use_dns {
     $dns_groups = [ 'bind' ]
+  } else {
+    $dns_groups = []
   }
 
   if $dc_foreman_proxy::use_bmc {
