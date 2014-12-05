@@ -9,7 +9,7 @@ define dc_postgresql::db (
   postgresql::server::db { $title:
     user      => $user,
     password  => $password,
-    require   => Class['::postgresql::server'],
+    require   => Class['::dc_postgresql::install'],
   }
 
   postgresql::server::pg_hba_rule { "allow ${access_address} to access ${title}":
