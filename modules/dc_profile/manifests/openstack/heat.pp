@@ -18,7 +18,7 @@ class dc_profile::openstack::heat {
   include ::heat::api_cfn
 
   @@haproxy::balancermember { "${::fqdn}-heat":
-    listening_service => 'icehouse-heat',
+    listening_service => 'heat',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '8004',
@@ -26,7 +26,7 @@ class dc_profile::openstack::heat {
   }
 
   @@haproxy::balancermember { "${::fqdn}-heat-cfn":
-    listening_service => 'icehouse-heat-cfn',
+    listening_service => 'heat-cfn',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '8000',

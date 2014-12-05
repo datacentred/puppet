@@ -24,7 +24,7 @@ class dc_profile::openstack::ceilometer {
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-ceilometer":
-    listening_service => 'icehouse-ceilometer',
+    listening_service => 'ceilometer',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '8777',

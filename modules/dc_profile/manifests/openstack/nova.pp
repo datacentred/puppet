@@ -27,21 +27,21 @@ class dc_profile::openstack::nova {
 
   # Add the various services from this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-compute":
-    listening_service => 'icehouse-nova-compute',
+    listening_service => 'nova-compute',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '8774',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-metadata":
-    listening_service => 'icehouse-nova-metadata',
+    listening_service => 'nova-metadata',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '8775',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-novnc":
-    listening_service => 'icehouse-novncproxy',
+    listening_service => 'novncproxy',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '6080',
