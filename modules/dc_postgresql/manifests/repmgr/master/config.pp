@@ -1,4 +1,4 @@
-class {
+class dc_postgresql::repmgr::master::config {
 
   include ::dc_postgresql::params
 
