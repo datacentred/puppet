@@ -15,7 +15,6 @@ class dc_profile::openstack::keystone {
   contain ::keystone
   contain ::keystone::roles::admin
   contain ::keystone::endpoint
-  contain ::keystone::wsgi::apache
 
   # Data defined in the openstack_keystone role
   create_resources(keystone_user, hiera(keystone_users))
@@ -56,14 +55,14 @@ class dc_profile::openstack::keystone {
   }
 
   @@haproxy::balancermember { "${::fqdn}-keystone-auth":
-    listening_service => 'icehouse-keystone-auth',
+    listening_service => 'keystone-auth',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '5000',
     options           => 'check inter 2000 rise 2 fall 5'
   }
   @@haproxy::balancermember { "${::fqdn}-keystone-admin":
-    listening_service => 'icehouse-keystone-admin',
+    listening_service => 'keystone-admin',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '35357',
