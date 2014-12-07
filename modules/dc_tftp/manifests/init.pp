@@ -21,6 +21,7 @@ class dc_tftp (
   $tftp_user       = $dc_tftp::params::tftp_user,
   $tftp_group      = $dc_tftp::params::tftp_group,
   $dir_mode        = $dc_tftp::params::dir_mode,
+  $conf_template   = $dc_tftp::params::conf_template,
 ) inherits dc_tftp::params {
 
   contain dc_tftp::install

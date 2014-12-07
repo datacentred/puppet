@@ -31,7 +31,7 @@ class dc_tftp::sync_master {
   }
 
   class { '::lsyncd':
-    lsyncd_config_content => template('dc_tftp/lsyncd.conf.erb'),
+    lsyncd_config_content => template($conf_template),
     lsyncd_logdir_owner   => $dc_tftp::tftp_sync_user,
     lsyncd_logdir_group   => $dc_tftp::tftp_sync_group,
     require               => Sshkeys::Create_key[ $dc_tftp::tftp_sync_user ],
