@@ -17,19 +17,24 @@
 
 class dc_profile::openstack::haproxy {
 
-  include ::dc_ssl::haproxy
   include ::haproxy
-
-  # Get the IP of the VIP to which we want haproxy to bind
-  $vrhash = hiera(virtual_routers)
-  $internal_vip = $vrhash['compute_api_int']['vip']
-  $external_vip = $vrhash['compute_api_ext']['vip']
+  include ::dc_ssl::haproxy
 
   # Ensure HAProxy is restarted whenever SSL certificates are changed
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
 
   $haproxy_stats_user     = hiera(haproxy_stats_user)
   $haproxy_stats_password = hiera(haproxy_stats_password)
+
+  # Redirect all non-SSL requests to SSL
+  haproxy::listen { 'http-to-https-redirect':
+    ipaddress => '*',
+    mode      => 'http',
+    ports     => '80',
+    options   => {
+      'redirect' => 'scheme https if !{ ssl_fc }',
+    }
+  }
 
   # HAProxy Statistics
   haproxy::listen { 'haproxy-stats':
@@ -56,7 +61,7 @@ class dc_profile::openstack::haproxy {
 
   # Keystone Auth
   haproxy::listen { 'keystone-auth':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '5000',
     bind_options => [
@@ -75,7 +80,7 @@ class dc_profile::openstack::haproxy {
 
   # Keystone Admin
   haproxy::listen { 'keystone-admin':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '35357',
     bind_options => [
@@ -94,7 +99,7 @@ class dc_profile::openstack::haproxy {
 
   # Glance API
   haproxy::listen { 'glance-api':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '9292',
     bind_options => [
@@ -113,7 +118,7 @@ class dc_profile::openstack::haproxy {
 
   # Glance Registry
   haproxy::listen { 'glance-registry':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '9191',
     bind_options => [
@@ -132,7 +137,7 @@ class dc_profile::openstack::haproxy {
 
   # Neutron
   haproxy::listen { 'neutron':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '9696',
     bind_options => [
@@ -151,7 +156,7 @@ class dc_profile::openstack::haproxy {
 
   # Nova Compute
   haproxy::listen { 'nova-compute':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '8774',
     bind_options => [
@@ -171,7 +176,7 @@ class dc_profile::openstack::haproxy {
   # Nova Metadata
   # TODO: Renable SSL for this service when we go to Juno
   haproxy::listen { 'nova-metadata':
-    ipaddress => [ $internal_vip, $external_vip ],
+    ipaddress => '*',
     mode      => 'http',
     ports     => '8775',
     options   => {
@@ -182,7 +187,7 @@ class dc_profile::openstack::haproxy {
 
   # Cinder
   haproxy::listen { 'cinder':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '8776',
     bind_options => [
@@ -201,7 +206,7 @@ class dc_profile::openstack::haproxy {
 
   # Horizon
   haproxy::listen { 'horizon':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '443',
     bind_options => [
@@ -220,7 +225,7 @@ class dc_profile::openstack::haproxy {
 
   # NoVNC Proxy
   haproxy::listen { 'novncproxy':
-    ipaddress    => [ $internal_vip, $external_vip ],
+    ipaddress    => '*',
     mode         => 'http',
     ports        => '6080',
     bind_options => [
@@ -238,7 +243,7 @@ class dc_profile::openstack::haproxy {
 
   # Galera
   haproxy::listen { 'galera':
-    ipaddress => [ $internal_vip, $external_vip ],
+    ipaddress => '*',
     mode      => 'tcp',
     ports     => '3306',
     options   => {
