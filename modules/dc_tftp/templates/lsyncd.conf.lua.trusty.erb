@@ -1,0 +1,18 @@
+settings = {
+   logfile = "/var/log/lsyncd/lsyncd.log",
+   statusFile = "/var/log/lsyncd/lsyncd-status.log",
+   statusInterval = 20
+}
+
+sync {
+   default.rsync,
+   source="<%= scope.lookupvar('dc_tftp::tftp_dir') %>",
+   target="<%= scope.lookupvar('dc_tftp::sync_slave') %>.<%= @domain %>:<%= scope.lookupvar('dc_tftp::tftp_dir') %>",
+   rsync = {
+       compress = true,
+       acls = true,
+       verbose = true,
+       rsh = "/usr/bin/ssh -p 22 -o StrictHostKeyChecking=no -l <%= scope.lookupvar('dc_tftp::tftp_sync_user') %> -i <%= scope.lookupvar('dc_tftp::tftp_sync_home') %>/.ssh/id_rsa",
+       _extra = { "--omit-dir-times" }
+   }
+}
