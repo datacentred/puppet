@@ -6,7 +6,7 @@ class dc_elasticsearch::elasticsearch_snapshot_pruning (
   $access_key        = hiera(datacentred_s3_access_key),
   $secret_key        = hiera(datacentred_s3_secret_key),
   $ceph_access_point = hiera(datacentred_ceph_access_point),
-  $ceph_bucket       = hiera(elasticsearch::backup_bucket),
+  $ceph_bucket       = hiera(dc_elasticsearch::backup_bucket),
 ) {
 
   file { 'elasticsearch_snapshot_pruning.py':

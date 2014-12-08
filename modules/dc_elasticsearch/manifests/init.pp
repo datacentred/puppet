@@ -12,8 +12,8 @@
 #
 class dc_elasticsearch (
   $es_hash,
-  $backup_name = hiera(elasticsearch::backup_name),
-  $backup_bucket = hiera(elasticsearch::backup_bucket),
+  $backup_name,
+  $backup_bucket,
   $ceph_access_point = hiera(datacentred_ceph_access_point),
   $ceph_access_key = hiera(datacentred_s3_access_key),
   $ceph_private_key = hiera(datacentred_s3_secret_key),
@@ -51,4 +51,10 @@ class dc_elasticsearch (
   include ::dc_icinga::hostgroup_elasticsearch
 
   elasticsearch::instance { 'es-01': }
+}
+
+exec { 'name':
+  command      => '/bin/echo',
+  #path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+  #refreshonly => true,
 }
