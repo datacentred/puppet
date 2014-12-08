@@ -33,7 +33,7 @@ class dc_postgresql::icinga {
   #  require => Postgresql::Server::Role['nagios'],
   #}
 
-  include dc_icinga::hostgroup_postgres
+  include ::dc_icinga::hostgroup_postgres
 
   include ::dc_nrpe::postgres
 

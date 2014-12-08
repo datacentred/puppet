@@ -1,4 +1,8 @@
-class dc_postgresql::repmgr::db {
+# == Class: dc_postgresql::repmgr::master::db
+#
+# Creates the repmgr database on the master node
+#
+class dc_postgresql::repmgr::master::db {
 
   postgresql::server::role { 'repmgr':
     username  => 'repmgr',

@@ -15,6 +15,6 @@ class dc_postgresql::databases {
 
   include ::dc_postgresql::params
 
-  create_resources(postgresql::server::db, $dc_postgresql::params::databases)
+  create_resources('postgresql::server::db', $dc_postgresql::params::databases)
 
 }
