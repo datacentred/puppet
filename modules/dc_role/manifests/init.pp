@@ -25,6 +25,7 @@ class dc_role {
     include dc_profile::perf::sysdig
     include dc_profile::util::mdadm
     include dc_profile::net::ntpgeneric
+    include dc_profile::net::lldp
 
     ## Only include these classes in production
     if $::environment == 'production' {
