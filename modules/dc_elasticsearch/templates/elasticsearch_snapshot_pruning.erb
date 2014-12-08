@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import boto
+import boto.s3.connection
+from dateutil.parser import *
+import datetime
+access_key = 'ebe2442a49314cd6ab00a7f757020760'
+secret_key = '8136c27f69ed440eb431acef79f861b9'
+
+conn = boto.connect_s3(
+        aws_access_key_id = access_key,
+        aws_secret_access_key = secret_key,
+        host = 'storage.datacentred.io',
+        #is_secure=False,               # uncomment if you are not using ssl
+        calling_format = boto.s3.connection.OrdinaryCallingFormat(),
+        )
+
+date_105d_ago = datetime.datetime.now() - datetime.timedelta(days=105) #105 days because snapshots that are 90 days old reference indexes that are 104 days old.
+mybucket = conn.get_bucket('testing-es-snapshots')
+for key in mybucket.list():
+  if "logstash" in key.name:
+    this_index_date = key.name.split('/') #get the index name out of the file name
+    this_index_date = this_index_date[1].split('-')
+    this_index_date = this_index_date[1]
+    if datetime.datetime.strptime(this_index_date, "%Y.%m.%d") < date_105d_ago:
+      key.delete()
+      print key.name
