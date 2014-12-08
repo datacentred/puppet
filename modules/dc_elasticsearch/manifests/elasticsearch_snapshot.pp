@@ -5,6 +5,7 @@
 class dc_elasticsearch::elasticsearch_snapshot (
   $logstash_server = hiera(logstash_server),
   $domain          = $::domain,
+  $backup_name     = hiera(elasticsearch::backup_name),
 ) {
 
   file { 'elasticsearch_snapshot.sh':

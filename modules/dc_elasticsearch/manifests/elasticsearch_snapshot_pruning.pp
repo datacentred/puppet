@@ -3,23 +3,25 @@
 # Create a cron job that prunes old snapshots from ceph
 #
 class dc_elasticsearch::elasticsearch_snapshot_pruning (
-  $access_key      = hiera(datacentred_s3_access_key)
-  $secret_key      = hiera(datacentred_s3_secret_key)
+  $access_key        = hiera(datacentred_s3_access_key),
+  $secret_key        = hiera(datacentred_s3_secret_key),
+  $ceph_access_point = hiera(datacentred_ceph_access_point),
+  $ceph_bucket       = hiera(elasticsearch::backup_bucket),
 ) {
 
-  file { 'elasticsearch_snapshot.sh':
+  file { 'elasticsearch_snapshot_pruning.py':
     ensure  => file,
-    path    => '/usr/local/bin/elasticsearch_snapshot.sh',
-    content => template('dc_elasticsearch/elasticsearch_snapshot.erb'),
+    path    => '/usr/local/bin/elasticsearch_snapshot_pruning.py',
+    content => template('dc_elasticsearch/elasticsearch_snapshot_pruning.erb'),
     owner   => root,
     group   => root,
     mode    => '0754',
   }
 
-  cron { 'elasticsearch_snapshot':
-    command => '/usr/local/bin/elasticsearch_snapshot.sh',
+  cron { 'elasticsearch_snapshot_pruning':
+    command => '/usr/local/bin/elasticsearch_snapshot_pruning.py',
     user    => root,
-    hour    => 2,
+    hour    => 3,
     minute  => 0
   }
 }

@@ -14,9 +14,9 @@ class dc_elasticsearch (
   $es_hash,
   $backup_name = hiera(elasticsearch::backup_name),
   $backup_bucket = hiera(elasticsearch::backup_bucket),
-  $ceph_access_point = hiera(ceph::access_point),
+  $ceph_access_point = hiera(datacentred_ceph_access_point),
   $ceph_access_key = hiera(datacentred_s3_access_key),
-  $ceph_private_key = hiera(datacentred_s3_private_key),
+  $ceph_private_key = hiera(datacentred_s3_secret_key),
 ) {
 
   include ::ulimit
@@ -44,12 +44,8 @@ class dc_elasticsearch (
     version       => '1.3.6',
   }
 
-notify {"curl -XPUT 'http://localhost:9200/_snapshot/${backup_name}' -d '{ \"type\": \"s3\", \"settings\": { \"bucket\": \"${backup_bucket}\", \"endpoint\": \"${ceph_access_point}\", \"access_key\": \"${ceph_access_key}\", \"secret_key\": \"${ceph_private_key}\" } }'" :}
-
   exec { 'setup-backup-to-ceph':
     command => "curl -XPUT 'http://localhost:9200/_snapshot/${backup_name}' -d '{ \"type\": \"s3\", \"settings\": { \"bucket\": \"${backup_bucket}\", \"endpoint\": \"${ceph_access_point}\", \"access_key\": \"${ceph_access_key}\", \"secret_key\": \"${ceph_private_key}\" } }'",
-    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin,'
-    #remove the path for production, this is just to work around vagrant bugs
   }
 
   include ::dc_icinga::hostgroup_elasticsearch
