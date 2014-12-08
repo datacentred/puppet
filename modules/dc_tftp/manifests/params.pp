@@ -10,7 +10,6 @@ class dc_tftp::params (
   $tftp_user,
   $tftp_group,
   $dir_mode,
-  $conf_template,
 ){
 
  case $lsbdistcodename { 
