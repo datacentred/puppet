@@ -580,7 +580,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_lsyncd':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_lsyncd',
-    check_command       => 'check_lsyncd',
+    check_command       => 'check_nrpe_1arg!check_lsyncd',
     service_description => 'Lsyncd Sync Daemon',
   }
 
