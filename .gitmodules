@@ -263,3 +263,6 @@
 [submodule "modules/duplicity"]
 	path = modules/duplicity
 	url = https://github.com/datacentred/puppet-duplicity
+[submodule "modules/lldp"]
+	path = modules/lldp
+	url = https://github.com/mfournier/puppet-lldp.git
