@@ -37,4 +37,6 @@ class dc_tftp::sync_master {
     require               => Sshkeys::Create_key[ $dc_tftp::tftp_sync_user ],
   }
 
+  include ::dc_nrpe::lsyncd
+
 }
