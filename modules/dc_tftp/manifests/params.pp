@@ -10,4 +10,13 @@ class dc_tftp::params (
   $tftp_user,
   $tftp_group,
   $dir_mode,
-){}
+  $conf_template,
+){
+
+ case $lsbdistcodename { 
+  'trusty' : { $conf_template = 'lsyncd.conf.lua.trusty.erb' }
+  'precise': { $conf_template = 'lsyncd.conf.lua.precise.erb' }
+ }
+ 
+}
+
