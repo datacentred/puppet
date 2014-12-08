@@ -413,6 +413,10 @@ class dc_icinga::server::config {
     description => 'Elasticsearch Node',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_lsyncd':
+    description => 'Lsyncd Sync Master',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
