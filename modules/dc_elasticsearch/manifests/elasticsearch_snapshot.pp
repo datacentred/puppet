@@ -4,10 +4,10 @@
 #
 class dc_elasticsearch::elasticsearch_snapshot (
   $logstash_server = hiera(logstash_server),
-  $backup_name     = hiera(dc_elasticsearch::backup_name),
+  $backup_name     = $dc_elasticsearch::backup_name,
 ) {
 
-  notify {$backup_name:}
+  include dc_elasticsearch
 
   file { 'elasticsearch_snapshot.sh':
     ensure  => file,

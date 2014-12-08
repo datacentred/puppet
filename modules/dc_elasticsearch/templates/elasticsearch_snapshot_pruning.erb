@@ -16,7 +16,7 @@ conn = boto.connect_s3(
         )
 
 date_105d_ago = datetime.datetime.now() - datetime.timedelta(days=105) #105 days because snapshots that are 90 days old reference indexes that are 104 days old.
-mybucket = conn.get_bucket('<%= @ceph_bucket %>')
+mybucket = conn.get_bucket('<%= scope.lookupvar('dc_elasticsearch::backup_bucket') %>')
 for key in mybucket.list():
   if "logstash" in key.name:
     this_index_date = key.name.split('/') #get the index name out of the file name
