@@ -11,6 +11,8 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_tftp (
   $tftp_dir        = $dc_tftp::params::tftp_dir,
+  $address         = $dc_tftp::params::address,
+  $virtual_address = $dc_tftp::params::virtual_address,
   $ha_sync         = $dc_tftp::params::ha_sync,
   $sync_master     = $dc_tftp::params::sync_master,
   $sync_slave      = $dc_tftp::params::sync_slave,
