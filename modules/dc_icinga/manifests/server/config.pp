@@ -417,6 +417,10 @@ class dc_icinga::server::config {
     description => 'Lsyncd Sync Master',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_mongodb':
+    description => 'MongoDB Nodes',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
