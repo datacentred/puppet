@@ -4,9 +4,9 @@ import boto
 import boto.s3.connection
 from dateutil.parser import *
 import datetime
-access_key = <%= @access_key %>
-secret_key = <%= @secret_key %>
-ceph_provider = <%= @ceph_access_point %>
+access_key = '<%= @ceph_access_key %>'
+secret_key = '<%= @ceph_private_key %>'
+ceph_provider = '<%= @ceph_access_point %>'
 
 conn = boto.connect_s3(
         aws_access_key_id = access_key,
@@ -16,9 +16,9 @@ conn = boto.connect_s3(
         )
 
 date_105d_ago = datetime.datetime.now() - datetime.timedelta(days=105) #105 days because snapshots that are 90 days old reference indexes that are 104 days old.
-mybucket = conn.get_bucket('<%= scope.lookupvar('dc_elasticsearch::backup_bucket') %>')
+mybucket = conn.get_bucket('<%= @backup_bucket %>')
 for key in mybucket.list():
-  if "logstash" in key.name:
+  if re.search('^indices/logstash-\d{4}\.\d{2}\.\d{2}', key.name) is not None:
     this_index_date = key.name.split('/') #get the index name out of the file name
     this_index_date = this_index_date[1].split('-')
     this_index_date = this_index_date[1]
