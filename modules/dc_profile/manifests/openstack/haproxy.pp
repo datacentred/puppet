@@ -185,6 +185,25 @@ class dc_profile::openstack::haproxy {
     },
   }
 
+  # Amazon EC2-compatible nova API endpoint
+  haproxy::listen { 'nova-ec2':
+    ipaddress    => '*',
+    mode         => 'http',
+    ports        => '8773',
+    bind_options => [
+      'ssl',
+      'no-sslv3',
+      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+    ],
+    options      => {
+      'option'  => ['tcpka', 'tcplog'],
+      'balance' => 'source',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+    },
+  }
+
   # Cinder
   haproxy::listen { 'cinder':
     ipaddress    => '*',
