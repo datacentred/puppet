@@ -47,6 +47,13 @@ class dc_profile::openstack::nova {
     ports             => '6080',
     options           => 'check inter 2000 rise 2 fall 5',
   }
+  @@haproxy::balancermember { "${::fqdn}-ec2":
+    listening_service => 'nova-ec2',
+    server_names      => $::hostname,
+    ipaddresses       => $::ipaddress,
+    ports             => '8773',
+    options           => 'check inter 2000 rise 2 fall 5',
+  }
 
   include ::dc_nrpe::nova_server
   include ::dc_icinga::hostgroup_nova_server
