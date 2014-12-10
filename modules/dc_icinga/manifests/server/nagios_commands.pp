@@ -30,7 +30,8 @@ class dc_icinga::server::nagios_commands {
   $ldap_server_suffix = hiera(ldap_suffix)
   $haproxy_stats_user = hiera(haproxy_stats_user)
   $haproxy_stats_password = hiera(haproxy_stats_password)
-
+  $mongodb_monitor_user = hiera(mongodb_monitor_user)
+  $mongodb_monitor_password = hiera(mongodb_monitor_password)
 
   ######################################################################
   # Commands
