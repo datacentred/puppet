@@ -69,4 +69,5 @@ class dc_icinga::server::install {
   package { 'python-pymongo':
     ensure => installed,
   }
+  
 }
