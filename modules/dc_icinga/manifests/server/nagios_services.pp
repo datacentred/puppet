@@ -601,7 +601,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_replication_lag':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!replication_lag!27017!15!30',
+    check_command       => 'check_mongodb_alias!replication_lag!27017!15!30',
     service_description => 'MongoDB Replication Lag',
   }
 
