@@ -31,7 +31,7 @@ class dc_profile::openstack::mongodb {
   } ->
   Mongodb_replset['ceilometer']
 
-  unless $is_vagrant {
+  unless $::is_vagrant {
     include dc_icinga::hostgroup_mongodb
   }
 }
