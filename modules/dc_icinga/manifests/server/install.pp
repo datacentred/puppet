@@ -65,4 +65,7 @@ class dc_icinga::server::install {
     ensure => installed,
   }
 
+  package { 'postgresql-client':
+    ensure => installed,
+  }
 }
