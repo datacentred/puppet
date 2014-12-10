@@ -30,6 +30,8 @@ define dc_rails::app (
   $openstack_stronghold_username = hiera(dc_rails::openstack::stronghold_username)
   $openstack_stronghold_password = hiera(dc_rails::openstack::stronghold_password)
   $openstack_stronghold_tenant   = hiera(dc_rails::openstack::stronghold_tenant)
+  $ceph_token   = hiera(dc_rails::ceph::token)
+  $ceph_key     = hiera(dc_rails::ceph::key)
   $ruby = '2.1.4'
   $home = "/home/${user}/"
   $app_home = "${home}${app_name}/current/"
