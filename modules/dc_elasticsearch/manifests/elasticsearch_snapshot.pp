@@ -45,15 +45,19 @@ class dc_elasticsearch::elasticsearch_snapshot (
     minute  => 0
   }
 
+  package { 'python-pip':
+    ensure => installed,
+  } ->
+
   package { 'boto':
     ensure   => present,
     provider => 'pip',
-  }
+  } ->
 
   package { 'datetime':
     ensure   => present,
     provider => 'pip',
-  }
+  } ->
 
   package { 'dateutil':
     ensure   => present,
