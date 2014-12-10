@@ -650,7 +650,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_replica_state':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!repl_state!27017!0!0',
+    check_command       => 'check_mongodb!replset_state!27017!0!0',
     service_description => 'MongoDB Replica State',
   }
 
