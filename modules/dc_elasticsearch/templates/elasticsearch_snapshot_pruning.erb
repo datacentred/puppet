@@ -2,8 +2,8 @@
 
 import boto
 import boto.s3.connection
-from dateutil.parser import *
 import datetime
+import re
 access_key = '<%= @ceph_access_key %>'
 secret_key = '<%= @ceph_private_key %>'
 ceph_provider = '<%= @ceph_access_point %>'

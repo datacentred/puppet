@@ -57,11 +57,6 @@ class dc_elasticsearch::elasticsearch_snapshot (
   package { 'datetime':
     ensure   => present,
     provider => 'pip',
-  } ->
-
-  package { 'dateutil':
-    ensure   => present,
-    provider => 'pip',
   }
 
 }
