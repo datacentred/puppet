@@ -24,8 +24,8 @@ class dc_profile::openstack::galera {
     require => File['/srv/mysql'],
   }
 
-  # First server in the list is defacto master
   $galera_servers = hiera(osdbmq_members)
+  # First server in the list is defacto master
   $galera_master = $galera_servers[0]
 
   class { '::galera':
@@ -40,6 +40,12 @@ class dc_profile::openstack::galera {
   }
   else {
     $haproxy_options = 'check port 9200 inter 2000 rise 2 fall 5 backup'
+  }
+
+  # Arbitrarily select something that isn't the master for backups
+  $galera_backup_node = $galera_servers[2]
+  if $::fqdn == $galera_backup_node {
+    include ::dc_backup::duplicity
   }
 
   # Export our haproxy balancermember resource
