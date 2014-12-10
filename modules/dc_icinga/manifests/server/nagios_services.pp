@@ -636,7 +636,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_flush_average':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!flushing!27017!100!200',
+    check_command       => 'check_mongodb!flushing!27017!150!250',
     service_description => 'MongoDB Flush Average',
   }
 
