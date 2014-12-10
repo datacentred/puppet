@@ -21,26 +21,26 @@ define dc_rails::app (
   $rails_env,
 ) {
 
-  $user = hiera(rails::user::name)
-  $password = hiera(rails::user::password)
-  $group = hiera(rails::user::name)
-  $db_password = hiera(dc_mariadb::maria_root_pw)
-  $sirportly_api_token = hiera(sirportly::stronghold::api_token)
-  $sirportly_api_secret = hiera(sirportly::stronghold::api_secret)
+  $user                          = hiera(rails::user::name)
+  $password                      = hiera(rails::user::password)
+  $group                         = hiera(rails::user::name)
+  $db_password                   = hiera(dc_mariadb::maria_root_pw)
+  $sirportly_api_token           = hiera(sirportly::stronghold::api_token)
+  $sirportly_api_secret          = hiera(sirportly::stronghold::api_secret)
   $openstack_stronghold_username = hiera(dc_rails::openstack::stronghold_username)
   $openstack_stronghold_password = hiera(dc_rails::openstack::stronghold_password)
   $openstack_stronghold_tenant   = hiera(dc_rails::openstack::stronghold_tenant)
-  $ceph_token   = hiera(dc_rails::ceph::token)
-  $ceph_key     = hiera(dc_rails::ceph::key)
-  $ruby = '2.1.4'
-  $home = "/home/${user}/"
-  $app_home = "${home}${app_name}/current/"
-  $bundler = "${home}.rbenv/shims/bundle"
-  $unicorn = "${home}.rbenv/shims/bundle"
-  $log_base = '/var/log/rails/'
-  $logdir = "${log_base}${app_name}/"
-  $run_base = '/var/run/rails/'
-  $rundir = "${run_base}${app_name}/"
+  $ceph_token                    = hiera(dc_rails::ceph::token)
+  $ceph_key                      = hiera(dc_rails::ceph::key)
+  $ruby                          = '2.1.4'
+  $home                          = "/home/${user}/"
+  $app_home                      = "${home}${app_name}/current/"
+  $bundler                       = "${home}.rbenv/shims/bundle"
+  $unicorn                       = "${home}.rbenv/shims/bundle"
+  $log_base                      = '/var/log/rails/'
+  $logdir                        = "${log_base}${app_name}/"
+  $run_base                      = '/var/run/rails/'
+  $rundir                        = "${run_base}${app_name}/"
 
   contain sudo
 
