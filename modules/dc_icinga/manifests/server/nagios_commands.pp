@@ -190,24 +190,24 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_ceilometer_api_curl.sh -E https://\$HOSTALIAS\$:8777/v1 -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
-  icinga::command { 'check_mongodb'
-    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H $HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$',
+  icinga::command { 'check_mongodb':
+    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H $HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$'
   }
 
-  icinga::command { 'check_mongodb_database'
-    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H $HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -d $ARG5$',
+  icinga::command { 'check_mongodb_database':
+    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H \$HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -d $ARG5$',
   }
 
-  icinga::command { 'check_mongodb_collection'
-    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H $HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -d $ARG5$ -c $ARG6$',
+  icinga::command { 'check_mongodb_collection':
+    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H \$HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -d $ARG5$ -c $ARG6$',
   }
 
-  icinga::command { 'check_mongodb_replicaset'
-    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H $HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -r $ARG5$',
+  icinga::command { 'check_mongodb_replicaset':
+    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H \$HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -r $ARG5$',
   }
 
-  icinga::command { 'check_mongodb_query'
-    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H $HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -q $ARG5$',
+  icinga::command { 'check_mongodb_query':
+    command_line => '/usr/lib/nagios/plugins/check_mongodb.py -H \$HOSTADDRESS$ -A $ARG1$ -P $ARG2$ -W $ARG3$ -C $ARG4$ -q $ARG5$',
   }
 }
 
