@@ -21,5 +21,6 @@ class dc_role::bigyellow inherits dc_role {
   contain dc_profile::net::robocopy
   contain dc_profile::net::tftpserver
   contain dc_profile::util::wwwbackups
+  contain dc_elasticsearch::elasticsearch_snapshot
 
 }

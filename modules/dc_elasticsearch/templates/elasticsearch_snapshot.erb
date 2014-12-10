@@ -1,0 +1,3 @@
+#!/bin/bash
+_today=$(date +"%m_%d_%Y")
+curl -XPUT "<%= @logstash_server %>.<%= @domain %>:9200/_snapshot/<%= @backup_name %>/$_today"
