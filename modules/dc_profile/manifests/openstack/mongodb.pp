@@ -30,6 +30,10 @@ class dc_profile::openstack::mongodb {
     require => Package['mongodb-org-server'],
   } ->
   Mongodb_replset['ceilometer']
+
+  unless $::is_vagrant {
+    include dc_icinga::hostgroup_mongodb
+  }
 }
 
 

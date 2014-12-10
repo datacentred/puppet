@@ -601,14 +601,14 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_replication_lag':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!replication_lag!27017!15!30',
+    check_command       => 'check_mongodb_alias!replication_lag!27017!15!30',
     service_description => 'MongoDB Replication Lag',
   }
 
   icinga::service { 'check_mongo_replication_lag_percent':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!replication_lag_percent!27017!50!75',
+    check_command       => 'check_mongodb_alias!replication_lag_percent!27017!50!75',
     service_description => 'MongoDB Replication Lag Percentage',
   }
 
@@ -650,7 +650,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_replica_state':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!repl_state!27017!0!0',
+    check_command       => 'check_mongodb!replset_state!27017!0!0',
     service_description => 'MongoDB Replica State',
   }
 

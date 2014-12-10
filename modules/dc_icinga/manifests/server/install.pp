@@ -65,4 +65,8 @@ class dc_icinga::server::install {
     ensure => installed,
   }
 
+  # MongoDB needs pymongo
+  package { 'python-pymongo':
+    ensure => installed,
+  }
 }
