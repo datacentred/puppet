@@ -69,4 +69,25 @@ class dc_icinga::server::install {
   package { 'python-pymongo':
     ensure => installed,
   }
+  
+  # Packages for Postgresql checks
+
+  package { 'postgresql-client':
+    ensure => installed,
+  }
+
+  package { 'python-psycopg2':
+    ensure => installed,
+  }
+
+  package { 'python-pip':
+    ensure => installed,
+  }
+
+  package { 'nagiosplugin':
+    ensure   => installed,
+    provider => 'pip',
+    require  => Package['python-pip'],
+  }
+
 }
