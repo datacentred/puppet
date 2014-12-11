@@ -46,6 +46,7 @@ class dc_profile::openstack::galera {
   $galera_backup_node = $galera_servers[2]
   if $::fqdn == $galera_backup_node {
     include ::dc_backup::duplicity
+    include ::mysql::server::backup
   }
 
   # Export our haproxy balancermember resource
