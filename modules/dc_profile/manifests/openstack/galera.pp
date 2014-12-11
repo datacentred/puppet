@@ -44,6 +44,10 @@ class dc_profile::openstack::galera {
 
   # $::backup_node is set via Foreman
   if $::backup_node {
+    file { '/var/local/backup':
+      ensure => directory,
+      mode   => '0700',
+    }
     include ::dc_backup::duplicity
     include ::mysql::server::backup
   }
