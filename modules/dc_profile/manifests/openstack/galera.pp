@@ -43,8 +43,9 @@ class dc_profile::openstack::galera {
   }
 
   # Arbitrarily select something that isn't the master for backups
+  # $::backup_node is set via Foreman
   $galera_backup_node = $galera_servers[2]
-  if $::fqdn == $galera_backup_node {
+  if $::backup_node {
     include ::dc_backup::duplicity
     include ::mysql::server::backup
   }
