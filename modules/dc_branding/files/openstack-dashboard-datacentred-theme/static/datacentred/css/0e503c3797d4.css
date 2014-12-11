@@ -1979,16 +1979,16 @@ table .span12 {
   background-color: #c67605 \9;
 }
 .btn-danger {
-  background-color: #002664;
-  background-image: -moz-linear-gradient(top,#6885b4,#436294 );
-  background-image: -ms-linear-gradient(top,#6885b4,#436294 );
-  background-image: -webkit-gradient(linear,0 0,0 100%,from(#6885b4),to(#436294 ));
-  background-image: -webkit-linear-gradient(top,#6885b4,#436294 );
-  background-image: -o-linear-gradient(top,#6885b4,#436294 );
-  background-image: linear-gradient(top,#6885b4,#436294 );
+  background-color: #a52c56;
+  background-image: -moz-linear-gradient(top,#ed5e8f,#ed5287 );
+  background-image: -ms-linear-gradient(top,#ed5e8f,#ed5287 );
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#ed5e8f),to(#ed5287));
+  background-image: -webkit-linear-gradient(top,#ed5e8f,#ed5287);
+  background-image: -o-linear-gradient(top,#ed5e8f,#ed5287 );
+  background-image: linear-gradient(top,#ed5e8f,#ed5287 );
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6885b4', endColorstr='#436294 ', GradientType=0);
-  border-color: #436294  #436294  #001b46;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ed5e8f', endColorstr='#ed5287', GradientType=0);
+  border-color: #ed5287 #ed5287 #a52c56;
   border-color: rgba(0,0,0,.1)rgba(0,0,0,.1)fadein(rgba(0,0,0,.1),15%);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -3910,7 +3910,7 @@ a.thumbnail:hover {
 .nav_accordion dd li a.active {
   background: #ffffff;
   border-top: 2px solid #e5e5e5;
-  border-left: 4px solid #d93c27;
+  border-left: 4px solid #436294;
   border-bottom: 2px solid #e5e5e5;
   margin-left: 18px;
   -webkit-border-radius: 5px 0 0 5px;
@@ -4090,7 +4090,8 @@ body {
   background-image: url('/static/datacentred/img/datacentred-watermark.png');
 }
 #splash .login {
-  background: #ffffff url('/static/datacentred/img/datacentred.png') no-repeat center 35px;
+  background: #ffffff url('/static/datacentred/img/datacentred-logo-vertical-800px.png') no-repeat center 35px;
+  background-size: 208px 102px;
   position: absolute;
   top: 80px;
   left: 50%;
@@ -4156,7 +4157,8 @@ h1.brand {
   margin: 0;
 }
 h1.brand a {
-  background: url('/static/datacentred/img/datacentred-ikle.png') top left no-repeat;
+  background: url('/static/datacentred/img/datacentred-logo-horizontal-800px.png') top left no-repeat;
+  background-size: 130px 35px;
   display: block;
   float: left;
   width: 216px;
@@ -4841,10 +4843,10 @@ div.table_cell_wrapper .inline-edit-status.inline-edit-mod .loading {
   background-color: #f5f5f5;
 }
 .table-striped tbody tr.status_unknown:nth-child(odd) td {
-  background-color: #ffffb5;
+  background-color: #fabdd2;
 }
 .table-striped tbody tr.status_unknown:nth-child(even) td {
-  background-color: #ffffc6;
+  background-color: #fabdd2;
 }
 .nowrap-col {
   white-space: nowrap;
