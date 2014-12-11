@@ -34,17 +34,15 @@ class dc_profile::openstack::galera {
   }
 
   # We only want to be our designated master to be actively written to,
-  # unless it's failed of course.
-  if $::fqdn == $galera_master {
+  # unless it's failed of course. $::galera_master is set via Foreman
+  if $::galera_master {
     $haproxy_options = 'check port 9200 inter 2000 rise 2 fall 5'
   }
   else {
     $haproxy_options = 'check port 9200 inter 2000 rise 2 fall 5 backup'
   }
 
-  # Arbitrarily select something that isn't the master for backups
   # $::backup_node is set via Foreman
-  $galera_backup_node = $galera_servers[2]
   if $::backup_node {
     include ::dc_backup::duplicity
     include ::mysql::server::backup
