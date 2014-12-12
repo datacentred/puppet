@@ -39,8 +39,26 @@ class dc_profile::openstack::galera {
 
   # $::backup_node is set via Foreman
   if $::backup_node {
+    $backupuser     = hiera(osdbmq_galera_backup_user)
+    $backuppassword = hiera(osdbmq_galera_backup_pw)
+    mysql_user { "${backupuser}@localhost":
+    ensure        => present,
+    password_hash => mysql_password($backuppassword),
+    provider      => 'mysql',
+    require       => Class['mysql::server::root_password'],
+    }
+    mysql_grant { "${backupuser}@localhost/*.*":
+      ensure     => present,
+      user       => "${backupuser}@localhost",
+      table      => '*.*',
+      privileges => [ 'SELECT', 'RELOAD', 'LOCK TABLES', 'SHOW VIEW' ],
+      require    => Mysql_user["${backupuser}@localhost"],
+    }
+    file { '/var/local/backup':
+      ensure => directory,
+      mode   => '0700',
+    }
     include ::dc_backup::duplicity
-    include ::mysql::server::backup
   }
 
   # Export our haproxy balancermember resource
