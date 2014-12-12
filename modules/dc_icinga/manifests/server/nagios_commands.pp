@@ -32,6 +32,9 @@ class dc_icinga::server::nagios_commands {
   $haproxy_stats_password = hiera(haproxy_stats_password)
   $mongodb_monitor_user = hiera(mongodb_monitor_user)
   $mongodb_monitor_password = hiera(mongodb_monitor_password)
+  $mongodb_admin_user = hiera(mongodb_admin_user)
+  $mongodb_admin_password = hiera(mongodb_admin_password)
+
 
   ######################################################################
   # Commands
@@ -197,6 +200,10 @@ class dc_icinga::server::nagios_commands {
 
   icinga::command { 'check_mongodb_alias':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
+  }
+
+  icinga::command { 'check_mongodb_admin':
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_admin_user -p $mongodb_admin_password -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
   icinga::command { 'check_mongodb_database':
