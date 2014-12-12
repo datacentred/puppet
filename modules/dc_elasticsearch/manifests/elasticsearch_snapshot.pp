@@ -59,4 +59,8 @@ class dc_elasticsearch::elasticsearch_snapshot (
     provider => 'pip',
   }
 
+  package { 'curl':
+    ensure => installed,
+  }
+
 }
