@@ -80,10 +80,6 @@ class dc_icinga::server::install {
     ensure => installed,
   }
 
-  package { 'python-pip':
-    ensure => installed,
-  }
-
   package { 'nagiosplugin':
     ensure   => installed,
     provider => 'pip',
