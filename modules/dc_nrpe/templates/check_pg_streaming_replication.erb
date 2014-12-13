@@ -1,0 +1,160 @@
+#!/bin/bash
+#
+# Nagios plugin to check Postgresql streamin replication state
+# 
+# Could be use on Master or on standby node
+#
+# Requirement : 
+#
+#     On master node : Slaves must be able to connect with user PG_USER
+#                      to database postgres as trust
+#
+#     On standby node : PG_USER must be able to connect localy as trust
+#
+# Author : Benjamin Renard <brenard@easter-eggs.com>
+# Date : Wed, 14 Mar 2012 14:45:55 +0000
+# Source : http://git.zionetrix.net/check_pg_streaming_replication
+#
+PG_USER=postgres
+PSQL_BIN=/usr/bin/psql
+PG_MAIN=/var/lib/postgresql/9.3/main
+RECOVERY_CONF=$PG_MAIN/recovery.conf
+PG_DEFAULT_PORT=5432
+PG_PASSWORD=<%= @postgres_password %>
+
+DEBUG=1
+[ "$1" == "-d" ] && DEBUG=1
+
+function psql_get () {
+	echo "$1"|su - $PG_USER -c "$PSQL_BIN -t -P format=unaligned"
+}
+
+function debug() {
+	if [ $DEBUG -eq 1 ]
+	then
+		echo "[DEBUG] $1"
+	fi
+}
+
+# Postgres is running ?
+if [ $DEBUG -eq 0 ]
+then
+	psql_get '\q' 2> /dev/null
+else
+	psql_get '\q'
+fi
+if [ $? -ne 0 ]
+then
+	echo "CRITICAL : Postgres is not running !"
+	exit 2
+fi
+debug "Postgres is running"
+
+RECOVERY_MODE=0
+[ $( psql_get 'SELECT pg_is_in_recovery();' ) == "t" ] && RECOVERY_MODE=1
+
+if [ -f $RECOVERY_CONF ]
+then
+	debug "File recovery.conf found. Hot-standby mode."
+	
+	# Check recovery mode
+	if [ $RECOVERY_MODE -ne 1 ]
+	then
+		echo "CRITICAL : Not in recovery mode while recovery.conf file found !"
+		exit 2
+	fi
+	debug "Postgres is in recovery mode"
+
+	LAST_XLOG_RECEIVE=$( psql_get "SELECT pg_last_xlog_receive_location()" )
+	debug "Last xlog file receive : $LAST_XLOG_RECEIVE"
+	LAST_XLOG_REPLAY=$( psql_get "SELECT pg_last_xlog_replay_location()" )
+	debug "Last xlog file replay : $LAST_XLOG_REPLAY"
+
+
+	# Get master connection informations from recovery.conf file
+	MASTER_CONN_INFOS=$( egrep '^ *primary_conninfo' $RECOVERY_CONF|sed "s/^ *primary_conninfo *= *[\"\']\([^\"\']*\)[\"\'].*$/\1/" )
+	if [ ! -n "$MASTER_CONN_INFOS" ]
+	then
+		echo "UNKNOWN : Can't retrieve master connection informations form recovery.conf file"
+		exit 3
+	fi
+	debug "Master connection information : $MASTER_CONN_INFOS"
+
+	M_HOST=$( echo "$MASTER_CONN_INFOS"|sed 's/^.*host= *\([^ ]*\) *.*$/\1/' )
+	if [ ! -n "$M_HOST" ]
+	then
+		echo "UNKNOWN : Can't retrieve master host from recovery.conf file"
+		exit 3
+	fi
+	debug "Master host : $M_HOST"
+
+	M_PORT=$( echo "$MASTER_CONN_INFOS"|sed 's/^.*port= *\([^ ]*\) *.*$/\1/' )
+	if [ ! -n "$M_PORT" ]
+	then
+		debug "Master port not specified, use default : $PG_DEFAULT_PORT"
+		M_PORT=$PG_DEFAULT_PORT
+	else
+		debug "Master port : $M_PORT"
+	fi
+	
+	# Get current xlog file from master
+    M_CUR_XLOG="$( echo 'SELECT pg_current_xlog_location()'|su - $PG_USER -c "PGPASSWORD=$PGPASSWORD $PSQL_BIN -h $M_HOST -p $M_PORT -t -P format=unaligned" )"
+	if [ ! -n "$M_CUR_XLOG" ]
+	then
+		echo "UNKNOWN : Can't retrieve current xlog from master server"
+		exit 3
+	fi
+	debug "Master current xlog : $M_CUR_XLOG"
+
+	# Master current xlog is the last receive xlog ?
+	if [ "$M_CUR_XLOG" != "$LAST_XLOG_RECEIVE" ]
+	then
+		echo "CRITICAL : Master current xlog is not the last receive xlog"
+		exit 2
+	fi
+	debug "Master current xlog is the last receive xlog"
+
+	# The last receive xlog is the last replay file ?
+	if [ "$LAST_XLOG_RECEIVE" != "$LAST_XLOG_REPLAY" ]
+	then
+		echo "WARNING : last receive xlog file is not the last replay file"
+		exit 1
+	fi
+	debug "Last receive xlog file is the last replay file"
+
+	echo "OK : Hot-standby server is up to date"
+	exit 0
+else
+	debug "File recovery.conf not found. Master mode."
+
+	# Check recovery mode
+	if [ $RECOVERY_MODE -eq 1 ]
+	then
+		echo "CRITICAL : In recovery mode while recovery.conf file not found !"
+		exit 2
+	fi
+	debug "Postgres is not in recovery mode"
+
+	# Check standby client
+	STANDBY_CLIENTS=$( psql_get "SELECT client_addr, sync_state FROM pg_stat_replication;" )
+	if [ ! -n "$STANDBY_CLIENTS" ]
+	then
+		echo "WARNING : no stand-by client connected"
+		exit 1
+	fi
+	debug "Stand-by client(s) : $( echo  -n $STANDBY_CLIENTS|sed 's/\n/ , /g' )"
+
+	STANDBY_CLIENTS_TXT=""
+	STANDBY_CLIENTS_COUNT=0
+	for line in $STANDBY_CLIENTS
+	do
+		let STANDBY_CLIENTS_COUNT=STANDBY_CLIENTS_COUNT+1
+
+		IP=$( echo $line|cut -d '|' -f 1 )
+		MODE=$( echo $line|cut -d '|' -f 2 )
+		STANDBY_CLIENTS_TXT="$STANDBY_CLIENTS_TXT $IP (mode=$MODE)"
+	done
+
+	echo "OK : $STANDBY_CLIENTS_COUNT stand-by client(s) connected - $STANDBY_CLIENTS_TXT"
+	exit 0
+fi
