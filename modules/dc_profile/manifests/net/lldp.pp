@@ -13,8 +13,7 @@ class dc_profile::net::lldp {
   include ::lldp
 
   file { '/etc/default/lldpd':
-    content => 'DAEMON_ARGS=\"-I eth*, p1p*\"',
-    require => Class['lldp'],
+    content => 'DAEMON_ARGS="-I eth*, p1p*"',
     notify  => Service['lldpd'],
   }
 
