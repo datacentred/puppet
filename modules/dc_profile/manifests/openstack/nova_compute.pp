@@ -22,6 +22,23 @@ class dc_profile::openstack::nova_compute {
     require => Class['::Nova'],
   }
 
+  file { '/var/lib/nova/.ssh':
+    ensure  => directory,
+    owner   => 'nova',
+    group   => 'nova',
+    mode    => '0700',
+    require => Class['::Nova'],
+  }
+
+  file { '/var/lib/nova/.ssh/config':
+    ensure  => file,
+    source  => 'puppet:///modules/dc_openstack/ssh_config',
+    owner   => 'nova',
+    group   => 'nova',
+    mode    => '0600',
+    require => File['/var/lib/nova/.ssh'],
+  }
+
   # Configure Ceph client
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=cinder.images\" mon \"allow r\"'
