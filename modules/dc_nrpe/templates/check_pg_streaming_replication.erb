@@ -98,7 +98,7 @@ then
 	fi
 	
 	# Get current xlog file from master
-    M_CUR_XLOG="$( echo 'SELECT pg_current_xlog_location()'|su - $PG_USER -c "PGPASSWORD=$PGPASSWORD $PSQL_BIN -h $M_HOST -p $M_PORT -t -P format=unaligned" )"
+    M_CUR_XLOG="$( echo 'SELECT pg_current_xlog_location()'|su - $PG_USER -c "PGPASSWORD=$PG_PASSWORD $PSQL_BIN -h $M_HOST -p $M_PORT -t -P format=unaligned" )"
 	if [ ! -n "$M_CUR_XLOG" ]
 	then
 		echo "UNKNOWN : Can't retrieve current xlog from master server"

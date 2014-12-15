@@ -668,4 +668,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'MongoDB Primary Connection',
   }
 
+  icinga::service { 'check_postgres_replication':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_postgres',
+    check_command       => 'check_nrpe_1arg!check_postgres_replication',
+    service_description => 'Postgres Streaming Replication',
+  }
+
 }
