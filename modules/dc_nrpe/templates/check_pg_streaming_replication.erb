@@ -22,7 +22,7 @@ RECOVERY_CONF=$PG_MAIN/recovery.conf
 PG_DEFAULT_PORT=5432
 PG_PASSWORD=<%= @postgres_password %>
 
-DEBUG=1
+DEBUG=0
 [ "$1" == "-d" ] && DEBUG=1
 
 function psql_get () {
