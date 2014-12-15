@@ -3,6 +3,7 @@
 define dc_nrpe::check (
   $path,
   $source = undef,
+  $content = undef,
   $args = '',
   $sudo = false,
 ) {
@@ -11,6 +12,10 @@ define dc_nrpe::check (
   validate_string($source)
   validate_string($args)
   validate_bool($sudo)
+
+  if $source and $content {
+    fail ('only one of $source and $content can be defined')
+  }
 
   # Enable privilige escalation for the command
   if $sudo {
@@ -28,6 +33,16 @@ define dc_nrpe::check (
     file { $path:
       ensure => file,
       source => $source,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+    }
+  }
+
+  if $content {
+    file { $path:
+      ensure => file,
+      content => $content,
       owner  => 'root',
       group  => 'root',
       mode   => '0755',

@@ -35,5 +35,7 @@ class dc_postgresql::icinga {
 
   include dc_icinga::hostgroup_postgres
 
+  include ::dc_nrpe::postgres
+
 }
 
