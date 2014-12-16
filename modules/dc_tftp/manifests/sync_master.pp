@@ -26,7 +26,7 @@ class dc_tftp::sync_master {
   }
 
   keepalived::vrrp::instance { 'keepalived_tftp_syncmaster':
-    interface         => 'eth0',
+    interface         => 'bond0',
     state             => 'MASTER',
     priority          => '150',
     virtual_router_id => $dc_tftp::virtual_router_id,
