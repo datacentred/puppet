@@ -1,6 +1,7 @@
 class dc_tftp::params (
   $tftp_dir,
-  $virtual_ipaddress,
+  $virtual_address,
+  $virtual_netmask,
   $virtual_router_id,
   $ha_sync,
   $sync_master,
