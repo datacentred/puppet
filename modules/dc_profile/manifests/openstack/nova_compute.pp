@@ -53,16 +53,25 @@ class dc_profile::openstack::nova_compute {
     require => Package['nova-common'],
   }
 
+  file { '/var/lib/nova/.ssh/config':
+    ensure => file,
+    owner  => 'nova',
+    group  => 'nova', 
+    mode   => '0600',
+  }
+
   ssh_config { 'StrictHostKeyChecking':
     value   => 'no',
     target  => '/var/lib/nova/.ssh/config',
     host    => '*',
+    require => File['/var/lib/nova/.ssh/config'],
   }
 
   ssh_config { 'UserKnownHostsFile':
     value   => '/dev/null',
     target  => '/var/lib/nova/.ssh/config',
     host    => '*',
+    require => File['/var/lib/nova/.ssh/config'],
   }
 
   if $::environment == 'production' {
