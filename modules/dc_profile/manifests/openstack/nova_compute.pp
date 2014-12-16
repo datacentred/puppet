@@ -50,21 +50,19 @@ class dc_profile::openstack::nova_compute {
   user { 'nova':
     ensure  => present,
     shell   => '/bin/bash',
-    require => Class['::Nova'],
+    require => Package['nova-common'],
   }
 
   ssh_config { 'StrictHostKeyChecking':
     value   => 'no',
     target  => '/var/lib/nova/.ssh/config',
     host    => '*',
-    require => Class['::Nova'],
   }
 
   ssh_config { 'UserKnownHostsFile':
     value   => '/dev/null',
     target  => '/var/lib/nova/.ssh/config',
     host    => '*',
-    require => Class['::Nova'],
   }
 
   if $::environment == 'production' {
