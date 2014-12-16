@@ -43,7 +43,7 @@ class ceph_billing::configure {
   } ->
 
   # Create the WSGI frontend
-  apache::vhost { 'ceph.datacentred.io':
+  apache::vhost { $fqdn:
     port                        => '443',
     docroot                     => '/var/www',
     ssl                         => true,
@@ -68,7 +68,7 @@ class ceph_billing::configure {
       'permanent',
     ],
     redirectmatch_regexp        => [
-      '^/?$ storage/',
+      '^/?$ /storage/',
     ],
     wsgi_daemon_process         => 'ceph.datacentred.io',
     wsgi_daemon_process_options => {
