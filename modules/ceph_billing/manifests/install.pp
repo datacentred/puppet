@@ -2,21 +2,21 @@
 #
 class ceph_billing::install {
 
-  package { 'python-pip':
-    ensure => installed,
-  } ->
+  $les_packages = [
+    'python-pip',
+    'python-mysqldb',
+    'python-crypto',
+    'curl',
+  ]
+  $les_valeurs_par_defaut_des_packages = {
+    'ensure' => 'installed',
+  }
+  ensure_packages($les_packages, $les_valeurs_par_defaut_des_packages)
 
   package { 'Django':
     ensure   => $ceph_billing::version,
     provider => 'pip',
-  }
-
-  package { [
-    'curl',
-    'python-mysqldb',
-    'python-crypto',
-  ]:
-    ensure => installed,
+    require  => Package['python-pip'],
   }
 
 }
