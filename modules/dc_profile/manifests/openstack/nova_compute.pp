@@ -74,6 +74,10 @@ class dc_profile::openstack::nova_compute {
     require => File['/var/lib/nova/.ssh/config'],
   }
 
+  package { 'sysfsutils':
+    ensure => installed,
+  }
+
   if $::environment == 'production' {
     # Logstash config
     include ::dc_profile::openstack::nova_compute_logstash
