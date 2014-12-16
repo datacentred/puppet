@@ -266,3 +266,6 @@
 [submodule "modules/lldp"]
 	path = modules/lldp
 	url = https://github.com/mfournier/puppet-lldp.git
+[submodule "modules/augeasproviders_ssh"]
+	path = modules/augeasproviders_ssh
+	url = https://github.com/hercules-team/augeasproviders_ssh

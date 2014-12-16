@@ -39,12 +39,33 @@ class dc_profile::openstack::nova_compute {
   include ::nova::compute::rbd
   include ::nova::network::neutron
   include ::nova::scheduler::filter
-  
+
   # Make sure the Ceph client configuration is in place
   # before we do any of the Nova rbd-related configuration, and
   # restart if there's any changes
   Ceph::Client['cinder'] ~>
   Class['::nova::compute']
+
+  # Manage the user so we can set the shell
+  user { 'nova':
+    ensure  => present,
+    shell   => '/bin/bash',
+    require => Class['::Nova'],
+  }
+
+  ssh_config { 'StrictHostKeyChecking':
+    value   => 'no',
+    target  => '/var/lib/nova/.ssh/config',
+    host    => '*',
+    require => Class['::Nova'],
+  }
+
+  ssh_config { 'UserKnownHostsFile':
+    value   => '/dev/null',
+    target  => '/var/lib/nova/.ssh/config',
+    host    => '*',
+    require => Class['::Nova'],
+  }
 
   if $::environment == 'production' {
     # Logstash config
