@@ -17,7 +17,7 @@ class dc_profile::openstack::glance::policy {
     incl    => '/etc/glance/policy.json',
     lens    => 'Json.lns',
     changes => "set dict/entry[. = 'publicize_image']/string role:admin",
-    require => Class['::glance'],
+    require => Class['::glance::api'],
   }
 
 }
