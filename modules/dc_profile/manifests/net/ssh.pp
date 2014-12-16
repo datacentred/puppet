@@ -30,6 +30,7 @@ class dc_profile::net::ssh {
       'ceph-deploy',
       'dhcp_sync_agent',
       'tftpsync',
+      'nova',
     ],
     notify => Service['ssh']
   }
