@@ -30,7 +30,7 @@ class dc_tftp::sync_master {
     state             => 'MASTER',
     priority          => '150',
     virtual_router_id => $dc_tftp::virtual_router_id,
-    virtual_ipaddress => [ "$dc_tftp::virtual_ipaddress/29" ],
+    virtual_ipaddress => [ "$dc_tftp::virtual_ipaddress/24" ],
     track_script      => [ 'check_tftp' ],
   }
 
