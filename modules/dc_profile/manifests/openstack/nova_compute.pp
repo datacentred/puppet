@@ -46,6 +46,13 @@ class dc_profile::openstack::nova_compute {
   Ceph::Client['cinder'] ~>
   Class['::nova::compute']
 
+  # Manage the user so we can set the shell
+  user { 'nova':
+    ensure  => present,
+    shell   => '/bin/bash',
+    require => Class['::Nova'],
+  }
+
   if $::environment == 'production' {
     # Logstash config
     include ::dc_profile::openstack::nova_compute_logstash
