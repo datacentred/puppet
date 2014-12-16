@@ -2,6 +2,11 @@
 #
 class ceph_billing::configure {
 
+  include ::git
+  include ::apache
+  include ::apache::mod::wsgi
+  include ::mysql::server
+
   # Install the codebase from GitHub
   file { '/root/.ssh':
     ensure  => directory,
@@ -18,12 +23,10 @@ class ceph_billing::configure {
     mode    => '0400',
   } ->
 
-  file { '/root/.ssh/config':
-    ensure  => file,
-    content => "Host github.com\nStrictHostKeyChecking no",
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0640'
+  ssh_config { 'StrictHostKeyChecking':
+    value  => 'no',
+    host   => 'github.com',
+    target => '/root/.ssh/config',
   } ->
 
   git::repo { 'blinky':
@@ -70,11 +73,11 @@ class ceph_billing::configure {
     redirectmatch_regexp        => [
       '^/?$ /storage/',
     ],
-    wsgi_daemon_process         => 'ceph.datacentred.io',
+    wsgi_daemon_process         => $::fqdn,
     wsgi_daemon_process_options => {
       'python-path' => $ceph_billing::path,
     },
-    wsgi_process_group          => 'ceph.datacentred.io',
+    wsgi_process_group          => $::fqdn,
     wsgi_script_aliases         => {
       '/' => "${ceph_billing::path}/blinky/wsgi.py",
     },

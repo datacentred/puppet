@@ -13,12 +13,10 @@ class ceph_billing (
   $db_password,
 ) {
 
-  include ::apache
-  include ::apache::mod::wsgi
-  include ::git
-  include ::mysql::server
+  include ::ceph_billing::install
+  include ::ceph_billing::configure
 
-  include ceph_billing::install
-  include ceph_billing::configure
+  Class['::ceph_billing::install'] ->
+  Class['::ceph_billing::configure']
 
 }
