@@ -53,6 +53,15 @@ class dc_profile::openstack::nova_compute {
     require => Class['::Nova'],
   }
 
+  file { '/var/lib/nova/.ssh/config':
+    ensure  => present,
+    source  => 'puppet:///dc_openstack/nova_ssh_config'
+    owner   => 'nova',
+    group   => 'nova',
+    mode    => '0600',
+    require => Class['::Nova'],
+  }
+
   if $::environment == 'production' {
     # Logstash config
     include ::dc_profile::openstack::nova_compute_logstash
