@@ -55,7 +55,7 @@ class dc_profile::openstack::nova_compute {
 
   file { '/var/lib/nova/.ssh/config':
     ensure  => present,
-    source  => 'puppet:///dc_openstack/nova_ssh_config'
+    source  => 'puppet:///modules/dc_openstack/nova_ssh_config'
     owner   => 'nova',
     group   => 'nova',
     mode    => '0600',
