@@ -36,7 +36,7 @@ class dc_tftp::sync_slave {
     state             => 'BACKUP',
     priority          => '100',
     virtual_router_id => $dc_tftp::virtual_router_id,
-    virtual_ipaddress => [ "$dc_tftp::virtual_address/$dc_tftp::virtual_netmask" ],
+    virtual_ipaddress => [ "${dc_tftp::virtual_address}/${dc_tftp::virtual_netmask}" ],
     track_script      => [ 'check_tftp' ],
   }
 
