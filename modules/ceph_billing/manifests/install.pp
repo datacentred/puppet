@@ -12,6 +12,7 @@ class ceph_billing::install {
   }
 
   package { [
+    'curl',
     'python-mysqldb',
     'python-crypto',
   ]:
