@@ -1,5 +1,7 @@
 class dc_tftp::params (
   $tftp_dir,
+  $virtual_ipaddress,
+  $virtual_router_id,
   $ha_sync,
   $sync_master,
   $sync_slave,
@@ -16,6 +18,8 @@ class dc_tftp::params (
   'trusty' : { $conf_template = 'dc_tftp/lsyncd.conf.lua.trusty.erb' }
   'precise': { $conf_template = 'dc_tftp/lsyncd.conf.lua.precise.erb' }
  }
+
+ $address = $::ipaddress
  
 }
 

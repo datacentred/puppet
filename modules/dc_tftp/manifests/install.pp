@@ -15,6 +15,7 @@ class dc_tftp::install {
 
   class { '::tftp':
     manage_dir => true,
+    address    => $dc_tftp::virtual_ipaddress,
     directory  => $dc_tftp::tftp_dir,
     inetd      => $dc_tftp::use_inetd,
     dir_owner  => $dc_tftp::tftp_user,
