@@ -10,9 +10,9 @@ class dc_profile::hardware::all {
   # Manufacturer-dependant hardware classes
   case $::boardmanufacturer {
     'Supermicro': {
-      include dc_ipmi::supermicro::ipmi
+      #include dc_ipmi::supermicro::ipmi
       include dc_ipmi::supermicro::reaper
     }
-    /Dell/:       { include dc_ipmi::dell::idrac }
+    #/Dell/:       { include dc_ipmi::dell::idrac }
   }
 }
