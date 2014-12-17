@@ -6,6 +6,9 @@ hieradata/roles/*.yaml                            filter=private diff=private
 /modules/dc_ssl/files/mcollective/private_keys/*  filter=private diff=private
 /modules/dc_ssl/files/mcollective/client_certs/*  filter=private diff=private
 /modules/dc_ssl/files/storage/*                   filter=private diff=private
+/modules/dc_ssl/files/haproxy/*                   filter=private diff=private
+/modules/dc_ssl/files/slapd/*                     filter=private diff=private
+/modules/dc_ssl/files/stronghold/*                filter=private diff=private
 /modules/dc_puppet/templates/master/git/id_rsa    filter=private diff=private
 /modules/dc_rails/files/deployer_keys/id_rsa      filter=private diff=private
 /modules/dc_puppet/files/keys/marvin/*            filter=private diff=private
