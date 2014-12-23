@@ -32,17 +32,21 @@
 #
 class dc_postgresql::params (
   $postgres_password,
+  $pghome = '/var/lib/postgresql',
   $pgdata,
   $pg_bindir,
   $backup_path,
   $backup_server,
   $cluster_name,
   $cluster_master_node,
-  $cluster_standby_nodes = [],
   $listen_addresses = '*',
   $ip_mask_allow_all_users = '0.0.0.0/0',
   $ip_mask_deny_postgres_user = '0.0.0.0/32',
   $databases = {},
+  $config_entries = {},
+  $nodemap,
+  $ssh_private_key,
+  $ssh_public_key,
 ) {
 
   if $caller_module_name != $module_name {
