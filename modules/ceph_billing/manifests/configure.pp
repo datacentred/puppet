@@ -85,7 +85,7 @@ class ceph_billing::configure {
 
   # Setup the storage poller
   cron { 'ceph stat':
-    command => "curl https://${::fqdn}/storage/stat/ --cacert /var/lib/puppet/ssl/certs/ca.pem",
+    command => "curl https://${::fqdn}/storage/stat/ --cacert /var/lib/puppet/ssl/certs/ca.pem 2>&1 > /dev/null",
     user    => 'root',
     minute  => '0',
   }
