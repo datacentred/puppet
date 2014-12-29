@@ -1,6 +1,6 @@
 # == Class: dc_nrpe::checks::smartd
 #
-class dc_nrpe::smartd {
+class dc_nrpe::checks::smartd {
 
   package {'smartmontools':
     ensure => installed
