@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::glance
+# == Class: dc_nrpe::checks::glance
 #
-class dc_nrpe::glance {
+class dc_nrpe::checks::glance {
 
   dc_nrpe::check { 'check_glance_registry_netstat':
     path   => '/usr/local/bin/check_glance-registry.sh',

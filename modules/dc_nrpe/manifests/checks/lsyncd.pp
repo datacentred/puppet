@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::lsyncd
+# == Class: dc_nrpe::checks::lsyncd
 #
-class dc_nrpe::lsyncd {
+class dc_nrpe::checks::lsyncd {
 
   dc_nrpe::check { 'check_lsyncd':
     path => '/usr/lib/nagios/plugins/check_procs',

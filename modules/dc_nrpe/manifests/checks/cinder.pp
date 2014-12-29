@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::cinder
+# == Class: dc_nrpe::checks::cinder
 #
-class dc_nrpe::cinder {
+class dc_nrpe::checks::cinder {
 
   dc_nrpe::check { 'check_cinder_scheduler_proc':
     path => '/usr/lib/nagios/plugins/check_procs',
@@ -24,7 +24,7 @@ class dc_nrpe::cinder {
   }
 
   dc_nrpe::check { 'check_cinder_volume_netstat':
-    path   => '/usr/lib/nagios/plugins/check_cinder-volume.sh',
+    path   => '/usr/local/bin/check_cinder-volume.sh',
     source => 'puppet:///modules/dc_nrpe/check_cinder-volume.sh',
     sudo   => true,
   }

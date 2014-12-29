@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::nova_server
+# == Class: dc_nrpe::checks::nova_server
 #
-class dc_nrpe::nova_server {
+class dc_nrpe::checks::nova_server {
 
   dc_nrpe::check { 'check_nova_scheduler_netstat':
     path   => '/usr/local/bin/check_nova-scheduler.sh',

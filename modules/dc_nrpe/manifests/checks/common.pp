@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::common
+# == Class: dc_nrpe::checks::common
 #
-class dc_nrpe::common {
+class dc_nrpe::checks::common {
 
   package { 'python-yaml':
     ensure => installed,

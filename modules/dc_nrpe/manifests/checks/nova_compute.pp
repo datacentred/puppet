@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::nova_compute
+# == Class: dc_nrpe::checks::nova_compute
 #
-class dc_nrpe::nova_compute {
+class dc_nrpe::checks::nova_compute {
 
   dc_nrpe::check { 'check_nova_compute_netstat':
     path   => '/usr/local/bin/check_nova-compute.sh',

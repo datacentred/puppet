@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::ceph
+# == Class: dc_nrpe::checks::ceph
 #
-class dc_nrpe::ceph {
+class dc_nrpe::checks::ceph {
 
   dc_nrpe::check { 'check_ceph_health':
     path   => '/usr/local/bin/check_ceph_health',

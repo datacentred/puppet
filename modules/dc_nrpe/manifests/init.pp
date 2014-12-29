@@ -25,11 +25,4 @@ class dc_nrpe (
   Class['::dc_nrpe::configure'] ~>
   Class['::dc_nrpe::service']
 
-  # TODO: Move me!
-  include ::dc_nrpe::glance
-  include ::dc_nrpe::neutron
-  include ::dc_nrpe::nova_server
-  include ::dc_nrpe::logstash
-  include ::dc_nrpe::smartd
-
 }
