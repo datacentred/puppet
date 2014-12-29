@@ -22,7 +22,6 @@ class dc_profile::puppet::puppetdb {
     notify  => Service['puppetdb'],
   }
 
-  include ::dc_nrpe::puppetdb
   include ::dc_icinga::hostgroup_puppetdb
 
 }

@@ -57,9 +57,6 @@ class dc_tftp::sync_master {
     require               => Sshkeys::Create_key[ $dc_tftp::tftp_sync_user ],
   }
 
-  unless $::is_vagrant {
-    include ::dc_nrpe::lsyncd
-    include ::dc_icinga::hostgroup_lsyncd
-  }
+  include ::dc_icinga::hostgroup_lsyncd
 
 }

@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::cinder
+# == Class: dc_nrpe::checks::cinder
 #
-class dc_nrpe::cinder {
+class dc_nrpe::checks::cinder {
 
   dc_nrpe::check { 'check_cinder_scheduler_proc':
     path => '/usr/lib/nagios/plugins/check_procs',

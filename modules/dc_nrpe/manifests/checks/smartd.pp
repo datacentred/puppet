@@ -1,4 +1,4 @@
-# == Class: dc_nrpe::smartd
+# == Class: dc_nrpe::checks::smartd
 #
 class dc_nrpe::smartd {
 

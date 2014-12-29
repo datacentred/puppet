@@ -15,7 +15,6 @@
 class dc_role::network_node inherits dc_role {
 
   contain dc_profile::openstack::neutron_agent
-  contain dc_profile::openstack::neutron_common
 
   include dc_icinga::hostgroup_neutron_node
 

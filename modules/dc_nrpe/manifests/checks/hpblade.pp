@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::hpblade
+# == Class: dc_nrpe::checks::hpblade
 #
-class dc_nrpe::hpblade {
+class dc_nrpe::checks::hpblade {
 
   dc_nrpe::check { 'check_hpasm':
     path   => '/usr/local/bin/check_hpasm',

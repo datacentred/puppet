@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::postgres
+# == Class: dc_nrpe::checks::postgres
 #
-class dc_nrpe::postgres (
+class dc_nrpe::checks::postgres (
   $postgres_password, 
 ){
 

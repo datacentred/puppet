@@ -1,4 +1,4 @@
-# Class: dc_nrpe::logstash
+# Class: dc_nrpe::checks::logstash
 #
 # Logstash specific nrpe configuration
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_nrpe::logstash {
+class dc_nrpe::checks::logstash {
 
   dc_nrpe::check { 'check_logcourier_netstat':
     path   => '/usr/local/bin/check_logcourier',

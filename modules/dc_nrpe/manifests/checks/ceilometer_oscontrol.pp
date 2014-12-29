@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::ceilometer_oscontrol
+# == Class: dc_nrpe::checks::ceilometer_oscontrol
 #
-class dc_nrpe::ceilometer_oscontrol {
+class dc_nrpe::checks::ceilometer_oscontrol {
 
   dc_nrpe::check { 'check_ceilometer_notification_proc':
     path => '/usr/lib/nagios/plugins/check_procs',

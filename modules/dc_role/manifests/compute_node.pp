@@ -13,7 +13,6 @@
 class dc_role::compute_node inherits dc_role {
 
   contain dc_profile::openstack::neutron_agent
-  contain dc_profile::openstack::neutron_common
   contain dc_profile::openstack::nova_compute
   contain dc_profile::openstack::ceilometer_agent
 

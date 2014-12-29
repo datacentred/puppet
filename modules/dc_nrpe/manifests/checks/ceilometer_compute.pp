@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::ceilometer_compute
+# == Class: dc_nrpe::checks::ceilometer_compute
 #
-class dc_nrpe::ceilometer_compute {
+class dc_nrpe::checks::ceilometer_compute {
 
   dc_nrpe::check { 'check_ceilometer_compute_proc':
     path => '/usr/lib/nagios/plugins/check_procs',

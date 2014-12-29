@@ -41,7 +41,6 @@ class dc_profile::openstack::cinder {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  include ::dc_nrpe::cinder
   include ::dc_icinga::hostgroup_cinder
 
   unless $::is_vagrant {

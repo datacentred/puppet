@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::neutron_common
+# == Class: dc_nrpe::checks::neutron_common
 #
-class dc_nrpe::neutron_common {
+class dc_nrpe::checks::neutron_common {
 
   dc_nrpe::check { 'check_neutron_vswitch_agent':
     path => '/usr/lib/nagios/plugins/check_procs',

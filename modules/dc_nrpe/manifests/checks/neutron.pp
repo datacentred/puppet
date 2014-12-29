@@ -1,4 +1,4 @@
-# == Class: dc_nrpe::neutron
+# == Class: dc_nrpe::checks::neutron
 #
 class dc_nrpe::neutron (
   $keystone_port,

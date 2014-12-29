@@ -1,6 +1,6 @@
-# == Class: dc_nrpe::neutron_agent
+# == Class: dc_nrpe::checks::neutron_agent
 #
-class dc_nrpe::neutron_agent {
+class dc_nrpe::checks::neutron_agent {
 
   dc_nrpe::check { 'check_neutron_dhcp_agent':
     path => '/usr/lib/nagios/plugins/check_procs',

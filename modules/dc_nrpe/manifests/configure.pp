@@ -23,4 +23,20 @@ class dc_nrpe::configure {
     mode    => '0644',
   }
 
+  include ::dc_nrpe::checks::ceph
+  include ::dc_nrpe::checks::cinder
+  include ::dc_nrpe::checks::common
+  include ::dc_nrpe::checks::glance
+  include ::dc_nrpe::checks::hpblade
+  include ::dc_nrpe::checks::logstash
+  include ::dc_nrpe::checks::lsyncd
+  include ::dc_nrpe::checks::neutron
+  include ::dc_nrpe::checks::neutron_common
+  include ::dc_nrpe::checks::nova_compute
+  include ::dc_nrpe::checks::nova_server
+  include ::dc_nrpe::checks::postfix
+  include ::dc_nrpe::checks::postgres
+  include ::dc_nrpe::checks::puppetdb
+  include ::dc_nrpe::checks::smartd
+
 }

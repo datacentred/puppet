@@ -21,7 +21,6 @@ class dc_profile::hp::hpblade {
     dhcp => true,
   }
 
-  include ::dc_nrpe::hpblade
   include ::dc_icinga::hostgroup_hpblade
 
 }
