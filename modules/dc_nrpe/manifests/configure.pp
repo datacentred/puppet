@@ -24,7 +24,7 @@ class dc_nrpe::configure {
   }
 
   include ::dc_nrpe::checks::ceilometer_compute
-  include ::dc_nrpe::ckecks::ceilometer_oscontrol
+  include ::dc_nrpe::checks::ceilometer_oscontrol
   include ::dc_nrpe::checks::ceph
   include ::dc_nrpe::checks::cinder
   include ::dc_nrpe::checks::common
