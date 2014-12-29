@@ -16,8 +16,6 @@ class dc_profile::openstack::neutron_agent {
   include ::neutron::plugins::ml2
   include ::neutron::agents::ml2::ovs
 
-  include dc_nrpe::neutron_agent
-
   include dc_profile::auth::sudoers_neutron
 
   # A bug in the ML2 plugin deployment means that this file needs to be

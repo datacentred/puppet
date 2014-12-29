@@ -15,5 +15,5 @@ class dc_profile::openstack::ceilometer_agent {
   include ::ceilometer
   include ::ceilometer::agent::auth
   include ::ceilometer::agent::compute
-  include dc_nrpe::ceilometer_compute
+
 }

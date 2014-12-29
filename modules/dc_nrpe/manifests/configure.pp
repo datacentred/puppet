@@ -23,6 +23,8 @@ class dc_nrpe::configure {
     mode    => '0644',
   }
 
+  include ::dc_nrpe::checks::ceilometer_compute
+  include ::dc_nrpe::ckecks::ceilometer_oscontrol
   include ::dc_nrpe::checks::ceph
   include ::dc_nrpe::checks::cinder
   include ::dc_nrpe::checks::common
@@ -31,12 +33,14 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::logstash
   include ::dc_nrpe::checks::lsyncd
   include ::dc_nrpe::checks::neutron
+  include ::dc_nrpe::checks::neutron_agent
   include ::dc_nrpe::checks::neutron_common
   include ::dc_nrpe::checks::nova_compute
   include ::dc_nrpe::checks::nova_server
   include ::dc_nrpe::checks::postfix
   include ::dc_nrpe::checks::postgres
   include ::dc_nrpe::checks::puppetdb
+  include ::dc_nrpe::checks::sensors
   include ::dc_nrpe::checks::smartd
 
 }

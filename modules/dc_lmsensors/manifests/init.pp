@@ -60,7 +60,6 @@ class dc_lmsensors {
 
       }
 
-      include dc_nrpe::sensors
       include dc_icinga::hostgroup_lmsensors
     }
 
