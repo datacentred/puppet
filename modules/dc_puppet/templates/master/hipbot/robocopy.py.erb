@@ -19,6 +19,8 @@ import base64
 import time
 import glob
 import os
+import xml.etree.ElementTree as ET
+import httplib
 
 DOMAIN       = '<%= @domain %>'
 FOREMAN_HOST = '<%= @foreman_url %>'
@@ -68,10 +70,18 @@ class MLStripper(HTMLParser):
 
 def get_image(vhost):
     """Return a random image"""
-    path = 'http://' + vhost + '.' + DOMAIN + '/'
-    resp = urllib2.urlopen(path + vhost + '.json')
-    images = json.loads(resp.read())
-    return path + random.choice(images)
+    con = httplib.HTTPConnection('{0}.storage.datacentred.io'.format(bucket))
+    con.request('GET', '/')
+    root = ET.fromstring(con.getresponse().read())
+    images = []
+    for child in root:
+        if not child.tag.endswith('Contents'):
+            continue
+        images += [gc.text for gc in child if gc.tag.endswith('Key')]
+    return '{0}.storage.datacentred.io/{1}'.format(
+        bucket,
+        random.choice(images)
+    )
 
 def get_pony():
     """Return a random pony"""
