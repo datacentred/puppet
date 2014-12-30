@@ -37,7 +37,7 @@ class dc_profile::openstack::neutron_agent {
     # We want to disable GRO on the external interface
     # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
     # Physical interface plumbed into external network
-    $uplink_if = 'em2'
+    $uplink_if = 'p2p2'
 
     include ethtool
     ethtool { $uplink_if:
