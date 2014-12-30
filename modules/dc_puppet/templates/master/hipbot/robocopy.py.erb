@@ -68,7 +68,7 @@ class MLStripper(HTMLParser):
 # My Little Pony: Friendship Is Magic
 ##############################################################################
 
-def get_image(vhost):
+def get_image(bucket):
     """Return a random image"""
     con = httplib.HTTPConnection('{0}.storage.datacentred.io'.format(bucket))
     con.request('GET', '/')
@@ -78,7 +78,7 @@ def get_image(vhost):
         if not child.tag.endswith('Contents'):
             continue
         images += [gc.text for gc in child if gc.tag.endswith('Key')]
-    return '{0}.storage.datacentred.io/{1}'.format(
+    return 'http://{0}.storage.datacentred.io/{1}'.format(
         bucket,
         random.choice(images)
     )
@@ -89,7 +89,7 @@ def get_pony():
 
 def get_scarlett():
     """Return a random Scarlett"""
-    return get_image('puppies')
+    return get_image('scarlett')
 
 ##############################################################################
 # Git
