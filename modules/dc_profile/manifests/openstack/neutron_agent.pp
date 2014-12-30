@@ -53,7 +53,7 @@ class dc_profile::openstack::neutron_agent {
           "set iface[. = '${uplink_if}']/family inet",
           "set iface[. = '${uplink_if}']/method manual",
           "set iface[. = '${uplink_if}'] ${uplink_if}",
-		  "set iface[. = '${uplink_if}']/pre-up ip link set ${uplink_if} mtu 9000"
+		      "set iface[. = '${uplink_if}']/pre-up 'ip link set ${uplink_if} mtu 9000'",
           "set iface[. = '${uplink_if}']/up 'ip link set dev ${uplink_if} up'",
           "set iface[. = '${uplink_if}']/down 'ip link set dev ${uplink_if} down'",
       ],
