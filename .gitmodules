@@ -78,7 +78,7 @@
 	url = https://github.com/richardc/puppet-datacat
 [submodule "modules/rabbitmq"]
 	path = modules/rabbitmq
-	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
+	url = https://github.com/datacentred/puppetlabs-rabbitmq.git
 [submodule "modules/erlang"]
 	path = modules/erlang
 	url = https://github.com/garethr/garethr-erlang
