@@ -273,6 +273,18 @@ class dc_profile::openstack::haproxy {
     },
   }
 
+  # RabbitMQ
+  haproxy::listen { 'rabbitmq':
+    ipaddress => '*',
+    mode      => 'tcp',
+    ports     => '5672',
+    options   => {
+      'balance'        => 'roundrobin',
+      'timeout client' => '30000s',
+      'timeout server' => '30000s',
+    },
+  }
+
   # Ceilometer
   haproxy::listen { 'ceilometer':
     ipaddress    => '*',
