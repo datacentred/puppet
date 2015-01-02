@@ -54,4 +54,11 @@ class dc_profile::openstack::ceilometer_logstash {
     }
   }
 
+  dc_logstash::client::register { 'ceilometer_agent_compute_log':
+    logs     => '/var/log/ceilometer/ceilometer-agent-compute.log',
+    fields   => {
+      'type' => 'ceilometer',
+    }
+  }
+
 }
