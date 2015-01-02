@@ -13,7 +13,7 @@ class dc_postgresql::repmgr::config {
     options         => {
       "Host ${dc_postgresql::params::backup_server}" => {
         'StrictHostKeyChecking' => 'no',
-        'UserKnownHostsFile'    => '/dev/null'
+        'UserKnownHostsFile'    => '/dev/null',
       },
     },
   }
