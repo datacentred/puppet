@@ -43,7 +43,7 @@ class dc_postgresql::backup {
       user    => 'barman',
       options => "from=\"${::ipaddress}\"",
       tag     => postgres_backup_key,
-   }
+    }
   
   }
 }
