@@ -31,5 +31,19 @@ class dc_postgresql::backup {
     custom_lines => 'retention_policy = RECOVERY WINDOW OF 7 DAYS',
     tag          => postgres_backup_config,
   }
+  
+  if $::sshpubkey_postgres {
 
+    $backup_key_elements = split($::sshpubkey_postgres, ' ')
+
+    @@ssh_authorized_key { "postgres_backup_key_${::hostname}" :
+      ensure  => present,
+      type    => 'ssh-rsa',
+      key     => $backup_key_elements[1],
+      user    => 'barman',
+      options => "from=\"${::ipaddress}\"",
+      tag     => postgres_backup_key,
+   }
+  
+  }
 }
