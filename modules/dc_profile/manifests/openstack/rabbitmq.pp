@@ -75,14 +75,24 @@ class dc_profile::openstack::rabbitmq {
     write_permission     => '.*',
   }
 
-  # Required for Icinga monitoring
-  rabbitmq_user { $rabbitmq_monuser:
-    admin    => true,
-    password => $rabbitmq_monuser_password,
-    require  => Class['::rabbitmq'],
+  # Export our haproxy balancermember resource
+  @@haproxy::balancermember { "${::fqdn}-rabbitmq":
+    listening_service => 'rabbitmq',
+    server_names      => $::hostname,
+    ipaddresses       => $::ipaddress,
+    ports             => '5672',
+    options           => 'check inter 2000 rise 2 fall 5',
   }
 
   # Icinga checks
-  include dc_icinga::hostgroup_rabbitmq
+  unless $::is_vagrant {
+    include dc_icinga::hostgroup_rabbitmq
+    # Required for Icinga monitoring
+    rabbitmq_user { $rabbitmq_monuser:
+      admin    => true,
+      password => $rabbitmq_monuser_password,
+      require  => Class['::rabbitmq'],
+    }
+  }
 
 }
