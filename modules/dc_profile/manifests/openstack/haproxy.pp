@@ -26,6 +26,8 @@ class dc_profile::openstack::haproxy {
   $haproxy_stats_user     = hiera(haproxy_stats_user)
   $haproxy_stats_password = hiera(haproxy_stats_password)
 
+  $internal_vip = hiera(os_api_vip)
+
   # Redirect all non-SSL requests to SSL
   haproxy::listen { 'http-to-https-redirect':
     ipaddress => '*',
@@ -262,12 +264,24 @@ class dc_profile::openstack::haproxy {
 
   # Galera
   haproxy::listen { 'galera':
-    ipaddress => '*',
+    ipaddress => $internal_vip,
     mode      => 'tcp',
     ports     => '3306',
     options   => {
       'option'         => ['httpchk'],
       'balance'        => 'source',
+      'timeout client' => '30000s',
+      'timeout server' => '30000s',
+    },
+  }
+
+  # RabbitMQ
+  haproxy::listen { 'rabbitmq':
+    ipaddress => $internal_vip,
+    mode      => 'tcp',
+    ports     => '5672',
+    options   => {
+      'balance'        => 'roundrobin',
       'timeout client' => '30000s',
       'timeout server' => '30000s',
     },
