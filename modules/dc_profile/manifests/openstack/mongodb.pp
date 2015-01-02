@@ -16,6 +16,7 @@ class dc_profile::openstack::mongodb {
   include ::mongodb::server
   include ::mongodb::client
   include ::mongodb::replset
+  include ::dc_backup::duplicity
 
   Class['::mongodb::server'] ->
   Class['::mongodb::client']
