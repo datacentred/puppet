@@ -270,8 +270,8 @@ class dc_profile::openstack::haproxy {
     options   => {
       'option'         => ['httpchk'],
       'balance'        => 'source',
-      'timeout client' => '30000s',
-      'timeout server' => '30000s',
+      'timeout client' => '8h',
+      'timeout server' => '8h',
     },
   }
 
@@ -283,8 +283,8 @@ class dc_profile::openstack::haproxy {
     options   => {
       'option'         => ['tcpka'],
       'balance'        => 'roundrobin',
-      'timeout client' => '30000s',
-      'timeout server' => '30000s',
+      'timeout client' => '8h',
+      'timeout server' => '8h',
     },
   }
 
