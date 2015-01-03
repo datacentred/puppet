@@ -281,6 +281,7 @@ class dc_profile::openstack::haproxy {
     mode      => 'tcp',
     ports     => '5672',
     options   => {
+      'option'         => ['tcpka'],
       'balance'        => 'roundrobin',
       'timeout client' => '30000s',
       'timeout server' => '30000s',
