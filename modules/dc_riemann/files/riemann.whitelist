@@ -8,3 +8,4 @@ Can\'t create new lease file: Permission denied
 ^.*Please use the the default quota class for default quota.$
 ^.*FAILED: Has an address record but no DHCID, not mine.$
 ^.*Found [0-9] in the database and [0-9] on the hypervisor.$
+^.*Arguments dropped when creating context:.$
