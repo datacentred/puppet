@@ -18,7 +18,7 @@ class dc_postgresql::repmgr::config {
     },
   }
 
-  $node_id = $dc_postgresql::params::nodemap[$::hostname]
+  $node_id = $dc_postgresql::params::nodemap[$::fqdn]
 
   file { "${dc_postgresql::params::pghome}/repmgr":
     ensure  => directory,
