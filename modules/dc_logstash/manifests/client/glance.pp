@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::glance_logstash
+# Class: dc_logstash::client::glance
 #
 # Configures logstash for glance
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::glance_logstash {
+class dc_logstash::client::glance {
 
   dc_logstash::client::register { 'glance_api_log':
     logs   => '/var/log/glance/api.log',

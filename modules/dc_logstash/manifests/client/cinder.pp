@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::cinder_logstash
+# Class: dc_logstash::client::cinder
 #
 # Configures logstash for cinder
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::cinder_logstash {
+class dc_logstash::client::cinder {
 
   dc_logstash::client::register { 'cinder_manage_log':
     logs   => '/var/log/cinder/cinder-manage.log',

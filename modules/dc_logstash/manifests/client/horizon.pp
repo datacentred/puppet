@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::horizon_logstash
+# Class: dc_logstash::client::horizon
 #
 # Configures logstash for horizon
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::horizon_logstash {
+class dc_logstash::client::horizon {
 
   dc_logstash::client::register { 'horizon_log':
     logs   => '/var/log/horizon/horizon.log',

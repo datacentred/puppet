@@ -45,7 +45,7 @@ class dc_profile::openstack::cinder {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_profile::openstack::cinder_logstash
+      include ::dc_logstash::client::cinder
     }
   }
 
