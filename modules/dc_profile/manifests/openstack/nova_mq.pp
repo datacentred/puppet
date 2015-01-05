@@ -50,8 +50,10 @@ class dc_profile::openstack::nova_mq {
 
   include dc_collectd::agent::rabbitmq
 
-  if $::environment == 'production' {
-    include dc_profile::openstack::nova_mq_logstash
+  unless $is_vagrant {
+    if $::environment == 'production' {
+      include dc_logstash::client::nova_mq
+    }
   }
 
 }

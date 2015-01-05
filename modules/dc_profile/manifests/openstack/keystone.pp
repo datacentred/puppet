@@ -81,7 +81,7 @@ class dc_profile::openstack::keystone {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include dc_profile::openstack::keystone_logstash
+      include dc_logstash::client::keystone
 
       # Keystone tenancy and accounts for Icinga monitoring
       keystone_tenant { 'icinga':

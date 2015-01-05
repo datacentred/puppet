@@ -16,4 +16,10 @@ class dc_profile::openstack::ceilometer_agent {
   include ::ceilometer::agent::auth
   include ::ceilometer::agent::compute
 
+  unless $::is_vagrant {
+    if $::environment == 'production' {
+      include dc_logstash::client::ceilometer
+    }
+  }
+
 }

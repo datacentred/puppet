@@ -59,7 +59,7 @@ class dc_profile::openstack::nova {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include dc_profile::openstack::nova_logstash
+      include dc_logstash::client::nova
     }
   }
 

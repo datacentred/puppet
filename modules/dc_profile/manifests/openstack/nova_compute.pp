@@ -78,9 +78,11 @@ class dc_profile::openstack::nova_compute {
     ensure => installed,
   }
 
-  if $::environment == 'production' {
-    # Logstash config
-    include ::dc_profile::openstack::nova_compute_logstash
+  unless $::is_vagrant {
+    if $::environment == 'production' {
+      # Logstash config
+      include ::dc_logstash::client::nova_compute
+    }
   }
 
 }

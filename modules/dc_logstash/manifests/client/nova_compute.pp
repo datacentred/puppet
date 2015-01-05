@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::nova_compute_logstash
+# Class: dc_logstash::client::nova_compute
 #
 # Logstash config for Nova on compute nodes
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::nova_compute_logstash {
+class dc_logstash::client::nova_compute {
 
   dc_logstash::client::register { 'nova_manage':
     logs   => '/var/log/nova/nova-manage.log',

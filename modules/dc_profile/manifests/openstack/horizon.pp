@@ -29,7 +29,7 @@ class dc_profile::openstack::horizon {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include dc_profile::openstack::horizon_logstash
+      include dc_logstash::client::horizon
     }
   }
 

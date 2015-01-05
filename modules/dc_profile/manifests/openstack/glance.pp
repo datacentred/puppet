@@ -41,7 +41,7 @@ class dc_profile::openstack::glance {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_profile::openstack::glance_logstash
+      include ::dc_logstash::client::glance
     }
   }
 

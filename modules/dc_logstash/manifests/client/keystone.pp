@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::keystone_logstash
+# Class: dc_logstash::client::keystone
 #
 # Configures logstash for keystone
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::keystone_logstash {
+class dc_logstash::client::keystone {
 
   dc_logstash::client::register { 'keystone_log':
     logs     => '/var/log/keystone/keystone.log',

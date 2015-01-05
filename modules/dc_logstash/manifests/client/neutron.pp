@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::neutron_logstash
+# Class: dc_logstash::client::neutron
 #
 # Configures logstash for neutron
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::neutron_logstash {
+class dc_logstash::client::neutron {
 
   dc_logstash::client::register { 'neutron_server_log':
     logs     => '/var/log/neutron/server.log',
