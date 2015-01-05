@@ -27,6 +27,14 @@ filter {
             add_tag => [ "keystone", "keystonefmt" ]
         }
     }
+    else if [type] =~ /ceilometer.*/ {
+        mutate {
+            add_tag => [ "ceilometer", "oslofmt" ]
+    }
+    else if [type] =~ /heat.*/ {
+        mutate {
+            add_tag => [ "heat", "oslofmt" ]
+    }
     if "oslofmt" in [tags] {
     #    multiline {
     #        negate => true
