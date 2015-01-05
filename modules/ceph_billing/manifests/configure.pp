@@ -9,10 +9,10 @@ class ceph_billing::configure {
 
   # Install the codebase from GitHub
   file { '/root/.ssh':
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0750',
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0750',
   } ->
 
   file { '/root/.ssh/id_rsa':
@@ -46,7 +46,7 @@ class ceph_billing::configure {
   } ->
 
   # Create the WSGI frontend
-  apache::vhost { $fqdn:
+  apache::vhost { $::fqdn:
     port                        => '443',
     docroot                     => '/var/www',
     ssl                         => true,
@@ -85,7 +85,7 @@ class ceph_billing::configure {
 
   # Setup the storage poller
   cron { 'ceph stat':
-    command => "curl https://${::fqdn}/storage/stat/ --cacert /var/lib/puppet/ssl/certs/ca.pem 2>&1 > /dev/null",
+    command => "curl -Ss https://${::fqdn}/storage/stat/ --cacert /var/lib/puppet/ssl/certs/ca.pem 2>&1 > /dev/null",
     user    => 'root',
     minute  => '0',
   }
