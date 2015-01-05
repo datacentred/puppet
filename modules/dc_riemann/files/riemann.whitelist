@@ -7,3 +7,5 @@ Can\'t create new lease file: Permission denied
 ^.*dhcp-failover rejected: incoming update is less critical than outgoing update$
 ^.*Please use the the default quota class for default quota.$
 ^.*FAILED: Has an address record but no DHCID, not mine.$
+^.*Found [0-9] in the database and [0-9] on the hypervisor.$
+^.*Arguments dropped when creating context:.$
