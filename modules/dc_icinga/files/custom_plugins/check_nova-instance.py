@@ -40,6 +40,7 @@
 # * `--endpoint_type`: When not overriding, which type to use in the catalog.  Public by default.
 # * `--image_name`: Image name to use (cirros-0.3.0-x86_64-disk by defalut)
 # * `--flavor_name`: Flavor name to use (m1.tiny by default)
+# * `--net_name`: Net name to use ( test_net by default )
 # * `--instance_name`: Instance name to use (monitoring_test by default)
 # * `--force_delete`: If matching instances are found delete them and add a notification in the message instead of getting out in critical state
 # * `--api_version`: Version of the API to use. 2 by default. (1.1 supported, and 3 not tested)
@@ -48,7 +49,7 @@
 # 
 # ## Usage
 # 
-# * `check_nova-instance.py --auth_url $OS_AUTH_URL --username $OS_USERNAME --tenant $OS_TENANT_NAME --password $OS_PASSWORD --api_version '2' --instance_name 'test_from_api' --endpoint_url http://localhost`
+# * `check_nova-instance.py --auth_url $OS_AUTH_URL --username $OS_USERNAME --tenant $OS_TENANT_NAME --password $OS_PASSWORD --api_version '2' --instance_name 'test_from_api' --net_name 'test_net' --endpoint_url http://localhost`
 # 
 # For a asynchronous usage relative to a nagios check, one can use [cache_check.py](https://github.com/gaelL/nagios-cache-check)
 # 
@@ -87,9 +88,9 @@ STATE_CRITICAL = 2
 STATE_UNKNOWN = 3
 
 default_image_name = 'cirros-0.3.0-x86_64-disk'
-default_flavor_name = 'dc1.1x0'
+default_flavor_name = 'm1.tiny'
 default_instance_name = 'monitoring_test'
-
+default_net_name = 'test_net'
 
 def script_unknown(msg):
     sys.stderr.write("UNKNOWN - %s (UTC: %s)\n" % (msg, datetime.utcnow()))
@@ -196,6 +197,15 @@ class Novautils:
             except Exception as e:
                 self.msgs.append("Cannot find the image %s (%s)"
                                  % (image_name, e))
+    
+    def get_net(self, net_name):
+        if not self.msgs:
+            try:
+                self.net = self.nova_client.networks.find(label=net_name)
+	        self.nics = [{"net-id": self.net.id, "v4-fixed-ip": ''}]
+            except Exception as e:
+                self.msgs.append("Cannot find the network %s (%s)"
+                                 % (net_name, e))
 
     def get_flavor(self, flavor_name):
         if not self.msgs:
@@ -211,7 +221,8 @@ class Novautils:
                 self.instance = self.nova_client.servers.create(
                     name=instance_name,
                     image=self.image,
-                    flavor=self.flavor)
+                    flavor=self.flavor,
+		    nics=self.nics)
             except Exception as e:
                 self.msgs.append("Cannot create the vm %s (%s)"
                                  % (instance_name, e))
@@ -320,6 +331,11 @@ parser.add_argument('--flavor_name', metavar='flavor_name', type=str,
                     help="Flavor name to use (%s by default)"
                     % default_flavor_name)
 
+parser.add_argument('--net_name', metavar='net_name', type=str,
+                    default=default_net_name,
+                    help="Network name to use (%s by default)"
+                    % default_net_name)
+
 parser.add_argument('--instance_name', metavar='instance_name', type=str,
                     default=default_instance_name,
                     help="Instance name to use (%s by default)"
@@ -383,6 +399,7 @@ util.check_existing_instance(args.instance_name,
                              args.timeout_delete)
 util.get_image(args.image_name)
 util.get_flavor(args.flavor_name)
+util.get_net(args.net_name)
 util.create_instance(args.instance_name)
 util.instance_ready(args.timeout)
 util.delete_instance()
