@@ -16,7 +16,6 @@ class dc_profile::openstack::mongodb {
   include ::mongodb::server
   include ::mongodb::client
   include ::mongodb::replset
-  include ::dc_backup::duplicity
 
   Class['::mongodb::server'] ->
   Class['::mongodb::client']
@@ -32,9 +31,19 @@ class dc_profile::openstack::mongodb {
   } ->
   Mongodb_replset['ceilometer']
 
+  # $::backup_node is set via the ENC (Foreman)
+  if $::backup_node {
+    file { '/srv/backup':
+      ensure => directory,
+      mode   => '0700',
+    }
+    include ::dc_backup::duplicity
+  }
+
   unless $::is_vagrant {
     include dc_icinga::hostgroup_mongodb
   }
+  
 }
 
 
