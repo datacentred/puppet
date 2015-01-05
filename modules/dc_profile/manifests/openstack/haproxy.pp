@@ -345,4 +345,10 @@ class dc_profile::openstack::haproxy {
     },
   }
 
+  unless $::is_vagrant {
+    if $::environment == 'production' {
+      include ::dc_icinga::hostgroup_haproxy
+    }
+  }
+
 }
