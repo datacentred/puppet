@@ -86,4 +86,10 @@ class dc_foreman_proxy::install {
     subscribe => File['/etc/foreman-proxy/settings.yml']
   }
 
+  unless $::is_vagrant {
+    if $::environment == 'production' {
+      include ::dc_logstash::client::foreman_proxy
+    }
+  }
+
 }
