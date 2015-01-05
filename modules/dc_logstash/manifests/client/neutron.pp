@@ -13,8 +13,8 @@
 class dc_logstash::client::neutron {
 
   dc_logstash::client::register { 'neutron_server_log':
-    logs     => '/var/log/neutron/server.log',
-    fields   => {
+    logs   => '/var/log/neutron/server.log',
+    fields => {
       'type' => 'neutron_server',
     }
   }
@@ -27,9 +27,16 @@ class dc_logstash::client::neutron {
   }
 
   dc_logstash::client::register { 'neutron_l3_log':
-    logs   => '/var/log/neutron/l3-agent.log',
+    logs   => '/var/log/neutron/vpn_agent.log',
     fields => {
       'type' => 'neutron_l3',
+    }
+  }
+
+  dc_logstash::client::register { 'neutron_lbaas_log':
+    logs   => '/var/log/neutron/lbaas-agent.log',
+    fields => {
+      'type' => 'neutron_lbaas',
     }
   }
 
