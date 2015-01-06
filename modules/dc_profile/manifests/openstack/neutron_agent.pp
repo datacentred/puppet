@@ -71,7 +71,7 @@ class dc_profile::openstack::neutron_agent {
     include ::neutron::agents::metering
     include ::neutron::services::fwaas
 
-    unless $is_vagrant {
+    unless $::is_vagrant {
       if $environment == 'production' {
         include dc_logstash::client::neutron
       }
