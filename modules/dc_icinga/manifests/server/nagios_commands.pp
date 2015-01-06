@@ -34,6 +34,8 @@ class dc_icinga::server::nagios_commands {
   $mongodb_monitor_password = hiera(mongodb_monitor_password)
   $mongodb_admin_user = hiera(mongodb_admin_user)
   $mongodb_admin_password = hiera(mongodb_admin_password)
+  $icinga_instance_net_name = hiera(icinga_instance_net_name)
+  $icinga_instance_flavor = hiera(icinga_instance_flavor)
 
 
   ######################################################################
@@ -99,7 +101,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_nova_instance':
-    command_line => "/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --image_name CirrOS\\ 0.3.3 --flavor_name dc1.1x0 --force_delete"
+    command_line => "/usr/lib/nagios/plugins/check_nova-instance.py --auth_url https://\$HOSTALIAS\$:${keystone_port}/v2.0 --endpoint_url https://\$HOSTALIAS\$:${nova_osapi_port}/v2 --tenant ${keystone_icinga_tenant} --username ${keystone_icinga_user} --password ${keystone_icinga_password} --instance_name icinga --net_name ${icinga_instance_net_name} --image_name CirrOS\\ 0.3.3 --flavor_name ${icinga_instance_flavor} --force_delete"
   }
 
   icinga::command { 'check_nova_api_connect':
