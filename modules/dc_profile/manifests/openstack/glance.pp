@@ -37,10 +37,12 @@ class dc_profile::openstack::glance {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  include ::dc_icinga::hostgroup_glance
+  # Explicitly enable mirrored queues
+  glance_api_config { 'DEFAULT/rabbit_ha_queues': value => true }
 
   unless $::is_vagrant {
     if $::environment == 'production' {
+      include ::dc_icinga::hostgroup_glance
       include ::dc_logstash::client::glance
     }
   }
