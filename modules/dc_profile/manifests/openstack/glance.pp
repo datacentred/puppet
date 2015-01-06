@@ -37,11 +37,10 @@ class dc_profile::openstack::glance {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  include ::dc_icinga::hostgroup_glance
-
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_logstash::client::glance
+      include ::dc_icinga::hostgroup_glance
     }
   }
 

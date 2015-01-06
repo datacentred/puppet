@@ -77,11 +77,10 @@ class dc_profile::openstack::keystone {
     before  => Service['keystone'],
   }
 
-  include ::dc_icinga::hostgroup_keystone
-
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include dc_logstash::client::keystone
+      include ::dc_icinga::hostgroup_keystone
+      include ::dc_logstash::client::keystone
 
       # Keystone tenancy and accounts for Icinga monitoring
       keystone_tenant { 'icinga':
