@@ -8,18 +8,27 @@ class loadbalancer::stats (
   $ssl = false,
   $ssl_cert = undef,
   $ssl_key = undef,
+  $combined_cert = undef,
 ) {
 
   if $ssl {
 
-    $cert = "/etc/ssl/private/${::fqdn}.crt"
+    if $combined_cert {
 
-    loadbalancer::cert { $cert:
-      ssl_cert => $ssl_cert,
-      ssl_key  => $ssl_key,
-      before   => Haproxy::Listen['haproxy-stats'],
+      $cert = $combined_cert
+    
+    } else {
+      
+      $cert = "/etc/ssl/private/${::fqdn}.crt"
+
+      loadbalancer::cert { $cert:
+        ssl_cert => $ssl_cert,
+        ssl_key  => $ssl_key,
+        before   => Haproxy::Listen['haproxy-stats'],
+      }
+    
     }
-
+    
     $bind_options = [
       'ssl',
       'no-sslv3',
