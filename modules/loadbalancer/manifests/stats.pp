@@ -8,14 +8,14 @@ class loadbalancer::stats (
   $ssl = false,
   $ssl_cert = undef,
   $ssl_key = undef,
-  $cert_override = undef,
+  $combined_cert = undef,
 ) {
 
   if $ssl {
 
-    if $cert_override {
+    if $combined_cert {
 
-      $cert = $cert_override
+      $cert = $combined_cert
     
     } else {
       
