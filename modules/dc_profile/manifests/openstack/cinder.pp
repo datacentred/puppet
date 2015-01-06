@@ -41,9 +41,6 @@ class dc_profile::openstack::cinder {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  # Explicitly enable mirrored queues
-  cinder_config { 'DEFAULT/rabbit_ha_queues': value => true }
-
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_logstash::client::cinder

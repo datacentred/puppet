@@ -77,14 +77,10 @@ class dc_profile::openstack::keystone {
     before  => Service['keystone'],
   }
 
-  # Explicitly enable mirrored queues.  This isn't set to true unless
-  # rabbit_hosts is defined.
-  keystone_config { 'DEFAULT/rabbit_ha_queues': value => true }
-
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_icinga::hostgroup_keystone
-      include dc_logstash::client::keystone
+      include ::dc_logstash::client::keystone
 
       # Keystone tenancy and accounts for Icinga monitoring
       keystone_tenant { 'icinga':
