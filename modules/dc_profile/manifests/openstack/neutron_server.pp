@@ -18,6 +18,8 @@ class dc_profile::openstack::neutron_server {
 
   include dc_profile::auth::sudoers_neutron
 
+  # include dc_icinga::hostgroup_neutron_server
+
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
     listening_service => 'neutron',
@@ -27,13 +29,9 @@ class dc_profile::openstack::neutron_server {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  # Explicitly enable mirrored queues
-  neutron_config { 'DEFAULT/rabbit_ha_queues': value  => true }
-
-  unless $::is_vagrant {
+  unless $is_vagrant {
     if $environment == 'production' {
       include dc_logstash::client::neutron
-      include dc_icinga::hostgroup_neutron_server
     }
   }
 }

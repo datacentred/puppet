@@ -64,9 +64,6 @@ class dc_profile::openstack::neutron_agent {
       'DEFAULT/dhcp_domain': value => 'datacentred.io';
     }
 
-    # Explicitly enable mirrored queues
-    neutron_config { 'DEFAULT/rabbit_ha_queues': value  => true }
-
     include ::neutron::agents::dhcp
     include ::neutron::agents::vpnaas
     include ::neutron::agents::lbaas
@@ -74,7 +71,7 @@ class dc_profile::openstack::neutron_agent {
     include ::neutron::agents::metering
     include ::neutron::services::fwaas
 
-    unless $::is_vagrant {
+    unless $is_vagrant {
       if $environment == 'production' {
         include dc_logstash::client::neutron
       }
