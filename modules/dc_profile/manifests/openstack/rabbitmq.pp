@@ -75,15 +75,6 @@ class dc_profile::openstack::rabbitmq {
     write_permission     => '.*',
   }
 
-  # Export our haproxy balancermember resource
-  @@haproxy::balancermember { "${::fqdn}-rabbitmq":
-    listening_service => 'rabbitmq',
-    server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
-    ports             => '5672',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
   # Icinga checks
   unless $::is_vagrant {
     include ::dc_icinga::hostgroup_rabbitmq
