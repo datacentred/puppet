@@ -86,7 +86,8 @@ class dc_profile::openstack::rabbitmq {
 
   # Icinga checks
   unless $::is_vagrant {
-    include dc_icinga::hostgroup_rabbitmq
+    include ::dc_icinga::hostgroup_rabbitmq
+    include ::dc_logstash::client::rabbitmq
     # Required for Icinga monitoring
     rabbitmq_user { $rabbitmq_monuser:
       admin    => true,

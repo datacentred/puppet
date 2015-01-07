@@ -1,4 +1,4 @@
-# Class: dc_logstash::client::nova_mq
+# Class: dc_logstash::client::rabbitmq
 #
 # Configures logstash for rabbitmq
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_logstash::client::nova_mq {
+class dc_logstash::client::rabbitmq {
 
   dc_logstash::client::register { 'rabbitmq_log':
     logs   => "/var/log/rabbitmq/rabbit@${::hostname}.log",
