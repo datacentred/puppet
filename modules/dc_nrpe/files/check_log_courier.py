@@ -29,6 +29,9 @@ if entries[1][(entries[0].index('Status'))] == 'Disconnected':
 elif entries[1][(entries[0].index('Pending Payloads'))] > 50:
   print "WARNING: There are more than 50 messages to logstash pending"
   sys.exit(WARNING)
+elif (entries[1][(entries[0].index('Pending Payloads'))] <= 50) and (entries[1][(entries[0].index('Status'))] == 'Reconnecting...'):
+  print "OK: Publisher reconnecting to logstash, low number of pending payloads"
+  sys.exit(OK)
 elif (entries[1][(entries[0].index('Pending Payloads'))] <= 50) and (entries[1][(entries[0].index('Status'))] == 'Connected'):
   print "OK: Publisher connected to logstash, low number of pending payloads"
   sys.exit(OK)
