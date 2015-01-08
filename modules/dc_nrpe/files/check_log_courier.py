@@ -8,6 +8,8 @@ OK = 0
 WARNING = 1
 CRITICAL = 2
 UNKNOWN = 3
+logstash_pp_warn_threshold = 20
+logstash_pp_crit_threshold = 50
 
 subprocess.call(["lc-admin status > /tmp/lc-admin-output.txt"], shell=True)
 lines = open("/tmp/lc-admin-output.txt", 'r').readlines()
@@ -23,15 +25,15 @@ for key, value in yaml.load(stream)['Publisher'].iteritems():
      entries[0].append(key)
      entries[1].append(value)
 
-if entries[1][(entries[0].index('Status'))] == 'Disconnected':
-  print "CRITICAL: Publisher disconnected from logstash"
+if entries[1][(entries[0].index('Pending Payloads'))] > logstash_pp_crit_threshold:
+  print "CRITICAL: There are more than %d messages to logstash pending" % logstash_pp_crit_threshold
   sys.exit(CRITICAL)
-elif entries[1][(entries[0].index('Pending Payloads'))] > 50:
-  print "WARNING: There are more than 50 messages to logstash pending"
+elif entries[1][(entries[0].index('Pending Payloads'))] > logstash_pp_warn_threshold:
+  print "WARNING: There are more than %d messages to logstash pending" % logstash_pp_warn_threshold
   sys.exit(WARNING)
-elif (entries[1][(entries[0].index('Pending Payloads'))] <= 50) and (entries[1][(entries[0].index('Status'))] == 'Connected'):
-  print "OK: Publisher connected to logstash, low number of pending payloads"
+elif entries[1][(entries[0].index('Pending Payloads'))] <= logstash_pp_warn_threshold:
+  print "OK: Low number of pending payloads"
   sys.exit(OK)
 else:
-  print "UNKNOWN: I didn't forsee this problem!"
+  print "UNKNOWN: Unknown error"
   sys.exit(UNKNOWN)
