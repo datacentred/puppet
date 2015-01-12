@@ -1,13 +1,13 @@
-# Class: dc_logstash::client::apache
+# Class: dc_logstash::client::mongodb
 #
-# Forwards the apache error logs
+# Forwards MongoDB logs
 #
 class dc_logstash::client::mongodb {
   
-  dc_logstash::client::register { 'mongod_server':
-    logs   => '/var/log/mongodb/mongod.log',
+  dc_logstash::client::register { 'mongodb_server':
+    logs   => '/var/log/mongodb/mongodb.log',
     fields => {
-      'type' => 'mongod',
+      'type' => 'mongodb',
     }
   }
 
