@@ -41,7 +41,10 @@ class dc_profile::openstack::mongodb {
   }
 
   unless $::is_vagrant {
-    include dc_icinga::hostgroup_mongodb
+    if $::environment == 'production' {
+      include ::dc_icinga::hostgroup_mongodb
+      include ::dc_logstash::client::mongodb
+    }
   }
   
 }
