@@ -9,4 +9,4 @@ Can\'t create new lease file: Permission denied
 ^.*FAILED: Has an address record but no DHCID, not mine.$
 ^.*Found \d+ in the database and \d+ on the hypervisor.$
 ^.*Arguments dropped when creating context.*
-^.*Failed to inspect disks of instance.*domain is in state of SHUTOFF
+^.*Failed to inspect.*of instance.*domain is in state of SHUTOFF
