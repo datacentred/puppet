@@ -23,6 +23,9 @@ class dc_profile::apt::apt {
     priority => '400',
   }
 
+  # Disable automatic updates and downloads
+  contain ::apt::unattended_upgrades
+
   # Ensure an apt-get update happens before any package installs
   Class['apt::update'] -> Package <| |>
 }
