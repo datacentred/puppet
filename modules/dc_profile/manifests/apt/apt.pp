@@ -24,12 +24,7 @@ class dc_profile::apt::apt {
   }
 
   # Disable automatic updates and downloads
-  class { apt::unattended_upgrades:
-    update   => '0',
-    download => '0',
-    upgrade  => '0',
-    enable   => '0',
-  }
+  contain ::apt::unattended_upgrades
 
   # Ensure an apt-get update happens before any package installs
   Class['apt::update'] -> Package <| |>
