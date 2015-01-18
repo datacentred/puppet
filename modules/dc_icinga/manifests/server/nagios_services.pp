@@ -675,4 +675,18 @@ class dc_icinga::server::nagios_services {
     service_description => 'Postgres Streaming Replication',
   }
 
+  icinga::service { 'check_compute_hw':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_nova_compute',
+    check_command       => 'check_nrpe_1arg!check_compute_hw',
+    service_description => 'Compute Node Hardware Config',
+  }
+
+  icinga::service { 'check_cephosd_hw':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_ceph_osd',
+    check_command       => 'check_nrpe_1arg!check_cephosd_hw',
+    service_description => 'OSD Node Hardware Config',
+  }
+
 }
