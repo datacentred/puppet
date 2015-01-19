@@ -1,8 +1,4 @@
 #!/bin/bash
-mem_bytes=`cat /proc/meminfo | grep MemTotal | cut -d " " -f 8`
-mem_gigabytes=$((mem_bytes/1000000))
-mem_expected=$1
-disks_expected=$2
 usage()
 {
 cat << EOF
@@ -69,9 +65,9 @@ fi
 
 # Script start
 
-mem_bytes=`cat /proc/meminfo | grep MemTotal | cut -d " " -f 8`
+mem_bytes=`grep MemTotal /proc/meminfo | cut -d " " -f 8`
 mem_gigabytes=$((mem_bytes/1000000))
-cpu_actual=`cat /proc/cpuinfo | grep processor | wc -l`
+cpu_actual=`grep -c processor /proc/cpuinfo`
 
 debug_echo "Actual memory is $mem_bytes in bytes"
 debug_echo "Actual memory is $mem_gigabytes GB"
