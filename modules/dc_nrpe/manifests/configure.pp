@@ -42,5 +42,7 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::puppetdb
   include ::dc_nrpe::checks::sensors
   include ::dc_nrpe::checks::smartd
+  include ::dc_nrpe::checks::compute_hw
+  include ::dc_nrpe::checks::cephosd_hw
 
 }
