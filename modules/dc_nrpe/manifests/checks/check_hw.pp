@@ -22,6 +22,11 @@ class dc_nrpe::checks::check_hw {
     source => 'puppet:///modules/dc_nrpe/check_hw.sh'
   }
 
+  sudo::conf { 'check_hw.sh':
+    priority => 10,
+    content  => 'nagios ALL=NOPASSWD:/usr/local/bin/check_hw.sh',
+  }
+
   file { '/usr/local/bin/check_hw_compute.sh':
     ensure => absent,
   }
