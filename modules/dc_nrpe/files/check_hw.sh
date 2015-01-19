@@ -24,6 +24,8 @@ fi
 
 VERBOSE=0
 ERRORS=0
+WARNINGS=0
+
 while getopts ":m:c:vh" OPTION
 do
      case $OPTION in
@@ -78,7 +80,7 @@ debug_echo "Expected memory is $MEM GB"
 if (( $MEM < $mem_gigabytes ))
 then
 	debug_echo "More memory than expected"
-	((++ERRORS))
+	((++WARNINGS))
 	error_message="Memory was $mem_gigabytes GB, expecting $MEM GB"
 elif (( $MEM > $mem_gigabytes ))
 then
@@ -92,7 +94,7 @@ fi
 if (( $CPU < $cpu_actual ))
 then
 	debug_echo "More CPU's than expected"
-	((++ERRORS))
+	((++WARNINGS))
 	error_message="$error_message Number of CPU's was $cpu_actual, expecting $CPU"
 elif (( $CPU > $cpu_actual ))
 then
@@ -109,6 +111,11 @@ then
 	debug_echo "Errors is $ERRORS"
 	echo "CRITICAL - $error_message"
 	exit 2
+elif [ $WARNINGS != 0 ]
+then
+    debug_echo "Warnings is $WARNINGS"
+    echo "WARNING - $error_message"
+    exit 1
 else
 	echo "OK - hardware configuration looks correct"
 	exit 0
