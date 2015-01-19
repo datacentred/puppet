@@ -42,7 +42,7 @@ class dc_nrpe::checks::check_hw {
 
   concat::fragment { 'check_compute_hw':
     target  => '/etc/nagios/nrpe.d/dc_nrpe_check.cfg',
-    content => "command[check_compute_hw]=sudo /usr/local/bin/check_hw.sh -c 16 -m 64\n",
+    content => "command[check_compute_hw]=sudo /usr/local/bin/check_hw.sh -c 16 -m 65\n",
   }
 
 }
