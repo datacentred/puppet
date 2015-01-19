@@ -6,4 +6,8 @@ class dc_nrpe::install {
     ensure  => installed,
   }
 
+  package { 'python-netifaces':
+    ensure => installed,
+  }
+
 }
