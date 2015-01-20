@@ -689,4 +689,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'OSD Node Hardware Config',
   }
 
+  icinga::service { 'check_net_interface':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_ceph_osd,dc_hostgroup_nova_compute,dc_hostgroup_ceph_rgw,dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_net_interface',
+    service_description => '10Gb Interface Checks',
+  }
+
 }
