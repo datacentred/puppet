@@ -13,7 +13,7 @@ class dc_profile::ceph::radosgw_lb {
   $domain      = 'storage.datacentred.io'
   $myip        = get_ip_addr("${::hostname}.${domain}")
   $ceph_public = 'p1p1' # Internet facing
-  $ceph_lb     = 'p2p2' # Internally facing
+  $ceph_lb     = 'p1p2' # Internally facing
 
   augeas { $ceph_public :
       context => '/files/etc/network/interfaces',
