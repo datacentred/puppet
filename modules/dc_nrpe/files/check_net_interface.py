@@ -10,7 +10,7 @@ def get_mtu(interface):
 def main():
     for interface in fnmatch.filter(netifaces.interfaces(), 'p?p?'):
         mtu_int=get_mtu(interface)
-        if mtu_int != $correct_mtu:
+        if mtu_int != correct_mtu:
             print "CRITICAL: Jumbo frames are not configured correctly on interface %s" % interface
             sys.exit(2)
         else:
