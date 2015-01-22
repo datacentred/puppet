@@ -23,6 +23,18 @@ class dc_profile::openstack::proxyip {
   # to exist.
   $ip       = get_ip_addr("${::hostname}.${domain}")
 
+  augeas { $int_if:
+      context => '/files/etc/network/interfaces',
+      changes => [
+          "set auto[child::1 = '${ext_if}']/1 ${ext_if}",
+          "set iface[. = '${int_if}'] ${int_if}",
+          "set iface[. = '${int_if}']/family inet",
+          "set iface[. = '${int_if}']/method dhcp",
+          "set iface[. = '${int_if}']/post-up[1] 'ip route add 10.10.0.0/16 via 10.10.160.254'",
+          "set iface[. = '${int_if}']/post-down[1] 'ip route del 10.10.0.0/16 via 10.10.160.254'",
+      ],
+  }
+
   augeas { $ext_if :
       context => '/files/etc/network/interfaces',
       changes => [
@@ -33,14 +45,8 @@ class dc_profile::openstack::proxyip {
           "set iface[. = '${ext_if}']/address ${ip}",
           "set iface[. = '${ext_if}']/netmask 255.255.255.248",
           "set iface[. = '${ext_if}']/post-up[1] 'ip route replace default via 185.43.218.25'",
-          "set iface[. = '${ext_if}']/post-up[2] 'ip route add 10.10.0.0/16 via 10.10.160.254'",
           "set iface[. = '${ext_if}']/post-down[1] 'ip route replace default via 10.10.160.254'",
-          "set iface[. = '${ext_if}']/post-down[2] 'ip route del 10.10.0.0/16 via 10.10.160.254'",
       ],
-  } ~>
-  exec { "restart-${ext_if}":
-    command     => "/sbin/ifdown ${ext_if} ; /sbin/ifup ${ext_if}",
-    refreshonly => true,
   }
 
 }
