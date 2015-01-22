@@ -1,0 +1,17 @@
+filter {
+  if [type] = "mongodb" {
+    grok {
+     pattern => '%{TIMESTAMP_ISO8601} \[conn%{NUMBER:mongoConnection}\] end connection %{IPORHOST}:%{POSINT:port} %{GREEDYDATA}'
+    }
+    grok {
+     pattern => '%{TIMESTAMP_ISO8601} \[%{WORD:originator}\] connection accepted from %{IPORHOST}:%{POSINT:port} %{GREEDYDATA}'
+    }
+    grok {
+     pattern =>'%{TIMESTAMP_ISO8601} \[conn%{NUMBER:mongoConnection}\]  authenticate db: %{WORD:databaseName} %{GREEDYDATA}'
+    }
+  }
+}
+
+2015-01-22T13:06:26.745+0000 [conn3860296]  authenticate db: admin { authenticate: 1, user: "monitor", nonce: "xxx", key: "xxx" }
+2015-01-22T13:06:29.236+0000 [conn3860290] end connection 10.10.160.158:34307 (52 connections now open)
+2015-01-22T13:06:26.743+0000 [initandlisten] connection accepted from 10.10.192.147:42539 #3860296 (54 connections now open)
