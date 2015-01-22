@@ -1,23 +1,31 @@
 #!/bin/bash
 
-if grep -q <%= @mountpoint %> /proc/mounts; then
-  msg="Hello from <%= @fqdn %>\nMy mountpoint shouldn't be mounted yet"
-  echo $msg | mail -s 'Ceph key backup' <%= @sos_address %>
+if grep -q <%= @mountpoint %> /proc/mounts
+then
+    echo "Mountpoint shouldn't be mounted yet - trying to unmount"
+    if ! umount <%= @mountpoint %>
+    then
+        echo "Backup umount failed"
+        exit 1
+    fi
+else
+    if ! mount <%= @mountpoint %>
+    then
+        echo "Backup mount failed"
+        exit 1
+    else
+        if ! ceph auth list > <%= @mountpoint %>/keys
+        then
+            echo "Backup failed"
+            exit 1
+        else
+            if ! umount <%= @mountpoint %>
+            then
+                echo "Backup unmount failed"
+            fi
+        fi
+    fi
 fi
 
-if ! mount <%= @mountpoint %>; then
-  msg="Hello from <%= @fqdn %>\nMy backup mount failed"
-  echo $msg | mail -s 'Ceph key backup' <%= @sos_address %>
-fi
 
-if ! ceph auth list > <%= @mountpoint %>/keys; then
-  msg="Hello from <%= @fqdn %>\nMy backup failed"
-  echo $msg | mail -s 'Ceph key backup' <%= @sos_address %>
-fi
 
-if ! umount <%= @mountpoint %>; then
-  msg="Hello from <%= @fqdn %>\nMy backup unmount failed"
-  echo $msg | mail -s 'Ceph key backup' <%= @sos_address %>
-fi
-
-# vim: set syntax=sh ts=2 et:
