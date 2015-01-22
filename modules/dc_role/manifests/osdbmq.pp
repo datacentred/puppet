@@ -32,5 +32,6 @@ class dc_role::osdbmq inherits dc_role {
   Class['dc_profile::openstack::heat_db']
 
   include ::sysctls
+  include dc_profile::openstack::neutron_db_check
 
 }
