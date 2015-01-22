@@ -91,6 +91,7 @@ class dc_icinga::server::nagios_services {
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_postgres',
     check_command       => 'check_pgsql_dc!nagiostest!nagios!guweopojRut3',
+    max_check_attempts  => '10',
     service_description => 'PostgreSQL',
   }
 
