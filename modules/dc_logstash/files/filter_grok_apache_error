@@ -1,7 +1,7 @@
 filter {
  if [type] == "apache_error" {
   grok {
-   pattern => \[%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR}\] \[:%{WORD:level}\] \[pid %{NUMBER:pid}\] %{GREEDYDATA:message}
+   pattern => '\[%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR}\] \[:%{WORD:level}\] \[pid %{NUMBER:pid}\] %{GREEDYDATA:message}'
   }
  }
 }
