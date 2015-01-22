@@ -16,6 +16,10 @@ class dc_profile::openstack::neutron_db_check {
   $neutron_db_user = hiera(neutron_db_user)
   $neutron_db_pass = hiera(neutron_db_pass)
 
+  package { 'python-mysqldb':
+    ensure => installed,
+  }
+
   file { '/usr/local/bin/check_neutron_db.py':
     owner   => 'root',
     group   => 'root',
