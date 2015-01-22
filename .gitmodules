@@ -70,9 +70,6 @@
 [submodule "modules/puppetdbquery"]
 	path = modules/puppetdbquery
 	url = https://github.com/dalen/puppet-puppetdbquery
-[submodule "modules/mcollective"]
-	path = modules/mcollective
-	url = https://github.com/spjmurray/puppetlabs-mcollective
 [submodule "modules/datacat"]
 	path = modules/datacat
 	url = https://github.com/richardc/puppet-datacat
