@@ -26,7 +26,7 @@ class dc_profile::openstack::proxyip {
   augeas { $int_if:
       context => '/files/etc/network/interfaces',
       changes => [
-          "set auto[child::1 = '${ext_if}']/1 ${ext_if}",
+          "set auto[child::1 = '${int_if}']/1 ${int_if}",
           "set iface[. = '${int_if}'] ${int_if}",
           "set iface[. = '${int_if}']/family inet",
           "set iface[. = '${int_if}']/method dhcp",
