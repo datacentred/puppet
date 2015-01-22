@@ -1,5 +1,5 @@
 filter {
-  if [type] = "mongodb" {
+  if [type] == "mongodb" {
     grok {
      pattern => '%{TIMESTAMP_ISO8601} \[conn%{NUMBER:mongoConnection}\] end connection %{IPORHOST}:%{POSINT:port} %{GREEDYDATA}'
     }
