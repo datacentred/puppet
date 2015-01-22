@@ -14,7 +14,7 @@ else
         echo "Backup mount failed"
         exit 1
     else
-        if ! ceph auth list > <%= @mountpoint %>/keys
+        if ! ceph auth list &> <%= @mountpoint %>/keys
         then
             echo "Backup failed"
             exit 1
