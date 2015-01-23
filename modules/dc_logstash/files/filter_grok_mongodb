@@ -1,0 +1,13 @@
+filter {
+  if [type] == "mongodb" {
+    grok {
+     pattern => '%{TIMESTAMP_ISO8601} \[conn%{NUMBER:mongoConnection}\] end connection %{IPORHOST}:%{POSINT:port} %{GREEDYDATA}'
+    }
+    grok {
+     pattern => '%{TIMESTAMP_ISO8601} \[%{WORD:originator}\] connection accepted from %{IPORHOST}:%{POSINT:port} %{GREEDYDATA}'
+    }
+    grok {
+     pattern =>'%{TIMESTAMP_ISO8601} \[conn%{NUMBER:mongoConnection}\]  authenticate db: %{WORD:databaseName} %{GREEDYDATA}'
+    }
+  }
+}
