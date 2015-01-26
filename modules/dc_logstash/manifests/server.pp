@@ -74,7 +74,6 @@ class dc_logstash::server (
   contain ::dc_logstash::server::config::filter_grok_syslog
   contain ::dc_logstash::server::config::output_elasticsearch
   contain ::dc_logstash::server::config::output_riemann
-  contain ::dc_logstash::server::config::output_riemann_dev
   contain ::dc_logstash::server::config::filter_grok_apache
   contain ::dc_logstash::server::config::filter_grok_apache_err
   contain ::dc_logstash::server::config::filter_grok_mongodb
