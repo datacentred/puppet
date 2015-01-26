@@ -22,8 +22,8 @@ class dc_grub {
 
   # Since we don't use plymouth we don't need this
   # if it exists it will complain during boot
-  file { '/etc/init/plymouth-upstart-bridge.conf'
-    ensure => 'absent',
+  file { '/etc/init/plymouth-upstart-bridge.conf':
+    ensure => absent,
   }
 
   exec { '/usr/sbin/update-grub':
