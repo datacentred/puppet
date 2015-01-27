@@ -13,22 +13,15 @@
 # Event requires a string formatted correctly for riemann, see the template
 #
 # [Remember: No empty lines between comments and class definition]
-define dc_riemann::oslog_email_stream (
-  $fromaddress = "riemann@${::fqdn}",
-  $waittime    = 3600,
-  $rollup      = 3,
-  $event       = undef,
-  $whitelist   = undef,
-){
+class dc_riemann::oslog_email_stream {
 
-  $sysmailaddress = hiera(sal01_internal_sysmail_address)
-
-  file { "${dc_riemann::riemann_config_dir}/${title}.clj":
+  file { "${dc_riemann::riemann_config_dir}/oslog_email_stream.clj":
     ensure  => file,
     owner   => 'riemann',
     group   => 'riemann',
     content => template('dc_riemann/oslog_email_stream.clj.erb'),
     notify  => Service['riemann'],
   }
+
 }
 

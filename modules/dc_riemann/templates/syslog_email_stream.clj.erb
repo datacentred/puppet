@@ -4,16 +4,16 @@
   (with-open [rdr (reader filename)]
     (doall (line-seq rdr))))
 
-(def messages (get_messages "<%= @whitelist %>"))
+(def messages (get_messages "<%= scope.lookupvar('dc_riemann::riemann_whitelist') %>"))
 
 (def whitelist_pattern
   (str "^((?!(" (clojure.string/join "|" messages) ")).)*$"))
 
-(def email(mailer { :from "<%= @fromaddress %>" }))
+(def email(mailer { :from "<%= scope.lookupvar('dc_riemann::riemann_from_email_address') %>" }))
 
 (streams
  (by :service
-  (where <%= @event %>
+  (where (or (state "2")(state "1")(state "0"))
    (where (description (re-pattern whitelist_pattern))
-    (rollup <%= @rollup %> <%= @waittime %>
-     (email "<%= @sysmailaddress %>" ))))))
+    (rollup 3 3600
+     (email "<%= scope.lookupvar('dc_riemann::sysmail_address') %>" ))))))
