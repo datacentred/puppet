@@ -14,6 +14,7 @@ class dc_role::ps_logstash inherits dc_role {
 
   contain dc_profile::log::logstash
   contain dc_profile::log::kibana
+  include ::dc_ssl::logstash
   contain dc_profile::log::riemann
   contain dc_profile::log::logstash_lbmember
 }
