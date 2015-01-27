@@ -11,10 +11,17 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_riemann {
-
-  $sysmailaddress = hiera(sal01_internal_sysmail_address)
-  $riemann_config_dir = '/etc/riemann.conf.d'
+class dc_riemann (
+  $sysmail_address,
+  $riemann_from_email_address,
+  $riemann_config_dir,
+  $riemann_whitelist,
+  $riemann_pagerduty_key,
+  $riemann_pagerduty_blacklist,
+  $riemann_hipchat_auth_token,
+  $riemann_hipchat_room,
+  $riemann_hipchat_from,
+){
 
   class { 'riemann':
     # Specify the latest version, because the package default is old
@@ -50,5 +57,12 @@ class dc_riemann {
     source => 'puppet:///modules/dc_riemann/riemann.whitelist',
     notify => Service['riemann'],
   }
+
+  include dc_riemann::syslog_pagerduty_stream
+  include dc_riemann::syslog_hipchat_stream
+  include dc_riemann::oslog_hipchat_stream
+  include dc_riemann::syslog_email_stream
+  include dc_riemann::oslog_email_stream
+
 }
 

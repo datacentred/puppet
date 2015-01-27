@@ -1,0 +1,5 @@
+EDAC MC\d+: \d+ CE error on CPU#\d+Channel#\d+_DIMM#\d+.*
+ata\d+.\d+: exception.*
+ata\d+.\d+: failed command:.*
+ata\d+: link is slow to respond, please be patient.*
+ata\d+.\d+:.*failed.*

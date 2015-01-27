@@ -1,0 +1,20 @@
+(use 'clojure.java.io)
+
+(defn get_messages [filename]
+  (with-open [rdr (reader filename)]
+    (doall (line-seq rdr))))
+
+(def messages (get_messages "<%= scope.lookupvar('dc_riemann::riemann_pagerduty_blacklist') %>"))
+
+(def blacklist_pattern
+  (str "^?(" (clojure.string/join "|" messages) ").*$"))
+
+(def pd (pagerduty "<%= scope.lookupvar('dc_riemann::riemann_pagerduty_key') %>"))
+
+(streams
+ (by :host
+   (where (description (re-pattern blacklist_pattern))
+     (with {:state "Failure" :service "Hardware"}
+        (throttle 1 10800
+         #(info %)
+         (:trigger pd))))))    

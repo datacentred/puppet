@@ -4,18 +4,18 @@
   (with-open [rdr (reader filename)]
     (doall (line-seq rdr))))
 
-(def messages (get_messages "<%= @whitelist %>"))
+(def messages (get_messages "<%= scope.lookupvar('dc_riemann::riemann_whitelist') %>"))
 
 (def whitelist_pattern
   (str "^((?!(" (clojure.string/join "|" messages) ")).)*$"))
 
 (streams
  (by :service
-  (where <%= @event %>
+  (where (or (state "4")(state "3")(state "2")(state "1")(state "0"))
    (where (description (re-pattern whitelist_pattern))
-    (rollup <%= @rollup %> <%= @waittime %>
-      (hipchat {:token "<%= @token %>"
-                :room "<%= @room %>"
-                :from "<%= @from %>"
-                :notify <%= @hipchat_notify %>
+    (rollup 3 3600
+      (hipchat {:token "<%= scope.lookupvar('dc_riemann::riemann_hipchat_auth_token') %>"
+                :room "<%= scope.lookupvar('dc_riemann::riemann_hipchat_room') %>"
+                :from "<%= scope.lookupvar('dc_riemann::riemann_hipchat_from') %>"
+                :notify 0
                }))))))
