@@ -1,2 +1,1 @@
-HTTPERRORDATE %{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR}
-APACHEERRORLOG \[%{HTTPERRORDATE:timestamp}\] \[%{WORD:severity}\] \[client %{IPORHOST:clientip}\] %{GREEDYDATA:logmessage}
+HTTPERRORTIMESTAMP %{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR}
