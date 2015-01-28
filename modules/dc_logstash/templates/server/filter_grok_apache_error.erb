@@ -1,0 +1,8 @@
+filter {
+ if [type] == "apache_error" {
+  grok {
+   patterns_dir => ['<%= @logstash_grok_patterns_dir %>']
+   pattern => '\[%{HTTPERRORTIMESTAMP:timestamp}\] \[:%{WORD:level}\] \[pid %{NUMBER:pid}\] FASTCGI: %{IPORHOST:clientip} %{GREEDYDATA:message}'
+  }
+ }
+}
