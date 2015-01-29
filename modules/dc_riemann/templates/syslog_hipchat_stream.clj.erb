@@ -13,7 +13,7 @@
  (by :service
   (where (or (state "4")(state "3")(state "2")(state "1")(state "0"))
    (where (description (re-pattern whitelist_pattern))
-    (rollup 3 3600
+    (hipchat 5 3600
       (hipchat {:token "<%= scope.lookupvar('dc_riemann::riemann_hipchat_auth_token') %>"
                 :room "<%= scope.lookupvar('dc_riemann::riemann_hipchat_room') %>"
                 :from "<%= scope.lookupvar('dc_riemann::riemann_hipchat_from') %>"
