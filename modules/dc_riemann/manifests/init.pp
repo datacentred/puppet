@@ -46,6 +46,7 @@ class dc_riemann (
 
   file { '/etc/riemann.conf.d':
     ensure => directory,
+    purge  => true,
     owner  => 'riemann',
     group  => 'riemann',
   }
