@@ -11,7 +11,4 @@
 # Sample Usage:
 #
 class dc_role::mailserver inherits dc_role {
-
-  contain dc_profile::net::mail
-
 }
