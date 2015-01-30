@@ -12,6 +12,7 @@ class dc_profile::hardware::all {
     'Supermicro': {
       #include dc_ipmi::supermicro::ipmi
       include dc_ipmi::supermicro::reaper
+      include dc_icinga::hostgroup_supermicro
     }
     #/Dell/:       { include dc_ipmi::dell::idrac }
   }

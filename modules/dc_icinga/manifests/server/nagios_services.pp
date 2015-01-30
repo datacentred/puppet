@@ -697,4 +697,11 @@ class dc_icinga::server::nagios_services {
     service_description => '10Gb Interface Checks',
   }
 
+  icinga::service { 'check_supermicro_psu_ipmi':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_supermicro',
+    check_command       => 'check_nrpe_1arg!check_supermicro_psu_ipmi',
+    service_description => 'Supermicro PSU Check',
+  }
+
 }

@@ -421,6 +421,10 @@ class dc_icinga::server::config {
     description => 'MongoDB Nodes',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_supermicro':
+    description => 'Supermicro Hardware',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
