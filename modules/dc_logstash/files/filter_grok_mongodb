@@ -2,7 +2,6 @@ filter {
   if [type] == "mongodb" {
     grok {
       pattern => '%{TIMESTAMP_ISO8601:timestamp} \[%{WORD:originator}\] %{GREEDYDATA:message_tail}'
-      tag_on_failure => "catch_all_mongodb_grok_failed"
     }
   }
 }
