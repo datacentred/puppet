@@ -1,6 +1,7 @@
-# Class: dc_firmware::modules
+# Class: dc_ipmi::modules
 #
-# Load the required modules for IPMI
+# It ensures that ipmi modules are loaded
+#
 #
 # Parameters:
 #
@@ -10,8 +11,8 @@
 #
 # Sample Usage:
 #
-# [Remember: No empty lines between comments and class definition]i
-class dc_firmware::modules {
+# [Remember: No empty lines between comments and class definition]
+class dc_ipmi::modules {
 
   case $::lsbdistcodename {
     'precise': {
@@ -46,4 +47,5 @@ class dc_firmware::modules {
     path   => '/etc/modules',
     notify => Exec['module_refresh'],
   }
+
 }
