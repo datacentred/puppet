@@ -13,6 +13,7 @@
 class dc_profile::ceph::osd {
 
   include ::dc_ceph::osd
+  include ::dc_ceph::osd_sysctl
   include ::ceph::osd
   include ::dc_icinga::hostgroup_ceph_osd
 
