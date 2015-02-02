@@ -14,6 +14,7 @@ class dc_profile::auth::ldap::server (
   $suffix,
   $rootdn,
   $rootpw,
+  $cname,
 ) {
   contain ::dc_ssl
   contain ::dc_ssl::slapd
@@ -26,8 +27,10 @@ class dc_profile::auth::ldap::server (
   Class['dc_ssl'] ~> Class['ldap::server::service']
   Class['dc_ssl::slapd'] ~> Class['ldap::server::service']
 
-  @@dns_resource { "ldap.${::domain}/CNAME":
-    rdata => $::fqdn,
+  if $cname == 'true' {
+    @@dns_resource { "ldap.${::domain}/CNAME":
+      rdata => $::fqdn,
+    }
   }
 
   $defaults = {
