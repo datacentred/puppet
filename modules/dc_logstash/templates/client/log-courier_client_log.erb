@@ -1,4 +1,15 @@
     {
       "paths": [ "<%= @logs %>" ],
-      "fields": <%= @json_fields %>
+      "fields": <%= @json_fields %>,
+      <%- if @codec_hash -%>
+      "codec": {
+      <%- @codec_hash.each_pair do |key,val| -%>
+          <%- if val == 'true' or val == 'false' -%>
+            "<%= key %>": <%= val %>,
+          <%- else -%>
+            "<%= key %>": "<%= val %>",
+          <%- end -%>
+      <%- end -%>
+      }
+      <%- end -%>
     },
