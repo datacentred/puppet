@@ -59,6 +59,12 @@ class dc_riemann (
     notify => Service['riemann'],
   }
 
+  logrotate::rule { 'riemann':
+    path         => '/var/log/riemann.log',
+    rotate       => 7,
+    rotate_every => 'day',
+  }
+
   include dc_riemann::syslog_pagerduty_stream
   include dc_riemann::syslog_hipchat_stream
   include dc_riemann::oslog_hipchat_stream
