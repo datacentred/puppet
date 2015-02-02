@@ -3,3 +3,5 @@ Author : matt
  ____________________________________ 
 
 Puppet module to install firmware tools and data for BIOS and IPMI
+
+The IPMI libraries are for the Supermicro Yafuflash utility

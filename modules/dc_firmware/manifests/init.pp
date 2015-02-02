@@ -34,8 +34,6 @@ class dc_firmware {
         ensure => installed,
       }
 
-      contain dc_firmware::ipmitool
-
       file { '/usr/local/bin/Yafuflash':
         ensure => file,
         source => 'puppet:///modules/dc_firmware/Yafuflash',
@@ -59,8 +57,6 @@ class dc_firmware {
         source  => 'puppet:///modules/dc_firmware/firmware',
         recurse => true,
       }
-
-      contain dc_firmware::modules
 
     }
 

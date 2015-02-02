@@ -1,6 +1,7 @@
-# Class: dc_firmware::ipmitool
+# Class: dc_ipmi::install
 #
-# A class to wrap installing ipmitool as a virtual resource
+# Ensures that ipmitool and utils are installed
+#
 #
 # Parameters:
 #
@@ -11,8 +12,14 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_firmware::ipmitool {
+class dc_ipmi::install {
+
   package { 'ipmitool':
     ensure => installed,
   }
+
+  package { 'freeipmi-utils':
+    ensure => installed,
+  }
+
 }
