@@ -10,13 +10,16 @@
 #
 # Sample Usage:
 #
-class dc_logstash::client::cinder {
+class dc_logstash::client::cinder (
+  $oslofmt_codec_hash=undef,
+){
 
   dc_logstash::client::register { 'cinder_manage_log':
     logs   => '/var/log/cinder/cinder-manage.log',
     fields => {
       'type' => 'cinder_manage',
     },
+    codec_hash => $oslofmt_codec_hash,
   }
 
   dc_logstash::client::register { 'cinder_scheduler_log':
@@ -24,6 +27,7 @@ class dc_logstash::client::cinder {
     fields => {
       'type' => 'cinder_scheduler',
     },
+    codec_hash => $oslofmt_codec_hash,
   }
 
   dc_logstash::client::register { 'cinder_api_log':
@@ -31,6 +35,7 @@ class dc_logstash::client::cinder {
     fields => {
       'type' => 'cinder_api',
     },
+    codec_hash => $oslofmt_codec_hash,
   }
 
   dc_logstash::client::register { 'cinder_volume_log':
@@ -38,6 +43,7 @@ class dc_logstash::client::cinder {
     fields => {
       'type' => 'cinder_volume',
     },
+    codec_hash => $oslofmt_codec_hash,
   }
 
 }
