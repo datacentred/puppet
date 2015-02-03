@@ -1,0 +1,6 @@
+filter {
+  if [type] == "ceilometer" {
+    if [message] == "No server is av" {
+      drop {}
+  }
+}
