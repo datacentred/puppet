@@ -5,10 +5,12 @@ filter {
     }
     grok {
       match => { "message" => "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" }
+      match => [ "message", "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname}  %{YEAR}[/-]%{MONTHNUM}[/-]%{MONTHDAY} %{TIME} %{POSINT:syslog_pid} %{WORD:severity} %{GREEDYDATA:syslog_message}"]
       add_field => [ "received_at", "%{@timestamp}" ]
       add_field => [ "received_from", "%{host}" ]
       add_field => [ "program", "%{syslog_program}" ]
       add_field => [ "timestamp", "%{syslog_timestamp}" ]
+
     }
     syslog_pri { }
     date {
