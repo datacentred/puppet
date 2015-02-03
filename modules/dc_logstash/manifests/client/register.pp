@@ -1,5 +1,7 @@
 # == Define: dc_logstash::client::register
 #
+# codec_hash supports multiple codecs, and should be a hash of hashes
+#
 define dc_logstash::client::register ($logs, $fields, $order='10', $codec_hash=undef ) {
 
   validate_hash($fields)
