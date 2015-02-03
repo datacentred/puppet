@@ -2,16 +2,26 @@
       "paths": [ "<%= @logs %>" ],
       <%- if @codec_hash -%>
       "fields": <%= @json_fields %>,
-          <%- @codec_hash.each_pair do |hash_key,hash_val| -%>
+          <%- @codec_hash.each_with_index do |(hash_key,hash_val), index| -%>
+            <%- if index == codec_hash.length - 1 -%>
+                <%- codec_lt = '' -%>
+            <%- else -%>
+              <%- codec_lt = ',' -%>
+            <%- end -%>
       "codec": {
-            <%- hash_val.each_pair do |key,val| -%>
-                <%- if val == 'true' or val == 'false' -%>
-            "<%= key %>": <%= val %>,
+            <%- hash_val.each_with_index do |(key,val), index| -%>
+                <%- if index == hash_val.length - 1 -%>
+                    <%- lt = '' -%>
                 <%- else -%>
-            "<%= key %>": "<%= val %>",
+                    <%- lt = ',' -%>
+                <%- end -%>
+                <%- if val == 'true' or val == 'false' -%>
+             "<%= key %>": <%= val %><%= lt %>
+                <%- else -%>
+             "<%= key %>": "<%= val %>"<%= lt %>
                 <%- end -%>
             <%- end -%>
-      }
+      }<%= codec_lt %>
           <%- end -%>
       <%- else -%>
       "fields": <%= @json_fields %>
