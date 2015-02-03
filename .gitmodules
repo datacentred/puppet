@@ -275,3 +275,6 @@
 [submodule "modules/grafana"]
 	path = modules/grafana
 	url = https://github.com/bfraser/puppet-grafana.git
+[submodule "modules/archive"]
+	path = modules/archive
+	url = https://github.com/camptocamp/puppet-archive
