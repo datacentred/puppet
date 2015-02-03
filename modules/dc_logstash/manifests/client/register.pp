@@ -1,11 +1,18 @@
 # == Define: dc_logstash::client::register
 #
-define dc_logstash::client::register ($logs, $fields, $order='10') {
+# codec_hash supports multiple codecs, and should be a hash of hashes
+#
+define dc_logstash::client::register ($logs, $fields, $order='10', $codec_hash=undef ) {
 
   validate_hash($fields)
 
+  if $codec_hash {
+    validate_hash($codec_hash)
+  }
+
   $default_fields = {
-    'shipper'   => 'log-courier' }
+    'shipper'   => 'log-courier'
+  }
 
   $merged_fields = merge($default_fields, $fields)
 
