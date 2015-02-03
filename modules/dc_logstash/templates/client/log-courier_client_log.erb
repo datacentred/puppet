@@ -1,7 +1,7 @@
     {
       "paths": [ "<%= @logs %>" ],
-      "fields": <%= @json_fields %>,
       <%- if @codec_hash -%>
+      "fields": <%= @json_fields %>,
           <%- @codec_hash.each_pair do |hash_key,hash_val| -%>
       "codec": {
             <%- hash_val.each_pair do |key,val| -%>
@@ -13,5 +13,7 @@
             <%- end -%>
       }
           <%- end -%>
+      <%- else %>
+      "fields": <%= @json_fields %>
       <%- end -%>
     },
