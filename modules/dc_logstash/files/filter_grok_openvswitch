@@ -1,0 +1,7 @@
+filter {
+ if [type] == "openvswitch_ovsvswitchd" {
+  grok {
+   match => [ "message", "%{TIMESTAMP_ISO8601:timestamp}\|%{INT}\|%{WORD}\|%{WORD:severity}\|%{GREEDYDATA:message_tail}" ]
+  }
+ }
+}
