@@ -7,6 +7,7 @@ filter {
       patterns_dir => ['<%= @logstash_grok_patterns_dir %>']
       pattern      => '\[%{HTTPERRORTIMESTAMP:timestamp}\] \[:%{WORD:level}\] \[pid %{NUMBER:pid}\] FastCGI: %{IPORHOST:clientip} %{GREEDYDATA:message_tail}'
       pattern      => '\[%{HTTPERRORTIMESTAMP:timestamp}\] \[fastcgi:%{WORD:level}\] \[pid %{NUMBER:pid}\] (%{NUMBER:http_error_code}) %{GREEDYDATA:message_tail}'
+      pattern      => '\[%{HTTPERRORTIMESTAMP:timestamp}\] %{GREEDYDATA:message_tail}'
     }
   }
 }
