@@ -40,10 +40,9 @@ class dc_profile::auth::radius::server (
       vhost   => 'datacentred',
       ipaddr  => '0.0.0.0',
       netmask => '0',
-      secret  => 'kJvRRR.6';
   }
 
-  if $cname == 'true' {
+  if $cname == true {
     @@dns_resource { "radius.${::domain}/CNAME":
       rdata => $::fqdn,
     }
