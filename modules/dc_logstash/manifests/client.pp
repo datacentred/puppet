@@ -69,4 +69,11 @@ class dc_logstash::client (
     subscribe => [ Concat['/etc/log-courier/log-courier.conf'], File['/usr/sbin/log-courier'] ],
   }
 
+  logrotate::rule { 'log-courier':
+    path         => '/var/log/log-courier.log',
+    rotate       => 4,
+    rotate_every => 'week',
+    compress     => true,
+  }
+
 }
