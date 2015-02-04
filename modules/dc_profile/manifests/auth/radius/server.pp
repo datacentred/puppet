@@ -12,6 +12,7 @@
 #
 class dc_profile::auth::radius::server (
   $cname,
+  $secret,
 ){
   include ::radius
   include ::radius::module::ldap
@@ -20,6 +21,7 @@ class dc_profile::auth::radius::server (
     authorize    => ['ldap'],
     authenticate => ['ldap'],
     post_auth    => ['ldap'],
+    secret       => $secret,
   }
 
   radius::vhost::listen {
