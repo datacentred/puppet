@@ -3,6 +3,7 @@ filter {
   grok {
    patterns_dir => ['<%= @logstash_grok_patterns_dir %>']
    match => [ "message", "%{MYSQLERROR}" ]
+   match => [ "message", "%{YEAR:year}%{MONTHNUM:month}%{MONTHDAY:monthday}  %{TIME:time} \[%{WORD:severity}\] %{GREEDYDATA:logmessage}"]
   }
  }
 }
