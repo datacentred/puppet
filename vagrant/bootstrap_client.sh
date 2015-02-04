@@ -36,7 +36,7 @@ EOF
 find /var/lib/puppet/ssl -type f -delete
 
 # Run puppet apply
-FACTER_role=openstack_data FACTER_is_vagrant=true puppet apply -e "include ${1}" \
+FACTER_is_vagrant=true puppet apply -e "include ${1}" \
   --modulepath /vagrant/modules:/vagrant/site:/vagrant/dist \
   --hiera_config /vagrant/vagrant/hiera.yaml \
   --environment production \
