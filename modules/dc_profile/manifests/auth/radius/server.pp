@@ -21,7 +21,6 @@ class dc_profile::auth::radius::server (
     authorize    => ['ldap'],
     authenticate => ['ldap'],
     post_auth    => ['ldap'],
-    secret       => $secret,
   }
 
   radius::vhost::listen {
@@ -42,6 +41,7 @@ class dc_profile::auth::radius::server (
       vhost   => 'datacentred',
       ipaddr  => '0.0.0.0',
       netmask => '0',
+      secret  => $secret,
   }
 
   if $cname == true {
