@@ -1,0 +1,2 @@
+ENABLED=true
+IPMIEVD_OPTIONS="sel daemon"

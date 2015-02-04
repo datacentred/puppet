@@ -1,0 +1,19 @@
+<RIBCL VERSION="2.0">
+  <LOGIN USER_LOGIN="adminname" PASSWORD="password">
+  <SERVER_INFO MODE="write">
+       <SERVER_NAME value ="<%= @hostname %>" />
+  </SERVER_INFO>
+  <RIB_INFO MODE="write">
+    <MOD_NETWORK_SETTINGS>
+      <DHCP_DOMAIN_NAME value="Yes"/>
+      <DHCP_ENABLE value="Yes"/>
+      <DNS_NAME value="<%= @hostname %>-bmc"/>
+      <DHCP_GATEWAY value="Yes"/>
+      <DHCP_DNS_SERVER value="Yes"/>
+      <DHCP_WINS_SERVER value="Yes"/>
+      <DHCP_STATIC_ROUTE value="Yes"/>
+      <REG_DDNS_SERVER value ="No" />
+    </MOD_NETWORK_SETTINGS>
+  </RIB_INFO>
+  </LOGIN>
+</RIBCL>

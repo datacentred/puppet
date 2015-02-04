@@ -1,0 +1,17 @@
+#!/bin/bash
+
+IPADDRESS=`ipmitool lan print 1 | grep 'IP Address\s*:\s*' | awk '{print $4'}`
+
+if ! curl -s http://$IPADDRESS/login.asp | grep -q login.html
+then
+    ipmitool mc reset warm
+    sleep 90
+fi
+
+if curl -s http://$IPADDRESS/login.asp | grep login.html
+then
+    /usr/local/bin/sm_http.rb  --ip $IPADDRESS --hostname <%= @hostname %>-bmc --server <%= scope.lookupvar('dc_bmc::radius_server') %> --secret <%= scope.lookupvar('dc_bmc::radius_secret') %> --password <%= scope.lookupvar('dc_bmc::bmc_admin_passwd') %> --username <%= scope.lookupvar('dc_bmc::bmc_admin_name') %>
+else
+    echo "Cannot connect to IPMI web interface"
+    exit 1
+fi

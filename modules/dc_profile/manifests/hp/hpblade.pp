@@ -13,14 +13,9 @@
 #
 class dc_profile::hp::hpblade {
 
-  package { ['hpacucli', 'cciss-vol-status' ]:
-    ensure  => installed,
+  # include dc_ipmi
+
+  unless $::is_vagrant {
+    include ::dc_icinga::hostgroup_hpblade
   }
-
-  class { 'hpilo':
-    dhcp => true,
-  }
-
-  include ::dc_icinga::hostgroup_hpblade
-
 }
