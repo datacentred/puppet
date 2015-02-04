@@ -38,4 +38,8 @@ class dc_ipmi (
     include dc_ipmi::dell::idrac
   }
 
+  # HP Blade specific code
+  if $::productname =~ /ProLiant BL/ {
+    include dc_ipmi::hp::blade
+  }
 }
