@@ -19,15 +19,17 @@ class dc_puppet::agent::service {
     enable => false,
   }
 
-  unless $::is_vagrant {
-    $times = ip_to_cron($dc_puppet::params::runinterval)
+  $times = ip_to_cron($dc_puppet::params::runinterval)
 
-    cron { 'puppet':
-      command => "/usr/bin/env puppet agent --config ${dir}/puppet.conf --onetime --no-daemonize",
-      user    => 'root',
-      hour    => $times[0],
-      minute  => $times[1],
-    }
+  cron { 'puppet':
+    command => "/usr/bin/env puppet agent --config ${dir}/puppet.conf --onetime --no-daemonize",
+    user    => 'root',
+    hour    => $times[0],
+    minute  => $times[1],
+  }
+
+  if $::is_vagrant {
+    Cron['puppet'] { ensure => absent }
   }
 
 }
