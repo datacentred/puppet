@@ -1,6 +1,8 @@
 :hierarchy:
-    - "modules/%{calling_module}"
+    - "nodes/${hostname}"
+    - "roles/${role}"
     - "releases/%{lsbdistcodename}"
+    - "modules/%{calling_module}"
     - "%{environment}"
     - common
 :backends:
