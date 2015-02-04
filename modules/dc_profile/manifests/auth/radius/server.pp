@@ -10,7 +10,9 @@
 #
 # Sample Usage:
 #
-class dc_profile::auth::radius::server {
+class dc_profile::auth::radius::server (
+  $cname,
+){
   include ::radius
   include ::radius::module::ldap
 
@@ -38,10 +40,11 @@ class dc_profile::auth::radius::server {
       vhost   => 'datacentred',
       ipaddr  => '0.0.0.0',
       netmask => '0',
-      secret  => 'kJvRRR.6';
   }
 
-  @@dns_resource { "radius.${::domain}/CNAME":
-    rdata => $::fqdn,
+  if $cname == true {
+    @@dns_resource { "radius.${::domain}/CNAME":
+      rdata => $::fqdn,
+    }
   }
 }
