@@ -28,4 +28,8 @@ class dc_puppet::agent::service {
     minute  => $times[1],
   }
 
+  if $::is_vagrant {
+    Cron['puppet'] { ensure => absent }
+  }
+
 }

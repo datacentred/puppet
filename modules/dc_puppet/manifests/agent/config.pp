@@ -20,7 +20,7 @@ class dc_puppet::agent::config {
     $server = $::puppetmaster
   }
 
-  unless $::virtual == 'virtualbox' or $::virtual == 'vmware' {
+  unless $::is_vagrant {
     concat_fragment { 'puppet.conf+20-agent':
       content => template('dc_puppet/agent/puppet.conf-agent.erb'),
     }
