@@ -1,7 +1,7 @@
 filter {
   if [type] == "mongodb" {
     grok {
-      pattern => '%{TIMESTAMP_ISO8601:timestamp} \[%{WORD:originator}\] %{GREEDYDATA:message_tail}'
+      match => [ "message", "%{TIMESTAMP_ISO8601:timestamp} \[%{WORD:originator}\] %{GREEDYDATA:message_tail}" ]
     }
   }
 }

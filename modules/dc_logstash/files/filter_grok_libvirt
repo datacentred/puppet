@@ -1,7 +1,7 @@
 filter {
     if [type] == "libvirt" {
         grok {
-            pattern => "%{TIMESTAMP_ISO8601:timestamp}: %{NUMBER:code}: %{LOGLEVEL:level} : %{GREEDYDATA:message}"
+            match => [ "message", "%{TIMESTAMP_ISO8601:timestamp}: %{NUMBER:code}: %{LOGLEVEL:level} : %{GREEDYDATA:message}" ]
         }
     }
 }
