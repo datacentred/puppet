@@ -25,7 +25,7 @@ class dc_profile::ceph::radosgw_lb {
           "set iface[. = '${ceph_public}']/address ${myip}",
           "set iface[. = '${ceph_public}']/netmask 255.255.255.248",
           "set iface[. = '${ceph_public}']/post-up 'ip route replace default via 185.43.218.17'",
-          "set iface[. = '${ceph_public}']/post-down 'ip route replace default via 10.10.9.254'",
+          "set iface[. = '${ceph_public}']/post-down 'ip route replace default via 10.10.9.1'",
       ],
   }
 
@@ -37,8 +37,10 @@ class dc_profile::ceph::radosgw_lb {
         "set iface[. = '${ceph_lb}']/family inet",
         "set iface[. = '${ceph_lb}']/method dhcp",
         "set iface[. = '${ceph_lb}']/pre-up '/sbin/ip link set ${ceph_lb} mtu 9000'",
-        "set iface[. = '${ceph_lb}']/post-up 'ip route add 10.10.0.0/16 via 10.10.9.254'",
-        "set iface[. = '${ceph_lb}']/post-down 'ip route del 10.10.0.0/16 via 10.10.9.254'",
+        "set iface[. = '${ceph_lb}']/post-up[1] 'ip route add 10.10.0.0/16 via 10.10.9.1'",
+        "set iface[. = '${ceph_lb}']/post-up[2] 'ip route add 10.253.2.0/24 via 10.10.9.1'",
+        "set iface[. = '${ceph_lb}']/post-down[1] 'ip route del 10.10.0.0/16 via 10.10.9.1'",
+        "set iface[. = '${ceph_lb}']/post-down[2] 'ip route del 10.253.2.0/24 via 10.10.9.1'",
     ],
   }
 

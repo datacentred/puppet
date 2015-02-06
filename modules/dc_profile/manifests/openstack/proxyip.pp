@@ -30,8 +30,10 @@ class dc_profile::openstack::proxyip {
           "set iface[. = '${int_if}'] ${int_if}",
           "set iface[. = '${int_if}']/family inet",
           "set iface[. = '${int_if}']/method dhcp",
-          "set iface[. = '${int_if}']/post-up[1] 'ip route add 10.10.0.0/16 via 10.10.160.254'",
+          "set iface[. = '${int_if}']/post-up[1] 'ip route add 10.10.0.0/16 via 10.10.160.1'",
+          "set iface[. = '${int_if}']/post-up[2] 'ip route add 10.253.2.0/24 via 10.10.160.1'",
           "set iface[. = '${int_if}']/post-down[1] 'ip route del 10.10.0.0/16 via 10.10.160.254'",
+          "set iface[. = '${int_if}']/post-down[2] 'ip route del 10.10.0.0/16 via 10.10.160.254'",
       ],
   }
 
@@ -45,7 +47,7 @@ class dc_profile::openstack::proxyip {
           "set iface[. = '${ext_if}']/address ${ip}",
           "set iface[. = '${ext_if}']/netmask 255.255.255.248",
           "set iface[. = '${ext_if}']/post-up[1] 'ip route replace default via 185.43.218.25'",
-          "set iface[. = '${ext_if}']/post-down[1] 'ip route replace default via 10.10.160.254'",
+          "set iface[. = '${ext_if}']/post-down[1] 'ip route replace default via 10.10.160.1'",
       ],
   }
 
