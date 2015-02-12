@@ -5,9 +5,7 @@
 #
 class dc_bmc::supermicro::http_scripted {
 
-  package { 'curl':
-    ensure => installed,
-  }
+  ensure_packages(['curl'])
 
   file { '/usr/local/bin/sm_http.rb':
     ensure => file,
