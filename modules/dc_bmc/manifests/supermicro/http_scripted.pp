@@ -5,6 +5,10 @@
 #
 class dc_bmc::supermicro::http_scripted {
 
+  package { 'curl':
+    ensure => installed,
+  }
+
   file { '/usr/local/bin/sm_http.rb':
     ensure => file,
     source => 'puppet:///modules/dc_bmc/supermicro/sm_http.rb',
