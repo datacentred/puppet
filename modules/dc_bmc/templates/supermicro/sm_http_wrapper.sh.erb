@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# Script will re-run if any of the settings below change
 IPADDRESS=`ipmitool lan print 1 | grep 'IP Address\s*:\s*' | awk '{print $4'}`
 
 if ! curl -s http://$IPADDRESS/login.asp | grep -q login.html
