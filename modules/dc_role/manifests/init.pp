@@ -26,6 +26,7 @@ class dc_role {
     include dc_profile::util::grub
     include dc_profile::net::ntpgeneric
     include dc_profile::net::lldp
+    include dc_profile::hardware::bmc
 
     ## Only include these classes in production
     if $::environment == 'production' {
@@ -40,7 +41,5 @@ class dc_role {
     }
   }
 
-  ## Add all hardware dependant classes
-  include dc_profile::hardware::all
 
 }
