@@ -1,0 +1,15 @@
+<RIBCL VERSION="2.1">
+    <LOGIN USER_LOGIN="Administrator" PASSWORD="password">
+        <USER_INFO MODE="write">
+            <MOD_USER USER_LOGIN = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_user') %>">
+                <PASSWORD value = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_password') %>"/>
+                <ADMIN_PRIV value = "N"/>
+                <REMOTE_CONS_PRIV value = "N"/>
+                <RESET_SERVER_PRIV value = "N"/>
+                <VIRTUAL_MEDIA_PRIV value = "N"/>
+                <CONFIG_ILO_PRIV value = "N"/>
+            </MOD_USER>
+        </USER_INFO>
+    </LOGIN>
+</RIBCL>
+
