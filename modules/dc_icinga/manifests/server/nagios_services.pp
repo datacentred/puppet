@@ -704,4 +704,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'Supermicro PSU Check',
   }
 
+  icinga::service { 'check_bmc':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_bmc',
+    check_command       => 'check_bmc',
+    service_description => 'BMC Network Check',
+  }
+
 }
