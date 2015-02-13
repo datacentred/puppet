@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+"""
+docstring
+"""
+
+import sys
+import getopt
+import socket
+import subprocess
+import os
+
+VERSION = '1.0'
+
+def version():
+    """
+    Print out the version string
+    """
+    sys.stderr.write('check_ipmi v{0}\n'.format(VERSION))
+    sys.stderr.write('Simon Murray <simon.murray@datacentred.co.uk>\n')
+    sys.stderr.write('Matt Jarvis <matt.jarvis@datacentred.co.uk>\n')
+    sys.exit(3)
+
+def syntax():
+    """
+    Print out the syntax and exit with code of 1
+    """
+    sys.stderr.write('check_ipmi -H hostname\n')
+    sys.exit(3)
+
+    
+def main():
+    """
+    docstring
+    """
+
+    # Parse the options
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'H:hv', ['help', 'version'])
+    except getopt.GetoptError:
+        syntax()
+    for opt, param in opts:
+        if opt == '-H':
+            hostname = param
+        elif opt in ('-h', '--help'):
+            syntax()
+        elif opt in ('-v', '--version'):
+            version()
+    for arg in args:
+        print arg
+
+    # Check that what we need is defined
+    try:
+        hostname
+    except NameError:
+        syntax()
+
+    bmc_hostname = hostname+'-bmc'
+    # Check the host has an entry in DNS
+    try:
+        host = socket.gethostbyname(bmc_hostname)
+    except socket.gaierror, err:
+	print "No BMC DNS entry found for %s" % hostname
+	sys.exit(1)
+
+    # Check if the BMC is up and pinging
+    ping_response = os.system("ping -c 1 %s >/dev/null" % bmc_hostname)
+    if ping_response != 0:
+	print "No ping response from %s" % bmc_hostname
+    	sys.exit(1)
+
+    print "BMC interface has DNS and is up"
+    sys.exit(0)
+
+main()

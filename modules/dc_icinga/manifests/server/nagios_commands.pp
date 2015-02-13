@@ -223,5 +223,9 @@ class dc_icinga::server::nagios_commands {
   icinga::command { 'check_mongodb_query':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -q \$ARG5$",
   }
+
+  icinga::command { 'check_bmc':
+    command_line => "/usr/lib/nagios/plugins/check_bmc -H \$HOSTNAME$",
+  }
 }
 
