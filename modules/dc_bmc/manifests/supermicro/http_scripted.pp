@@ -5,6 +5,8 @@
 #
 class dc_bmc::supermicro::http_scripted {
 
+  $radius_server_ip = get_ip_addr($dc_bmc::radius_server)
+
   ensure_packages(['curl'])
 
   file { '/usr/local/bin/sm_http.rb':
