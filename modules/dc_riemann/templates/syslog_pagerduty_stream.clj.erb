@@ -15,6 +15,6 @@
  (by :host
    (where (description (re-pattern blacklist_pattern))
      (with {:state "Failure" :service "Hardware"}
-        (throttle 1 10800
+        (throttle 1 43200
          #(info %)
          (:trigger pd)))))) 
