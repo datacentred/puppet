@@ -275,3 +275,6 @@
 [submodule "modules/archive"]
 	path = modules/archive
 	url = https://github.com/camptocamp/puppet-archive
+[submodule "modules/dnsclient"]
+	path = modules/dnsclient
+	url = https://github.com/ghoneycutt/puppet-module-dnsclient
