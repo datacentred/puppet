@@ -1,0 +1,7 @@
+boxes:
+  webserver:
+    puppet_class: role::webserver
+  dbserver:
+    cpu: 4
+    memory: 4096
+    puppet_class: role::dbserver
