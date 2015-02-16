@@ -27,6 +27,7 @@ class dc_bmc (
   $radius_secret,
   $bmc_admin_passwd,
   $bmc_admin_name,
+  $std_fw_version = $dc_bmc::params::std_fw_version,
   $ipmi_user_channel = $dc_bmc::params::ipmi_user_channel,
   $ipmi_admin_user_slot = $dc_bmc::params::ipmi_admin_user_slot,
   $ipmi_smnew_admin_user_slot = $dc_bmc::params::ipmi_smnew_admin_user_slot,

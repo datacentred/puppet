@@ -1,0 +1,87 @@
+#!/usr/bin/env python
+"""
+docstring
+"""
+
+import sys
+import getopt
+import socket
+import subprocess as sp
+import os
+import re
+
+VERSION = '1.0'
+
+def version():
+    """
+    Print out the version string
+    """
+    sys.stderr.write('check_bmc v{0}\n'.format(VERSION))
+    sys.stderr.write('Matt Jarvis <matt.jarvis@datacentred.co.uk>\n')
+    sys.exit(3)
+
+def syntax():
+    """
+    Print out the syntax and exit with code of 1
+    """
+    sys.stderr.write('check_bmc')
+    sys.exit(3)
+
+    
+def main():
+    """
+    docstring
+    """
+
+    # Parse the options
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'hv', ['help', 'version'])
+    except getopt.GetoptError:
+        syntax()
+    for opt, param in opts:
+        if opt in ('-h', '--help'):
+            syntax()
+        elif opt in ('-v', '--version'):
+            version()
+    for arg in args:
+        print arg
+
+    bmc_ipaddress  = "<%= @ipmi_ipaddress %>"
+    std_fw_version = "<%= scope.lookupvar('dc_bmc::std_fw_version') %>"
+    icinga_user    = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_user') %>"
+    admin_user     = "<%= scope.lookupvar('dc_bmc::bmc_admin_name') %>"
+    icinga_pwd     = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_password') %>"
+    admin_pwd      = "<%= scope.lookupvar('dc_bmc::bmc_admin_passwd') %>"
+
+    # Test the admin user
+    admin_cmd_args="ipmitool -I lanplus -H %s -U %s -P %s mc info" % (bmc_ipaddress,admin_user,admin_pwd)
+    child = sp.Popen(admin_cmd_args.split(), stdout=sp.PIPE, stderr=sp.PIPE)
+    child.communicate()
+    rc = child.returncode
+    if rc != 0:
+        print "BMC admin user login failed"
+        sys.exit(1)
+
+    # Test the icinga user and use it to check the firmware version
+    icinga_cmd_args="ipmitool -I lanplus -H %s -U %s -P %s -L user mc info" % (bmc_ipaddress,icinga_user,icinga_pwd)
+    child = sp.Popen(icinga_cmd_args.split(), stdout=sp.PIPE, stderr=sp.PIPE)
+    streamdata = child.communicate()[0]
+    rc = child.returncode
+
+    if rc == 0 :
+        # Get the line containing the version and split it into a list
+        ver_line = (re.findall("Firmware\ Revision.*$",streamdata,re.MULTILINE))[0].split()
+        # The actual version number is the last element
+        ver_num = ver_line[-1]
+        if ver_num != std_fw_version:
+            print "BMC firmware version is incorrect"
+            sys.exit(1)
+    else:
+        print "BMC monitoring user login failed"
+        sys.exit(1)
+
+    # All OK
+    print "BMC users and firmware version are all correct"
+    sys.exit(0)
+
+main()

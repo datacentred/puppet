@@ -21,6 +21,7 @@ class dc_bmc::base {
   Class['dc_bmc::modules'] -> Class ['dc_bmc::install'] -> Class['dc_bmc::service']
 
   # Icinga
+  include dc_bmc::icinga
   include dc_icinga::hostgroup_bmc
 
 }
