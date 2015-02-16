@@ -15,6 +15,7 @@ class dc_role {
   include dc_profile::util::facter
   include dc_profile::util::motd
   include dc_profile::util::dnsclient
+  include dc_profile::util::apparmor
 
   ## Don't include these classes on vagrant instances
   unless $::is_vagrant {
