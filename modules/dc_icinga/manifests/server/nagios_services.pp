@@ -711,4 +711,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'BMC Network Check',
   }
 
+  icinga::service { 'check_bmc_nrpe':
+    use                 => 'dc_service_secondary',
+    hostgroup_name      => 'dc_hostgroup_bmc',
+    check_command       => 'check_nrpe_1arg!check_bmc',
+    service_description => 'IPMI NRPE Check',
+  }
+
 }
