@@ -4,6 +4,11 @@
 DATE=`date +"%m/%d/%Y %H:%M:%S"`
 IPMITOOL=`which ipmitool`
 
+if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+    echo "Error: another instance of $(basename $0) is already running"
+    exit 1
+fi
+
 if [ -f $IPMITOOL ]
 then    
     if ! ipmitool sel time set "$DATE" >/dev/null
