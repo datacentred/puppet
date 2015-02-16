@@ -705,7 +705,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_bmc':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_bmc',
     check_command       => 'check_bmc',
     service_description => 'BMC Network Check',
