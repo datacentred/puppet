@@ -66,6 +66,7 @@ Vagrant.configure('2') do |config|
         puppet.options = [
           '--verbose',
           '--storeconfigs',
+          '--storeconfigs_backend puppetdb',
         ]
       end
     end
