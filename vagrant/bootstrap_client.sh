@@ -1,6 +1,9 @@
 #!/bin/bash
 # Bootstrap the vagrant puppet clients
 
+# Exit if the following file exists
+test -f /root/.provisioned && exit 0
+
 # Ensure we've got the latest APT caches
 apt-get update &> /dev/null
 
@@ -34,3 +37,6 @@ EOF
 
 # Clean out stale SSL certificates
 find /var/lib/puppet/ssl -type f -delete
+
+# Done provisioning
+touch /root/.provisioned
