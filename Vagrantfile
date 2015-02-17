@@ -54,7 +54,7 @@ Vagrant.configure('2') do |config|
       # Provision the box
       box.vm.provision 'shell', path: 'vagrant/bootstrap_client.sh'
       box.vm.provision 'puppet' do |puppet|
-        puppet.manifest_file     = 'site.pp'
+        puppet.manifests_path    = 'vagrant'
         puppet.module_path       = 'modules'
         puppet.hiera_config_path = 'vagrant/hiera.yaml'
 
