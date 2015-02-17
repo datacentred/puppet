@@ -34,12 +34,3 @@ EOF
 
 # Clean out stale SSL certificates
 find /var/lib/puppet/ssl -type f -delete
-
-# Run puppet apply
-FACTER_is_vagrant=true puppet apply -e "include ${1}" \
-  --modulepath /vagrant/modules:/vagrant/site:/vagrant/dist \
-  --hiera_config /vagrant/vagrant/hiera.yaml \
-  --environment production \
-  --storeconfigs \
-  --storeconfigs_backend puppetdb \
-  --pluginsync
