@@ -60,11 +60,13 @@ Vagrant.configure('2') do |config|
 
         puppet.facter = {
           'is_vagrant'   => true,
-          'vagrant_role' => options.has_key?(:puppet_class) ? options.puppet_class.to_s : 'dc_role',
+          'vagrant_role' => options.has_key?(:puppet_role) ? options.puppet_role.to_s : 'dc_role',
+          'role'         => options.has_key?(:hiera_role) ? options.hiera_role.to_s : '',
         }
 
         puppet.options = [
           '--verbose',
+          '--debug',
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
         ]
