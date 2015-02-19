@@ -12,6 +12,7 @@
 #
 class dc_elasticsearch (
   $es_hash,
+  $es_datadir         = $dc_elasticsearch::params::elasticsearch_data_dir,
   $backup_name        = $dc_elasticsearch::params::backup_name,
   $backup_bucket      = $dc_elasticsearch::params::backup_bucket,
   $ceph_access_point  = $dc_elasticsearch::params::ceph_access_point,
@@ -38,10 +39,13 @@ class dc_elasticsearch (
   }
 
   class { '::elasticsearch':
-    config        => $es_hash,
-    java_install  => true,
-    init_defaults => $config_hash,
-    version       => '1.3.6',
+    config            => $es_hash,
+    datadir           => $es_datadir,
+    restart_on_change => false,
+    java_install      => true,
+    init_defaults     => $config_hash,
+    version           => '1.3.6',
+
   }
 
   exec { 'setup-backup-to-ceph':
