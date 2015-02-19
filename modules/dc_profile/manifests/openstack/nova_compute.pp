@@ -56,7 +56,7 @@ class dc_profile::openstack::nova_compute {
   file { '/var/lib/nova/.ssh/config':
     ensure => file,
     owner  => 'nova',
-    group  => 'nova', 
+    group  => 'nova',
     mode   => '0600',
   }
 
@@ -76,6 +76,32 @@ class dc_profile::openstack::nova_compute {
 
   package { 'sysfsutils':
     ensure => installed,
+  }
+
+  # Ensure 10GbE interfaces are properly configured
+  $integration = 'p1p1'
+  $ceph_storage = 'p1p2'
+
+  augeas { $integration:
+    context => '/files/etc/network/interfaces',
+    changes => [
+        "set auto[child::1 = '${integration}']/1 ${integration}",
+        "set iface[. = '${integration}'] ${integration}",
+        "set iface[. = '${integration}']/family inet",
+        "set iface[. = '${integration}']/method dhcp",
+        "set iface[. = '${integration}']/pre-up '/sbin/ip link set ${integration} mtu 9000'",
+    ],
+  }
+
+  augeas { $ceph_storage:
+    context => '/files/etc/network/interfaces',
+    changes => [
+        "set auto[child::1 = '${ceph_storage}']/1 ${ceph_storage}",
+        "set iface[. = '${ceph_storage}'] ${ceph_storage}",
+        "set iface[. = '${ceph_storage}']/family inet",
+        "set iface[. = '${ceph_storage}']/method dhcp",
+        "set iface[. = '${ceph_storage}']/pre-up '/sbin/ip link set ${ceph_storage} mtu 9000'",
+    ],
   }
 
   unless $::is_vagrant {
