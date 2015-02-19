@@ -33,9 +33,9 @@ Vagrant.configure('2') do |config|
 
       # Allow DHCP IP to be manually overriden
       if options.has_key?(:ip)
-        config.vm.network :private_network, ip: options.ip
+        box.vm.network :private_network, ip: options.ip
       else
-        config.vm.network :private_network, type: :dhcp
+        box.vm.network :private_network, type: :dhcp
       end
 
       # Virtualbox Provider
