@@ -1,7 +1,18 @@
 boxes:
-  webserver:
-    puppet_class: role::webserver
-  dbserver:
-    cpu: 4
-    memory: 4096
-    puppet_class: role::dbserver
+  # Define our first server. You can define as many as you want.
+  os_compute_node:
+    # The puppet role (class) to include at the base level
+    # Default: dc_role
+    puppet_role: dc_role::compute_node
+
+    # The hiera role to define.
+    # Default: None
+    hiera_role: openstack_compute
+
+    # You can override the default CPU cores & memory
+    # cpus: 4
+    # memory: 4096
+
+    # You can manually specify IP addresses instead of relying on DHCP
+    # Default: DHCP
+    # ip: 192.168.1.50
