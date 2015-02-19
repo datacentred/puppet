@@ -30,7 +30,7 @@ class dc_nrpe::checks::common {
 
   dc_nrpe::check { 'check_all_disks':
     path => '/usr/lib/nagios/plugins/check_disk',
-    args => '-w 20% -c 10%',
+    args => '-w 10% -c 5%',
   }
 
   dc_nrpe::check { 'check_puppetagent':
