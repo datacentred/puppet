@@ -39,11 +39,12 @@ class dc_elasticsearch (
   }
 
   class { '::elasticsearch':
-    config        => $es_hash,
-    datadir       => $es_datadir,
-    java_install  => true,
-    init_defaults => $config_hash,
-    version       => '1.3.6',
+    config            => $es_hash,
+    datadir           => $es_datadir,
+    restart_on_change => false,
+    java_install      => true,
+    init_defaults     => $config_hash,
+    version           => '1.3.6',
 
   }
 
