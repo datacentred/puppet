@@ -28,6 +28,7 @@ class dc_bmc::housekeeper {
     require => File['/usr/local/bin/bmc_housekeeper.sh'],
     weekday => 0,
     hour    => 2,
+    minute  => 0,
   }
 
 }
