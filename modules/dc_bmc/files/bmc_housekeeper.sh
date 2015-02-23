@@ -3,10 +3,9 @@
 # This 'should' be set by the BIOS on boot but doesn't seem to always be true
 DATE=`date +"%m/%d/%Y %H:%M:%S"`
 IPMITOOL=`which ipmitool`
-
-if [ "$(pgrep -f $(basename $0))" != "$$" ]; then
-    echo "Error: another instance of $(basename $0) is already running"
-    exit 1
+if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then
+        echo "This script is already running with PID `pidof -x $(basename $0) -o %PPID`"
+        exit 1
 fi
 
 if [ -f $IPMITOOL ]
