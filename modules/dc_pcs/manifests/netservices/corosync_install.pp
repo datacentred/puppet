@@ -4,7 +4,7 @@ class dc_pcs::netservices::corosync_install {
     enable_secauth    => true,
     authkey_source    => 'string',
     authkey           => $dc_pcs::netservices::net_services_authkey,
-    bind_address      => $ipaddress_eth2,
+    bind_address      => $ipaddress,
     multicast_address => '239.1.1.2',
     packages          => [ 'corosync', 'pacemaker', 'crmsh' ],
     set_votequorum    => true,
