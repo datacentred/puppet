@@ -4,8 +4,11 @@ class dc_pcs::netservices::corosync_config {
     primitive_class => 'ocf',
     primitive_type  => 'IPaddr2',
     provided_by     => 'heartbeat',
-    parameters      => { 'ip'       => $dc_pcs::netservices::net_services_vip, 'cidr_netmask' => '24', 'nic' => 'eth2' },
-    operations      => { 'monitor'  => { 'interval'                      => '10s' } },
+    parameters      => {
+      'ip' => $dc_pcs::netservices::net_services_vip, 'cidr_netmask' => '24', 'nic' => 'eth2' },
+    operations      => {
+      'monitor'  =>
+        { 'interval' => '10s' } },
   }
 
   cs_primitive { 'net_services_drbd':
@@ -33,7 +36,7 @@ class dc_pcs::netservices::corosync_config {
 
   cs_group { 'net_services_drbd_group':
     primitives => [ 'net_services_vip', 'net_services_drbd_fs' ],
-    require   => [ Cs_primitive['net_services_vip'], Cs_primitive['net_services_drbd_fs'] ],
+    require    => [ Cs_primitive['net_services_vip'], Cs_primitive['net_services_drbd_fs'] ],
   }
 
   cs_colocation { 'net_services_drbd_fs_colo':
