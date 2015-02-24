@@ -19,7 +19,7 @@ class dc_pcs::netservices::loopback {
   }
 
   exec { 'net_services_zero':
-    command     => "dd if=/dev/zero of=$dc_pcs::netservices::loopback_store/net_services.img bs=1 count=0 seek=1000M",
+    command     => "dd if=/dev/zero of=${dc_pcs::netservices::loopback_store}/net_services.img bs=1 count=0 seek=1000M",
     timeout     => '1000',
     refreshonly => true,
     require     => File[$dc_pcs::netservices::loopback_store],

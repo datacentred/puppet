@@ -39,7 +39,7 @@ class dc_pcs::netservices::primary_drbd {
   }
 
   exec { 'mount_first_time':
-    command     => "mount $dc_pcs::netservices::drbd_device /drbd/net_services",
+    command     => "mount ${dc_pcs::netservices::drbd_device} /drbd/net_services",
     refreshonly => true,
     notify      => Exec['create_initial_dirs'],
   }
@@ -52,7 +52,7 @@ class dc_pcs::netservices::primary_drbd {
   }
 
   exec { 'umount_first_time':
-    command     => "umount $dc_pcs::netservices::drbd_device",
+    command     => "umount ${dc_pcs::netservices::drbd_device}",
     refreshonly => true,
   }
 
