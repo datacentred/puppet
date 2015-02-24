@@ -275,3 +275,9 @@
 [submodule "modules/archive"]
 	path = modules/archive
 	url = https://github.com/camptocamp/puppet-archive
+[submodule "modules/corosync"]
+	path = modules/corosync
+	url = https://github.com/datacentred/puppetlabs-corosync.git
+[submodule "modules/drbd"]
+	path = modules/drbd
+	url = https://github.com/datacentred/puppetlabs-drbd
