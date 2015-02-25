@@ -622,7 +622,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_mapped_memory':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!memory_mapped!27017!30!40',
+    check_command       => 'check_mongodb!memory_mapped!27017!60!40',
     service_description => 'MongoDB Mapped Memory',
   }
 
