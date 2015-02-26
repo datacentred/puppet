@@ -619,13 +619,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'MongoDB Memory Usage',
   }
 
-  icinga::service { 'check_mongo_mapped_memory':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!memory_mapped!27017!30!40',
-    service_description => 'MongoDB Mapped Memory',
-  }
-
   icinga::service { 'check_mongo_lock_time_percentage':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
