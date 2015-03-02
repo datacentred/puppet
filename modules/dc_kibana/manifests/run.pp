@@ -3,9 +3,10 @@
 class dc_kibana::run {
 
   exec { 'run_kibana':
-    command => 'bin/kibana',
-    cwd     => '/var/www',
-    path    => ['/bin', '/usr/bin'],
+    command     => '/var/www/kibana/bin/kibana',
+    cwd         => '/var/www',
+    path        => ['/bin', '/usr/bin'],
+    refreshonly => true
   }
 
 }
