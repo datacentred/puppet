@@ -8,12 +8,12 @@ class dc_kibana::install {
   }
 
   exec { 'install_kibana':
-    command => 'wget http://download.elasticsearch.org/kibana/kibana/kibana-latest.tar.gz \
-                && tar xzf kibana-latest.tar.gz -C /var/www/ \
-                && mv kibana-latest kibana',
+    command => 'wget https://download.elasticsearch.org/kibana/kibana/kibana-4.0.0-linux-x64.tar.gz \
+                && sudo tar xzf kibana-4.0.0-linux-x64.tar.gz -C /var/www/ \
+                && sudo mv kibana-4.0.0-linux-x64 kibana',
     cwd     => '/var/www',
     path    => ['/bin', '/usr/bin'],
-    creates => '/var/www/kibana-latest.tar.gz',
+    creates => '/var/www/kibana-4.0.0-linux-x64.tar.gz',
     require => File['/var/www'],
   }
 

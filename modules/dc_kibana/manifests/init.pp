@@ -8,7 +8,8 @@ class dc_kibana (
 
   include dc_kibana::apache
 
-  class { 'dc_kibana::install': } ~>
+  class { 'dc_kibana::install': } ->
   class { 'dc_kibana::config': } ~>
+  class { 'dc_kibana::run': } ~>
   Class ['dc_kibana']
 }
