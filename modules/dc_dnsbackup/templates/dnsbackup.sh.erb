@@ -8,6 +8,7 @@
 # nick.jones@datacentred.co.uk
 # matt.jarvis@datacentred.co.uk
 
+
 if [ $# -eq 0 ]
 then
     echo "Required argument missing - please supply a configuration directory path"
@@ -18,18 +19,11 @@ fi
 CONFDIR=$1
 TS=$(date "+%y-%m-%d-%H")
 
-# Mount the backup directory
-if ! mount <%= @nfs_backup_server %>:<%= @storagedir %>/backups/<%= @hostname %>-dnsbackup <%= @dnsbackupmount %>
-then echo "Could not mount remote backup directory"
-exit 1
-fi
-
 if [ -d <%= @dnsbackupmount %> ]
 then
     if ! mkdir <%= @dnsbackupmount %>/$TS
-    then 
+    then
         echo "Could not create backup folder"
-        umount <%= @dnsbackupmount %>
         exit 1
     fi
 fi
@@ -39,17 +33,11 @@ do
     NS=`grep master $CONFDIR/$conffile | cut -d ' ' -f 2`
     DOMAIN=`grep zone $CONFDIR/$conffile | cut -d ' ' -f 2`
     if ! dig @$NS $DOMAIN AXFR | grep -v -E ';|SOA|NS|AAAA' | awk 'NF > 0' > <%= @dnsbackupmount %>/$TS/$DOMAIN.axfr
-    then 
+    then
         echo "Could not AXFR"
-        umount <%= @dnsbackupmount %>
         exit 1
     fi
 done
 
-if ! umount <%= @dnsbackupmount %>
-then
-    echo "Could not unmount backup directory"
-    exit 1
-fi
 
 exit 0
