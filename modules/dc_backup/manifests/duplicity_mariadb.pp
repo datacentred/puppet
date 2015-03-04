@@ -1,6 +1,6 @@
 # == Class: dc_backups::duplicity_mariadb
 #
-# Backs up mariadb backups to ceph and amazon S3
+# Backs up mariadb backups to swift
 #
 class dc_backup::duplicity_mariadb (
   $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,
