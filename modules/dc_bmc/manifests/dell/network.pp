@@ -13,9 +13,39 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::dell::network {
 
-  # enable DHCP
+  # Disable DHCP
   drac_setting { 'cfgLanNetworking/cfgNicUseDhcp':
-    object_value => 1,
+    object_value => 0,
+  }
+
+  # Set IP Address
+  drac_setting { 'cfgLanNetworking/cfgNicIPAddress':
+    object_value => $dc_bmc::bmc_ip,
+  }
+
+  # Set Mask
+  drac_setting { 'cfgLanNetworking/cfgNicNetmask':
+    object_value => '255.255.255.0',
+  }
+
+  # Set Gateway
+  drac_setting { 'cfgLanNetworking/cfgNicGateway':
+    object_value => $dc_bmc::bmc_gateway,
+  }
+
+  # Set Primary DNS
+  drac_setting { 'cfgLanNetworking/cfgDNSServer1':
+    object_value => $dc_bmc::prim_dns,
+  }
+
+  # Set Secondary DNS
+  drac_setting { 'cfgLanNetworking/cfgDNSServer2':
+    object_value => $dc_bmc::sec_dns,
+  }
+
+  # Set Domain
+  drac_setting { 'cfgLanNetworking/cfgDNSDomainName':
+    object_value => $::domain,
   }
 
   # set the hostname
@@ -34,11 +64,11 @@ class dc_bmc::dell::network {
 
   # Configure DNS
   drac_setting { 'cfgLanNetworking/cfgDNSDomainNameFromDHCP':
-    object_value => 'Enabled',
+    object_value => 'Disabled',
   }
 
   drac_setting { 'cfgLanNetworking/cfgDNSServersFromDHCP':
-    object_value => 'Enabled',
+    object_value => 'Disabled',
   }
 
   drac_setting { 'cfgIpmiLan/cfgIpmiLanEnable':

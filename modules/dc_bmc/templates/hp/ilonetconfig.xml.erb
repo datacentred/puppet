@@ -5,13 +5,14 @@
   </SERVER_INFO>
   <RIB_INFO MODE="write">
     <MOD_NETWORK_SETTINGS>
-      <DHCP_DOMAIN_NAME value="Yes"/>
-      <DHCP_ENABLE value="Yes"/>
+      <DHCP_DOMAIN_NAME value="No"/>
+      <DHCP_ENABLE value="No"/>
       <DNS_NAME value="<%= @hostname %>-bmc"/>
-      <DHCP_GATEWAY value="Yes"/>
-      <DHCP_DNS_SERVER value="Yes"/>
-      <DHCP_WINS_SERVER value="Yes"/>
-      <DHCP_STATIC_ROUTE value="Yes"/>
+      <IP_ADDRESS value="<%= scope.lookupvar('dc_bmc::bmc_ip') %>"/>
+      <SUBNET_MASK value="<%= scope.lookupvar('dc_bmc::bmc_netmask') %>"/>
+      <GATEWAY_IP_ADDRESS value="<%= scope.lookupvar('dc_bmc::bmc_gateway') %>"/>
+      <PRIM_DNS_SERVER value="<%= scope.lookupvar('dc_bmc::prim_dns') %>"/>
+      <SEC_DNS_SERVER value="<%= scope.lookupvar('dc_bmc::sec_dns') %>" />
       <REG_DDNS_SERVER value ="No" />
     </MOD_NETWORK_SETTINGS>
   </RIB_INFO>
