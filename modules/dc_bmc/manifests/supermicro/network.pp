@@ -34,7 +34,7 @@ class dc_bmc::supermicro::network {
     }
 
     exec { 'set_ipmi_gateway':
-      command => "ipmitool lan set defw ipaddr ${dc_bmc::bmc_gateway}",
+      command => "ipmitool lan set defgw ipaddr ${dc_bmc::bmc_gateway}",
       unless  => "ipmitool lan print 1 | grep -w 'Default Gateway IP' | cut -d ':' -f 2 | grep -w '${dc_bmc::bmc_gateway}' >/dev/null",
       require => Package['ipmitool'],
     }
