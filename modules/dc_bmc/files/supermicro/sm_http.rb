@@ -137,8 +137,8 @@ class App
       @cookie ||= login(@options.username, @options.password)
       get_radius_cfg
       set_radius_cfg
-      #get_network_cfg
-      #set_network_cfg
+      get_network_cfg
+      set_network_cfg
     end
 
     def output_usage
