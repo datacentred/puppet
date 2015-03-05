@@ -27,11 +27,21 @@ class dc_bmc (
   $radius_secret,
   $bmc_admin_passwd,
   $bmc_admin_name,
+  $bmc_subnet,
+  $bmc_netmask,
   $std_fw_version = $dc_bmc::params::std_fw_version,
   $ipmi_user_channel = $dc_bmc::params::ipmi_user_channel,
   $ipmi_admin_user_slot = $dc_bmc::params::ipmi_admin_user_slot,
   $ipmi_smnew_admin_user_slot = $dc_bmc::params::ipmi_smnew_admin_user_slot,
 ) inherits dc_bmc::params {
+
+  $nameservers = hiera(nameservers)
+  $ns_array = values($nameservers)
+  $prim_dns = $ns_array[0]
+  $sec_dns = $ns_array[1]
+  $split_ip   = split($::ipaddress, '[.]')
+  $bmc_ip = join(concat(delete_at(split($bmc_subnet, '[.]'), 3), [ $split_ip[3] ]), '.')
+  $bmc_gateway = join(concat(delete_at(split($bmc_subnet, '[.]'), 3), [ '254' ]), '.')
 
   case $::productname {
 
@@ -48,6 +58,8 @@ class dc_bmc (
       include dc_bmc::monitor_user
       include dc_bmc::supermicro::reaper
       include dc_bmc::supermicro::http_scripted
+      include dc_bmc::supermicro::network
+      Class['dc_bmc::supermicro::network'] -> Class['dc_bmc::supermicro::http_scripted']
     }
     /PowerEdge/: {
       include dc_bmc::base
@@ -60,6 +72,13 @@ class dc_bmc (
       notify { "Unsupported IPMI platform ${::productname}": }
     }
 
+  }
+
+  stage{ 'post_config': }
+  Stage['main'] -> Stage['post_config']
+
+  class { dc_bmc::dns :
+    stage => 'post_config',
   }
 
 }
