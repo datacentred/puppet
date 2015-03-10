@@ -14,15 +14,21 @@ class dc_backup::duplicity_puppetcerts (
     ensure => installed,
   }
 
+    exec { 'dns_backups_container':
+    command => "swift --os-username=${datacentred_swift_id} --os-password=${datacentred_swift_key} --os-auth-url=${datacentred_swift_access_point} post datacentred_puppetcerts_${::hostname}_backup",
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+  }->
+
   duplicity { 'puppetcerts_to_swift':
-    pre_command       => "tar zcf $backupdir/certs-$dateformat.tgz /var/lib/puppet/ssl >/dev/null 2>&1"
+    pre_command       => "tar zcf /var/certsbackup/certs-$dateformat.tgz /var/lib/puppet/ssl >/dev/null 2>&1"
     directory         => '/var/certsbackup',
-    bucket            => "puppetcerts_${::hostname}_backup",
+    bucket            => "datacentred_puppetcerts_${::hostname}_backup",
     dest_id           => $datacentred_swift_id,
     dest_key          => $datacentred_swift_key,
     cloud             => $cloud, #which target we're writing to, S3, swift, rackspace etc
     swift_authurl     => $datacentred_swift_access_point,
     swift_authversion => $swift_authversion,
+    remove_older_than => '1M',
   }
 
 }
