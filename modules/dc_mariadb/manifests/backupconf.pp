@@ -14,14 +14,6 @@
 class dc_mariadb::backupconf (
 ){
 
-  include nfs::client
-
-  Nfs::Client::Mount <<| nfstag == "${::hostname}-mariadbbackup" |>> {
-    ensure  => present,
-    options => 'noauto,_netdev',
-    mount   => '/var/dbbackups-remote',
-  }
-
   class { 'mysql::server::backup':
     backupuser        => 'backup',
     backuppassword    => hiera(backup_mysql_pw),
@@ -31,21 +23,6 @@ class dc_mariadb::backupconf (
     time              => ['3','00']
   }
   contain 'mysql::server::backup'
-
-  file { '/usr/local/sbin/nfscopy.sh':
-    ensure => file,
-    owner  => root,
-    group  => root,
-    mode   => '0744',
-    source => 'puppet:///modules/dc_mariadb/nfscopy.sh',
-  }
-
-  cron { 'nfscopy':
-    command => '/usr/local/sbin/nfscopy.sh',
-    user    => root,
-    hour    => 4,
-    minute  => 0,
-  }
 
 }
 

@@ -22,6 +22,7 @@ class dc_backup::duplicity_mariadb (
     cloud             => $cloud,
     swift_authurl     => $datacentred_swift_access_point,
     swift_authversion => $swift_authversion,
+    remove_older_than => '1M',
   }
 
 }
