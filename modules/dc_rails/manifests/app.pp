@@ -130,6 +130,8 @@ define dc_rails::app (
     openstack_stronghold_username => $openstack_stronghold_username,
     openstack_stronghold_password => $openstack_stronghold_password,
     openstack_stronghold_tenant   => $openstack_stronghold_tenant,
+    ceph_key             => $ceph_key,
+    ceph_token           => $ceph_token,
     source               => $unicorn,
     subscribe            => Vcsrepo[$app_home],
   } ->
