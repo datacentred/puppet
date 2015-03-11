@@ -16,6 +16,6 @@ script
 exec /bin/bash <<'EOT'
   source /etc/default/unicorn_stronghold
   cd /home/rails/stronghold/current
-  exec /home/rails/.rbenv/shims/bundle exec sidekiq -e production -c 10
+  exec /home/rails/.rbenv/shims/bundle exec sidekiq -e staging -c 10
 EOT
 end script
