@@ -15,7 +15,7 @@ script
 # respawn as bash so we can source in rbenv
 exec /bin/bash <<'EOT'
   source /etc/default/unicorn_stronghold
-  cd /home/rails/stronghold
+  cd /home/rails/stronghold/current
   exec /home/rails/.rbenv/shims/bundle exec clockwork clock.rb
 EOT
 end script
