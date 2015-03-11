@@ -102,16 +102,6 @@ define dc_rails::app (
     subscribe   => Vcsrepo[$app_home],
   } ->
 
-  exec { "rake assets:precompile ${$app_name}":
-    command     => "${bundler} exec rake assets:precompile",
-    cwd         => $app_home,
-    group       => $group,
-    user        => $user,
-    environment => ["RAILS_ENV=${rails_env}"],
-    refreshonly => true,
-    subscribe   => Vcsrepo[$app_home],
-  } ->
-
   unicorn::app { $app_name:
     approot              => $app_home,
     pidfile              => "${$rundir}unicorn.pid",
