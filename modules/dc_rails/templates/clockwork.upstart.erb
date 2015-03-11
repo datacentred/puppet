@@ -4,9 +4,18 @@ stop on runlevel [!2345]
 setuid rails
 setgid rails
 
-env DB_PASSWORD=<%= @db_password %>
-env RAILS_ENV=<%= @rails_env %>
+respawn
+respawn limit 3 30
 
-chdir <%= @app_home %>
+normal exit 0 TERM
+stop on (stopping workers or runlevel [06])
 
-exec <%= @home %>/.rbenv/shims/bundle exec clockwork <%= @app_home %>/clock.rb
+script
+# this script runs in /bin/sh by default
+# respawn as bash so we can source in rbenv
+exec /bin/bash <<'EOT'
+  source /etc/default/unicorn_stronghold
+  cd /home/rails/stronghold
+  exec /home/rails/.rbenv/shims/bundle exec clockwork clock.rb
+EOT
+end script
