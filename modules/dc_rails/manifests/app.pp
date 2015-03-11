@@ -85,7 +85,7 @@ define dc_rails::app (
   } ->
 
   vcsrepo { $app_home:
-    ensure   => bare,
+    ensure   => present,
     provider => git,
     source   => $app_repo,
     user     => $user,
