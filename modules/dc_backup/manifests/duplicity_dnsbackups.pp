@@ -1,6 +1,6 @@
-# == Class: dc_backup::duplicity_mariadb
+# == Class: dc_backup::duplicity_dnsbackups
 #
-# Backs up all the puppetcerts to swift
+# Backs up dns records to swift
 #
 class dc_backup::duplicity_dnsbackups (
   $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,
@@ -8,7 +8,7 @@ class dc_backup::duplicity_dnsbackups (
   $datacentred_swift_access_point = $dc_backup::params::datacentred_swift_access_point,
   $cloud = $dc_backup::params::cloud,
   $swift_authversion = $dc_backup::params::swift_authversion,
-) {
+) inherits dc_backup::params {
 
   package { 'python-swiftclient':
     ensure => installed,
@@ -28,5 +28,6 @@ class dc_backup::duplicity_dnsbackups (
     swift_authurl     => $datacentred_swift_access_point,
     swift_authversion => $swift_authversion,
   }
+
 
 }
