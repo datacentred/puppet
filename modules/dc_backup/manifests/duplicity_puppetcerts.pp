@@ -8,6 +8,7 @@ class dc_backup::duplicity_puppetcerts (
   $datacentred_swift_access_point = $dc_backup::params::datacentred_swift_access_point,
   $cloud = $dc_backup::params::cloud,
   $swift_authversion = $dc_backup::params::swift_authversion,
+  $backup_source_dir,
 ) inherits dc_backup::params {
 
   package { 'python-swiftclient':
@@ -20,8 +21,7 @@ class dc_backup::duplicity_puppetcerts (
   }->
 
   duplicity { 'puppetcerts_to_swift':
-    pre_command       => "tar zcf /var/certsbackup/certs-$dateformat.tgz /var/lib/puppet/ssl >/dev/null 2>&1"
-    directory         => '/var/certsbackup',
+    directory         => $backup_source_dir,
     bucket            => "datacentred_puppetcerts_${::hostname}_backup",
     dest_id           => $datacentred_swift_id,
     dest_key          => $datacentred_swift_key,

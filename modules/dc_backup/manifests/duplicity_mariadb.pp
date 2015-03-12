@@ -8,6 +8,7 @@ class dc_backup::duplicity_mariadb (
   $datacentred_swift_access_point = $dc_backup::params::datacentred_swift_access_point,
   $cloud = $dc_backup::params::cloud,
   $swift_authversion = $dc_backup::params::swift_authversion,
+  $backup_source_dir,
 ) inherits dc_backup::params {
 
   package { 'python-swiftclient':
@@ -20,7 +21,7 @@ class dc_backup::duplicity_mariadb (
   }->
 
   duplicity { 'mariadb_to_swift':
-    directory         => '/var/dbbackups',
+    directory         => $backup_source_dir,
     bucket            => "datacentred_mariadb_${::hostname}_backup",
     dest_id           => $datacentred_swift_id,
     dest_key          => $datacentred_swift_key,
