@@ -15,7 +15,7 @@ class dc_backup::duplicity_mariadb (
     ensure => installed,
   }
 
-    exec { 'dns_backups_container':
+  exec { 'mariadb_backups_container':
     command => "swift --os-username=${datacentred_swift_id} --os-password=${datacentred_swift_key} --os-auth-url=${datacentred_swift_access_point} post datacentred_mariadb_${::hostname}_backup",
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
   }->
