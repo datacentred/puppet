@@ -51,15 +51,6 @@ class dc_dnsbackup(
     minute  => '0',
   }
 
-  cron { 'remove_old_dnsbackups':
-    command  => 'rm -rf /var/zonebackups/',
-    user     => 'root',
-    month    => '*',
-    monthday => '1',
-    hour     => '11',
-    minute   => '*',
-  }
-
   anchor { 'dc_dnsbackup::first': } ->
   class { 'dc_dnsbackup::exports': } ->
   anchor { 'dc_dnsbackup::last': }
