@@ -9,6 +9,8 @@ class dc_backup::duplicity_mariadb (
   $cloud = $dc_backup::params::cloud,
   $swift_authversion = $dc_backup::params::swift_authversion,
   $backup_source_dir,
+  $datacentred_amazon_s3_id = $dc_backup::params::datacentred_amazon_s3_id,
+  $datacentred_amazon_s3_key = $dc_backup::params::datacentred_amazon_s3_key,
 ) inherits dc_backup::params {
 
   package { 'python-swiftclient':
@@ -25,10 +27,20 @@ class dc_backup::duplicity_mariadb (
     bucket            => "datacentred_mariadb_${::hostname}_backup",
     dest_id           => $datacentred_swift_id,
     dest_key          => $datacentred_swift_key,
-    cloud             => $cloud,
+    cloud             => 'swift',
     swift_authurl     => $datacentred_swift_access_point,
     swift_authversion => $swift_authversion,
     remove_older_than => '1M',
+  }
+
+  duplicity { 'mariadb_to_amazon_s3':
+    directory         => $backup_source_dir,
+    bucket            => "datacentred_mariadb_${::hostname}_backup",
+    dest_id           => $datacentred_amazon_s3_id,
+    dest_key          => $datacentred_amazon_s3_key,
+    cloud             => 's3',
+    remove_older_than => '1M',
+    pubkey_id         => #note to self, actual public key for use.
   }
 
 }
