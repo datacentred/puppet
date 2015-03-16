@@ -32,6 +32,11 @@ define dc_rails::app (
   $openstack_stronghold_tenant   = hiera(dc_rails::openstack::stronghold_tenant)
   $ceph_token                    = hiera(dc_rails::ceph::token)
   $ceph_key                      = hiera(dc_rails::ceph::key)
+  $salesforce_username           = hiera(dc_rails::salesforce::username)
+  $salesforce_password           = hiera(dc_rails::salesforce::password)
+  $salesforce_token              = hiera(dc_rails::salesforce::token)
+  $salesforce_client_id          = hiera(dc_rails::salesforce::client_id)
+  $salesforce_client_secret      = hiera(dc_rails::salesforce::client_secret)
   $ruby                          = '2.1.4'
   $home                          = "/home/${user}/"
   $app_home                      = "${home}${app_name}/current/"
@@ -120,6 +125,11 @@ define dc_rails::app (
     openstack_stronghold_username => $openstack_stronghold_username,
     openstack_stronghold_password => $openstack_stronghold_password,
     openstack_stronghold_tenant   => $openstack_stronghold_tenant,
+    salesforce_username           => $salesforce_username,
+    salesforce_password           => $salesforce_password,
+    salesforce_token              => $salesforce_token,
+    salesforce_client_id          => $salesforce_client_id,
+    salesforce_client_secret      => $salesforce_client_secret,
     ceph_key             => $ceph_key,
     ceph_token           => $ceph_token,
     source               => $unicorn,
