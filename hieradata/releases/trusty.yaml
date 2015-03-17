@@ -32,7 +32,7 @@ repo_list:
   foreman_mirror:
     location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
     release: 'trusty'
-    repos: '1.5'
+    repos: '1.7'
     key: '3A85FC71'
     key_source: 'http://deb.theforeman.org/foreman.asc'
   trusty_proposed:
