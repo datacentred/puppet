@@ -42,3 +42,9 @@ repo_list:
 
 collectd::version: 5.4.0-3ubuntu2datacentred1
 apache::mod::passenger::mod_package_ensure: '4.0.37-2'
+
+dc_apt::pins:
+  trusty-proposed:
+    packages: '*'
+    release: 'trusty-proposed'
+    priority: '400'
