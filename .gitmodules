@@ -37,9 +37,6 @@
 [submodule "modules/apache"]
 	path = modules/apache
 	url = https://github.com/puppetlabs/puppetlabs-apache
-[submodule "modules/foreman"]
-	path = modules/foreman
-	url = https://github.com/datacentred/puppet-foreman
 [submodule "modules/puppetdb"]
 	path = modules/puppetdb
 	url = https://github.com/puppetlabs/puppetlabs-puppetdb.git
@@ -281,3 +278,6 @@
 [submodule "modules/drbd"]
 	path = modules/drbd
 	url = https://github.com/datacentred/puppetlabs-drbd
+[submodule "modules/foreman"]
+	path = modules/foreman
+	url = https://github.com/theforeman/puppet-foreman.git
