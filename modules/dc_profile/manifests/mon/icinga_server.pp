@@ -24,8 +24,6 @@ class dc_profile::mon::icinga_server {
 
   contain pagerduty
 
-  ::apache::mod { 'authn_core': }
-
   $nagios_api_username = hiera(nagios_api_username)
   $nagios_api_password = hiera(nagios_api_password)
 
