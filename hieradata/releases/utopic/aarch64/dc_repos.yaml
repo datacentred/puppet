@@ -1,0 +1,14 @@
+---
+dc_repos::repos:
+  utopic:
+    location: 'gb.archive.ubuntu.com/ubuntu'
+    release: 'utopic'
+    repos: 'main restricted universe multiverse'
+  utopic_security:
+    location: 'gb.archive.ubuntu.com/ubuntu'
+    release: 'utopic-security'
+    repos: 'main restricted universe multiverse'
+  utopic_updates:
+    location: 'gb.archive.ubuntu.com/ubuntu'
+    release: 'utopic-updates'
+    repos: 'main restricted universe multiverse'

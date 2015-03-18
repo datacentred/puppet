@@ -1,0 +1,104 @@
+---
+dc_repos::repos:
+  ceph_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ceph_mirror_path')}"
+    release: 'trusty'
+    repos: 'main'
+    key: '17ED316D'
+    key_server: 'keyserver.ubuntu.com'
+  datacentred_backports:
+    location: "%{hiera('mirror_server')}/%{hiera('datacentred_path')}"
+    release: 'trusty'
+    repos: 'universe'
+    key: '7CCDE6B0'
+    key_source: "%{hiera('mirror_server')}/%{hiera('datacentred_path')}/repo.gpg.key"
+  dell_openmanage_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('dell_openmanage_mirror_path')}"
+    release: 'trusty'
+    repos: 'openmanage'
+    key: '34D8786F'
+    key_source: 'http://pool.sks-keyservers.net:11371/pks/lookup?op=get&search=0x1285491434D8786F'
+  elasticsearch_1_4_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('elasticsearch_1_4_mirror_path')}"
+    release: 'stable'
+    repos: 'main'
+    key: 'D88E42B4'
+    key_source: 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch'
+  foreman_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
+    release: 'trusty'
+    repos: '1.7'
+    key: '3A85FC71'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+  foreman_plugins_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
+    release: 'plugins'
+    repos: '1.7'
+    key: '1AA043B8'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+  hpsupport_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('hpsupport_mirror_path')}"
+    release: 'trusty/current'
+    repos: 'non-free'
+    key: 'B1275EA3'
+    key_source: 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp'
+  logstash_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('logstash_mirror_path')}"
+    release: 'stable'
+    repos: 'main'
+    key: 'D88E42B4'
+    key_source: 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch'
+  mariadb_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('mariadb_mirror_path')}"
+    release: 'trusty'
+    repos: 'main'
+    key: '1BB943DB'
+    key_server: 'keyserver.ubuntu.com'
+  pagerduty:
+    location: 'http://packages.pagerduty.com/pdagent deb/'
+    release: ''
+    repos: ''
+    include_src: false
+    key: '9E65C6CB'
+    key_source: 'http://packages.pagerduty.com/GPG-KEY-pagerduty'
+  postgres_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('postgres_mirror_path')}"
+    release: 'trusty-pgdg'
+    repos: 'main'
+    key: 'ACCC4CF8'
+    key_source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+  puppetlabs_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('puppet_mirror_path')}"
+    release: 'trusty'
+    repos: 'main dependencies'
+    key: '4BD6EC30'
+    key_source: 'https://apt.puppetlabs.com/keyring.gpg'
+  # Packaged on utopic and higher \o/
+  rabbitmq_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('rabbitmq_mirror_path')}"
+    release: 'testing'
+    repos: 'main'
+    key: '056E8E56'
+    key_source: 'http://www.rabbitmq.com/rabbitmq-signing-key-public.asc'
+  trusty_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty'
+    repos: 'main restricted universe multiverse'
+  trusty_security_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-security'
+    repos: 'main restricted universe'
+  trusty_proposed:
+    location: 'http://archive.ubuntu.com/ubuntu/'
+    release: 'trusty-proposed'
+    repos: 'restricted main multiverse universe'
+  trusty_updates_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-updates'
+    repos: 'main restricted universe multiverse'
+  virtualbox_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('virtualbox_mirror_path')}"
+    release: 'trusty'
+    repos: 'contrib'
+    key: '98AB5139'
+    key_source: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'

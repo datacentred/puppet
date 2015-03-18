@@ -1,0 +1,49 @@
+---
+# Delete me on the demise of mx0 and ns0
+dc_repos::repos:
+  collectd_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('collectd_mirror_path')}"
+    release: 'precise'
+    repos: 'main'
+    key: 'FB7B395F'
+    key_server: 'keyserver.ubuntu.com'
+  foreman_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('foreman_mirror_path')}"
+    release: 'precise'
+    repos: 'stable'
+    key: '1AA043B8'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+  hpsupport_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('hpsupport_mirror_path')}"
+    release: 'precise/current'
+    repos: 'non-free'
+    key: 'B1275EA3'
+    key_source: 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp'
+  logstash_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('logstash_mirror_path')}"
+    release: 'stable'
+    repos: 'main'
+    key: 'D88E42B4'
+    key_source: 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch'
+  precise_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'precise'
+    repos: 'main restricted universe multiverse'
+  precise_security_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'precise-security'
+    repos: 'main restricted universe'
+  precise_updates_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('ubuntu_mirror_path')}"
+    release: 'precise-updates'
+    repos: 'main restricted universe multiverse'
+  puppetlabs_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('puppet_mirror_path')}"
+    release: 'precise'
+    repos: 'main dependencies'
+  rsyslog_mirror:
+    location: "%{hiera('mirror_server')}/%{hiera('rsyslog_mirror_path')}"
+    release: 'precise'
+    repos: 'main'
+    key: '5234BF2B'
+    key_server: 'keyserver.ubuntu.com'

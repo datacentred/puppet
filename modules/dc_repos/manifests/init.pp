@@ -10,11 +10,13 @@
 #
 # Sample Usage:
 #
-class dc_repos {
+class dc_repos (
+  $repos = {},
+) {
 
   $aptsource_defaults = {
     include_src => false,
   }
-  create_resources(apt::source, hiera_hash(repo_list), $aptsource_defaults)
+  create_resources(apt::source, $repos, $aptsource_defaults)
 
 }
