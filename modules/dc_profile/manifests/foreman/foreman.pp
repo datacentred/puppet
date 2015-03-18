@@ -12,20 +12,10 @@
 #
 class dc_profile::foreman::foreman {
 
-  include ::dc_foreman
-  contain 'dc_foreman'
-
-  class { '::foreman':
-    foreman_url           => $::fqdn,
-    authentication        => true,
-    passenger             => true,
-    use_vhost             => true,
-    ssl                   => true,
-  } -> Class['dc_foreman']
+  class { '::foreman': }
 
   package { 'foreman-compute':
     ensure  => installed,
-    require => Class['::foreman'],
   }
 
   package { 'ruby-foreman-discovery':
