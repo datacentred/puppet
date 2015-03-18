@@ -28,7 +28,8 @@ class dc_profile::foreman::foreman {
 
   package { 'ruby-foreman-hooks':
     ensure  => installed,
-  }
+  } ->
+  class { 'dc_foreman::hooks': }
 
   package { 'ruby-foreman-digitalocean':
     ensure  => installed,
