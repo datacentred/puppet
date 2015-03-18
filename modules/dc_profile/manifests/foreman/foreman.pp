@@ -12,13 +12,7 @@
 #
 class dc_profile::foreman::foreman {
 
-  class { '::foreman':
-    foreman_url           => $::fqdn,
-    authentication        => true,
-    passenger             => true,
-    use_vhost             => true,
-    ssl                   => true,
-  }
+  class { '::foreman': }
 
   package { 'foreman-compute':
     ensure  => installed,
