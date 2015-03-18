@@ -18,7 +18,7 @@ class dc_profile::foreman::foreman {
     passenger             => true,
     use_vhost             => true,
     ssl                   => true,
-  } -> Class['dc_foreman']
+  }
 
   package { 'foreman-compute':
     ensure  => installed,
