@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+# Script to downtime given host in Nagios when Foreman
+# removes it. It will be removed next Puppet run.
+
+require 'net/http'
+require 'json'
+
+icinga_url = "http://<%= @nagios_api_host %>"
+fqdn = ARGV[1]
+host = fqdn.slice(0, fqdn =~ /\./)
+
+uri = URI("#{icinga_url}/schedule_downtime")
+req = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
+req.body = {host: host, duration: 86400, comment: 'Host is removed', author: 'foreman'}.to_json
+req.basic_auth("<%= @nagios_api_username %>", "<%= @nagios_api_password %>")
+
+res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+  http.request(req)
+end
+
+res = JSON.parse(res.body)
+unless res['success']
+  unless res['content'] == 'Host or service not found.'
+    raise StandardError, res['content'] 
+  end
+end
