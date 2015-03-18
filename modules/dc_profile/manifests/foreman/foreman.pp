@@ -20,12 +20,26 @@ class dc_profile::foreman::foreman {
 
   package { 'ruby-foreman-discovery':
     ensure  => installed,
-    require => Class['::foreman'],
+  }
+
+  package { 'ruby-foreman-puppetdb':
+    ensure  => installed,
   }
 
   package { 'ruby-foreman-hooks':
     ensure  => installed,
-    require => Class['::foreman'],
+  }
+
+  package { 'ruby-foreman-digitalocean':
+    ensure  => installed,
+  }
+
+  package { 'ruby-foreman-dhcp-browser':
+    ensure  => installed,
+  }
+
+  package { 'foreman-cli':
+    ensure  => installed,
   }
 
   # TODO: Remove this if we ever introduce a second load-balanced
