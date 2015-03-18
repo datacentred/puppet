@@ -12,9 +12,6 @@
 #
 class dc_profile::foreman::foreman {
 
-  include ::dc_foreman
-  contain 'dc_foreman'
-
   class { '::foreman':
     foreman_url           => $::fqdn,
     authentication        => true,
@@ -25,7 +22,6 @@ class dc_profile::foreman::foreman {
 
   package { 'foreman-compute':
     ensure  => installed,
-    require => Class['::foreman'],
   }
 
   package { 'ruby-foreman-discovery':
