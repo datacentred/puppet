@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+# Script to enable a given host in Nagios by removing
+# any scheduled downtime
+#
+# This should only happen if the build is cancelled
+
+require 'net/http'
+require 'json'
+require 'foreman_api'
+
+icinga_url = "http://<%= @nagios_api_host %>"
+fqdn = ARGV[1]
+host = fqdn.slice(0, fqdn =~ /\./)
+
+audits = ForemanApi::Resources::Audit.new(
+{
+  :base_url => "http://<%= @foreman_url %>", 
+  :oauth => {
+    :consumer_key    => '<%= @foreman_oauth_consumer_key %>',
+    :consumer_secret => '<%= @foreman_oauth_consumer_secret %>'
+  }
+},{
+  :headers => {
+    :foreman_user => "admin",
+  }
+})
+
+res = audits.index('host_id' => fqdn)
+latest_audit = res[0]['results'][0]['audited_changes']
+
+if latest_audit['build'] && latest_audit['build'] == [true, false]
+  # Last audit event for this host shows the build was cancelled
+  # It's safe to cancel the icinga downtime
+  uri = URI("#{icinga_url}/cancel_downtime")
+  req = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json'})
+  req.body = {host: host}.to_json
+  req.basic_auth("<%= @nagios_api_username %>", "<%= @nagios_api_password %>")
+
+  res = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    http.request(req)
+  end
+
+  res = JSON.parse(res.body)
+  unless res['success']
+    raise StandardError, res['content'] 
+  end
+else
+  # Otherwise do nothing - the 1-hour scheduled downtime in Icinga will lapse
+end
