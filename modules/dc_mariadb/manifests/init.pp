@@ -51,6 +51,8 @@ class dc_mariadb (
   create_resources('dc_mariadb::db', $databases)
 
   unless $::is_vagrant {
-    include dc_mariadb::collectd
+    if $::environment == 'production' {
+      include dc_mariadb::collectd
+    }
   }
 }
