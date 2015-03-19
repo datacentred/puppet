@@ -14,18 +14,17 @@ class dc_profile::foreman::foreman {
 
   class { '::foreman': }
 
-  package { 'foreman-compute':
-    ensure  => installed,
+  include foreman::plugin::discovery
+  include foreman::plugin::digitalocean
+  include foreman::plugin::hooks
+  include foreman::plugin::puppetdb
+
+  package { 'foreman-cli':
+    ensure => installed,
   }
 
-  package { 'ruby-foreman-discovery':
-    ensure  => installed,
-    require => Class['::foreman'],
-  }
-
-  package { 'ruby-foreman-hooks':
-    ensure  => installed,
-    require => Class['::foreman'],
+  class { 'dc_foreman::hooks':
+    require => Class['foreman::plugins::hooks'],
   }
 
   # TODO: Remove this if we ever introduce a second load-balanced
