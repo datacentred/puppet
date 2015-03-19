@@ -1,7 +1,7 @@
 :hierarchy:
     - "nodes/%{::hostname}"
     - "roles/%{::role}"
-    - "releases/%{::lsbdistcodename}"
+    - "releases/%{::lsbdistcodename}/%{::architecture}/%{calling_module}"
     - "modules/%{calling_module}"
     - "%{environment}"
     - common
