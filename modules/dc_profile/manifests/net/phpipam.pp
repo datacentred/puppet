@@ -10,6 +10,7 @@ class dc_profile::net::phpipam {
   include apache::mod::php
   include apache::mod::rewrite
 
+  include ::dc_mariadb
   include ::phpipam
 
   apache::vhost { 'phpipam':
