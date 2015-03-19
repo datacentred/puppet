@@ -12,7 +12,8 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class dc_mariadb (
-  $maria_root_pw      = undef,
+  $maria_root_pw = undef,
+  $databases = {},
 ){
 
   class { '::mysql::server':
@@ -47,7 +48,11 @@ class dc_mariadb (
     ],
   }
 
+  create_resources('dc_mariadb::db', $databases)
+
   unless $::is_vagrant {
-    include dc_mariadb::collectd
+    if $::environment == 'production' {
+      include dc_mariadb::collectd
+    }
   }
 }
