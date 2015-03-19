@@ -24,6 +24,12 @@ class dc_foreman::hooks (
     provider => 'gem',
   }
 
+  File {
+    owner => 'foreman',
+    group => 'foreman',
+    mode  => '0770',
+  }
+
   file { ["${home}/config/hooks",
           "${home}/config/hooks/host",
           "${home}/config/hooks/host/managed",
@@ -32,36 +38,21 @@ class dc_foreman::hooks (
           "${home}/config/hooks/host/managed/after_build"
   ]:
     ensure => directory,
-    owner  => 'foreman',
-    group  => 'foreman',
-    mode   => '0770',
   } ->
   file { "${home}/config/hooks/host/managed/before_provision/10_hipchat.py":
     ensure  => file,
-    owner   => 'foreman',
-    group   => 'foreman',
-    mode    => '0770',
     content => template('dc_foreman/hooks/10_hipchat.py.erb'),
   } ->
   file { "${home}/config/hooks/host/managed/before_provision/20_enable_icinga.rb":
     ensure  => file,
-    owner   => 'foreman',
-    group   => 'foreman',
-    mode    => '0770',
     content => template('dc_foreman/hooks/20_enable_icinga.rb.erb'),
   } ->
   file { "${home}/config/hooks/host/managed/after_build/10_disable_icinga.rb":
     ensure  => file,
-    owner   => 'foreman',
-    group   => 'foreman',
-    mode    => '0770',
     content => template('dc_foreman/hooks/10_disable_icinga.rb.erb'),
   } ->
   file { "${home}/config/hooks/host/managed/destroy/10_remove_from_icinga.rb":
     ensure  => file,
-    owner   => 'foreman',
-    group   => 'foreman',
-    mode    => '0770',
     content => template('dc_foreman/hooks/10_remove_from_icinga.rb.erb'),
   }
 
