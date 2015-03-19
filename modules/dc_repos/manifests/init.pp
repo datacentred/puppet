@@ -12,11 +12,9 @@
 #
 class dc_repos (
   $repos = {},
+  $defaults = {},
 ) {
 
-  $aptsource_defaults = {
-    include_src => false,
-  }
-  create_resources(apt::source, $repos, $aptsource_defaults)
+  create_resources(apt::source, $repos, $defaults)
 
 }
