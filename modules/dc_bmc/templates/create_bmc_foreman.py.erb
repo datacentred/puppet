@@ -133,27 +133,27 @@ def find_domain(subnet_id):
 				
 # Find proxies and domain for a subnet		
 def find_subnet_info(subnet):
-	url = foreman_api_baseurl + 'subnets'
-	try:
+    url = foreman_api_baseurl + 'subnets'
+    try:
         r = requests.get(url, verify=cacert, headers=headers, cert=certs)
     except requests.exceptions.RequestException as e :
         print "Error - got %s" % e
         sys.exit(1)
 	
-	if r.status_code == 200:	
+    if r.status_code == 200:	
         data = json.loads(r.text)
-		for res in data.get('results'):
-			if res['network'] == subnet:
-				subnet_id = res['id']
-				domain = find_domain(subnet_id)
-				dhcp_proxy = res['dhcp']['url']
-				dns_proxy = res['dns']['url']
-				return dhcp_proxy,dns_proxy,domain,subnet_id
-		print "Could not find proxies for %s" % subnet
-		sys.exit(1)
-	else:
-		print "Unexpected return code %s" % r.status_code
-		sys.exit(1)
+        for res in data.get('results'):
+            if res['network'] == subnet:
+                subnet_id = res['id']
+                domain = find_domain(subnet_id)
+                dhcp_proxy = res['dhcp']['url']
+                dns_proxy = res['dns']['url']
+                return dhcp_proxy,dns_proxy,domain,subnet_id
+        print "Could not find proxies for %s" % subnet
+        sys.exit(1)
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
 	
 
 ############################################
