@@ -42,12 +42,12 @@ def get_dhcp_ip(proxy_url, subnet):
 	except requests.exceptions.RequestException as e :
 		print "Error - got %s" % (url,e)
 		sys.exit(1)
-	if r.status_code != 200:
-        print "Unexpected return code getting ip - code returned was %s" % r.status_code
-        sys.exit(1)
-    data = json.loads(r.text)
-    ret_ip = data.get('ip')
-    return ret_ip.encode("ascii")
+        if r.status_code != 200:
+                print "Unexpected return code getting ip - code returned was %s" % r.status_code
+                sys.exit(1)
+        data = json.loads(r.text)
+        ret_ip = data.get('ip')
+        return ret_ip.encode("ascii")
 
 # Get MAC address of IPMI
 def get_ipmi_mac(ipmi_lan_chan):
@@ -75,10 +75,10 @@ def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
 	url = foreman_int_api
 	payload = {'interface': {'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
 	try:
-		r = requests.post(url, verify=cacert, data=json.dumps(payload), headers=headers, cert=certs)
+	    r = requests.post(url, verify=cacert, data=json.dumps(payload), headers=headers, cert=certs)
 	except requests.exceptions.RequestException as e :
-                print "Error - got %s" % e
-                sys.exit(1)
+        print "Error - got %s" % e
+        sys.exit(1)
 	if r.status_code != 200:
 		print "Unexpected return code creating interface - code returned was %s" % r.status_code
 		print r.text
@@ -89,35 +89,35 @@ def check_bmc_int(fqdn):
 	try:
 		r = requests.get(url, verify=cacert, headers=headers, cert=certs)
 	except requests.exceptions.RequestException as e :
-                print "Error - got %s" % e
-                sys.exit(1)
+        print "Error - got %s" % e
+        sys.exit(1)
 	if r.status_code == 200:
-                data = json.loads(r.text)
-                for res in data.get('results'):
-			if res['type'] == 'bmc':
+        data = json.loads(r.text)
+        for res in data.get('results'):
+		    if res['type'] == 'bmc':
 				return res
-		return False
-        else:
-                print "Unexpected return code %s" % r.status_code
-                sys.exit(1)
+        return False
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
 	
 # Find domain which a subnet belongs to
 def find_domain(subnet_id):
 	url = foreman_api_baseurl + 'domains'
 	try:	
 		r = requests.get(url, verify=cacert, headers=headers, cert=certs)
-        except requests.exceptions.RequestException as e :
-               	print "Error - got %s" % e
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
 		sys.exit(1)
 	if r.status_code == 200:
 		data = json.loads(r.text)
-                for domain in data.get('results'):
+        for domain in data.get('results'):
 			url = foreman_api_baseurl + 'domains' + '/' + str(domain['id'])
 			try:	
 				r = requests.get(url, verify=cacert, headers=headers, cert=certs)
         		except requests.exceptions.RequestException as e :
-               			print "Error - got %s" % e
-				sys.exit(1)
+               		print "Error - got %s" % e
+				    sys.exit(1)
 			if r.status_code == 200:
 				data = json.loads(r.text)
 				for subnet in data.get('subnets'):
@@ -135,13 +135,13 @@ def find_domain(subnet_id):
 def find_subnet_info(subnet):
 	url = foreman_api_baseurl + 'subnets'
 	try:
-                r = requests.get(url, verify=cacert, headers=headers, cert=certs)
-        except requests.exceptions.RequestException as e :
-                print "Error - got %s" % e
-                sys.exit(1)
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
 	
 	if r.status_code == 200:	
-        	data = json.loads(r.text)
+        data = json.loads(r.text)
 		for res in data.get('results'):
 			if res['network'] == subnet:
 				subnet_id = res['id']
@@ -167,8 +167,8 @@ ipmi_lan_channel = find_lan_channel()
 # Check in Foreman if the interface is already defined
 interface = check_bmc_int(fqdn)
 if interface:
-	print "Interface is already defined"
-	sys.exit(0)
+    print "Interface is already defined"
+    sys.exit(0)
 # Unset any existing leases
 DEVNULL=open(os.devnull, 'r+b', 0)
 rc = subprocess.call([omapi_script], stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL, shell=True)
