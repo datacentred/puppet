@@ -51,9 +51,9 @@ def get_dhcp_ip(proxy_url, subnet):
 
 # Get MAC address of IPMI
 def get_ipmi_mac(ipmi_lan_chan):
-	command = '/usr/bin/ipmitool lan print %s | grep \'MAC Address\' | awk \'{print $4}\'' % ipmi_lan_chan
-	mac = subprocess.check_output(command, shell=True).strip()
-	return mac
+    command = '/usr/bin/ipmitool lan print %s | grep \'MAC Address\' | awk \'{print $4}\'' % ipmi_lan_chan
+    mac = subprocess.check_output(command, shell=True).strip()
+    return mac
 
 # Get host id
 def get_host_id(fqdn):
@@ -72,30 +72,30 @@ def get_host_id(fqdn):
 
 # Create BMC interface in Foreman
 def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
-	url = foreman_int_api
-	payload = {'interface': {'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
-	try:
-	    r = requests.post(url, verify=cacert, data=json.dumps(payload), headers=headers, cert=certs)
-	except requests.exceptions.RequestException as e :
+    url = foreman_int_api
+    payload = {'interface': {'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
+    try:
+        r = requests.post(url, verify=cacert, data=json.dumps(payload), headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
         print "Error - got %s" % e
         sys.exit(1)
-	if r.status_code != 200:
-		print "Unexpected return code creating interface - code returned was %s" % r.status_code
-		print r.text
+    if r.status_code != 200:
+        print "Unexpected return code creating interface - code returned was %s" % r.status_code
+        print r.text
 
 # Check if an interface exists in Foreman, return it if it does
 def check_bmc_int(fqdn):
-	url = foreman_api_baseurl + '/hosts/' + fqdn + '/interfaces'
-	try:
-		r = requests.get(url, verify=cacert, headers=headers, cert=certs)
-	except requests.exceptions.RequestException as e :
+    url = foreman_api_baseurl + '/hosts/' + fqdn + '/interfaces'
+    try:
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
         print "Error - got %s" % e
         sys.exit(1)
-	if r.status_code == 200:
+    if r.status_code == 200:
         data = json.loads(r.text)
         for res in data.get('results'):
-		    if res['type'] == 'bmc':
-				return res
+            if res['type'] == 'bmc':
+                return res
         return False
     else:
         print "Unexpected return code %s" % r.status_code
@@ -103,33 +103,33 @@ def check_bmc_int(fqdn):
 	
 # Find domain which a subnet belongs to
 def find_domain(subnet_id):
-	url = foreman_api_baseurl + 'domains'
-	try:	
-		r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    url = foreman_api_baseurl + 'domains'
+    try:	
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
     except requests.exceptions.RequestException as e :
         print "Error - got %s" % e
-		sys.exit(1)
-	if r.status_code == 200:
-		data = json.loads(r.text)
+        sys.exit(1)
+    if r.status_code == 200:
+        data = json.loads(r.text)
         for domain in data.get('results'):
-			url = foreman_api_baseurl + 'domains' + '/' + str(domain['id'])
-			try:	
-				r = requests.get(url, verify=cacert, headers=headers, cert=certs)
-        		except requests.exceptions.RequestException as e :
-               		print "Error - got %s" % e
-				    sys.exit(1)
-			if r.status_code == 200:
-				data = json.loads(r.text)
-				for subnet in data.get('subnets'):
-					if subnet['id'] == subnet_id:
-						return domain['id'],domain['name']
-					else:
-						continue
-		print "Could not find domain for subnet_id %s" % subnet_id
-		sys.exit(1)
-	else:
-		print "Unexpected return code %s" % r.status_code
-		sys.exit(1)
+            url = foreman_api_baseurl + 'domains' + '/' + str(domain['id'])
+            try:	
+                r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+            except requests.exceptions.RequestException as e :
+                print "Error - got %s" % e
+                sys.exit(1)
+            if r.status_code == 200:
+                data = json.loads(r.text)
+                for subnet in data.get('subnets'):
+                    if subnet['id'] == subnet_id:
+                        return domain['id'],domain['name']
+                    else:
+                        continue
+        print "Could not find domain for subnet_id %s" % subnet_id
+        sys.exit(1)
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
 				
 # Find proxies and domain for a subnet		
 def find_subnet_info(subnet):
