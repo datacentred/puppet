@@ -37,6 +37,8 @@ class dc_bmc (
   $omapi_port,
   $bmc_subnet,
   $foreman_url,
+  $foreman_admin_user,
+  $foreman_admin_passwd,
 ) inherits dc_bmc::params {
 
   case $::productname {
