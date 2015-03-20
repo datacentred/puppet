@@ -39,14 +39,15 @@ def get_dhcp_ip(proxy_url, subnet):
 	url = proxy_url + '/dhcp/' + subnet + '/unused_ip'
 	try :
 		r = requests.get(url, verify=cacert, cert=certs)
-		data = json.loads(r.text)
-		ret_ip = data.get('ip')
-		return ret_ip.encode("ascii")
 	except requests.exceptions.RequestException as e :
 		print "Error - got %s" % (url,e)
 		sys.exit(1)
 	if r.status_code != 200:
-		print "Unexpected return code getting ip - code returned was %s" % r.status_code
+        print "Unexpected return code getting ip - code returned was %s" % r.status_code
+        sys.exit(1)
+    data = json.loads(r.text)
+    ret_ip = data.get('ip')
+    return ret_ip.encode("ascii")
 
 # Get MAC address of IPMI
 def get_ipmi_mac(ipmi_lan_chan):
