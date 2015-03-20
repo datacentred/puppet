@@ -37,6 +37,7 @@ define dc_rails::app (
   $salesforce_token              = hiera(dc_rails::salesforce::token)
   $salesforce_client_id          = hiera(dc_rails::salesforce::client_id)
   $salesforce_client_secret      = hiera(dc_rails::salesforce::client_secret)
+  $stripe_secret_key             = hiera(dc_rails::stripe::secret_key)
   $ruby                          = '2.1.4'
   $home                          = "/home/${user}/"
   $app_home                      = "${home}${app_name}/current/"
@@ -130,6 +131,7 @@ define dc_rails::app (
     salesforce_token              => $salesforce_token,
     salesforce_client_id          => $salesforce_client_id,
     salesforce_client_secret      => $salesforce_client_secret,
+    stripe_secret_key             => $stripe_secret_key,
     ceph_key             => $ceph_key,
     ceph_token           => $ceph_token,
     source               => $unicorn,
