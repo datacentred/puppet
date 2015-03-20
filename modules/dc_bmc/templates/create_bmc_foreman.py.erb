@@ -26,11 +26,11 @@ omapi_script = '/usr/local/bin/omapi_unset_ipmi.sh'
 
 # Find the LAN channel
 def find_lan_channel():
-        for c in range(1, 3):
-                DEVNULL=open(os.devnull, 'r+b', 0)
-                returncode = subprocess.call(['/usr/bin/ipmitool','lan','print',str(c)],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
-                if returncode == 0:
-                        return c
+    for c in range(1, 3):
+        DEVNULL=open(os.devnull, 'r+b', 0)
+        returncode = subprocess.call(['/usr/bin/ipmitool','lan','print',str(c)],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        if returncode == 0:
+            return c
         print "Could not find IPMI lan channel"
         sys.exit(1)
 
@@ -57,18 +57,18 @@ def get_ipmi_mac(ipmi_lan_chan):
 
 # Get host id
 def get_host_id(fqdn):
-        url = foreman_api_baseurl + 'hosts/' + fqdn
-        try:
-                r = requests.get(url, verify=cacert, headers=headers, cert=certs)
-        except requests.exceptions.RequestException as e :
-                print "Error - got %s" % e
-                sys.exit(1)
-        if r.status_code == 200:
-                data = json.loads(r.text)
-                return data['id']
-        else:
-                print "Unexpected return code %s" % r.status_code
-                sys.exit(1)
+    url = foreman_api_baseurl + 'hosts/' + fqdn
+    try:
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code == 200:
+        data = json.loads(r.text)
+        return data['id']
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
 
 # Create BMC interface in Foreman
 def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
