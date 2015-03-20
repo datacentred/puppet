@@ -24,7 +24,7 @@ class dc_profile::foreman::foreman {
   }
 
   class { 'dc_foreman::hooks':
-    require => Class['foreman::plugins::hooks'],
+    require => Class['foreman::plugin::hooks'],
   }
 
   # TODO: Remove this if we ever introduce a second load-balanced
