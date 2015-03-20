@@ -18,7 +18,8 @@ class dc_bmc::base {
   include dc_bmc::modules
   include dc_bmc::install
   include dc_bmc::service
-  Class['dc_bmc::modules'] -> Class ['dc_bmc::install'] -> Class['dc_bmc::service']
+  include dc_bmc::foreman
+  Class['dc_bmc::modules'] -> Class ['dc_bmc::install'] -> Class['dc_bmc::service'] -> Class['dc_bmc::foreman']
 
   # Icinga
   include dc_bmc::icinga
