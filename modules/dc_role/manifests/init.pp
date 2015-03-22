@@ -1,3 +1,7 @@
+# == Class: dc_role
+#
+# Generic role all specializations inherit
+#
 class dc_role {
 
   ## Include these classes on all systems
