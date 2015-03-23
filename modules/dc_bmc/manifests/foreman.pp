@@ -14,8 +14,19 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::foreman {
 
+  # The requests module on precise is too old
+  # so install from pip instead
+
   package { 'python-requests':
-    ensure => installed,
+    ensure => absent,
+  }
+
+  ensure_packages('python-pip')
+
+  package { 'requests':
+    ensure   => installed,
+    provider => 'pip',
+    require  => Package['python-pip'],
   }
 
   file { '/usr/local/bin/omapi_unset_ipmi.sh':
