@@ -1,13 +1,11 @@
 # == Class: dc_nrpe::checks::net_interface
 #
-class dc_nrpe::checks::net_interface (
-  $excluded_ints="",
-){
+class dc_nrpe::checks::net_interfaces {
 
-  dc_nrpe::check { 'check_net_interface':
-    path    => '/usr/local/bin/check_net_interface.py',
-    content => template('dc_nrpe/check_net_interface.py.erb'),
-    sudo    => true,
+  dc_nrpe::check { 'check_net_interfaces':
+    path   => '/usr/local/bin/check_net_interfaces',
+    source => 'puppet:///modules/dc_nrpe/check_net_interfaces',
+    sudo   => true,
   }
 
 }
