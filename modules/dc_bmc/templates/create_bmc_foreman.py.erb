@@ -1,0 +1,198 @@
+#!/usr/bin/env python
+# Script to add and configure BMC interface in Foreman
+import requests
+import sys
+import json
+from base64 import b64encode
+import socket
+from string import split
+import subprocess
+import os
+
+fqdn = socket.getfqdn()
+hostname = fqdn.split('.')[0]
+domainname = fqdn.split('.',1)[1]
+cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+certs= ('/var/lib/puppet/ssl/certs/%s.pem' % fqdn, '/var/lib/puppet/ssl/private_keys/%s.pem' % fqdn)
+bmc_subnet = '<%= scope.lookupvar('dc_bmc::bmc_subnet') %>'
+foreman_url = '<%= scope.lookupvar('dc_bmc::foreman_url') %>'
+foreman_api_baseurl = 'https://' + foreman_url + '/api/v2/'
+foreman_int_api = foreman_api_baseurl + 'hosts/' + fqdn + '/interfaces'
+auth_encode = b64encode(b"<% scope.lookupvar('dc_bmc::foreman_admin_name') %>:<%= scope.lookupvar('dc_bmc::foreman_admin_passwd') %>").decode("ascii")
+headers= {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Basic %s' % auth_encode}
+bmc_user = '<%= scope.lookupvar('dc_bmc::bmc_admin_name') %>'
+bmc_password = '<%= scope.lookupvar('dc_bmc::bmc_admin_passwd') %>'
+omapi_script = '/usr/local/bin/omapi_unset_ipmi.sh'
+
+# Find the LAN channel
+def find_lan_channel():
+    for c in range(1, 3):
+        DEVNULL=open(os.devnull, 'r+b', 0)
+        returncode = subprocess.call(['/usr/bin/ipmitool','lan','print',str(c)],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        if returncode == 0:
+            return c
+        print "Could not find IPMI lan channel"
+        sys.exit(1)
+
+# Get a free IP from DHCP
+def get_dhcp_ip(proxy_url, subnet):
+    url = proxy_url + '/dhcp/' + subnet + '/unused_ip'
+    try :
+        r = requests.get(url, verify=cacert, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % (url,e)
+        sys.exit(1)
+    if r.status_code != 200:
+        print "Unexpected return code getting ip - code returned was %s" % r.status_code
+        sys.exit(1)
+    data = json.loads(r.text)
+    ret_ip = data.get('ip')
+    return ret_ip.encode("ascii")
+
+# Get MAC address of IPMI
+def get_ipmi_mac(ipmi_lan_chan):
+    command = '/usr/bin/ipmitool lan print %s | grep \'MAC Address\' | awk \'{print $4}\'' % ipmi_lan_chan
+    mac = subprocess.check_output(command, shell=True).strip()
+    return mac
+
+# Get host id
+def get_host_id(fqdn):
+    url = foreman_api_baseurl + 'hosts/' + fqdn
+    try:
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code == 200:
+        data = json.loads(r.text)
+        return data['id']
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
+
+# Create BMC interface in Foreman
+def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
+    url = foreman_int_api
+    payload = {'interface': {'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
+    try:
+        r = requests.post(url, verify=cacert, data=json.dumps(payload), headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code != 200:
+        print "Unexpected return code creating interface - code returned was %s" % r.status_code
+        print r.text
+
+# Check if an interface exists in Foreman, return it if it does
+def check_bmc_int(fqdn):
+    url = foreman_api_baseurl + '/hosts/' + fqdn + '/interfaces'
+    try:
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code == 200:
+        data = json.loads(r.text)
+        for res in data.get('results'):
+            if res['type'] == 'bmc':
+                return res
+        return False
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
+	
+# Find domain which a subnet belongs to
+def find_domain(subnet_id):
+    url = foreman_api_baseurl + 'domains'
+    try:	
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code == 200:
+        data = json.loads(r.text)
+        for domain in data.get('results'):
+            url = foreman_api_baseurl + 'domains' + '/' + str(domain['id'])
+            try:	
+                r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+            except requests.exceptions.RequestException as e :
+                print "Error - got %s" % e
+                sys.exit(1)
+            if r.status_code == 200:
+                data = json.loads(r.text)
+                for subnet in data.get('subnets'):
+                    if subnet['id'] == subnet_id:
+                        return domain['id'],domain['name']
+                    else:
+                        continue
+        print "Could not find domain for subnet_id %s" % subnet_id
+        sys.exit(1)
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
+				
+# Find proxies and domain for a subnet		
+def find_subnet_info(subnet):
+    url = foreman_api_baseurl + 'subnets'
+    try:
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+	
+    if r.status_code == 200:	
+        data = json.loads(r.text)
+        for res in data.get('results'):
+            if res['network'] == subnet:
+                subnet_id = res['id']
+                domain = find_domain(subnet_id)
+                dhcp_proxy = res['dhcp']['url']
+                dns_proxy = res['dns']['url']
+                return dhcp_proxy,dns_proxy,domain,subnet_id
+        print "Could not find proxies for %s" % subnet
+        sys.exit(1)
+    else:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
+	
+
+############################################
+
+# Get the variables we need to start configuring things
+dhcp_proxy,dns_proxy,domain,subnet_id = find_subnet_info(bmc_subnet)
+domain_id = domain[0]
+domain_name = domain[1]
+# Find the IPMI lan channel
+ipmi_lan_channel = find_lan_channel()
+# Check in Foreman if the interface is already defined
+interface = check_bmc_int(fqdn)
+if interface:
+    print "Interface is already defined"
+    sys.exit(0)
+# Unset any existing leases
+DEVNULL=open(os.devnull, 'r+b', 0)
+rc = subprocess.call([omapi_script], stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL, shell=True)
+if rc != 0:
+    print "Unsetting existing lease failed"
+    sys.exit(1)
+# Get host id
+host_id = get_host_id(fqdn)
+# Get an IP address
+new_ip = get_dhcp_ip(dhcp_proxy, bmc_subnet)
+# Get the MAC of the IPMI interface
+ipmi_mac = get_ipmi_mac(ipmi_lan_channel)
+add_bmc_int(new_ip, ipmi_mac, bmc_user, bmc_password, domain_id, subnet_id)
+# If we get to this point everything should be OK, so re-enable DHCP on the IPMI interface
+# and reset the MC
+DEVNULL=open(os.devnull, 'r+b', 0)
+rc = subprocess.call(['ipmitool', 'lan', 'set', str(ipmi_lan_channel), 'ipsrc', 'dhcp'],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+if rc == 0:
+    rc = subprocess.call(['ipmitool', 'mc', 'reset', 'warm'],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+    if rc != 0:
+        print "Could not reset MC"
+        sys.exit(1)
+else:
+    print "Could not set BMC to DHCP"
+    sys.exit(1)
+print "BMC configuration complete"
+sys.exit(0)
