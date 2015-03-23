@@ -36,7 +36,8 @@ class dc_profile::ceph::radosgw_lb {
         "set iface[. = '${ceph_lb}'] ${ceph_lb}",
         "set iface[. = '${ceph_lb}']/family inet",
         "set iface[. = '${ceph_lb}']/method dhcp",
-        "set iface[. = '${ceph_lb}']/pre-up '/sbin/ip link set ${ceph_lb} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${ceph_lb}']/pre-up '/sbin/ip link set ${ceph_lb} mtu 9000'",
         "set iface[. = '${ceph_lb}']/post-up[1] 'ip route add 10.10.0.0/16 via 10.10.9.1'",
         "set iface[. = '${ceph_lb}']/post-up[2] 'ip route add 10.253.2.0/24 via 10.10.9.1'",
         "set iface[. = '${ceph_lb}']/post-down[1] 'ip route del 10.10.0.0/16 via 10.10.9.1'",

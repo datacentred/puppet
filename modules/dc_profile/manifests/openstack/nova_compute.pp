@@ -89,7 +89,8 @@ class dc_profile::openstack::nova_compute {
         "set iface[. = '${integration}'] ${integration}",
         "set iface[. = '${integration}']/family inet",
         "set iface[. = '${integration}']/method dhcp",
-        "set iface[. = '${integration}']/pre-up '/sbin/ip link set ${integration} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${integration}']/pre-up '/sbin/ip link set ${integration} mtu 9000'",
     ],
   }
 
@@ -100,7 +101,8 @@ class dc_profile::openstack::nova_compute {
         "set iface[. = '${ceph_storage}'] ${ceph_storage}",
         "set iface[. = '${ceph_storage}']/family inet",
         "set iface[. = '${ceph_storage}']/method dhcp",
-        "set iface[. = '${ceph_storage}']/pre-up '/sbin/ip link set ${ceph_storage} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${ceph_storage}']/pre-up '/sbin/ip link set ${ceph_storage} mtu 9000'",
     ],
   }
 

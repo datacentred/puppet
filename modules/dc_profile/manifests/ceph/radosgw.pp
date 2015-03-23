@@ -20,7 +20,8 @@ class dc_profile::ceph::radosgw {
         "set iface[. = '${ceph_lb}'] ${ceph_lb}",
         "set iface[. = '${ceph_lb}']/family inet",
         "set iface[. = '${ceph_lb}']/method dhcp",
-        "set iface[. = '${ceph_lb}']/pre-up '/sbin/ip link set ${ceph_lb} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${ceph_lb}']/pre-up '/sbin/ip link set ${ceph_lb} mtu 9000'",
     ],
   }
 
@@ -31,7 +32,8 @@ class dc_profile::ceph::radosgw {
         "set iface[. = '${ceph_public}'] ${ceph_public}",
         "set iface[. = '${ceph_public}']/family inet",
         "set iface[. = '${ceph_public}']/method dhcp",
-        "set iface[. = '${ceph_public}']/pre-up '/sbin/ip link set ${ceph_public} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${ceph_public}']/pre-up '/sbin/ip link set ${ceph_public} mtu 9000'",
     ],
   }
 

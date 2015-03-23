@@ -34,7 +34,8 @@ class dc_profile::ceph::osd {
         "set iface[. = '${ceph_public}'] ${ceph_public}",
         "set iface[. = '${ceph_public}']/family inet",
         "set iface[. = '${ceph_public}']/method dhcp",
-        "set iface[. = '${ceph_public}']/pre-up '/sbin/ip link set ${ceph_public} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${ceph_public}']/pre-up '/sbin/ip link set ${ceph_public} mtu 9000'",
     ],
   }
 
@@ -45,7 +46,8 @@ class dc_profile::ceph::osd {
         "set iface[. = '${ceph_storage}'] ${ceph_storage}",
         "set iface[. = '${ceph_storage}']/family inet",
         "set iface[. = '${ceph_storage}']/method dhcp",
-        "set iface[. = '${ceph_storage}']/pre-up '/sbin/ip link set ${ceph_storage} mtu 9000'",
+        # Now set via DHCP
+        "rm iface[. = '${ceph_storage}']/pre-up '/sbin/ip link set ${ceph_storage} mtu 9000'",
     ],
   }
 
