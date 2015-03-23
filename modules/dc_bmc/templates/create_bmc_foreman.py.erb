@@ -31,8 +31,8 @@ def find_lan_channel():
         returncode = subprocess.call(['/usr/bin/ipmitool','lan','print',str(c)],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
         if returncode == 0:
             return c
-        print "Could not find IPMI lan channel"
-        sys.exit(1)
+    print "Could not find IPMI lan channel"
+    sys.exit(1)
 
 # Get a free IP from DHCP
 def get_dhcp_ip(proxy_url, subnet):

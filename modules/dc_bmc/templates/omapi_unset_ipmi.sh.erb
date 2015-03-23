@@ -2,10 +2,10 @@
 IPMITOOL=$(which ipmitool)
 OMSHELL=$(which omshell)
 IPMI_ADDRESS=$($IPMITOOL lan print $IPMI_CHANNEL | grep -w 'IP Address ' | awk '{print $4}')
-OMAPI_HOST= <%= scope.lookupvar('dc_bmc::omapi_host') %>
-OMAPI_PORT= <%= scope.lookupvar('dc_bmc::omapi_port') %>
-OMAPI_KEY= <%= scope.lookupvar('dc_bmc::omapi_key') %>
-OMAPI_SECRET= <%= scope.lookupvar('dc_bmc::omapi_secret') %>
+OMAPI_HOST="<%= scope.lookupvar('dc_bmc::omapi_host') %>"
+OMAPI_PORT="<%= scope.lookupvar('dc_bmc::omapi_port') %>"
+OMAPI_KEY="<%= scope.lookupvar('dc_bmc::omapi_key') %>"
+OMAPI_SECRET="<%= scope.lookupvar('dc_bmc::omapi_secret') %>"
 IPSRC=$(/usr/bin/ipmitool lan print 1 | grep Source | awk '{print $5}')
 
 function omapi_unset {
