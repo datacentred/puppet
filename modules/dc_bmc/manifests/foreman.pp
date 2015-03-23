@@ -18,15 +18,7 @@ class dc_bmc::foreman {
   # so install from pip instead
 
   package { 'python-requests':
-    ensure => absent,
-  }
-
-  ensure_packages('python-pip')
-
-  package { 'requests':
-    ensure   => installed,
-    provider => 'pip',
-    require  => Package['python-pip'],
+    ensure => installed,
   }
 
   file { '/usr/local/bin/omapi_unset_ipmi.sh':
