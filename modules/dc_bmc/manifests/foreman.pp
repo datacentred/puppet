@@ -24,8 +24,8 @@ class dc_bmc::foreman {
   ensure_packages('python-pip')
 
   package { 'requests':
-    provider => 'pip',
     ensure   => installed,
+    provider => 'pip',
     require  => Package['python-pip'],
   }
 
