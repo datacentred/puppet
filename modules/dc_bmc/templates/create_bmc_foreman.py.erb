@@ -157,7 +157,8 @@ def find_subnet_info(subnet):
 	
 
 ############################################
-
+# Requests will complain about using puppet certs so disable warnings
+requests.packages.urllib3.disable_warnings()
 # Get the variables we need to start configuring things
 dhcp_proxy,dns_proxy,domain,subnet_id = find_subnet_info(bmc_subnet)
 domain_id = domain[0]
