@@ -18,7 +18,7 @@ bmc_subnet = '<%= scope.lookupvar('dc_bmc::bmc_subnet') %>'
 foreman_url = '<%= scope.lookupvar('dc_bmc::foreman_url') %>'
 foreman_api_baseurl = 'https://' + foreman_url + '/api/v2/'
 foreman_int_api = foreman_api_baseurl + 'hosts/' + fqdn + '/interfaces'
-auth_encode = b64encode(b"<% scope.lookupvar('dc_bmc::foreman_admin_user') %>:<%= scope.lookupvar('dc_bmc::foreman_admin_passwd') %>").decode("ascii")
+auth_encode = b64encode(b"<%= scope.lookupvar('dc_bmc::foreman_admin_user') %>:<%= scope.lookupvar('dc_bmc::foreman_admin_passwd') %>").decode("ascii")
 headers= {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Basic %s' % auth_encode}
 bmc_user = '<%= scope.lookupvar('dc_bmc::bmc_admin_name') %>'
 bmc_password = '<%= scope.lookupvar('dc_bmc::bmc_admin_passwd') %>'
