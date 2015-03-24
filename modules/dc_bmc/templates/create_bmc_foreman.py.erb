@@ -85,7 +85,7 @@ def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
 
 # Check if an interface exists in Foreman, return it if it does
 def check_bmc_int(fqdn):
-    url = foreman_api_baseurl + '/hosts/' + fqdn + '/interfaces'
+    url = foreman_api_baseurl + 'hosts/' + fqdn + '/interfaces?per_page=10000'
     try:
         r = requests.get(url, verify=cacert, headers=headers, cert=certs)
     except requests.exceptions.RequestException as e :
