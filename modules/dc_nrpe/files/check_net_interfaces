@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 REQUIRED_MTU = '9000'
-INTERFACES = '^p\dp\d|^eth\d|^em\d'
+INTERFACES = '^p\dp\d|^eth\d|^em\d|^bond\d'
 
 def get_interfaces():
   interfaces = []
