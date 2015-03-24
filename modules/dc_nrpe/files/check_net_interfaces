@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+import netifaces
+import re
+import subprocess
+import sys
+
+REQUIRED_MTU = '9000'
+INTERFACES = '^p\dp\d|^eth\d|^em\d'
+
+def get_interfaces():
+  interfaces = []
+  for int in netifaces.interfaces():
+    # Discard interfaces that don't match the regex
+    if not re.match(INTERFACES, int): continue
+
+    # Discard interfaces that are up but without any IPs
+    if not netifaces.ifaddresses(int).get(netifaces.AF_INET): continue
+
+    interfaces.append(int)
+  return interfaces
+
+def get_interface_mtu(interface):
+  output = subprocess.check_output(['ip','link','show', interface])
+  match = re.search('mtu ([0-9]*)', output)
+  if match:
+    return match.group(1)
+  else:
+    raise ValueError("Unable to find MTU for interface %s" % interface)
+
+def main():
+  interfaces = get_interfaces()
+  wrong_mtu = [s for s in interfaces if get_interface_mtu(s) != REQUIRED_MTU]
+  if wrong_mtu:
+    print "CRITICAL: Jumbo frames are not configured correctly on interface(s) %s" % ', '.join(wrong_mtu)
+    sys.exit(2)
+  else:
+    print "OK: All interfaces configured correctly with Jumbo frames"
+    sys.exit(0)
+
+if __name__ == '__main__':
+  main()
