@@ -12,14 +12,14 @@
 #
 class dc_profile::rails::stronghold {
 
-  dc_rails::app { 'stronghold':
-    app_name        => 'stronghold',
-    app_url         => 'rails01.sal01.datacentred.co.uk',
-    app_repo        => 'git@github.com:datacentred/stronghold.git',
-    ssl_key         => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.key',
-    ssl_cert        => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.crt',
-    secret_key_base => hiera(rails::server::stronghold::secret_key_base),
-    rails_env       => 'staging',
-  }
+#  dc_rails::app { 'stronghold':
+#    app_name        => 'stronghold',
+#    app_url         => 'rails01.sal01.datacentred.co.uk',
+#    app_repo        => 'git@github.com:datacentred/stronghold.git',
+#    ssl_key         => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.key',
+#    ssl_cert        => 'puppet:///modules/dc_ssl/stronghold/stronghold.dev.crt',
+#    secret_key_base => hiera(rails::server::stronghold::secret_key_base),
+#    rails_env       => 'staging',
+#  }
 
 }
