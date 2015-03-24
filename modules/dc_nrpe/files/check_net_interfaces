@@ -31,7 +31,7 @@ def check_interface_mtu(interface, mtu):
 
 def main():
   parser = optparse.OptionParser()
-  parser.add_option('-m', '--mtu', help='The required MTU to check for')
+  parser.add_option('-m', '--mtu', default='1500', help='The required MTU to check for')
   parser.add_option('-i', '--include', help='Regex of interfaces to include')
   parser.add_option('-e', '--exclude', help='Regex of interfaces to exclude')
   (opts, args) = parser.parse_args()
