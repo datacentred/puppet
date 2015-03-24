@@ -82,6 +82,7 @@ def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
     if r.status_code != 200:
         print "Unexpected return code creating interface - code returned was %s" % r.status_code
         print r.text
+        sys.exit(1)
 
 # Check if an interface exists in Foreman, return it if it does
 def check_bmc_int(fqdn):
