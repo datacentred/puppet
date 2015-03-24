@@ -154,7 +154,10 @@ def find_subnet_info(subnet):
     else:
         print "Unexpected return code %s" % r.status_code
         sys.exit(1)
-	
+        
+#
+# Here's where the MAGIC starts
+#
 
 ############################################
 # Check in Foreman if the interface is already defined
