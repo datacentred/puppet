@@ -157,17 +157,17 @@ def find_subnet_info(subnet):
 	
 
 ############################################
+# Check in Foreman if the interface is already defined
+interface = check_bmc_int(fqdn)
+if interface:
+    print "Interface is already defined"
+    sys.exit(0)
 # Get the variables we need to start configuring things
 dhcp_proxy,dns_proxy,domain,subnet_id = find_subnet_info(bmc_subnet)
 domain_id = domain[0]
 domain_name = domain[1]
 # Find the IPMI lan channel
 ipmi_lan_channel = find_lan_channel()
-# Check in Foreman if the interface is already defined
-interface = check_bmc_int(fqdn)
-if interface:
-    print "Interface is already defined"
-    sys.exit(0)
 # Unset any existing leases
 DEVNULL=open(os.devnull, 'r+b', 0)
 rc = subprocess.call([omapi_script], stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL, shell=True)
