@@ -8,4 +8,8 @@ class dc_nrpe::checks::net_interfaces {
     sudo   => true,
   }
 
+  file { '/usr/local/bin/check_net_interface.py':
+    ensure => absent,
+  }
+
 }
