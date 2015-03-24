@@ -9,7 +9,7 @@ from string import split
 import subprocess
 import os
 
-fqdn = socket.getfqdn()
+fqdn = '<%= @fqdn %>'
 hostname = fqdn.split('.')[0]
 domainname = fqdn.split('.',1)[1]
 cacert = '/var/lib/puppet/ssl/certs/ca.pem'
