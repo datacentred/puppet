@@ -1,21 +1,20 @@
 #!/usr/bin/env python
+import optparse
 import netifaces
 import re
 import subprocess
 import sys
 
-REQUIRED_MTU = '9000'
-INTERFACES = '^p\dp\d|^eth\d|^em\d|^bond\d'
-
-def get_interfaces():
+def get_interfaces(include=None, exclude=None):
   interfaces = []
   for int in netifaces.interfaces():
-    # Discard interfaces that don't match the regex
-    if not re.match(INTERFACES, int): continue
-
-    # Discard interfaces that are up but without any IPs
+    # Discard interfaces that:
+    #  - match the exclude regex
+    #  - don't match the include regex
+    #  - don't have an IP address associated
+    if exclude and re.match(exclude, int): continue
+    if include and not re.match(include, int): continue
     if not netifaces.ifaddresses(int).get(netifaces.AF_INET): continue
-
     interfaces.append(int)
   return interfaces
 
@@ -27,14 +26,24 @@ def get_interface_mtu(interface):
   else:
     raise ValueError("Unable to find MTU for interface %s" % interface)
 
+def check_interface_mtu(interface, mtu):
+  if get_interface_mtu(interface) == mtu: return True
+
 def main():
-  interfaces = get_interfaces()
-  wrong_mtu = [s for s in interfaces if get_interface_mtu(s) != REQUIRED_MTU]
+  parser = optparse.OptionParser()
+  parser.add_option('-m', '--mtu', help='The required MTU to check for')
+  parser.add_option('-i', '--include', help='Regex of interfaces to include')
+  parser.add_option('-e', '--exclude', help='Regex of interfaces to exclude')
+  (opts, args) = parser.parse_args()
+
+  interfaces = get_interfaces(opts.include, opts.exclude)
+  wrong_mtu = [s for s in interfaces if not check_interface_mtu(s, opts.mtu)]
+
   if wrong_mtu:
-    print "CRITICAL: Jumbo frames are not configured correctly on interface(s) %s" % ', '.join(wrong_mtu)
+    print "CRITICAL: MTUs are not configured correctly on interface(s): %s" % ', '.join(wrong_mtu)
     sys.exit(2)
   else:
-    print "OK: All interfaces configured correctly with Jumbo frames"
+    print "OK: All interface MTUs are configured correctly"
     sys.exit(0)
 
 if __name__ == '__main__':
