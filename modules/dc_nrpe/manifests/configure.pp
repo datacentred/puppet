@@ -43,7 +43,7 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::sensors
   include ::dc_nrpe::checks::smartd
   include ::dc_nrpe::checks::check_hw
-  include ::dc_nrpe::checks::net_interface
+  include ::dc_nrpe::checks::net_interfaces
   include ::dc_nrpe::checks::supermicro_psu_ipmi
 
 }
