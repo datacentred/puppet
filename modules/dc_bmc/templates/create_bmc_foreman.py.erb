@@ -186,7 +186,7 @@ add_bmc_int(new_ip, ipmi_mac, bmc_user, bmc_password, domain_id, subnet_id)
 DEVNULL=open(os.devnull, 'r+b', 0)
 rc = subprocess.call(['ipmitool', 'lan', 'set', str(ipmi_lan_channel), 'ipsrc', 'dhcp'],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
 if rc == 0:
-    rc = subprocess.call(['ipmitool', 'mc', 'reset', 'warm'],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+    rc = subprocess.call(['ipmitool', 'mc', 'reset', 'cold'],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
     if rc != 0:
         print "Could not reset MC"
         sys.exit(1)
