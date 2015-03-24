@@ -1,8 +1,11 @@
+# == Class: dc_role
+#
+# Generic role all specializations inherit
+#
 class dc_role {
 
   ## Include these classes on all systems
   include dc_profile::apt::apt
-  include dc_profile::apt::dpkg
   include dc_profile::auth::rootpw
   include dc_profile::auth::sudoers
   include dc_profile::editors::vim
