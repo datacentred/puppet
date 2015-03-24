@@ -14,9 +14,6 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::foreman {
 
-  # The requests module on precise is too old
-  # so install from pip instead
-
   package { 'python-requests':
     ensure => installed,
   }
@@ -33,10 +30,10 @@ class dc_bmc::foreman {
     content => template('dc_bmc/create_bmc_foreman.py.erb'),
   }
 
-  #runonce { 'update_foreman_bmc':
-  #  persistent => true,
-  #  command    => '/usr/local/bin/create_bmc_foreman.py',
-  #  require    => Package['python-requests'],
-  #}
+  runonce { 'update_foreman_bmc':
+    persistent => true,
+    command    => '/usr/local/bin/create_bmc_foreman.py',
+    require    => [ Package['python-requests'], File['/usr/local/bin/create_bmc_foreman.py'], File['/usr/local/bin/omapi_unset_ipmi.sh'] ]
+  }
 
 }
