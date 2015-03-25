@@ -13,11 +13,6 @@
 #
 class dc_profile::img::packer {
 
-  include dc_packer
-  include apache
-
-  dc_apache::vhost { 'vboxes':
-    docroot     => '/home/packer/output',
-  }
+  include ::dc_packer
 
 }

@@ -2,10 +2,10 @@
 #
 class dc_kibana::apache {
 
-  dc_apache::vhost { 'kibana':
-    docroot => '/var/www/kibana',
-    cname   => false,
-    require => File['/var/www'],
+  apache::vhost { "kibana.${::domain}":
+    port          => 80,
+    docroot       => '/var/www/kibana',
+    serveraliases => [ 'kibana' ],
   }
 
 }
