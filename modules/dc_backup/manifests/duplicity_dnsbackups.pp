@@ -1,6 +1,6 @@
 # == Class: dc_backup::duplicity_dnsbackups
 #
-# Backs up dns records to swift
+# Backs up dns records to swift and (encrypted) to S3
 #
 class dc_backup::duplicity_dnsbackups (
   $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,

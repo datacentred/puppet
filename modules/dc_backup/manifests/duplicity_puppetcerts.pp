@@ -1,6 +1,6 @@
 # == Class: dc_backups::duplicity_puppetcerts
 #
-# Backs up all the puppetcerts to swift_authversion
+# Backs up all the puppetcerts to swift and (encrypted) to S3
 #
 class dc_backup::duplicity_puppetcerts (
   $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,

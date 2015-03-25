@@ -1,6 +1,6 @@
 # == Class: dc_backups::duplicity_mariadb
 #
-# Backs up mariadb backups to swift
+# Backs up mariadb backups to swift and to (encrypted) S3
 #
 class dc_backup::duplicity_mariadb (
   $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,
@@ -35,11 +35,12 @@ class dc_backup::duplicity_mariadb (
 
   duplicity { 'mariadb_to_amazon_s3':
     directory         => $backup_source_dir,
-    bucket            => "datacentred_mariadb_${::hostname}_backup",
+    bucket            => 'datacentred',
     dest_id           => $datacentred_amazon_s3_id,
     dest_key          => $datacentred_amazon_s3_key,
     cloud             => 's3',
     remove_older_than => '1M',
+    folder            => "mariadb_${::hostname}_backup",
     pubkey_id         => $datacentred_backup_encryption_pubkey,
   }
 
