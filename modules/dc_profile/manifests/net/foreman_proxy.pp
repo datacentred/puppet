@@ -19,6 +19,7 @@ class dc_profile::net::foreman_proxy {
     use_dns      => true,
     use_dhcp     => true,
     use_tftp     => true,
+    use_bmc      => true,
     omapi_key    => $omapi_key,
     omapi_secret => $omapi_secret,
   }
