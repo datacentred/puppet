@@ -35,8 +35,8 @@ class dc_foreman_proxy::install {
   $groups = flatten([$init_groups,$tftp_groups,$dns_groups])
 
   package { 'foreman-proxy':
-    ensure  => installed,
-    name    => 'foreman-proxy',
+    ensure => installed,
+    name   => 'foreman-proxy',
   }
 
   file { '/etc/foreman-proxy/settings.d/bmc.yml':
