@@ -11,6 +11,11 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_foreman_proxy::bmc {
 
-  ensure_packages(['ipmitool','rubyipmi'])
+  package { 'rubyipmi':
+    ensure   => installed,
+    provider => gem,
+  }
+
+  ensure_packages(['ipmitool'])
 
 }
