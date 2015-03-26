@@ -19,76 +19,7 @@
 
 # port used by the proxy
 :port: 8443
-
-# Enable TFTP management
-:tftp: <%= @use_tftp %>
-<% if @use_tftp == true -%>
-:tftproot: <%= scope.lookupvar('dc_tftp::tftp_dir') %>
-<% end -%>
-#:tftproot: /var/lib/tftpboot
-# Defines the TFTP Servername to use, overrides the name in the subnet declaration
-#:tftp_servername: tftp.domain.com
-
-
-# Enable DNS management
-:dns: <%= @use_dns %>
-<% if @use_dns == true -%>
-:dns_key: <%= @dns_key %>
-<% end -%>
-#:dns_key: /etc/bind/rndc.key
-# use this setting if you are managing a dns server which is not localhost though this proxy
-#:dns_server: dns.domain.com
-
-# Enable DHCP management
-:dhcp: <%= @use_dhcp %>
-# The vendor can be either isc or native_ms
-#:dhcp_vendor: isc
-# dhcp_subnets is a Native MS implementation setting. It restricts the subnets queried to a
-# subset, so as to reduce the query time.
-#:dhcp_subnets: [192.168.205.0/255.255.255.128, 192.168.205.128/255.255.255.128]
-# Settings for Ubuntu ISC
-#:dhcp_config: /etc/dhcp3/dhcpd.conf
-#:dhcp_leases: /var/lib/dhcp3/dhcpd.leases
-# Settings for Redhat ISC
-#:dhcp_config: /etc/dhcpd.conf
-#:dhcp_leases: /var/lib/dhcpd/dhcpd.leases
-<% if @use_dhcp == true -%>
-:dhcp_vendor: isc
-:dhcp_config: /etc/dhcp/dhcpd.conf
-:dhcp_leases: /var/lib/dhcp/dhcpd.leases
-:dhcp_key_name: <%= @omapi_key %>
-:dhcp_key_secret: <%= @omapi_secret %>
-<% end -%>
-
-# enable PuppetCA management
-:puppetca: <%= @use_puppetca %>
-<% if @use_puppet_ca == true -%>
-:ssldir: /var/lib/puppet/ssl
-:puppetdir: /etc/puppet
-<% end -%>
-#:puppetca: false
-#:ssldir: /var/lib/puppet/ssl
-#:puppetdir: /etc/puppet
-
-# enable Puppet management
-
-:puppet: <%= @use_puppet %>
-<% if @use_puppet -%>
-:puppet_conf: /etc/puppet/puppet.conf
-<% end -%>    
-#:puppet_conf: /etc/puppet/puppet.conf
-
-# enable BMC management (Bare metal power and bios controls)
-# Available providers:
-# - freeipmi / ipmitool - requires the appropriate package installed, and the rubyipmi gem
-# - shell - for local reboot control (requires sudo access to /sbin/shutdown for the proxy user)
-<% if @use_bmc == true %>
-:bmc: true
-:bmc_default_provider: ipmitool
-<% end -%>
-#:bmc: false
-#:bmc_default_provider:ipmitool
-
+    
 # Where our proxy log files are stored
 # filename or STDOUT
 :log_file: /var/log/foreman-proxy/foreman-proxy.log

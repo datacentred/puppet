@@ -39,6 +39,54 @@ class dc_foreman_proxy::install {
     name    => 'foreman-proxy',
   }
 
+  file { '/etc/foreman-proxy/settings.d/bmc.yml':
+    require => Package['foreman-proxy'],
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
+    mode    => '0640',
+    content => template('dc_foreman_proxy/bmc.yml.erb');
+  }
+
+  file { '/etc/foreman-proxy/settings.d/dhcp.yml':
+    require => Package['foreman-proxy'],
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
+    mode    => '0640',
+    content => template('dc_foreman_proxy/dhcp.yml.erb');
+  }
+
+  file { '/etc/foreman-proxy/settings.d/dns.yml':
+    require => Package['foreman-proxy'],
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
+    mode    => '0640',
+    content => template('dc_foreman_proxy/dns.yml.erb');
+  }
+
+  file { '/etc/foreman-proxy/settings.d/tftp.yml':
+    require => Package['foreman-proxy'],
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
+    mode    => '0640',
+    content => template('dc_foreman_proxy/tftp.yml.erb');
+  }
+
+  file { '/etc/foreman-proxy/settings.d/puppetca.yml':
+    require => Package['foreman-proxy'],
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
+    mode    => '0640',
+    content => template('dc_foreman_proxy/puppetca.yml.erb');
+  }
+
+  file { '/etc/foreman-proxy/settings.d/puppet.yml':
+    require => Package['foreman-proxy'],
+    owner   => 'foreman-proxy',
+    group   => 'foreman-proxy',
+    mode    => '0640',
+    content => template('dc_foreman_proxy/puppet.yml.erb');
+  }
+
   file { '/etc/foreman-proxy/settings.yml':
     require => Package['foreman-proxy'],
     owner   => 'foreman-proxy',
