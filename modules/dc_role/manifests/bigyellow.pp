@@ -13,7 +13,6 @@
 class dc_role::bigyellow inherits dc_role {
 
   contain dc_profile::db::pgbackup
-  contain dc_profile::img::packer
   contain dc_profile::net::aptmirror
   contain dc_profile::net::nfsserver
   contain dc_profile::util::wwwbackups
