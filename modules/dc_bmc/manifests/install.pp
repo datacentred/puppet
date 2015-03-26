@@ -14,9 +14,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::install {
 
-  package { 'ipmitool':
-    ensure => installed,
-  }
+  ensure_packages(['ipmitool'])
 
   package { 'freeipmi-tools':
     ensure => installed,
