@@ -21,6 +21,10 @@ class dc_foreman_proxy (
   $omapi_secret = $dc_foreman_proxy::params::omapi_secret,
 ) inherits dc_foreman_proxy::params {
 
-  contain dc_foreman_proxy::install
+  include dc_foreman_proxy::install
+  include dc_foreman_proxy::config
+  include dc_foreman_proxy::service
+
+  Class['dc_foreman_proxy::install'] -> Class['dc_foreman_proxy::config'] -> Class['dc_foreman_proxy::service']
 
 }
