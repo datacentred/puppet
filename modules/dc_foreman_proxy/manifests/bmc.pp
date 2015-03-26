@@ -16,8 +16,6 @@ class dc_foreman_proxy::bmc {
     provider => gem,
   }
 
-  package { 'ipmitool':
-    ensure => installed,
-  }
+  ensure_packages(['ipmitool'])
 
 }
