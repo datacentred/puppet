@@ -1,3 +1,4 @@
+# Installs racadm
 class dc_bmc::dell::racadm {
 
   $idrac_packages = [
