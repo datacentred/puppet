@@ -1,6 +1,7 @@
 /hieradata/*.yaml                                 filter=private diff=private
 /hieradata/modules/*.yaml                         filter=private diff=private
 /hieradata/nodes/*.yaml                           filter=private diff=private
+/hieradata/platforms/*.yaml                       filter=private diff=private
 /hieradata/roles/*.yaml                           filter=private diff=private
 /hieradata/releases/*/*/*.yaml                    filter=private diff=private
 /modules/dc_ssl/files/mcollective/certs/*         filter=private diff=private

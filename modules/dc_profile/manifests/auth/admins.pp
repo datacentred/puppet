@@ -15,7 +15,8 @@ class dc_profile::auth::admins {
   group { 'sysadmin':
     ensure => present,
     gid    => 1000,
-  } ->
+  }
+
   dc_users { 'admins': }
 
 }

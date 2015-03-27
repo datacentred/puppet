@@ -12,20 +12,7 @@
 #
 class dc_profile::auth::sudoers {
 
-  contain sudo
-
-  sudo::conf { '%sysadmin':
-    priority => 10,
-    content  => '%sysadmin ALL=(ALL) NOPASSWD: ALL',
-  }
-
-  if $::is_vagrant {
-
-    sudo::conf { 'vagrant':
-      priority => 10,
-      content  => 'vagrant ALL=(ALL) NOPASSWD: ALL',
-    }
-
-  }
+  contain ::sudo
+  contain ::sudo::configs
 
 }
