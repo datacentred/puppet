@@ -1,6 +1,5 @@
+# Installs racadm
 class dc_bmc::dell::racadm {
-
-  include dc_bmc::dell::repos
 
   $idrac_packages = [
     #'srvadmin-all',
