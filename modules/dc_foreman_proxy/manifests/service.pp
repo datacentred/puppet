@@ -14,7 +14,6 @@ class dc_foreman_proxy::service {
 
   service { 'foreman-proxy':
     ensure  => running,
-    require => Package['foreman-proxy'],
     enable  => true,
   }
 
