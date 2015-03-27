@@ -13,8 +13,8 @@
 class dc_foreman_proxy::service {
 
   service { 'foreman-proxy':
-    ensure  => running,
-    enable  => true,
+    ensure => running,
+    enable => true,
   }
 
 }
