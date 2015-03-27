@@ -21,31 +21,31 @@ class dc_foreman_proxy::config {
   }
 
   file { '/etc/foreman-proxy/settings.d/bmc.yml':
-    content => template('dc_foreman_proxy/bmc.yml.erb');
+    content => template('dc_foreman_proxy/bmc.yml.erb'),
   }
 
   file { '/etc/foreman-proxy/settings.d/dhcp.yml':
-    content => template('dc_foreman_proxy/dhcp.yml.erb');
+    content => template('dc_foreman_proxy/dhcp.yml.erb'),
   }
 
   file { '/etc/foreman-proxy/settings.d/dns.yml':
-    content => template('dc_foreman_proxy/dns.yml.erb');
+    content => template('dc_foreman_proxy/dns.yml.erb'),
   }
 
   file { '/etc/foreman-proxy/settings.d/tftp.yml':
-    content => template('dc_foreman_proxy/tftp.yml.erb');
+    content => template('dc_foreman_proxy/tftp.yml.erb'),
   }
 
   file { '/etc/foreman-proxy/settings.d/puppetca.yml':
-    content => template('dc_foreman_proxy/puppetca.yml.erb');
+    content => template('dc_foreman_proxy/puppetca.yml.erb'),
   }
 
   file { '/etc/foreman-proxy/settings.d/puppet.yml':
-    content => template('dc_foreman_proxy/puppet.yml.erb');
+    content => template('dc_foreman_proxy/puppet.yml.erb'),
   }
 
   file { '/etc/foreman-proxy/settings.yml':
-    content => template('dc_foreman_proxy/settings.yml.erb');
+    content => template('dc_foreman_proxy/settings.yml.erb'),
   }
 
   if $::fqdn != $::puppetmaster {
