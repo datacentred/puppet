@@ -12,7 +12,7 @@
 #
 class dc_bmc::hp::base {
 
-  $hpblade_packages = ['hpacucli', 'cciss-vol-status' ]
+  $hpblade_packages = ['hpssacli', 'cciss-vol-status' ]
 
   package { $hpblade_packages :
     ensure  => installed,
