@@ -19,7 +19,6 @@ class dc_foreman_proxy::config {
     owner   => 'foreman-proxy',
     group   => 'foreman-proxy',
     mode    => '0640',
-    notify => Service['foreman-proxy'],
   }
 
   file { '/etc/foreman-proxy/settings.d/bmc.yml':
