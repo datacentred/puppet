@@ -15,7 +15,6 @@ class dc_foreman_proxy::config {
   include dc_foreman_proxy
 
   File {
-    require => Package['foreman-proxy'],
     owner   => 'foreman-proxy',
     group   => 'foreman-proxy',
     mode    => '0640',
