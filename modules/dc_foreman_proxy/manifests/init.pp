@@ -22,5 +22,9 @@ class dc_foreman_proxy (
 ) inherits dc_foreman_proxy::params {
 
   contain dc_foreman_proxy::install
+  contain dc_foreman_proxy::config
+  contain dc_foreman_proxy::service
+
+  Class['dc_foreman_proxy::install'] -> Class['dc_foreman_proxy::config'] ~> Class['dc_foreman_proxy::service']
 
 }

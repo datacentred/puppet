@@ -1,0 +1,9 @@
+---
+# enable Puppet management
+# :puppet_conf: /etc/puppet/puppet.conf
+<% if @use_puppet -%>
+:puppet_conf: /etc/puppet/puppet.conf
+:enabled: true
+<% else -%>
+:enabled: false
+<% end -%>

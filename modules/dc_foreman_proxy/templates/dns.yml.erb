@@ -1,0 +1,11 @@
+---
+# Enable DNS management
+# :dns_key: /etc/bind/rndc.key
+# use this setting if you are managing a dns server which is not localhost though this proxy
+# :dns_server: dns.domain.com
+<% if @use_dns == true -%>
+:dns_key: <%= @dns_key %>
+:enabled: true
+<% else -%>
+:enabled: false
+<% end -%>
