@@ -13,7 +13,6 @@ class dc_bmc::dell::racadm {
 
   package { $idrac_packages:
     ensure  => 'present',
-    require => Class['dc_bmc::dell::repos'],
   }
 
   service { 'dataeng':
