@@ -11,7 +11,8 @@ class dc_elasticsearch::elasticsearch_snapshot (
   $ceph_private_key  = $dc_elasticsearch::params::ceph_private_key,
 ) inherits dc_elasticsearch::params {
 
-#  notify {$ceph_access_key:}
+  ensure_packages('python-pip', 'curl')
+  ensure_packages('boto', 'datetime', {'provider' => 'pip', require => Package['python-pip']})
 
   file { 'elasticsearch_snapshot.sh':
     ensure  => file,
@@ -20,7 +21,8 @@ class dc_elasticsearch::elasticsearch_snapshot (
     owner   => root,
     group   => root,
     mode    => '0754',
-  }
+    require => Package['python-pip', 'curl', 'boto', 'datetime'],
+  } ->
 
   cron { 'elasticsearch_snapshot':
     command => '/usr/local/bin/elasticsearch_snapshot.sh',
@@ -36,31 +38,14 @@ class dc_elasticsearch::elasticsearch_snapshot (
     owner   => root,
     group   => root,
     mode    => '0754',
-  }
+    require => Package['python-pip', 'curl', 'boto', 'datetime'],
+  } ->
 
   cron { 'elasticsearch_snapshot_pruning':
     command => '/usr/local/bin/elasticsearch_snapshot_pruning.py',
     user    => root,
     hour    => 3,
     minute  => 0
-  }
-
-  package { 'python-pip':
-    ensure => installed,
-  } ->
-
-  package { 'boto':
-    ensure   => present,
-    provider => 'pip',
-  } ->
-
-  package { 'datetime':
-    ensure   => present,
-    provider => 'pip',
-  }
-
-  package { 'curl':
-    ensure => installed,
   }
 
 }

@@ -17,5 +17,6 @@ class dc_role::bigyellow inherits dc_role {
   contain dc_profile::net::nfsserver
   contain dc_profile::util::wwwbackups
   contain dc_elasticsearch::elasticsearch_snapshot
+  contain dc_elasticsearch::elasticsearch_pruning
 
 }
