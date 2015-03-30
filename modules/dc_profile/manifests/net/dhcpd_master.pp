@@ -44,8 +44,6 @@ class dc_profile::net::dhcpd_master {
 
   contain dc_dhcpdpools
 
-  Dhcp::Pool { failover => 'dhcp-failover' }
-
   include dc_dhcp::primary
 
 }
