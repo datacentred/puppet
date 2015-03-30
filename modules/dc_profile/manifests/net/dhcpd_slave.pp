@@ -44,10 +44,6 @@ class dc_profile::net::dhcpd_slave {
 
   contain dc_dhcpdpools
 
-  Dhcp::Pool {
-    failover => 'dhcp-failover'
-  }
-
   include dc_icinga::hostgroup_dhcp
   include dc_dhcp::secondary
   include dc_apparmor::dhcpd
