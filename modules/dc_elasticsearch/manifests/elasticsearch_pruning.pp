@@ -6,6 +6,8 @@ class dc_elasticsearch::elasticsearch_pruning (
   $logstash_server   = $dc_elasticsearch::params::logstash_server,
 ) inherits dc_elasticsearch::params {
 
+  ensure_packages('curl')
+
   file { 'elasticsearch_pruning.sh':
     ensure  => file,
     path    => '/usr/local/bin/elasticsearch_pruning.sh',
@@ -13,7 +15,8 @@ class dc_elasticsearch::elasticsearch_pruning (
     owner   => root,
     group   => root,
     mode    => '0754',
-  }
+    require => Package['curl'],
+  } ->
 
   cron { 'elasticsearch_pruning':
     command => '/usr/local/bin/elasticsearch_pruning.sh',
@@ -21,7 +24,5 @@ class dc_elasticsearch::elasticsearch_pruning (
     hour    => 3,
     minute  => 0
   }
-
-  ensure_packages('curl')
 
 }
