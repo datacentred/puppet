@@ -4,11 +4,6 @@
 #
 class dc_elasticsearch::elasticsearch_pruning (
   $logstash_server   = $dc_elasticsearch::params::logstash_server,
-  $backup_name       = $dc_elasticsearch::params::backup_name,
-  $backup_bucket     = $dc_elasticsearch::params::backup_bucket,
-  $ceph_access_point = $dc_elasticsearch::params::ceph_access_point,
-  $ceph_access_key   = $dc_elasticsearch::params::ceph_access_key,
-  $ceph_private_key  = $dc_elasticsearch::params::ceph_private_key,
 ) inherits dc_elasticsearch::params {
 
   file { 'elasticsearch_pruning.sh':
