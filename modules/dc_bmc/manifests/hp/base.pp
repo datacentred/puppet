@@ -10,9 +10,11 @@
 #
 # Sample Usage:
 #
-class dc_bmc::hp::base {
+class dc_bmc::hp::base (
+  $hparray_tool,
+){
 
-  $hpblade_packages = ['hpssacli', 'cciss-vol-status' ]
+  $hpblade_packages = [ $hparray_tool, 'cciss-vol-status' ]
 
   package { $hpblade_packages :
     ensure  => installed,
