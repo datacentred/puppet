@@ -12,9 +12,8 @@
 #
 class dc_profile::auth::rootpw {
 
-  exec { 'usermod_root':
-    command => '/usr/sbin/usermod -p \'!\' root',
-    unless  => '/bin/grep "^root:!:" /etc/shadow',
+  user { 'root':
+    password => '!',
   }
 
 }
