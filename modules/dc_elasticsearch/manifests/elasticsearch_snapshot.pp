@@ -12,7 +12,7 @@ class dc_elasticsearch::elasticsearch_snapshot (
 ) inherits dc_elasticsearch::params {
 
   ensure_packages('python-pip', 'curl')
-  ensure_packages('boto', 'datetime', {'provider' => 'pip'})
+  ensure_packages('boto', 'datetime', {'provider' => 'pip', require => Package['python-pip']})
 
   file { 'elasticsearch_snapshot.sh':
     ensure  => file,
