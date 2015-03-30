@@ -43,6 +43,12 @@ if [ "$warn" -lt "$crit" -o "$warn" -eq "$crit" ]; then
         exit 3
 fi
 
+# Avoid divide by zero for nodes with no swap
+if [ "$full" -eq "0" ]; then
+        echo "OK: no swap detected"
+        exit 0
+fi
+
 use=`echo $(( ($free * 100) / $full ))`
 
 if [ "$use" -gt "$warn" -o "$use" -eq "$warn" ]; then
