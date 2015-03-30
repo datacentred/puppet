@@ -6,7 +6,7 @@ class dc_elasticsearch::elasticsearch_pruning (
   $logstash_server   = $dc_elasticsearch::params::logstash_server,
 ) inherits dc_elasticsearch::params {
 
-  ensure_packages('curl')
+  ensure_packages(['curl'])
 
   file { 'elasticsearch_pruning.sh':
     ensure  => file,
