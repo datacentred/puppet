@@ -22,6 +22,6 @@ class dc_elasticsearch::elasticsearch_pruning (
     minute  => 0
   }
 
-  ensure_resource('package', 'curl', {'ensure' => 'present' })
+  ensure_packages('curl', {'ensure' => 'present' })
 
 }

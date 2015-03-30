@@ -59,6 +59,6 @@ class dc_elasticsearch::elasticsearch_snapshot (
     provider => 'pip',
   }
 
-  ensure_resource('package', 'curl', {'ensure' => 'present' })
+  ensure_packages('curl', {'ensure' => 'present' })
 
 }
