@@ -1,3 +1,5 @@
 #!/bin/bash
-_today=$(date +"%m_%d_%Y")
+_today=$(date +"%m.%d.%Y")
+_delete_older_than=$(date --date='15 days ago' +"%Y_%m_%d")
 curl -s -S -f -XPUT "<%= @logstash_server %>.<%= @domain %>:9200/_snapshot/<%= @backup_name %>/$_today" >/dev/null || echo 'failure'
+curl -s -S -f -XDELETE "<%= @logstash_server %>.<%= @domain %>:9200/logtash-$_delete_older_than" >/dev/null || echo 'failure'
