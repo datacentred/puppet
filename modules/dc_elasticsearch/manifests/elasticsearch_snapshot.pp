@@ -11,8 +11,8 @@ class dc_elasticsearch::elasticsearch_snapshot (
   $ceph_private_key  = $dc_elasticsearch::params::ceph_private_key,
 ) inherits dc_elasticsearch::params {
 
-  ensure_packages('python-pip', 'curl')
-  ensure_packages('boto', 'datetime', {'provider' => 'pip', require => Package['python-pip']})
+  ensure_packages(['python-pip', 'curl'])
+  ensure_packages(['boto', 'datetime'], {'provider' => 'pip', require => Package['python-pip']})
 
   file { 'elasticsearch_snapshot.sh':
     ensure  => file,
