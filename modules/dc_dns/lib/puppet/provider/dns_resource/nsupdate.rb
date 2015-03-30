@@ -32,6 +32,13 @@ class Resolv::DNS::Resource::IN::CNAME
   end
 end
 
+# MX records return the fqdn
+class Resolv::DNS::Resource::IN::MX
+  def to_rdata
+    @name.to_s
+  end
+end
+
 Puppet::Type.type(:dns_resource).provide(:nsupdate) do
 
   private
@@ -63,9 +70,16 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     name, type = resource[:name].split('/')
     rdata = resource[:rdata]
     ttl = resource[:ttl]
-    nsupdate("server 127.0.0.1
-              update add #{name}. #{ttl} #{type} #{rdata}
-              send")
+    if type != 'MX'
+        nsupdate("server 127.0.0.1
+                  update add #{name}. #{ttl} #{type} #{rdata}
+                  send")
+    else
+        domain = name.split('.', 2)[-1]
+        nsupdate("server 127.0.0.1
+                  update add #{domain} #{ttl} #{type} #{rdata} #{name}
+                  send")
+    end
   end
 
   # Destroy an existing DNS resource
@@ -88,6 +102,8 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
       typeclass = Resolv::DNS::Resource::IN::PTR
     when 'CNAME'
       typeclass = Resolv::DNS::Resource::IN::CNAME
+    when 'MX'
+      typeclass = Resolv::DNS::Resource::IN::MX
     else
       raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
     end
