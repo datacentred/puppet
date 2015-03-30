@@ -85,9 +85,16 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   # Destroy an existing DNS resource
   def destroy
     name, type = resource[:name].split('/')
-    nsupdate("server 127.0.0.1
-              update delete #{name}. #{type}
-              send")
+    if type != 'MX'
+        nsupdate("server 127.0.0.1
+                update delete #{name}. #{type}
+                send")
+    else
+        domain = name.split('.', 2)[-1]
+        nsupdate("server 127.0.0.1
+                update delete #{domain} #{type} #{rdata} #{name}.
+                send")
+    end
   end
 
   # Determine whether a DNS resource exists
