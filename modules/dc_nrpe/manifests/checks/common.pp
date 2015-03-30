@@ -51,4 +51,9 @@ class dc_nrpe::checks::common {
     source => 'puppet:///modules/dc_nrpe/check_mem.pl',
   }
 
+  dc_nrpe::check { 'check_free_swap':
+    path   => '/usr/local/bin/check_swap.sh',
+    source => 'puppet:///modules/dc_nrpe/check_swap.sh',
+  }
+
 }
