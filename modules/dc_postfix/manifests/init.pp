@@ -10,14 +10,16 @@
 #
 # Sample Usage:
 #
-class dc_postfix {
+class dc_postfix (
+  $primary_mail_server,
+  $sal01_internal_sysmail_address,
+){
 
-  $primary_mail_server = hiera(primary_mail_server)
-
-  if $::fqdn != $primary_mail_server {
+  if $::role != 'mail_gateway' {
     include ::dc_postfix::nullclient
   }
   else {
     include ::dc_postfix::gateway
   }
+
 }

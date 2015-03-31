@@ -10,16 +10,25 @@
 #
 # Sample Usage:
 #
-class dc_postfix::gateway {
+class dc_postfix::gateway (
+  $external_sysmail_address,
+  $smarthostuser,
+  $smarthostpass,
+  $rate_limit_config_hash,
+  $smarthost_config_hash,
+  $restrictions_config_hash,
+  $networks_config_hash,
+){
+
+  $internal_sysmail_address = $dc_postfix::sal01_internal_sysmail_address
 
   class { 'postfix':
     smtp_listen         => 'all',
-    root_mail_recipient => hiera(sal01_internal_sysmail_address),
+    root_mail_recipient => $internal_sysmail_address,
   }
 
   include augeas
 
-  contain dc_postfix::users
   contain dc_postfix::virtual
   contain dc_postfix::networks
   contain dc_postfix::gmailrelay
@@ -28,5 +37,9 @@ class dc_postfix::gateway {
 
   include dc_icinga::hostgroup_smtp
   include dc_icinga::hostgroup_postfix
+
+  @@dns_resource { "${::fqdn}/MX":
+    rdata => '10',
+  }
 
 }
