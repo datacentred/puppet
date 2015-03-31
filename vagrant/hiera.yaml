@@ -2,6 +2,7 @@
     - "nodes/%{::hostname}"
     - "roles/%{::role}"
     - "releases/%{::lsbdistcodename}/%{::architecture}/%{calling_module}"
+    - "platforms/%{platform}"
     - "modules/%{calling_module}"
     - "%{environment}"
     - common
