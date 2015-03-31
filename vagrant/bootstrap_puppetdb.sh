@@ -23,7 +23,7 @@ cat << EOF > /etc/nginx/sites-enabled/puppetdb
 server {
   listen 8081;
 
-  client_max_body_size 20M;
+  client_max_body_size 1G;
 
   ssl on;
   ssl_certificate /var/lib/puppet/ssl/certs/$(hostname -f).pem;
