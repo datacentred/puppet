@@ -13,36 +13,17 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_nrpe::checks::check_hw {
 
-  # Don't use the check class as we've got two checks using the same file
-  file { '/usr/local/bin/check_hw.sh':
-    ensure => present,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_nrpe/check_hw.sh'
+  dc_nrpe::check { 'check_cephosd_hw':
+    path   => '/usr/local/bin/check_hw.sh',
+    args   => '-c 16 -m 32',
+    source => 'puppet:///modules/dc_nrpe/check_hw.sh',
+    sudo   => true,
   }
 
-  sudo::conf { 'check_hw.sh':
-    priority => 10,
-    content  => 'nagios ALL=NOPASSWD:/usr/local/bin/check_hw.sh',
-  }
-
-  file { '/usr/local/bin/check_hw_compute.sh':
-    ensure => absent,
-  }
-
-  file { '/usr/local/bin/check_hw_osd.sh':
-    ensure => absent,
-  }
-
-  concat::fragment { 'check_cephosd_hw':
-    target  => '/etc/nagios/nrpe.d/dc_nrpe_check.cfg',
-    content => "command[check_cephosd_hw]=sudo /usr/local/bin/check_hw.sh -c 16 -m 32\n",
-  }
-
-  concat::fragment { 'check_compute_hw':
-    target  => '/etc/nagios/nrpe.d/dc_nrpe_check.cfg',
-    content => "command[check_compute_hw]=sudo /usr/local/bin/check_hw.sh -c 16 -m 65\n",
+  dc_nrpe::check { 'check_compute_hw':
+    path => '/usr/local/bin/check_hw.sh',
+    args => '-c 16 -m 65',
+    sudo => true,
   }
 
 }
