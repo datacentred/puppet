@@ -2,17 +2,6 @@
 #
 class dc_postfix::ratelimit {
 
-  postfix::config { 'default_destination_rate_delay':
-    value => '5s',
-  }
-  postfix::config { 'default_destination_concurrency_limit':
-    value => '10',
-  }
-  postfix::config { 'relay_destination_concurrency_limit':
-    value => '10',
-  }
-  postfix::config { 'default_destination_recipient_limit':
-    value => '2',
-  }
+  create_resources ( postfix::config, $dc_postfix::gateway::rate_limit_config_hash )
 
 }
