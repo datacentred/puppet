@@ -16,9 +16,6 @@ class dc_profile::openstack::neutron_server {
   include ::neutron::server::notifications
   include ::neutron::plugins::ml2
 
-  include dc_profile::auth::sudoers_neutron
-
-
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
     listening_service => 'neutron',

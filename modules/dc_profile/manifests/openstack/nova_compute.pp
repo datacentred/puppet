@@ -12,8 +12,6 @@
 #
 class dc_profile::openstack::nova_compute {
 
-  include dc_profile::auth::sudoers_nova
-
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
     path    => '/var/lib/nova/instances',
