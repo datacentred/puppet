@@ -278,3 +278,6 @@
 [submodule "modules/foreman"]
 	path = modules/foreman
 	url = https://github.com/theforeman/puppet-foreman.git
+[submodule "modules/gnupg"]
+	path = modules/gnupg
+	url = git@github.com:n1tr0g/golja-gnupg.git

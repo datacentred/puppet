@@ -19,5 +19,7 @@ class dc_role::dnsmaster inherits dc_role {
   contain dc_profile::net::tftp_syncmaster
   contain dc_profile::net::foreman_proxy
   contain dc_icinga::hostgroup_dhcp
+  contain dc_backup::duplicity_dnsbackups
+  contain dc_backup::gpg_keys
 
 }
