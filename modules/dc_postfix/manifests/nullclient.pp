@@ -15,7 +15,7 @@ class dc_postfix::nullclient {
     include augeas
 
     class { 'postfix':
-      relayhost           => $dc_postfix::primary_mail_server,
+      relayhost           => $::domain,
       myorigin            => $::fqdn,
       root_mail_recipient => $dc_postfix::internal_sysmail_address,
       satellite           => true,
