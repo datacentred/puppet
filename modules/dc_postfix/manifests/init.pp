@@ -12,7 +12,7 @@
 #
 class dc_postfix (
   $primary_mail_server,
-  $sal01_internal_sysmail_address,
+  $internal_sysmail_address,
 ){
 
   if $::role == 'mail_gateway' {

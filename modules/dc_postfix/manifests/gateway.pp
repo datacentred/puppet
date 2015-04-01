@@ -20,7 +20,7 @@ class dc_postfix::gateway (
   $networks_config_hash,
 ){
 
-  $internal_sysmail_address = $dc_postfix::sal01_internal_sysmail_address
+  $internal_sysmail_address = $dc_postfix::internal_sysmail_address
 
   class { 'postfix':
     smtp_listen         => 'all',

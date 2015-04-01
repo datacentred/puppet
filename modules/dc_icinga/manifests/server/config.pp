@@ -106,7 +106,7 @@ class dc_icinga::server::config {
 
   icinga::contact { 'sysadmin':
     description                   => 'System Administrators',
-    email                         => hiera(sal01_internal_sysmail_address),
+    email                         => hiera(internal_sysmail_address),
     contactgroups                 => 'dc_admins_email',
     service_notification_period   => 'dc_timeperiod_24x7',
     host_notification_period      => 'dc_timeperiod_24x7',
