@@ -33,5 +33,7 @@ class dc_role::osdbmq inherits dc_role {
 
   include ::sysctls
   include dc_profile::openstack::neutron_db_check
+  include dc_backup::duplicity
+  include dc_backup::gpg_keys
 
 }
