@@ -15,11 +15,11 @@ class dc_postfix (
   $sal01_internal_sysmail_address,
 ){
 
-  if $::role != 'mail_gateway' {
-    include ::dc_postfix::nullclient
+  if $::role == 'mail_gateway' {
+    include ::dc_postfix::gateway
   }
   else {
-    include ::dc_postfix::gateway
+    include ::dc_postfix::nullclient
   }
 
 }
