@@ -1,0 +1,16 @@
+[foreman]
+foreman_admin_user = <%= @foreman_admin_user %>
+foreman_admin_pw = <%= @foreman_admin_pw %>
+foreman_api_baseurl = <%= @foreman_url %>/api/v2/
+cert_path = /var/lib/puppet/ssl/certs/<%= @hostname %>.<%= @domain %>
+cacert_path = /var/lib/puppet/ssl/certs/ca.pem
+key_path = /var/lib/puppet/ssl/private_keys/<%= @hostname %>.<%= @domain %>
+
+[omapi]
+omapi_port = <%= @omapi_port %>
+omapi_key = <%= @omapi_key %>
+omapi_secret = <%= @omapi_secret %>
+dhcp_server = <%= @dhcp_server %>
+
+[tftp]
+pxe_root = <%= @tftp_dir %>/pxelinux.cfg
