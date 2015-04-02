@@ -1,0 +1,219 @@
+#!/usr/bin/env python
+# Script to check Foreman data against network services
+import requests
+import json
+import pypureomapi
+import struct
+import sys
+from base64 import b64encode
+import socket
+import os
+
+fqdn = '<%= @hostname %>.<%= @domain %>'
+cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+certs= ('/var/lib/puppet/ssl/certs/%s.pem' % fqdn, '/var/lib/puppet/ssl/private_keys/%s.pem' % fqdn)
+foreman_api_baseurl = <%= @foreman_url %> + '/api/v2/'
+auth_encode = b64encode(b"<%= @foreman_admin_user %>:<%= @foreman_admin_pw %>").decode("ascii")
+headers= {'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Basic %s' % auth_encode}
+omapi_port = <%= @omapi_port %>
+omapi_key = '<%= @omapi_key %>'
+omapi_secret = '<%= @omapi_secret %>'
+pxe_root = '<%= @tftp_dir %>' + '/pxelinux.cfg'
+dhcp_server = '<%= @dhcp_server %>'
+
+# Custom pypureomapi stuff
+
+STATES = {
+    1: "free",
+    2: "active",
+    3: "expired",
+    4: "released",
+    5: "abandoned",
+    6: "reset",
+    7: "backup",
+    8: "reserved",
+    9: "bootp",
+}
+
+class Lease(object):
+    def __init__(self, obj):
+        self.mac = None
+        for (k, v) in obj:
+            if k == "ip-address":
+                self.ip = pypureomapi.unpack_ip(v)
+            elif k == "state":
+                self.state = STATES[struct.unpack("!I", v)[0]]
+            elif k == "hardware-address":
+                self.mac = pypureomapi.unpack_mac(v)
+            elif k == "client-hostname":
+                self.client_hostname = v
+            elif k == "starts":
+                self.starts = unpack_time(v)
+            elif k == "ends":
+                self.ends = unpack_time(v)
+            elif k == "tstp":
+                self.tstp = unpack_time(v)
+            elif k == "tsfp":
+                self.tsfp = unpack_time(v)
+            elif k == "atsfp":
+                self.atsfp = unpack_time(v)
+            elif k == "cltt":
+                self.cltt = unpack_time(v)
+
+def unpack_time(t):
+    return struct.unpack("!I", t)[0]
+
+def format_time(t):
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(t))
+
+class Omapi(pypureomapi.Omapi):
+    def lookup_lease_ip(self, ip):
+        msg = pypureomapi.OmapiMessage.open(b"lease")
+        msg.obj.append((b"ip-address", pypureomapi.pack_ip(ip)))
+        response = self.query_server(msg)
+        if response.opcode != pypureomapi.OMAPI_OP_UPDATE:
+            raise pypureomapi.OmapiErrorNotFound()
+        return Lease(response.obj)
+    
+    def lookup_lease_mac(self, mac):
+        msg = pypureomapi.OmapiMessage.open(b"lease")
+        msg.obj.append((b"hardware-address", pypureomapi.pack_mac(mac)))
+        response = self.query_server(msg)
+        if response.opcode != pypureomapi.OMAPI_OP_UPDATE:
+            raise pypureomapi.OmapiErrorNotFound()
+        return Lease(response.obj)
+
+    def lookup_host_mac(self,mac):
+        msg = pypureomapi.OmapiMessage.open("host")
+        msg.obj.append(("hardware-address", pypureomapi.pack_mac(mac)))
+        response = self.query_server(msg)
+        if response.opcode != pypureomapi.OMAPI_OP_UPDATE:
+            raise pypureomapi.OmapiErrorNotFound()
+        try:
+            return pypureomapi.unpack_ip(dict(response.obj)["ip-address"])
+        except KeyError: # ip-address
+            raise pypureomapi.OmapiErrorNotFound()
+
+# Get stuff from Foreman
+def get_from_foreman(url):
+    url_options = url + '?per_page=10000'
+    try:
+        r = requests.get(url_options, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code == 200:
+        data = json.loads(r.text)
+        return data['results']
+    else:
+        print "Unexpected return code %s" % r.status_code
+        print r.text
+        sys.exit(1)
+
+# Lookup objects via OMAPI
+def omapi_lookup(key,lookup_type):
+    try:
+        o = Omapi(dhcp_server, omapi_port, omapi_key, omapi_secret)
+        if lookup_type == 'host':
+            ret = o.lookup_host_mac(key)
+        elif lookup_type == 'lease':
+            ret = o.lookup_lease_mac(key)
+        return ret
+    except pypureomapi.OmapiErrorNotFound:
+        return False
+    except pypureomapi.OmapiError, err:
+        print "an error occured: %r" % (err,)
+        sys.exit(1)
+
+# Look up hostname in DNS
+def dns_lookup(name):
+    try:
+        ip = socket.gethostbyname(name)
+        return ip
+    except socket.gaierror, err:
+        return False
+
+# Check Foreman API endpoint
+def check_api_endpoint(url):
+    try:
+        r = requests.get(url_options, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Connection Error - got %s" % e
+        sys.exit(1)
+    if r.status_code != 200:
+        print "Connection Error - got %s" % r.status_code
+        sys.exit(1)
+    else:
+        return True
+        
+
+############################################
+
+# Disable warnings on latest version of requests
+if requests.__version__ >= 2:
+    requests.packages.urllib3.disable_warnings()
+
+# Check we can reach the Foreman API
+check_api_endpoint(foreman_api_baseurl)
+
+ints = []
+failures = []
+errors = 0
+
+# Load a dictionary with all of the defined interfaces in Foreman
+url = foreman_api_baseurl + 'hosts'
+r = get_from_foreman(url)
+for host in r:
+    # Load the main interface
+    ints.append({'name':host['name'].encode("ascii"),'ip':host['ip'].encode("ascii"),'mac':host['mac'].encode("ascii"),'type':'main'})
+    # Check for any additional interfaces
+    ints_url = foreman_api_baseurl + 'hosts/' + str(host['id']) + '/interfaces'
+    foreman_ints = get_from_foreman(ints_url)
+    for foreman_int in foreman_ints:
+        if foreman_int['managed'] == True:
+            int_fqdn = foreman_int['name'] + '.' + foreman_int['domain_name']
+            ints.append({'name':int_fqdn.encode("ascii"),'ip':foreman_int['ip'].encode("ascii"),'mac':foreman_int['mac'].encode("ascii"),'type':foreman_int['type'].encode("ascii")})
+
+for interface in ints:
+    # Check if the IP for the host entry is correct
+    ip = omapi_lookup(interface['mac'],'host')
+    if ip:
+        if ip != interface['ip']:
+            errors += 1
+            failures.append("Host entry in DHCP does not match Foreman %s %s, expected %s received %s" % (interface['name'],interface['mac'],interface['ip'],ip))
+    else:
+    # Returned False therefore doesn't exist
+        errors +=1
+        failures.append("No host entry in DHCP for %s %s" % (interface['name'],interface['ip']))
+		
+    # Test for any dynamic leases associated with Foreman MAC addresses
+    lease = omapi_lookup(interface['mac'],'lease')
+    if lease:
+        if getattr(lease,'state') == 'active':
+            failures.append("Active dynamic lease found for %s %s" % (interface['name'],interface['mac']))
+            errors += 1
+
+    # Check DNS is correct
+    dns_ip = dns_lookup(interface['name'])
+    if dns_ip:
+        if dns_ip != interface['ip']:
+            errors += 1
+            failures.append("DNS address for %s does not match Foreman, expected %s got %s" % (interface['name'],interface['ip'],dns_ip))
+    else:
+        errors += 1
+        failures.append("No DNS entry found for %s" % interface['name'])
+
+    # Check for each MAC there is a correct tftp entry
+    # Munge the mac into the expected format for PXE
+    if interface['type'] in ['bond','main']:
+        pxe_path = pxe_root + '/01-' + interface['mac'].replace(':','-')
+        if not os.path.exists(pxe_path):
+        errors += 1
+            failures.append("No PXE config found for %s %s" % (interface['name'],interface['mac']))
+
+if errors != 0:
+    print "----------------------------------------------------------------"
+    print "The following errors were found during automated Foreman checks:"
+    print "----------------------------------------------------------------"
+    for fail in failures:
+        print fail
