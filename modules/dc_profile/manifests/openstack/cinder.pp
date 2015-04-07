@@ -21,8 +21,6 @@ class dc_profile::openstack::cinder {
   include ::cinder::ceilometer
   include ::cinder::volume::rbd
 
-  include dc_profile::auth::sudoers_cinder
-
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
   }

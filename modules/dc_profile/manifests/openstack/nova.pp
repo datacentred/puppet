@@ -23,8 +23,6 @@ class dc_profile::openstack::nova {
     value => 'ext-net',
   }
 
-  include dc_profile::auth::sudoers_nova
-
   # Add the various services from this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-compute":
     listening_service => 'nova-compute',
