@@ -15,7 +15,7 @@ class dc_apparmor {
 
   package { 'apparmor':
     ensure => installed,
-  } ~>
+  } ->
 
   # Note: there is a bug in the dpkg puppet provider whereby you need
   #       to use another provider type to override the default status
