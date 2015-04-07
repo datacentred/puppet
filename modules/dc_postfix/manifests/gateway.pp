@@ -27,8 +27,6 @@ class dc_postfix::gateway (
     root_mail_recipient => $internal_sysmail_address,
   }
 
-  include augeas
-
   contain dc_postfix::virtual
   contain dc_postfix::networks
   contain dc_postfix::gmailrelay

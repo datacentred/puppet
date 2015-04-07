@@ -11,6 +11,7 @@ class dc_role {
   include dc_profile::editors::vim
   include dc_profile::mon::icinga_client
   include dc_profile::puppet::puppet
+  include dc_profile::util::augeas
   include dc_profile::util::external_facts
   include dc_profile::util::timezone
   include dc_profile::util::locale
