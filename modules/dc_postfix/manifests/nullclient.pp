@@ -12,8 +12,6 @@
 #
 class dc_postfix::nullclient {
 
-    include augeas
-
     class { 'postfix':
       relayhost           => $::domain,
       myorigin            => $::fqdn,
