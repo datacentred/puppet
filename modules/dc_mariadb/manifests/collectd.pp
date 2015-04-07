@@ -33,13 +33,6 @@ class dc_mariadb::collectd {
     require    => Mysql_user["${mysql_collectd_username}@${mysql_collectd_hostname}"],
   }
 
-  # Add custom fact to provide a list of databases
-  # TODO: This should live in /var/lib/puppet/lib/facter!!! [SM]
-  file { '/usr/lib/ruby/vendor_ruby/facter/mysql.rb':
-    ensure  => file,
-    content => template('dc_mariadb/mysql.rb.erb'),
-  }
-
   # Generate the collectd config
   collectd::plugin::mysql::database { $::hostname :
     host     => 'localhost',
