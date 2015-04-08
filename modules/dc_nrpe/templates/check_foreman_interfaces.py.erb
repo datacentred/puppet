@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+import netifaces
+import sys
+import subprocess
+import os
+
+foreman_interfaces = [<% scope['::foreman_interfaces'].each do |interface| ; if interface['managed'] == true %>{<% for attr in [ 'mac','ip' ] do %>'<%= attr %>': '<%= interface[attr] %>', <% end %>'type': '<%= interface['type'] %>'},<% end %><% end %>]
+
+# Find the LAN channel
+def find_lan_channel():
+    for c in range(1, 3):
+        DEVNULL=open(os.devnull, 'r+b', 0)
+        returncode = subprocess.call(['/usr/bin/ipmitool','lan','print',str(c)],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        if returncode == 0:
+            return c
+    print "Could not find IPMI lan channel"
+    sys.exit(1)
+
+# Get the IPMI MAC via ipmitool
+def get_ipmi_mac(ipmi_lan_chan):
+    command = '/usr/bin/ipmitool lan print %s | grep \'MAC Address\' | awk \'{print $4}\'' % ipmi_lan_chan
+    mac = subprocess.check_output(command, shell=True).strip()
+    return mac
+
+# Get the IPMI IP via ipmitool
+def get_ipmi_ip(ipmi_lan_chan):
+    command = '/usr/bin/ipmitool lan print %s | grep \'IP Address  \' | awk \'{print $4}\'' % ipmi_lan_chan
+    ip = subprocess.check_output(command, shell=True).strip()
+    return ip
+
+# Check an interface against the configured system interfaces
+def check_foreman_int(mac, ip):
+    for i in netifaces.interfaces():
+        addrs = netifaces.ifaddresses(i)
+        if addrs[netifaces.AF_LINK][0]['addr'] == mac:
+            if addrs[netifaces.AF_INET][0]['addr'] == ip:
+                return True
+            else:
+                return False
+    else:
+        return False
+
+# Check an interface against Foreman
+def check_system_int(ip,mac):
+    for i in foreman_interfaces:
+        if ip == i['ip']:
+            if mac == i['mac']:
+                return True
+            else:
+                return False
+    else:
+        return False
+	
+def main():		
+
+    # Check the interfaces in Foreman against the configured system interfaces
+    for interface in foreman_interfaces:
+        if interface['type'] != 'BMC':
+            if not check_foreman_int(interface['mac'], interface['ip']):
+                print "WARNING: Foreman interface %s %s does not match the system" % (interface['mac'],interface['ip'])
+                sys.exit(1)
+
+    # Check the configured interfaces on the system back against Foreman
+    for i in netifaces.interfaces():
+        if i != 'lo':
+            addrs = netifaces.ifaddresses(i)
+            if netifaces.AF_INET in addrs:
+                if not check_system_int(addrs[netifaces.AF_INET][0]['addr'],addrs[netifaces.AF_LINK][0]['addr']):
+                    print "WARNING: Configured system interface does not match Foreman %s %s" % (addrs[netifaces.AF_INET][0]['addr'],addrs[netifaces.AF_LINK][0]['addr'])
+                    sys.exit(1)
+
+    # Check the BMC interface
+    ipmi_lan_chan = find_lan_channel()
+    bmc_mac = get_ipmi_mac(ipmi_lan_chan)
+    bmc_ip = get_ipmi_ip(ipmi_lan_chan)
+    bmc_int = next((interface for interface in foreman_interfaces if interface['type'] == 'BMC'), None)
+    if bmc_int != None:
+        if not bmc_int['ip'] == bmc_ip and not bmc_int['mac'] == bmc_mac:
+            print "WARNING: BMC configuration does not match Foreman"
+            sys.exit(1)
+
+    print "OK: All interfaces matched to Foreman"
+
+if __name__ == "__main__":
+    main()
+
