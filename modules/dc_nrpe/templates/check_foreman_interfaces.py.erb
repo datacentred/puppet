@@ -4,7 +4,7 @@ import sys
 import subprocess
 import os
 
-foreman_interfaces = [<% @foreman_interfaces.each do |interface| ; if interface['managed'] == true %>{<% for attr in [ 'mac','ip' ] do %>'<%= attr %>': '<%= interface[attr] %>', <% end %>'type': '<%= interface['type'] %>'},<% end %><% end %>]
+foreman_interfaces = [<% scope['::foreman_interfaces'].each do |interface| ; if interface['managed'] == true %>{<% for attr in [ 'mac','ip' ] do %>'<%= attr %>': '<%= interface[attr] %>', <% end %>'type': '<%= interface['type'] %>'},<% end %><% end %>]
 
 # Find the LAN channel
 def find_lan_channel():
