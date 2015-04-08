@@ -8,5 +8,4 @@ class dc_nrpe::checks::foreman_interfaces {
     sudo    => true,
   }
 
-
 }
