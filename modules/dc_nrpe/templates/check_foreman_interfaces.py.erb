@@ -5,7 +5,7 @@ import subprocess
 import os
 
 foreman_interfaces = [<% scope['::foreman_interfaces'].each do |interface| ; if interface['managed'] == true %>{<% for attr in [ 'mac','ip' ] do %>'<%= attr %>': '<%= interface[attr] %>', <% end %>'type': '<%= interface['type'] %>'},<% end %><% end %>]
-ignored_interfaces = [ 'lo', 'virbr0' ]
+ignored_interfaces = [<% @ignored_interfaces.each do |interface| %>'<%= interface %>',<% end %>]
 local_interfaces = [ x for x in netifaces.interfaces() if x not in ignored_interfaces ]
 
 # Find the LAN channel
