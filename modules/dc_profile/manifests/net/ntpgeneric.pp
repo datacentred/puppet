@@ -27,11 +27,6 @@ class dc_profile::net::ntpgeneric {
     # Setup monitoring
     include dc_icinga::hostgroup_ntp
 
-    # Add CNAME entry
-    @@dns_resource { "${localtimeservers[$::fqdn]['cname']}/CNAME":
-      rdata => $::fqdn,
-    }
-
   } else {
 
     # Setup NTP, using local timeservers - don't allow queries
