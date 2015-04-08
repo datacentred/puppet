@@ -35,11 +35,10 @@ def check_foreman_int(mac, ip):
         if not i in ignored_interfaces:
             addrs = netifaces.ifaddresses(i)
             if netifaces.AF_INET in addrs:
-                if addrs[netifaces.AF_LINK][0]['addr'] == mac:
-                    if addrs[netifaces.AF_INET][0]['addr'] == ip:
-                        return True
-                    else:
-                        return False
+                if addrs[netifaces.AF_LINK][0]['addr'] == mac and addrs[netifaces.AF_INET][0]['addr'] == ip:
+                    return True
+                else:
+                    return False
     else:
         return False
 
