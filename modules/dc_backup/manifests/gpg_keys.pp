@@ -5,10 +5,10 @@
 class dc_backup::gpg_keys (
   $datacentred_signing_key_public,
   $datacentred_signing_key_private,
-  $datacentred_signing_key_short_id,
+  $datacentred_signing_key_short_id = $dc_backup::params::datacentred_signing_key_short_id,
   $datacentred_signing_key_finger,
   $datacentred_encryption_key_public,
-  $datacentred_encryption_key_short_id,
+  $datacentred_encryption_key_short_id = $dc_backup::params::datacentred_encryption_key_short_id,
   $datacentred_encryption_key_finger,
 ) inherits dc_backup::params {
 
