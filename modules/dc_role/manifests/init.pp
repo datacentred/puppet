@@ -28,7 +28,7 @@ class dc_role {
     include dc_profile::perf::sysdig
     include dc_profile::util::mdadm
     include dc_profile::util::grub
-    include dc_profile::net::ntpgeneric
+    include dc_profile::net::ntp
     include dc_profile::net::lldp
     include dc_profile::hardware::bmc
 
