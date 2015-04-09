@@ -4,6 +4,8 @@
 #
 class dc_role {
 
+  hiera_include('classes')
+
   ## Include these classes on all systems
   include dc_profile::apt::apt
   include dc_profile::auth::rootpw
@@ -24,7 +26,6 @@ class dc_role {
     include dc_profile::auth::admins
     include dc_profile::net::ssh
     include dc_profile::net::hosts
-    include dc_profile::util::firmware
     include dc_profile::perf::sysdig
     include dc_profile::util::mdadm
     include dc_profile::util::grub

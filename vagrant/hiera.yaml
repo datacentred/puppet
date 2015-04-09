@@ -3,6 +3,7 @@
     - "roles/%{::role}"
     - "releases/%{::lsbdistcodename}/%{::architecture}/%{calling_module}"
     - "platforms/%{platform}"
+    - "architectures/%{architecture}"
     - "modules/%{calling_module}"
     - "%{environment}"
     - common
