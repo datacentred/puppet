@@ -14,5 +14,6 @@ class dc_role::stronghold inherits dc_role {
 
   contain dc_profile::rails::stronghold
   contain dc_backup::duplicity_mariadb
+  contain dc_backup::gpg_keys
 
 }

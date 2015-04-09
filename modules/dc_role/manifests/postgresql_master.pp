@@ -14,5 +14,6 @@ class dc_role::postgresql_master inherits dc_role {
 
   contain dc_profile::db::postgresql_master
   contain dc_backup::duplicity_mariadb
+  contian dc_backup::gpg_keys
 
 }
