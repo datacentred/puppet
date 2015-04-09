@@ -6,12 +6,12 @@ class dc_backup::duplicity_puppetcerts (
   $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,
   $datacentred_swift_key = $dc_backup::params::datacentred_swift_key,
   $datacentred_swift_access_point = $dc_backup::params::datacentred_swift_access_point,
-  $cloud = $dc_backup::params::cloud,
   $swift_authversion = $dc_backup::params::swift_authversion,
   $backup_source_dir,
   $datacentred_amazon_s3_id = $dc_backup::params::datacentred_amazon_s3_id,
   $datacentred_amazon_s3_key = $dc_backup::params::datacentred_amazon_s3_key,
-  $datacentred_backup_encryption_pubkey = $dc_backup::params::datacentred_backup_encryption_pubkey,
+  $datacentred_encryption_key_short_id = $dc_backup::params::datacentred_encryption_key_short_id,
+  $datacentred_signing_key_short_id = $dc_backup::params::datacentred_signing_key_short_id,
 ) inherits dc_backup::params {
 
   package { 'python-swiftclient':
@@ -35,13 +35,15 @@ class dc_backup::duplicity_puppetcerts (
   }
 
   duplicity { 'puppetcerts_to_amazon_s3':
-    directory         => $backup_source_dir,
-    bucket            => "datacentred_puppetcerts_${::hostname}_backup",
-    dest_id           => $datacentred_amazon_s3_id,
-    dest_key          => $datacentred_amazon_s3_key,
-    cloud             => 's3',
-    remove_older_than => '1M',
-    pubkey_id         => $datacentred_backup_encryption_pubkey,
+    directory          => $backup_source_dir,
+    bucket             => 'datacentred',
+    dest_id            => $datacentred_amazon_s3_id,
+    dest_key           => $datacentred_amazon_s3_key,
+    cloud              => 's3',
+    remove_older_than  => '1M',
+    folder             => "puppetcerts_${::hostname}_backup",
+    encrypt_key_id     => $datacentred_encryption_key_short_id,
+    sign_key_id        => $datacentred_signing_key_short_id,
   }
 
 }

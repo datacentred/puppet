@@ -10,7 +10,8 @@ class dc_backup::duplicity_dnsbackups (
   $backup_source_dir,
   $datacentred_amazon_s3_id = $dc_backup::params::datacentred_amazon_s3_id,
   $datacentred_amazon_s3_key = $dc_backup::params::datacentred_amazon_s3_key,
-  $datacentred_backup_encryption_pubkey = $dc_backup::params::datacentred_backup_encryption_pubkey,
+  $datacentred_encryption_key_short_id = $dc_backup::params::datacentred_encryption_key_short_id,
+  $datacentred_signing_key_short_id = $dc_backup::params::datacentred_signing_key_short_id,
 ) inherits dc_backup::params {
 
   package { 'python-swiftclient':
@@ -34,12 +35,14 @@ class dc_backup::duplicity_dnsbackups (
 
   duplicity { 'dns_backups_to_amazon_s3':
     directory         => $backup_source_dir,
-    bucket            => "datacentred_dns_${::hostname}_backup",
+    bucket            => 'datacentred',
     dest_id           => $datacentred_amazon_s3_id,
     dest_key          => $datacentred_amazon_s3_key,
     cloud             => 's3',
     remove_older_than => '1M',
-    pubkey_id         => $datacentred_backup_encryption_pubkey,
+    folder            => "dns_${::hostname}_backup",
+    encrypt_key_id    => $datacentred_encryption_key_short_id,
+    sign_key_id       => $datacentred_signing_key_short_id,
   }
 
 }
