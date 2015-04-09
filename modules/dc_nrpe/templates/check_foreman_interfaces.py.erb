@@ -63,8 +63,7 @@ def main():
     bond = next((i for i in foreman_interfaces if i['type'] == 'Bond'), False)
     if bond:
         bonded_ifs = bond['attached_devices'].split(',')
-        for i in bonded_ifs:
-            foreman_interfaces[:] = [x for x in foreman_interfaces if x.get('identifier') != i]
+        foreman_interfaces[:] = [x for x in foreman_interfaces if x.get('identifier') not in bonded_ifs]
 
     # Check the interfaces in Foreman against the configured system interfaces
     for interface in foreman_interfaces:
