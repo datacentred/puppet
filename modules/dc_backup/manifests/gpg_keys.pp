@@ -39,7 +39,7 @@ class dc_backup::gpg_keys (
     key_type    => public,
   }
 
-  exec { 'do_you_want_to_build_a_trustdb':
+  exec { 'create_import_gpg_trust_db':
     command => "echo ${datacentred_signing_key_finger}${trust_level} > /tmp/${datacentred_signing_key_finger}.keyid; echo ${datacentred_encryption_key_finger}${trust_level} > /tmp/${datacentred_encryption_key_finger}.keyid; gpg --import-ownertrust /tmp/${datacentred_signing_key_finger}.keyid; gpg --import-ownertrust /tmp/${datacentred_encryption_key_finger}.keyid",
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     user    => 'root',
