@@ -5,5 +5,7 @@
 class dc_role::osmongodb inherits dc_role {
 
   include ::dc_profile::openstack::mongodb
+  include ::dc_backup::duplicity
+  include ::dc_backup::gpg_keys
 
 }
