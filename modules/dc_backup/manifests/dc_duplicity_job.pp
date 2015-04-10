@@ -16,7 +16,6 @@
 #  }
 #
 define dc_backup::dc_duplicity_job(
-  $cloud,
   $backup_content,
   $source_dir,
   $pre_command = undef,
