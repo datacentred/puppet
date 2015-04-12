@@ -19,8 +19,6 @@ class dc_profile::openstack::glance {
   include ::glance::cache::pruner
   include ::glance::cache::cleaner
 
-  include ::dc_profile::openstack::glance::policy
-
   # Add this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-glance-registry":
     listening_service => 'glance-registry',
