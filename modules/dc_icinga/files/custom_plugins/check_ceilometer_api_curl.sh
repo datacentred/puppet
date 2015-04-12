@@ -88,7 +88,7 @@ if [ -z "$TOKEN2" ]; then
     exit $STATE_CRITICAL
 fi
 
-RES=$(curl -s -H "X-Auth-Token: $TOKEN2" -H 'Content-Type: application/json' ${ENDPOINT_URL}/projects | grep -o project -c)                                                                                                       
+RES=$(curl -s -H "X-Auth-Token: $TOKEN2" -H 'Content-Type: application/json' ${ENDPOINT_URL}/resources | grep -o project -c)                                                                                                       
 
 if [ -z "$RES" ]; then
     echo "Unable to get projects"
