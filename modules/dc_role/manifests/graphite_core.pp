@@ -18,5 +18,6 @@ class dc_role::graphite_core inherits dc_role {
   contain dc_profile::perf::network_weathermap
   contain dc_profile::perf::grafana
   contain dc_backup::duplicity_mariadb
+  contain dc_backup::gpg_keys
 
 }
