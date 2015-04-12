@@ -307,9 +307,10 @@ class dc_profile::openstack::haproxy {
       'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
     ],
     options      => {
-      'option'  => ['tcpka', 'tcplog'],
+      'option'  => ['tcpka', 'tcplog', 'forwardfor'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
     },
   }
 
