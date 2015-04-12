@@ -3511,10 +3511,15 @@ class ComputeManager(manager.Manager):
             block_device_info = self._get_instance_block_device_info(
                                 context, instance, bdms=bdms)
 
+            # NOTE MJ - fix for revert resize, to remove uncomment the two lines below
+            # and comment out these 4
             destroy_disks = not self._is_instance_storage_shared(context,
                                                                  instance)
             self.driver.destroy(context, instance, network_info,
-                                block_device_info, destroy_disks)
+                                block_device_info,destroy_disks)
+
+            #self.driver.destroy(context, instance, network_info,
+            #                    block_device_info)
 
             self._terminate_volume_connections(context, instance, bdms)
 
