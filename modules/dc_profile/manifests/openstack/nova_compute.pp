@@ -26,7 +26,7 @@ class dc_profile::openstack::nova_compute {
     group   => 'root',
     mode    => '0644',
     source  => 'puppet:///modules/dc_openstack/manager.py',
-    require => Package['nova-compute'],
+    require => Package['python-nova'],
     notify  => Service['nova-compute'],
   }
 
