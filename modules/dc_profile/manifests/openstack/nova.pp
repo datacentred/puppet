@@ -20,7 +20,7 @@ class dc_profile::openstack::nova {
   include ::nova::vncproxy
 
   nova_config { 'DEFAULT/default_floating_pool':
-    value => 'ext-net',
+    value => 'external',
   }
 
   # Add the various services from this node into our loadbalancers

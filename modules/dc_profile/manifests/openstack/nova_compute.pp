@@ -20,6 +20,16 @@ class dc_profile::openstack::nova_compute {
     require => Class['::Nova'],
   }
 
+  # Patch in the fix for revert resize deleting the rbd
+  file { '/usr/lib/python2.7/dist-packages/nova/compute/manager.py':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/dc_openstack/manager.py',
+    require => Package['nova-compute'],
+    notify  => Service['nova-compute'],
+  }
+
   # Configure Ceph client
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=cinder.images\" mon \"allow r\"'
