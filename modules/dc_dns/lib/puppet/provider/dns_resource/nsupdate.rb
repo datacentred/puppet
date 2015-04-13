@@ -32,7 +32,8 @@ class Resolv::DNS::Resource::IN::CNAME
   end
 end
 
-# MX records return the fqdn
+# MX records
+# FIXME this isn't true, returns an array of records
 class Resolv::DNS::Resource::IN::MX
   def to_rdata
     @name.to_s
@@ -111,6 +112,7 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
       typeclass = Resolv::DNS::Resource::IN::CNAME
     when 'MX'
       typeclass = Resolv::DNS::Resource::IN::MX
+      domain = name.split('.', 2)[-1]
     else
       raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
     end
@@ -118,7 +120,18 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     r = Resolv::DNS.new(:nameserver => '127.0.0.1')
     # Attempt the lookup via DNS
     begin
-      @dnsres = r.getresource(name, typeclass)
+      if type != 'MX'
+        @dnsres = r.getresource(name, typeclass)
+      else
+        mxrecords = r.getresources(domain, typeclass)
+        mxrecords.each do |mx|
+            if mx.exchange.to_s == name
+                return true
+            else
+                return false
+            end
+        end
+      end
     rescue Resolv::ResolvError
       return false
     end
