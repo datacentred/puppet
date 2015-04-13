@@ -3,3 +3,5 @@
 .vagrantuser
 *.swp
 tags
+*.orig
+*.rej
