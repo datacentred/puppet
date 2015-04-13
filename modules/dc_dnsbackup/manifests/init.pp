@@ -52,7 +52,7 @@ class dc_dnsbackup(
   }
 
   cron { 'remove_old_dnsbackups':
-    command  => 'find /var/zonebackups -type d -mtime +7 -exec rm -rf {} \;',
+    command  => 'find /var/zonebackups -type d -mtime +7 -delete',
     user     => 'root',
     month    => '*',
     monthday => '*',

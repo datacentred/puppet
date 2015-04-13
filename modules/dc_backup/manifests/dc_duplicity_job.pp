@@ -30,6 +30,8 @@ define dc_backup::dc_duplicity_job(
   $datacentred_signing_key_short_id = $dc_backup::params::datacentred_signing_key_short_id,
 ) {
 
+  ensure_packages ([python-swiftclient])
+
   $ensure_swift = $cloud ? {
     /(swift|all)/ => present,
     default       => absent,
@@ -40,7 +42,7 @@ define dc_backup::dc_duplicity_job(
     default       => absent,
   }
 
-  duplicity { 'swift':
+  duplicity { 'datacentred_swift':
     ensure            => $ensure_swift,
     directory         => $source_dir,
     bucket            => 'datacentred_backups',
