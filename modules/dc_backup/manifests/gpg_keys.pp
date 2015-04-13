@@ -13,7 +13,6 @@ class dc_backup::gpg_keys (
 ) inherits dc_backup::params {
 
   include ::gnupg
-  $trust_level = ':6:'
 
   gnupg_key { 'datacentred_public_signing_key':
     ensure      => present,
@@ -39,10 +38,12 @@ class dc_backup::gpg_keys (
     key_type    => public,
   }
 
-  exec { 'create_import_gpg_trust_db':
-    command => "echo ${datacentred_signing_key_finger}${trust_level} > /tmp/${datacentred_signing_key_finger}.keyid; echo ${datacentred_encryption_key_finger}${trust_level} > /tmp/${datacentred_encryption_key_finger}.keyid; gpg --import-ownertrust /tmp/${datacentred_signing_key_finger}.keyid; gpg --import-ownertrust /tmp/${datacentred_encryption_key_finger}.keyid",
-    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    user    => 'root',
+  dc_backup::gpg_trust_db { 'datacentred_signing_key' :
+    key_fingerprint => $datacentred_signing_key_finger,
+  }
+
+  dc_backup::gpg_trust_db { 'datacentred_encryption_key' :
+    key_fingerprint => $datacentred_encryption_key_finger,
   }
 
 }
