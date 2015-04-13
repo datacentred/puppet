@@ -711,4 +711,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'IPMI NRPE Check',
   }
 
+  icinga::service { 'check_foreman_interfaces':
+    use                 => 'dc_service_secondary',
+    hostgroup_name      => 'dc_hostgroup_generic',
+    check_command       => 'check_nrpe_1arg!check_foreman_interfaces',
+    service_description => 'Foreman Interfaces Check',
+  }
+
 }
