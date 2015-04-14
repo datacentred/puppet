@@ -37,9 +37,9 @@ def configure():
 
 # Find the LAN channel
 def find_lan_channel():
-    for c in range(1, 3):
-        DEVNULL = open(os.devnull, 'r+b', 0)
-        returncode = subprocess.call(['/usr/bin/ipmitool', 'lan', 'print', str(c)], stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+    for chan in range(1, 3):
+        devnull = open(os.devnull, 'r+b', 0)
+        returncode = subprocess.call(['/usr/bin/ipmitool', 'lan', 'print', str(chan)], stdin=devnull, stdout=devnull, stderr=devnull)
         if returncode == 0:
             return c
     print "Could not find IPMI lan channel"
@@ -54,8 +54,8 @@ def get_ipmi_mac(ipmi_lan_chan):
 # Get the IPMI IP via ipmitool
 def get_ipmi_ip(ipmi_lan_chan):
     command = '/usr/bin/ipmitool lan print %s | grep \'IP Address  \' | awk \'{print $4}\'' % ipmi_lan_chan
-    ip = subprocess.check_output(command, shell=True).strip()
-    return ip
+    ipmi_ip = subprocess.check_output(command, shell=True).strip()
+    return ipmi_ip
 
 # Check an interface against the configured system interfaces
 def check_foreman_int(mac, ip, identifier):
