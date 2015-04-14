@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+"""
+Check network interfaces
+between Foreman and system
+"""
 import netifaces
 import sys
 import subprocess
