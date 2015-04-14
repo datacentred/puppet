@@ -41,7 +41,7 @@ def find_lan_channel():
         devnull = open(os.devnull, 'r+b', 0)
         returncode = subprocess.call(['/usr/bin/ipmitool', 'lan', 'print', str(chan)], stdin=devnull, stdout=devnull, stderr=devnull)
         if returncode == 0:
-            return c
+            return chan
     print "Could not find IPMI lan channel"
     return "Not Found"
 
@@ -58,10 +58,10 @@ def get_ipmi_ip(ipmi_lan_chan):
     return ipmi_ip
 
 # Check an interface against the configured system interfaces
-def check_foreman_int(mac, ip, identifier):
+def check_foreman_int(mac, ip_address, identifier):
     addrs = netifaces.ifaddresses(identifier)
     if netifaces.AF_INET in addrs:
-        if addrs[netifaces.AF_LINK][0]['addr'] == mac and addrs[netifaces.AF_INET][0]['addr'] == ip:
+        if addrs[netifaces.AF_LINK][0]['addr'] == mac and addrs[netifaces.AF_INET][0]['addr'] == ip_address:
             return True
         else:
             return False
@@ -69,10 +69,10 @@ def check_foreman_int(mac, ip, identifier):
         return False
 
 # Check an interface against Foreman
-def check_system_int(ip, mac, identifier):
+def check_system_int(ip_address, mac, identifier):
     foreman_int = next((i for i in foreman_interfaces if i['identifier'] == identifier), None)
     if foreman_int != None:
-        if ip == foreman_int['ip'] and mac == foreman_int['mac']:
+        if ip_address == foreman_int['ip'] and mac == foreman_int['mac']:
             return True
         else:
             return False
