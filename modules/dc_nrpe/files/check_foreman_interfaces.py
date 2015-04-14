@@ -3,14 +3,37 @@ import netifaces
 import sys
 import subprocess
 import os
+import yaml
 
-foreman_interfaces = [<% scope['::foreman_interfaces'].each do |interface| ; if interface['managed'] == true %>{<% for attr in [ 'mac','ip','identifier' ] do %>'<%= attr %>': '<%= interface[attr] %>', <% end %><% if interface['type'] == 'Bond'%>'attached_devices': '<%= interface['attached_devices'] %>',<% end %>'type': '<%= interface['type'] %>'},<% end %><% end %>]
-<% if @ignored_interfaces -%>
-ignored_interfaces = [<% @ignored_interfaces.each do |interface| %>'<%= interface %>',<% end %>]
-local_interfaces = [ x for x in netifaces.interfaces() if x not in ignored_interfaces ]
-<% else -%>
-local_interfaces = netifaces.interfaces()
-<% end -%>
+foreman_interfaces = []
+ignored_interfaces = []
+
+def configure():
+    """
+    Loads configuration data.  If required values aren't found
+    execution continues with default values
+    """
+    global foreman_interfaces
+    global ignored_interfaces
+
+    try:
+        config_file = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
+    except IOError:
+        print 'Unable to open configuration file, check permissions'
+        sys.exit(1)
+
+    config = yaml.load(config_file.read())
+    config_file.close()
+
+    try:
+        foreman_interfaces = config['managed_interfaces']
+    except KeyError:
+        print 'WARNING: unable to find managed_interfaces in configuration'
+
+    try:
+        ignored_interfaces = config['ignored_interfaces']
+    except KeyError:
+        print 'WARNING: unable to find ignored_interfaces in configuration'
 
 # Find the LAN channel
 def find_lan_channel():
@@ -58,6 +81,10 @@ def check_system_int(ip,mac,identifier):
 	
 def main():		
 
+    configure()
+
+    local_interfaces = [ x for x in netifaces.interfaces() if x not in ignored_interfaces ]
+
     # The foreman_interfaces check can mis-identify bonded interfaces
     # so remove any interfaces which match a defined bond
     bond = next((i for i in foreman_interfaces if i['type'] == 'Bond'), False)
@@ -95,3 +122,4 @@ def main():
 if __name__ == "__main__":
     main()
 
+# vi: ts=4 et:
