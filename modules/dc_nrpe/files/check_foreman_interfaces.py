@@ -5,17 +5,23 @@ import subprocess
 import os
 import yaml
 
-def configure() {
-  global foreman_interfaces
-  global ignored_interfaces
+def configure():
+    global foreman_interfaces
+    global ignored_interfaces
 
-  f = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
-  config = yaml.load(f.read())
-  f.close()
+    f = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
+    config = yaml.load(f.read())
+    f.close()
 
-  foreman_interfaces = config['managed_interfaces']
-  ignored_interfaces = config['ignored_interfaces']
-}
+    try:
+        foreman_interfaces = config['managed_interfaces']
+    except KeyError:
+        foreman_interfaces = []
+
+    try:
+        ignored_interfaces = config['ignored_interfaces']
+    except KeyError:
+        ignored_interfaces = []
 
 # Find the LAN channel
 def find_lan_channel():
@@ -104,3 +110,4 @@ def main():
 if __name__ == "__main__":
     main()
 
+# vi: ts=4 et:
