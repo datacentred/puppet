@@ -13,6 +13,6 @@ module Puppet::Parser::Functions
     # Get list of bond slaves
     bs = bi.inject([]) { |x, y| x + y['attached_devices'].split(',') }
     # Get list of managed interfaces which aren't bond slaves
-    mi.select { |x| ! bs.include? x['identifier'] }
+    mi.reject { |x| bs.include? x['identifier'] }
   end
 end

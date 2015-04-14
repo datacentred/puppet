@@ -5,23 +5,35 @@ import subprocess
 import os
 import yaml
 
+foreman_interfaces = []
+ignored_interfaces = []
+
 def configure():
+    """
+    Loads configuration data.  If required values aren't found
+    execution continues with default values
+    """
     global foreman_interfaces
     global ignored_interfaces
 
-    f = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
-    config = yaml.load(f.read())
-    f.close()
+    try:
+        config_file = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
+    except IOError:
+        print 'Unable to open configuration file, check permissions'
+        sys.exit(1)
+
+    config = yaml.load(config_file.read())
+    config_file.close()
 
     try:
         foreman_interfaces = config['managed_interfaces']
     except KeyError:
-        foreman_interfaces = []
+        print 'WARNING: unable to find managed_interfaces in configuration'
 
     try:
         ignored_interfaces = config['ignored_interfaces']
     except KeyError:
-        ignored_interfaces = []
+        print 'WARNING: unable to find ignored_interfaces in configuration'
 
 # Find the LAN channel
 def find_lan_channel():
