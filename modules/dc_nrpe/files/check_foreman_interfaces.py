@@ -38,7 +38,7 @@ def configure():
 # Find the LAN channel
 def find_lan_channel():
     for c in range(1, 3):
-        DEVNULL=open(os.devnull, 'r+b', 0)
+        DEVNULL = open(os.devnull, 'r+b', 0)
         returncode = subprocess.call(['/usr/bin/ipmitool', 'lan', 'print', str(c)], stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
         if returncode == 0:
             return c
@@ -61,15 +61,15 @@ def get_ipmi_ip(ipmi_lan_chan):
 def check_foreman_int(mac, ip, identifier):
     addrs = netifaces.ifaddresses(identifier)
     if netifaces.AF_INET in addrs:
-            if addrs[netifaces.AF_LINK][0]['addr'] == mac and addrs[netifaces.AF_INET][0]['addr'] == ip:
-                return True
-            else:
-                return False
+        if addrs[netifaces.AF_LINK][0]['addr'] == mac and addrs[netifaces.AF_INET][0]['addr'] == ip:
+            return True
+        else:
+            return False
     else:
         return False
 
 # Check an interface against Foreman
-def check_system_int(ip,mac,identifier):
+def check_system_int(ip, mac, identifier):
     foreman_int = next((i for i in foreman_interfaces if i['identifier'] == identifier), None)
     if foreman_int != None:
         if ip == foreman_int['ip'] and mac == foreman_int['mac']:
@@ -78,12 +78,12 @@ def check_system_int(ip,mac,identifier):
             return False
     else:
         return False
-	
-def main():		
+
+def main():
 
     configure()
 
-    local_interfaces = [ x for x in netifaces.interfaces() if x not in ignored_interfaces ]
+    local_interfaces = [x for x in netifaces.interfaces() if x not in ignored_interfaces]
 
     # The foreman_interfaces check can mis-identify bonded interfaces
     # so remove any interfaces which match a defined bond
