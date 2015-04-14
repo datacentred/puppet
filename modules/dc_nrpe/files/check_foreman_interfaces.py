@@ -43,7 +43,7 @@ def find_lan_channel():
         if returncode == 0:
             return c
     print "Could not find IPMI lan channel"
-    sys.exit(1)
+    return "Not Found"
 
 # Get the IPMI MAC via ipmitool
 def get_ipmi_mac(ipmi_lan_chan):
@@ -109,13 +109,14 @@ def main():
 
     # Check the BMC interface
     ipmi_lan_chan = find_lan_channel()
-    bmc_mac = get_ipmi_mac(ipmi_lan_chan)
-    bmc_ip = get_ipmi_ip(ipmi_lan_chan)
-    bmc_int = next((interface for interface in foreman_interfaces if interface['type'] == 'BMC'), None)
-    if bmc_int != None:
-        if not bmc_int['ip'] == bmc_ip and not bmc_int['mac'] == bmc_mac:
-            print "WARNING: BMC configuration does not match Foreman"
-            sys.exit(1)
+    if ipmi_lan_chan != "Not Found":
+        bmc_mac = get_ipmi_mac(ipmi_lan_chan)
+        bmc_ip = get_ipmi_ip(ipmi_lan_chan)
+        bmc_int = next((interface for interface in foreman_interfaces if interface['type'] == 'BMC'), None)
+        if bmc_int != None:
+            if not bmc_int['ip'] == bmc_ip and not bmc_int['mac'] == bmc_mac:
+                print "WARNING: BMC configuration does not match Foreman"
+                sys.exit(1)
 
     print "OK: All interfaces matched to Foreman"
 
