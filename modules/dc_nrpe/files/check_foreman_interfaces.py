@@ -3,14 +3,19 @@ import netifaces
 import sys
 import subprocess
 import os
+import yaml
 
-foreman_interfaces = [<% scope['::foreman_interfaces'].each do |interface| ; if interface['managed'] == true %>{<% for attr in [ 'mac','ip','identifier' ] do %>'<%= attr %>': '<%= interface[attr] %>', <% end %><% if interface['type'] == 'Bond'%>'attached_devices': '<%= interface['attached_devices'] %>',<% end %>'type': '<%= interface['type'] %>'},<% end %><% end %>]
-<% if @ignored_interfaces -%>
-ignored_interfaces = [<% @ignored_interfaces.each do |interface| %>'<%= interface %>',<% end %>]
-local_interfaces = [ x for x in netifaces.interfaces() if x not in ignored_interfaces ]
-<% else -%>
-local_interfaces = netifaces.interfaces()
-<% end -%>
+def configure() {
+  global foreman_interfaces
+  global ignored_interfaces
+
+  f = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
+  config = yaml.load(f.read())
+  f.close()
+
+  foreman_interfaces = config['managed_interfaces']
+  ignored_interfaces = config['ignored_interfaces']
+}
 
 # Find the LAN channel
 def find_lan_channel():
@@ -57,6 +62,10 @@ def check_system_int(ip,mac,identifier):
         return False
 	
 def main():		
+
+    configure()
+
+    local_interfaces = [ x for x in netifaces.interfaces() if x not in ignored_interfaces ]
 
     # The foreman_interfaces check can mis-identify bonded interfaces
     # so remove any interfaces which match a defined bond
