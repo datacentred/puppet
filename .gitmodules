@@ -33,7 +33,7 @@
 	url = https://github.com/datacentred/puppetlabs-dhcp
 [submodule "modules/puppet"]
 	path = modules/puppet
-	url = https://github.com/spjmurray/puppet-puppet
+	url = https://github.com/datacentred/puppet-puppet
 [submodule "modules/apache"]
 	path = modules/apache
 	url = https://github.com/puppetlabs/puppetlabs-apache
