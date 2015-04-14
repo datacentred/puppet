@@ -39,7 +39,7 @@ def configure():
 def find_lan_channel():
     for c in range(1, 3):
         DEVNULL=open(os.devnull, 'r+b', 0)
-        returncode = subprocess.call(['/usr/bin/ipmitool','lan','print',str(c)],stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
+        returncode = subprocess.call(['/usr/bin/ipmitool', 'lan', 'print', str(c)], stdin=DEVNULL, stdout=DEVNULL, stderr=DEVNULL)
         if returncode == 0:
             return c
     print "Could not find IPMI lan channel"
@@ -96,15 +96,15 @@ def main():
     for interface in foreman_interfaces:
         if interface['type'] != 'BMC':
             if not check_foreman_int(interface['mac'], interface['ip'], interface['identifier']):
-                print "WARNING: Foreman interface %s %s %s does not match the system" % (interface['mac'],interface['ip'],interface['identifier'])
+                print "WARNING: Foreman interface %s %s %s does not match the system" % (interface['mac'], interface['ip'], interface['identifier'])
                 sys.exit(1)
 
     # Check the configured interfaces on the system back against Foreman
     for i in local_interfaces:
         addrs = netifaces.ifaddresses(i)
         if netifaces.AF_INET in addrs:
-            if not check_system_int(addrs[netifaces.AF_INET][0]['addr'],addrs[netifaces.AF_LINK][0]['addr'],i):
-                print "WARNING: Configured system interface does not match Foreman %s %s %s" % (addrs[netifaces.AF_INET][0]['addr'],addrs[netifaces.AF_LINK][0]['addr'],i)
+            if not check_system_int(addrs[netifaces.AF_INET][0]['addr'], addrs[netifaces.AF_LINK][0]['addr'], i):
+                print "WARNING: Configured system interface does not match Foreman %s %s %s" % (addrs[netifaces.AF_INET][0]['addr'], addrs[netifaces.AF_LINK][0]['addr'], i)
                 sys.exit(1)
 
     # Check the BMC interface
