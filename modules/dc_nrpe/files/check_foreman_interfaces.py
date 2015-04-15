@@ -50,8 +50,7 @@ def find_lan_channel():
             stdin=devnull, stdout=devnull, stderr=devnull)
         if returncode == 0:
             return chan
-    print "Could not find IPMI lan channel"
-    return "Not Found"
+    return False
 
 def get_ipmi_mac(ipmi_lan_chan):
     """
@@ -100,6 +99,40 @@ def check_system_int(ip_address, mac, identifier):
     else:
         return False
 
+def find_identifier(mac):
+    """
+    Find an interface on the system given its mac address
+    """
+    real_interfaces = [
+            x for x in netifaces.interfaces() if not x.startswith('bond')
+    ]
+    for interface in real_interfaces:
+        addrs = netifaces.ifaddresses(interface)
+        try:
+            if addrs[netifaces.AF_LINK][0]['addr'] == mac:
+                return interface
+        except LookupError:
+            continue
+    return False
+
+def check_bmc_interface():
+    """
+    Check the BMC interface against Foreman
+    """
+    ipmi_lan_chan = find_lan_channel()
+    if ipmi_lan_chan:
+        bmc_mac = get_ipmi_mac(ipmi_lan_chan)
+        bmc_ip = get_ipmi_ip(ipmi_lan_chan)
+        bmc_int = next(
+                (interface for interface in FOREMAN_INTERFACES
+                      if interface['type'] == 'BMC'), None)
+        if bmc_int:
+            if not bmc_int['ip'] == bmc_ip and not bmc_int['mac'] == bmc_mac:
+                return False
+    else:
+        return True
+    return True
+
 def main():
     """
     Check all interfaces line up
@@ -112,6 +145,17 @@ def main():
             x for x in netifaces.interfaces()
             if x not in IGNORED_INTERFACES
     ]
+
+    # Foreman can be missing idents so look them up and fill them in first
+    for i, interface in enumerate(FOREMAN_INTERFACES):
+        if interface['identifier'] == None and interface['type'] != 'BMC':
+            ident = find_identifier(interface['mac'])
+            if ident:
+                FOREMAN_INTERFACES[i]['identifier'] = ident
+            else:
+                print "WARNING: MAC %s in Foreman does not exist on system" \
+                            % interface['mac']
+                sys.exit(1)
 
     # The foreman_interfaces check can mis-identify bonded interfaces
     # so remove any interfaces which match a defined bond
@@ -148,17 +192,10 @@ def main():
                 sys.exit(1)
 
     # Check the BMC interface
-    ipmi_lan_chan = find_lan_channel()
-    if ipmi_lan_chan != "Not Found":
-        bmc_mac = get_ipmi_mac(ipmi_lan_chan)
-        bmc_ip = get_ipmi_ip(ipmi_lan_chan)
-        bmc_int = next(
-                (interface for interface in FOREMAN_INTERFACES
-                    if interface['type'] == 'BMC'), None)
-        if bmc_int != None:
-            if not bmc_int['ip'] == bmc_ip and not bmc_int['mac'] == bmc_mac:
-                print "WARNING: BMC configuration does not match Foreman"
-                sys.exit(1)
+    bmc_int = check_bmc_interface()
+    if not bmc_int:
+        print "WARNING: BMC interface does not match Foreman"
+        sys.exit(1)
 
     print "OK: All interfaces matched to Foreman"
 
