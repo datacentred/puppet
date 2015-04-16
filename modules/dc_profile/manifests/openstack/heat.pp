@@ -39,4 +39,10 @@ class dc_profile::openstack::heat {
     }
   }
 
+  # Enable 'preview' Stack Adopt and Abandon features
+  heat_config {
+    'DEFAULT/stack_abandon' : value => true;
+    'DEFAULT/stack_adopt'   : value => true;
+  }
+
 }
