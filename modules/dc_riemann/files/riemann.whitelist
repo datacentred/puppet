@@ -11,3 +11,4 @@ Can\'t create new lease file: Permission denied
 ^.*Arguments dropped when creating context.*
 ^.*Failed to inspect.*of instance.*domain is in state of SHUTOFF
 ^.*Unknown base file: /var/lib/nova/instances/_base/*
+^.*Couldn\'t obtain IP address ofinstance.*
