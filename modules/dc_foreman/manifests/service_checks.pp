@@ -16,12 +16,12 @@ class dc_foreman::service_checks (
 
   file { '/usr/local/lib/python2.7/site-packages/dc_foreman.py':
     ensure => file,
-    source => 'puppet:///dc_foreman/dc_foreman.py'
+    source => 'puppet:///modules/dc_foreman/dc_foreman.py'
   }
 
   file { '/usr/local/lib/python2.7/site-packages/dc_omapi.py':
     ensure => file,
-    source => 'puppet:///dc_foreman/dc_omapi.py'
+    source => 'puppet:///modules/dc_foreman/dc_omapi.py'
   }
 
   file { '/usr/local/etc/foreman_check.config':
