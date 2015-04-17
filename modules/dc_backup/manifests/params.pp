@@ -12,5 +12,6 @@ $datacentred_amazon_s3_key,
 $datacentred_signing_key_short_id,
 $datacentred_encryption_key_short_id,
 $datacentred_private_signing_key_password,
+$datacentred_private_encryption_key_password,
 ) {
 }

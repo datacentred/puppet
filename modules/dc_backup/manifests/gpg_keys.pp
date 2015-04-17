@@ -10,6 +10,7 @@ class dc_backup::gpg_keys (
   $datacentred_encryption_key_public,
   $datacentred_encryption_key_short_id = $dc_backup::params::datacentred_encryption_key_short_id,
   $datacentred_encryption_key_finger,
+  $datacentred_encryption_key_private,
 ) inherits dc_backup::params {
 
   include ::gnupg
@@ -38,6 +39,15 @@ class dc_backup::gpg_keys (
     user        => 'root',
     key_content => $datacentred_encryption_key_public,
     key_type    => public,
+    trust_level => '6',
+  }
+
+  gnupg_key { 'datacentred_private_encryption_key':
+    ensure      => present,
+    key_id      => $datacentred_encryption_key_short_id,
+    user        => 'root',
+    key_content => $datacentred_encryption_key_private,
+    key_type    => private,
     trust_level => '6',
   }
 

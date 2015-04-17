@@ -29,6 +29,7 @@ define dc_backup::dc_duplicity_job(
   $datacentred_encryption_key_short_id = $dc_backup::params::datacentred_encryption_key_short_id,
   $datacentred_signing_key_short_id = $dc_backup::params::datacentred_signing_key_short_id,
   $datacentred_private_signing_key_password = $dc_backup::params::datacentred_private_signing_key_password,
+  $datacentred_private_encryption_key_password = $dc_backup::params::datacentred_private_encryption_key_password,
 ) {
 
   ensure_packages ([python-swiftclient])
@@ -57,18 +58,19 @@ define dc_backup::dc_duplicity_job(
 
 
   duplicity { 'amazon_s3':
-    ensure              => $ensure_s3,
-    pre_command         => $pre_command,
-    directory           => $source_dir,
-    bucket              => 'datacentred',
-    dest_id             => $datacentred_amazon_s3_id,
-    dest_key            => $datacentred_amazon_s3_key,
-    sign_key_passphrase => $datacentred_private_signing_key_password,
-    cloud               => 's3',
-    remove_older_than   => '1M',
-    folder              => "${backup_content}_${::hostname}_backup",
-    encrypt_key_id      => $datacentred_encryption_key_short_id,
-    sign_key_id         => $datacentred_signing_key_short_id,
+    ensure                 => $ensure_s3,
+    pre_command            => $pre_command,
+    directory              => $source_dir,
+    bucket                 => 'datacentred',
+    dest_id                => $datacentred_amazon_s3_id,
+    dest_key               => $datacentred_amazon_s3_key,
+    sign_key_passphrase    => $datacentred_private_signing_key_password,
+    encrypt_key_passphrase => $datacentred_private_encryption_key_password,
+    cloud                  => 's3',
+    remove_older_than      => '1M',
+    folder                 => "${backup_content}_${::hostname}_backup",
+    encrypt_key_id         => $datacentred_encryption_key_short_id,
+    sign_key_id            => $datacentred_signing_key_short_id,
   }
 
 }

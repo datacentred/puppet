@@ -6,7 +6,7 @@ class dc_profile::db::duplicity_mariadb {
 
   dc_backup::dc_duplicity_job { $::hostname :
     source_dir     => '/var/dbbackups',
-    backup_content => 'maraidb',
+    backup_content => 'mariadb',
   }
 
 }
