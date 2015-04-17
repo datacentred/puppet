@@ -51,13 +51,10 @@ class dc_dnsbackup(
     minute  => '0',
   }
 
-  cron { 'remove_old_dnsbackups':
-    command  => 'find /var/zonebackups -type d -mtime +7 -delete',
-    user     => 'root',
-    month    => '*',
-    monthday => '*',
-    hour     => '11',
-    minute   => '*',
+  tidy { '/var/zonebackups':
+    age     => '1w',
+    recurse => true,
+    rmdirs  => true,
   }
 
   anchor { 'dc_dnsbackup::first': } ->
