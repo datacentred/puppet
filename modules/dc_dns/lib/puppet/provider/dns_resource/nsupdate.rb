@@ -119,20 +119,16 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     r = Resolv::DNS.new(:nameserver => '127.0.0.1')
     # Attempt the lookup via DNS
     begin
-      if type != 'MX'
-        @dnsres = r.getresource(name, typeclass)
-      else
-        mxrecords = r.getresources(domain, typeclass)
-        mxrecords.each do |mx|
-            if mx.exchange.to_s == name
-                @dnsres = mx
-                break
-            end
+        case type
+        when 'MX'
+            mxrecords = r.getresources(domain, typeclass)
+            mxrecords.select { |v| v.exchange.to_s == name } || false
+            @dnsres = v
+        else
+            @dnsres = r.getresource(name, typeclass)
         end
-        return false
-      end
     rescue Resolv::ResolvError
-      return false
+        return false
     end
     # The record exists!
     return true
