@@ -26,7 +26,7 @@ class dc_foreman::service_checks (
 
   file { '/usr/local/etc/foreman_check.config':
     ensure  => file,
-    content => template('dc_foreman/foreman_check.config.erb'),
+    content => template('dc_foreman/foreman_check_config.erb'),
   }
 
 }
