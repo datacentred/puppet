@@ -32,10 +32,10 @@ class Resolv::DNS::Resource::IN::CNAME
   end
 end
 
-# MX records return the fqdn
+# MX check
 class Resolv::DNS::Resource::IN::MX
   def to_rdata
-    @name.to_s
+    @exchange.to_s
   end
 end
 
@@ -100,27 +100,31 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   # Determine whether a DNS resource exists
   def exists?
     name, type = resource[:name].split('/')
-    # Work out which type class we are fetching
     typeclass = nil
-    case type
-    when 'A'
-      typeclass = Resolv::DNS::Resource::IN::A
-    when 'PTR'
-      typeclass = Resolv::DNS::Resource::IN::PTR
-    when 'CNAME'
-      typeclass = Resolv::DNS::Resource::IN::CNAME
-    when 'MX'
-      typeclass = Resolv::DNS::Resource::IN::MX
-    else
-      raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
-    end
     # Create the resolver, pointing to the nameserver
     r = Resolv::DNS.new(:nameserver => '127.0.0.1')
-    # Attempt the lookup via DNS
     begin
-      @dnsres = r.getresource(name, typeclass)
+        # Set the typeclass and attempt the lookup via DNS
+        case type
+        when 'A'
+            typeclass = Resolv::DNS::Resource::IN::A
+            @dnsres = r.getresource(name, typeclass)
+        when 'PTR'
+            typeclass = Resolv::DNS::Resource::IN::PTR
+            @dnsres = r.getresource(name, typeclass)
+        when 'CNAME'
+            typeclass = Resolv::DNS::Resource::IN::CNAME
+            @dnsres = r.getresource(name, typeclass)
+        when 'MX'
+            typeclass = Resolv::DNS::Resource::IN::MX
+            domain = name.split('.', 2)[-1]
+            mxrecords = r.getresources(domain, typeclass)
+            @dnsres = mxrecords.select! { |v| v.exchange.to_s == name }.first || false
+        else
+            raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
+        end
     rescue Resolv::ResolvError
-      return false
+        return false
     end
     # The record exists!
     return true
