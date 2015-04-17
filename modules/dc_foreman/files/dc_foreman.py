@@ -1,7 +1,7 @@
 """
 DataCentred Foreman module
 Expects a config file in ini format eg.
-      
+
 [foreman]
 foreman_admin_user = some_user
 foreman_admin_pw = some_password
@@ -9,7 +9,7 @@ foreman_api_baseurl = https://foreman-server/api/v2/
 cert_path = a_cert
 cacert_path = a_cacert
 key_path = a_key
-  
+
 Usage:
 import dc_foreman
 foreman_server = dc_foreman.Foreman(configfile)
@@ -20,7 +20,6 @@ import requests
 import json
 import sys
 from base64 import b64encode
-import os
 import ConfigParser
 
 class Foreman(object):
@@ -51,8 +50,8 @@ class Foreman(object):
         self.certs = (cert_path, key_path)
 
     	# Disable warnings on latest version of requests
-    	if requests.__version__ >= 2:
-        	requests.packages.urllib3.disable_warnings()
+        if requests.__version__ >= 2:
+            requests.packages.urllib3.disable_warnings()
 
 
     def get_from_api(self, api_url):
