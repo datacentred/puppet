@@ -718,4 +718,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'Foreman Interfaces Check',
   }
 
+  icinga::service { 'check_memcached':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_memcached',
+    check_command       => 'check_memcached',
+    service_description => 'memached availability check',
+  }
+
 }

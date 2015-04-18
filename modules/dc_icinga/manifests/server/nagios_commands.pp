@@ -15,7 +15,6 @@
 #
 class dc_icinga::server::nagios_commands {
 
-  $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $keystone_icinga_user = hiera(keystone_icinga_user)
   $keystone_icinga_tenant = hiera(keystone_icinga_tenant)
@@ -227,5 +226,10 @@ class dc_icinga::server::nagios_commands {
   icinga::command { 'check_bmc':
     command_line => "/usr/lib/nagios/plugins/check_bmc -H \$HOSTNAME$",
   }
+
+  icinga::command { 'check_memcached':
+    command_line => "/usr/lib/nagios/plugins/check_memcached.pl -H \$HOSTNAME$ -p 11211",
+  }
+
 }
 
