@@ -35,7 +35,7 @@ end
 # MX check
 class Resolv::DNS::Resource::IN::MX
   def to_rdata
-    @exchange.to_s
+    @preference.to_s
   end
 end
 
