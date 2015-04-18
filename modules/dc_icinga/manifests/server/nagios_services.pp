@@ -722,7 +722,7 @@ class dc_icinga::server::nagios_services {
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_memcached',
     check_command       => 'check_memcached',
-    service_description => 'memached availability check',
+    service_description => 'memcached Availability Check'
   }
 
 }
