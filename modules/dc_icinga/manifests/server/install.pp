@@ -69,7 +69,7 @@ class dc_icinga::server::install {
   package { 'python-pymongo':
     ensure => installed,
   }
-  
+
   # Packages for Postgresql checks
 
   package { 'postgresql-client':
@@ -84,6 +84,11 @@ class dc_icinga::server::install {
     ensure   => installed,
     provider => 'pip',
     require  => Package['python-pip'],
+  }
+
+  # memcached checks need an additional Perl module
+  package { 'libcache-memcached-perl':
+    ensure => installed
   }
 
 }
