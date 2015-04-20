@@ -429,6 +429,10 @@ class dc_icinga::server::config {
     description => 'BMC Capable Nodes',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_memcached':
+    description => 'memcached Node',
+  }
+
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 
