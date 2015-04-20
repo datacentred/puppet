@@ -145,6 +145,7 @@ def check_for_static(interface):
             return True
         else:
             return False
+    local_conf.close()
 
 def main():
     """
