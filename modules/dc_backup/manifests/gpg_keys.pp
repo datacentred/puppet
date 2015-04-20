@@ -13,7 +13,7 @@ class dc_backup::gpg_keys (
   $datacentred_encryption_key_private,
 ) inherits dc_backup::params {
 
-  include gnupg
+  contain gnupg
 
   gnupg_key { 'datacentred_public_signing_key':
     ensure      => present,
