@@ -20,9 +20,9 @@ define dc_backup::dc_duplicity_job(
   $source_dir,
   $pre_command = undef,
   $cloud = 'all',
-  $datacentred_swift_id = $dc_backup::params::datacentred_swift_id,
-  $datacentred_swift_key = $dc_backup::params::datacentred_swift_key,
-  $datacentred_swift_access_point = $dc_backup::params::datacentred_swift_access_point,
+  $datacentred_ceph_access_key = $dc_backup::params::datacentred_ceph_access_key,
+  $datacentred_ceph_secret_key = $dc_backup::params::datacentred_ceph_secret_key,
+  $datacentred_ceph_access_point = $dc_backup::params::datacentred_ceph_access_point,
   $swift_authversion = $dc_backup::params::swift_authversion,
   $datacentred_amazon_s3_id = $dc_backup::params::datacentred_amazon_s3_id,
   $datacentred_amazon_s3_key = $dc_backup::params::datacentred_amazon_s3_key,
@@ -34,8 +34,8 @@ define dc_backup::dc_duplicity_job(
 
   ensure_packages ([python-swiftclient])
 
-  $ensure_swift = $cloud ? {
-    /(swift|all)/ => present,
+  $ensure_dc_ceph = $cloud ? {
+    /(dc_ceph|all)/ => present,
     default       => absent,
   }
 
@@ -44,16 +44,15 @@ define dc_backup::dc_duplicity_job(
     default       => absent,
   }
 
-  duplicity { 'datacentred_swift':
-    ensure            => $ensure_swift,
+  notify{"lollerz printing ceph AP: ${datacentred_ceph_access_point}":}
+
+  duplicity { 'datacentred_ceph':
+    ensure            => $ensure_dc_ceph,
     directory         => $source_dir,
-    bucket            => 'datacentred_backups',
-    dest_id           => $datacentred_swift_id,
-    dest_key          => $datacentred_swift_key,
-    cloud             => 'swift',
-    swift_authurl     => $datacentred_swift_access_point,
-    swift_authversion => $swift_authversion,
-    folder            => "${backup_content}_${::hostname}_backup",
+    dest_id           => $datacentred_ceph_access_key,
+    dest_key          => $datacentred_ceph_secret_key,
+    cloud             => 's3',
+    custom_endpoint   => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
   }
 
 
