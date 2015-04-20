@@ -142,10 +142,10 @@ def check_for_static(interface):
     regex = "^iface %s" % interface
     for line in local_conf:
         if re.search(regex, line) and line.rsplit(None, 1)[-1] == 'static':
+            local_conf.close()
             return True
-        else:
-            return False
     local_conf.close()
+    return False
 
 def main():
     """
