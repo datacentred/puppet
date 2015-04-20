@@ -91,13 +91,14 @@ def main():
                 failures.append("Active dynamic lease found for %s %s"
                	    % (interface['name'], interface['mac']))
         except OmapiErrorNotFound:
-            next
+            pass
 
         # Check DNS is correct
         try:
             dns_ip = dns_lookup(interface['name'])
             if dns_ip != interface['ip']:
-                failures.append("DNS address for %s does not match Foreman, expected %s got %s"
+                failures.append("DNS address for \
+                        %s does not match Foreman, expected %s got %s"
                      % (interface['name'], interface['ip'], dns_ip))
         except socket.gaierror:
             failures.append("No DNS entry found for %s" % interface['name'])
