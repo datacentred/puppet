@@ -51,6 +51,12 @@ class dc_dnsbackup(
     minute  => '0',
   }
 
+  tidy { '/var/zonebackups':
+    age     => '1w',
+    recurse => true,
+    rmdirs  => true,
+  }
+
   anchor { 'dc_dnsbackup::first': } ->
   class { 'dc_dnsbackup::exports': } ->
   anchor { 'dc_dnsbackup::last': }
