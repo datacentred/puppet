@@ -141,11 +141,8 @@ def check_for_static(interface):
     local_conf = open('/etc/network/interfaces', 'r')
     regex = "^iface %s" % interface
     for line in local_conf:
-        if re.search(regex, line):
-            if line.rsplit(None, 1)[-1] != 'static':
-                return True
-            else:
-                return False
+        if re.search(regex, line) and line.rsplit(None, 1)[-1] != 'static':
+            return True
         else:
             return False
 
