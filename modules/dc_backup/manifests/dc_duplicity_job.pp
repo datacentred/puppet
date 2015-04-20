@@ -44,15 +44,13 @@ define dc_backup::dc_duplicity_job(
     default       => absent,
   }
 
-  notify{"lollerz printing ceph AP: ${datacentred_ceph_access_point}":}
-
   duplicity { 'datacentred_ceph':
-    ensure            => $ensure_dc_ceph,
-    directory         => $source_dir,
-    dest_id           => $datacentred_ceph_access_key,
-    dest_key          => $datacentred_ceph_secret_key,
-    cloud             => 's3',
-    custom_endpoint   => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
+    ensure          => $ensure_dc_ceph,
+    directory       => $source_dir,
+    dest_id         => $datacentred_ceph_access_key,
+    dest_key        => $datacentred_ceph_secret_key,
+    cloud           => 's3',
+    custom_endpoint => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
   }
 
 
