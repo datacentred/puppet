@@ -8,6 +8,7 @@ import sys
 import subprocess
 import os
 import yaml
+import re
 
 FOREMAN_INTERFACES = []
 IGNORED_INTERFACES = []
@@ -185,11 +186,16 @@ def main():
             if not check_system_int(
                     addrs[netifaces.AF_INET][0]['addr'],
                     addrs[netifaces.AF_LINK][0]['addr'], i):
-                print "WARNING: Configured system interface \
-                            does not match Foreman %s %s %s" \
-                        % (addrs[netifaces.AF_INET][0]['addr'],
-                                addrs[netifaces.AF_LINK][0]['addr'], i)
-                sys.exit(1)
+                local_conf = open('/etc/network/interfaces', 'r')
+                regex = "^iface %s" % i
+                for line in local_conf:
+                    if re.search(regex, line):
+                        if line.rsplit(None, 1)[-1] != 'static':
+                            print "WARNING: Configured system interface \
+                                does not match Foreman %s %s %s" \
+                                % (addrs[netifaces.AF_INET][0]['addr'],
+                                    addrs[netifaces.AF_LINK][0]['addr'], i)
+                            sys.exit(1)
 
     # Check the BMC interface
     bmc_int = check_bmc_interface()
