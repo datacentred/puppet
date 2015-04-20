@@ -32,16 +32,16 @@ define dc_backup::dc_duplicity_job(
   $datacentred_private_encryption_key_password = $dc_backup::params::datacentred_private_encryption_key_password,
 ) {
 
-  ensure_packages ([python-swiftclient])
+  ensure_packages([python-swiftclient])
 
   $ensure_dc_ceph = $cloud ? {
     /(dc_ceph|all)/ => present,
-    default       => absent,
+    default         => absent,
   }
 
   $ensure_s3 = $cloud ? {
-    /(s3|all)/    => present,
-    default       => absent,
+    /(s3|all)/ => present,
+    default    => absent,
   }
 
   duplicity { 'datacentred_ceph':
