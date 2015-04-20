@@ -27,5 +27,6 @@ class dc_profile::net::foreman_proxy {
   Class['::tftp'] -> Class['dc_foreman_proxy']
 
   include dc_icinga::hostgroup_foreman_proxy
+  include dc_foreman::service_checks
 
 }
