@@ -15,7 +15,6 @@
 #
 class dc_icinga::server::nagios_commands {
 
-  $keystone_host = get_exported_var('', 'keystone_host', ['localhost'])
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $keystone_icinga_user = hiera(keystone_icinga_user)
   $keystone_icinga_tenant = hiera(keystone_icinga_tenant)
@@ -197,35 +196,40 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_mongodb':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
   icinga::command { 'check_mongodb_alias':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
   icinga::command { 'check_mongodb_admin':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_admin_user -p $mongodb_admin_password -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_admin_user} -p ${mongodb_admin_password} -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
   icinga::command { 'check_mongodb_database':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -d \$ARG5$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -d \$ARG5$",
   }
 
   icinga::command { 'check_mongodb_collection':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -d \$ARG5$ -c \$ARG6$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -d \$ARG5$ -c \$ARG6$",
   }
 
   icinga::command { 'check_mongodb_replicaset':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -r \$ARG5$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -r \$ARG5$",
   }
 
   icinga::command { 'check_mongodb_query':
-    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u $mongodb_monitor_user -p $mongodb_monitor_password -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -q \$ARG5$",
+    command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -q \$ARG5$",
   }
 
   icinga::command { 'check_bmc':
     command_line => "/usr/lib/nagios/plugins/check_bmc -H \$HOSTNAME$",
   }
+
+  icinga::command { 'check_memcached':
+    command_line => "/usr/lib/nagios/plugins/check_memcached.pl -H \$HOSTNAME$ -p 11211",
+  }
+
 }
 

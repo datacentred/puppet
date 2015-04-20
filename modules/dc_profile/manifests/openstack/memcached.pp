@@ -14,4 +14,9 @@ class dc_profile::openstack::memcached {
 
   contain ::memcached
 
+  # Icinga checks
+  unless $::is_vagrant {
+    include ::dc_icinga::hostgroup_memcached
+  }
+
 }
