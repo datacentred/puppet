@@ -134,6 +134,21 @@ def check_bmc_interface():
         return True
     return True
 
+def check_for_static(interface):
+    """
+    Check if an interface is defined as static
+    """
+    local_conf = open('/etc/network/interfaces', 'r')
+    regex = "^iface %s" % interface
+    for line in local_conf:
+        if re.search(regex, line):
+            if line.rsplit(None, 1)[-1] != 'static':
+                return True
+            else:
+                return False
+        else:
+            return False
+
 def main():
     """
     Check all interfaces line up
@@ -185,17 +200,13 @@ def main():
         if netifaces.AF_INET in addrs:
             if not check_system_int(
                     addrs[netifaces.AF_INET][0]['addr'],
-                    addrs[netifaces.AF_LINK][0]['addr'], i):
-                local_conf = open('/etc/network/interfaces', 'r')
-                regex = "^iface %s" % i
-                for line in local_conf:
-                    if re.search(regex, line):
-                        if line.rsplit(None, 1)[-1] != 'static':
-                            print "WARNING: Configured system interface \
-                                does not match Foreman %s %s %s" \
-                                % (addrs[netifaces.AF_INET][0]['addr'],
-                                    addrs[netifaces.AF_LINK][0]['addr'], i)
-                            sys.exit(1)
+                    addrs[netifaces.AF_LINK][0]['addr'], i) \
+                            and not check_for_static(i):
+                print "WARNING: Configured system interface \
+                        does not match Foreman %s %s %s" \
+                    % (addrs[netifaces.AF_INET][0]['addr'],
+                        addrs[netifaces.AF_LINK][0]['addr'], i)
+                sys.exit(1)
 
     # Check the BMC interface
     bmc_int = check_bmc_interface()
