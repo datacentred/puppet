@@ -20,7 +20,8 @@ class dc_role::dnsmaster inherits dc_role {
   contain dc_profile::net::foreman_proxy
   contain dc_icinga::hostgroup_dhcp
   contain dc_icinga::hostgroup_ntp
-  contain dc_profile::net::duplicity_dns
-  contain dc_backup::gpg_keys
+#  These two won't work under 12.04 without key regeneration atm
+#  contain dc_profile::net::duplicity_dns
+#  contain dc_backup::gpg_keys
 
 }
