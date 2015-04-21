@@ -59,6 +59,7 @@ class dc_profile::openstack::galera {
       mode   => '0700',
     }
     include ::dc_backup::duplicity
+    include ::dc_backup::gpg_keys
   }
 
   # Export our haproxy balancermember resource

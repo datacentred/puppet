@@ -38,6 +38,7 @@ class dc_profile::openstack::mongodb {
       mode   => '0700',
     }
     include ::dc_backup::duplicity
+    include ::dc_backup::gpg_keys
   }
 
   unless $::is_vagrant {
@@ -46,7 +47,7 @@ class dc_profile::openstack::mongodb {
       include ::dc_logstash::client::mongodb
     }
   }
-  
+
 }
 
 

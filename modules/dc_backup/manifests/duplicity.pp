@@ -6,10 +6,6 @@ class dc_backup::duplicity (
   $backup,
 ) {
 
-  package { 'python-swiftclient':
-    ensure => installed,
-  }
-
   create_resources('duplicity', $backup)
 
 }
