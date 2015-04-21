@@ -8,17 +8,13 @@ import sys
 import subprocess
 import os
 import yaml
-
-FOREMAN_INTERFACES = []
-IGNORED_INTERFACES = []
+import re
 
 def configure():
     """
     Loads configuration data.  If required values aren't found
     execution continues with default values
     """
-    global FOREMAN_INTERFACES
-    global IGNORED_INTERFACES
 
     try:
         config_file = open('/usr/local/etc/check_foreman_interfaces.yaml', 'r')
@@ -30,14 +26,16 @@ def configure():
     config_file.close()
 
     try:
-        FOREMAN_INTERFACES = config['managed_interfaces']
+        foreman_interfaces = config['managed_interfaces']
     except KeyError:
         print 'WARNING: unable to find managed_interfaces in configuration'
 
     try:
-        IGNORED_INTERFACES = config['ignored_interfaces']
+        ignored_interfaces = config['ignored_interfaces']
     except KeyError:
         print 'WARNING: unable to find ignored_interfaces in configuration'
+
+    return foreman_interfaces, ignored_interfaces
 
 def find_lan_channel():
     """
@@ -84,12 +82,12 @@ def check_foreman_int(mac, ip_address, identifier):
     else:
         return False
 
-def check_system_int(ip_address, mac, identifier):
+def check_system_int(ip_address, mac, identifier, foreman_interfaces):
     """
     Check an interface against Foreman
     """
     foreman_int = next(
-            (i for i in FOREMAN_INTERFACES
+            (i for i in foreman_interfaces
                 if i['identifier'] == identifier), None)
     if foreman_int != None:
         if ip_address == foreman_int['ip'] and mac == foreman_int['mac']:
@@ -115,7 +113,7 @@ def find_identifier(mac):
             continue
     return False
 
-def check_bmc_interface():
+def check_bmc_interface(foreman_interfaces):
     """
     Check the BMC interface against Foreman
     """
@@ -124,7 +122,7 @@ def check_bmc_interface():
         bmc_mac = get_ipmi_mac(ipmi_lan_chan)
         bmc_ip = get_ipmi_ip(ipmi_lan_chan)
         bmc_int = next(
-                (interface for interface in FOREMAN_INTERFACES
+                (interface for interface in foreman_interfaces
                       if interface['type'] == 'BMC'), None)
         if bmc_int:
             if not bmc_int['ip'] == bmc_ip and not bmc_int['mac'] == bmc_mac:
@@ -133,25 +131,38 @@ def check_bmc_interface():
         return True
     return True
 
+def check_for_static(interface):
+    """
+    Check if an interface is defined as static
+    """
+    local_conf = open('/etc/network/interfaces', 'r')
+    regex = "^iface %s" % interface
+    for line in local_conf:
+        if re.search(regex, line) and line.rsplit(None, 1)[-1] == 'static':
+            local_conf.close()
+            return True
+    local_conf.close()
+    return False
+
 def main():
     """
     Check all interfaces line up
     between Foreman and configured system interfaces
     """
 
-    configure()
+    foreman_interfaces, ignored_interfaces = configure()
 
     local_interfaces = [
             x for x in netifaces.interfaces()
-            if x not in IGNORED_INTERFACES
+            if x not in ignored_interfaces
     ]
 
     # Foreman can be missing idents so look them up and fill them in first
-    for i, interface in enumerate(FOREMAN_INTERFACES):
+    for i, interface in enumerate(foreman_interfaces):
         if interface['identifier'] == None and interface['type'] != 'BMC':
             ident = find_identifier(interface['mac'])
             if ident:
-                FOREMAN_INTERFACES[i]['identifier'] = ident
+                foreman_interfaces[i]['identifier'] = ident
             else:
                 print "WARNING: MAC %s in Foreman does not exist on system" \
                             % interface['mac']
@@ -159,16 +170,16 @@ def main():
 
     # The foreman_interfaces check can mis-identify bonded interfaces
     # so remove any interfaces which match a defined bond
-    bond = next((i for i in FOREMAN_INTERFACES if i['type'] == 'Bond'), False)
+    bond = next((i for i in foreman_interfaces if i['type'] == 'Bond'), False)
     if bond:
         bonded_ifs = bond['attached_devices'].split(',')
-        FOREMAN_INTERFACES[:] = [
-                x for x in FOREMAN_INTERFACES
+        foreman_interfaces[:] = [
+                x for x in foreman_interfaces
                 if x.get('identifier') not in bonded_ifs
         ]
 
     # Check the interfaces in Foreman against the configured system interfaces
-    for interface in FOREMAN_INTERFACES:
+    for interface in foreman_interfaces:
         if interface['type'] != 'BMC':
             if not check_foreman_int(
                 interface['mac'], interface['ip'], interface['identifier']):
@@ -184,15 +195,16 @@ def main():
         if netifaces.AF_INET in addrs:
             if not check_system_int(
                     addrs[netifaces.AF_INET][0]['addr'],
-                    addrs[netifaces.AF_LINK][0]['addr'], i):
+                    addrs[netifaces.AF_LINK][0]['addr'],
+                        i, foreman_interfaces) and not check_for_static(i):
                 print "WARNING: Configured system interface \
-                            does not match Foreman %s %s %s" \
-                        % (addrs[netifaces.AF_INET][0]['addr'],
-                                addrs[netifaces.AF_LINK][0]['addr'], i)
+                        does not match Foreman %s %s %s" \
+                    % (addrs[netifaces.AF_INET][0]['addr'],
+                        addrs[netifaces.AF_LINK][0]['addr'], i)
                 sys.exit(1)
 
     # Check the BMC interface
-    bmc_int = check_bmc_interface()
+    bmc_int = check_bmc_interface(foreman_interfaces)
     if not bmc_int:
         print "WARNING: BMC interface does not match Foreman"
         sys.exit(1)
