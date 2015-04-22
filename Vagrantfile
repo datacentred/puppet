@@ -45,6 +45,8 @@ Vagrant.configure('2') do |config|
 
       # VMware Fusion Provider
       box.vm.provider 'vmware_fusion' do |vmware, override|
+        # Enable nested virtualisation
+        vmware.vmx["vhv.enable"] = "TRUE"
         vmware.vmx['numvcpus'] = options.has_key?(:cpus) ? options.cpus.to_i : 2
         vmware.vmx['memsize']  = options.has_key?(:memory) ? options.memory.to_i : 1024
       end
