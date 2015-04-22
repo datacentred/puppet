@@ -6,21 +6,6 @@ class dc_role {
 
   hiera_include('classes')
 
-  ## Include these classes on all systems
-  include dc_profile::apt::apt
-  include dc_profile::auth::rootpw
-  include dc_profile::auth::sudoers
-  include dc_profile::editors::vim
-  include dc_profile::mon::icinga_client
-  include dc_profile::puppet::puppet
-  include dc_profile::util::augeas
-  include dc_profile::util::external_facts
-  include dc_profile::util::timezone
-  include dc_profile::util::locale
-  include dc_profile::util::motd
-  include dc_profile::util::dnsclient
-  include dc_profile::util::apparmor
-
   ## Don't include these classes on vagrant instances
   unless $::is_vagrant {
     include dc_profile::auth::admins
