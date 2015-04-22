@@ -9,5 +9,6 @@
     - common
 :backends:
     - yaml
+    - puppetdb
 :yaml:
     :datadir: '/vagrant/hieradata'
