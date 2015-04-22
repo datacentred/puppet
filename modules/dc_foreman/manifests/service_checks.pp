@@ -10,8 +10,8 @@ class dc_foreman::service_checks (
 ){
 
   file { '/usr/local/bin/foreman_check.py':
-    ensure  => file,
-    content => template('dc_foreman/foreman_check.py.erb'),
+    ensure => file,
+    source => 'puppet:///modules/dc_foreman/foreman_check.py',
   }
 
   file { '/usr/local/lib/python2.7/site-packages/dc_foreman.py':
