@@ -107,7 +107,9 @@ class Foreman(object):
           # Check for any additional interfaces
             for foreman_int in self.get_from_api(
                         'hosts/' + str(host['id']) + '/interfaces'):
-                if foreman_int['managed'] == True:
+                # Filter out bonds which are the main interface
+                if foreman_int['managed'] == True and not \
+                        any(d['mac'] == foreman_int['mac'] for d in ints):
                     int_fqdn = foreman_int['name'] + '.' \
                             + foreman_int['domain_name']
                     ints.append({
