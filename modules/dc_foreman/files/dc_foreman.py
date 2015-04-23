@@ -51,7 +51,8 @@ class Foreman(object):
         self.certs = (cert_path, key_path)
 
         with warnings.catch_warnings():
-            warnings.filterwarnings("ignore", message=".*InsecureRequestWarning.*")
+            warnings.filterwarnings(
+                    "ignore", message=".*InsecureRequestWarning.*")
 
 
     def get_from_api(self, api_url):
