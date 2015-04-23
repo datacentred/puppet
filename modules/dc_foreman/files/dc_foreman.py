@@ -21,6 +21,7 @@ import json
 import sys
 from base64 import b64encode
 import ConfigParser
+import warnings
 
 class Foreman(object):
     """
@@ -49,9 +50,8 @@ class Foreman(object):
         self.cacert = cacert_path
         self.certs = (cert_path, key_path)
 
-    	# Disable warnings on latest version of requests
-        if requests.__version__ >= 2:
-            requests.packages.urllib3.disable_warnings()
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*InsecureRequestWarning.*")
 
 
     def get_from_api(self, api_url):
