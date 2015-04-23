@@ -8,7 +8,7 @@ if ! diff /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts; then
        echo "Could not copy file"
        exit 1
   fi
-  if ! sudo /etc/init.d/isc-dhcp-server restart
+  if ! sudo service isc-dhcp-server restart
   then
        echo "Could not restart server"
        exit 1
