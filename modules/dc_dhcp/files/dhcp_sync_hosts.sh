@@ -3,7 +3,7 @@
 if ! diff /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts; then
   TIMESTAMP=`date | tr '\n' ']'`
   echo "[${TIMESTAMP} Synchronizing /etc/dhcp/dhcpd.hosts" > /var/log/dhcp_sync_hosts.log
-  if ! cp /tmp/dhcp.hosts /etc/dhcp/dhcpd.hosts
+  if ! cp /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts
   then
        echo "Could not copy file"
        exit 1
