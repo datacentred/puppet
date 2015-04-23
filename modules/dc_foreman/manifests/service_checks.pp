@@ -30,12 +30,12 @@ class dc_foreman::service_checks (
   }
 
   file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':
-    ensure => absent,
+    ensure => file,
     source => 'puppet:///modules/dc_foreman/dc_foreman.py'
   }
 
   file { '/usr/local/lib/python2.7/dist-packages/dc_omapi.py':
-    ensure => absent,
+    ensure => file,
     source => 'puppet:///modules/dc_foreman/dc_omapi.py'
   }
 
