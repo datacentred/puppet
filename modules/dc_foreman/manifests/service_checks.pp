@@ -9,18 +9,33 @@ class dc_foreman::service_checks (
   $tftp_dir,
 ){
 
+  package { 'pypureomapi':
+    ensure   => installed,
+    provider => 'pip',
+  }
+
   file { '/usr/local/bin/foreman_check.py':
     ensure => file,
     source => 'puppet:///modules/dc_foreman/foreman_check.py',
   }
 
   file { '/usr/local/lib/python2.7/site-packages/dc_foreman.py':
-    ensure => file,
+    ensure => absent,
     source => 'puppet:///modules/dc_foreman/dc_foreman.py'
   }
 
   file { '/usr/local/lib/python2.7/site-packages/dc_omapi.py':
-    ensure => file,
+    ensure => absent,
+    source => 'puppet:///modules/dc_foreman/dc_omapi.py'
+  }
+
+  file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':
+    ensure => absent,
+    source => 'puppet:///modules/dc_foreman/dc_foreman.py'
+  }
+
+  file { '/usr/local/lib/python2.7/dist-packages/dc_omapi.py':
+    ensure => absent,
     source => 'puppet:///modules/dc_foreman/dc_omapi.py'
   }
 
