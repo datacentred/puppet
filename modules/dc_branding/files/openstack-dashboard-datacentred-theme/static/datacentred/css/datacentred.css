@@ -1,0 +1,9 @@
+#splash .login {
+  background: url('/static/datacentred/img/datacentred-logo-vertical-800px.png') no-repeat center 35px;
+  background-size: 208px 102px;
+}
+
+h1.brand a {
+  background: url('/static/datacentred/img/datacentred-logo-horizontal-800px.png') top left no-repeat;
+  background-size: 130px 35px;
+}

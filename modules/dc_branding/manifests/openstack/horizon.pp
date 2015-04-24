@@ -16,15 +16,17 @@ class dc_branding::openstack::horizon (
 ) {
 
   File {
-    owner => 'root',
-    group => 'root',
+    owner  => 'root',
+    group  => 'root',
+    notify => Service['apache2'],
   }
 
   # Add in the resources
   file { $theme_path:
     ensure  => directory,
-    source  => "puppet:///modules/dc_branding/openstack-dashboard-datacentred-theme",
+    source  => 'puppet:///modules/dc_branding/openstack-dashboard-datacentred-theme',
     recurse => true,
+    purge   => true,
   }
 
   # Create the configuration file
