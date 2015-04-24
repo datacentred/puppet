@@ -72,18 +72,3 @@ class DhcpHostsParser(object):
         Get all the hosts
         """
         return self.hosts
-
-def get_host_list(lease_file):
-    """
-    Return a sensibly formatted list
-    """
-    host_list = []
-    host_parser = DhcpHostsParser(lease_file)
-    host_parser.parse()
-    hosts = host_parser.get_hosts()
-    for host in hosts:
-        host_list.append({
-                'name':host[0].lease_name,
-		'ip':host[0].ip_addresses,
-		'mac':host[0].mac_address})
-    return host_list
