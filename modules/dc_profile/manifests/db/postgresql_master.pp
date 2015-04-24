@@ -7,6 +7,7 @@ class dc_profile::db::postgresql_master {
   include ::dc_postgresql::databases
   include ::dc_postgresql::icinga
   include ::dc_postgresql::repmgr::master
+  contain dc_backup::gpg_keys
 
   Class['::dc_postgresql'] ->
   Class['::dc_postgresql::repmgr::master']

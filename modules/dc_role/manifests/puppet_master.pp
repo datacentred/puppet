@@ -6,5 +6,7 @@
 class dc_role::puppet_master inherits dc_role {
 
   include ::dc_profile::puppet::puppet_master
+  include dc_profile::puppet::duplicity_puppetcerts
+  contain dc_backup::gpg_keys
 
 }
