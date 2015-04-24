@@ -5,8 +5,8 @@
 Vagrant.require_version '~> 1.7.2'
 
 Vagrant.configure('2') do |config|
-  config.vm.box              = 'datacentred/ubuntu-trusty64-puppet'
-  config.vm.box_version      = '0.1.4'
+  config.vm.box              = 'puppetlabs/ubuntu-14.04-64-puppet'
+  config.vm.box_version      = '1.0.1'
   config.vm.box_check_update = true
 
   # Use landrush for DNS resolution
