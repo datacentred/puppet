@@ -10,6 +10,7 @@ import ConfigParser
 import dc_foreman
 import dc_omapi
 from pypureomapi import OmapiErrorNotFound
+import dc_dhcp_parser
 
 # Look up hostname in DNS
 def dns_lookup(name):
@@ -110,6 +111,12 @@ def main():
                     pxe_root + '/01-' + interface['mac'].replace(':', '-')):
                 failures.append("No PXE config found for %s %s"
                         % (interface['name'], interface['mac']))
+
+    # Check back from DHCP for anything not in Foreman
+    for host in dc_dhcp_parser.get_host_list('/var/lib/dhcp/dhcpd.leases'):
+        if not any(interface['name'] == host['name'] for interface in ints):
+            failures.append("Entry exists in DHCP but not in Foreman %s "
+                        % (host['name']))
 
     if failures:
         print "----------------------------------------------------------------"
