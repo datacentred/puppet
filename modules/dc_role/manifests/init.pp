@@ -7,6 +7,7 @@ class dc_role {
   hiera_include('classes')
 
   ## Don't include these classes on vagrant instances
+  unless $::architecture == 'aarch64' {
   unless $::is_vagrant {
     include dc_profile::auth::admins
     include dc_profile::net::ssh
@@ -30,6 +31,6 @@ class dc_role {
       include dc_profile::log::logrotate
     }
   }
-
+  }
 
 }
