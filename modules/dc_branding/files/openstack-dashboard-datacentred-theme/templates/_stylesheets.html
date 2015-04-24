@@ -1,2 +1,13 @@
-<link href='{{ STATIC_URL }}datacentred/css/0e503c3797d4.css' type='text/css' media='screen' rel='stylesheet' />
+{% load compress %}
+
+{% compress css %}
+<link href='{{ STATIC_URL }}dashboard/less/horizon.less' type='text/less' media='screen' rel='stylesheet' />
+<link href='{{ STATIC_URL }}dashboard/less/rickshaw.css' type='text/css' media='screen' rel='stylesheet' />
+<link href='{{ STATIC_URL }}dashboard/less/horizon_charts.less' type='text/less' media='screen' rel='stylesheet' />
+<link href='{{ STATIC_URL }}dashboard/less/horizon_workflow.less' type='text/less' media='screen' rel='stylesheet' />
+{% endcompress %}
+
+<link href='{{ STATIC_URL }}datacentred/css/datacentred.css' type='text/css' media='screen' rel='stylesheet' />
+
+<link rel="icon" href="{{ STATIC_URL }}datacentred/img/favicon-datacentred.ico"/>
 <link rel="shortcut icon" href="{{ STATIC_URL }}datacentred/img/favicon-datacentred.ico"/>
