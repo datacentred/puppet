@@ -24,7 +24,7 @@ class dc_branding::openstack::horizon (
   # Add in the resources
   file { $theme_path:
     ensure  => directory,
-    source  => "puppet:///modules/dc_branding/openstack-dashboard-datacentred-theme",
+    source  => 'puppet:///modules/dc_branding/openstack-dashboard-datacentred-theme',
     recurse => true,
     purge   => true,
   }
