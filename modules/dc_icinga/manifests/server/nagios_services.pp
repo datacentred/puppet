@@ -15,9 +15,10 @@ class dc_icinga::server::nagios_services {
     service_description => 'Disk Space',
   }
 
+  # Note: this service check installs an ELF binary
   icinga::service { 'check_dev_smart':
     use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_generic',
+    hostgroup_name      => 'dc_hostgroup_x86',
     check_command       => 'check_nrpe_1arg!check_dev_smart',
     service_description => 'Hard Disk Health',
   }

@@ -277,6 +277,10 @@ class dc_icinga::server::config {
     description => 'All Server Hosts',
   }
 
+  icinga::hostgroup { 'dc_hostgroup_x86':
+    description => 'All x86 Server Hosts',
+  }
+
   icinga::hostgroup { 'dc_hostgroup_http':
     description => 'HTTP Servers',
   }
