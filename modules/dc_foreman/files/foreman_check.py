@@ -23,6 +23,22 @@ def dns_lookup(name):
     except socket.gaierror:
         raise
 
+def get_host_list(lease_file):
+    """
+    Return a sensibly formatted list of hosts in DHCP
+    """
+    host_list = []
+    host_parser = dc_dhcp_parser.DhcpHostsParser(lease_file)
+    host_parser.parse()
+    hosts = host_parser.get_hosts()
+    for host in hosts:
+        host_list.append({
+                'name':host[0].lease_name,
+                'ip':host[0].ip_addresses,
+                'mac':host[0].mac_address})
+    return host_list
+
+
 ############################################
 
 def main():
@@ -113,7 +129,7 @@ def main():
                         % (interface['name'], interface['mac']))
 
     # Check back from DHCP for anything not in Foreman
-    for host in dc_dhcp_parser.get_host_list('/var/lib/dhcp/dhcpd.leases'):
+    for host in get_host_list('/var/lib/dhcp/dhcpd.leases'):
         if not any(interface['name'] == host['name'] for interface in ints):
             failures.append("Entry exists in DHCP but not in Foreman %s "
                         % (host['name']))
