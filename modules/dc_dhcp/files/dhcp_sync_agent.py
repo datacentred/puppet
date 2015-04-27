@@ -115,7 +115,7 @@ def main(argv):
             break
 
 if __name__ == '__main__':
-    
+
     HOST = ""
 
     logging.basicConfig(level=logging.INFO,
