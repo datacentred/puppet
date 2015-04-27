@@ -69,7 +69,10 @@ class Foreman(object):
             sys.exit(1)
         if req.status_code == 200:
             data = json.loads(req.text)
-            return data['results']
+            if 'results' in data:
+                return data['results']
+            else:
+                return data
         else:
             print "Unexpected return code %s" % req.status_code
             print req.text
@@ -103,6 +106,7 @@ class Foreman(object):
                 'name':host['name'].encode("ascii"),
                 'ip':host['ip'].encode("ascii"),
                 'mac':host['mac'].encode("ascii"),
+                'subnet_id':host['subnet_id'],
                 'type':'main'
             })
           # Check for any additional interfaces
@@ -117,6 +121,17 @@ class Foreman(object):
                         'name':int_fqdn.encode("ascii"),
                         'ip':foreman_int['ip'].encode("ascii"),
                         'mac':foreman_int['mac'].encode("ascii"),
-                        'type':foreman_int['type'].encode("ascii")
+                        'type':foreman_int['type'].encode("ascii"),
+                        'subnet_id':foreman_int['subnet_id']
                     })
         return ints
+
+    def get_subnet_proxies(self, subnet_id):
+        """
+        Return subnet proxies URL given a subnet_id
+        """
+        subnet_info = self.get_from_api('subnets/' + str(subnet_id))
+        dhcp_proxy = subnet_info['dhcp']['url']
+        dns_proxy = subnet_info['dns']['url']
+        tftp_proxy = subnet_info['tftp']['url']
+        return dhcp_proxy, dns_proxy, tftp_proxy

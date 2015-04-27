@@ -26,4 +26,13 @@ class dc_dhcp {
     #sudo_applications => '/etc/init.d/isc-dhcp-server',
   }
 
+  file { '/usr/local/lib/python2.7/dist-packages/dc_dhcp_parser.py':
+    ensure => file,
+    source => 'puppet:///modules/dc_dhcp/dc_dhcp_parser.py',
+  }
+
+  package { 'python-pyparsing':
+    ensure => installed,
+  }
+
 }
