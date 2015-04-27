@@ -8,9 +8,21 @@ if ! diff /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts; then
     echo "Could not copy file"
     exit 1
   fi
-  if ! sudo service isc-dhcp-server restart
+  if ! sudo service isc-dhcp-server stop
   then
-    echo "Could not restart server"
+    echo "Could not stop server"
+    exit 1
+  fi
+  if ! rm /var/lib/dhcp/dhcpd.leases*
+  then
+    echo "Could not clear existing leases"
+    exit 1
+  else
+    touch /var/lib/dhcp/dhcpd.leases
+  fi
+  if ! sudo service isc-dhcp-server start
+  then
+    echo "Could not start server"
     exit 1
   fi
 fi
