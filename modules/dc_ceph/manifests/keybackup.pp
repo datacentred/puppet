@@ -31,7 +31,7 @@ class dc_ceph::keybackup (
     }
 
     dc_backup::dc_duplicity_job { $::hostname :
-      pre_command    => 'ceph auth list &> /var/ceph-keybackup/keys'
+      pre_command    => 'ceph auth list &> /var/ceph-keybackup/keys',
       source_dir     => '/var/ceph-keybackup',
       backup_content => 'cephkey',
     }
