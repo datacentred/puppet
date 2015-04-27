@@ -96,7 +96,7 @@ def main(argv):
 	wm = pyinotify.WatchManager()
 	mask = pyinotify.IN_CLOSE_WRITE
 	notifier = pyinotify.Notifier(wm, DHCPLeaseListener())
-	wdd = wm.add_watch('/var/lib/dhcp/dhcpd.leases', mask)
+	wdd = wm.add_watch('/var/lib/dhcp', mask)
 
 	logging.info('Entering event loop ...')
 	while True:
