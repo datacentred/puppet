@@ -106,12 +106,12 @@ def check_tftp(ints, pxe_root):
                         % (interface['name'], interface['mac']))
     return failures
 
-def check_dhcp_leases(ints, lease_files):
+def check_dhcp_leases(ints, lease_file):
     """
     Check for any hosts defined in DHCP but not in Foreman
     """
     failures = []
-    for host in get_host_list(lease_files):
+    for host in get_host_list(lease_file):
         if not any(interface['name'] == host['name'] for interface in ints):
             failures.append("Entry exists in DHCP but not in Foreman %s "
                           % (host['name']))
@@ -180,7 +180,7 @@ def main():
 
     failures += check_tftp(ints, pxe_root)
 
-    failures += check_dhcp_leases(ints, lease_files)
+    failures += check_dhcp_leases(ints, lease_file)
 
     if failures:
         print "----------------------------------------------------------------"
