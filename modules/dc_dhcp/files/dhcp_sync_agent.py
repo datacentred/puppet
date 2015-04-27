@@ -23,8 +23,8 @@ import subprocess
 class DHCPLeaseListener(pyinotify.ProcessEvent):
 	"""Class to process inotify events"""
 
-	def process_IN_MODIFY(self, event):
-		"""Function to process IN_MODIFY events"""
+	def process_IN_CLOSE_WRITE(self, event):
+		"""Function to process IN_CLOSE_WRITE events"""
 
 		# Pull out the static leases
 		fd = open('/var/lib/dhcp/dhcpd.leases', 'r')
@@ -94,7 +94,7 @@ def main(argv):
 	# Begin monitoring the dhcp leases file and dispatch events
 	# to our listener class
 	wm = pyinotify.WatchManager()
-	mask = pyinotify.IN_MODIFY
+	mask = pyinotify.IN_CLOSE_WRITE
 	notifier = pyinotify.Notifier(wm, DHCPLeaseListener())
 	wdd = wm.add_watch('/var/lib/dhcp/dhcpd.leases', mask)
 
