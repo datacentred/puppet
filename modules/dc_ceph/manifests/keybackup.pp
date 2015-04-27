@@ -18,6 +18,8 @@ class dc_ceph::keybackup (
 
   if $::hostname == $primary_mon {
 
+    contain dc_backup::gpg_keys
+
     file { '/var/ceph-keybackup':
       ensure  => directory,
     }
