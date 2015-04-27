@@ -23,19 +23,24 @@ def dns_lookup(name):
     except socket.gaierror:
         raise
 
-def get_host_list(lease_file):
+def get_host_list(lease_files):
     """
     Return a sensibly formatted list of hosts in DHCP
+    Takes a list of file paths as an argument
     """
     host_list = []
-    host_parser = dc_dhcp_parser.DhcpHostsParser(lease_file)
-    host_parser.parse()
-    hosts = host_parser.get_hosts()
-    for host in hosts:
-        host_list.append({
-                'name':host[0].lease_name,
-                'ip':host[0].ip_addresses,
-                'mac':host[0].mac_address})
+    for lease_file in lease_files:
+        if os.path.isfile(lease_file) and os.access(lease_file, os.R_OK):
+            host_parser = dc_dhcp_parser.DhcpHostsParser(lease_file)
+            host_parser.parse()
+            hosts = host_parser.get_hosts()
+            for host in hosts:
+                host_list.append({
+                        'name':host[0].lease_name,
+                        'ip':host[0].ip_addresses,
+                        'mac':host[0].mac_address})
+        else:
+            continue
     return host_list
 
 
@@ -63,6 +68,9 @@ def main():
     [tftp]
     pxe_root = /var/tftpboot/pxelinux.cfg
 
+    [dhcp]
+    lease_files = /var/lib/dhcp/dhcpd.leases, /etc/dhcp/dhcpd.hosts
+
     """
     configfile = '/usr/local/etc/foreman_check.config'
 
@@ -73,6 +81,7 @@ def main():
         print 'Could not parse config file:', err
         sys.exit(1)
     pxe_root = parser.get('pxe', 'pxe_root')
+    lease_files = [ v.strip() for v in parser.get('dhcp', 'lease_files').split(',')]
 
     # Create a Foreman object
     foreman_server = dc_foreman.Foreman(configfile)
@@ -129,7 +138,7 @@ def main():
                         % (interface['name'], interface['mac']))
 
     # Check back from DHCP for anything not in Foreman
-    for host in get_host_list('/var/lib/dhcp/dhcpd.leases'):
+    for host in get_host_list(lease_files):
         if not any(interface['name'] == host['name'] for interface in ints):
             failures.append("Entry exists in DHCP but not in Foreman %s "
                         % (host['name']))
