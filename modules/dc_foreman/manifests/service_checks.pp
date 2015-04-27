@@ -7,6 +7,8 @@ class dc_foreman::service_checks (
   $omapi_secret,
   $omapi_port,
   $tftp_dir,
+  $dhcp_server,
+  $lease_file,
 ){
 
   package { 'pypureomapi':

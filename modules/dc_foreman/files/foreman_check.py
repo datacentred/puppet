@@ -26,17 +26,96 @@ def dns_lookup(name):
 def get_host_list(lease_file):
     """
     Return a sensibly formatted list of hosts in DHCP
+    Takes a list of file paths as an argument
     """
     host_list = []
-    host_parser = dc_dhcp_parser.DhcpHostsParser(lease_file)
-    host_parser.parse()
-    hosts = host_parser.get_hosts()
-    for host in hosts:
-        host_list.append({
-                'name':host[0].lease_name,
-                'ip':host[0].ip_addresses,
-                'mac':host[0].mac_address})
+    if os.path.isfile(lease_file) and os.access(lease_file, os.R_OK):
+        host_parser = dc_dhcp_parser.DhcpHostsParser(lease_file)
+        host_parser.parse()
+        hosts = host_parser.get_hosts()
+        for host in hosts:
+            host_list.append({
+                    'name':host[0].lease_name,
+                    'ip':host[0].ip_addresses,
+                    'mac':host[0].mac_address})
     return host_list
+
+def check_host_ips(omapi_wrapper, ints):
+    """
+    Given an omapi wrapper and a set of interfaces
+    Test that the IP entry is correct
+    """
+    failures = []
+    for interface in ints:
+        # Check if the IP for the host entry is correct
+        try:
+            ip_addr = omapi_wrapper.omapi_lookup(interface['mac'], 'host')
+            if ip_addr != interface['ip']:
+                failures.append(
+                      "Host entry in DHCP does not match Foreman %s %s, \
+                              expected %s received %s"
+                        % (interface['name'], interface['mac'],
+                          interface['ip'], ip_addr))
+        except OmapiErrorNotFound:
+            failures.append("No host entry in DHCP for %s %s"
+                % (interface['name'], interface['ip']))
+    return failures
+
+def check_dynamic_leases(omapi_wrapper, ints):
+    """
+    Given an omapi wrapper and a set of interfaces
+    Test if any dynamic leases exist
+    """
+    failures = []
+    for interface in ints:
+        try:
+            lease = omapi_wrapper.omapi_lookup(interface['mac'], 'lease')
+            if getattr(lease, 'state') == 'active':
+                failures.append("Active dynamic lease found for %s %s"
+                      % (interface['name'], interface['mac']))
+        except OmapiErrorNotFound:
+            pass
+    return failures
+
+def check_dns(ints):
+    """
+    Check DNS entries are correct
+    """
+    failures = []
+    for interface in ints:
+        try:
+            dns_ip = dns_lookup(interface['name'])
+            if dns_ip != interface['ip']:
+                failures.append("DNS address for \
+                      %s does not match Foreman, expected %s got %s"
+                     % (interface['name'], interface['ip'], dns_ip))
+        except socket.gaierror:
+            failures.append("No DNS entry found for %s" % interface['name'])
+    return failures
+
+def check_tftp(ints, pxe_root):
+    """
+    Check TFTP configuration is correct
+    """
+    failures = []
+    for interface in ints:
+        if interface['type'] in ['bond', 'main']:
+            if not os.path.exists(
+              pxe_root + '/01-' + interface['mac'].replace(':', '-')):
+                failures.append("No PXE config found for %s %s"
+                        % (interface['name'], interface['mac']))
+    return failures
+
+def check_dhcp_leases(ints, lease_files):
+    """
+    Check for any hosts defined in DHCP but not in Foreman
+    """
+    failures = []
+    for host in get_host_list(lease_files):
+        if not any(interface['name'] == host['name'] for interface in ints):
+            failures.append("Entry exists in DHCP but not in Foreman %s "
+                          % (host['name']))
+    return failures
 
 
 ############################################
@@ -63,6 +142,9 @@ def main():
     [tftp]
     pxe_root = /var/tftpboot/pxelinux.cfg
 
+    [dhcp]
+    lease_file = /var/lib/dhcp/dhcpd.leases
+
     """
     configfile = '/usr/local/etc/foreman_check.config'
 
@@ -73,6 +155,7 @@ def main():
         print 'Could not parse config file:', err
         sys.exit(1)
     pxe_root = parser.get('pxe', 'pxe_root')
+    lease_file = parser.get('dhcp', 'lease_file')
 
     # Create a Foreman object
     foreman_server = dc_foreman.Foreman(configfile)
@@ -88,51 +171,16 @@ def main():
     # Create an OMAPI Wrapper object
     omapi_wrapper = dc_omapi.OmapiWrapper(configfile)
 
-    for interface in ints:
-        # Check if the IP for the host entry is correct
-        try:
-            ip_addr = omapi_wrapper.omapi_lookup(interface['mac'], 'host')
-            if ip_addr != interface['ip']:
-                failures.append(
-		    "Host entry in DHCP does not match Foreman %s %s, expected %s received %s"
-                    % (interface['name'], interface['mac'],
-                        interface['ip'], ip_addr))
-        except OmapiErrorNotFound:
-            failures.append("No host entry in DHCP for %s %s"
-                    % (interface['name'], interface['ip']))
+    # Check DHCP entries
+    failures += check_host_ips(omapi_wrapper, ints)
 
-        # Test for any dynamic leases associated with Foreman MAC addresses
-        try:
-            lease = omapi_wrapper.omapi_lookup(interface['mac'], 'lease')
-            if getattr(lease, 'state') == 'active':
-                failures.append("Active dynamic lease found for %s %s"
-               	    % (interface['name'], interface['mac']))
-        except OmapiErrorNotFound:
-            pass
+    failures += check_dynamic_leases(omapi_wrapper, ints)
 
-        # Check DNS is correct
-        try:
-            dns_ip = dns_lookup(interface['name'])
-            if dns_ip != interface['ip']:
-                failures.append("DNS address for \
-                        %s does not match Foreman, expected %s got %s"
-                     % (interface['name'], interface['ip'], dns_ip))
-        except socket.gaierror:
-            failures.append("No DNS entry found for %s" % interface['name'])
+    failures += check_dns(ints)
 
-        # Check for each MAC there is a correct tftp entry
-        # Munge the mac into the expected format for PXE
-        if interface['type'] in ['bond', 'main']:
-            if not os.path.exists(
-                    pxe_root + '/01-' + interface['mac'].replace(':', '-')):
-                failures.append("No PXE config found for %s %s"
-                        % (interface['name'], interface['mac']))
+    failures += check_tftp(ints, pxe_root)
 
-    # Check back from DHCP for anything not in Foreman
-    for host in get_host_list('/var/lib/dhcp/dhcpd.leases'):
-        if not any(interface['name'] == host['name'] for interface in ints):
-            failures.append("Entry exists in DHCP but not in Foreman %s "
-                        % (host['name']))
+    failures += check_dhcp_leases(ints, lease_files)
 
     if failures:
         print "----------------------------------------------------------------"
