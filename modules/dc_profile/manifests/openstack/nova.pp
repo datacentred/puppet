@@ -17,10 +17,15 @@ class dc_profile::openstack::nova {
   include ::nova::conductor
   include ::nova::consoleauth
   include ::nova::scheduler
+  include ::nova::scheduler::filter
   include ::nova::vncproxy
 
   nova_config { 'DEFAULT/default_floating_pool':
     value => 'external',
+  }
+
+  nova_config { 'DEFAULT/restrict_isolated_hosts_to_isolated_images':
+    value => true,
   }
 
   # Add the various services from this node into our loadbalancers
