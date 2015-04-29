@@ -9,15 +9,10 @@ class dc_role {
   ## Don't include these classes on vagrant instances
   unless $::architecture == 'aarch64' {
   unless $::is_vagrant {
-    include dc_profile::auth::admins
-    include dc_profile::net::ssh
-    include dc_profile::net::hosts
     include dc_profile::perf::sysdig
     include dc_profile::util::mdadm
     include dc_profile::util::grub
-    include dc_profile::net::ntp
     include dc_profile::net::lldp
-    include dc_profile::hardware::bmc
 
     ## Only include these classes in production
     if $::environment == 'production' {
