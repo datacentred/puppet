@@ -9,7 +9,6 @@ class dc_role {
   ## Don't include these classes on vagrant instances
   unless $::architecture == 'aarch64' {
   unless $::is_vagrant {
-    include dc_profile::util::mdadm
     include dc_profile::util::grub
     include dc_profile::net::lldp
 
