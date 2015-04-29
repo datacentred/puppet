@@ -15,15 +15,22 @@ UNKNOWN=0
 HDD_WARNPS_PARAMS=(100 75000 75000)
 HDD_CRITPS_PARAMS=(200 100000 100000)
 # This is queue depth in number of operations
-HDD_QUEUE_PARAMS=(50 100)
+# Warn, Critical
+# Finger in the wind on these numbers
+# iostat shows this generally under 1
+HDD_QUEUE_PARAMS=(5 10)
 # Average wait times in ms
 # Roughly the time it takes to service an IO
+# Warn, Critical
+# A disk under heavy load in Ceph usually
+# takes average 50-60ms, spiking to 130ms
 HDD_WAIT_PARAMS=(180 200)
 # PNY SSD 500MB/s seq read, 320MB/s seq write
 # 60K IOPS rd, 35K IOPS write
+# As above thse are IOPS, Read KB/s, Write KB/s
 SSD_WARNPS_PARAMS=(30000 300000 200000)
 SSD_CRITPS_PARAMS=(50000 400000 300000)
-SSD_QUEUE_PARAMS=(50 100)
+SSD_QUEUE_PARAMS=(5 10)
 SSD_WAIT_PARAMS=(10 20)
 
 readdiskstat() {
