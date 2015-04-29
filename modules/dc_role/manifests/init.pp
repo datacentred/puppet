@@ -6,21 +6,4 @@ class dc_role {
 
   hiera_include('classes')
 
-  ## Don't include these classes on vagrant instances
-  unless $::architecture == 'aarch64' {
-
-    ## Only include these classes in production
-    if $::environment == 'production' {
-      include dc_profile::puppet::mcollective
-      include dc_profile::perf::collectd::agent
-      include dc_profile::net::mail
-      include dc_profile::mon::nsca_client
-      include dc_profile::mon::lmsensors
-      include dc_profile::log::rsyslog_client
-      include dc_profile::log::log_courier
-      include dc_profile::log::logrotate
-    }
-
-  }
-
 }
