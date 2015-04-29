@@ -19,6 +19,5 @@ class loadbalancer (
   create_resources('keepalived::vrrp::instance', $keepalived_interfaces, $keepalived_defaults)
   create_resources('haproxy::listen', $haproxy_listeners)
 
-  include dc_icinga::hostgroup_haproxy
 }
 
