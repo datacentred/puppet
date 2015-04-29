@@ -5,6 +5,7 @@ class dc_profile::ceph::radosgw_lb {
   include ::dc_ssl::storage
   include ::loadbalancer::certs
   include ::loadbalancer
+  include dc_icinga::hostgroup_haproxy
 
   Class['dc_ssl::storage'] ->
   Class['loadbalancer::certs'] ->
