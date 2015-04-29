@@ -19,5 +19,6 @@ class dc_role::graphite_core inherits dc_role {
   contain dc_profile::perf::grafana
   contain dc_backup::gpg_keys
   contain dc_profile::db::duplicity_mariadb
+  include dc_collectd::agent::openstack
 
 }

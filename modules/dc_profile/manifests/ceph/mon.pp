@@ -17,6 +17,10 @@ class dc_profile::ceph::mon {
   include ::dc_ceph::keybackup
   include ::dc_icinga::hostgroup_ceph_mon
 
+  if $::collectd_ceph {
+    include ::dc_collectd::agent::ceph
+  }
+
   Class['ceph::mon'] ->
   Class['dc_ceph::exports'] ->
   Class['dc_ceph::keybackup']
