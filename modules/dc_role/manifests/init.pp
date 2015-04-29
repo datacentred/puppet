@@ -8,9 +8,6 @@ class dc_role {
 
   ## Don't include these classes on vagrant instances
   unless $::architecture == 'aarch64' {
-  unless $::is_vagrant {
-    include dc_profile::util::grub
-    include dc_profile::net::lldp
 
     ## Only include these classes in production
     if $::environment == 'production' {
@@ -23,7 +20,7 @@ class dc_role {
       include dc_profile::log::log_courier
       include dc_profile::log::logrotate
     }
-  }
+
   }
 
 }
