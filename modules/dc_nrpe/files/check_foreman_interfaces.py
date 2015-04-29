@@ -43,9 +43,14 @@ def find_lan_channel():
     """
     for chan in range(1, 3):
         devnull = open(os.devnull, 'r+b', 0)
-        returncode = subprocess.call(
-            ['/usr/bin/ipmitool', 'lan', 'print', str(chan)],
-            stdin=devnull, stdout=devnull, stderr=devnull)
+        try:
+            returncode = subprocess.call(
+                ['/usr/bin/ipmitool', 'lan', 'print', str(chan)],
+                stdin=devnull, stdout=devnull, stderr=devnull)
+        except OSError:
+            # Things like ARM don't have BMC ergo this will 
+            # fail trying to find the binary
+            return False
         if returncode == 0:
             return chan
     return False
