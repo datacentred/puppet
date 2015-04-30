@@ -11,6 +11,7 @@ class loadbalancer (
   # need to come before provisionage of these classes
   contain ::haproxy
   contain ::keepalived
+  contain loadbalancer::stats
 
   $keepalived_defaults = {
     'state'    => 'SLAVE',
