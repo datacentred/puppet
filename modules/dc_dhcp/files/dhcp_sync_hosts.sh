@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then
+    echo "This script is already running with PID `pidof -x $(basename $0) -o %PPID`"
+    exit 1
+fi
+
 if ! diff /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts; then
   TIMESTAMP=`date | tr '\n' ']'`
   echo "[${TIMESTAMP} Synchronizing /etc/dhcp/dhcpd.hosts" > /var/log/dhcp_sync_hosts.log
