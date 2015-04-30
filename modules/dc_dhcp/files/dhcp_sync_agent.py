@@ -18,6 +18,7 @@ import logging
 import tempfile
 import pyinotify
 import subprocess
+import os
 
 class DHCPLeaseListener(pyinotify.ProcessEvent):
     """
@@ -67,7 +68,10 @@ class DHCPLeaseListener(pyinotify.ProcessEvent):
         """
         Function to process IN_CLOSE_WRITE events
         """
-        self.send_leases()
+        target = os.path.join(event.path, event.name)
+        if target == '/var/lib/dhcp/dhcpd.leases':
+            logging.info('Leases updated - starting sync')
+            self.send_leases()
 
 def monitor_dhcp(host):
     """
