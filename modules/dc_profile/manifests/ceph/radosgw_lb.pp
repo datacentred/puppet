@@ -5,10 +5,12 @@ class dc_profile::ceph::radosgw_lb {
   include ::dc_ssl::storage
   include ::loadbalancer::certs
   include ::loadbalancer
+  include ::dc_profile::net::loadbalancer_stats
 
   Class['dc_ssl::storage'] ->
   Class['loadbalancer::certs'] ->
-  Class['loadbalancer']
+  Class['loadbalancer'] ->
+  Class['loadbalancer::stats']
 
   $domain      = 'storage.datacentred.io'
   $myip        = get_ip_addr("${::hostname}.${domain}")
