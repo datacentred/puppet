@@ -8,6 +8,12 @@ class dc_logstash::client (
   $logcourier_port    = $dc_logstash::params::logcourier_port,
 ) inherits dc_logstash::params {
 
+  include ::external_facts
+
+  external_facts::fact { 'log_shipper':
+    value => 'log_courier',
+  }
+
   file { '/usr/sbin/log-courier':
     ensure => file,
     owner  => 'root',
