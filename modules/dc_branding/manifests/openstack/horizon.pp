@@ -18,7 +18,7 @@ class dc_branding::openstack::horizon (
   File {
     owner  => 'root',
     group  => 'root',
-    notify => Service['apache2'],
+    notify => Exec['horizon_compile_sass'],
   }
 
   # Add in the resources
@@ -46,4 +46,11 @@ class dc_branding::openstack::horizon (
     target => "${theme_path}/static/datacentred",
   }
 
+  # Compile the sass assets
+  exec { 'horizon_compile_sass':
+    command     => 'python manage.py compress',
+    cwd         => $horizon_path,
+    refreshonly => true,
+    notify      => Service['apache2'],
+  }
 }
