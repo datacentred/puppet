@@ -2,10 +2,7 @@
 class dc_collectd::agent::iostat {
 
   # Install pre-reqs
-  $prereqs = [ 'sysstat' ]
-  package { $prereqs :
-    ensure => present,
-  }
+  ensure_packages('sysstat')
 
   # Make plugins directory structure
   $pythondirs = [
