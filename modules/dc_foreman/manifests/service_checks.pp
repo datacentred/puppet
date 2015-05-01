@@ -21,16 +21,6 @@ class dc_foreman::service_checks (
     source => 'puppet:///modules/dc_foreman/foreman_check.py',
   }
 
-  file { '/usr/local/lib/python2.7/site-packages/dc_foreman.py':
-    ensure => absent,
-    source => 'puppet:///modules/dc_foreman/dc_foreman.py'
-  }
-
-  file { '/usr/local/lib/python2.7/site-packages/dc_omapi.py':
-    ensure => absent,
-    source => 'puppet:///modules/dc_foreman/dc_omapi.py'
-  }
-
   file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':
     ensure => file,
     source => 'puppet:///modules/dc_foreman/dc_foreman.py'
@@ -44,6 +34,12 @@ class dc_foreman::service_checks (
   file { '/usr/local/etc/foreman_check.config':
     ensure  => file,
     content => template('dc_foreman/foreman_check_config.erb'),
+  }
+
+  cron { 'foreman_check':
+    command => '/usr/local/bin/foreman_check.py',
+    hour    => 2,
+    minute  => 0,
   }
 
 }
