@@ -15,6 +15,7 @@ class dc_logstash::server (
   $logcourier_port            = $dc_logstash::params::logcourier_port,
   $logstash_cert_alias        = $dc_logstash::params::logstash_cert_alias,
   $logstash_syslog_port       = $dc_logstash::params::logstash_syslog_port,
+  $logstash_beavertcp_port       = $dc_logstash::params::logstash_beaver_port,
   $elasticsearch_host         = $dc_logstash::params::elasticsearch_host,
   $elasticsearch_embedded     = $dc_logstash::params::elasticsearch_embedded,
   $elasticsearch_protocol     = $dc_logstash::params::elasticsearch_protocol,

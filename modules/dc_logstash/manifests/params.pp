@@ -12,6 +12,7 @@
 class dc_logstash::params (
   $logstash_server,
   $logstash_syslog_port,
+  $logstash_beavertcp_port,
   $logcourier_port,
   $logcourier_version,
   $logstash_grok_patterns_dir,
@@ -20,4 +21,7 @@ class dc_logstash::params (
   $elasticsearch_host,
   $elasticsearch_embedded,
   $elasticsearch_protocol,
+  $logstash_api_version,
+  $log_shipper,
+  $beaver_timeout,
 ){}
