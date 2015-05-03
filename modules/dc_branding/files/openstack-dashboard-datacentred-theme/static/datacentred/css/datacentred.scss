@@ -57,7 +57,6 @@
 
 $datacentred-blue:    #1a76bc;
 $datacentred-pink:    #e30450;
-$datacentred-purple:  #766591;
 
 $light-orange:        #fdf6f2; /* used as background on pre text */
 $warm-grey:           #888888; /* warm grey */
@@ -79,7 +78,7 @@ $status-green:        #38b44a; /* green, for positive status */
 
 /* misc colours */
 $box-solid-grey:      #efefef;
-$link-color:          $datacentred-blue; /* This is the global link color, mainly used for links in content */
+$link-color:          $datacentred-blue;
 
 /* grid variables */
 $base:                14;
@@ -152,7 +151,7 @@ button.cta-inverted {
   @include box-sizing();
   @include font-size (14);
   @include rounded-corners(3px);
-  background: $datacentred-purple;
+  background: $datacentred-blue;
   border: none;
   color: #fff;
   text-decoration:none;
@@ -173,11 +172,7 @@ button.cta-inverted {
 {
   color: #fff;
   text-decoration: none;
-  background: #6d5d85;
-}
-
-.btn-primary.disabled {
-  background: $datacentred-purple;
+  background: darken($datacentred-blue, 10%);
 }
 
 .btn-danger {
@@ -190,7 +185,7 @@ button.cta-inverted {
 {
   color: #fff;
   text-decoration: none;
-  background: #d00449;
+  background: darken($datacentred-pink, 10%);
 }
 
 .btn.close,
@@ -216,6 +211,8 @@ button.cta-inverted {
 #splash .login {
   background-color: $datacentred-blue;
   background-image: url("../img/datacentred.png");
+  background-size: 250px 60px;
+  background-position: 65px 20px;
   padding-top: 100px;
   div {
     background-color: #fff;
@@ -237,6 +234,12 @@ button.cta-inverted {
   }
 }
 
+h1.brand a {
+  background-image: url("../img/datacentred.png");
+  background-size: 130px 30px;
+  margin-top: -5px;
+}
+
 .topbar .context-box .context-selection .dropdown-toggle {
     background: none;
     border: none;
@@ -251,9 +254,4 @@ button.cta-inverted {
 
 #user_info > a {
   color: #fff;
-}
-
-h1.brand a {
-  background-image: url("../img/datacentred.png");
-  margin-top: -10px;
 }
