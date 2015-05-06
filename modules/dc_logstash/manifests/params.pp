@@ -16,6 +16,7 @@ class dc_logstash::params (
   $logcourier_version,
   $logstash_grok_patterns_dir,
   $logstash_cert_alias,
+  $logstash_beavertcp_port,
   $riemann_dev_host,
   $elasticsearch_host,
   $elasticsearch_embedded,
