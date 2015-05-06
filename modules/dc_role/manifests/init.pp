@@ -17,6 +17,7 @@ class dc_role {
     include dc_profile::net::ntp
     include dc_profile::net::lldp
     include dc_profile::hardware::bmc
+    include dc_profile::hardware::board_support
 
     ## Only include these classes in production
     if $::environment == 'production' {
