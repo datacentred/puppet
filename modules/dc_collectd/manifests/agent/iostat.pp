@@ -13,7 +13,7 @@ class dc_collectd::agent::iostat {
   # Copy in new plugin
   file { '/usr/lib/collectd/python/collectd_iostat_python.py':
     ensure  => file,
-    require => File[$pythondirs],
+    require => File['/usr/lib/collectd/python'],
     source  => 'puppet:///modules/dc_collectd/collectd_iostat_python.py',
   }
 
