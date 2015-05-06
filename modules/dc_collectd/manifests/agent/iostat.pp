@@ -5,10 +5,7 @@ class dc_collectd::agent::iostat {
   ensure_packages('sysstat')
 
   # Make plugins directory structure
-  $pythondirs = [
-    '/usr/lib/collectd/python'
-  ]
-  file { $pythondirs:
+  file { 'usr/lib/collectd/python':
     ensure  => directory,
     require => Package['collectd'],
   }
