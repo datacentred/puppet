@@ -42,6 +42,17 @@ define dc_backup::dc_duplicity_job(
     default    => absent,
   }
 
+  if $pre_command {
+    cron { 'prep_for_backups':
+      command  => $pre_command,
+      user     => 'root',
+      month    => '*',
+      monthday => '*',
+      hour     => '0',
+      minute   => '0',
+    }
+  }
+
   duplicity { 'datacentred_ceph':
     ensure          => $ensure_dc_ceph,
     directory       => $source_dir,
@@ -55,7 +66,6 @@ define dc_backup::dc_duplicity_job(
 
   duplicity { 'amazon_s3':
     ensure                 => $ensure_s3,
-    pre_command            => $pre_command,
     directory              => $source_dir,
     bucket                 => 'datacentred',
     dest_id                => $datacentred_amazon_s3_id,
