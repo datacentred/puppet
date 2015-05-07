@@ -19,7 +19,10 @@ define dc_backup::dc_duplicity_job(
   $backup_content,
   $source_dir,
   $pre_command = undef,
-  $cloud = 'all',
+  $cloud = $dc_backup::params::cloud,
+  $pre_command_hour = $dc_backup::params::pre_command_hour,
+  $ceph_backup_hour = $dc_backup::params::ceph_backup_hour,
+  $s3_backup_hour = $dc_backup::params::s3_backup_hour,
   $datacentred_ceph_access_key = $dc_backup::params::datacentred_ceph_access_key,
   $datacentred_ceph_secret_key = $dc_backup::params::datacentred_ceph_secret_key,
   $datacentred_ceph_access_point = $dc_backup::params::datacentred_ceph_access_point,
@@ -42,25 +45,37 @@ define dc_backup::dc_duplicity_job(
     default    => absent,
   }
 
-  duplicity { 'datacentred_ceph':
+  if $pre_command {
+    cron { "prep_for_${backup_content}_backups":
+      command  => $pre_command,
+      user     => 'root',
+      month    => '*',
+      monthday => '*',
+      hour     => $pre_command_hour,
+      minute   => '0',
+    }
+  }
+
+  duplicity { "${backup_content}_datacentred_ceph":
     ensure          => $ensure_dc_ceph,
     directory       => $source_dir,
     dest_id         => $datacentred_ceph_access_key,
     dest_key        => $datacentred_ceph_secret_key,
+    hour            => $ceph_backup_hour,
     cloud           => 's3',
     custom_endpoint => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
   }
 
 
-  duplicity { 'amazon_s3':
+  duplicity { "${backup_content}_amazon_s3":
     ensure                 => $ensure_s3,
-    pre_command            => $pre_command,
     directory              => $source_dir,
     bucket                 => 'datacentred',
     dest_id                => $datacentred_amazon_s3_id,
     dest_key               => $datacentred_amazon_s3_key,
     sign_key_passphrase    => $datacentred_private_signing_key_password,
     encrypt_key_passphrase => $datacentred_private_encryption_key_password,
+    hour                   => $s3_backup_hour,
     cloud                  => 's3',
     remove_older_than      => '1M',
     folder                 => "${backup_content}_${::hostname}_backup",

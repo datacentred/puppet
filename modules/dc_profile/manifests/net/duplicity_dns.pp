@@ -4,7 +4,7 @@
 #
 class dc_profile::net::duplicity_dns {
 
-  dc_backup::dc_duplicity_job { $::hostname :
+  dc_backup::dc_duplicity_job { "${::hostname}_dns" :
     source_dir     => '/var/zonebackups',
     backup_content => 'dns',
   }

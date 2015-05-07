@@ -37,7 +37,7 @@ class dc_profile::openstack::mongodb {
       ensure => directory,
       mode   => '0700',
     }
-    include ::dc_backup::duplicity
+    include ::dc_profile::openstack::duplicity_mongodb
     include ::dc_backup::gpg_keys
   }
 
