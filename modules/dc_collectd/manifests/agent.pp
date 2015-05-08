@@ -48,5 +48,6 @@ class dc_collectd::agent {
   include dc_collectd::agent::disks
   include dc_collectd::agent::cpu
   include dc_collectd::agent::df
+  include dc_collectd::agent::iostat
 
 }
