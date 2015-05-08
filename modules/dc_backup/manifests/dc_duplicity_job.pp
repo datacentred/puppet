@@ -19,7 +19,10 @@ define dc_backup::dc_duplicity_job(
   $backup_content,
   $source_dir,
   $pre_command = undef,
-  $cloud = 'all',
+  $cloud = $dc_backup::params::cloud,
+  $pre_command_hour = $dc_backup::params::pre_command_hour,
+  $ceph_backup_hour = $dc_backup::params::ceph_backup_hour,
+  $s3_backup_hour = $dc_backup::params::s3_backup_hour,
   $datacentred_ceph_access_key = $dc_backup::params::datacentred_ceph_access_key,
   $datacentred_ceph_secret_key = $dc_backup::params::datacentred_ceph_secret_key,
   $datacentred_ceph_access_point = $dc_backup::params::datacentred_ceph_access_point,
@@ -48,7 +51,7 @@ define dc_backup::dc_duplicity_job(
       user     => 'root',
       month    => '*',
       monthday => '*',
-      hour     => '0',
+      hour     => $pre_command_hour,
       minute   => '0',
     }
   }
@@ -58,7 +61,7 @@ define dc_backup::dc_duplicity_job(
     directory       => $source_dir,
     dest_id         => $datacentred_ceph_access_key,
     dest_key        => $datacentred_ceph_secret_key,
-    hour            => '2',
+    hour            => $ceph_backup_hour,
     cloud           => 's3',
     custom_endpoint => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
   }
@@ -72,7 +75,7 @@ define dc_backup::dc_duplicity_job(
     dest_key               => $datacentred_amazon_s3_key,
     sign_key_passphrase    => $datacentred_private_signing_key_password,
     encrypt_key_passphrase => $datacentred_private_encryption_key_password,
-    hour                   => '4',
+    hour                   => $s3_backup_hour,
     cloud                  => 's3',
     remove_older_than      => '1M',
     folder                 => "${backup_content}_${::hostname}_backup",
