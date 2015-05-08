@@ -37,6 +37,7 @@ class dc_interop (
   $alt_tenant_name = undef,
   $alt_password = undef,
   $image_ref = undef,
+  $image_ref_alt = undef,
   $flavor_ref = undef,
   $flavor_ref_alt = undef,
   $dashboard_url = undef,
