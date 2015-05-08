@@ -46,5 +46,6 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::net_interfaces
   include ::dc_nrpe::checks::supermicro_psu_ipmi
   include ::dc_nrpe::checks::foreman_interfaces
+  include ::dc_nrpe::checks::disk_stats
 
 }
