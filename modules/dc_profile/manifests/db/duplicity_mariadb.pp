@@ -4,7 +4,7 @@
 #
 class dc_profile::db::duplicity_mariadb {
 
-  dc_backup::dc_duplicity_job { $::hostname :
+  dc_backup::dc_duplicity_job { "${::hostname}_mariadb" :
     source_dir     => '/var/dbbackups',
     backup_content => 'mariadb',
   }

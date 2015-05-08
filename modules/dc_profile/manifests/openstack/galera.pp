@@ -58,6 +58,7 @@ class dc_profile::openstack::galera {
       ensure => directory,
       mode   => '0700',
     }
+    include ::dc_profile::openstack::duplicity_galera
     include ::dc_backup::duplicity
     include ::dc_backup::gpg_keys
   }
