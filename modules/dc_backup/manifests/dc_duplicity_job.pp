@@ -46,7 +46,7 @@ define dc_backup::dc_duplicity_job(
   }
 
   if $pre_command {
-    cron { "prep_for_${backup_content}_backups":
+    cron { "prep_for_${name}_backups":
       command  => $pre_command,
       user     => 'root',
       month    => '*',
