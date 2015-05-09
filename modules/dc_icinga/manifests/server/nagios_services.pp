@@ -726,4 +726,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'memcached Availability Check'
   }
 
+  icinga::service { 'check_disk_stats':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_generic',
+    check_command       => 'check_nrpe_1arg!check_disk_stats',
+    service_description => 'Disk Stats Check',
+  }
+
 }
