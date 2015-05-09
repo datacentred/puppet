@@ -30,19 +30,19 @@
 # Sample Usage:
 #
 class dc_interop (
-  $username = undef,
-  $tenant_name = undef,
-  $password = undef,
-  $alt_username = undef,
-  $alt_tenant_name = undef,
-  $alt_password = undef,
-  $image_ref = undef,
-  $image_ref_alt = undef,
-  $flavor_ref = undef,
-  $flavor_ref_alt = undef,
-  $dashboard_url = undef,
-  $identity_uri = undef,
-  $refcore_tests = undef,
+  $username,
+  $tenant_name,
+  $password,
+  $alt_username,
+  $alt_tenant_name,
+  $alt_password,
+  $image_ref,
+  $image_ref_alt,
+  $flavor_ref,
+  $flavor_ref_alt,
+  $dashboard_url,
+  $identity_uri,
+  $refcore_tests,
   $region = sal01,
   $client_home = '/var/lib/refstack-client'
 ) {
