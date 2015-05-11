@@ -281,3 +281,6 @@
 [submodule "modules/gnupg"]
 	path = modules/gnupg
 	url = https://github.com/datacentred/golja-gnupg.git
+[submodule "modules/tempest"]
+	path = modules/tempest
+	url = https://github.com/stackforge/puppet-tempest
