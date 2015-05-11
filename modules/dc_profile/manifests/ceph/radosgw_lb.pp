@@ -3,10 +3,12 @@
 class dc_profile::ceph::radosgw_lb {
 
   include ::dc_ssl::storage
+  include ::dc_ssl::haproxy
   include ::loadbalancer::certs
   include ::loadbalancer
 
   Class['dc_ssl::storage'] ->
+  Class['dc_ssl::haproxy'] ->
   Class['loadbalancer::certs'] ->
   Class['loadbalancer']
 
