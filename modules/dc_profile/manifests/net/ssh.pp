@@ -13,32 +13,6 @@
 #
 class dc_profile::net::ssh {
 
-  service { 'ssh':
-    ensure     => true,
-    enable     => true,
-    hasrestart => true
-  }
-
-  sshd_config { 'AllowGroups':
-    ensure => present,
-    value  => [
-      'sysadmin',
-      'git',
-      'postgres',
-      'barman',
-      'juniperbackup',
-      'ceph-deploy',
-      'dhcp_sync_agent',
-      'tftpsync',
-      'nova',
-    ],
-    notify => Service['ssh']
-  }
-
-  sshd_config { 'PermitRootLogin':
-    ensure => present,
-    value  => 'no',
-    notify => Service['ssh']
-  }
+  include ::dc_ssh
 
 }
