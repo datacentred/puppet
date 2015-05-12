@@ -7,11 +7,11 @@ class dc_nrpe::checks::common {
   }
 
   $lw1  = $::processorcount * 8
-  $lw5  = $::processorcount * 5
-  $lw15 = $::processorcount * 2
   $lc1  = $::processorcount * 10
+  $lw5  = $::processorcount * 5
   $lc5  = $::processorcount * 8
-  $lc15 = $::processorcount * 3
+  $lw15 = $::processorcount * 3
+  $lc15 = $::processorcount * 4
 
   dc_nrpe::check { 'check_users':
     path => '/usr/lib/nagios/plugins/check_users',
