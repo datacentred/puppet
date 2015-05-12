@@ -20,12 +20,15 @@ class dc_profile::perf::grafana {
     port          => '80',
     default_vhost => false,
     docroot       => '/var/lib/grafana',
+    docroot_owner => 'grafana',
+    docroot_group => 'grafana',
     proxy_pass    => [
       {
         'path' => '/',
         'url'  => 'http://localhost:8080/'
       },
     ],
+    require       => Class['::grafana'],
   }
 
   @@dns_resource { "grafana.${::domain}/CNAME":

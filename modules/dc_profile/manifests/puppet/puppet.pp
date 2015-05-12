@@ -15,6 +15,4 @@ class dc_profile::puppet::puppet {
 
   contain ::puppet::agent::cron
 
-  cron { 'puppet': ensure => absent }
-
 }

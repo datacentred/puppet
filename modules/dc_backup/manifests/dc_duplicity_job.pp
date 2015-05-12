@@ -19,10 +19,15 @@ define dc_backup::dc_duplicity_job(
   $backup_content,
   $source_dir,
   $pre_command = undef,
+  $create_cron = true,
+  $script_owner = undef,
+  $script_group_owner = undef,
+  $script_permissions = undef,
   $cloud = $dc_backup::params::cloud,
   $pre_command_hour = $dc_backup::params::pre_command_hour,
   $ceph_backup_hour = $dc_backup::params::ceph_backup_hour,
   $s3_backup_hour = $dc_backup::params::s3_backup_hour,
+  $create_cron = true,
   $datacentred_ceph_access_key = $dc_backup::params::datacentred_ceph_access_key,
   $datacentred_ceph_secret_key = $dc_backup::params::datacentred_ceph_secret_key,
   $datacentred_ceph_access_point = $dc_backup::params::datacentred_ceph_access_point,
@@ -56,18 +61,22 @@ define dc_backup::dc_duplicity_job(
     }
   }
 
-  duplicity { "${backup_content}_datacentred_ceph":
-    ensure          => $ensure_dc_ceph,
-    directory       => $source_dir,
-    dest_id         => $datacentred_ceph_access_key,
-    dest_key        => $datacentred_ceph_secret_key,
-    hour            => $ceph_backup_hour,
-    cloud           => 's3',
-    custom_endpoint => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
+  duplicity { "${name}_datacentred_ceph":
+    ensure             => $ensure_dc_ceph,
+    directory          => $source_dir,
+    dest_id            => $datacentred_ceph_access_key,
+    dest_key           => $datacentred_ceph_secret_key,
+    create_cron        => $create_cron,
+    script_owner       => $script_owner,
+    script_permissions => $script_permissions,
+    script_group_owner => $script_group_owner,
+    hour               => $ceph_backup_hour,
+    cloud              => 's3',
+    custom_endpoint    => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/"
   }
 
 
-  duplicity { "${backup_content}_amazon_s3":
+  duplicity { "${name}_amazon_s3":
     ensure                 => $ensure_s3,
     directory              => $source_dir,
     bucket                 => 'datacentred',
@@ -76,6 +85,7 @@ define dc_backup::dc_duplicity_job(
     sign_key_passphrase    => $datacentred_private_signing_key_password,
     encrypt_key_passphrase => $datacentred_private_encryption_key_password,
     hour                   => $s3_backup_hour,
+    create_cron            => $create_cron,
     cloud                  => 's3',
     remove_older_than      => '1M',
     folder                 => "${backup_content}_${::hostname}_backup",
