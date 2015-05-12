@@ -2,7 +2,7 @@
 #
 # MongoDB deployment for OpenStack Ceilometer
 #
-class dc_role::osmongodb inherits dc_role {
+class dc_role::osmongodb {
 
   include ::dc_profile::openstack::mongodb
 

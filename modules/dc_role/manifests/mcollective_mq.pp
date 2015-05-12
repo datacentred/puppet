@@ -10,6 +10,6 @@
 #
 # Sample Usage:
 #
-class dc_role::mcollective_mq inherits dc_role {
+class dc_role::mcollective_mq {
 
 }

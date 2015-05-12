@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::bigyellow inherits dc_role {
+class dc_role::bigyellow {
 
   contain dc_profile::db::pgbackup
   contain dc_profile::net::aptmirror

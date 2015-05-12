@@ -7,3 +7,6 @@ Exec {
     '/usr/sbin/',
   ],
 }
+
+# Probe hiera for our class list
+hiera_include('classes')

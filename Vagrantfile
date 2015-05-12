@@ -9,6 +9,11 @@ Vagrant.configure('2') do |config|
   config.vm.box_version      = '1.0.1'
   config.vm.box_check_update = true
 
+  # Provision using the root account.  This allows us to modify
+  # the uid/gid namespaces before provisioning with puppet
+  config.ssh.username = 'root'
+  config.ssh.password = 'puppet'
+
   # Use landrush for DNS resolution
   config.landrush.enabled = true
 
@@ -51,6 +56,11 @@ Vagrant.configure('2') do |config|
         vmware.vmx['memsize']  = options.has_key?(:memory) ? options.memory.to_i : 1024
       end
 
+      # By default the puppet VMs have vagrant at 1000:1000 which interferes with
+      # our hard coded IDs.  Removing this hurdle allows testing of user account
+      # provisioning
+      config.vm.provision 'shell', inline: 'userdel -r vagrant'
+
       # Provision the box
       box.vm.provision 'shell', path: 'vagrant/bootstrap_client.sh'
       box.vm.provision 'puppet' do |puppet|
@@ -60,7 +70,7 @@ Vagrant.configure('2') do |config|
 
         puppet.facter = {
           'is_vagrant'   => true,
-          'vagrant_role' => options.has_key?(:puppet_role) ? options.puppet_role.to_s : 'dc_role',
+          'vagrant_role' => options.has_key?(:puppet_role) ? options.puppet_role.to_s : '',
           'role'         => options.has_key?(:hiera_role) ? options.hiera_role.to_s : '',
         }
 
@@ -68,6 +78,7 @@ Vagrant.configure('2') do |config|
           '--debug',
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
+          '--environment=vagrant',
         ]
       end
     end

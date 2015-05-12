@@ -2,7 +2,7 @@
 #
 # Gerrit code review role
 #
-class dc_role::gerrit inherits dc_role {
+class dc_role::gerrit {
 
   include ::gerrit
 

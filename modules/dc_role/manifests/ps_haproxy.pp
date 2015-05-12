@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::ps_haproxy inherits dc_role {
+class dc_role::ps_haproxy {
 
   include ::dc_profile::util::sysctls
   include ::dc_profile::net::loadbalancer

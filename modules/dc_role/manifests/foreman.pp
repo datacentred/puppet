@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::foreman inherits dc_role {
+class dc_role::foreman {
 
   contain dc_profile::foreman::foreman
 

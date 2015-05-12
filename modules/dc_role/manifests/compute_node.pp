@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::compute_node inherits dc_role {
+class dc_role::compute_node {
 
   contain dc_profile::openstack::neutron_agent
   contain dc_profile::openstack::nova_compute
