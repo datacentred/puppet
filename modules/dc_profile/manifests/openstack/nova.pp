@@ -19,7 +19,6 @@ class dc_profile::openstack::nova {
   include ::nova::scheduler
   include ::nova::scheduler::filter
   include ::nova::vncproxy
-  include ::nova::serialproxy
 
   nova_config { 'DEFAULT/default_floating_pool':
     value => 'external',
@@ -27,6 +26,10 @@ class dc_profile::openstack::nova {
 
   nova_config { 'DEFAULT/restrict_isolated_hosts_to_isolated_images':
     value => true,
+  }
+
+  nova_config { 'serial_console/enabled':
+    value => false,
   }
 
   # Add the various services from this node into our loadbalancers
@@ -49,13 +52,6 @@ class dc_profile::openstack::nova {
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
     ports             => '6080',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-  @@haproxy::balancermember { "${::fqdn}-serialproxy":
-    listening_service => 'serialproxy',
-    server_names      => $::hostname,
-    ipaddresses       => $::ipaddresses,
-    ports             => '6083',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-ec2":
