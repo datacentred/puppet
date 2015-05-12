@@ -179,10 +179,10 @@ for DISK in "${DISK_ARRAY[@]}"; do
     # Check IOPS
     if [ "$IOPS" -gt "$WARN_IOPS" ]; then
         if [ "$IOPS" -gt "$CRIT_IOPS" ]; then
-            OUTPUT+="IO/s on $DISK (>$CRIT_TPS), "
+            OUTPUT+="IO/s on $DISK (>$CRIT_IOPS), "
             ((CRITICAL++))
         else
-            OUTPUT+="IO/s on $DISK (>$WARN_TPS), "
+            OUTPUT+="IO/s on $DISK (>$WARN_IOPS), "
             ((WARNING++))
         fi
     fi
