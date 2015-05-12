@@ -727,7 +727,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_disk_stats':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_nrpe',
     hostgroup_name      => 'dc_hostgroup_generic',
     check_command       => 'check_nrpe_1arg!check_disk_stats',
     service_description => 'Disk Stats Check',
