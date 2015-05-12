@@ -53,8 +53,8 @@ class dc_profile::mon::icinga_server {
         path       => '/usr/share/icinga-web/pub/images/$1/$2',
       },
       {
-        alias      => '/js/ext3/',
-        path       => '/usr/share/icinga-web/lib/ext3/',
+        alias => '/js/ext3/',
+        path  => '/usr/share/icinga-web/lib/ext3/',
       },
     ],
     directories => [
@@ -74,36 +74,43 @@ class dc_profile::mon::icinga_server {
     servername  => "api-icinga.${::domain}",
     docroot     => '/var/www/html',
     port        => 80,
-    directories => [{ path           => '/schedule_downtime',
-                      provider       => 'location',
-                      auth_name      => 'Icinga API',
-                      auth_type      => 'basic',
-                      auth_user_file => '/etc/apache2/api-icinga.htpasswd',
-                      require        => 'valid-user',
-                    },
-                    { path           => '/cancel_downtime',
-                      provider       => 'location',
-                      auth_name      => 'Icinga API',
-                      auth_type      => 'basic',
-                      auth_user_file => '/etc/apache2/api-icinga.htpasswd',
-                      require        => 'valid-user',
-                    },
-                    { path           => '/state',
-                      provider       => 'location',
-                      auth_name      => 'Icinga API',
-                      auth_type      => 'basic',
-                      auth_user_file => '/etc/apache2/api-icinga.htpasswd',
-                      require        => 'valid-user',
-                    },
+    directories => [
+      {
+        'path'           => '/schedule_downtime',
+        'provider'       => 'location',
+        'auth_name'      => 'Icinga API',
+        'auth_type'      => 'basic',
+        'auth_user_file' => '/etc/apache2/api-icinga.htpasswd',
+        'require'        => 'valid-user',
+      },
+      {
+        'path'           => '/cancel_downtime',
+        'provider'       => 'location',
+        'auth_name'      => 'Icinga API',
+        'auth_type'      => 'basic',
+        'auth_user_file' => '/etc/apache2/api-icinga.htpasswd',
+        'require'        => 'valid-user',
+      },
+      {
+        'path'           => '/state',
+        'provider'       => 'location',
+        'auth_name'      => 'Icinga API',
+        'auth_type'      => 'basic',
+        'auth_user_file' => '/etc/apache2/api-icinga.htpasswd',
+        'require'        => 'valid-user',
+      },
     ],
     proxy_pass  => [
-      { 'path' => '/schedule_downtime',
+      {
+        'path' => '/schedule_downtime',
         'url'  => 'http://localhost:24554/schedule_downtime'
       },
-      { 'path' => '/cancel_downtime',
+      {
+        'path' => '/cancel_downtime',
         'url'  => 'http://localhost:24554/cancel_downtime'
       },
-      { 'path' => '/state',
+      {
+        'path' => '/state',
         'url'  => 'http://localhost:24554/state'
       },
     ],
