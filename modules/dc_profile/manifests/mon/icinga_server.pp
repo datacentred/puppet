@@ -109,8 +109,4 @@ class dc_profile::mon::icinga_server {
     ],
   }
 
-  @@dns_resource { "api-icinga.${::domain}/CNAME":
-    rdata => $::fqdn,
-  }
-
 }
