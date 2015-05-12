@@ -28,10 +28,6 @@ class dc_profile::openstack::nova {
     value => true,
   }
 
-  nova_config { 'serial_console/enabled':
-    value => false,
-  }
-
   # Add the various services from this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-compute":
     listening_service => 'nova-compute',

@@ -48,6 +48,10 @@ class dc_profile::openstack::nova_compute {
   include ::nova::network::neutron
   include ::nova::scheduler::filter
 
+  nova_config { 'serial_console/enabled':
+    value => false,
+  }
+
   # Make sure the Ceph client configuration is in place
   # before we do any of the Nova rbd-related configuration, and
   # restart if there's any changes
