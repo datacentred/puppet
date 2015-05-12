@@ -262,24 +262,6 @@ class dc_profile::openstack::haproxy {
     },
   }
 
-  # Nova Serial Proxy
-  haproxy::listen { 'serialproxy':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '6083',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
-    ],
-    options      => {
-      'option'  => ['tcpka', 'tcplog'],
-      'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
-    },
-  }
-
   # Galera
   haproxy::listen { 'galera':
     ipaddress => $internal_vip,
