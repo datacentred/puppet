@@ -41,6 +41,12 @@ Vagrant.configure('2') do |config|
         box.vm.network :private_network, ip: options.ip
       end
 
+      # Provision some flavour of RHEL instead of the default Ubuntu Trusty
+      if options.has_key?(:rhel)
+        box.vm.box = 'puppetlabs/centos-7.0-64-puppet'
+        box.vm.box_version = '1.0.1'
+      end
+
       # Virtualbox Provider
       box.vm.provider 'virtualbox' do |virtualbox, override|
         virtualbox.cpus   = options.has_key?(:cpus) ? options.cpus.to_i : 2
