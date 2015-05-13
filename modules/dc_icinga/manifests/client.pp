@@ -14,6 +14,7 @@
 #
 class dc_icinga::client (
   $address = $::ipaddress,
+  $host_tag = $::environment,
 ) {
 
   contain ::icinga::client
@@ -37,7 +38,7 @@ class dc_icinga::client (
     notes           => $description,
     statusmap_image => 'base/ubuntu.gd2',
     vrml_image      => 'ubuntu.png',
-    tag             => $::environment,
+    tag             => $host_tag,
   }
 
 }
