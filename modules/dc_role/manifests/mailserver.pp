@@ -10,5 +10,5 @@
 #
 # Sample Usage:
 #
-class dc_role::mailserver inherits dc_role {
+class dc_role::mailserver {
 }

@@ -1,8 +1,13 @@
 boxes:
   # Define our first server. You can define as many as you want.
+  #
+  # WARNING: At least one key must be defined per host lest 
+  #          vagrant falls over in a heap with errors.  A
+  #          null string will suffice for role for example
+  #
   os_compute_node:
     # The puppet role (class) to include at the base level
-    # Default: dc_role
+    # Default: None
     puppet_role: dc_role::compute_node
 
     # The hiera role to define.

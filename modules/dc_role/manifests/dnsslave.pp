@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::dnsslave inherits dc_role {
+class dc_role::dnsslave {
 
   contain dc_profile::net::dns_slave
   contain dc_profile::net::dhcpd_slave

@@ -5,21 +5,23 @@
 #
 # === Parameters
 #
-# [*allowed_groups*]
-#   POSIX groups allowed to ssh into a machine
+# [*config*]
+#   Hash of sshd configuration commands passed down to the
+#   augeas provider
 #
 # === Notes
 #
-# Typically the groups are sourced from common.yaml for most machines,
+# Typically the configuration is sourced from common.yaml for most machines,
 # platform specific overrides are provided where necessary so grep for
-# all affected configurations when adding new groups (e.g. the vagrant
-# group on vagrant platforms allows vagrant ssh to function)
+# all affected configurations when adding new groups (e.g. vagrant needs
+# to allow root login for vagrant ssh and provison commands to work post
+# provisioning)
 #
 class dc_ssh (
-  $allowed_groups,
+  $config = {},
 ) {
 
-  validate_array($allowed_groups)
+  create_resources('sshd_config', $config)
 
   service { 'ssh':
     ensure     => true,
@@ -27,16 +29,6 @@ class dc_ssh (
     hasrestart => true
   }
 
-  sshd_config { 'AllowGroups':
-    ensure => present,
-    value  => $allowed_groups,
-    notify => Service['ssh']
-  }
-
-  sshd_config { 'PermitRootLogin':
-    ensure => present,
-    value  => 'no',
-    notify => Service['ssh']
-  }
+  Sshd_config <||> ~> Service['ssh']
 
 }

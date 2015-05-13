@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::puppetdb inherits dc_role {
+class dc_role::puppetdb {
 
   contain dc_profile::puppet::puppetdb
 

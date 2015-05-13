@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::logstash inherits dc_role {
+class dc_role::logstash {
 
   contain dc_profile::log::kibana
   contain dc_profile::log::logstash

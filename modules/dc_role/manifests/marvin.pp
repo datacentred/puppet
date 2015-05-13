@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::marvin inherits dc_role {
+class dc_role::marvin {
 
   contain dc_profile::hubot::marvin
 

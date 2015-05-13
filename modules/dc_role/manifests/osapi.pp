@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_role::osapi inherits dc_role {
+class dc_role::osapi {
   contain dc_profile::openstack::proxyip
   contain dc_profile::openstack::haproxy
   contain dc_profile::openstack::keepalived

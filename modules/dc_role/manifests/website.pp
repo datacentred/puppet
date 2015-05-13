@@ -9,7 +9,7 @@
 #
 # Sample Usage:
 #
-class dc_role::website inherits dc_role {
+class dc_role::website {
 
   include dc_profile::wordpress::datacentred
 }

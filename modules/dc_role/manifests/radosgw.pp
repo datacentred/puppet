@@ -2,7 +2,7 @@
 #
 # A rados gateway
 #
-class dc_role::radosgw inherits dc_role {
+class dc_role::radosgw {
 
   contain ::dc_profile::ceph::radosgw
 
