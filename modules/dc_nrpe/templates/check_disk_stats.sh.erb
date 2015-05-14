@@ -65,7 +65,18 @@ for DISK in "${DISK_ARRAY[@]}"; do
     # generate HISTFILE filename
     HISTFILE=/var/tmp/check_diskstat_$(id -nu).$DISK
     # Set the correct parameters dependening on type
-    DISK_TYPE=$(cat /sys/block/"$DISK"/queue/rotational)
+    if [[ "$DISK" =~ "cciss" ]]
+    then
+        CONTROLLER=${DISK:7:1}
+        if hpacucli ctrl slot=$CONTROLLER pd all show detail | grep Model | grep SSD >/dev/null
+        then
+            DISK_TYPE=0
+        else
+            DISK_TYPE=1
+        fi
+    else
+        DISK_TYPE=$(cat /sys/block/"$DISK"/queue/rotational)
+    fi
     if [ "$DISK_TYPE" -eq 1 ]
     then
 	    # Spinning disk params
