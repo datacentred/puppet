@@ -8,12 +8,6 @@
 # [*postgres_password*]
 #   Password for the postgres account
 #
-# [*backup_path*]
-#   Path to the barman backup directory
-#
-# [*backup_server*]
-#   Hostname of the barman backup server
-#
 # [*cluster_master_node*]
 #   Hostname of the master cluster node
 #
@@ -35,8 +29,6 @@ class dc_postgresql::params (
   $pghome = '/var/lib/postgresql',
   $pgdata,
   $pg_bindir,
-  $backup_path,
-  $backup_server,
   $cluster_name,
   $cluster_master_node,
   $listen_addresses = '*',
