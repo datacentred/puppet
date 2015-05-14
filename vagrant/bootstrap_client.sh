@@ -4,11 +4,17 @@
 # Exit if the following file exists
 test -f /root/.provisioned && exit 0
 
+# By default the puppet VMs have vagrant at 1000:1000 which interferes with
+# our hard coded IDs.  Removing this hurdle allows testing of user account
+# provisioning
+userdel -rf vagrant
+
 # Distribution-specific package considerations
 if [ -f /etc/redhat-release ]; then
   yum makecache fast > /dev/null
   yum install -y puppetdb-terminus > /dev/null
   gem install --no-rdoc --no-ri hiera-eyaml > /dev/null
+  sed -i '/Defaults    requiretty/d' /etc/sudoers
 else
   apt-get update &> /dev/null
   for i in puppetdb-terminus; do

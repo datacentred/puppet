@@ -14,6 +14,9 @@ Vagrant.configure('2') do |config|
   config.ssh.username = 'root'
   config.ssh.password = 'puppet'
 
+  # 
+  # config.ssh.pty = true
+  
   # Use landrush for DNS resolution
   config.landrush.enabled = true
 
@@ -61,11 +64,6 @@ Vagrant.configure('2') do |config|
         vmware.vmx['numvcpus'] = options.has_key?(:cpus) ? options.cpus.to_i : 2
         vmware.vmx['memsize']  = options.has_key?(:memory) ? options.memory.to_i : 1024
       end
-
-      # By default the puppet VMs have vagrant at 1000:1000 which interferes with
-      # our hard coded IDs.  Removing this hurdle allows testing of user account
-      # provisioning
-      config.vm.provision 'shell', inline: 'userdel -r vagrant'
 
       # Provision the box
       box.vm.provision 'shell', path: 'vagrant/bootstrap_client.sh'
