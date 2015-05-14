@@ -13,6 +13,7 @@ class dc_profile::puppet::puppet_master {
   include ::dc_puppet::master::hipbot
   include ::dc_icinga::hostgroup_puppetmaster
   include ::dc_icinga::hostgroup_foreman_proxy
+  include ::dc_profile::puppet::duplicity_puppetcerts
 
   # Install these classes after puppetmaster-common due to implicit
   # dependencies on directories and SSL certificates.  In particular
