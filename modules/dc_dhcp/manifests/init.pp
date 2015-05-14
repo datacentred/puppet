@@ -6,7 +6,7 @@
 #
 class dc_dhcp {
 
-  private()
+  assert_private()
 
   include ::dc_dhcp::params
 

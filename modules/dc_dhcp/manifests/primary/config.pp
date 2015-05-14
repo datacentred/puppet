@@ -4,7 +4,7 @@
 #
 class dc_dhcp::primary::config {
 
-  private()
+  assert_private()
 
   include ::dc_dhcp::params
 
