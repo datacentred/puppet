@@ -21,6 +21,6 @@ class dc_dhcp::params (
   $secondary_dhcp_host,
 ) {
 
-  private()
+  assert_private()
 
 }

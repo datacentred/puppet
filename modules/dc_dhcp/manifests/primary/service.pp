@@ -4,7 +4,7 @@
 #
 class dc_dhcp::primary::service {
 
-  private()
+  assert_private()
 
   service { 'dhcp_sync_agent':
     ensure => running,

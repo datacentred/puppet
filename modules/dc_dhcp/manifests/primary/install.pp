@@ -4,7 +4,7 @@
 #
 class dc_dhcp::primary::install {
 
-  private()
+  assert_private()
 
   package { 'python-pyinotify':
     ensure => installed,
