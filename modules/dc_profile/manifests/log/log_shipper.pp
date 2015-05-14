@@ -1,6 +1,6 @@
-# Class: dc_profile::log::log_courier
+# Class: dc_profile::log::log_shipper
 #
-# Installs the logstash forwarder to monitor files
+# Installs a log shipper to monitor files
 # and pipe the output to the server.  This is a
 # compressed and secure pipe
 #
@@ -12,10 +12,9 @@
 #
 # Sample Usage:
 #
-class dc_profile::log::log_courier {
+class dc_profile::log::log_shipper {
 
   contain dc_logstash::client
-  contain dc_logstash::client::forwarder
   contain dc_logstash::client::apache
   contain dc_logstash::client::mysql
   contain dc_logstash::client::mail

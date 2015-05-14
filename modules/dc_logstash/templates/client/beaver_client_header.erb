@@ -1,0 +1,8 @@
+[beaver]
+transport: tcp
+tcp_host: <%= @logstash_server %>
+tcp_port: <%= @logstash_beavertcp_port %>
+format: json
+logstash_version: <%= @logstash_api_version %>
+queue_timeout: <%= @beaver_timeout %>
+
