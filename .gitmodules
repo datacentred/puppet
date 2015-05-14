@@ -13,9 +13,6 @@
 [submodule "modules/stdlib"]
 	path = modules/stdlib
 	url = git://github.com/puppetlabs/puppetlabs-stdlib.git
-[submodule "modules/hiera-puppet"]
-	path = modules/hiera-puppet
-	url = git://github.com/puppetlabs/hiera-puppet.git
 [submodule "modules/apt_mirror"]
 	path = modules/apt_mirror
 	url = https://github.com/jtopjian/puppet-apt_mirror
@@ -52,9 +49,6 @@
 [submodule "modules/foreman_proxy"]
 	path = modules/foreman_proxy
 	url = https://github.com/theforeman/puppet-foreman_proxy
-[submodule "modules/hiera_yamlgpg"]
-	path = modules/hiera_yamlgpg
-	url = https://github.com/compete/hiera_yamlgpg
 [submodule "modules/logstash"]
 	path = modules/logstash
 	url = https://github.com/logstash/puppet-logstash
