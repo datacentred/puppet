@@ -14,7 +14,6 @@ class dc_postgresql::duplicity_postgresql_base {
     owner   => 'root',
   }
 
-
   postgresql::server::pg_hba_rule { 'allow replication access to local postgres user':
     description => 'Open up all for replication from local postgres user',
     type        => 'local',
