@@ -11,7 +11,7 @@ class dc_postgresql::duplicity_postgresql_wal {
     script_owner   => 'postgres',
     source_dir     => "${dc_postgresql::params::pgdata}/pg_xlog/",
     backup_content => 'postgresql_WAL',
-    cloud          => 'dc_ceph'
+    cloud          => 'dc_ceph',
   }
 
 }
