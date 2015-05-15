@@ -64,6 +64,13 @@ class dc_foreman_proxy::config {
 
   }
 
+  # How foreman signs certificates
+  file { '/etc/puppet/autosign.conf':
+    ensure => file,
+    owner  => 'puppet',
+    group  => 'puppet',
+  }
+
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_logstash::client::foreman_proxy
