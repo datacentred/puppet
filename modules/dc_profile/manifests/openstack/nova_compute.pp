@@ -32,7 +32,7 @@ class dc_profile::openstack::nova_compute {
 
   # Configure Ceph client
   ceph::client { 'cinder':
-    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=cinder.images\" mon \"allow r\"'
+    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
   } ~>
   # Workaround to get our rbd key into libvirt
   exec { 'set-virsh-secret-value':
