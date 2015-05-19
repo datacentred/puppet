@@ -18,6 +18,10 @@ class dc_ceph::keybackup (
 
   if $::hostname == $primary_mon {
 
+    file { '/var/ceph-keybackup':
+      ensure => directory,
+    }
+
     dc_backup::dc_duplicity_job { "${::hostname}_ceph_keys" :
       pre_command    => 'ceph auth list > /var/ceph-keybackup/keys_`date +"%m_%d_%Y"`.txt',
       source_dir     => '/var/ceph-keybackup',
