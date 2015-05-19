@@ -74,6 +74,22 @@ for DISK in "${DISK_ARRAY[@]}"; do
         else
             DISK_TYPE=1
         fi
+    elif smartctl -a /dev/$DISK | grep PERC >/dev/null
+    then
+        BUS_ID=$(dmesg | grep $DISK | grep Attached | awk '{ print $4 }' | cut -d ":" -f 3)
+        if [ $(sudo racadm raid get controllers | wc -l) == 2 ]
+        then
+            MEDIA_TYPE=$(racadm raid get vdisks:Disk.Virtual.$BUS_ID:RAID.Integrated.1-1 | grep MediaType | awk '{ print $3 }')
+            if [ "$MEDIA_TYPE" == "SSD" ]
+            then
+                DISK_TYPE=0
+            else
+                DISK_TYPE=1
+            fi
+        else
+            echo "WARNING: Found more than one PERC - unsupported"
+            exit 1
+        fi 
     else
         DISK_TYPE=$(cat /sys/block/"$DISK"/queue/rotational)
     fi
