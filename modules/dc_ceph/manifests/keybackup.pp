@@ -18,28 +18,21 @@ class dc_ceph::keybackup (
 
   if $::hostname == $primary_mon {
 
-    $sos_address      = hiera(internal_sysmail_address)
-    $mountpoint       = '/var/ceph-keybackup'
-
-    include ::nfs::client
-
-    Nfs::Client::Mount <<| nfstag == 'ceph-keybackup' |>> {
-      ensure  => present,
-      options => 'noauto,_netdev',
-      mount   => $mountpoint,
+    file { '/var/ceph-keybackup':
+      ensure => directory,
     }
 
-    file { '/usr/local/bin/ceph-keybackup':
-      ensure  => file,
-      mode    => '0744',
-      content => template('dc_ceph/ceph-keybackup.erb'),
+    dc_backup::dc_duplicity_job { "${::hostname}_ceph_keys" :
+      pre_command    => 'ceph auth list > /var/ceph-keybackup/keys_`date +"%m_%d_%Y"`.txt',
+      source_dir     => '/var/ceph-keybackup',
+      backup_content => 'ceph_keys',
     }
 
-    cron { 'ceph-keybackup':
-      command => '/usr/local/bin/ceph-keybackup',
-      user    => 'root',
-      hour    => 4,
-      minute  => 0,
+    tidy { 'ceph_key_dir':
+      path    => '/var/ceph-keybackup',
+      age     => '7D',
+      recurse => true,
+      rmdirs  => true,
     }
 
   }
