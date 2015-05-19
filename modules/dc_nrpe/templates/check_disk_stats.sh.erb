@@ -45,7 +45,7 @@ readhistdiskstat() {
 }
 
 safe_to_run_smartctl() {
-  if [[ $(uname -m) == 'aarch64']]; then
+  if [[ $(uname -m) == 'aarch64' ]]; then
     return 1
   else
     return 0
