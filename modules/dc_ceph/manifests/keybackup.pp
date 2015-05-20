@@ -22,7 +22,7 @@ class dc_ceph::keybackup (
       ensure => directory,
     }
 
-#percentage signs in cron job are escaped because cron subs them for newlines otherwise
+    #percentage signs in cron job are escaped because cron subs them for newlines otherwise
     dc_backup::dc_duplicity_job { "${::hostname}_ceph_keys" :
       pre_command    => 'ceph auth list > /var/ceph-keybackup/keys_`date +"\%m_\%d_\%Y"`.txt',
       source_dir     => '/var/ceph-keybackup',
