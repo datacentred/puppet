@@ -69,6 +69,7 @@ class dc_foreman_proxy::config {
     ensure => file,
     owner  => 'puppet',
     group  => 'puppet',
+    mode   => '0664',
   }
 
   unless $::is_vagrant {
