@@ -275,3 +275,6 @@
 [submodule "modules/tempest"]
 	path = modules/tempest
 	url = https://github.com/stackforge/puppet-tempest
+[submodule "modules/kibana4"]
+	path = modules/kibana4
+	url = https://github.com/lesaux/puppet-kibana4.git
