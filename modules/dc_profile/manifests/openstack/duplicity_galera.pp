@@ -27,10 +27,6 @@ class dc_profile::openstack::duplicity_galera (
     mode    => '0700',
   }
 
-  file { '/var/local/backup':
-    ensure => directory,
-  }
-
   tidy { 'galera_dumps':
     path    => '/var/local/backup',
     age     => '2D',
