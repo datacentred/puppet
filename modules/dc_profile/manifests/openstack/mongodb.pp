@@ -31,6 +31,24 @@ class dc_profile::openstack::mongodb {
   } ->
   Mongodb_replset['ceilometer']
 
+  # Logrotation recommendations as per https://jira.mongodb.org/browse/SERVER-11087
+  logrotate::rule { 'mongodb_logs':
+    path          => '/var/log/mongodb/mongodb.log',
+    rotate        => '14',
+    rotate_every  => 'day',
+    ifempty       => false,
+    create        => true,
+    create_mode   => '640',
+    create_owner  => 'mongod',
+    create_group  => 'mongod',
+    compress      => true,
+    missingok     => true,
+    delaycompress => true,
+    sharedscripts => true,
+    postrotate    => [ '/bin/kill -SIGUSR1 `cat /var/run/mongodb/mongod.pid 2>/dev/null` >/dev/null 2>&1',
+                      'find /var/log/mongodb -type f -size 0 -regextype posix-awk -regex "^\/var\/log\/mongodb\/mongod\.log\.[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}$" -execdir rm {} \; >/dev/null 2>&1' ],
+  }
+
   # $::backup_node is set via the ENC (Foreman)
   if $::backup_node {
     file { '/srv/backup':
