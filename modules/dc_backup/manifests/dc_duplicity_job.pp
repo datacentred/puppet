@@ -61,6 +61,13 @@ define dc_backup::dc_duplicity_job(
     }
   }
 
+  tidy { 'duplicity_signature_cache':
+    path    => '/root/.cache/duplicity/',
+    age     => '30d',
+    recurse => true,
+    rmdirs  => true,
+  }
+
   duplicity { "${name}_datacentred_ceph":
     ensure             => $ensure_dc_ceph,
     directory          => $source_dir,
