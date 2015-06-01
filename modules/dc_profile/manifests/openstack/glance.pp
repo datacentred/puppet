@@ -18,6 +18,7 @@ class dc_profile::openstack::glance {
   contain ::glance::notify::rabbitmq
   include ::glance::cache::pruner
   include ::glance::cache::cleaner
+  include ::dc_icinga::hostgroup_glance
 
   # Add this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-glance-registry":
@@ -38,7 +39,6 @@ class dc_profile::openstack::glance {
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_logstash::client::glance
-      include ::dc_icinga::hostgroup_glance
     }
   }
 

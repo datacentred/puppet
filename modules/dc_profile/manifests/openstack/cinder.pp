@@ -20,6 +20,7 @@ class dc_profile::openstack::cinder {
   include ::cinder::volume
   include ::cinder::ceilometer
   include ::cinder::volume::rbd
+  include ::dc_icinga::hostgroup_cinder
 
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
@@ -42,7 +43,6 @@ class dc_profile::openstack::cinder {
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_logstash::client::cinder
-      include ::dc_icinga::hostgroup_cinder
     }
   }
 
