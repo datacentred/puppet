@@ -1,7 +1,7 @@
 boxes:
   # Define our first server. You can define as many as you want.
   #
-  # WARNING: At least one key must be defined per host lest 
+  # WARNING: At least one key must be defined per host lest
   #          vagrant falls over in a heap with errors.  A
   #          null string will suffice for role for example
   #
@@ -21,3 +21,14 @@ boxes:
     # You can manually specify IP addresses instead of relying on DHCP
     # Default: DHCP
     # ip: 192.168.1.50
+
+    # You can forward ports from your local machine to the guest
+    # forwarded_ports:
+    #   http:
+    #     guest: 80
+    #     host: 8080
+    #     protocol: tcp
+    #   https:
+    #     guest: 443
+    #     host: 8443
+    #     protocol: tcp
