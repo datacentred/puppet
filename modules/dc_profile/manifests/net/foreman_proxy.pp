@@ -12,21 +12,8 @@
 #
 class dc_profile::net::foreman_proxy {
 
-  $omapi_key    = hiera(omapi_key)
-  $omapi_secret = hiera(omapi_secret)
-
-  class { 'dc_foreman_proxy' :
-    use_dns      => true,
-    use_dhcp     => true,
-    use_tftp     => true,
-    use_bmc      => true,
-    omapi_key    => $omapi_key,
-    omapi_secret => $omapi_secret,
-  }
-
-  Class['::tftp'] -> Class['dc_foreman_proxy']
-
-  include dc_icinga::hostgroup_foreman_proxy
-  include dc_foreman::service_checks
+  include ::dc_foreman_proxy
+  include ::dc_foreman::service_checks
+  include ::dc_icinga::hostgroup_foreman_proxy
 
 }

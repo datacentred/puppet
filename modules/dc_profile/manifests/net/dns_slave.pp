@@ -12,18 +12,7 @@
 #
 class dc_profile::net::dns_slave {
 
-  class { 'dns':
-    nameservers => hiera(nameservers),
-    forwarders  => hiera(forwarders),
-    recursors   => hiera(client_networks),
-    rndc_key    => hiera(rndc_key),
-  }
-
-  class { 'dc_dns':
-    isslave => true,
-  }
-  contain 'dc_dns'
-
-  include dc_icinga::hostgroup_dns
+  include ::dc_dns
+  include ::dc_icinga::hostgroup_dns
 
 }
