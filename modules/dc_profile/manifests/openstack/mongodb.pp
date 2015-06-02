@@ -16,6 +16,7 @@ class dc_profile::openstack::mongodb {
   include ::mongodb::server
   include ::mongodb::client
   include ::mongodb::replset
+  include ::dc_icinga::hostgroup_mongodb
 
   Class['::mongodb::server'] ->
   Class['::mongodb::client']
@@ -43,7 +44,6 @@ class dc_profile::openstack::mongodb {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_icinga::hostgroup_mongodb
       include ::dc_logstash::client::mongodb
     }
   }

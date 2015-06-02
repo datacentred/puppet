@@ -15,6 +15,7 @@ class dc_profile::openstack::neutron_server {
   include ::neutron::server
   include ::neutron::server::notifications
   include ::neutron::plugins::ml2
+  include ::dc_icinga::hostgroup_neutron_server
 
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
@@ -28,7 +29,6 @@ class dc_profile::openstack::neutron_server {
   unless $::is_vagrant {
     if $environment == 'production' {
       include ::dc_logstash::client::neutron
-      include ::dc_icinga::hostgroup_neutron_server
     }
   }
 }
