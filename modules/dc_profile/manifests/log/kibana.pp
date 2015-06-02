@@ -11,9 +11,6 @@
 # Sample Usage:
 #
 class dc_profile::log::kibana {
-
   include apache
-
-  class { 'dc_kibana': }
-
+  include kibana4
 }
