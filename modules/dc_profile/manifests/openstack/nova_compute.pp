@@ -43,7 +43,10 @@ class dc_profile::openstack::nova_compute {
     key  => hiera('ceph_admin_key'),
   }
 
-  Ceph::Keyring['ceph.client.admin.keyring'] -> Class['::nova::compute::rbd']
+  # Ensure ceph is installed and configured before installing the cinder secret
+  Class['::ceph::config'] ->
+  Ceph::Keyring['ceph.client.admin.keyring'] ->
+  Class['::nova::compute::rbd']
 
   include ::nova
   include ::nova::compute
