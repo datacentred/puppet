@@ -82,7 +82,7 @@ Vagrant.configure('2') do |config|
           '--debug',
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
-          '--environment=vagrant',
+          '--environment=production',
         ]
       end
     end
