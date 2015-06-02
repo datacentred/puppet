@@ -61,7 +61,7 @@ class dc_logstash::client::config::beaver (
   }
 
   logrotate::rule { 'beaver':
-    path         => '/var/log/beaver/beaver.log',
+    path         => '/var/log/beaver/logstash_beaver.log',
     rotate       => 4,
     rotate_every => 'week',
     compress     => true,
