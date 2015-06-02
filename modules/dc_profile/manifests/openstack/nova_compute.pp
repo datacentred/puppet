@@ -30,15 +30,20 @@ class dc_profile::openstack::nova_compute {
     notify  => Service['nova-compute'],
   }
 
-  # Configure Ceph client
+  # Configure Ceph client, this installs ceph and the client keyring
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
-  } ~>
-  # Workaround to get our rbd key into libvirt
-  exec { 'set-virsh-secret-value':
-    command => '/usr/bin/virsh secret-set-value --secret $(cat /etc/nova/virsh.secret) --base64 $(sed -n -e \'s/^.*key\ \= //p\' /etc/ceph/ceph.client.cinder.keyring)',
-    unless  => '/usr/bin/virsh secret-list | grep $(cat /etc/nova/virsh.secret)',
+  } ->
+
+  # Install the admin key on each host as ::nova::compute::rbd has a requirement
+  # that 'ceph auth' works without specifying the keyring.
+  # TODO: The hard-coded horror goes away in the next generation ceph module
+  ceph::keyring { 'ceph.client.admin.keyring':
+    user => 'client.admin',
+    key  => hiera('ceph_admin_key'),
   }
+
+  Ceph::Keyring['ceph.client.admin.keyring'] -> Class['::nova::compute::rbd']
 
   include ::nova
   include ::nova::compute
