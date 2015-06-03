@@ -48,4 +48,9 @@ class dc_foreman_proxy::install {
     content => 'foreman-proxy ALL=(ALL) NOPASSWD:ALL',
   }
 
+  # Hack: need to shift this up into a profile that includes all this stuff
+  Class['puppet'] -> Class['dc_foreman_proxy::install']
+  Class['tftp'] -> Class['dc_foreman_proxy::install']
+  Class['dc_dns'] -> Class['dc_foreman_proxy::install']
+
 }

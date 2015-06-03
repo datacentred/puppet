@@ -4,7 +4,10 @@
 # synchronisation agent user and configures passwordless ssh and sudo
 # rights to restart the dhcp daemon
 #
-class dc_dhcp {
+class dc_dhcp (
+  $zonemaster,
+  $pools = {},
+) {
 
   assert_private()
 
@@ -34,5 +37,10 @@ class dc_dhcp {
   package { 'python-pyparsing':
     ensure => installed,
   }
+
+  $pool_dfl = {
+    'zonemaster' => $zonemaster,
+  }
+  create_resources('dhcp::pool', $pools, $pool_dfl)
 
 }

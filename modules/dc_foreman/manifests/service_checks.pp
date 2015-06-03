@@ -11,9 +11,12 @@ class dc_foreman::service_checks (
   $lease_file,
 ){
 
+  ensure_packages(['python-pip'])
+
   package { 'pypureomapi':
     ensure   => installed,
     provider => 'pip',
+    require  => Package['python-pip'],
   }
 
   file { '/usr/local/bin/foreman_check.py':
