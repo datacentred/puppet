@@ -14,6 +14,7 @@ class dc_logstash::client::config::log_courier (
     ensure => file,
     owner  => 'root',
     group  => 'root',
+    mode   => '0755',
     source => "puppet:///modules/dc_logstash/log_courier/log-courier-${logcourier_version}",
   }
 
@@ -21,6 +22,7 @@ class dc_logstash::client::config::log_courier (
     ensure => file,
     owner  => 'root',
     group  => 'root',
+    mode   => '0755',
     source => 'puppet:///modules/dc_logstash/log_courier/lc-admin',
   }
 
@@ -36,12 +38,14 @@ class dc_logstash::client::config::log_courier (
     ensure => directory,
     owner  => 'root',
     group  => 'root',
+    mode   => '0755',
   }
 
   file { '/var/lib/log-courier':
     ensure => directory,
     owner  => 'root',
     group  => 'root'
+    mode   => '0755',
   }
 
   concat { '/etc/log-courier/log-courier.conf':
