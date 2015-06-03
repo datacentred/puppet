@@ -44,7 +44,7 @@ class dc_logstash::client::config::log_courier (
   file { '/var/lib/log-courier':
     ensure => directory,
     owner  => 'root',
-    group  => 'root'
+    group  => 'root',
     mode   => '0755',
   }
 
