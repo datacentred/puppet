@@ -14,9 +14,6 @@ Vagrant.configure('2') do |config|
   config.ssh.username = 'root'
   config.ssh.password = 'puppet'
 
-  # 
-  # config.ssh.pty = true
-  
   # Use landrush for DNS resolution
   config.landrush.enabled = true
 
@@ -42,6 +39,15 @@ Vagrant.configure('2') do |config|
       # Allow DHCP IP to be manually overriden
       if options.has_key?(:ip)
         box.vm.network :private_network, ip: options.ip
+      end
+
+      # Allow ports to be forwarded
+      if options.has_key?(:forwarded_ports)
+        options.forwarded_ports.each do |name, forwarded_port|
+          config.vm.network 'forwarded_port', guest: forwarded_port[:guest],
+                                              host: forwarded_port[:host],
+                                              protocol: forwarded_port[:protocol]
+        end
       end
 
       # Provision some flavour of RHEL instead of the default Ubuntu Trusty
@@ -82,7 +88,7 @@ Vagrant.configure('2') do |config|
           '--debug',
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
-          '--environment=vagrant',
+          '--environment vagrant',
         ]
       end
     end

@@ -19,6 +19,7 @@ class dc_profile::openstack::nova {
   include ::nova::scheduler
   include ::nova::scheduler::filter
   include ::nova::vncproxy
+  include ::dc_icinga::hostgroup_nova_server
 
   nova_config { 'DEFAULT/default_floating_pool':
     value => 'external',
@@ -61,7 +62,6 @@ class dc_profile::openstack::nova {
   unless $::is_vagrant {
     if $::environment == 'production' {
       include ::dc_logstash::client::nova
-      include ::dc_icinga::hostgroup_nova_server
     }
   }
 

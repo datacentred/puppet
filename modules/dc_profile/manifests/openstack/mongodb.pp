@@ -16,6 +16,7 @@ class dc_profile::openstack::mongodb {
   include ::mongodb::server
   include ::mongodb::client
   include ::mongodb::replset
+  include ::dc_icinga::hostgroup_mongodb
 
   Class['::mongodb::server'] ->
   Class['::mongodb::client']
@@ -31,6 +32,21 @@ class dc_profile::openstack::mongodb {
   } ->
   Mongodb_replset['ceilometer']
 
+  # MongoDB rotates its logs on receipt of SIGUSR1
+  cron { 'mongodb_logrotate':
+    user    => root,
+    command => '/bin/kill -SIGUSR1 `/bin/pidof mongod`',
+    minute  => 0,
+    hour    => 5,
+  }
+
+  tidy { 'mongodb_logclean':
+    path    => '/var/log/mongodb',
+    age     => '14d',
+    matches => '*.log.*',
+    recurse => true,
+  }
+
   # $::backup_node is set via the ENC (Foreman)
   if $::backup_node {
     file { '/srv/backup':
@@ -43,7 +59,6 @@ class dc_profile::openstack::mongodb {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_icinga::hostgroup_mongodb
       include ::dc_logstash::client::mongodb
     }
   }

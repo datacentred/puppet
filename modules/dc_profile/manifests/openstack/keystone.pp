@@ -15,6 +15,7 @@ class dc_profile::openstack::keystone {
   contain ::keystone
   contain ::keystone::roles::admin
   contain ::keystone::endpoint
+  include ::dc_icinga::hostgroup_keystone
 
   # Data defined in the openstack_keystone role
   create_resources(keystone_user, hiera(keystone_users))
@@ -79,7 +80,6 @@ class dc_profile::openstack::keystone {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_icinga::hostgroup_keystone
       include ::dc_logstash::client::keystone
 
       # Keystone tenancy and accounts for Icinga monitoring

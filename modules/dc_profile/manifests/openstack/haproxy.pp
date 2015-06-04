@@ -19,6 +19,7 @@ class dc_profile::openstack::haproxy {
 
   include ::haproxy
   include ::dc_ssl::haproxy
+  include ::dc_icinga::hostgroup_haproxy
 
   # Ensure HAProxy is restarted whenever SSL certificates are changed
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
@@ -331,12 +332,6 @@ class dc_profile::openstack::haproxy {
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
     },
-  }
-
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_icinga::hostgroup_haproxy
-    }
   }
 
 }

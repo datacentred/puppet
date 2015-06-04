@@ -72,10 +72,4 @@ class dc_foreman_proxy::config {
     mode   => '0664',
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_logstash::client::foreman_proxy
-    }
-  }
-
 }

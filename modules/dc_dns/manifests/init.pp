@@ -12,12 +12,18 @@
 #
 class dc_dns (
   $isslave = false,
+  $nameservers = {},
+  $dns_zones = {},
+  $masters = '',
 ) {
 
+  include ::dns
+
   $defaults = {
-    'nameservers' => hiera(nameservers),
+    'nameservers' => $nameservers,
     'isslave'     => $isslave,
+    'masters'     => $masters,
   }
-  create_resources(dc_dns::dnszone, hiera(dns_zones), $defaults)
+  create_resources(dc_dns::dnszone, $dns_zones, $defaults)
 
 }

@@ -11,14 +11,24 @@ class dc_foreman::service_checks (
   $lease_file,
 ){
 
+  ensure_packages(['python-pip'])
+
   package { 'pypureomapi':
     ensure   => installed,
     provider => 'pip',
+    require  => Package['python-pip'],
+  }
+
+  File {
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
   }
 
   file { '/usr/local/bin/foreman_check.py':
     ensure => file,
     source => 'puppet:///modules/dc_foreman/foreman_check.py',
+    mode   => '0755',
   }
 
   file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':

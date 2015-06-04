@@ -4,7 +4,10 @@
 # synchronisation agent user and configures passwordless ssh and sudo
 # rights to restart the dhcp daemon
 #
-class dc_dhcp {
+class dc_dhcp (
+  $zonemaster,
+  $pools = {},
+) {
 
   assert_private()
 
@@ -29,10 +32,18 @@ class dc_dhcp {
   file { '/usr/local/lib/python2.7/dist-packages/dc_dhcp_parser.py':
     ensure => file,
     source => 'puppet:///modules/dc_dhcp/dc_dhcp_parser.py',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   package { 'python-pyparsing':
     ensure => installed,
   }
+
+  $pool_dfl = {
+    'zonemaster' => $zonemaster,
+  }
+  create_resources('dhcp::pool', $pools, $pool_dfl)
 
 }

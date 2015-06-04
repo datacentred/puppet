@@ -15,13 +15,14 @@ define dc_dns::dnszone (
   $soaip       = undef,
   $nameservers = undef,
   $reverse     = undef,
-  $isslave     = false
+  $isslave     = false,
+  $masters  = '',
 ) {
 
   if $isslave {
     dns::zone {$title:
       zonetype    => 'slave',
-      masters     => hiera(dnsmasters),
+      masters     => $masters,
       nameservers => $nameservers
     }
   } else {
