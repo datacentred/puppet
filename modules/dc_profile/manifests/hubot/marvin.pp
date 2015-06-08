@@ -16,12 +16,16 @@ class dc_profile::hubot::marvin {
 
   apt::source{'nodesource_0.12':
     location => 'https://deb.nodesource.com/node_0.12',
-    release  => $::lsbdistrelease,
+    release  => 'trusty',
     repos => 'main',
-    key => {
-      source => 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key',
-    }
   }
+
+  package {'npm':} ->
+
+  file { '/usr/local/bin/node':
+    ensure => 'link',
+    target => '/usr/bin/nodejs',
+  } ->
 
   class { 'hubot': 
     nodejs_manage_repo => false
