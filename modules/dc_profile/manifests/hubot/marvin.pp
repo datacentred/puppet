@@ -16,7 +16,7 @@ class dc_profile::hubot::marvin {
 
   apt::source{'nodesource_0.12':
     location => 'https://deb.nodesource.com/node_0.12',
-    release  => 'trusty',
+    release  => $::lsbdistrelease,
     repos => 'main',
     key => {
       source => 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key',
