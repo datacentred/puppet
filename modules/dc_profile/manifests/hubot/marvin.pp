@@ -14,10 +14,14 @@ class dc_profile::hubot::marvin {
 
   include ::redis
 
+  apt::key { 'nodesourcekey':
+    source => 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key',
+  }
+
   apt::source{'nodesource_0.12':
     location => 'https://deb.nodesource.com/node_0.12',
-    release  => 'trusty',
-    repos => 'main',
+    release  => $::lsbdistcodename,
+    repos    => 'main',
   }
 
   package {'npm':} ->
