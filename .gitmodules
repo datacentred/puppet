@@ -178,7 +178,7 @@
 	url = https://github.com/jamtur01/puppet-httpauth.git
 [submodule "modules/hubot"]
 	path = modules/hubot
-	url = https://github.com/datacentred/evenup-hubot.git
+	url = https://github.com/bilco105/evenup-hubot.git
 [submodule "modules/nodejs"]
 	path = modules/nodejs
 	url = https://github.com/puppetlabs/puppetlabs-nodejs.git

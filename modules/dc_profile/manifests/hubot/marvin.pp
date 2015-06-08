@@ -13,26 +13,8 @@
 class dc_profile::hubot::marvin {
 
   include ::redis
+  include ::hubot
 
-  apt::key { 'nodesourcekey':
-    source => 'https://deb.nodesource.com/gpgkey/nodesource.gpg.key',
-  }
-
-  apt::source{'nodesource_0.12':
-    location => 'https://deb.nodesource.com/node_0.12',
-    release  => $::lsbdistcodename,
-    repos    => 'main',
-  }
-
-  package {'npm':} ->
-
-  file { '/usr/local/bin/node':
-    ensure => 'link',
-    target => '/usr/bin/nodejs',
-  } ->
-
-  class { 'hubot': 
-    nodejs_manage_repo => false
-  }
+  Class['redis'] -> Class['hubot']
 
 }
