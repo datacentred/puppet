@@ -16,7 +16,7 @@ class dc_profile::hubot::marvin {
 
   Class['redis'] -> Class['hubot']
 
-  @@dns_resource { "marvin.${::domain}/CNAME":
+  @@dns_resource { "hubot.${::domain}/CNAME":
     rdata => $::fqdn,
   }
 }
