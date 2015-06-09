@@ -52,8 +52,8 @@ class dc_nrpe::checks::common {
 
     default : {
       dc_nrpe::check { 'check_log_shipper':
-        path   => '/usr/local/bin/check_log_courier',
-        sudo   => true,
+        path => '/usr/local/bin/check_log_courier',
+        sudo => true,
       }
     }
 
