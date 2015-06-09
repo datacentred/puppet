@@ -9,6 +9,7 @@ class dc_logstash::client::config::beaver (
   $beaver_timeout,
 ) {
 
+  # TODO: delete me
   include ::external_facts
 
   file { '/etc/beaver':
@@ -67,6 +68,7 @@ class dc_logstash::client::config::beaver (
     compress     => true,
   }
 
+  # TODO: delete me
   external_facts::fact { 'log_shipper':
     value => 'beaver',
   }
