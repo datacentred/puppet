@@ -44,14 +44,6 @@ readhistdiskstat() {
     [ -f "$HISTFILE" ] && cat "$HISTFILE"
 }
 
-safe_to_run_smartctl() {
-  if [[ $(uname -m) == 'aarch64' ]]; then
-    return 1
-  else
-    return 0
-  fi
-}
-
 ################
 # SCRIPT START #
 ################
@@ -81,7 +73,7 @@ for DISK in "${DISK_ARRAY[@]}"; do
         else
             DISK_TYPE=1
         fi
-    elif safe_to_run_smartctl && smartctl -a /dev/$DISK | grep PERC >/dev/null
+    elif grep PERC /sys/class/block/${DISK}/device/model > /dev/null 2>&1
     then
         BUS_ID=$(dmesg | grep $DISK | grep Attached | awk '{ print $4 }' | cut -d ":" -f 3)
         if [ $(sudo racadm raid get controllers | wc -l) == 2 ]
