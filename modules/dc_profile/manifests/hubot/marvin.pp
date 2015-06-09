@@ -11,10 +11,12 @@
 # Sample Usage:
 #
 class dc_profile::hubot::marvin {
-
   include ::redis
   include ::hubot
 
   Class['redis'] -> Class['hubot']
 
+  @@dns_resource { "marvin.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
 }
