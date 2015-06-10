@@ -21,6 +21,10 @@ class dc_riemann (
   $riemann_hipchat_auth_token,
   $riemann_hipchat_room,
   $riemann_hipchat_from,
+  $riemann_slack_api_key,
+  $riemann_slack_room,
+  $riemann_slack_user,
+  $riemann_slack_account
 ){
 
   class { 'riemann':
@@ -67,9 +71,11 @@ class dc_riemann (
 
   include dc_riemann::syslog_pagerduty_stream
   include dc_riemann::syslog_hipchat_stream
-  include dc_riemann::oslog_hipchat_stream
   include dc_riemann::syslog_email_stream
+  include dc_riemann::syslog_slack_stream
+  include dc_riemann::oslog_hipchat_stream
   include dc_riemann::oslog_email_stream
+  include dc_riemann::oslog_slack_stream
 
 }
 
