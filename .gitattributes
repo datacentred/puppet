@@ -15,6 +15,5 @@
 /modules/dc_ssl/files/slapd/*                     filter=private diff=private
 /modules/dc_ssl/files/stronghold/*                filter=private diff=private
 /modules/dc_puppet/templates/master/git/id_rsa    filter=private diff=private
-/modules/dc_rails/files/deployer_keys/id_rsa      filter=private diff=private
 /modules/dc_puppet/files/keys/marvin/*            filter=private diff=private
 /modules/dc_puppet/files/keys/stronghold/*        filter=private diff=private

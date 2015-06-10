@@ -10,8 +10,14 @@ class dc_profile::net::phpipam {
   include apache::mod::php
   include apache::mod::rewrite
 
-  include ::dc_mariadb
+  include ::mysql::server
+  include ::mysql::server::monitor
+  include ::mysql::server::backup
+  include ::dc_collectd::agent::mysql
+
   include ::phpipam
+
+  create_resources('mysql::db', hiera('databases'))
 
   apache::vhost { 'phpipam':
     servername => "phpipam.${::domain}",

@@ -1,0 +1,20 @@
+# Galera/Rabbit Cluster
+#
+# Note: Fixed IPs are attached to eth2 as the default provisioner
+# already has a host only adapter attached to eth1 however set via
+# DHCP. Changes to hostnames and IP addresses will need to be reflected
+# in vagrant.yaml
+
+boxes:
+  osdbmq0:
+    puppet_role: 'dc_role::osdbmq'
+    hiera_role: 'openstack_data'
+    ip: 10.0.32.2
+  osdbmq1:
+    puppet_role: 'dc_role::osdbmq'
+    hiera_role: 'openstack_data'
+    ip: 10.0.32.3
+  osdbmq2:
+    puppet_role: 'dc_role::osdbmq'
+    hiera_role: 'openstack_data'
+    ip: 10.0.32.4

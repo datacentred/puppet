@@ -28,6 +28,9 @@ class dc_profile::openstack::galera {
     require       => File['/var/lib/mysql'],
   }
 
+  create_resources('mysql::db', hiera('databases'))
+  Class['::galera'] -> Mysql::Db <||>
+
   # We only want to be our designated master to be actively written to,
   # unless it's failed of course. $::galera_master is set via Foreman
   if $::galera_master {
