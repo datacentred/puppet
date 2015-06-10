@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+"""
+Sanitise 'ceph auth list' output to filter out expected stderr output
+which would usually cause cron to send mails
+"""
+
+import sys
+import subprocess
+import optparse
+
+def die(msg):
+    """Commit suicide"""
+    sys.stderr.write(msg)
+    sys.exit(1)
+
+def main():
+    """Entry point"""
+    parser = optparse.OptionParser()
+    parser.add_option('-o', '--output', dest='output',
+                      action='store', type='string',
+                      help='Path to output keys to')
+    (options, _) = parser.parse_args()
+
+    # Our raison d'etre is to filter out stderr output on success so
+    # ensure we collect all the things
+    command = 'ceph auth list'
+    try:
+        process = subprocess.Popen(command.split(), stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE)
+        stdout, stderr = process.communicate()
+    except OSError:
+        die('Unable to execute "{}"\n'.format(command))
+
+    # Non-zero exit code, spit out stderr
+    if process.returncode != 0:
+        die('Process exited with non zero exit code {}:\n{}'.format(
+            process.returncode,
+            stderr,
+        ))
+
+    # Zero exit code write out stdout and discard stderr
+    try:
+        output = open(options.output, 'w')
+        output.write(stdout)
+    except IOError:
+        die('Unable to write output file {}\n'.format(options.output))
+    output.close()
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
