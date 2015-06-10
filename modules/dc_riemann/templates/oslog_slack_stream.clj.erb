@@ -1,0 +1,22 @@
+(use 'clojure.java.io)
+
+(defn get_messages [filename]
+  (with-open [rdr (reader filename)]
+    (doall (line-seq rdr))))
+
+(def messages (get_messages "<%= scope.lookupvar('dc_riemann::riemann_whitelist') %>"))
+
+(def whitelist_pattern
+  (str "^((?!(" (clojure.string/join "|" messages) ")).)*$"))
+
+(def api-key "<%= scope.lookupvar('dc_riemann::riemann_slack_api_key') %>")
+(def room "<%= scope.lookupvar('dc_riemann::riemann_slack_room') %>")
+(def user "<%= scope.lookupvar('dc_riemann::riemann_slack_user') %>")
+(def account "<%= scope.lookupvar('dc_riemann::riemann_slack_account') %>")
+
+(streams
+ (by :service
+  (where (or (state "WARNING")(state "CRITICAL")(state "ERROR"))
+   (where (description (re-pattern whitelist_pattern))
+    (throttle 5 3600
+      (slack account api-key user room))))))
