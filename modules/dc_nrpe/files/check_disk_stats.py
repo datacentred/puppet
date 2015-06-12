@@ -115,9 +115,7 @@ def main():
     ]
     context['output'].insert(0, status_strings[context['status']])
 
-    for line in context['output']:
-        print line
-
+    print '\n'.join(context['output'])
     sys.exit(context['status'])
 
 if __name__ == '__main__':
