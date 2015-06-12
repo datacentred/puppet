@@ -23,7 +23,7 @@ class dc_nrpe::checks::disk_stats (
     content => inline_template('<%= YAML.dump(@config) %>')
   }
 
-  dc_nrpe::check { 'check_disk_stats.py':
+  dc_nrpe::check { 'check_disk_stats':
     path   => '/usr/local/bin/check_disk_stats.py',
     source => 'puppet:///modules/dc_nrpe/check_disk_stats.py',
   }
