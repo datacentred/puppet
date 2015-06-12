@@ -89,21 +89,23 @@ class dc_graphite (
       application-group => '%{GLOBAL}',
     },
     wsgi_process_group          => graphite,
-    wsgi_script_aliases         => { '/' => '/opt/graphite/conf/graphite.wsgi' },
+    wsgi_script_aliases         => {
+      '/' => '/opt/graphite/conf/graphite.wsgi'
+    },
   }
 
   if $graphite_manage_db == true {
-    class { '::dc_mariadb':
-      maria_root_pw => $mysql_pw,
-    }
-    contain 'dc_mariadb'
 
-    dc_mariadb::db { 'graphite':
+    include ::mysql::server
+    include ::mysql::server::monitor
+    include ::mysql::server::backup
+    include ::dc_collectd::agent::mysql
+
+    mysql::db { 'graphite':
       user     => $graphite_db_user,
       password => $graphite_db_pw,
       host     => "${::hostname}.${::domain}",
       grant    => ['ALL'],
-      require  => Class['::dc_mariadb'],
     }
   }
 
