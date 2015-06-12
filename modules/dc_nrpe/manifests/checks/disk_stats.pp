@@ -25,7 +25,7 @@ class dc_nrpe::checks::disk_stats (
 
   dc_nrpe::check { 'check_disk_stats.py':
     path   => '/usr/local/bin/check_disk_stats.py',
-    source => 'puppet:///modules/dc_nrpe/check_disk_stats',
+    source => 'puppet:///modules/dc_nrpe/check_disk_stats.py',
   }
 
 }
