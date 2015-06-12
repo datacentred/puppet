@@ -22,6 +22,5 @@ class dc_logstash::params (
   $elasticsearch_embedded,
   $elasticsearch_protocol,
   $logstash_api_version,
-  $log_shipper,
   $beaver_timeout,
 ){}
