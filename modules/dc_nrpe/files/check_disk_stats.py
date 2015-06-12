@@ -43,7 +43,7 @@ def configure():
     return config
 
 def valid_block_device(device):
-    """Is this device backed by a pysical bit of hardware"""
+    """Is this device backed by a physical bit of hardware"""
 
     path = '/sys/block/{}/device'.format(device)
     return os.access(path, os.F_OK)
