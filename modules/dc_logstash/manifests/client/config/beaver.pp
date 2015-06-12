@@ -9,9 +9,6 @@ class dc_logstash::client::config::beaver (
   $beaver_timeout,
 ) {
 
-  # TODO: delete me
-  include ::external_facts
-
   file { '/etc/beaver':
     ensure => directory,
     owner  => 'root',
@@ -66,11 +63,6 @@ class dc_logstash::client::config::beaver (
     rotate       => 4,
     rotate_every => 'week',
     compress     => true,
-  }
-
-  # TODO: delete me
-  external_facts::fact { 'log_shipper':
-    value => 'beaver',
   }
 
 }

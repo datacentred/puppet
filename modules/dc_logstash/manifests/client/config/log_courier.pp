@@ -8,9 +8,6 @@ class dc_logstash::client::config::log_courier (
   $logcourier_port,
 ) {
 
-  # TODO: delete me
-  include ::external_facts
-
   file { '/usr/sbin/log-courier':
     ensure => file,
     owner  => 'root',
@@ -82,11 +79,5 @@ class dc_logstash::client::config::log_courier (
     rotate_every => 'week',
     compress     => true,
   }
-
-  # TODO: delete me
-  external_facts::fact { 'log_shipper':
-    value => 'log_courier',
-  }
-
 
 }

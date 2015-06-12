@@ -40,25 +40,6 @@ class dc_nrpe::checks::common {
     sudo   => true,
   }
 
-  # TODO: delete me
-  case $::log_shipper {
-
-    'beaver': {
-      dc_nrpe::check { 'check_log_shipper':
-        path => '/usr/lib/nagios/plugins/check_procs',
-        args => '-c 1: -a beaver',
-      }
-    }
-
-    default : {
-      dc_nrpe::check { 'check_log_shipper':
-        path => '/usr/local/bin/check_log_courier',
-        sudo => true,
-      }
-    }
-
-  }
-
   dc_nrpe::check { 'check_beaver':
     path => '/usr/lib/nagios/plugins/check_procs',
     args => '-c 1: -a beaver',
