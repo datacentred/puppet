@@ -515,14 +515,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Elasticsearch',
   }
 
-  # TODO: delete me
-  icinga::service { 'check_log_shipper':
-    use                 => 'dc_service_secondary',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_log_shipper',
-    service_description => 'Log Shipper Status',
-  }
-
   icinga::service { 'check_log_courier':
     use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_log_courier',
