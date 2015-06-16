@@ -31,7 +31,7 @@ class dc_postgresql::duplicity_postgresql_base {
 
   tidy { 'postgres_base_dump':
     path    => '/var/postgres_base_dump',
-    age     => '16H',
+    age     => '7D',
     recurse => true,
     rmdirs  => true,
   }
