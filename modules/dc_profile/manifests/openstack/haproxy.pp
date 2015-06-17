@@ -49,7 +49,7 @@ class dc_profile::openstack::haproxy {
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
       'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'stats'  => [
@@ -58,7 +58,7 @@ class dc_profile::openstack::haproxy {
         'hide-version',
         "auth ${haproxy_stats_user}:${haproxy_stats_password}",
       ],
-      'rspadd' => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd' => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -71,12 +71,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -89,12 +89,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -107,12 +107,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -125,12 +125,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -143,12 +143,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -161,12 +161,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -191,12 +191,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -209,12 +209,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -227,12 +227,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -245,12 +245,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -276,12 +276,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
@@ -294,12 +294,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'tcplog', 'forwardfor'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
       'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
     },
   }
@@ -313,12 +313,12 @@ class dc_profile::openstack::haproxy {
       'ssl',
       'no-sslv3',
       'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ],
     options      => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
-      'rspadd'  => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 

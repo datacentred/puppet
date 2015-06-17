@@ -33,7 +33,7 @@ class loadbalancer::stats (
       'ssl',
       'no-sslv3',
       "crt ${cert}",
-      'ciphers HIGH:!RC4:!MD5:!aNULL:!eNULL:!EXP:!LOW:!MEDIUM',
+      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
     ]
 
   } else {
@@ -56,7 +56,7 @@ class loadbalancer::stats (
         'hide-version',
         "auth ${user}:${password}",
       ],
-      'rspadd' => 'Strict-Transport-Security:\ max-age=60',
+      'rspadd' => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
 
