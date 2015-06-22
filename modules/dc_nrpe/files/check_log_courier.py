@@ -28,6 +28,9 @@ for key, value in yaml.load(stream)['Publisher'].iteritems():
 if entries[1][(entries[0].index('Pending Payloads'))] > logstash_pp_crit_threshold:
   print "CRITICAL: There are more than %d messages to logstash pending" % logstash_pp_crit_threshold
   sys.exit(CRITICAL)
+elif 'Disconnected' in entries[1]:
+  print "CRITICAL: Log courier disconnected"
+  sys.exit(CRITICAL)
 elif entries[1][(entries[0].index('Pending Payloads'))] > logstash_pp_warn_threshold:
   print "WARNING: There are more than %d messages to logstash pending" % logstash_pp_warn_threshold
   sys.exit(WARNING)
