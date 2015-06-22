@@ -9,7 +9,6 @@ class dc_profile::net::dns_slave {
 
   include ::dhcp
   include ::dhcp::ddns
-  include ::dhcp::failover
   include ::dc_dhcp::secondary
   include ::dc_icinga::hostgroup_dhcp
   include ::dc_apparmor::dhcpd
