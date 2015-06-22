@@ -35,11 +35,11 @@ def main():
             print 'CRITICAL: not connected to logstash'
             sys.exit(CRITICAL)
 
-        if output['Publisher']['Pending Payloads'] >= PENDING_CRIT:
+        if int(output['Publisher']['Pending Payloads']) >= PENDING_CRIT:
             print 'CRITICAL: pending payloads >= {}'.format(PENDING_CRIT)
             sys.exit(CRITICAL)
 
-        if output['Publisher']['Pending Payloads'] >= PENDING_WARN:
+        if int(output['Publisher']['Pending Payloads']) >= PENDING_WARN:
             print 'WARNING: pending payloads >= {}'.format(PENDING_WARN)
             sys.exit(WARNING)
 
