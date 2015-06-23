@@ -31,6 +31,17 @@ class dc_profile::openstack::cinder {
   Ceph::Client['cinder'] ~>
   Class['::cinder::volume']
 
+  # TODO: Remove me once there's an updated package available which includes this fix!
+  # Patch file in place to address CVE-2015-1850
+  file { '/usr/lib/python2.7/dist-packages/cinder/image/image_utils.py':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/dc_openstack/image_utils.py',
+    require => Package['python-cinder'],
+    notify  => Service['cinder-volume', 'cinder-api'],
+  }
+
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-cinder":
     listening_service => 'cinder',
