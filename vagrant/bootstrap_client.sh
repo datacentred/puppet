@@ -46,5 +46,8 @@ EOF
 # Clean out stale SSL certificates
 find /var/lib/puppet/ssl -type f -delete
 
+# Install deep_merge so hiera hash merges compile
+gem install deep_merge
+
 # Done provisioning
 touch /root/.provisioned
