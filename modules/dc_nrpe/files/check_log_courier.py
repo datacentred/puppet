@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Checks log courier is connected and keeping up
+"""
 
 import yaml
 import sys
@@ -8,32 +11,46 @@ OK = 0
 WARNING = 1
 CRITICAL = 2
 UNKNOWN = 3
-logstash_pp_warn_threshold = 20
-logstash_pp_crit_threshold = 50
+PENDING_WARN = 20
+PENDING_CRIT = 50
 
-subprocess.call(["lc-admin status > /tmp/lc-admin-output.txt"], shell=True)
-lines = open("/tmp/lc-admin-output.txt", 'r').readlines()
-del lines[0:4]
-file = open("/tmp/lc-admin-yaml.yaml", 'w')
-for line in lines:
-    file.write(line)
-file.close()
+def main():
+    """
+    Main subroutine
+    Runs lc-admin, cleans output, parses and runs some rudimentary checks
+    """
+    try:
+        output = subprocess.check_output(['lc-admin', 'status'])
+    except subprocess.CalledProcessError:
+        print 'UNKNOWN: lc-admin returned non-zero status'
+        sys.exit(UNKNOWN)
 
-entries = [[],[]]
-stream = open("/tmp/lc-admin-yaml.yaml", 'r')
-for key, value in yaml.load(stream)['Publisher'].iteritems():
-     entries[0].append(key)
-     entries[1].append(value)
+    # Clean up the ouput into raw json
+    output = '\n'.join(output.split('\n')[5:])
+    output = yaml.load(output)
 
-if entries[1][(entries[0].index('Pending Payloads'))] > logstash_pp_crit_threshold:
-  print "CRITICAL: There are more than %d messages to logstash pending" % logstash_pp_crit_threshold
-  sys.exit(CRITICAL)
-elif entries[1][(entries[0].index('Pending Payloads'))] > logstash_pp_warn_threshold:
-  print "WARNING: There are more than %d messages to logstash pending" % logstash_pp_warn_threshold
-  sys.exit(WARNING)
-elif entries[1][(entries[0].index('Pending Payloads'))] <= logstash_pp_warn_threshold:
-  print "OK: Low number of pending payloads"
-  sys.exit(OK)
-else:
-  print "UNKNOWN: Unknown error"
-  sys.exit(UNKNOWN)
+    # Check things are doing something
+    try:
+        if output['Publisher']['Status'] != 'Connected':
+            print 'CRITICAL: not connected to logstash'
+            sys.exit(CRITICAL)
+
+        if int(output['Publisher']['Pending Payloads']) >= PENDING_CRIT:
+            print 'CRITICAL: pending payloads >= {}'.format(PENDING_CRIT)
+            sys.exit(CRITICAL)
+
+        if int(output['Publisher']['Pending Payloads']) >= PENDING_WARN:
+            print 'WARNING: pending payloads >= {}'.format(PENDING_WARN)
+            sys.exit(WARNING)
+
+        print 'OK: everything is awesome'
+        sys.exit(OK)
+
+    except KeyError:
+        print 'UNKNOWN: malformed output'
+        sys.exit(UNKNOWN)
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
