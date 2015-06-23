@@ -38,7 +38,7 @@ class dc_profile::openstack::cinder {
     group   => 'root',
     mode    => '0644',
     source  => 'puppet:///modules/dc_openstack/image_utils.py',
-    require => Package['python-cinder'],
+    require => Package['cinder-volume'],
     notify  => Service['cinder-volume', 'cinder-api'],
   }
 
