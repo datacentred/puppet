@@ -11,6 +11,7 @@ class dc_profile::puppet::puppet_master {
   include ::dc_foreman_proxy
   include ::dc_puppet::master::git
   include ::dc_puppet::master::hipbot
+  include ::dc_puppet::master::deep_merge
   include ::dc_icinga::hostgroup_puppetmaster
   include ::dc_icinga::hostgroup_foreman_proxy
   include ::dc_profile::puppet::duplicity_puppetcerts
