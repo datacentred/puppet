@@ -10,7 +10,6 @@ class dc_profile::net::dns_master {
 
   include ::dhcp
   include ::dhcp::ddns
-  include ::dhcp::failover
   include ::dc_dhcp::primary
   include ::dc_apparmor::dhcpd
   include ::dc_icinga::hostgroup_dhcp
