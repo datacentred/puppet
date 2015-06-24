@@ -16,7 +16,6 @@ class dc_profile::ceph::mon {
   include ::dc_ceph::exports
   include ::dc_ceph::keybackup
   include ::dc_icinga::hostgroup_ceph_mon
-  include ::dc_backup::gpg_keys
 
   if $::collectd_ceph {
     include ::dc_collectd::agent::ceph

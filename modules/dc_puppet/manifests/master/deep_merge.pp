@@ -15,7 +15,6 @@ class dc_puppet::master::deep_merge {
   package { 'deep_merge':
     ensure   => installed,
     provider => gem,
-    require  => Package['rubygems'],
   }
 
 }
