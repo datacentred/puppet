@@ -18,17 +18,17 @@ class dc_collectd::agent::iostat {
 
   # Copy in new plugin
   file { '/usr/lib/collectd/python/collectd_iostat_python.py':
-    ensure  => file,
-    mode    => '0644',
-    source  => 'puppet:///modules/dc_collectd/collectd_iostat_python.py',
+    ensure => file,
+    mode   => '0644',
+    source => 'puppet:///modules/dc_collectd/collectd_iostat_python.py',
   } ->
 
   # Add config
   file { '/etc/collectd/conf.d/10-iostat.conf':
-    ensure  => file,
-    mode    => '0644',
-    source  => 'puppet:///modules/dc_collectd/10-iostat.conf',
-    notify  => Service['collectd'],
+    ensure => file,
+    mode   => '0644',
+    source => 'puppet:///modules/dc_collectd/10-iostat.conf',
+    notify => Service['collectd'],
   }
 
 }
