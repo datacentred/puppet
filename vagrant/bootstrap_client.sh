@@ -13,20 +13,17 @@ userdel -rf vagrant
 if [ -f /etc/redhat-release ]; then
   yum makecache fast > /dev/null
   yum install -y puppetdb-terminus > /dev/null
-  gem install --no-rdoc --no-ri hiera-eyaml > /dev/null
   sed -i '/Defaults    requiretty/d' /etc/sudoers
 else
   apt-get update &> /dev/null
   for i in puppetdb-terminus; do
     dpkg -s ${i} &> /dev/null || apt-get -y install ${i} > /dev/null
   done
-  for i in hiera-eyaml; do
-    gem query --name ${i} --installed &> /dev/null || gem install --no-rdoc --no-ri ${i} > /dev/null
-  done
 fi
 
-# Install deep_merge so hiera hash merges compile
-gem install deep_merge >/dev/null
+for i in deep_merge; do
+  gem query --name ${i} --installed &> /dev/null || gem install --no-rdoc --no-ri ${i} > /dev/null
+done
 
 # Setup PuppetDB
 cat << EOF > /etc/puppet/puppetdb.conf
