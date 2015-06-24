@@ -14,8 +14,7 @@ class dc_nrpe::checks::smartd {
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      require => Package['nagios-nrpe-server'],
-      notify  => Service['nagios-nrpe-server'],
+      require => Package['nrpe-agent'],
     }
   }
 
@@ -25,8 +24,7 @@ class dc_nrpe::checks::smartd {
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    require => Package['nagios-nrpe-server'],
-    notify  => Service['nagios-nrpe-server'],
+    require => Package['nrpe-agent'],
   }
 
   dc_nrpe::check { 'check_dev_smart':
