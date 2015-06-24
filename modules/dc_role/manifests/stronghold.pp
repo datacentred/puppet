@@ -14,6 +14,5 @@ class dc_role::stronghold {
 
   contain dc_profile::rails::stronghold
   contain dc_profile::db::duplicity_mariadb
-  contain dc_backup::gpg_keys
 
 }

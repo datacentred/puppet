@@ -5,7 +5,6 @@
 class dc_postgresql::duplicity_postgresql_base {
 
   include ::dc_postgresql::params
-  include ::dc_backup::gpg_keys
 
   file { '/root/.pgpass':
     ensure  => file,

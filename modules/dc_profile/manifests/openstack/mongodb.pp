@@ -54,7 +54,6 @@ class dc_profile::openstack::mongodb {
       mode   => '0700',
     }
     include ::dc_profile::openstack::duplicity_mongodb
-    include ::dc_backup::gpg_keys
   }
 
   unless $::is_vagrant {
