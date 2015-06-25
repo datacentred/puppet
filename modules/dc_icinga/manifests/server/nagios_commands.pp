@@ -35,6 +35,8 @@ class dc_icinga::server::nagios_commands {
   $mongodb_admin_password = hiera(mongodb_admin_password)
   $icinga_instance_net_name = hiera(icinga_instance_net_name)
   $icinga_instance_flavor = hiera(icinga_instance_flavor)
+  $dhcp_icinga_mac = hiera(dc_dhcp::dhcp_icinga_mac)
+  $dhcp_icinga_ip = hiera(dc_dhcp::dhcp_icinga_ip)
 
 
   ######################################################################
@@ -229,6 +231,10 @@ class dc_icinga::server::nagios_commands {
 
   icinga::command { 'check_memcached':
     command_line => "/usr/lib/nagios/plugins/check_memcached.pl -H \$HOSTNAME$ -p 11211",
+  }
+
+  icinga::command { 'check_dhcp_by_mac':
+    command_line => "/usr/lib/nagios/plugins/check_dhcp -s \$HOSTADDRESS$ -i \$ARG1 -m ${dhcp_icinga_mac} -r ${dhcp_icinga_ip}",
   }
 
 }

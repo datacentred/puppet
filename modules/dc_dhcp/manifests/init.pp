@@ -8,6 +8,8 @@ class dc_dhcp (
   $zonemaster,
   $default_lease_time,
   $max_lease_time,
+  $dhcp_icinga_mac,
+  $dhcp_icinga_ip,
 ) {
 
   assert_private()
@@ -36,6 +38,13 @@ class dc_dhcp (
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
+  }
+
+  file { '/etc/dhcp/dhcpd.misc':
+    ensure => file,
+    source => 'puppet:///modules/dc_dhcp/dhcpd.misc',
+    owner  => 'root',
+    group  => 'root',
   }
 
   package { 'python-pyparsing':
