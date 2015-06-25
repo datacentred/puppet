@@ -41,10 +41,10 @@ class dc_dhcp (
   }
 
   file { '/etc/dhcp/dhcpd.misc':
-    ensure => file,
-    source => 'puppet:///modules/dc_dhcp/dhcpd.misc',
-    owner  => 'root',
-    group  => 'root',
+    ensure  => file,
+    content => template('dc_dhcp/dhcpd.misc.erb'),
+    owner   => 'root',
+    group   => 'root',
   }
 
   package { 'python-pyparsing':
