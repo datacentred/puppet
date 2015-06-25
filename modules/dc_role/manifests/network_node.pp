@@ -18,4 +18,13 @@ class dc_role::network_node {
 
   include dc_icinga::hostgroup_neutron_node
 
+  if $::osfamily == 'RedHat' {
+    service { 'firewalld':
+      ensure => 'stopped',
+    }
+    service { 'NetworkManager':
+      ensure => 'stopped',
+    }
+  }
+
 }

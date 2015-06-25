@@ -23,4 +23,13 @@ class dc_role::compute_node {
 
   include dc_icinga::hostgroup_nova_compute
 
+  if $::osfamily == 'RedHat' {
+    service { 'firewalld':
+      ensure => 'stopped',
+    }
+    service { 'NetworkManager':
+      ensure => 'stopped',
+    }
+  }
+
 }

@@ -2,12 +2,12 @@
 #
 class dc_nrpe::install {
 
-  package { 'nagios-nrpe-server':
-    ensure  => installed,
+  $nrpe_agent = $::operatingsystem ? {
+    /(RedHat|CentOS)/ => 'nrpe',
+    /(Debian|Ubuntu)/ => 'nagios-nrpe-server',
   }
 
-  package { 'python-netifaces':
-    ensure => installed,
-  }
+  ensure_packages($nrpe_agent, {'alias' => 'nrpe-agent'})
+  ensure_packages('python-netifaces')
 
 }

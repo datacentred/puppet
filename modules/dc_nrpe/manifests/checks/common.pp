@@ -2,9 +2,12 @@
 #
 class dc_nrpe::checks::common {
 
-  package { 'python-yaml':
-    ensure => installed,
+  $python_yaml = $::operatingsystem ? {
+    /(RedHat|CentOS)/ => 'PyYAML',
+    /(Debian|Ubuntu)/ => 'python-yaml',
   }
+
+  ensure_packages($python_yaml)
 
   $lw1  = $::processorcount * 8
   $lc1  = $::processorcount * 10

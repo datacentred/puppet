@@ -13,8 +13,11 @@
 #
 class dc_profile::editors::vim {
 
-  package { 'vim' :
-    ensure => installed,
+  $vim_package = $::operatingsystem ? {
+    /(RedHat|CentOS)/ => 'vim-common',
+    /(Debian|Ubuntu)/ => 'vim',
   }
+
+  ensure_packages($vim_package)
 
 }
