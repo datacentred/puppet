@@ -8,15 +8,16 @@ class dc_backup (
   $datacentred_ceph_access_point,
   $datacentred_amazon_s3_id,
   $datacentred_amazon_s3_key,
+  $datacentred_signing_key_public,
+  $datacentred_signing_key_private,
   $datacentred_signing_key_short_id,
+  $datacentred_signing_key_finger,
+  $datacentred_encryption_key_public,
   $datacentred_encryption_key_short_id,
+  $datacentred_encryption_key_finger,
+  $datacentred_encryption_key_private,
   $datacentred_private_signing_key_password,
   $datacentred_private_encryption_key_password,
-  $pre_command = undef,
-  $cloud = 'all',
-  $pre_command_hour = '0',
-  $ceph_backup_hour = '2',
-  $s3_backup_hour = '4',
 ) {
 
   include ::dc_backup::gpg_keys
