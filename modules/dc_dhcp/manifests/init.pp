@@ -6,7 +6,8 @@
 #
 class dc_dhcp (
   $zonemaster,
-  $pools = {},
+  $default_lease_time,
+  $max_lease_time,
 ) {
 
   assert_private()
@@ -43,7 +44,11 @@ class dc_dhcp (
 
   $pool_dfl = {
     'zonemaster' => $zonemaster,
+    'parameters' => [ "default-lease-time ${default_lease_time}", "max-lease-time ${max_lease_time}" ]
   }
-  create_resources('dhcp::pool', $pools, $pool_dfl)
+
+  $merged_pools = hiera_hash('dc_dhcp::pools')
+
+  create_resources('dhcp::pool', $merged_pools, $pool_dfl)
 
 }
