@@ -98,7 +98,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_dhcp':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_dhcp',
-    check_command       => 'check_dhcp_interface!bond0',
+    check_command       => 'check_dhcp_by_mac!bond0',
     service_description => 'DHCP',
   }
 
