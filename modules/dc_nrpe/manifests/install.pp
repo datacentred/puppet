@@ -4,7 +4,7 @@ class dc_nrpe::install {
 
   $nrpe_agent = $::operatingsystem ? {
     /(RedHat|CentOS)/ => 'nrpe',
-    'Debian'          => 'nagios-nrpe-server',
+    /(Debian|Ubuntu)/ => 'nagios-nrpe-server',
   }
 
   package { $nrpe_agent:
