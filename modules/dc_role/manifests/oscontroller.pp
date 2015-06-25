@@ -30,6 +30,15 @@ class dc_role::oscontroller {
   Class['dc_profile::openstack::horizon'] ->
   Class['dc_profile::openstack::heat']
 
+  if $::osfamily == 'RedHat' {
+    service { 'firewalld':
+      ensure => 'stopped',
+    }
+    service { 'NetworkManager':
+      ensure => 'stopped',
+    }
+  }
+
   include ::sysctls
 
 }
