@@ -112,7 +112,8 @@ def check_dhcp_leases(ints, lease_file):
     """
     failures = []
     for host in get_host_list(lease_file):
-        if not any(interface['name'] == host['name'] for interface in ints):
+        if not host['name'] == 'icinga-check' and not \
+                any(interface['name'] == host['name'] for interface in ints):
             failures.append("Entry exists in DHCP but not in Foreman %s "
                           % (host['name']))
     return failures
