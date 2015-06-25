@@ -23,24 +23,25 @@ define dc_backup::dc_duplicity_job (
   $script_owner = undef,
   $script_group_owner = undef,
   $script_permissions = undef,
-  $cloud = $dc_backup::cloud,
-  $pre_command_hour = $dc_backup::pre_command_hour,
-  $ceph_backup_hour = $dc_backup::ceph_backup_hour,
-  $s3_backup_hour = $dc_backup::s3_backup_hour,
   $create_cron = true,
-  $datacentred_ceph_access_key = $dc_backup::datacentred_ceph_access_key,
-  $datacentred_ceph_secret_key = $dc_backup::datacentred_ceph_secret_key,
-  $datacentred_ceph_access_point = $dc_backup::datacentred_ceph_access_point,
-  $swift_authversion = $dc_backup::swift_authversion,
-  $datacentred_amazon_s3_id = $dc_backup::datacentred_amazon_s3_id,
-  $datacentred_amazon_s3_key = $dc_backup::datacentred_amazon_s3_key,
-  $datacentred_encryption_key_short_id = $dc_backup::datacentred_encryption_key_short_id,
-  $datacentred_signing_key_short_id = $dc_backup::datacentred_signing_key_short_id,
-  $datacentred_private_signing_key_password = $dc_backup::datacentred_private_signing_key_password,
-  $datacentred_private_encryption_key_password = $dc_backup::datacentred_private_encryption_key_password,
+  $cloud = 'all',
+  $pre_command_hour = '0',
+  $ceph_backup_hour = '2',
+  $s3_backup_hour = '4',
 ) {
 
   include ::dc_backup
+
+  $datacentred_ceph_access_key = $dc_backup::datacentred_ceph_access_key
+  $datacentred_ceph_secret_key = $dc_backup::datacentred_ceph_secret_key
+  $datacentred_ceph_access_point = $dc_backup::datacentred_ceph_access_point
+  $swift_authversion = $dc_backup::swift_authversion
+  $datacentred_amazon_s3_id = $dc_backup::datacentred_amazon_s3_id
+  $datacentred_amazon_s3_key = $dc_backup::datacentred_amazon_s3_key
+  $datacentred_encryption_key_short_id = $dc_backup::datacentred_encryption_key_short_id
+  $datacentred_signing_key_short_id = $dc_backup::datacentred_signing_key_short_id
+  $datacentred_private_signing_key_password = $dc_backup::datacentred_private_signing_key_password
+  $datacentred_private_encryption_key_password = $dc_backup::datacentred_private_encryption_key_password
 
   $ensure_dc_ceph = $cloud ? {
     /(dc_ceph|all)/ => present,
