@@ -1,6 +1,6 @@
 host icinga_dhcp_check {
   dynamic;
-  hardware ethernet <%- @dhcp_icinga_mac %>;
+  hardware ethernet <%= @dhcp_icinga_mac %>;
   fixed-address <%= @dhcp_icinga_ip %>;
 }
 
