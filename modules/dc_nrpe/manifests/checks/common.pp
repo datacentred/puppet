@@ -2,7 +2,12 @@
 #
 class dc_nrpe::checks::common {
 
-  package { 'python-yaml':
+  $python_yaml = $::operatingsystem ? {
+    /(RedHat|CentOS)/ => 'PyYAML',
+    /(Debian|Ubuntu)/ => 'python-yaml',
+  }
+
+  package { $python_yaml:
     ensure => installed,
   }
 

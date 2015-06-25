@@ -15,7 +15,7 @@ class dc_profile::editors::vim {
 
   $vim_package = $::operatingsystem ? {
     /(RedHat|CentOS)/ => 'vim-common',
-    'Debian'          => 'vim',
+    /(Debian|Ubuntu)/ => 'vim',
   }
 
   package { $vim_package :
