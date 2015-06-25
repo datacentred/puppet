@@ -18,8 +18,6 @@ class dc_profile::editors::vim {
     /(Debian|Ubuntu)/ => 'vim',
   }
 
-  package { $vim_package :
-    ensure => installed,
-  }
+  ensure_packages($vim_package)
 
 }

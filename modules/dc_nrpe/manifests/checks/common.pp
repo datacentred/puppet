@@ -7,9 +7,7 @@ class dc_nrpe::checks::common {
     /(Debian|Ubuntu)/ => 'python-yaml',
   }
 
-  package { $python_yaml:
-    ensure => installed,
-  }
+  ensure_packages($python_yaml)
 
   $lw1  = $::processorcount * 8
   $lc1  = $::processorcount * 10
