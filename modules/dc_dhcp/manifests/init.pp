@@ -40,13 +40,6 @@ class dc_dhcp (
     mode   => '0755',
   }
 
-  file { '/etc/dhcp/dhcpd.misc':
-    ensure  => file,
-    content => template('dc_dhcp/dhcpd.misc.erb'),
-    owner   => 'root',
-    group   => 'root',
-  }
-
   package { 'python-pyparsing':
     ensure => installed,
   }
