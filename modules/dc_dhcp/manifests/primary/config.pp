@@ -16,4 +16,11 @@ class dc_dhcp::primary::config {
     content => "SECONDARY_HOST=${dc_dhcp::params::secondary_dhcp_host}",
   }
 
+  file { '/etc/dhcp/dhcpd.misc':
+    ensure  => file,
+    content => template('dc_dhcp/dhcpd.misc.erb'),
+    owner   => 'root',
+    group   => 'root',
+  }
+
 }

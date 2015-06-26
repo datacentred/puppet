@@ -28,4 +28,11 @@ class dc_dhcp::secondary {
     source => 'puppet:///modules/dc_dhcp/dhcp_sync_hosts.sh',
   }
 
+  file { '/etc/dhcp/dhcpd.misc':
+    ensure  => file,
+    content => '# Misc config',
+    owner   => 'root',
+    group   => 'root',
+  }
+
 }
