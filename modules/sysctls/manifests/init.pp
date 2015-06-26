@@ -16,7 +16,7 @@
 #       value: '1'
 #
 class sysctls (
-  $values,
+  $values = {},
 ) {
 
   $defaults = {
