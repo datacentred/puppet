@@ -18,6 +18,7 @@ class dc_profile::openstack::keystone {
   include ::dc_icinga::hostgroup_keystone
 
   # Data defined in the openstack_keystone role
+  create_resources(keystone_tenant, hiera(keystone_tenants))
   create_resources(keystone_user, hiera(keystone_users))
   create_resources(keystone_role, hiera(keystone_role))
   create_resources(keystone_user_role, hiera(keystone_user_roles))
@@ -80,23 +81,7 @@ class dc_profile::openstack::keystone {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_logstash::client::keystone
-
-      # Keystone tenancy and accounts for Icinga monitoring
-      keystone_tenant { 'icinga':
-        ensure  => present,
-        enabled => true,
-      }
-      keystone_user_role { 'icinga@icinga':
-        ensure => present,
-        roles  => admin,
-      }
-      keystone_user { 'icinga':
-        ensure   => present,
-        enabled  => true,
-        password => hiera(keystone_icinga_password),
-        tenant   => 'icinga',
-      }
+      include dc_logstash::client::keystone
     }
   }
 
