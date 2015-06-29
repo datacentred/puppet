@@ -2,16 +2,10 @@
 #
 class dc_ssl::haproxy {
 
-  file { '/etc/ssl/certs/haproxy.pem':
-    ensure => absent,
-  }
-
-  file { '/etc/ssl/certs/osapi_sal01_datacentred_co_uk.pem':
-    ensure => absent,
-  }
-
-  file { '/etc/ssl/certs/openstack_datacentred_io.pem':
-    ensure => absent,
+  File {
+    owner => 'root',
+    group => 'root',
+    mode  => '0644',
   }
 
   file { '/etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem':
