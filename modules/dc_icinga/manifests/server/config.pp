@@ -333,10 +333,6 @@ class dc_icinga::server::config {
     description => 'Openstack Keystone Servers',
   }
 
-  icinga::hostgroup { 'dc_hostgroup_nfs':
-    description => 'NFS Servers',
-  }
-
   icinga::hostgroup { 'dc_hostgroup_foreman':
     description => 'Foreman Servers',
   }

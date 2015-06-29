@@ -81,10 +81,6 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_mysql -H \$HOSTADDRESS$ -u icinga -p ${mariadb_icinga_pw}",
   }
 
-  icinga::command { 'check_nfs_dc':
-    command_line => '/usr/lib/nagios/plugins/check_rpc -H $HOSTADDRESS$ -C nfs -c2,3,4',
-  }
-
   icinga::command { 'check_keystone_dc':
     command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS\$:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
   }
