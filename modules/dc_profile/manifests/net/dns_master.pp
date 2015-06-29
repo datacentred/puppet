@@ -21,6 +21,8 @@ class dc_profile::net::dns_master {
   include ::dc_foreman::service_checks
   include ::dc_icinga::hostgroup_foreman_proxy
 
+  include ::dc_icinga::hostgroup_ntp
+
   # The proxy requires the users to bin installed by the
   # requisite classes
   Class['dc_dns'] -> Class['dc_foreman_proxy']
