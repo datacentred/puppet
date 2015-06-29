@@ -5,8 +5,8 @@
     - "osfamilies/%{osfamily}"
     - "platforms/%{productname}"
     - "architectures/%{architecture}"
-    - "modules/%{calling_module}"
     - "%{environment}"
+    - "modules/%{calling_module}"
     - common
 :backends:
     - yaml
