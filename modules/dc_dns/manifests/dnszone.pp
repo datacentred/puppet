@@ -32,8 +32,8 @@ define dc_dns::dnszone (
       nameservers => $nameservers,
       reverse     => $reverse,
     }
-    # Export a backup definition
-    @@dc_dnsbackup::backupzone { "${title}_${::hostname}":
+    # Create a backup definition
+    dc_dnsbackup::backupzone { "${title}_${::hostname}":
       zonename => $title,
       master   => $::fqdn,
     }

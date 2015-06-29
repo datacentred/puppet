@@ -13,7 +13,6 @@
 class dc_profile::ceph::mon {
 
   include ::ceph::mon
-  include ::dc_ceph::exports
   include ::dc_ceph::keybackup
   include ::dc_icinga::hostgroup_ceph_mon
 
@@ -22,7 +21,6 @@ class dc_profile::ceph::mon {
   }
 
   Class['ceph::mon'] ->
-  Class['dc_ceph::exports'] ->
   Class['dc_ceph::keybackup']
 
   # Ensure our 10GbE interfaces are properly configured

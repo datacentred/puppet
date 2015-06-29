@@ -19,9 +19,9 @@ fi
 CONFDIR=$1
 TS=$(date "+%y-%m-%d-%H")
 
-if [ -d <%= @dnsbackupmount %> ]
+if [ -d <%= @target %> ]
 then
-    if ! mkdir <%= @dnsbackupmount %>/$TS
+    if ! mkdir <%= @target %>/$TS
     then
         echo "Could not create backup folder"
         exit 1
@@ -32,7 +32,7 @@ for conffile in `ls $CONFDIR`
 do
     NS=`grep master $CONFDIR/$conffile | cut -d ' ' -f 2`
     DOMAIN=`grep zone $CONFDIR/$conffile | cut -d ' ' -f 2`
-    if ! dig @$NS $DOMAIN AXFR | grep -v -E ';|SOA|NS|AAAA' | awk 'NF > 0' > <%= @dnsbackupmount %>/$TS/$DOMAIN.axfr
+    if ! dig @$NS $DOMAIN AXFR | grep -v -E ';|SOA|NS|AAAA' | awk 'NF > 0' > <%= @target %>/$TS/$DOMAIN.axfr
     then
         echo "Could not AXFR"
         exit 1
