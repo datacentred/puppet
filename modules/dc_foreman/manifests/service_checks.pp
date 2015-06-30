@@ -14,8 +14,9 @@ class dc_foreman::service_checks (
   ensure_packages(['python-pip'])
 
   package { 'pypureomapi':
-    ensure   => installed,
+    ensure   => 'd56018c1e022977720f87de8675f372f629f6ca6',
     provider => 'pip',
+    source   => 'git+https://github.com/CygnusNetworks/pypureomapi.git',
     require  => Package['python-pip'],
   }
 
