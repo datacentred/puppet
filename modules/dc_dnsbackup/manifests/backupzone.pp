@@ -1,6 +1,9 @@
 # == Define: dc_dnsbackup::backupzone
 #
-define dc_dnsbackup::backupzone ($zonename,$master){
+define dc_dnsbackup::backupzone (
+  $zonename,
+  $master,
+) {
 
   include dc_dnsbackup
 
@@ -8,10 +11,10 @@ define dc_dnsbackup::backupzone ($zonename,$master){
     ensure  => file,
     require => File['/etc/dnsbackup.conf.d'],
     path    => "/etc/dnsbackup.conf.d/${zonename}-backup.conf",
-    owner   => root,
-    group   => root,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
     content => template('dc_dnsbackup/conf.erb'),
   }
 
 }
-

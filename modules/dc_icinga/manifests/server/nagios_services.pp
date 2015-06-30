@@ -144,13 +144,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'MySQL',
   }
 
-  icinga::service { 'check_nfs':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nfs',
-    check_command       => 'check_nfs_dc',
-    service_description => 'NFS',
-  }
-
   icinga::service { 'check_smtp':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_smtp',

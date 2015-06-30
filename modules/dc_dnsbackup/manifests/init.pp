@@ -1,31 +1,21 @@
-# Class: dc_dnsbackup
+# == Class: dc_dnsbackup
 #
+# Periodically back up requested zones to a specified directory
 #
-# Parameters:
+# === Parameters
 #
-# Actions:
+# [*target*]
+#   Target directory to store the zone backups to
 #
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
-class dc_dnsbackup(
+class dc_dnsbackup (
+  $target = '/var/zonebackups'
+) {
 
-  $dnsbackupmount = '/var/zonebackups'
-
-){
-
-  $nfs_backup_server = hiera(nfs_backup_server)
-  $storagedir        = hiera(storagedir)
-
-  package{ 'nfs-common':
-    ensure => installed,
-  }
-
-  file { 'backupmount':
+  file { $target:
     ensure => directory,
-    path   => $dnsbackupmount,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { 'dnsbackup.sh':
@@ -56,11 +46,5 @@ class dc_dnsbackup(
     recurse => true,
     rmdirs  => true,
   }
-
-  anchor { 'dc_dnsbackup::first': } ->
-  class { 'dc_dnsbackup::exports': } ->
-  anchor { 'dc_dnsbackup::last': }
-
-  Dc_dnsbackup::Backupzone <<| |>>
 
 }
