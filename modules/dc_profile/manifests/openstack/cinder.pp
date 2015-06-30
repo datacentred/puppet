@@ -22,8 +22,13 @@ class dc_profile::openstack::cinder {
   include ::cinder::volume::rbd
   include ::dc_icinga::hostgroup_cinder
 
+  file { '/etc/ceph':
+    ensure => directory,
+  }
+
   ceph::client { 'cinder':
-    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
+    perms   => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"',
+    require => File['/etc/ceph'],
   }
 
   # Ensure Ceph is configured before we do anything with Cinder, and
