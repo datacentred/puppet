@@ -1,3 +1,14 @@
+# Class: dc_tftp::params
+#
+# Parameters:
+#
+# Actions:
+#
+# Requires:
+#
+# Sample Usage:
+#
+# [Remember: No empty lines between comments and class definition]
 class dc_tftp::params (
   $tftp_dir,
   $virtual_address,
