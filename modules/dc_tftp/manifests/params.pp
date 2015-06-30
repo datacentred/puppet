@@ -6,6 +6,7 @@ class dc_tftp::params (
   $ha_sync,
   $sync_master,
   $sync_slave,
+  $sync_interface,
   $use_inetd,
   $tftp_sync_user,
   $tftp_sync_group,
@@ -13,14 +14,10 @@ class dc_tftp::params (
   $tftp_user,
   $tftp_group,
   $dir_mode,
+  $conf_template,
 ){
 
- case $lsbdistcodename { 
-  'trusty' : { $conf_template = 'dc_tftp/lsyncd.conf.lua.trusty.erb' }
-  'precise': { $conf_template = 'dc_tftp/lsyncd.conf.lua.precise.erb' }
- }
+  $address = $::ipaddress
 
- $address = $::ipaddress
- 
 }
 
