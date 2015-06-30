@@ -46,10 +46,4 @@ class dc_profile::openstack::cinder {
     }
   }
 
-  # Workaround for http://tracker.ceph.com/issues/11104
-  if $::osfamily == 'RedHat' {
-    Yumrepo['epel-testing'] ->
-    Ceph::Client['cinder']
-  }
-
 }
