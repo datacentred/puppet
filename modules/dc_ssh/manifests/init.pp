@@ -20,13 +20,15 @@
 class dc_ssh (
   $config = {},
 ) {
+  include dc_ssh::params
 
   create_resources('sshd_config', $config)
 
   service { 'ssh':
     ensure     => true,
     enable     => true,
-    hasrestart => true
+    hasrestart => true,
+    name       => $dc_ssh::params::service_name,
   }
 
   Sshd_config <||> ~> Service['ssh']
