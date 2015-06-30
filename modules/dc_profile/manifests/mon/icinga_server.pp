@@ -22,7 +22,13 @@ class dc_profile::mon::icinga_server {
   contain dc_icinga::server
   contain dc_icinga::hostgroup_http
 
+  contain dc_nsca::server
+
   contain pagerduty
+
+  # Requires the nagios user to be installed first
+  Class['::dc_icinga::server'] ->
+  Class['::dc_nsca::server']
 
   $nagios_api_username = hiera(nagios_api_username)
   $nagios_api_password = hiera(nagios_api_password)
