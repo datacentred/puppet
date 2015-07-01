@@ -32,7 +32,7 @@ class dc_tftp::sync_slave {
   }
 
   keepalived::vrrp::instance { 'keepalived_tftp_syncslave':
-    interface         => 'bond0',
+    interface         => $dc_tftp::sync_interface,
     state             => 'BACKUP',
     priority          => '100',
     virtual_router_id => $dc_tftp::virtual_router_id,

@@ -11,11 +11,12 @@ class dc_foreman::service_checks (
   $lease_file,
 ){
 
-  ensure_packages(['python-pip'])
+  ensure_packages(['python-pip', 'git'])
 
   package { 'pypureomapi':
-    ensure   => installed,
+    ensure   => 'd56018c1e022977720f87de8675f372f629f6ca6',
     provider => 'pip',
+    source   => 'git+https://github.com/CygnusNetworks/pypureomapi.git',
     require  => Package['python-pip'],
   }
 

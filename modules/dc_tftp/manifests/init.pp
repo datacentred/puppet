@@ -17,6 +17,7 @@ class dc_tftp (
   $ha_sync         = $dc_tftp::params::ha_sync,
   $sync_master     = $dc_tftp::params::sync_master,
   $sync_slave      = $dc_tftp::params::sync_slave,
+  $sync_interface  = $dc_tftp::params::sync_interface,
   $use_inetd       = $dc_tftp::params::use_inetd,
   $tftp_sync_user  = $dc_tftp::params::tftp_sync_user,
   $tftp_sync_group = $dc_tftp::params::tftp_sync_group,
