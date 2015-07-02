@@ -80,11 +80,27 @@ class dc_profile::openstack::keystone {
   }
 
   # Increase number of open files for the keystone service
-  file_line { 'keystone_nofiles':
-    path    => '/etc/init/keystone.conf',
-    line    => 'limit nofile 4096 65536',
-    require => Package['keystone'],
-    before  => Service['keystone'],
+  case $::osfamily {
+    'Debian': {
+      file_line { 'keystone_nofiles':
+        path    => '/etc/init/keystone.conf',
+        line    => 'limit nofile 4096 65536',
+        require => Package['keystone'],
+        before  => Service['keystone'],
+      }
+    }
+    'RedHat': {
+      file_line { 'keystone_nofiles':
+        path    => '/usr/lib/systemd/system/openstack-keystone.service',
+        line    => 'LimitNOFILE=65535',
+        after   => 'ExecStart=/usr/bin/keystone-all',
+        require => Package['keystone'],
+        before  => Service['keystone'],
+      }
+    }
+    default: {
+      fail('Cannot configure nofiles for keystone.')
+    }
   }
 
   unless $::is_vagrant {
