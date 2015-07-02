@@ -137,8 +137,8 @@ class Foreman(object):
         return dhcp_proxy, dns_proxy, tftp_proxy
 
     def get_host_info(self, host_id):
-       """
-       Return info about a host
-       """
-       host_info = self.get_from_api('hosts/' + str(host_id))
-       return host_info
+        """
+        Return info about a host
+        """
+        host_info = self.get_from_api('hosts/' + str(host_id))
+        return host_info
