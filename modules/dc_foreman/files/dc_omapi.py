@@ -151,14 +151,14 @@ class OmapiWrapper(object):
             print "an error occured: %r" % (err,)
             sys.exit(1)
 
-    def add_host(self, ip, mac, name):
-	"""
-	Add host as Foreman does
+    def add_host(self, ip_addr, mac, name):
+        """
+        Add host as Foreman does
 	"""
         try:
             oma = Omapi(self.dhcp_server, self.omapi_port,
                         self.omapi_key, self.omapi_secret)
-	    oma.add_host_supersede_name(ip, mac, name)
+	    oma.add_host_supersede_name(ip_addr, mac, name)
         except pypureomapi.OmapiError, err:
             print "an error occured: %r" % (err,)
             sys.exit(1)
