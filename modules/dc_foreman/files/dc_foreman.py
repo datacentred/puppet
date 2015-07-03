@@ -107,6 +107,7 @@ class Foreman(object):
                 'ip':host['ip'].encode("ascii"),
                 'mac':host['mac'].encode("ascii"),
                 'subnet_id':host['subnet_id'],
+		'host_id':host['id'],
                 'type':'main'
             })
           # Check for any additional interfaces
@@ -120,7 +121,8 @@ class Foreman(object):
                         'ip':foreman_int['ip'].encode("ascii"),
                         'mac':foreman_int['mac'].encode("ascii"),
                         'type':foreman_int['type'].encode("ascii"),
-                        'subnet_id':foreman_int['subnet_id']
+                        'subnet_id':foreman_int['subnet_id'],
+                        'host_id':host['id']
                     })
         return ints
 
@@ -133,3 +135,10 @@ class Foreman(object):
         dns_proxy = subnet_info['dns']['url']
         tftp_proxy = subnet_info['tftp']['url']
         return dhcp_proxy, dns_proxy, tftp_proxy
+
+    def get_host_info(self, host_id):
+        """
+        Return info about a host
+        """
+        host_info = self.get_from_api('hosts/' + str(host_id))
+        return host_info
