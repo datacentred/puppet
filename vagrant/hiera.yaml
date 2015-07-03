@@ -1,10 +1,10 @@
 :hierarchy:
     - "nodes/%{::hostname}"
+    - "platforms/%{productname}"
+    - "architectures/%{architecture}"
     - "roles/%{::role}"
     - "releases/%{::lsbdistcodename}/%{::architecture}/%{calling_module}"
     - "osfamilies/%{osfamily}"
-    - "platforms/%{productname}"
-    - "architectures/%{architecture}"
     - "%{environment}"
     - "modules/%{calling_module}"
     - common
