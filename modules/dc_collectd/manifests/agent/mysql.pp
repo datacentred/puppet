@@ -31,8 +31,4 @@ class dc_collectd::agent::mysql (
     password => $password,
   }
 
-  $dbhashhost = [ "${::hostname}#${::hostname}" ]
-
-  @@dc_gdash::mysql { $dbhashhost: }
-
 }
