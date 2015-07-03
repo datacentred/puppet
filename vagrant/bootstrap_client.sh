@@ -11,7 +11,8 @@ userdel -rf vagrant
 
 # Distribution-specific package considerations
 if [ -f /etc/redhat-release ]; then
-  yum makecache fast > /dev/null
+  yum update -y >/dev/null
+  yum makecache fast >/dev/null
   yum install -y puppetdb-terminus > /dev/null
   sed -i '/Defaults    requiretty/d' /etc/sudoers
 else

@@ -18,18 +18,27 @@ class dc_profile::openstack::keystone {
   include ::dc_icinga::hostgroup_keystone
 
   # Data defined in the openstack_keystone role
+  create_resources(keystone_tenant, hiera(keystone_tenants))
   create_resources(keystone_user, hiera(keystone_users))
   create_resources(keystone_role, hiera(keystone_role))
   create_resources(keystone_user_role, hiera(keystone_user_roles))
   create_resources(keystone_service, hiera(keystone_services))
   create_resources(keystone_endpoint, hiera(keystone_endpoints))
 
+  # Ensure that the various PKI-related certificates and keys
+  # are the same across all nodes running Keystone
+
   $keystone_signing_key  = hiera(keystone_signing_key)
   $keystone_signing_cert = hiera(keystone_signing_cert)
   $keystone_ca_key       = hiera(keystone_ca_key)
 
-  # Ensure that the various PKI-related certificates and keys
-  # are the same across all nodes running Keystone
+  file { [  '/etc/keystone/ssl', '/etc/keystone/ssl/certs',
+            '/etc/keystone/ssl/private' ]:
+    ensure => directory,
+    owner  => 'keystone',
+    group  => 'keystone',
+  }
+
   file { '/etc/keystone/ssl/private/signing_key.pem':
     content => $keystone_signing_key,
     mode    => '0600',
@@ -71,32 +80,32 @@ class dc_profile::openstack::keystone {
   }
 
   # Increase number of open files for the keystone service
-  file_line { 'keystone_nofiles':
-    path    => '/etc/init/keystone.conf',
-    line    => 'limit nofile 4096 65536',
-    require => Package['keystone'],
-    before  => Service['keystone'],
+  case $::osfamily {
+    'Debian': {
+      file_line { 'keystone_nofiles':
+        path    => '/etc/init/keystone.conf',
+        line    => 'limit nofile 4096 65536',
+        require => Package['keystone'],
+        before  => Service['keystone'],
+      }
+    }
+    'RedHat': {
+      file_line { 'keystone_nofiles':
+        path    => '/usr/lib/systemd/system/openstack-keystone.service',
+        line    => 'LimitNOFILE=65535',
+        after   => 'ExecStart=/usr/bin/keystone-all',
+        require => Package['keystone'],
+        before  => Service['keystone'],
+      }
+    }
+    default: {
+      fail('Cannot configure nofiles for keystone.')
+    }
   }
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include ::dc_logstash::client::keystone
-
-      # Keystone tenancy and accounts for Icinga monitoring
-      keystone_tenant { 'icinga':
-        ensure  => present,
-        enabled => true,
-      }
-      keystone_user_role { 'icinga@icinga':
-        ensure => present,
-        roles  => admin,
-      }
-      keystone_user { 'icinga':
-        ensure   => present,
-        enabled  => true,
-        password => hiera(keystone_icinga_password),
-        tenant   => 'icinga',
-      }
+      include dc_logstash::client::keystone
     }
   }
 

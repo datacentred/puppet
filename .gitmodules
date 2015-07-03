@@ -233,9 +233,6 @@
 [submodule "modules/lsyncd"]
 	path = modules/lsyncd
 	url = https://github.com/datacentred/puppet-lsyncd.git
-[submodule "modules/keystone"]
-	path = modules/keystone
-	url = https://github.com/datacentred/puppet-keystone.git
 [submodule "modules/duplicity"]
 	path = modules/duplicity
 	url = https://github.com/datacentred/puppet-duplicity
@@ -275,3 +272,6 @@
 [submodule "modules/kibana4"]
 	path = modules/kibana4
 	url = https://github.com/lesaux/puppet-kibana4.git
+[submodule "modules/keystone"]
+	path = modules/keystone
+	url = https://github.com/openstack/puppet-keystone.git

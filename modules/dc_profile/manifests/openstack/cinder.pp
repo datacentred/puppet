@@ -22,25 +22,19 @@ class dc_profile::openstack::cinder {
   include ::cinder::volume::rbd
   include ::dc_icinga::hostgroup_cinder
 
+  file { '/etc/ceph':
+    ensure => directory,
+  }
+
   ceph::client { 'cinder':
-    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
+    perms   => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"',
+    require => File['/etc/ceph'],
   }
 
   # Ensure Ceph is configured before we do anything with Cinder, and
   # restart the cinder-volume service if anything changes
   Ceph::Client['cinder'] ~>
   Class['::cinder::volume']
-
-  # TODO: Remove me once there's an updated package available which includes this fix!
-  # Patch file in place to address CVE-2015-1850
-  file { '/usr/lib/python2.7/dist-packages/cinder/image/image_utils.py':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/dc_openstack/image_utils.py',
-    require => Package['cinder-volume'],
-    notify  => Service['cinder-volume', 'cinder-api'],
-  }
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-cinder":
