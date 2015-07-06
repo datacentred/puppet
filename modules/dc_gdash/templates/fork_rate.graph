@@ -1,7 +1,0 @@
-title   "Fork rate"
-area    :all
-hide_legend false
-
-field :fork,   :alias => "Fork rate",
-               :data  => "node.processes.fork_rate"
-
