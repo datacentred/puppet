@@ -35,8 +35,8 @@ class dc_icinga::server::nagios_commands {
   $mongodb_admin_password = hiera(mongodb_admin_password)
   $icinga_instance_net_name = hiera(icinga_instance_net_name)
   $icinga_instance_flavor = hiera(icinga_instance_flavor)
-  $dhcp_icinga_mac = hiera(dc_dhcp::dhcp_icinga_mac)
-  $dhcp_icinga_ip = hiera(dc_dhcp::dhcp_icinga_ip)
+  $dhcp_icinga_mac = hiera(dc_dhcp::params::dhcp_icinga_mac)
+  $dhcp_icinga_ip = hiera(dc_dhcp::params::dhcp_icinga_ip)
 
 
   ######################################################################
