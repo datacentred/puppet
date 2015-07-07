@@ -13,11 +13,12 @@
 class dc_dns (
   $isslave = false,
   $nameservers = {},
-  $dns_zones = {},
   $masters = '',
 ) {
 
   include ::dns
+
+  $dns_zones = hiera_hash('dc_dns::dns_zones')
 
   $defaults = {
     'nameservers' => $nameservers,
