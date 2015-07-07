@@ -19,6 +19,8 @@ class dc_dhcp::params (
   $ssh_private_key,
   $ssh_public_key,
   $secondary_dhcp_host,
+  $dhcp_icinga_mac,
+  $dhcp_icinga_ip,
 ) {
 
   assert_private()
