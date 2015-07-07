@@ -73,4 +73,16 @@ class dc_collectd::agent::ceph(
     },
   }
 
+  collectd::plugin::python { 'ceph_iops':
+    modulepath    => '/usr/lib/collectd/ceph',
+    module        => 'ceph_iops_plugin',
+    script_source => 'puppet:///modules/dc_collectd/ceph/ceph_iops_plugin.py',
+    config        => {
+      'Verbose'  => true,
+      'Cluster'  => $ceph_cluster_name,
+      'Interval' => 60,
+      'TestPool' => $ceph_test_pool,
+    },
+  }
+
 }
