@@ -8,8 +8,6 @@ class dc_dhcp (
   $zonemaster,
   $default_lease_time,
   $max_lease_time,
-  $dhcp_icinga_mac,
-  $dhcp_icinga_ip,
 ) {
 
   assert_private()

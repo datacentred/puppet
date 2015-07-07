@@ -8,6 +8,9 @@ class dc_dhcp::primary::config {
 
   include ::dc_dhcp::params
 
+  $dhcp_icinga_mac = $dc_dhcp::params::dhcp_icinga_mac
+  $dhcp_icinga_ip = $dc_dhcp::params::dhcp_icinga_ip
+
   file { '/etc/default/dhcp_sync_agent':
     ensure  => file,
     owner   => 'root',
