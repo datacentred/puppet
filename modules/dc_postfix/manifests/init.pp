@@ -13,12 +13,12 @@
 class dc_postfix (
   $primary_mail_server,
   $internal_sysmail_address,
+  $gateway = false,
 ){
 
-  if $::role == 'mail_gateway' {
+  if $gateway {
     include ::dc_postfix::gateway
-  }
-  else {
+  } else {
     include ::dc_postfix::nullclient
   }
 
