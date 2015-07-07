@@ -30,6 +30,24 @@ class dc_profile::openstack::nova_compute {
     notify  => Service['nova-compute'],
   }
 
+  # Ensure ARM-based hypervisors don't advertise the ability to virtualise i686 and x86_64
+  # based instances and vice-versa
+  case $::architecture {
+    'aarch64': {
+      file { [ '/usr/bin/qemu-system-x86_64', '/usr/bin/qemu-system-i386' ]:
+        mode   => '0000',
+        notify => Service['nova-compute'],
+      }
+    }
+    'amd64': {
+      package { 'qemu-system-arm':
+        ensure => absent,
+        notify => Service['nova-compute'],
+      }
+    }
+    default: {}
+  }
+
   # Configure Ceph client, this installs ceph and the client keyring
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
