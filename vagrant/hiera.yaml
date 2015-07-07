@@ -2,10 +2,12 @@
     - "nodes/%{::hostname}"
     - "platforms/%{productname}"
     - "architectures/%{architecture}"
+    - "environments/%{::environment}/roles/%{::role}"
     - "roles/%{::role}"
     - "releases/%{::lsbdistcodename}/%{::architecture}/%{calling_module}"
     - "osfamilies/%{osfamily}"
     - "%{environment}"
+    - "environments/%{::environment}/modules/%{calling_module}"
     - "modules/%{calling_module}"
     - common
 :backends:
