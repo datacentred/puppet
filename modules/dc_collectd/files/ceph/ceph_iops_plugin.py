@@ -24,6 +24,7 @@ class CephIopsPlugin(base.Base):
             json_data = json.loads(output)
         except ValueError:
             collectd.error("ceph-iops: output parse failure")
+            return
         json_data = json.loads(output)
         data[ceph_cluster]['health']['iops'] = json_data['pgmap']['op_per_sec']
         return data
