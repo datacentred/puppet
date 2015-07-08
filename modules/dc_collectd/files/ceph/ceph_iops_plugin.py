@@ -12,18 +12,13 @@ class CephIopsPlugin(base.Base):
         """retrieve IOP stat data"""
         ceph_cluster = "%s-%s" % (self.prefix, self.cluster)
         data = {ceph_cluster:{'health': {'iops':0}}}
-        output = None
         try:
-            output = subprocess.check_output('ceph -s --format json',
-                    shell=True)
+            output = subprocess.check_output(['ceph', '-s', '--format', 'json'])
         except subprocess.CalledProcessError as exc:
             collectd.error(
             "ceph-iops: failed to ceph -s :: Output is %s :: error code %i"
                     % (exc.output, exc.returncode)
                     )
-            return
-        if output is None:
-            collectd.error('ceph-iops: failed to ceph -s :: output was None')
             return
         try:
             json_data = json.loads(output)
