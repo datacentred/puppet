@@ -45,4 +45,17 @@ class dc_profile::openstack::heat {
     'DEFAULT/stack_adopt'   : value => true;
   }
 
+  logrotate::rule { 'heat':
+    path          => [
+      'heat-api-cfn.log',
+      'heat-api.log',
+      'heat-engine.log',
+      'heat-manage.log' ],
+    rotate        => 90,
+    rotate_every  => 'day',
+    ifempty       => false,
+    delaycompress => true,
+    compress      => true,
+  }
+
 }
