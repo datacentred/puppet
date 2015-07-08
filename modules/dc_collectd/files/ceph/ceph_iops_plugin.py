@@ -25,6 +25,10 @@ class CephIopsPlugin(base.Base):
         if output is None:
             collectd.error('ceph-iops: failed to ceph -s :: output was None')
             return
+        try:
+            json_data = json.loads(output)
+        except ValueError:
+            collectd.error("ceph-iops: output parse failure")
         json_data = json.loads(output)
         data[ceph_cluster]['health']['iops'] = json_data['pgmap']['op_per_sec']
         return data
