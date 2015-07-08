@@ -17,23 +17,19 @@ class CephIopsPlugin(base.Base):
         try:
             output = subprocess.check_output('ceph -s --format json',
                     shell=True)
-        except Exception as exc:
-            collectd.error("ceph-iops: failed to ceph -s :: %s :: %s"
-                    % (exc, traceback.format_exc()))
+        except subprocess.CalledProcessError as exc:
+            collectd.error(
+            "ceph-iops: failed to ceph -s :: Output is %s :: error code %i"
+                    % (exc.output, exc.returncode)
+                    )
             return
         if output is None:
-            collectd.error("ceph-iops: failed to ceph -s :: %s :: %s"
-                    % (exc, traceback.format_exc()))
-        if output is None:
             collectd.error('ceph-iops: failed to ceph -s :: output was None')
+            return
         json_data = json.loads(output)
         data[ceph_cluster]['health']['iops'] = json_data['pgmap']['op_per_sec']
         return data
-try:
-    plugin = CephIopsPlugin()
-except Exception as exc:
-    collectd.error("ceph-IOPS: failed to innit ceph iops plugin :: %s :: %s"
-            % (exc, traceback.format_exc()))
+plugin = CephIopsPlugin()
 def configure_callback(conf):
     """Received configuration information"""
     plugin.config_callback(conf)
