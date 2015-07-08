@@ -13,26 +13,6 @@ class dc_tftp::sync_master {
 
   include dc_tftp
   include dc_tftp::sync_user
-  include ::keepalived
-
-  # Allow Linux to bind to IPs which don't yet exist
-  sysctl { 'net.ipv4.ip_nonlocal_bind':
-    ensure => present,
-    value  => '1',
-  }
-
-  keepalived::vrrp::script { 'check_tftp':
-    script => '/usr/bin/killall -0 in.tftpd',
-  }
-
-  keepalived::vrrp::instance { 'keepalived_tftp_syncmaster':
-    interface         => $dc_tftp::sync_interface,
-    state             => 'MASTER',
-    priority          => '150',
-    virtual_router_id => $dc_tftp::virtual_router_id,
-    virtual_ipaddress => [ "${dc_tftp::virtual_address}/${dc_tftp::virtual_netmask}" ],
-    track_script      => [ 'check_tftp' ],
-  }
 
   sshkeys::create_key { $dc_tftp::tftp_sync_user :
     home        => $dc_tftp::tftp_sync_home,

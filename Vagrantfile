@@ -22,7 +22,7 @@ Vagrant.configure('2') do |config|
   config.landrush.upstream '10.10.192.251'
 
   # Give every guest private networking
-  config.vm.network :private_network, type: :dhcp
+  #config.vm.network :private_network, type: :dhcp
 
   # Setup a dedicated PuppetDB for storedconfigs
   config.vm.define 'puppetdb' do |box|
@@ -39,6 +39,8 @@ Vagrant.configure('2') do |config|
       # Allow DHCP IP to be manually overriden
       if options.has_key?(:ip)
         box.vm.network :private_network, ip: options.ip
+      else
+        box.vm.network :private_network, ip: dhcp
       end
 
       # Allow ports to be forwarded
