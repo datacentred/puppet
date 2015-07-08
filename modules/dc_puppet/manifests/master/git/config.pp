@@ -32,21 +32,21 @@ class dc_puppet::master::git::config {
   # Become a member of the puppet group so we have write
   # access to the environments
   user { 'git':
-    ensure      => present,
-    gid         => 'git',
-    groups      => 'puppet',
-    home        => $home,
-    managehome  => true,
-    shell       => '/usr/bin/git-shell',
-    system      => true,
-    require     => Group['git'],
+    ensure     => present,
+    gid        => 'git',
+    groups     => 'puppet',
+    home       => $home,
+    managehome => true,
+    shell      => '/usr/bin/git-shell',
+    system     => true,
+    require    => Group['git'],
   }
 
   # Defaults for all file declarations
   File {
-    owner   => 'git',
-    group   => 'git',
-    mode    => '0644',
+    owner => 'git',
+    group => 'git',
+    mode  => '0644',
   }
 
   # Install the ssh keys to grant access to the GitHub
@@ -59,13 +59,13 @@ class dc_puppet::master::git::config {
   file { "${home}/.ssh/id_rsa":
     ensure  => present,
     mode    => '0400',
-    content => template('dc_puppet/master/git/id_rsa'),
+    content => $dc_puppet::master::git::id_rsa,
     require => File["${home}/.ssh"],
   }
 
   file { "${home}/.ssh/id_rsa.pub":
     ensure  => present,
-    content => template('dc_puppet/master/git/id_rsa.pub'),
+    content => $dc_puppet::master::git::id_rsa_pub,
     require => File["${home}/.ssh"],
   }
 
@@ -78,11 +78,11 @@ class dc_puppet::master::git::config {
   # Clone the puppet repository from GitHub onto the puppet
   # master
   exec { 'puppet_master_clone_git':
-    command     => "/usr/bin/git clone --bare ${remote} ${repo}",
-    user        => 'git',
-    creates     => $repo,
-    timeout     => 3600,
-    require     => [
+    command => "/usr/bin/git clone --bare ${remote} ${repo}",
+    user    => 'git',
+    creates => $repo,
+    timeout => 3600,
+    require => [
       File["${home}/.ssh/id_rsa"],
       File["${home}/.ssh/known_hosts"]
     ],
