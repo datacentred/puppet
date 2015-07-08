@@ -15,6 +15,8 @@ class dc_branding::openstack::horizon (
   $theme_path   = '/usr/share/openstack-dashboard-datacentred-theme',
 ) {
 
+  include ::dc_branding::params
+
   File {
     owner  => 'root',
     group  => 'root',
@@ -51,6 +53,6 @@ class dc_branding::openstack::horizon (
     command     => 'python manage.py compress',
     cwd         => $horizon_path,
     refreshonly => true,
-    notify      => Service['apache2'],
+    notify      => Service[$::dc_branding::params::http_service],
   }
 }
