@@ -46,11 +46,7 @@ class dc_profile::openstack::heat {
   }
 
   logrotate::rule { 'heat':
-    path          => [
-      'heat-api-cfn.log',
-      'heat-api.log',
-      'heat-engine.log',
-      'heat-manage.log' ],
+    path          => '/var/log/heat/*.log',
     rotate        => 90,
     rotate_every  => 'day',
     ifempty       => false,
