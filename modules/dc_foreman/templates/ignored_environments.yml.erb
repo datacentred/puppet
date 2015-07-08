@@ -1,0 +1,4 @@
+:filters:
+<% @regexes.each do |x| -%>
+  - !ruby/regexp '<%= x %>'
+<% end -%>
