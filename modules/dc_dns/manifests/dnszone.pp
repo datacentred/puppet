@@ -14,7 +14,7 @@ define dc_dns::dnszone (
   $soa         = undef,
   $soaip       = undef,
   $nameservers = undef,
-  $reverse     = undef,
+  $reverse     = false,
   $isslave     = false,
   $masters  = '',
 ) {

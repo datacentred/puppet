@@ -1,16 +1,9 @@
-# Class: dc_role::osapi
+# == Class: dc_profile::openstack::proxy
 #
-# OpenStack API Front-End Server
+# Top level Openstack API Proxy
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-class dc_role::osapi {
+class dc_profile::openstack::proxy {
+
   contain dc_profile::openstack::proxyip
   contain dc_profile::openstack::haproxy
   contain dc_profile::openstack::keepalived
@@ -18,4 +11,5 @@ class dc_role::osapi {
   Class['Dc_profile::Openstack::Proxyip'] ~>
   Class['Dc_profile::Openstack::Keepalived'] ~>
   Class['Dc_profile::Openstack::Haproxy']
+
 }

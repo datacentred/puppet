@@ -18,6 +18,7 @@ class dc_profile::openstack::glance {
   contain ::glance::notify::rabbitmq
   include ::glance::cache::pruner
   include ::glance::cache::cleaner
+  include ::glance::policy
   include ::dc_icinga::hostgroup_glance
 
   # Add this node into our loadbalancers
