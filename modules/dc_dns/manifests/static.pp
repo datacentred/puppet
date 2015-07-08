@@ -2,12 +2,12 @@
 #
 # Static configuration
 #
-class dc_dns::static (
-  $records = {},
-) {
+class dc_dns::static {
 
   # TODO: Delete me
   Dns_resource <<||>>
+
+  $records = hiera_hash('dc_dns::static::records')
 
   # Create DNS records from a hash stored in Hiera
   # for anything 'static' we require
