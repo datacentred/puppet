@@ -15,6 +15,7 @@ class dc_profile::openstack::neutron_server {
   include ::neutron::server
   include ::neutron::server::notifications
   include ::neutron::plugins::ml2
+  include ::neutron::quota
   include ::dc_icinga::hostgroup_neutron_server
 
   # Add this node's API services into our loadbalancer
