@@ -2,7 +2,7 @@
 import collectd
 import subprocess
 import json
-import ceph.base as base
+import base as base
 class CephIopsPlugin(base.Base):
     """Collect I/O ops per second """
     def __init__(self):
