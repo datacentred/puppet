@@ -13,8 +13,8 @@ class CephIopsPlugin(base.Base):
         ceph_cluster = "%s-%s" % (self.prefix, self.cluster)
         data = {ceph_cluster:{'health': {'iops':0}}}
         try:
-            output = subprocess.check_output(['ceph', '-s', '--format', 'json'],
-                    shell=True
+            output = subprocess.check_output('ceph -s --format json',
+                shell=True
                     )
         except subprocess.CalledProcessError as exc:
             collectd.error(
