@@ -26,7 +26,7 @@ Vagrant.configure('2') do |config|
 
   # Setup a dedicated PuppetDB for storedconfigs
   config.vm.define 'puppetdb' do |box|
-    box.vm.network :private_network, ip: dhcp
+    box.vm.network :private_network, type: :dhcp
     box.vm.hostname = 'puppetdb.vagrant.dev'
     box.vm.synced_folder '.', '/vagrant', :disabled => true
     box.vm.provision 'shell', path: 'vagrant/bootstrap_puppetdb.sh'
@@ -48,7 +48,7 @@ Vagrant.configure('2') do |config|
       if options.has_key?(:ip)
         box.vm.network :private_network, ip: options.ip
       else
-        box.vm.network :private_network, ip: dhcp
+        box.vm.network :private_network, type: :dhcp
       end
 
       # Allow ports to be forwarded
