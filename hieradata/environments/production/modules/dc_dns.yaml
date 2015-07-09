@@ -36,8 +36,6 @@ dc_dns::static::records:
     rdata: 'domain.status.io'
   'logstash.%{::domain}/A':
     rdata: "%{hiera('platform_services_logstash_vip')}"
-  'tftp.%{::domain}/A':
-    rdata: "%{hiera('platform_services_tftp_vip')}"
   'vboxes.%{::domain}/CNAME':
     rdata: "bigyellow.%{::domain}"
   'mirror.%{::domain}/CNAME':
