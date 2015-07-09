@@ -10,7 +10,10 @@
 #
 # Sample Usage:
 #
-class dc_puppet::master::git {
+class dc_puppet::master::git (
+  $id_rsa,
+  $id_rsa_pub,
+) {
 
   contain dc_puppet::master::git::install
   contain dc_puppet::master::git::config
