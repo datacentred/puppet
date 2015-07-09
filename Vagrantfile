@@ -41,8 +41,8 @@ Vagrant.configure('2') do |config|
       config.vm.provision 'file', source: 'vagrant/Gemfile', destination: 'Gemfile'
 
       # Copy the eyaml keys
-      config.vm.provision 'file', source: '~/keys/private_key.pkcs7.pem', destination: 'private_key.pkcs7.pem'
-      config.vm.provision 'file', source: '~/keys/public_key.pkcs7.pem', destination: 'public_key.pkcs7.pem'
+      config.vm.provision 'file', source: config.user.eyaml.private_key, destination: 'private_key.pkcs7.pem'
+      config.vm.provision 'file', source: config.user.eyaml.public_key,  destination: 'public_key.pkcs7.pem'
 
       # Allow DHCP IP to be manually overriden
       if options.has_key?(:ip)
