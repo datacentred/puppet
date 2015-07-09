@@ -1,1 +1,3 @@
-DCCRYPTOw0bSwRvwA5ypWgyChAK2B24KcybUX93bfbVu7X5VpCysyr7YeWakACVpEs2nSLUl
+---
+dhcp::interfaces:
+      - 'eth1'

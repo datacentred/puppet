@@ -1,1 +1,3 @@
-DCCRYPTO+a6BtD7VX8a36lAkQg/FtIzs4CUvUgKiDF4CaV2XaGFInAMOSbDClN9wUNTu8GGaAhc8OqXVqXSAAI2oFy9amQ==
+---
+classes:
+  - '::dc_profile::foreman::foreman'

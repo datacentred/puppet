@@ -1,1 +1,21 @@
-DCCRYPTORNX5T09nEbHqp4Ec+9r0PMBGUrWq/a6jrxzR3+xTgZDde+FfunolNVDki9QHHb/mwlwQ+550z/X1NuOVqnru32h8PCdNhCMo7mptv1p/lR9vEEp+mf3Hv1JPC5qlMSHSUFba4JZhJMhF+0OXeh6AmAvSB1W5W3cyG3uEl4fKqY5otzgsJOyD+WUGkjeYHaCyPoh3bq0gMPIYvKwyEzaQbosEJNoX9TY0pFrpw5Y/sqj0bK03bRRSy+GU89u+uT9oFt6fgfRE1y4BemBQgAqkjUtBnpyZRQVfurLpQ2mmcFzUiBUeSVNgnKKXKcXpOfnu5RjU29oagmUTphXW+smZjvkxNmVAxclv5HpLIGaqEVWv6PLAHhsLtCIvREaJDFcSTqSYjjn44VVtb+oboAzMHOB4e8ynLXHqNpaq9ylDa4Ug77sDX1EwYDZZv9jIDbnEqA6WPd0Z1OGwHI7SXnVmgEZD2FaS3lwnW8yhXv9xI+4CNh+hoWGOdNqv/kOo8s7p3a7QLoztO5z656djskgDPc0Sh7y5tpPylUDSEa3nICFV8MNM3PX7TZm2OiGtQ88paJpOtfMDFnD8TnyVUQ/QYNmjDXmpLdJdT28Xr4nZMTk7nvyONKoBe30SMIDEDenwXX3cC1XrSfuPcrXrP++nYhwLzaw4ZNbL5nXu3Lfz1Zi2w+YA1jDX1u4l5RCbCF7AarSkFufwfJRk74KEVRHRx/1/nAoaJJFso6I1d2FrfbTOUZDl7jfpGZy4H4ilMhCqKbf8AKtj30WrP/dLLZ4Cz2QR1sQwXm09ir6gAPtgi2qC8irZItrcppkPh0KuF+8Bq8+9DV28JpNhbtxt/yfkxE1KiBNcX3dWzc8iIrhmZIXDWwrZYsKGmSDOODktcjbMEG/i34pIJSd4CWw6flWxypTVL4+CcU/fscW9/4LeF40PTJ97VpW2NP/FC96nddIpLdgoK6qJiLf38gfOBRtVLcfY4xfGqKPchBCMmyGVMMon+e43SkdNGcgDdr6qup7LjQzMmbXtJKtyPXgUyYkSiDaGXHJdNYe2BZaowOvmMBftMaaCcAjp7VYJO9vAMZqR+60pyEW+SIfxiNXvQzjzLCLiQhSOqM2s79g+/7ptvET3WefEWjuSow+M2HAGO6QnQHYmeWN2Q+cfH7KYXfbDvbUOFj1XjJFGm67Bt2b49ii8xGQQJFJvwqUu7yAMbk5Atkdo0/0OnjG44qRH/7GQU2EbBfxwGSIZBQhXeq1gfTG5EDO8WjUe8dwVfXXPJ/pxTvHajMIMEYI0ufUZ9CbI4Hk95yXXhF57fA6VhoWEKud4j/d5hVKlxm0w4LRHE9MfmPbnT2HZ1M/ssIfB+La7UJlAjrX2rBJFRy87UEBpb7iMoCjMSFkT+K6CkGsmoRwnptHYrzJx74yFmtLO+n3DL922zKdkOaULCO0CGQVTEmVu+orGZTpy0sr4QPJQQ+8pQmQMS5ZPbfi8OSQm50yZYZGhZ20kdo2hwI+QVvOzTDAkmGw0obbzvrrDgwtKyX+FFdSA1cYh/zJrrvENxgwtz1Y9aFZU59YIwDeN9LKXXJAQz2lml6Ar7CRuCLcVCW3bxMzgHOxeS3dHIWFsXQYq1Q==
+---
+ceilometer::metering_secret: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAaBLVair6QL+4aNmKcb4mD8YL0kpKZVdgr97Jl2BXMyCDn0Wj7TP3FlHlLhrUBSecCDjuBgtfY/d8ChOLmLrlDRJ5uoknZ9OjZryUQcVV/Ckg3yc/GAz9SEYhe23TLKVg7D/zk0Eh2BiueKUo3m+6U6J/MwtvhrAn1T2hfOlwxnDzn8yPY/bEg/zKu/Y6ThVsIjyQYBTdXSF7Xa+o3Cr4hbvQHmMTmsEUijGGcamox26bANoKCtj6aqK9lDac5Dl+qsU+aegrSckKeLauKsVSQkZ0B4CsomkVjqgqmznw/TkB6adUCLiBm62OJT2bI7nSkK8UcuCz9dRjRcPJg9zXwzBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBvZE4BtvzKHip92MI0j51CgCC31fpuQ3iqETG4tl23SbG5xYjIVl7TuNovt5RLOzWbZA==]
+ceilometer::rabbit_hosts: 
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+ceilometer::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+ceilometer::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
+ceilometer::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+ceilometer::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+ceilometer::db::database_connection: "mongodb://ceilometer:%{hiera('ceilometer_db_password')}@osmongodb0.%{::domain},osmongodb1.%{::domain},osmongodb2.%{::domain}/ceilometer?replicaSet=ceilometer"
+ceilometer::api::keystone_host: "%{hiera('os_api_host')}"
+ceilometer::api::keystone_protocol: 'https'
+ceilometer::api::keystone_user: 'ceilometer'
+ceilometer::api::keystone_password: "%{hiera('keystone_ceilometer_password')}"
+ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/v2.0"
+ceilometer::agent::auth::auth_user: 'ceilometer'
+ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
+ceilometer::agent::auth::auth_region: "%{hiera('os_region')}"
+ceilometer::expirer::time_to_live: '2592000'
+ceilometer::agent::notification::enabled: true

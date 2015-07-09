@@ -1,1 +1,18 @@
-DCCRYPTOPd5zT0TSzsdEar1pFz/h22O2NtBarSU11Pfg6m9PhmOq12goc5gdNqXBKgHQs/QSrT3jHTntnQ5xS4Ei3oBWi2thCYa0RrjtHomyW4UYLNHgBGGEYIJwmHvtkIAivCdABs9vAekN1ynkwx0r0oKn9GFqi4eQI9N7LMd51oN2MWwOYKCGtKQDXr/t9gzw2Qwn6CumyxdDpGP5fGpJysX2TxfdciyfOcG/DZekYhAlf3nTOw86UcYEtdthFaIcJg4S5CtlzxIZUyffRTPeaDvk5joTmf7Bn7RyLqgHl0027z7dYtIrslOcq9RSvHy5EHhE2o2qba7owT0TAIYBCfxqmbFLX2BlR5gaE5sucvWOY6VmVh4xSbJaGW2OBCzMUuzFe+VPEWhgTthj+vHTkSXumlVRH7gXuffsRZ0wgvAfoDLmr7lTRGm1IT/6oXkxoKaazx0ZzdpLpnZ7oD00mrcYEzdFEshP0vSMa/M+IyNjxPGS1tz4yz3UHzHhHkeguOFD/5JIDD373LM0/mwyWUps9lhKuBs2lGu1SPGE3V2cEoEUMe9NqNWe+UgKT4ActoWLq6vwu+5ybC/2TBCqGZCct8VUHlndGkdAZctHteASOqLd+i90XFW4wlN9c2sqV6nru9b+G6KyGET5hEOMI4yjSWvC+UETlDcQ3b11EZyDxbw=
+---
+classes:
+  - '::dc_profile::openstack::network'
+
+neutron::agents::ml2::ovs::bridge_uplinks:
+ - "br-ex:em2"
+ - "br-p2p2:p2p2"
+neutron::agents::ml2::ovs::bridge_mappings:
+ - 'default:br-ex'
+ - 'as201541:br-p2p2'
+neutron::agents::l3::external_network_bridge: ''
+neutron::agents::l3::gateway_external_network_id: ''
+
+sudo::configs:
+  neutron:
+    content: |
+      Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
+      neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap

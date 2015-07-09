@@ -1,1 +1,5 @@
-DCCRYPTO8ibq/W+plLdNDJEyZe+yZUWkQSaHHWs55oVOMlBd2cCb+pnT/WTNSjkk6pNQfnDvqgz04KVuRIP0sxl93am0yPgbrCzdCfWTkCbmXFdXwocCZLUULiX/ZF9d5xLOEMqQqe5OSMeDXnztRfyGcMuGVg==
+---
+classes:
+  - '::dc_profile::util::firmware'
+
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p1p1}"

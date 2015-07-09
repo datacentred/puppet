@@ -1,1 +1,6 @@
-DCCRYPTOm7oD1pp75eXM3SlJb1RCnDXftFACpRSF9S0B7I4QH58Fk2sYLWTQmj8PyictqhTE01eP5tMH/eGejC3jX+7gJgwhIrT3r6NJuqx3GgcEOF58VIIS1QFkobJd7oayoQ91XGJNkGrbYtkhiy84r5GDjZSGUCctlldjLXdy6ll81Zs=
+---
+classes:
+  - '::dc_profile::apt::apt'
+  - '::dc_profile::util::apparmor'
+
+puppet::version: '3.7.4-1puppetlabs1'

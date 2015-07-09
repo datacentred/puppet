@@ -1,1 +1,11 @@
-DCCRYPTOy8UaNBHRKnsf901x8b2WcFta6nEcuU2F4mxoZKxbkd9Wn3bNvEnKFQvT/6gsIMptRSbA3v5i3VFG7A5j9fgowtIbSZTA/33kW2myYqSkeeQyjAQfHAOxkiJt9GW5NSYqEhBS1kREQfUOzkSfCINhId6xUbKtf/+BpS7glhzJW7F3aZYlNm8wEvT//07uaUepEVIdViAa06Bb/a6CP4Fd5mcB6pCKOQctGS6E6lDJPIq9quKm42Of1de/Nge6rf750VI8PkDvyiJgokBsGe1R0yFylNGgFTq0OD1ir3vQebw2hxL5IKuDlrYHngDp4MfVHHuGGnrYOgdGPHSJ3NFrLDAtUXnuPhsb8gjdI2E9jfN4OwNpEBW1J1Kqc9axLEEAekZ8AzRQcxIPzZrnr/2ZsMMhaLPEB3gbJQuBQQFkMSXVybW+tTQUX1YVBjTKNbBtu/DrxB9SO05dDNPIfGmyhqyy9G3hHV0Mc7DaUHxQVQE=
+dc_logstash::client::nova_compute::oslofmt_codec_hash:
+    multline1:
+        name: 'multiline'
+        pattern: '^%%{}{TIMESTAMP_ISO8601} '
+        negate: 'true'
+        what: 'previous'
+    multiline2:
+        name: 'multiline'
+        pattern: '^%%{}{TIMESTAMP_ISO8601}%%{}{SPACE}%%{}{NUMBER}?%%{}{SPACE}?TRACE'
+        negate: 'true'
+        what: 'previous'

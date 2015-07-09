@@ -1,1 +1,2 @@
-DCCRYPTOwh1nNLuuK9znKxoBvJoXfWVORDYlU4gC2I6XVR6PludRp9UzXQaL8su44rkF1WdG0/gw3dl/x+DSB0ontmt6Wkn9W8j/Tol2PBPvKpzAYokLpG3NK7SxWBk76ke+6ketAg4XtNFDbqDnfetiXM4pgg==
+---
+dc_profile::openstack::duplicity_mongodb::ceilometer_db_password: "%{hiera('ceilometer_db_password')}"

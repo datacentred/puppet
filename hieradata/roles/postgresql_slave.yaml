@@ -1,1 +1,7 @@
-DCCRYPTO16GFZhrkXW1Oo6wkHRGuLjlM+/w/JmNPjajR2fvZXChhq1IWNaluEHEP3Wk31DRkzbseuDA1nzHfnZJr/3c3LpzlQdRSXG6ye93ExfVUaZCYjFsxnfEQJAI+z3dNCAMmGmV7sRIpQJBzEgkjzZbOArY0mt228K3E8kskdsD8juBKvMRAAFd5pk3cXvFWB2oX
+---
+classes:
+  - '::dc_profile::db::postgresql_slave'
+
+dc_postgresql::params::config_entries:
+  hot_standby:
+    value: 'on'

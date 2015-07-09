@@ -1,1 +1,21 @@
-DCCRYPTOD3iqm+v3ZEZ2GDBNyjykoJcOvz7ImSrI9sT5kZ9Gb0oM5qztZCZiBiFd9wyA+E6bl9PSj/4ypy91begei5oqVoO8Sms13Atv7zAaWCETFhAFSym+n4ViEz8uRE5V+G3OrwkXHpmcRV3+l83uLWmIP0JYMOJIFOaZxGTDZU7SRND09HfLmGzlr0mR4qZ04nmx30HyTP5cD36k5AGMGvoYzBnkpfqQkSUC1x7ZzSFXHRLB2G/80Vlt1z21Iprh2pwtI8ASrb6sRmEqsv4Mq9UgizQJvh1SIl/mFuBGOQ8ZcVF4XYTy2svrIz/rs5dOUYx4OIiTPpfLxlynnbjGxAxaw/f73YU+eaBQCio33RbwKRQwhvu2Lfse7HmtSjoiFgoQ5GIgrUY8S8S2b8og2N9KZ1hKt7mzR+kSTYHl8qZIlvx7QFLbF1tN+Rc6HroqVDaZPUN74yBqSLy5UnFzvks+IaHiwM8Ob+UmOo36DRRl0djAgqdi5gEq+JEOL/52vSvdO7nVBC8mN/OfgEQ2hrbEu+foTqZ2xDYutoNw/sT+wT2np0vX1trTOL/j3ezMmQFwUfLpx4PI7kyd0T+pg+7TfrU1EdGB7UVK8G/dN+ztHkSsx+bbXSGbvOHo7q4rvFLut4WlcFfjZogDxTQ+BCHHjsbMLTElAHLYsY6ZZy4c1GSu/C0C7qBRSirkTI5fhIDF0wOrQ/kUHLNjSD8axQoZgAcs9ODxnTNILouryZ/kFnBW2HmdYaigYj/qbtAqTLN3LJks9EQcpEDDbHi/1q7HUlgNR70u2KVxo6S8upwlnirmDQJicyG/oFGNMfuDyzxL8+MztstJohRxC00sHw6yEjnqqBqyoG418kb+t4rNZipYuntFvWRNAG3+DuWFuiQMhfz+M0pRBYmhooOov9wlGlkJk/c+MdO7w9G5EqW9e7B8YXT5AY7rzf3C4NU3b4xtk3xlC2S4G+NUmsMuVKjmLA==
+---
+dns::forwarders:
+  - '8.8.8.8'
+  - '8.8.4.4'
+dns::dnsmasters:
+  - '10.10.192.250'
+dns::nameservers:
+  "ns0.%{::domain}": '10.10.192.250'
+  "ns1.%{::domain}": '10.10.192.251'
+dns::recursors:
+  - '10.10.192.0/24'  # ark-platform-services
+  - '10.10.128.0/24'  # ark-bmc
+  - '10.10.160.0/24'  # ark-compute-management
+  - '10.10.96.0/24'   # ark-storage-backend
+  - '10.10.129.0/24'  # ark-rack-infrastructure
+  - '10.10.104.0/24'  # ark-storage-frontend
+  - '10.10.112.0/24'  # ark-storage-loadbalance
+  - '10.253.2.0/24'   # vpn clients
+  - '10.10.9.0/24'    # ark-storage-api
+  - '10.10.130.0/24'  # ark-hw-onboarding
+dns::rndc_key: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAP+zm2ZbBkwxzt5/2XAcN3YSbvCjZNdMY37TR0Dhc1dka9lCNUtNi7mA7BklgzeZY6r63WJDh3nBsRMkn0wAiqF9diyH6jSACGb/JdmL+z270+92juxHjekZUTVaWmu7fCOpYOOeFze4uum9KEZlKkvAskpCj+S9OTZ8x3HnmyoYp5CmaOsUuwtGP0Aj4S9PEP35v3ggqSZvhAqiCrtXeWyO3F6JV9qWxkB+8orDdf3Lp4ve0cxTxEo+lK9oJ/NAXjhwAJ4jhA4fd6SGJismIoz8LLNe8GWjiJuCQWBlRxebzbughq5zOwEOc0ElIaR2QRAZVZJ1TvDcILaBN6WDagDCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQGCUFmzwsamisGN9piWrRvIBghJpZA5kNltLU0sRlAkQ4T7Qg0aTsQ7ytoke3+Iy7Sel9I1B1l9X1Oa3IZhOmCTcsSCWf5fvInLsHaYWv/m39LLnP7G9CuDUrOLA0Vdsw+i7R/ClCx135AHCiJaaNgmAn]

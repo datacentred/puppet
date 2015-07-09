@@ -1,1 +1,4 @@
-DCCRYPTOdSlT45UTEf4xOOn7J9cMVXkpTtxy3zVLdCRdZIcjreGRwJ7u3yLNvBQRPUfJAjX67oLF39PXiRwce/sN1z0RM70d+b6ucfAegPYQ4hjPu6w=
+---
+dpkg::foreign_architectures:
+  i386:
+    ensure: 'absent'

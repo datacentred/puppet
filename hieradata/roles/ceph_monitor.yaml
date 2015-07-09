@@ -1,1 +1,3 @@
-DCCRYPTOk1pH2k26JXlPBAFSN30wuPURXFvdrcyV7L1WYmOhhSGNah/vwcjgLM9O+IK2CpFg
+---
+classes:
+  - '::dc_profile::ceph::mon'

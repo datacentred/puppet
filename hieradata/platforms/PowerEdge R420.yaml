@@ -1,1 +1,2 @@
-DCCRYPTOkdSnoh1wQ3n/BzJ2OUPRz3JazPTG9OpXMjfCCnATiYGD5gQXLN3FAfaz4qIkiENqihEWk73mbxs/ekADNB0QifMw9tAWUKphVyJj3bFuz6k=
+---
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p2p1}"

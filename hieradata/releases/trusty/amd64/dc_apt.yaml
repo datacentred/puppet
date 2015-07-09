@@ -1,1 +1,6 @@
-DCCRYPTOHM266Qs63UXtTY8902FsrQVkT7iWXHJJoRF+RCsuG9hQp+rbgQskhdwtKBB0RpeYHA152CRTR40OvS7FMXdhQrI0amXr1lKzno/BupylCJToTPkhAu29UWlJSaFtMoEKfHZfagOMGlC+WPMvwZ00DQ==
+---
+dc_apt::pins:
+  trusty-proposed:
+    packages: '*'
+    release: 'trusty-proposed'
+    priority: '400'

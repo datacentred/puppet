@@ -1,1 +1,19 @@
-DCCRYPTOcVLF5HeE9XFoAJNrQY8Rsu+EQ0V9Etth7wMGPiKOT2Dhs2mHS4eD8epb6CtwhX9PAxRQwusgwF+22yRCSKAGwp/6hxpV+PfqtH12l8KWk2t7QQDjqcOWLBMP3O3eiAcff4uZzNdiZuoX3m2VBm5fQVmFDkPSGzp+V7l1Fjv81F2vXqNVrA8t7NU4nqSUgN/DX8340Fr0+gO7VlaLFGbDfFE3AgoNTxHXAcwlc8sJO7FuePiZPt4MC+/TOOUT1Gb9kkrhms5bmW/l/TeuHdoAuS7OyS2o18gCTpJF+9c4fu5BLh7B5dq1+yQ3cqH/jkInpFsnrToLoPAQ653XuQc7/V5TUvgQSaC1npXwZIkOt6M42D9jEkj20e0xpTy+CTkKsZyE/eOqPxIrqxKFobvuinKQFsYQBDt2mKagi1cQeesw+65Vo5TIdbs0tW2TKsauAGszHirRfQ1MaVSmWcqBlmGCOSLML+3IhX8BWgHkPPsNANMtI16EzO/Fe37bzR2xhRMk3iEuvWQyBTUaUwiN3TZasWH0oLTg4YqG11FihW9EraQevcAc7BSgKP8hc6DT1y42Kfe6hf83xlbZCliMLSxo9NHmsbLoN9ggk6ucc8TbV2cj/lWioTk9QTO/Qup2OJuBR52OcHHjAR+eSQv/m9M5K367eFharsY3zn6wrAXAWS+YgVoBsCWmp25gfv8OEtNmHmr/MSfFuPT1ioLKUP79SGWf7cn5gExFdgrn45ivwffCBwu6n2VqY5WxBHsEUizO6Ua0T5RsdQpCnrLWmauztmRTue0hSc05Ex+8iKriSB1ewN5vit356QWkbCmqtxV8pPSWUCeMfX3Gm9bWzY9guQYL4MdZUWCE/qTOyxjb2ijlFLlKwbObJQ28BFX8uvT+2RV1o0O6MoMGgmrLl1a92iu/Y+XPto3RsO0hEPXWEoJBhIraMDFbUt0LnznEQLgytzwUTFAdbdV7WBmYvr6fdn7/8KpMuRFJstC/egkQ15bXUwXYt6v+yYkERQDyCt0ZyXXY1xZZfHXar6ItgE3Sp3cw/1myXa7od4ywIUAXdI3PRQnAQqUf9blTPD7fR4jGxnqk8pjUjNr/O+x70853qdhg+OFiWXu/34Bm6ggKVMcsgLMfPSYbGydtH+zbd/hIWdRKdt5xq8YJwY5lkfScstCa2F/TJ08g7Q/rPk3gOkYrEg1DjAmum8M19mZeWUO+IOv05A2jp31Acho09blfCUXKLE1WQAwn9+5EaXY=
+---
+foreman::foreman_url:           "%{hiera('foreman_url')}"
+foreman::authentication:        true
+foreman::passenger:             true
+foreman::use_vhost:             true
+foreman::ssl:                   true
+foreman::server_ssl_crl:        false
+foreman::db_manage:             false
+foreman::db_type:               'postgresql'
+foreman::db_host:               "postgres0.%{::domain}"
+foreman::db_database:           "%{hiera('foreman_database')}"
+foreman::db_username:           "%{hiera('foreman_user')}"
+foreman::db_password:           "%{hiera('foreman_pass')}"
+foreman::oauth_active:          true
+foreman::oauth_consumer_key:    "%{hiera('foreman_oauth_consumer_key')}"
+foreman::oauth_consumer_secret: "%{hiera('foreman_oauth_consumer_secret')}"
+foreman::plugin::discovery::tftp_root: "%{hiera('tftp_dir')}"
+foreman::plugin::discovery::install_images: false
+foreman::puppetmaster::foreman_url: "https://%{hiera('foreman_url')}"

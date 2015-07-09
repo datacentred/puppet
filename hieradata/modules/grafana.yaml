@@ -1,1 +1,16 @@
-DCCRYPTOY7B9Ui7Y4CvrqtHMMW61bNKppvzpsEBjfGJfK5b8FUq+M2CbFjLnvMvEzPWA4lgptX/JI6OEV4bUDrXWGiICeJmJS7V9ormjc+OIRv5MWgbbv9BNflKWYpUsltYT278Bswy+Ek1tO0uG8MQYuYBGM9m/ysK/mzbhRH4ifS9JFJHjYrVpLY3npm7mQif3dX/VE/2ZaALsDmVJzO3dW4E/g4aq3twvLCbXbdAflObNa78nA17IN33gJlgIL/hDg5sgdDZvqBd+rm2pGxFYWHQYWBCCjimn2Q/zfOLx8DqHdBDKIHt7Wqd00QUYJsBvZyiPLm5GxNPO2S/RvrRUn2iwtBHAG467kdmsUlp0E73HcWzxFEnlsqt8hmI6yhA0gEvW
+---
+grafana::cfg:
+  app_mode: production
+  server:
+    http_port: 8080
+    root_url: '/'
+  security:
+    admin_user: admin
+    admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAbtqqozmYs7Y5nooyEvEW/aV7L8rh93XCJ54nj/SGbpAng0fmu60JGtzZKWd74U4zvolZCRueNNK8XsjykqiqR771Mkepup2IM5eOhhjftn+fsZGEckjUbBlnAkiHsaUlaOegR8GhC7b2hqWxEHZH+JL8B+tDpvM6oROTXPMHw7Glxj84ZzUkPiJU1g3PvGskEy9B4mq14BZTby2mcpBAxLIAECWCd0t15TfEgM/sd7VUZ8cle3w2osjzqaf6cewOxKDGq1luZCu0cwrFM/KGmDbxejl6kgekXOTdqcJvjlRffeCBaecxcftBkp82iffX1hN/wynH7hL4gWP+DN3SpDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD8SmL47wcojub+XRC3y9VagBC+8BqK0vnAOPp2KDeH1t/H]
+  database:
+    type: sqlite3
+  'auth.anonymous':
+    enabled: true
+    org_name: DataCentred
+    org_role: Admin
+

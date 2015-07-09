@@ -1,1 +1,6 @@
-DCCRYPTOJmhf5ytGOTyB8yV7zYAcQoF8z+o/ri0LFsxVY5ouCmTck/loRmjCyqSshiyvKpGU9238Vr1CU2/qt7/FiMIDcMwbo+2RJRg8dn/HxCTx4wIkh6YBJzSx/4spJ8o3P+mv8dXmjy8FBa3OoPN5uvbY95QiT90BA5455KriU+wSF0aDGQMIpCCn9zDzTujcKtci/TvF5Q7cfhTJkc2JXxExdQ==
+---
+dc_ceph::osd::journal_disk: '/dev/sdg'
+dc_ceph::osd::journal_size: '10'
+dc_ceph::osd::num_osds: '5'
+
+dc_ceph::keybackup::primary_mon: 'ceph-mon-0'

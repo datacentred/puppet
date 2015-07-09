@@ -1,1 +1,22 @@
-DCCRYPTOkF3pWFWsfm9I3Yf1i/WUqA08x8/urLtyi/gjMee/ov3cOEX1UeH0twor4m++cyw3e0KwX3Hrwlcp96CTPELevJCZzdNr7djwYTXzK9j66FxIvuojEGIyu9J6RztCvsABmDza+AS7qt3klYPoLXk6DGfpXIiP88XXdrtmx0BpB+QPL/Lry3re1CaAyTTtxYLKUqtmzGFuh6gjfubNEOrLWyI0dDB3JxA1cniX5MZaX+Bfzd1RAI1HyGCzGTflzKWPxmTC+FQgyiSffSWfNtSsqIlqJMKb58hFStAF71CW0lNPq785ON0y3/Yi47uAMjglTW67T0Xsu1tMHIkcwmh9bo5yPAzTdduCmP9R/UwTrSpIS38XgWRGYfUEf8ULnC3gbb/CpqubqWtN9RIqv3JKFVl38rTJlxflTl0u2/cf1LMYsmEGR7YyPn/LG+3bbWtiA7+2zoPLsqe+vUoK07lD6UQqnMpwiyxpWTIbhOkkzOaKdans4pga7V0KEf3hwPgaRgjoIXwJAqjjq5ygzg1jOA7BRwx8O9rpg0h+DyLK46RfV8xO42bM4DAW/lF4CGzsIrRW6Rdhnk/LbmLWJ98cqtLs7tg6h5IQhSkWXM/saXRkbycqexE5LcAlJ6FO2O8I6Y6DhdFYeBBed3gAI/fBFXkf7D+Ga+c4Q38t8syF2//K35oTBuh0dB3WR0KTEY/vBYaNUY0v25raHCD6fEd54sz33XC3EZbikN70aJ9POJFh5sJnjE7D3hQU1n/efpZ+VldJYkrhg5oy+8oA3txuEbjjtEvNH0V7kfeSwB9Q5S0CF7JpI7rrcuTwH2r+pfNApem1zJitGF7Ww7JU9CMSG4jngxP393m9ib7YHiBWzRE7Wgx7x6COpAHxqub5XsKwxxDHgTpiCUZvy0rA/Jb94uxQsXOlFNl9mY0erB0gEWw=
+---
+classes:
+  - '::dc_elasticsearch'
+  - '::dc_elasticsearch::lbmember'
+
+dc_elasticsearch::es_hash:
+  cluster.name: 'logstash_platform_services'
+  indices.memory.index_buffer_size: '50%'
+  index.translog.flush_threshold_ops: '50000'
+  threadpool.search.type: 'fixed'
+  threadpool.search.size: '20'
+  threadpool.search.queue_size: '100'
+  threadpool.index.type: 'fixed'
+  threadpool.index.size: '60'
+  threadpool.index.queue_size: '200'
+  bootstrap.mlockall: 'true'
+  discovery.zen.minimum_master_nodes: '2'
+  indices.ttl.interval: '14d'
+  cloud.aws.s3.endpoint: 'storage.datacentred.io'
+  cloud.aws.ec2.endpoint: 'storage.datacentred.io'
+  http.cors.allow-origin: '"*"'
+  http.cors.enabled: 'true'

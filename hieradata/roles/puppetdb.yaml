@@ -1,1 +1,3 @@
-DCCRYPTO+a6BtD7VX8a36lAkQg/FtIzs4CUvUgKiDF4CaV2XaGFb7Ny0ZgnfUbpuAzCEN+qcpRW5iyJ92glML46z4Amy6w==
+---
+classes:
+  - '::dc_profile::puppet::puppetdb'

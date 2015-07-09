@@ -1,1 +1,17 @@
-DCCRYPTO2XM6scPhYLzWdMFGYcP1S3NMlgSDDUplia98W7c4te8URzyb6mEjECGlpjfeDPkw/ztjMc/wcmy9wDaYuI8XF3T6+ZI4nadF/qfY2uIbCkK2HLybW2znDuhOuux09x30GoSVP/HGZKBXgAx6J+UFbjs4lWYmwq6Yi1C/dXA/j0XrEAAEQ1tNYYgHUvivVHUyyBaimjOBZ3i/4254vYvWuS29IroBdtkEM8SndmlrE681gp07KpQ15R2gALTDbU1lbJS9U61VbYJH5Sr59V2HxCPoJzHcHPw0KNMQkjbPBKkinJ+WSRZplEkC1vqbVS8wzI6IUpsMuwJcJMl6AM+VtcY6CppUBxvZvlRCmOB/bl7PzzavctITtXCkyaKB69Jatk8TEeHAiIrV3gVsXxysy7yllj6B/NfOMxvK/CHk3MgV3mZdcm4oA9YcrS3kak1EaIEq7E2fsgFWMmNr+/+Sbe7M5HY6JOftxJlpBUv13ZYeTgNp06TaE8Tuu4Q4EqrmQLE8i9LJZQi7m/UWLeHPXQzdvP4CnBtiggOayYdwl/qxgFrCjsc1Jru2pGMtaErT0Jwzw+tNWFCeK5auoUQABr5fG5OYZVURSnmzPzUk3HKbYXoHAv0t2sDH6+TixAhCsYadwzzx4qJ+mtS8+7YpUv+ApWNQ7cmzKFKEt6+rZCAAcjbJoJnumpN/t+X5u4qFkuVznOwuQavKhbTNv6t43J46T09SVfjClHSQxc/Qlyim62yxnzDAlFmPkcqeePDT+YSob2cWMFUz61lEDf6Zy/AYI+nBmW2ZeAV+TSh0kR9xkfsqAlnyBV3GH4pnF4MVnzancpVurXQhRMn8NrI9mwaRKd/OAKoxvE4nwBGANl4zVeNLxpjt82gLm7Da782MIWc19zsMjGHNESEXNXtYL8NRrEmWAc8G2lOY71Lue7Kgsw0dR4yxUKtjuIaA5ESb
+---
+dc_tftp::params::tftp_dir: "%{hiera('tftp_dir')}"
+dc_tftp::params::ha_sync: true
+dc_tftp::params::sync_master: 'ns0'
+dc_tftp::params::sync_slave: 'ns1'
+dc_tftp::params::sync_interface: 'bond0'
+dc_tftp::params::use_inetd: false
+dc_tftp::params::tftp_sync_user: 'tftpsync'
+dc_tftp::params::tftp_sync_group: 'tftpsync'
+dc_tftp::params::tftp_sync_home: '/var/lib/tftpsync'
+dc_tftp::params::tftp_user: 'tftp'
+dc_tftp::params::tftp_group: 'tftp'
+dc_tftp::params::dir_mode: '2775'
+dc_tftp::params::virtual_address: "%{hiera('platform_services_tftp_vip')}"
+dc_tftp::params::virtual_netmask: "24"
+dc_tftp::params::virtual_router_id: '2'
+dc_tftp::params::conf_template: 'dc_tftp/lsyncd.conf.lua.trusty.erb'

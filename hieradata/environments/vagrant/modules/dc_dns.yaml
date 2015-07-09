@@ -1,1 +1,17 @@
-DCCRYPTOVbXAbi/9AfthvfpyPAnThPEtLJqBiWDwJOr06eNvo4+5LAaFAZhTH5EBhz3F91jOCN35SvN3YcFZEee9kCSKURox6j4kPoeUjRJOQIdQ2ECpQ3eSpAQDGghmDG0EgG2Vmp7j0PRYKYswDnbCFIDtPGQJ9KSWRodLeOQbdtJpLYrN6brhRpqvqPvi+ylEj5nAXNnqzMAqjSME07WwGAzbRN1xPc0YL3foNWmcnBqo+ShHlwoDEzDMcaAQjbsFB+AIy79fISiSi5j4Hq5pcffzcqebnAsPvTtjDfkfCaCQx4xlkNrIos8re5d8pUnxdf5zv6OuNEf2mCQx1QpTflQiI2h1WuJfHC9YAATJB85qJTIMiPnDT1ZpedaGxafsZyvywpKLoQmMyHC/vzMyNU9jAdebkIAmjdvYDdZUYoFtnZXm2G07qQ8I+x+0+2Mkwo9+5vP1z/7gJ9FiO0PstQ9RCahk3um78yBvgyvDY/zj9sTopTjD8WveWZvStXLZx5IoWYJG4Rkh/53y8ByfKFGhGrDvU3m6etYRvSBJEaPLRPZFZ9+ZfEKGA7blxBdkpbCWyKZtC4SWcxy4hiptuQC0Ww==
+---
+dc_dns::dns_zones:
+  vagrant.dev:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+dc_dns::nameservers:
+  "ns0.%{::domain}": '172.22.5.250'
+  "ns1.%{::domain}": '172.22.5.251'
+dc_dns::static::records:
+  'my.datacentred.io/A':
+    rdata: '178.62.3.132'
+  'helpdesk.datacentred.io/A':
+    rdata: '178.62.37.236'
+  'docs.datacentred.io/A':
+    rdata: '185.43.218.237'
+  'status.datacentred.io/CNAME':
+    rdata: 'domain.status.io'

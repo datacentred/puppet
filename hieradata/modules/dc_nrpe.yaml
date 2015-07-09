@@ -1,1 +1,13 @@
-DCCRYPTOkek3PQDyjMtiaZaBYNL5cAvTOMIvYaxtwLbL0Qki7a5AO9mMCmCSISt2vbWPiBwxaC8AjthO+3hr6jothCvvOo8KEp2ELRQLp2awDp+Pu6I1IN/z/UN2J8ooj017dxniytcjEUy2PNl5cp/uUGFfDNVXH30WgDlmZ+BawEle/cBtGbKyqrxqlh0qxANPFi5HRSAvmSs75ZKBHJyiCnnvAvkU1qH92Q/IAhtlulitsSvSSA/evhW4ahNJsndBGAH41RcGULWEDLGcpPjFgHWb1jex738JrbUEB2NjugkhpE9BgaM6jryKq56MqeRwN4i5kGBjFdc9478IUN/zaTeMjNTMwJ8nKXzAGYvrCQ+KqGRmfNJcfdoLpO43xLAwlF5S3CSl5O8CpZGBEYOLgycOQB0XBKzxAR/8C6I7HqO9B34KQbuEm5vKm5MX7ujjDDp15XPj4Ge2DFugP+2vgE/S8wMTDQcWv/d59JQGcpjZnLxTYTH6Xre90fSEa0aK/n8RP56BWKNqJ3YAUWRaDDfroNfE6/aa6eAUK59vwrCYSrPHq54WJFWW8HADMe7chTZ2nQ9A+Y0uynFEk3xJugq+Y9N7nxZuiPNE9e8d01vMB1nQuKn9vE1FAtaCmf+eIqFQ8pgc7W6xn1M2rsIZik+tLpx/Cf12U17WA+PlJXaM5afmpDteN71JD9yVlLNVe15JMrykCIDb7NGCPWHcNzhj2vLQdYhAgTZ4K3vrYfFqFd2txmOGj+yXvp8q14SzHJs5ghEs0HrPqHpQ9CtwMvr1ChQaKHfvkK8KWnUvCBZHDRXrRyxYDlU2RciEd8XEnEvDbvCg+R0g0OrPxu4EjL/kNRSSYcTSTgi3W6ndSsDjiyA/NXObWjIIK/+c3Gmrk/cKJBanrMrj1YfzbevPJQeIK1K1ZfPOVsf1AVPxeOra57g5UTTEygcQ66E0Kuq74eitZd+QJWstklSyUNrl4eqbCcQK9iX1bhWr5qnppSBrINE=
+---
+dc_nrpe::allowed_hosts: "127.0.0.1 %{hiera('icinga_ip')}/32"
+
+dc_nrpe::checks::neutron::keystone_port:            "%{hiera('keystone_port')}"
+dc_nrpe::checks::neutron::os_api_host:              "%{hiera('os_api_host')}"
+dc_nrpe::checks::neutron::neutron_api_port:         "%{hiera('neutron_api_port')}"
+dc_nrpe::checks::neutron::keystone_icinga_tenant:   "%{hiera('keystone_icinga_tenant')}"
+dc_nrpe::checks::neutron::keystone_icinga_password: "%{hiera('keystone_icinga_password')}"
+dc_nrpe::checks::neutron::keystone_icinga_user:     "%{hiera('keystone_icinga_user')}"
+dc_nrpe::checks::postgres::postgres_password:     "%{hiera('postgres_password')}"
+dc_nrpe::checks::foreman_interfaces::ignored_interfaces:
+    - 'lo'
+    - 'virbr0'

@@ -1,1 +1,11 @@
-DCCRYPTOXJg6ZMmSjhlkL3xArHcG5AGqnyxC74a63UoFfdYLJCFRrsKjg46RBhDsnlVQCPdkq3KSUwJmn8TmK3+NB280ZfNYRIEERDB0FwjLztrK1+OSeOkpCZ0YVm3KVodQSJQHnStGXlqN9iWycXg9sue+16aObV1r5P/Eju0XnNO3elN8MzRWxnFrSgGMONr7HRZVsOvWYro/SUEf0TNvyBgQtnXgt0gx0oK7V3/1rg3FRxWMMg/EJZmeEUhGm4/2XiUKRYHSMdybtCFFTWFr3hiSK3Q2Y7tXCT1HSZsFbQr+qr8Y4DlRLzOLiNMN54jxfSiBuRsv6bVfK9Eb9y4i9xYKa+9zht/gCmnfY8Lw4/SHry1gk7q9jubhJr8FW7rY+TjdBKA0PkrCOkBGVCKQ4pmPN2PNF3hC8ZH6/x+/HJ48pM76M8jC5u/JP/YuHhpxSNa5iliLLURjHvFXQtw/+hRFYk5Y7wOd8lG3JuH2HBJ9f1d3k4+703ySWanHi1/ihKPtN9DdoKtQa2SzST8/f3pOYbeWt6ogi/8KXY4O/SwagotjqzaaazfZFSHbHKlRFw3XVrfTeQH+5nZWmnjnDhV6EE6F8rZOw9tLgoILgkP7uanfx3ppv7st8MeA6dDQVm8D43oa8Vr+CBBUw3+C2GbrGg==
+---
+puppetdb::puppetdb_version: '2.2.0-1puppetlabs1'
+
+puppetdb::server::ssl_listen_address: '0.0.0.0'
+puppetdb::server::database:           'postgres'
+puppetdb::server::database_host:      "postgres0.%{domain}"
+puppetdb::server::database_name:      "%{hiera('puppetdb_database')}"
+puppetdb::server::database_username:  "%{hiera('puppetdb_user')}"
+puppetdb::server::database_password:  "%{hiera('puppetdb_pass')}"
+
+puppetdb::master::config::puppetdb_server: "puppetdb-2.%{domain}"

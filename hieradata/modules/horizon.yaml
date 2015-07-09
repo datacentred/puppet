@@ -1,1 +1,19 @@
-DCCRYPTOD8kqf2mgffFPsizXjTn4tDbQbyLYCjHrEMnXmONBHOCw21t9l2iJjzFozB1pOulb7pHPo7zTqv2LN5wRVM1r4X4lrsE2sJ651Vb2VVBe7wNlME0leZXPJH6hVSmhwJhLmfjS8NleuQZ4fNGxuqyzikJSff8PNU/72UD9/BMkdv7VkvQPlmj5p+y550hF6S6vrX2aUA0pMWUme7hgM5YZPSsicCLpfBw9AOKE6TWzOTTUZGL+6mBg2mQ83g+4/aS5QJHPD9ANfFr6uCG6utyWsaShHkxQSPJ0kS5/cJ+v5Lp78VGiwIw5OEyPaencopzbwYkmCeVTi+1X6jy0zx7ISzixcPO1WG5c/hxGUzHRZJQy7kewwgKZhfwvRv/qSnIIYlXVUI5fx2qKcmWGn0XJ9UscQWrlDQzhc9aa3nGwRABkLO+1vyjE47GW2QKuqScU36DAn0DFeV6YQm6KuKvLZzQL6e492lKwb+DLa0Xv3Z4GkG5E3U/gVs4HTwpit4N40PLjXCNEgzJylW1RtfK7cwYGOVM0cRill21oWnILdjwwwRaBB2YmFOM+Ckj2Xgt5Onf0sF//EMwMhyMfWDjqRJaYZBTPMLxPMh6PhhMHqayNEbbZXT40I/23pOzQ4F67BGOlGOwZhnrlQIlLFvhZtpILaXd0xUADzFInSbvMUkK0JVpJ2qdf0T00EEYikYlIoYBtNbW4yHe2fxNzcJ07NAH27m8mwJTrwDhWQHNPNxc=
+---
+horizon::fqdn:
+ - "%{hiera('os_api_host')}"
+ - "%{::fqdn}"
+horizon::servername: "%{hiera('os_api_host')}"
+horizon::secret_key: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAnsH4DQDalycEbVgLxkx6GJt7d9qYZf09F1SeaULS3/gAAbM19mpcptUXrr42PPCMf+9q/cF2CRAzZ/+eOLd7BLQYgLIooWds2Zde8K2uQFhKurWzL/d7b8+cfNhNWJjKKxwuzPR1YpO3UeTm9TiGalfWpHVUHudGsxRcNs89OMsy2t0/zz2YHfudmNgfV/5CVqdhbKvM5nQ6vCdTm4Fy/rdr8hZHl8aAiB870sSw+QFUPGHxtwJzLZnSd8/fIJvXVC0DiRamWVmoCSxFbgg1WnKSDzHryeGKJhrqQPEUieGmb+ok01yIkBGEuSPQzfvKC34wLPotWeJcU14aP8ADsjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD0nyGyzaFWoqSmKdVsurN9gBDnp7P68/R2PF/inB5lKHBJ]
+horizon::keystone_url: "https://%{hiera('os_api_host')}:5000/v2.0"
+horizon::keystone_default_role: '_member_'
+horizon::log_level: 'DEBUG'
+horizon::api_result_limit: 1000
+horizon::neutron_options: 
+    'enable_firewall': true
+    'enable_lb': true
+    'enable_vpn': true
+horizon::cache_server_ip:
+ - "osdbmq0.%{::domain}"
+ - "osdbmq1.%{::domain}"
+ - "osdbmq2.%{::domain}"
+horizon::cache_server_port: '11211'

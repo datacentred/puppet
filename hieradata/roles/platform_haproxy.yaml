@@ -1,1 +1,52 @@
-DCCRYPTOYK0drDqj7osBtO+9warWCK77Lw/K8HjRnE5LfhMNKWdQBkuw6OZq1TF/Scmq+7jGCkhvSUYBLQQN+0P1DdEQlMPuu0Wigz6A0O4HgpljrwCuvhOCw1ZW7GWgLRWrFS+dzd/Yoia5x/WSKs4cjDH6F25g+ZGbked568TRrHS2R9YAZScfGk8gSjrSxEy+z8JgFeXcFHG3nDISBn9Nommpn7n3Ong2DeV0kc2AZzANfhulxgymNPkOb1IQIwxhL0sQvLHSBQneJ3NmI3CtIO901PFdJdtQR3doSudreMktJYJx3gdwcU1ZZFFFcRxtfbu69zgyg2FdrdAOLHyIBwQlxti+qJTX+QUKe7cEajLn5kRWlup8y/2/Lyz/EjgdGCQeNspydjYI05Wj9y9sCkJJpyYlpNQMjRZ4tU3pdcq/QxoOyM7kWx0lJv9eqngEzT60ZEY7V00JuISeTUAB9pJgHHZjO4HEdgRLfCuW/XkW+lvCmlU2aFqTYe+UBZHE7BbpBHhFIKKqC9hvhbMqbFtKP1vkrj6k+tfNDQf7mwij5nwAgMA0UBQwzvuSRjlqfQ4SFR9mf3uGJUUkIKWH4AiB94eSDlgfIrlSrB0sEggj/CiOKdR+7wKaaG8SdCQGdwv2Ok2UPSMly1Lonl4vN28nwwxJo52mC44+Xtl8bfRY8+yFAHwuiE6csSM2dB+8oJCJ3KXR+p9W4atZtUFuxd0qt2ix2wl2coyXxUzwThHZ2PgpHQipJTaPV+yrDoclFonpHXkQUvTo018S2A0yilq2fW2KTBdIryS2c/IdSu90yblmjUzUWS+Otrr2cuiw7Cfh+MaEhyUmiSLgiqz8vgqthhggx7WjYIFiLPwLCeHdIrCEwerdfOvyK/mc3tkl0eIOjBRj+TyUHqxhMgZbxv1XNPdJzS3PhkgHjhD454gLTkexBhE68QFzsEwYaaOMrCpPLPRn2449Y0rH784A16RVXtLZW0pbknLZpbsmoGqLnSHDgfaxmnY8o6hTD7o4VUx9uF36LY/rZEBNiduFkcWmPQE2nEdwrA1GMbB9thJiYxJPEcqwT1uJ0VjmHwAS4kVP+h1ti3HRgHkgdIxbt+9h5yy4oGE8dHUITw5SZSn0mjnlbH13sO746lqtR/tYYDopd6ICAu2ZQfGVOx2SklSnLmLEf2sWW2il09G38bs5F2ZOH+ewm5VpwzCrz1bpNyahF0P8GdYmY8e5D39esrgFrPmmjSfWDwRzxKzWhp01ph5woeevG2HCjIpNk4B0tjk7ImtHaD1oeZv48guowuKOihm758Uw3qBt63chApwXN4FY67kCMbg4hrl5BgO1lOFaWGtj+LZVMi8m2sdsZqQiWnbUckhOBGtJqbpDAnVk+EStHA1gHbx2yT3BCDz/oLgOl5f6PAT1zbt9zhnnd9VFPzWvtVpbNylMx3e6X8MjlpFODJu4rpV6YRikUZlEejHJFd/8miS4Bb5RUzIW06VUvwEv2XBuOUUxienTi0o+2Pt3AjmyM/6dsKLLKgCYkf1jnGR6qtwt+Vh0w+msH0GN5rzzX9af2yDi0tKVHJ+V+hrhWhHBP6oNjMfG7YKmVRQzd6pNBAtHot3UJqcCDyxnxr/d2yqdR31ADvOQpWH8cx1bPEBxYoeelkdfI/68Ew+ee7Hj67q0qBDxg8R05uWHJV3G+hG+LS+frWmKhRoOX94kcHyA9CyXgbe8iOGnmwXkrLlm5OwWlUuLJKAs6c8f3Q==
+---
+classes:
+  - '::dc_profile::net::loadbalancer'
+  - '::dc_ssl::haproxy' # TODO: review whether to include in loadbalancer class
+
+loadbalancer::keepalived_interfaces:
+  VI_1:
+    interface: 'bond0'
+    virtual_router_id: 1
+    virtual_ipaddress:
+      - "%{hiera('platform_services_logstash_vip')}"
+loadbalancer::haproxy_listeners:
+  kibana:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'http'
+    ports: '80'
+    options:
+      balance: 'source'
+  syslog:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'http'
+    ports: '5544'
+    options:
+      balance: 'source'
+  courier:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'tcp'
+    ports: '55516'
+    options:
+      balance: 'source'
+      timeout:
+          - 'client 40m'
+          - 'server 40m'
+  beaver:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'tcp'
+    ports: '9999'
+    options:
+      balance: 'source'
+      timeout:
+          - 'client 40m'
+          - 'server 40m'
+  elasticsearch:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'tcp'
+    ports: '9200'
+    options:
+      balance: 'source'
+loadbalancer::stats::ipaddress: "%{::ipaddress_bond0}"
+sysctls::values:
+  net.ipv4.ip_nonlocal_bind:
+    value: '1'

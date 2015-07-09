@@ -1,1 +1,4 @@
-DCCRYPTOYX29MfZ2s8ZhjOOsi8UcsCMJoPQ7CYydk3oqL9NCqFA7ghQc5dWx8+c3V9lAwsHCmGj/0FhpkAWQZ62AghWpvMiMC482AKInHZcSUm9LeNTvBEmlvL/JHuiOojdeIJkHE9kY0wFkqHLTPQoE5XcxTKp8hDtNUj4DLOujPXMZBj6NW5sb5W0n2SMLNaRQmOJTO4Jc1z+Z7dIpk19ds8geHcLuTKDUReowJPuxqkh7zrc=
+---
+kibana4::elasticsearch_url:     "http://logstash.%{::domain}:9200"
+kibana4::package_ensure:        "4.0.0-linux-x64"
+kibana4::package_provider:      "archive"

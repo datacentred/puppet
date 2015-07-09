@@ -1,1 +1,18 @@
-DCCRYPTOJsBhEYhuUd6sNqiAzWcgR2SN6z8i7bcpO6vMHGmvrXOHJv0Z8wNjhlIChSSPFrZlpAVcph1ren/bjuC82Sfv+veHBG9tYkx83Zhi/go+AhzWY9qn8JEv33aEpzr6aJA3ETa8NPnmuPfJOLwlg62tQ2gRjzxUs8gheRiYIyHNQJXyFq+4uvEJwzHDiYIvaQz0Dr6x/kgr6Lh8REZ7zbLImfkb0j8B6lJ2f0qoNjX3DDr3LkWgl7fpfT80ssvcXXDYZcrAH15kANHFA8b7PbHLDDqcs3IXMVLekGgYbh52poG9BIuBwD5x276QUYoV5o+HhuIqBautW4f51591Iv4b4TAhj9k5NaHmU/T98qmVShEWG49k3RhbfiL+h6hlDRjwUif4QcVPZDXEig21tSEub0zyxBIEllV7wNEqc35/jyuTGGE28e9oXMTY2PVsrNBS6YOoNmvqGR+LmZpZI6ETUQeyNq1UrC1MFjvHI9knL+gix4F4Kz4Ee6YYxonmhxuYLdnDUG/Y9lJ+B0uP3hOOc+Fx8r2pFlH81d3T3jXK74yVQQ/XCTJT5A/QFfgdrIWTEWxKyoRLpEMd1eOBIv2nI5NXGzEI57JUaRCfsD7dlA37xj/WP3BL8xr8BcvwiEh4wofjeORUiy6Zxr99Q1MsBBjE3vW8CMrn05tpC1hDXpqhKZtdpaFef0GZF0yjCZOCyfjwyfu5cWr6UMdQc6rglWbs3/s4/Q1MmCy3O4fx2tDaQzM9Ft19k3J7aBlM0jwRtPwX8lLA3mTkb7GZb6phCHNmrGoh7anYkTbu+FBI3LLRjpuzVQI3B8MIBMGy0Tj0SdE+zxb9iYeZyBEf8CnEfw==
+---
+mysql::server::package_name: 'mariadb-server'
+mysql::server::override_options:
+  mysqld:
+    bind_address: '0.0.0.0'
+
+mysql::server::monitor::mysql_monitor_username: 'icinga'
+mysql::server::monitor::mysql_monitor_password: "%{hiera('mariadb_icinga_pw')}"
+mysql::server::monitor::mysql_monitor_hostname: "%{hiera('icinga_ip')}"
+
+mysql::server::backup::backupuser: 'backup'
+mysql::server::backup::backuppassword: "%{hiera('backup_mysql_pw')}"
+mysql::server::backup::backupdir: '/var/dbbackups'
+mysql::server::backup::backuprotate: 7
+mysql::server::backup::file_per_database: true
+mysql::server::backup::time:
+  - '3'
+  - '00'

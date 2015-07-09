@@ -1,1 +1,11 @@
-DCCRYPTOd6w8x/Z4fAsr1S751vMC3wZDu1bwkWJcNfJTU+JEksSTq1ip4AXAjye9Dl1/XbhkjPOvBDlrEFyB/KqI35/OVFNSSi10XFe+a7pt/4p3bf6hHUHH6ZIrOUxEQPvOpvX/vWHC/ULU7JioTIkgUGpHZ0E7DUpyXIQsjjLZ4EGKc2F1PeZaesf8+t2Lh3QucOQivxM2eaeJ94vaI32Zd2TTrvEz0Fl/r3QzUpqrQfCY3Bj78zDlqjmBkQvbTxzVHgGViY3ayJFOO2jpvxFDQRRP/y0RWEOBOUPAfksB1CbP146Gt1dtGiH8Vwjacxp849wrVnU4+Bj9ktFanVIjltfPIg==
+---
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+  agent:
+    server: "puppet-the-next-generation.%{::domain}"
+
+puppet::autosign_manage: false

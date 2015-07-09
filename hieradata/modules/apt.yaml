@@ -1,1 +1,7 @@
-DCCRYPTOycOchTjEQZH4MLUjqyH1qGHdVan3zPXWbHBUjEGy9iMQq9wF87N4lyNRt5efjwJmVyVuMdjRo0DcqyqbzH9mPYjO5snF/Ir3h/llIx3LaO+qLMYynawyGEPunRs27gcMSfITfAtjUqqLOlT/gGhjc9dak0jA/69fxn/RI4kBkRTc01/XFkBlFVRdnZBFfwvcn3k2uBC5ts4kR6wiGHe2MFShoWUxahq/dK5ZiiKtkGDUTMtlmmTikNn5tZavJMvHUYLsncoARl7NHE7TzqhQjjbh0YMU1gHzxnOth0dSZsjyQ/C5BzuU6XFvhI6F5a/x
+---
+apt::purge_sources_list: true
+apt::purge_sources_list_d: true
+apt::unattended_upgrades::update: '0'
+apt::unattended_upgrades::download: '0'
+apt::unattended_upgrades::upgrade: '0'
+apt::unattended_upgrades::enable: '0'

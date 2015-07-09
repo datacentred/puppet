@@ -1,1 +1,3 @@
-DCCRYPTOAKtXuy1Mc+Nc25P1IG/xSv5bOQ/4BnSS8uiMk8RxDRaxXfp0/5huUDbgV6GlLJdq+Jq01TGqG6lvMt2VXGygZAq0kdLOyZEdf3Hat449gDXIKF68k13GacMgA0tiKbtvXw58j+ubM+4ifUIj0rjQAN7cwbLY/gPMBfsn0iwcl5VSvYq5FTNiCZEQGJ4ohypS51yAVbveeN/vamdt1/ncgccfTPCiRVxadA1fhjG7+VdWksLO7FO4lQUgrC0gtuplYB+0luLe15OvVAgDJSzuOhm6gw3bQW8PeNabrrJnN3E=
+---
+dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_user: "%{hiera('osdbmq_galera_backup_user')}"
+dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_pw: "%{hiera('osdbmq_galera_backup_pw')}"

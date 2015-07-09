@@ -1,1 +1,20 @@
-DCCRYPTO2799aPJyqf5gPwpyIqNcVsIDwp5HTkjjdd3FsoIXccP1VOiMo1l7UATOQ2qgNwtYbMvjOtltxeGBcUUWYavvtry/D8ph05NL8WfoQuRvlR6VzoZHYKnnxjqamnm4RuYjn3UEVFAC39625gFMzIt22MYA2H/YR3in6hYURKWku2wggUqLq87+hE3TI/bGCkPvc2aUe8ApyDTpTrkGKjGh0BjOnQdsSw698bV8R4vh3uaIYZAACLp9vnE8ZIFxTMGUn9CkOpuxg3Tr1no95n0/yHwL15BQ+felyJKbed1HztZUfJbKXyaFM+6PP5ymPDd8xLS0nlo8hMfHNBlbLb2CAZmqgBSNlvFitGR3Xd3Y0yF6gtnzxRAiPpj/FhT+hiKav3bBkeI45jHm11UacHCMi4V6PC9NosaMjrMM+yTbdPAJPTeV2+aJnjWqCgFhhZAg9k+oF2K3Jp2nwoLU1mRPUA==
+---
+hosts::hosts:
+  '127.0.0.1':
+    - 'localhost'
+  '127.0.0.1':
+    - "%{hostname}.%{domain}"
+    - "%{hostname}"
+  '::1':
+    - 'ip6-localhost'
+    - 'ip6-loopback'
+  'fe00::0':
+    - 'ip6-localnet'
+  'ff00::0':
+    - 'ip6-mcastprefix'
+  'ff02::1':
+    - 'ip6-allnodes'
+  'ff02::2':
+    - 'ip6-allrouters'
+  'ff02::3':
+    - 'ip6-allhosts'

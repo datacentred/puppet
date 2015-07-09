@@ -1,1 +1,18 @@
-DCCRYPTO33IWLPbWACfW/ynkQ5NGAYCyH8GrF3rBHKN+tKBC7vwDEpJoMM8aRywTpsosCmULHkkezErI/gEleQ/Dq6rhyiJTvbwo1xEBTOif3IuCukEr83UJyon8ZainxbeD2Oq3oapCABEBClgvvZHBOqKsBYvVvv0Was4iUkZ2ddB9LiBdQsWqjirL0Wq0vGKY03w2CfIKXnUP1U7t76TXopGTHCA6/RyHamzgMwW9lN3IPVwbOP9JxWXi7mLJFkRf6CmPCDfhkDdwUSCMDa8raMruGn6HONr+uYZYAmHjKpTwzhrYsh5EpYg5rRPDV3+XO9TYVDcWJj8uUFUPSbH5XIUqZExwfMgraOVhyZy2mDIqkQ4afBFI0n8dDmOQxddh6JEgBlVno2PwU2OYlHpFjLqt9RUFf6A49dIrG/Id4+6mriBAGjn6COobrSFySKyM8lChf8N5c5iMFX3c9LSU5dMWipx7sXtx2QP9Q6/iG7KuMK6qJd9HNf+1+rY+4kPW7luo9o/J1FVXl0KqFzePxnnB8rT6ufxGpkQdHdDK/pPu7WWc8ox81h3+H45+a6chBOYpoc/zf7uuUwHgaVAj+D6G2wyfLrpVokOk21cTDENlkaU0kQxSZze7YEJ4NX5Sv3mIlUJvJDTYT0/7sYxdj9PmhWSJBlLQ1TIzQFFw1NXaLCVJeWqCD2HZ0TlDCCWkP+3Y
+---
+classes:
+  - 'dc_tftp::icinga'
+dc_dhcp::pools:
+  ark-rack-infrastructure:
+    range:       '10.10.129.16 10.10.129.100'
+  ark-storage-management:
+    range:        '10.10.112.16 10.10.112.100'
+  ark-storage-lb:
+    range:        '10.10.9.16 10.10.9.31'
+  ark-compute-management:
+    range:       '10.10.160.16 10.10.160.100'
+  ark-platform-services:
+    range:       '10.10.192.16 10.10.192.100'
+  ark-bmc:
+    range:       '10.10.128.16 10.10.128.100'
+  ark-hw-onboarding:
+    range:       '10.10.130.16 10.10.130.100'

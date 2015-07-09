@@ -1,1 +1,35 @@
-DCCRYPTOaf2wwBN1gSd2o9Iv+zK4nBxHpV8KCn4mjf50FwQ/6JfPyCMYLk9gwkzcv38q9bJM/bA6vvzHbb4BxsxcAayFyyzaipnqvLVBcx3I6hgPFerMWFFqSmwoeWrCo+odPpkRVx9tl0u/ZHiYf6RWxFADl8uQSUW0VMC86V/I5GgsZIR7ijxpBzPnp6n9+waJaXKpHtxYY7EJQQBCCqWBDJLyGF5trU69igrd+56SXgMbVeJSa5KMFDGlXdFPPv/VmA8IQqfrD5wLVTTJVBRH2iWuknMKuWix6X3LMCm2Yyw6XWloXWr0Zh/Gib7MN0q91TZSaelm3Jis/iJaK3hV5bthq5Uzc51BvYNY6TXb2rPzN3JP3cLDK5amp9suEcQHkBL7MSKisCQNiYDdhntNhLfTjk5wl4/NMlrwbIhxRr2s4U3ZmP0gmdDyyDSOCrtN7BfSwRaDgp1SKB98ugpiipKEFOsKKDGB7eKPYiEyHgYFGgNHOPUFc3sGY5flvWXTPdPW1z1RiGOwIblWTPxBzCaOu1mzKHtwPMPWW5UOhR1ws5FuVVda5Mxba9wqm7mCd67p4TIKPcmcJNs07GTJxEghiNuQ//T9m4f4JQJ6+4YvchBt425a5oo41XpDfxs5FN6ITGjpXG1fXmU0pPKBo8HXEBhLsy/XTHreLsdg4Y5vFH1eNyAeMqTkxYNpBfjTJDFfKcu9XbIvsbLybfW21S+I7Tm+80KqyB5sinRSayr6ECnG1TsX6IvYEIXCmfaC1qGxeD+CLAB7WFEl8s11VJGB6AHv/8HSm8x/WraNKQ1luhW3izeXoMAlUF+hjsx5RqvVc6EsxsnXq0snmLvixOA8uG1e7sTMfV5sOR57LiOZ3sTKKJFDrP5IStvCWl9BmuK+N3rYEWhDNpw8Baqqdbndd7euFmFl8t497+8XnhQk6FbZwe+HTyvEk47b02HRKWXAKxlaFqP4iaulzGli7T99xCtgWbIb9OTPvSUMTuKZTa76ogwlxGZSgjUa/cNE4rWhWbHzWs+CWYqxDemHkqTSySqV3skHg2JIBEqqX0v7bgczLMM90rLop+idGKrlLWRypQ1cMh7G4Fyk39MTB43BbFA3SwZQsDahbWls8QXyPJbufVPZbvWQHAUYr2rNhI7K50rE1yD0F1HRyAxQdzRdtQ==
+---
+classes:
+  - 'dc_profile::net::dns_slave'
+  - 'dc_profile::net::dnsbackup'
+  - 'dc_profile::net::duplicity_dns'
+  - 'dc_profile::net::foreman_checks'
+
+dc_dns::isslave: true
+
+ntp::servers:
+  - '0.uk.pool.ntp.org'
+  - '1.uk.pool.ntp.org'
+  - '2.uk.pool.ntp.org'
+  - '3.uk.pool.ntp.org'
+ntp::autoupdate: false
+# Caution - although this mirrors the class params defaults we need to
+# override the class defaults defined in hiera
+ntp::restrict:
+  - 'default kod nomodify notrap nopeer noquery'
+  - '-6 default kod nomodify notrap nopeer noquery'
+  - '127.0.0.1'
+  - '-6 ::1'
+
+dc_dns::masters:
+  - '10.10.192.250'
+
+dhcp::failover::role: 'secondary'
+dhcp::failover::peer_address: '10.10.192.250'
+
+dc_dhcp::zonemaster: '10.10.192.250'
+
+dc_foreman_proxy::use_dns: true
+dc_foreman_proxy::use_dhcp: true
+dc_foreman_proxy::use_tftp: true
+dc_foreman_proxy::use_bmc: true

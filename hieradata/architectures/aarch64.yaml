@@ -1,1 +1,15 @@
-DCCRYPTOoYhYHTbVbVaA32dJutqJbgDyelAKyRwNuuCxgj3+LZWuiiuxFJA9gUBhCKxkMryPkruIcYGc1hso8VmoQqwWLBpewfGMAZx23J4l28lB1Hx8S327S8U5NDoBhTF/UwDACvr9u2K2qoKdnm/CCLPdMD0svvbfpu45ZRwpkvoH9kBWpBTe59ueqaRr9nOKVtg3LltT4Sf07AVmm52Vu9FvF01FRVSzTq6qEXNCDSyvP2dJNSV8REG0YMfLFmY8ssTLfWqgJvn/syu6ev3VjnBdkq1vqIWmZHr79Ptwr1z8XcFHR5GEOIjExlJ6G52hU1oTEXLA/OB/3bVqn+5EjGHdQqm9xI+ELusC7+GK7ARPIPDwDsWSrNa/ogP2ZZRPLlRTs/94qqwbwTBIOzb/YqI5wZmOveC6YVSZgT68TSBEbMRXchPAv8EPrOMyC0QYlw973p6Lk6AyCfT78oHa21Wsf5HF8HPETMFjohKjkjIkS5b0xahYXWPNj/uvz6kt/A21EZIdAjF7dy3zQMYIZFI1elQOGfa20TVA8ljhuVgdGghCMRVJXZydH0qlXiRoYkHYP/J44IdFN6JYdUOTZxFE3w==
+---
+classes:
+  - '::dc_profile::log::log_shipper_beaver'
+
+puppet::version: '3.7.4'
+puppet::package: 'puppet'
+puppet::provider: 'gem'
+puppet::path: '/usr/local/bin/puppet'
+
+nova::compute::vnc_enabled: false
+
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_bond0_170}" # TODO: This is hardware specific
+
+dc_nrpe::checks::check_hw::nova_cpu: 8  # Note: platform specific
+dc_nrpe::checks::check_hw::nova_mem: 66 # Note: platform specific

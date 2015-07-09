@@ -1,1 +1,26 @@
-DCCRYPTO41NZvoPfPY24JAHeSHsR+hfS3Cpda0EH8XllM20LG6iSAM/TfUXWgtfOLQt/5UXUj5/cVQr8Gn9dvwCxZIp0WO5o93Df3ReVYsKVMv2Pff7BpJqCMxR0EISEXR6+Kx40w47gPd1PTc2ck6oBPnvhorE8L55ZL3ohg6d0cDbjiXD3aL/IC6vfOzdc6pfDAIU4hH1kVI+4ki68bQlHh3iFQwm3GahIKKtyBEw+OuUUv79A5QiLH/QGcm3HUVJ8HpkVhk2fGErerK7yo6oRQru+5qUBRRopRYZMzyY3xlpHNo2YP3le39kimM8zmm2ORBnB8BvokbJOalrA3FPt3Dx5RoUSPmjGo8BwNFZARUQLPQ4maH4cRXRsAdMgpehmHe70S5URHKdBxjEKiQCc/HfyiDbvykVcE8mlcHaGtHlgx56sMGVuH31vQ1c5npbLArvGOuCsCkXB/HauRBQpDSLr5t9H+vSYjauhZVAxYboLkQcL+HSdF6Dow3KKPjxdPyj52ea6vf9BMTMLkqLuqlGUQp5wgcxp0y/ToPqM0uI/pB/XeSL+iyRU6xFi+TGufrLn1gu6ybLODARmRgyvCGaR4SIStqtmZ7E3iXydZubgIWpo3DBIY5/Gi1k8vJCpEUSk58QpZvHH6yNJgVtD4kZKvaD6+jVpODuA2DhDDpnwZojlKRL2MQ7U6u73yAEtxNVzdnr8fwG2Uyc4dfnqb/fQW2hAYNxm4cVQ5euLE3C3xKOPoeYIG2QD2VHN0U6+eUHO33/ohMV81rVj/jvltS2XkvhTzj1UldQrna4hVclKkjqfyxOPQ+rTlfd2U2KU52Kj+QMKoweIMc/QlhnNkgaH1mEZJbs5XLKwW4w8md3HY9RQ8bqy4Uah0dW0JIMVZTi2EzKleRshXCGfzPtNNy+icWJkKKcDYPv3cw0xl/yCqfXcHD40nclqe9rzh8PDlPglLNzMKpseIdDmSSSUmKopEaCr85+qKGICoaXUrPhwHZBiIF1GbTY5L3ThZIyusO+z2I33TMiTJukHSfUzxV7sp/WVhmQRPtibD2a543jHhx9gzwiBpjI27sG8EG9OCuADaPWmbNk9ZzdwIvSHzETivfj6cBHIZ3QpTY51tArQfV2YEgAJcr8vs8xTSoVubPbL8ZDYREsfz29lwjUVRHSzTfAKnjsv6pB+u59g48s0hy0=
+---
+ldap::server::suffix: "%{hiera('ldap_suffix')}"
+ldap::server::rootdn: "%{hiera('ldap_rootdn')}"
+ldap::server::rootpw: "%{hiera('ldap_rootpw')}"
+ldap::server::ssl: true
+ldap::server::ssl_cacert: '/etc/ssl/certs/datacentred-ca.pem'
+ldap::server::ssl_cert: '/etc/ssl/certs/slapd-server.crt'
+ldap::server::ssl_key: '/etc/ssl/private/slapd-server.key'
+ldap::server::schemas:
+  - 'core'
+  - 'cosine'
+  - 'nis'
+  - 'inetorgperson'
+  - 'hpilo'
+  - 'freeradius'
+ldap::server::modules:
+  - 'memberof'
+ldap::server::overlays:
+  - 'memberof'
+ldap::client::uri: "ldaps://%{hiera('ldap_host')}"
+ldap::client::base: "%{hiera('ldap::server::suffix')}"
+ldap::client::ssl: true
+ldap::client::ssl_cacert: '/etc/ssl/certs/datacentred-ca.pem'
+ldap::client::ssl_cert: '/etc/ssl/certs/slapd-server.crt'
+ldap::client::ssl_key: '/etc/ssl/private/slapd-server.key'
+ldap::client::ssl_reqcert: 'never'

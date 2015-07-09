@@ -1,1 +1,24 @@
-DCCRYPTOdeXxAMrihew/NfNTZ7qLTyCAQZ7EW5Qjjez67mqqOxpA864UWCgEaOJ/SlzKuL+KoHMdnOLFKRfYdENEw3VJkwc1finMmc63QwXrRW6XlqN2uor9uglZg8mbSjCC6BU1K+yd2J6qp8NQtBoQ7zwv9xliN55Rr5NpMFgUuaCrWicRgl7dWOSGAXE4l2KeeFprNqADv0qUr9wGOwfZTo0sFQB80uKNDBZre2Tbjmrsyf1LcDpqMOvdiluQGcG2F7ic4fVFsD4+Uq+X2nynCwSbnK7m1ocp1nbfikc/O/BP+JBWCvUm009Fh+AlUIY7y+5AD0fseMg7FYoPw14X24i3T2zqbqIJH7Ng9bcpf3r5/ybnxk1Hn0Z01+Z5RfSU1waID8KFUpFmWQrKpfXWCWjh+tcKdshJz8noKbuUFRWoYla+6846k7Li/Uxuoi+1yNinXF6KzOssrWD+Z97ReysRBWAZaxT+aAqzMpiMofFnZvr9G9Hm1WxGjA97+tsm4WoCR5J7j9Bh8R+mY9c5QK0y+Mp9x1N+2oL4ZS5aVUXrdGSBkI2tiuChd94eSnmGHaNNFTc8WgOyAGiVLbcQOGluOhDkxK5A3cnjiFDF21X9tFKNyUCi3EV0dBWGNC7xmkUDab0vf/G1m03bsbjgB95WjVE1qE3JhnggjVm2b1Kbgm8P7YSbl+PaCTuqlY2vGDLjdKC7xGCvAiS9ut1bVGvWVjJax/juvRdyTQf36alTBwNho8XVdLvl3oUR1GPgBBvhktlmJKw1IBj7xtPpXqYznOLcZhLWU1QsK8t7JEmiytmoIjed03xYro5rgLotKYMLu0jHa5Cik5Q5esGW2NI3zoNCuoua+y2dJeFqVNYpDW/OCXr8mzi3GbHd95diyjCaa9iYv+tD9E8yIqA5YoS88VefsfFrZWW4FLOULdOo1yfRcAAjtmMt0ll7N/Bb7xx9Oetkfbi2CMeTQnPFv6ihWVDnQUvOSUiGmgCuNf0j5jngWqmpitfzPSZwL/LckdUw3XmzxZ/qwnylZ8XoQt1DBbSw9t7Bg/65CecHMZ6tYBE6jBruTgBJ1ypkQppkciP62oBfV2VA8RMlCSFPz2JV/9fKePBXp57yWxCLcETPYpoiGMrBz5u0Mw5PUt3HFdi5K8g2R3dHZs69r2PxR2hiiCSW8psCrqp2RHjig8QgtOVYtT5PI/xI1LjhYjuMRDvBubkAYGjDehSqa65bm/Akla0CJZzABgVLd6amS4tz6232idQTqdqQMMOpltGDsYbKU6RKRQbAZqnM4qg7gJqk98al7aBG7USZ3BQt9NLz+8+l79s6f4bD8SCMtIBCwnYrVYJK59itnBgZIwFEPXYUWen4Z6De0paCZz5PbGQDFBh4WiC6fZoUWSO2yV7GFxr+A2teM94GluWW6UI28kwVUqztokoM3tMy0iNtBY0+kX2DwWC5LFGD36w69KuHqlOuAKEkcUlzTFrvpWH1X96uW4gYz/6XpcDt7e7apSpsb/ZStVwRrWfSrjHE806HOBOYCPksCIRrfJfNDqeTan9YpMCaz3RKGnlJ4JsMROglzYA/l4y3dqs+cz3FIRnR/z+0roE5D8f66a0GBJju7sli+rSRocINCRE7Cqm0wwPs0F88F+w4kbaz3E51ANxWA+1egROpcqRoGRSLOlHJEYAfYynmql9MmK5KH5yaZMdliHOQ8RanG0u6v7shuuxf7hBeDkKT4iVVDPCaT1x2vdit/A==
+---
+dc_logstash::params::elasticsearch_host: 'logstash'
+dc_logstash::params::elasticsearch_embedded: false
+dc_logstash::params::elasticsearch_protocol: 'http'
+dc_logstash::params::logcourier_version: '1.1.28.gd11a1b4'
+dc_logstash::params::logstash_server: "%{hiera('logstash_server')}"
+dc_logstash::params::logcourier_port: '55516'
+dc_logstash::params::logstash_grok_patterns_dir: '/etc/logstash/patterns/grok'
+dc_logstash::params::logstash_syslog_port: '5544'
+dc_logstash::params::logstash_cert_alias: "%{hiera('logstash_server')}.%{::domain}"
+dc_logstash::params::riemann_dev_host: 'logtest'
+dc_logstash::params::logstash_beavertcp_port: '9999'
+dc_logstash::params::logstash_api_version: '1'
+dc_logstash::params::log_shipper: 'log-courier'
+dc_logstash::params::beaver_timeout: '42300'
+
+dc_logstash::client::config::log_courier::logstash_server: "%{hiera('logstash_server')}"
+dc_logstash::client::config::log_courier::logcourier_version: '1.1.28.gd11a1b4'
+dc_logstash::client::config::log_courier::logcourier_port: '55516'
+
+dc_logstash::client::config::beaver::logstash_server: "%{hiera('logstash_server')}"
+dc_logstash::client::config::beaver::logstash_api_version: '1'
+dc_logstash::client::config::beaver::logstash_beavertcp_port: '9999'
+dc_logstash::client::config::beaver::beaver_timeout: '42300'

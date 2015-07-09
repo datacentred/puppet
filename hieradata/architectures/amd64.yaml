@@ -1,1 +1,9 @@
-DCCRYPTOd1ymAQ5M0WbwLxD2rIXlC9UNUrpeirRtVWEVMNmgTWVhrGUyi8qsgTA0py9XmMoX9flFa9qVVqEQ6xQYaDd5QLzRUWCRP7E7Om56VQ8J9bUrkQ/a8pQF/++bNCGc2P/u72aVj20gTzZXKpVsLqGbMTasmn7JQKTFOTokYNC8sOB5pnMo7UsxDQ47M1tqmImnVLT5azZBPoNxTgBweIYmLx4ArjB68lxiGKjYveubsbr6IKdArcE81GrqYA4q+pMkceCWvzAErkPFb7q9NyTZFtUG2KHVBOwjQYNmAN7Za4GLkAMm7yPyvnLtfk+ufZZVY/vjMxcZjLoB7bIuFFqL/3ZzKsyepA6NqvqxGYatoUpFXmJ/yXpOUvJn4k+JCzxv3ErfPY3rHFl2p9Y5E+DT7lQsyy9wmPMA61xBkWR/rChUcAf143Ti5tVIBWd6G0wEFgma0TrnIKuzrHqg9OgGsNNLLiFdE/Jiri630JMKj+mGine+cggGgjuQr81/KtXvbVr2AiaC5ER4QZS+izWctLC+S6SXdIu1vuY3OOfC2UvVv/M1LHIOKmk7HnrDao6OMgeLX0yhoAZUGmmM2So0c613sB+nWpmPMJErdDbxF419TvG2O2VWaXfFEybh8I1gfJRql4Qqqw3Vctn0MhmaLGRniJYHQVP2i20v3Vzlt/0uV8BI/z7oQb90kFWHiC9w9cGD/nTv5Su1Cs7DCx97EQ==
+---
+classes:
+  - '::dc_profile::hardware::bmc' # Note: should be platform specific
+  - '::dc_profile::hardware::board_support'
+  - '::dc_profile::log::log_shipper_log_courier'
+  - '::dc_profile::mon::icinga_client_x86' # Note: needs scripting rather than a binary
+  - '::dc_profile::mon::lmsensors' # Note: no sensors on moonshot, platform specific
+  - '::dc_profile::perf::sysdig' # DKMS module doesn't compile on utopic armv8
+  - '::dc_profile::util::grub' # Note: Manifests non-applicable on utopic armv8, may hold for amd64

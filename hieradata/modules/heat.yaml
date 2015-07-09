@@ -1,1 +1,24 @@
-DCCRYPTOiQ6rsc+23czkgBnVFPR4aT1MAo4Z5f4b8brVBzv4lOmasVtmbdJd8WJ2gynPEUlaizVBKzMM2pXep0qy0sbxDGEipzvKu50SqOmvFFYwnWrFnuY6R4D0qUFWWrEkAAMgTgfp7CCHS+iLMUOLYHko8LfF1zxLGDq7aSP+U38HHymy25KvbJeWhdXE06JbzD/W9v+wqNmr9dhZzW/P4jUkFcD7PWPq9IJVclm0JAmZYI/pq0s18dr1RxCTh2uiJNO/JEQmX+uTDIOCDv0rxlYBZ8h8KPp0kPF83jvB+BY/dXqQvC9TIaLTZt9uBYaDX7cEHe7ApRymMUP0BNPXMvZR0vIjFjOeLWOK9XLnpxXmTH3MXvrU87p38Ezw7zhhD0TFacy4PktGQkfR511Ww/G1lhoZnnjjTL0Y2lhMb6B9DHZG6lo1EMnoHaBnwLNeRENiQB4R6gXsA58aXl4L/A+giPK/3PvDALtB23jISEN3RdF9elZNkfsJ5EKNJuzYFjZIIAAKL1KOPmQUHWlQ6pSrorAdssditTBfISIaMpZZa/kTMv/Kd6nNliapR9n+TBB/3zPQAew3T8WELdDscRfbp4Bw2GhGWnSbbLYWUSO1m1pKeUcFiM4pIRTW1FTAJ/Skq7nELMMzi0BLNuLtAqHwx7vLtr81WxPlH1J4cpE0bqOWMxHH+L/xn8na1wB0xTeX0WKeU+KaXUKYqtufY1r8VWeAKnFdcCX/irpHCbK7xBu1qRFKe5dayEgEaRp7DvWNMIdInDWfrV94hxloj3IYmKw9wOTGGNg1jGqRtXTo+sjOrYnlBikmkx2geUdbzFFFIhTBexzHqhxg3dkWFOi5ZqnVRJlGEyADb2gQWa/pmCLLUVgId/OH9O2mt9RlIawPDVnz2oHaUJT/aeTQrFXvb8zbM4QFlsNJoXg9eZRy94tDSHJHRV1jke46X3Uv5IJXiUyQ0cW2EC8wl+5tapRJT4snQy5FiZzzjtuD4yvVJK7cwymW6BfoN8srxy4pBL/2DxEuTLxXQNJK+F270KBBJzwV8GyLzCio1EM0g6nrh6VEUZsLlRQpzrczvaiaQmw10O3XfwHW04dIPiloRn9Ks5hOtucQIprCQxprZageLOrAfixMYwtX2g7rlprYXdaz+o/SLPwx4qiYrv5Wx310n0ZLouVkAVLZUpyMWJtg5AZzrYO//SHCyjVPylywNgV7uSUYeM4YSf/dKX7ajgW5xiLlpoH/rlvb4q1N8Znc7bLpLlRw8ogW6/fmD1f19vWvlJJGq8KmZ9nCkEwRfWoIEXmpVjjPyl434PrtrMw6X+NCk6ipC0hDELGiF/t9RVEwcDCqZCcc1RaYwjG3hoBx41TP8m6gted4JfRadmhSJW6kxhDv9Ix3rrnR1WB5q9mhyo/ncme5kngFJdGMLJbDA9kiNVJcrwBrJ6PupcLRBZp/PQwdkUFObpqogLaCyYdgYVG+4HoX/JhKLhS9pqKaSW/v+sBfJNMlIg9cBkJ6gGz7R4xV9aRWKyTn8IkecxGfIg00MfE73/YEdHY3KnxA7zmSuSY6IShua0MyA7oYoW+wi8U03xeqk63qC3As68MorEDK1wqQosXalBwFmi4yNffTS9qnqDYFsCDDPw7v4rl89udC52FaXi8uih+1GXS/
+---
+heat::rabbit_hosts:
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+heat::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
+heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+heat::keystone_host: "%{hiera('os_api_host')}"
+heat::keystone_protocol: 'https'
+heat::keystone_user: 'heat'
+heat::keystone_password: "%{hiera('keystone_heat_password')}"
+heat::keystone_ec2_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
+heat::api::enabled: true
+heat::api::api_cfn::enabled: true
+heat::engine::enabled: true
+heat::engine::heat_metadata_server_url: "https://%{hiera('os_api_host')}:8000"
+heat::engine::heat_waitcondition_server_url: "https://%{hiera('os_api_host')}:8000/v1/waitcondition"
+heat::engine::heat_watch_server_url: "https://%{hiera('os_api_host')}:8003"
+heat::engine::auth_encryption_key: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAO6wiQVE5JMdUm8Zc5yKva/avHvU3haqAuI8h/LHjtANCqbJdBJf9j34mMuP6b6lOAfFFJ2pXXlW9i+41SPC2trXYPkMOSIq/DNUXjDNnRBcWybhAYi/xJs7slMeeVkK9u2GYVpaNZIkgDdicFuccy0tlmXcdAAPukA23XyYeKBhMWYyrzw4qmRWnQB9M9oCDsheXloudEJcqUpHjFLHTvS2dDIY8SNnHpCHJboyD7GEKdQzeAr2RAM8EMRPTiz4732VQh9LOXDBf6eyw8kubw2AY8tG0HfmEe/aiAmr5iQsQDZn8NhDHtazlQLgdrQWjylBc3Et1ggM8jBfBNvOTpzB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAh+VAx3LEMM3o9sPJhyYksgFDlZbxDeqdMZ/STl29pqnE0iQzvvzi094EYRzdkYm10MmfR8pFXRFLJLPpafGGCj/UzIBXCNU3pDjR3+UojCVyMIaholK1QuvCxAVp8sXeI3Q==]
+heat::engine::configure_delegated_roles: false

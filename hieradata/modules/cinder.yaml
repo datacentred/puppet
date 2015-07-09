@@ -1,1 +1,33 @@
-DCCRYPTORghO6MNTvpjeAtIRwHyhHBZc5bFk3ANja7jTYAHPdHxMCi7z6WGf/6nK+hhG+gqwi+nCS3vGA1lVGB4Bn8LHVWe6J8KGNNhiX5Q37yMqolVXLEpEungutCMGECgFpd8DRiF/ALszghesLRQOREyIq4pUJjmnlcxLrhrEmaH4W70dDoWMoCLuUTrRjAoYXfbwYCkpMulcwTyLTNmuTvL630fVmKKHxDQYUAvU560/9nop3vIo82R/ncCNo0p3ACRBQnRPPLLfiWVoGgsETkI46Jhf15Te3/wzCofKrQ63ucIOPxlqfMhNFXpnEvwQkufuMvanWnVt1sfstzKVC++d01iSevxVRbQxWOIWvmvk/HgL3aGxjEw6WuRhbHUuAEBw9LP0+xJ/Y89f18X3q34qiVb5yPy88pvWmCUgIQNGomAd6OW63qqvcsZ5G9vWf44qLhlnnSr1TCOJeBBs7LtGsWtTLhwJQL1T341pTJuEDUfJucI6BIMCFgwuAOcAuCF5WVgz5yQhhBkWcGulXN6jaAWq+/U0++kLRuKndUs42RrJ0JvSPEfhZli6YL3fS86AQFDcW3zM26boM7Irt4TvgHWrROGNL75R1s3zrfFPJJECK01dTRPN6zc8wn9q7puuZcEcKw7khaEY4dXk5FyqVg60Vrd3hgVcY9usc7XFvZI7RXSVFWae0qKxESW4+zedssF0dG0FzpL5PaixDz2JxXOuHFyI68RbvUshDfN4firCQDlEsXUxvSxDfWjoU0Wgt5ywvtlsEqegZQD6QbGh4zEaVPzJpCklqtoLxFEgIX7vIrE+H016MPWVV/QpDd46ngyUv5YHw4IYs4JmPE1mI3zP8mk2b9gtnQTq9QZD5rTcvFYC5qIPB7t4m4o7mcMzjNu/R/3GDF5MtJtmWP7RqmHtzSctkVsPnlI9WrvV8IP2CG45e2S4WAl2p5vE7Fv+joiPjSV2D2mx0hnnKKHCs/fxincenFqpNLG3c0QpoboJyjlBZqVVYzdlUei9L6NsGjceyJpB9JvD5uOu5hxFu+YfOoKz5i+u1vnnr0Zx4nwGKL9Dx/xdgRNEB7yJjQpVs+2TUquJS0jmrMW2BEMe23/vZVP4s4LLpm7RK/Wmluf31yUyegveDXCvMm6uNVL4jFT9rwpwS5l9rId9y5L7hR/BFaGg0Hp2TTnVYWqaVhegsl/0LxxNdUOICfmAzF3fOtEhNnMiBQTCAKCSxJEHBevWNOCNfjgcIR37ID2Tb8qchFGCRNl5Qc6nvlENq+CSWG6RI1MuWOdJ321linU0EGhcS4HwVnxuVIx+rJ6/0QfSDZLYFgsHlt3P+dGJfITz4SUAIynZbHDyt/vaHM8BQ/cQ58LwAiDyuxGUMId1HmChyJ1DmxnniY0ywt1qeOZSM2GHsVguQK2GMaZYbqUTDqbGNZCvSpVuMG1CtF1juNIe8LNKgLSKrX7w0LSiFQOFiejYyQgYuomSysOhcNx/0TTrGWMGmC9ALtWqRjDdaXKalQKysRth0ZLNoDXuncwwExat4u+jx7sAuP7Pp5OUYHPu/kFHZP6nt7oR5izj+HGrdf4b7qq3W83Ga0ajuBQGkwna284F00esQ1qMXFohM6JQFfxHYrB7SmeMoYaJDMFKDp1fvzi2tucdOP9LeMRUbm0ps3wYUH6UdJCGUpDakNbCvUbT9ghgtk7PhxhEVFtIhDWQzjp9hX05AOo7NLf7L2NZYbCAAFJa15tREK5L1X8qcmFKQyyM7BKp3m3QfOhjbM0fd0OKY1SW2IRVz1Xc5e3oTQt4ruWVMIeao+Z2qJnOAgqirswq4cFOEBl23dGq0SXaUOBATgmIoWectHt0tXrrNHsZEqUvhX+IkCbuDJUn8C3Ltzvl/Nr6mXBNNg8=
+---
+cinder::rpc_backend: 'cinder.openstack.common.rpc.impl_kombu'
+cinder::database_connection: "mysql://%{hiera('cinder_db_user')}:%{hiera('cinder_db_pass')}@%{hiera('os_api_host')}/%{hiera('cinder_db')}?charset=utf8"
+cinder::verbose: true
+cinder::debug:   true
+
+cinder::rabbit_hosts: 
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+cinder::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+cinder::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
+cinder::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+cinder::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+cinder::control_exchange: 'cinder'
+cinder::api::keystone_enabled: true
+cinder::api::keystone_auth_host: "%{hiera('os_api_host')}"
+cinder::api::keystone_auth_protocol: 'https'
+cinder::api::keystone_user: 'cinder'
+cinder::api::keystone_password: "%{hiera('keystone_cinder_password')}"
+cinder::api::os_region_name: "%{hiera('os_region')}"
+cinder::api::service_workers: '4'
+cinder::scheduler::scheduler_driver: 'cinder.scheduler.simple.SimpleScheduler'
+cinder::glance::glance_api_servers: "https://%{hiera('os_api_host')}:%{hiera('glance_api_port')}"
+cinder::volume::rbd::rbd_pool: 'cinder.volumes'
+cinder::volume::rbd::rbd_user: 'cinder'
+cinder::volume::rbd::rbd_secret_uuid: '42991612-85dc-42e4-ae3c-49cf07e98b70'
+cinder::quota::quota_volumes: '10'
+cinder::quota::quota_snapshots: '10'
+cinder::quota::quota_gigabytes: '200'
+
+
+

@@ -1,1 +1,17 @@
-DCCRYPTOCEF1qZc3CElSOLWCLKvRbD8Dh2SR5fQdJ5ZlIOSQGIvgY4hZSNnw0Zg5s/uJ6QyFUeQ3U6ht+OnJxFMwZZX952OUj4ZKDjyUqqRohriHy+ZE2al1Bus8eIUUsa8l7z2h5HI5xkUeaeNjgRa3JHlFK9Ou0yRGG/YUbJ400dv8fnABb8ZLc8DXMfRbIRgxMpJb6fKSvumOFo/xeTRC2XwRvL5hrrbKondpJxaS44bE5XT3DfoM/mw5VNvhK+XiTEvAFSLix1bKoUTcTFKtVkvphQcW7tK4Iti48l1mW9nOZhOOXYnqlNJZZBg1uP5DDekJ3JdYPoWQ26Nuoc4u884ntvVMWQnsr2GqtWfI6WaUfSG7jAO+oRVNux8h6KfTGTCj
+---
+hosts::hosts:
+  '127.0.0.1':
+    - 'localhost'
+  '::1':
+    - 'ip6-localhost'
+    - 'ip6-loopback'
+  'fe00::0':
+    - 'ip6-localnet'
+  'ff00::0':
+    - 'ip6-mcastprefix'
+  'ff02::1':
+    - 'ip6-allnodes'
+  'ff02::2':
+    - 'ip6-allrouters'
+  'ff02::3':
+    - 'ip6-allhosts'
