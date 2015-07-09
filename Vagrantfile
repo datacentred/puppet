@@ -36,6 +36,13 @@ Vagrant.configure('2') do |config|
     config.vm.define name.to_s do |box|
       box.vm.hostname = "#{name.to_s}.vagrant.dev"
 
+      # Copy the gemfile
+      config.vm.provision 'file', source: 'vagrant/Gemfile', destination: 'Gemfile'
+
+      # Copy the eyaml keys
+      config.vm.provision 'file', source: '~/keys/private_key.pkcs7.pem', destination: 'private_key.pkcs7.pem'
+      config.vm.provision 'file', source: '~/keys/public_key.pkcs7.pem', destination: 'public_key.pkcs7.pem'
+
       # Allow DHCP IP to be manually overriden
       if options.has_key?(:ip)
         box.vm.network :private_network, ip: options.ip

@@ -4,6 +4,9 @@
 # Exit if the following file exists
 test -f /root/.provisioned && exit 0
 
+DEBIAN_PACKAGES='puppetdb-terminus bundler'
+RHEL_PACKAGES='puppetdb-terminus bundler'
+
 # By default the puppet VMs have vagrant at 1000:1000 which interferes with
 # our hard coded IDs.  Removing this hurdle allows testing of user account
 # provisioning
@@ -13,18 +16,19 @@ userdel -rf vagrant
 if [ -f /etc/redhat-release ]; then
   yum update -y >/dev/null
   yum makecache fast >/dev/null
-  yum install -y puppetdb-terminus > /dev/null
+  for package in ${RHEL_PACKAGES}; do
+    yum install -y ${package} > /dev/null
+  done
   sed -i '/Defaults    requiretty/d' /etc/sudoers
 else
   apt-get update &> /dev/null
-  for i in puppetdb-terminus; do
-    dpkg -s ${i} &> /dev/null || apt-get -y install ${i} > /dev/null
+  for package in ${DEBIAN_PACKAGES}; do
+    dpkg -s ${i} &> /dev/null || apt-get -y install ${package} > /dev/null
   done
 fi
 
-for i in deep_merge; do
-  gem query --name ${i} --installed &> /dev/null || gem install --no-rdoc --no-ri ${i} > /dev/null
-done
+# Install gems
+bundle install
 
 # Setup PuppetDB
 cat << EOF > /etc/puppet/puppetdb.conf

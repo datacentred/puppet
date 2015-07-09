@@ -11,8 +11,14 @@
     - "modules/%{calling_module}"
     - common
 :backends:
+    - eyaml
     - yaml
     - puppetdb
 :merge_behavior: deeper
 :yaml:
     :datadir: '/vagrant/hieradata'
+:eyaml:
+    :extension: 'yaml'
+    :datadir: '/vagrant/hieradata'
+    :pkcs7_private_key: '/root/private_key.pkcs7.pem'
+    :pkcs7_public_key: '/root/public_key.pkcs7.pem'
