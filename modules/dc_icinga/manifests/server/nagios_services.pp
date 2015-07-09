@@ -31,7 +31,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_users':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_generic',
     check_command       => 'check_nrpe_1arg!check_users',
     service_description => 'Users',
