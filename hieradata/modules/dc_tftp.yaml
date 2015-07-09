@@ -1,0 +1,17 @@
+---
+dc_tftp::params::tftp_dir: "%{hiera('tftp_dir')}"
+dc_tftp::params::ha_sync: true
+dc_tftp::params::sync_master: 'ns0'
+dc_tftp::params::sync_slave: 'ns1'
+dc_tftp::params::sync_interface: 'bond0'
+dc_tftp::params::use_inetd: false
+dc_tftp::params::tftp_sync_user: 'tftpsync'
+dc_tftp::params::tftp_sync_group: 'tftpsync'
+dc_tftp::params::tftp_sync_home: '/var/lib/tftpsync'
+dc_tftp::params::tftp_user: 'tftp'
+dc_tftp::params::tftp_group: 'tftp'
+dc_tftp::params::dir_mode: '2775'
+dc_tftp::params::virtual_address: "%{hiera('platform_services_tftp_vip')}"
+dc_tftp::params::virtual_netmask: "24"
+dc_tftp::params::virtual_router_id: '2'
+dc_tftp::params::conf_template: 'dc_tftp/lsyncd.conf.lua.trusty.erb'

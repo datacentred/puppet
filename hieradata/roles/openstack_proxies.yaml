@@ -1,0 +1,14 @@
+---
+classes:
+  - '::dc_profile::openstack::proxy'
+
+haproxy::global_options:
+        tune.bufsize: 32000
+        log: '127.0.0.1 local0'
+        chroot: '/var/lib/haproxy'
+        pidfile: '/var/run/haproxy.pid'
+        maxconn: '8000'
+        user: 'haproxy'
+        group: 'haproxy'
+        stats: 'socket /var/lib/haproxy/stats'
+        daemon: ''

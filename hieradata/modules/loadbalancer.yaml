@@ -1,0 +1,8 @@
+loadbalancer::stats::ipaddress: "%{::ipaddress}"
+loadbalancer::stats::ports: 1936
+loadbalancer::stats::user: "%{hiera('haproxy_stats_user')}"
+loadbalancer::stats::password: "%{hiera('haproxy_stats_password')}"
+loadbalancer::stats::ssl: true
+loadbalancer::stats::combined_cert: "/etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem"
+loadbalancer::stats::ssl_cert: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+loadbalancer::stats::ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"

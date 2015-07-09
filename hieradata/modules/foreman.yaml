@@ -1,0 +1,19 @@
+---
+foreman::foreman_url:           "%{hiera('foreman_url')}"
+foreman::authentication:        true
+foreman::passenger:             true
+foreman::use_vhost:             true
+foreman::ssl:                   true
+foreman::server_ssl_crl:        false
+foreman::db_manage:             false
+foreman::db_type:               'postgresql'
+foreman::db_host:               "postgres0.%{::domain}"
+foreman::db_database:           "%{hiera('foreman_database')}"
+foreman::db_username:           "%{hiera('foreman_user')}"
+foreman::db_password:           "%{hiera('foreman_pass')}"
+foreman::oauth_active:          true
+foreman::oauth_consumer_key:    "%{hiera('foreman_oauth_consumer_key')}"
+foreman::oauth_consumer_secret: "%{hiera('foreman_oauth_consumer_secret')}"
+foreman::plugin::discovery::tftp_root: "%{hiera('tftp_dir')}"
+foreman::plugin::discovery::install_images: false
+foreman::puppetmaster::foreman_url: "https://%{hiera('foreman_url')}"

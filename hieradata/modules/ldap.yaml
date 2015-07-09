@@ -1,0 +1,26 @@
+---
+ldap::server::suffix: "%{hiera('ldap_suffix')}"
+ldap::server::rootdn: "%{hiera('ldap_rootdn')}"
+ldap::server::rootpw: "%{hiera('ldap_rootpw')}"
+ldap::server::ssl: true
+ldap::server::ssl_cacert: '/etc/ssl/certs/datacentred-ca.pem'
+ldap::server::ssl_cert: '/etc/ssl/certs/slapd-server.crt'
+ldap::server::ssl_key: '/etc/ssl/private/slapd-server.key'
+ldap::server::schemas:
+  - 'core'
+  - 'cosine'
+  - 'nis'
+  - 'inetorgperson'
+  - 'hpilo'
+  - 'freeradius'
+ldap::server::modules:
+  - 'memberof'
+ldap::server::overlays:
+  - 'memberof'
+ldap::client::uri: "ldaps://%{hiera('ldap_host')}"
+ldap::client::base: "%{hiera('ldap::server::suffix')}"
+ldap::client::ssl: true
+ldap::client::ssl_cacert: '/etc/ssl/certs/datacentred-ca.pem'
+ldap::client::ssl_cert: '/etc/ssl/certs/slapd-server.crt'
+ldap::client::ssl_key: '/etc/ssl/private/slapd-server.key'
+ldap::client::ssl_reqcert: 'never'

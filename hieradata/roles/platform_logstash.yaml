@@ -1,0 +1,29 @@
+---
+classes:
+  - '::dc_profile::log::kibana'
+  - '::dc_profile::log::logstash'
+  - '::dc_profile::log::logstash_lbmember'
+  - '::dc_profile::log::riemann'
+  - '::dc_ssl::logstash'
+
+dc_kibana::elasticsearch_host: 'logstash'
+
+dc_logstash::server::logstash_cert_alias: 'logstash.%{::domain}'
+
+loadbalancer::members::member_hash:
+  kibana:
+    ipaddresses: "%{::ipaddress}"
+    ports:       '80'
+    options:     'check'
+  syslog:
+    ipaddresses: "%{::ipaddress}"
+    ports:       '5544'
+    options:     'check'
+  courier:
+    ipaddresses: "%{::ipaddress}"
+    ports:       '55516'
+    options:     'check'
+  beaver:
+    ipaddresses: "%{::ipaddress}"
+    ports:       '9999'
+    options:     'check'

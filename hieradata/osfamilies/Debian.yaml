@@ -1,0 +1,6 @@
+---
+classes:
+  - '::dc_profile::apt::apt'
+  - '::dc_profile::util::apparmor'
+
+puppet::version: '3.7.4-1puppetlabs1'

@@ -1,0 +1,6 @@
+---
+classes:
+  - '::dc_profile::net::aptmirror'
+  - '::dc_profile::util::wwwbackups'
+  - '::dc_elasticsearch::elasticsearch_snapshot'
+  - '::dc_elasticsearch::elasticsearch_pruning'

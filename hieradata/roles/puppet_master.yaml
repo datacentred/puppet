@@ -1,0 +1,57 @@
+---
+classes:
+  - '::dc_profile::puppet::puppet_master'
+
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+  agent:
+    server: "puppet-the-next-generation.%{::domain}"
+  master:
+    environmentpath: '$confdir/environments'
+    node_terminus: 'exec'
+    external_nodes: '/etc/puppet/node.rb'
+    reports: 'foreman'
+    storeconfigs: true
+    storeconfigs_backend: 'puppetdb'
+
+puppet::hiera:
+  backends:
+    - 'eyaml'
+    - 'yaml'
+    - 'puppetdb'
+  yaml:
+    datadir: '"/etc/puppet/environments/%%{}{environment}/hieradata"'
+  eyaml:
+    extension: 'yaml'
+    datadir: '"/etc/puppet/environments/%%{}{environment}/hieradata"'
+    pkcs7_private_key: '/etc/puppet/keys/private_key.pkcs7.pem'
+    pkcs7_public_key: '/etc/puppet/keys/public_key.pkcs7.pem'
+  merge_behavior: 'deeper'
+  hierarchy:
+    - '"nodes/%%{}{hostname}"'
+    - '"platforms/%%{}{productname}"'
+    - '"architectures/%%{}{architecture}"'
+    - '"environments/%%{}{environment}/roles/%%{}{role}"'
+    - '"roles/%%{}{role}"'
+    - '"releases/%%{}{lsbdistcodename}/%%{}{architecture}/%%{}{calling_module}"'
+    - '"osfamilies/%%{}{osfamily}"'
+    - '"%%{}{environment}"'
+    - '"environments/%%{}{environment}/modules/%%{}{calling_module}"'
+    - '"modules/%%{}{calling_module}"'
+    - 'common'
+
+puppetdb::master::config::puppetdb_server: "puppetdb-2.%{::domain}"
+puppetdb::master::config::strict_validation: false
+puppetdb::master::config::manage_routes: true
+puppetdb::master::config::manage_storeconfigs: false
+puppetdb::master::config::manage_report_processor: false
+puppetdb::master::config::manage_config: true
+puppetdb::master::config::restart_puppet: false
+
+dc_foreman_proxy::use_puppetca: true
+dc_foreman_proxy::use_puppet: true
+dc_foreman_proxy::use_bmc: true

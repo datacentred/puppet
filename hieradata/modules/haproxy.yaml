@@ -1,0 +1,11 @@
+---
+haproxy::restart_command: 'service haproxy reload'
+haproxy::global_options:
+  log:     '127.0.0.1 local0'
+  daemon:  ''
+  chroot:  '/var/lib/haproxy'
+  pidfile: '/var/run/haproxy.pid'
+  maxconn: '4000'
+  user:    'haproxy'
+  group:   'haproxy'
+  stats:   'socket /var/lib/haproxy/stats'

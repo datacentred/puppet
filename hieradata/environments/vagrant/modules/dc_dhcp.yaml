@@ -1,0 +1,8 @@
+---
+dc_dhcp::pools:
+  vagrant:
+    network:     '172.28.128.0'
+    mask:        '255.255.255.0'
+    gateway:     '172.28.128.1'
+    nextserver:  "%{::ipaddress_eth1}"
+    pxefile:     '/pxelinux.0'

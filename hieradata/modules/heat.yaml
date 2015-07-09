@@ -1,0 +1,24 @@
+---
+heat::rabbit_hosts:
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+heat::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
+heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+heat::keystone_host: "%{hiera('os_api_host')}"
+heat::keystone_protocol: 'https'
+heat::keystone_user: 'heat'
+heat::keystone_password: "%{hiera('keystone_heat_password')}"
+heat::keystone_ec2_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
+heat::api::enabled: true
+heat::api::api_cfn::enabled: true
+heat::engine::enabled: true
+heat::engine::heat_metadata_server_url: "https://%{hiera('os_api_host')}:8000"
+heat::engine::heat_waitcondition_server_url: "https://%{hiera('os_api_host')}:8000/v1/waitcondition"
+heat::engine::heat_watch_server_url: "https://%{hiera('os_api_host')}:8003"
+heat::engine::auth_encryption_key: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAO6wiQVE5JMdUm8Zc5yKva/avHvU3haqAuI8h/LHjtANCqbJdBJf9j34mMuP6b6lOAfFFJ2pXXlW9i+41SPC2trXYPkMOSIq/DNUXjDNnRBcWybhAYi/xJs7slMeeVkK9u2GYVpaNZIkgDdicFuccy0tlmXcdAAPukA23XyYeKBhMWYyrzw4qmRWnQB9M9oCDsheXloudEJcqUpHjFLHTvS2dDIY8SNnHpCHJboyD7GEKdQzeAr2RAM8EMRPTiz4732VQh9LOXDBf6eyw8kubw2AY8tG0HfmEe/aiAmr5iQsQDZn8NhDHtazlQLgdrQWjylBc3Et1ggM8jBfBNvOTpzB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAh+VAx3LEMM3o9sPJhyYksgFDlZbxDeqdMZ/STl29pqnE0iQzvvzi094EYRzdkYm10MmfR8pFXRFLJLPpafGGCj/UzIBXCNU3pDjR3+UojCVyMIaholK1QuvCxAVp8sXeI3Q==]
+heat::engine::configure_delegated_roles: false

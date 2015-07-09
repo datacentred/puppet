@@ -1,0 +1,4 @@
+---
+classes:
+  - '::dc_profile::auth::ldap::server'
+  - '::dc_profile::auth::radius::server'

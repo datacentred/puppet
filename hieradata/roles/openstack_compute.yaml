@@ -1,0 +1,13 @@
+---
+classes:
+  - '::dc_profile::openstack::compute'
+
+sudo::configs:
+  nova:
+    content: |
+      Defaults: nova !requiretty
+      nova ALL=(root) NOPASSWD: /usr/bin/nova-rootwrap
+  neutron:
+    content: |
+      Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
+      neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap

@@ -1,0 +1,4 @@
+---
+dpkg::foreign_architectures:
+  i386:
+    ensure: 'absent'

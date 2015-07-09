@@ -1,0 +1,21 @@
+---
+dns::forwarders:
+  - '8.8.8.8'
+  - '8.8.4.4'
+dns::dnsmasters:
+  - '10.10.192.250'
+dns::nameservers:
+  "ns0.%{::domain}": '10.10.192.250'
+  "ns1.%{::domain}": '10.10.192.251'
+dns::recursors:
+  - '10.10.192.0/24'  # ark-platform-services
+  - '10.10.128.0/24'  # ark-bmc
+  - '10.10.160.0/24'  # ark-compute-management
+  - '10.10.96.0/24'   # ark-storage-backend
+  - '10.10.129.0/24'  # ark-rack-infrastructure
+  - '10.10.104.0/24'  # ark-storage-frontend
+  - '10.10.112.0/24'  # ark-storage-loadbalance
+  - '10.253.2.0/24'   # vpn clients
+  - '10.10.9.0/24'    # ark-storage-api
+  - '10.10.130.0/24'  # ark-hw-onboarding
+dns::rndc_key: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAP+zm2ZbBkwxzt5/2XAcN3YSbvCjZNdMY37TR0Dhc1dka9lCNUtNi7mA7BklgzeZY6r63WJDh3nBsRMkn0wAiqF9diyH6jSACGb/JdmL+z270+92juxHjekZUTVaWmu7fCOpYOOeFze4uum9KEZlKkvAskpCj+S9OTZ8x3HnmyoYp5CmaOsUuwtGP0Aj4S9PEP35v3ggqSZvhAqiCrtXeWyO3F6JV9qWxkB+8orDdf3Lp4ve0cxTxEo+lK9oJ/NAXjhwAJ4jhA4fd6SGJismIoz8LLNe8GWjiJuCQWBlRxebzbughq5zOwEOc0ElIaR2QRAZVZJ1TvDcILaBN6WDagDCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQGCUFmzwsamisGN9piWrRvIBghJpZA5kNltLU0sRlAkQ4T7Qg0aTsQ7ytoke3+Iy7Sel9I1B1l9X1Oa3IZhOmCTcsSCWf5fvInLsHaYWv/m39LLnP7G9CuDUrOLA0Vdsw+i7R/ClCx135AHCiJaaNgmAn]

@@ -1,0 +1,6 @@
+---
+dc_ceph::osd::journal_disk: '/dev/sdg'
+dc_ceph::osd::journal_size: '10'
+dc_ceph::osd::num_osds: '5'
+
+dc_ceph::keybackup::primary_mon: 'ceph-mon-0'

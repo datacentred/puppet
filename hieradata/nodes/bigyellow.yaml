@@ -1,0 +1,4 @@
+---
+dc_nrpe::checks::net_interfaces::exclude: '^eth\d'
+dc_apt_mirror::base_path: "%{hiera('storagedir')}/apt-mirror"
+dc_apt_mirror::var_path: '/var/spool/apt-mirror/var'

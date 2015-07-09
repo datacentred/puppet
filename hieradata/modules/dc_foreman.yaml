@@ -1,0 +1,17 @@
+---
+dc_foreman::hooks::foreman_oauth_consumer_key:    "%{hiera('foreman_oauth_consumer_key')}"
+dc_foreman::hooks::foreman_oauth_consumer_secret: "%{hiera('foreman_oauth_consumer_secret')}"
+dc_foreman::hooks::foreman_hipchat_token: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAIg+DIMIYIv+pqFuO/CCDQcg+4emFg4/YNMk4IiVlAS4nGqmaRgG1KpsjQ1KLJgkVOPmIPogO1CxthLQrtXZG0QF2i6HF+iu8fyXAgDDWOkaolrmmfzDZ3PE09+/B2jq5BfhYWEZ1GbIdA7fb2JAsjGWrVBu96H83n3QYw1vUpx9Xe5CKPGv+3XRcnwaYos4GpRotl1pc8kZxvF5V8VA76cY7IyimOSHkPk7lbWjkUrgJbhdTjNb277tOy4Ru1q1kXYjfpd2lpqFgs8r7+aySXdZT4GSGZj8qyI7+owQTuCFC3kR2uef0eoIYN4LG250uyrnsshNRV2IFfLD1ko3oEDBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCwssgB4x8ZrtpJPIhikWCJgCD1AJPeWChMuPDy4Xrty8VAkZzDf+xeuUXd1JxzyVqeTA==]
+dc_foreman::hooks::foreman_hipchat_room:  ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAdGxlEvcr47IAAYgqFoE+TfF9+J3pAdui4tHDrqsyNmyhXrDeq4hRkMVbQc+JSKNXQcxPzIKr8PMTxyzXvm5o5y8brMzF7QyzB9IVR2zX0a0zEpuXyFgF6en0IDv4lTkBulD2mOWdsMpTS3b/m6bnMLubAxzReCKegC5qplNy+NwmVLzBvlwKlonHftkwicvLfGaoyqVMeo4CYm8KYZPFFRo1JLgHInVUSxMVRKEVIj5NP74YgaH+hFV9fMlLh8i/yQN573uAOPyBthaF5ubQ7XR+DXqqVW1cyCrphccCwwcsHfx1JVIXeqExOnEv5SphMpGyWxQdoLQk0yM1HMJwKjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAa2wfwxSes1VhT3SNePMIlgBDiUxD1fI6f1/5pIH0GL0tR]
+dc_foreman::hooks::nagios_api_host: "%{hiera('nagios_api_host')}"
+dc_foreman::hooks::nagios_api_username: "%{hiera('nagios_api_username')}"
+dc_foreman::hooks::nagios_api_password: "%{hiera('nagios_api_password')}"
+dc_foreman::service_checks::omapi_key: 'omapi_key'
+dc_foreman::service_checks::omapi_secret: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAgGSST3cef6fjSAtQcOumcSc3LNF20EDPEOjm6RCUWDI6EsbTK38vyzK0hoBBZcTtZCoMjnZZdOmNlnTMt3z4IpjUpaSImEfDntiktxw0tI0F4O0FJZndOKJt/Z/HRTD25H2YCgUnl7BnaN7NmEsf2Os2doOlcUM/dY3g5L8zw9ek2DUVojiw63Mg6c0Xx4WZiTETENEQjAN6Lx9zD44GBU3WXLS/aeNAW27VSnmW2hPdaAR0k1QvLIOexMvtbc1dz63nZGLUe31Lxv+zANBZB2f7rxBkDT0Dj2jM0TeEg2G2WEJX12A29CVpxX20opKhYRNvNwxeEQ9W/045c3YSJDCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQKGVPCXIKANzSwCKMIqbcp4Bgbf/Ij31Y9whpXxPvchuHYg22xY2OUJxJvpvCXRqH9CNTJPQdFP8k6l86Xw/P/5Hw1LsfGlfxTTcDs1jE7gXrxubhZDrWneDo9Z0t+1AqmF8ytHpoLGi8U24qbrMG0oHg]
+dc_foreman::service_checks::omapi_port: '7911'
+dc_foreman::service_checks::foreman_url: "%{hiera('foreman_url')}"
+dc_foreman::service_checks::foreman_admin_pw: "%{hiera('foreman_admin_pw')}"
+dc_foreman::service_checks::foreman_admin_user: 'admin'
+dc_foreman::service_checks::tftp_dir: "%{hiera('tftp_dir')}"
+dc_foreman::service_checks::dhcp_server: '127.0.0.1'
+dc_foreman::service_checks::lease_file: '/var/lib/dhcp/dhcpd.leases'

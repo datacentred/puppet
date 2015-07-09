@@ -1,0 +1,81 @@
+---
+keystone::debug: true
+keystone::verbose: true
+keystone::use_syslog: false
+keystone::ldap::url:                     'ldap://my.datacentred.io'
+keystone::ldap::user:                    'cn=admin,dc=datacentred,dc=io'
+keystone::ldap::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAOGSDafTIsZBOxInPP3vaUQ3LsMpP72QWD4ZThidvdoSQtao/mnvL2Hs7hLzYI6lo4/HcVvez7WkY/cw0ucyA1RG68q33orXu5CJaLB4B5yLSwxWjwPYBLMlZ9eugU+PDZrXfF8tBy9nM/ZMrB6Kspfy9esrhqL9+wX36hduT23NgLPF3Rv0hdXvud0VeJOjsh1G2Yilb47GIhJaFB/ig17CrA0cDeec+wbTGvLdP4K04fa+MqXDt8lxen/S0GDacqxQQMT19eQdBDBP0imwDtHUcyKRKY/dWAGynHR0xF7fxBwb/0tD3V0x4DGucbTJ1irOtnN39qWtt1F2MsMDmcDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBACBUmTgqGykFafz+Zr8EC/gBBk3U4rSuWVPmgVstblxT9J]
+keystone::ldap::suffix:                  'dc=datacentred,dc=io'
+keystone::ldap::query_scope:             'sub'
+keystone::ldap::user_tree_dn:            'ou=Users,dc=openstack,dc=datacentred,dc=io'
+keystone::ldap::user_id_attribute:       'cn'
+keystone::ldap::user_name_attribute:     'sn'
+keystone::ldap::user_mail_attribute:     'mail'
+keystone::ldap::user_allow_create:       true
+keystone::ldap::user_allow_update:       true
+keystone::ldap::user_allow_delete:       true
+keystone::ldap::user_objectclass:        'inetOrgPerson'
+keystone::ldap::group_tree_dn:           'ou=Groups,dc=openstack,dc=datacentred,dc=io'
+keystone::ldap::group_objectclass:       'groupOfNames'
+keystone::ldap::group_id_attribute:      'cn'
+keystone::ldap::group_name_attribute:    'ou'
+keystone::ldap::group_member_attribute:  'roleOccupant'
+keystone::ldap::group_desc_attribute:    'description'
+keystone::ldap::group_allow_create:      true
+keystone::ldap::group_allow_update:      true
+keystone::ldap::group_allow_delete:      true
+keystone::ldap::tenant_tree_dn:          'ou=Projects,dc=openstack,dc=datacentred,dc=io'
+keystone::ldap::tenant_objectclass:      'groupOfNames'
+keystone::ldap::tenant_id_attribute:     'cn'
+keystone::ldap::tenant_member_attribute: 'member'
+keystone::ldap::tenant_name_attribute:   'ou'
+keystone::ldap::tenant_desc_attribute:   'description'
+keystone::ldap::tenant_allow_create:     true
+keystone::ldap::tenant_allow_update:     true
+keystone::ldap::tenant_allow_delete:     true
+keystone::ldap::role_tree_dn:            'ou=Roles,dc=openstack,dc=datacentred,dc=io'
+keystone::ldap::role_objectclass:        'organizationalRole'
+keystone::ldap::role_id_attribute:       'cn'
+keystone::ldap::role_name_attribute:     'ou'
+keystone::ldap::role_member_attribute:   'roleOccupant'
+keystone::ldap::role_allow_create:       true
+keystone::ldap::role_allow_update:       true
+keystone::ldap::role_allow_delete:       true
+keystone::ldap::identity_driver:         'keystone.identity.backends.ldap.Identity'
+keystone::ldap::assignment_driver:       'keystone.assignment.backends.ldap.Assignment'
+keystone::ldap::use_tls:                 true
+keystone::ldap::tls_cacertfile:          '/etc/ssl/certs/ca-certificates.crt'
+keystone::ldap::tls_req_cert:            'allow'
+keystone::enabled: true
+keystone::catalog_type: 'sql'
+keystone::admin_token: "%{hiera('keystone_admin_uuid')}"
+keystone::enable_pki_setup: false
+keystone::token_expiration: '14400'
+keystone::token_provider: 'keystone.token.providers.uuid.Provider'
+keystone::database_connection: "mysql://%{hiera('keystone_db_user')}:%{hiera('keystone_db_pass')}@%{hiera('os_api_host')}/keystone"
+keystone::log_level: 'DEBUG'
+keystone::rabbit_hosts: 
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+keystone::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+keystone::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
+keystone::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+keystone::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+keystone::token_driver: 'keystone.token.persistence.backends.memcache.Token'
+keystone::memcache_servers:
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+keystone::public_endpoint: "https://%{hiera('os_api_host')}:5000"
+keystone::admin_endpoint: "https://%{hiera('os_api_host')}:35357"
+keystone::roles::admin::email: "%{hiera('internal_sysmail_address')}"
+keystone::roles::admin::password: "%{hiera('keystone_admin_pw')}"
+keystone::roles::admin::service_tenant: "%{hiera('os_service_tenant')}"
+keystone::endpoint::public_url: "https://%{hiera('os_api_host')}:5000"
+keystone::endpoint::internal_url: "https://%{hiera('os_api_host')}:5000"
+keystone::endpoint::admin_url: "https://%{hiera('os_api_host')}:35357"
+keystone::endpoint::region: "%{hiera('os_region')}"
+keystone::wsgi::apache::ssl: false
+keystone::wsgi::apache::workers: 4
+keystone::wsgi::apache::servername: "%{::fqdn}"

@@ -1,0 +1,4 @@
+---
+kibana4::elasticsearch_url:     "http://logstash.%{::domain}:9200"
+kibana4::package_ensure:        "4.0.0-linux-x64"
+kibana4::package_provider:      "archive"

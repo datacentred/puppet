@@ -1,0 +1,7 @@
+---
+classes:
+  - '::dc_profile::db::postgresql_slave'
+
+dc_postgresql::params::config_entries:
+  hot_standby:
+    value: 'on'

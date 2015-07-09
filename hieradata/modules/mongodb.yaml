@@ -1,0 +1,8 @@
+---
+# Repo is managed in .*/apt.yaml
+mongodb::globals::manage_package_repo: false
+# Override the Ubuntu package and service defaults
+mongodb::client::package_name: 'mongodb-org-shell'
+mongodb::server::package_name: 'mongodb-org-server'
+mongodb::server::service_name: 'mongod'
+mongodb::server::config: '/etc/mongod.conf'

@@ -1,0 +1,4 @@
+---
+radius::module::ldap::server: "%{hiera('ldap_host')}"
+radius::module::ldap::basedn: "%{hiera('ldap_account_base')}"
+radius::module::ldap::filter: '(uid=%u)'

@@ -1,0 +1,5 @@
+---
+classes:
+  - '::dc_profile::util::firmware'
+
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p1p1}"

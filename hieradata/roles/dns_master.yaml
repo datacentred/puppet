@@ -1,0 +1,25 @@
+---
+classes:
+  - 'dc_profile::net::dns_master'
+  - 'dc_profile::net::foreman_checks'
+
+ntp::servers:
+  - '0.uk.pool.ntp.org'
+  - '1.uk.pool.ntp.org'
+  - '2.uk.pool.ntp.org'
+  - '3.uk.pool.ntp.org'
+ntp::autoupdate: false
+# Caution - although this mirrors the class params defaults we need to
+# override the class defaults defined in hiera
+ntp::restrict:
+  - 'default kod nomodify notrap nopeer noquery'
+  - '-6 default kod nomodify notrap nopeer noquery'
+  - '127.0.0.1'
+  - '-6 ::1'
+
+dc_dhcp::zonemaster: '127.0.0.1'
+
+dc_foreman_proxy::use_dns: true
+dc_foreman_proxy::use_dhcp: true
+dc_foreman_proxy::use_tftp: true
+dc_foreman_proxy::use_bmc: true

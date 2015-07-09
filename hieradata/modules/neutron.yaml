@@ -1,0 +1,56 @@
+---
+neutron::enabled: true
+neutron::bind_host: '0.0.0.0'
+neutron::rabbit_hosts:
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+neutron::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+neutron::rabbit_user: "%{hiera('osdbmq_rabbitmq_user')}"
+neutron::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+neutron::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+neutron::allow_overlapping_ips: true
+neutron::core_plugin: 'ml2'
+neutron::service_plugins:
+ - 'router'
+ - 'firewall'
+ - 'lbaas'
+ - 'vpnaas'
+ - 'metering'
+neutron::server::auth_host: "%{hiera('os_api_host')}"
+neutron::server::auth_protocol: 'https'
+neutron::server::auth_password: "%{hiera('keystone_neutron_password')}"
+neutron::server::database_connection: "mysql://neutron:%{hiera('neutron_db_pass')}@%{hiera('os_api_host')}/neutron"
+neutron::plugins::ml2::type_drivers:
+ - 'gre'
+ - 'flat'
+neutron::plugins::ml2::tenant_network_types:
+ - 'gre'
+neutron::plugins::ml2::mechanism_drivers:
+ - 'openvswitch'
+neutron::plugins::ml2::tunnel_id_ranges:
+ - '1:1000'
+neutron::server::notifications::nova_url: "https://%{hiera('os_api_host')}:8774/v2"
+neutron::server::notifications::nova_admin_auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
+neutron::server::notifications::nova_admin_username: 'nova'
+neutron::server::notifications::nova_admin_password: "%{hiera('keystone_nova_password')}"
+neutron::server::notifications::nova_region_name: "%{hiera('os_region')}"
+neutron::server::notifications::nova_admin_tenant_id: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAu/s+xqeB+Ij9nX//2kcCA78vtA+ABaknfVCn1Vy3fHoNkGSuveQW6UFGadOEd4xr4nwkg0cUrtHfAjlQMxNQ+4n0xKk1hRDtKPyjLv8Z3ApPNPd7Sa/HnOJNW671KAZIpBIyvr+fsoHVlul7ltii2txG+SzB6VwatN9k2Vtlptz1+N/j7Sc1Jo0IQihOqAYThbkNyof7MqOwWU8Q+Sht8KO6E1xtLZezfvP1LO5giFKPzyT91L5Ssu6xzC7bn6+j8QPhbX4EljMqb8lrOnuQsrtkXG7X/rGEY7pX2PDOKgl/3YvE4WLfqJtfLYPkqKIpcI7tI8D3m2WxLlc9O7+zWDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDVJOf0UA0FD4I+rT398D5ggDAenHlqBUwb2bCApH0zWvqmTjQXzcpllMvj1G5SL8zRW/ezTaseP5Ij2Oy9v0Xpcy4=]
+neutron::server::notifications::nova_admin_tenant_name: 'services'
+neutron::agents::ml2::ovs::bridge_mappings:
+ - 'default:br-ex'
+neutron::agents::ml2::ovs::enable_tunneling: true
+neutron::agents::metadata::shared_secret: "%{hiera('neutron_metadata_secret')}"
+neutron::agents::metadata::auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
+neutron::agents::metadata::auth_password: "%{hiera('keystone_neutron_password')}"
+neutron::agents::metadata::auth_region: "%{hiera('os_region')}"
+neutron::agents::metadata::metadata_ip: "%{hiera('os_api_vip')}"
+neutron::agents::dhcp::enabled: true
+neutron::agents::vpnaas::enabled: true
+neutron::agents::lbaas::enabled: true
+neutron::agents::lbaas::use_namespaces: true
+neutron::agents::metering::enabled: true
+neutron::services::fwaas::enabled: true
+neutron::services::fwaas::driver: 'neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver'
+neutron::services::fwaas::vpnaas_agent_package: true
+neutron::quota::quota_floatingip: '1'

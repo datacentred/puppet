@@ -1,0 +1,115 @@
+---
+ceilometer_db_password: 'mowdasUsDyp5'
+ceilometer_mongodb_keyfile: |
+  y8CwUxRvBlljukX/uGEYPhmlPtqmBOJyIcvUOo8efH2L6NvOZ9Mcg7/PX/eG1owc
+  tZSPnhBNMxA1iMdEL3ANT+vqXW/UAVPmKgi7dsI23/lgU6TtRJADtgSTJoEzkeWb
+  g4mxVuRSOSuahIshQvOxyME7SHXmIsZLrwmptva5XK5DKVhVqeCYUtDnJAX2/TZW
+  nAImDOlzjZBWXgjrB0HEgcxSlpwOt7kB4zUszRmG/i4940Lr3INLXaszjQfuNlXh
+  zP3/cenN4dzDADV10hqIH2o5TeKzgERDM6W43HBSr6T99Vc3u6RKVjL/CCNxRX9t
+  VIimzll89bmGqWroEcs/SrARqQFZUeULs4DpPc4Jz6H5wi5dwKm7gG2wQk9w0Cg/
+  vaFIsSZE1vo2UhadJsKqkIIHprvKgHw1hsePGKwO9KbvhpgUriYxF0kUOwlwCyW1
+  5CFl0N015wIL9IleCRUXseKpnAL03yiRB//95+psUKePEnOEBTyT8fJsRdTTfptS
+  UEKhq/LalJ3qs8cphkPz9RkvRXadPuq+h/iCQqEf7F3c5n2YzEsYcQ9CwRFFiQQe
+  w70ngZt/z6Iem7redwbxwEU4mZfap2cfJFC/oX4F9QeB9SmqzAsDhM0wa71UygmL
+  CKDqb9H+xMrVnrdRcAhG1XX2dsqEoqxYIbGF2dyrWoeyp/AjMu5TZL4H6k9eOBiS
+  PmKK5xHTwnr+avpJpi36uU7CmKX8pVwuxvb7XJDCHzpao/sqExSHqFCqyjnJC1D9
+  bufphIuLkuq99toRRJNG0QEFESCafoX9QC1r2pPZCCkONUVle+kQ6hMJP2L/W6o+
+  eQjHm/i/BqVd4RkFYcDklahKtade6wodVi+5dlWgFVFhjCDwzfZZbnpBZXjM8EqS
+  o2QYg6JnzajzGacDER7E4Y7SuummV+2AM0ntoo2mP2GuZoNAj3bCWu931nMrxsyB
+  D37DlzK+Q5mNjE8oBeaJzNo9ukKc
+
+# Galera/Rabbitmq Cluster
+# See .vagrantuser.galera for hostname and IP address mappings
+
+galera::galera_master: 'osdbmq0.vagrant.dev'
+galera::galera_servers:
+  - '10.0.32.2'
+  - '10.0.32.3'
+  - '10.0.32.4'
+galera::local_ip: "%{ipaddress_eth1}"
+galera::bind_address: "%{ipaddress_eth1}"
+
+# HAProxy
+#
+haproxy_stats_user: 'haproxy'
+haproxy_stats_password: 'FeOweurtias3'
+
+# OpenStack
+#
+os_service_tenant:   'services'
+os_region:           'vagrant'
+os_api_host: 'compute.datacentred.io'
+os_api_vip: '192.168.132.133'
+
+# keystone
+#
+keystone_admin_uuid: '7d5471fa-172d-4a25-85ca-7bd1706ad242'
+keystone_admin_pw: 'attOamAdNec0'
+keystone_glance_password: 'BajAdtishif8'
+keystone_nova_password: 'bebUjecyawp5'
+keystone_neutron_password: '6OnVeetecpit'
+keystone_icinga_password: 'gackGuIrrat8'
+keystone_cinder_password: 'gleshat9Ots5'
+keystone_ceilometer_password: 'udbedkicsOv6'
+keystone_heat_password: 'Frethyuvtop6'
+
+# keystone
+#
+keystone_db:          'keystone'
+keystone_db_user:     'keystone'
+keystone_db_pass:     ']DiJottAnhig7'
+
+# nova
+#
+nova_db_user:        'nova'
+nova_db_pass:        'NuIthkobyad9'
+nova_db:             'nova'
+nova_admin_tenant:   'services'
+nova_admin_user:     'nova'
+nova_osapi_port :    '8774'
+
+# glance
+#
+glance_db:       'glance'
+glance_db_user:  'glance'
+glance_db_pass:  'DishrubChop2'
+glance_api_port: '9292'
+
+# cinder
+#
+cinder_db:           'cinder'
+cinder_db_user:      'cinder'
+cinder_db_pass:      'nequekOberl1'
+cinder_api_port:     '8776'
+
+# neutron
+#
+neutron_admin_user:  'neutron'
+neutron_secret:      'dytKehalkev5'
+neutron_metadata_secret: 'Cydrug4OjAlm'
+neutron_db:          'neutron'
+neutron_db_user:     'neutron'
+neutron_db_pass:     'alNanJetOcs6'
+neutron_api_port:    '9696'
+
+# heat
+#
+heat_db: 'heat'
+heat_db_user: 'heat'
+heat_db_pass: 'yeOv7wrixVer'
+
+# Virtual Router definitions
+#
+virtual_routers:
+  os_api_int: # 'Internal' facing VIP for the OpenStack API endpoints
+    id:      '1'
+    vip:     "%{hiera('os_api_vip')}"
+    vlanid:  160
+  os_api_ext: # 'External' VIP for OS API endpoints
+    id:      '2'
+    vip:     '185.43.218.26'
+    vlanid:  514
+
+dc_dhcp::params::dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
+dc_dhcp::params::dhcp_icinga_ip: '10.10.192.13'
+dc_tftp::sync_interface: 'eth1'

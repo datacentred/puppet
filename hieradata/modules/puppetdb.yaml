@@ -1,0 +1,11 @@
+---
+puppetdb::puppetdb_version: '2.2.0-1puppetlabs1'
+
+puppetdb::server::ssl_listen_address: '0.0.0.0'
+puppetdb::server::database:           'postgres'
+puppetdb::server::database_host:      "postgres0.%{domain}"
+puppetdb::server::database_name:      "%{hiera('puppetdb_database')}"
+puppetdb::server::database_username:  "%{hiera('puppetdb_user')}"
+puppetdb::server::database_password:  "%{hiera('puppetdb_pass')}"
+
+puppetdb::master::config::puppetdb_server: "puppetdb-2.%{domain}"

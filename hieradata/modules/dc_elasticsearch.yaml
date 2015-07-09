@@ -1,0 +1,9 @@
+---
+#elasticsearch snapshot
+dc_elasticsearch::params::backup_name: 'datacentredceph'
+dc_elasticsearch::params::backup_bucket: 'datacentred-logstash-snapshots'
+dc_elasticsearch::params::logstash_server: 'logstash'
+dc_elasticsearch::params::ceph_access_key: "%{hiera('datacentred_s3_access_key')}"
+dc_elasticsearch::params::ceph_private_key: "%{hiera('datacentred_s3_secret_key')}"
+dc_elasticsearch::params::ceph_access_point: "%{hiera('datacentred_ceph_access_point')}"
+dc_elasticsearch::params::elasticsearch_data_dir: '/var/lib/elasticsearch/data'

@@ -1,0 +1,2 @@
+---
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p2p1}"

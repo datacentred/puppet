@@ -1,0 +1,61 @@
+---
+classes:
+  - '::dc_profile::openstack::galera'
+  - '::dc_profile::openstack::memcached'
+  - '::dc_profile::openstack::neutron_db_check'
+  - '::dc_profile::openstack::rabbitmq'
+  - '::sysctls'
+
+rabbitmq::wipe_db_on_cookie_change: false
+rabbitmq::config_cluster: true
+rabbitmq::admin_enable: true
+rabbitmq::delete_guest_user: true
+rabbitmq::ssl: true
+rabbitmq::ssl_cacert: '/var/lib/puppet/ssl/certs/ca.pem'
+rabbitmq::ssl_cert: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+rabbitmq::ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+rabbitmq::ssl_verify: 'verify_peer'
+rabbitmq::ssl_fail_if_no_peer_cert: true
+rabbitmq::environment_variables:
+    RABBITMQ_NODE_IP_ADDRESS: "%{::ipaddress}"
+    RABBITMQ_MNESIA_BASE: '/srv/rabbitmq'
+    RABBITMQ_MNESIA_DIR: "/srv/rabbitmq/%{::hostname}"
+rabbitmq::erlang_cookie: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAoIoYoyYPz0rf9wCxBzQ3kRpWam2y7WTvN7X53utx9cTxQgDfSpfVPD/87xB2gGhF27iVG6xh4U0WcQPXM33akSIArQDCTnG7lGaMFX2b+iMNk3LbaXNNqbqZ2fqVXsmjg4nv6OmaxB5WOOLn5TMc9a5msVmh5Q/T/1N/yCiIb23BzJevCvtuo8XVgDNd7D43tRMohJd0YRGM9xx5/gmdYGdEnhR9Uxs06zlcgviFGq0HIHdI7hTsTzWaHcFBRIx+yKeqYgG3St9v9o/whyYkJYLvBUihLJ/9SpKAPAU9/0Jk83eqgYaaVfPATpiCg9M7olPr+TbYuD9NAz/DiXs+KTBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCCrXi2n9ZAHSVQHWZqVAVogCB6TCjDdTxmNNHNiWjLQtfmG9XpLC3B81WgjArlkaELxQ==]
+galera::galera_servers:
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+galera::galera_master: osdbmq0.%{::domain}
+
+# Increase number of file handles
+#
+sysctls::values:
+    fs.file-max:
+        value: '4096000'
+
+databases:
+  "%{hiera('cinder_db')}":
+    user: "%{hiera('cinder_db_user')}"
+    password: "%{hiera('cinder_db_pass')}"
+    host: '%'
+  "%{hiera('glance_db')}":
+    user: "%{hiera('glance_db_user')}"
+    password: "%{hiera('glance_db_pass')}"
+    host: '%'
+  "%{hiera('heat_db')}":
+    user: "%{hiera('heat_db_user')}"
+    password: "%{hiera('heat_db_pass')}"
+    host: '%'
+  "%{hiera('keystone_db')}":
+    user: "%{hiera('keystone_db_user')}"
+    password: "%{hiera('keystone_db_pass')}"
+    host: '%'
+  "%{hiera('neutron_db')}":
+    user: "%{hiera('neutron_db_user')}"
+    password: "%{hiera('neutron_db_pass')}"
+    host: '%'
+  "%{hiera('nova_db')}":
+    user: "%{hiera('nova_db_user')}"
+    password: "%{hiera('nova_db_pass')}"
+    host: '%'
+

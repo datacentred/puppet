@@ -1,0 +1,21 @@
+---
+ceilometer::metering_secret: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAaBLVair6QL+4aNmKcb4mD8YL0kpKZVdgr97Jl2BXMyCDn0Wj7TP3FlHlLhrUBSecCDjuBgtfY/d8ChOLmLrlDRJ5uoknZ9OjZryUQcVV/Ckg3yc/GAz9SEYhe23TLKVg7D/zk0Eh2BiueKUo3m+6U6J/MwtvhrAn1T2hfOlwxnDzn8yPY/bEg/zKu/Y6ThVsIjyQYBTdXSF7Xa+o3Cr4hbvQHmMTmsEUijGGcamox26bANoKCtj6aqK9lDac5Dl+qsU+aegrSckKeLauKsVSQkZ0B4CsomkVjqgqmznw/TkB6adUCLiBm62OJT2bI7nSkK8UcuCz9dRjRcPJg9zXwzBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBvZE4BtvzKHip92MI0j51CgCC31fpuQ3iqETG4tl23SbG5xYjIVl7TuNovt5RLOzWbZA==]
+ceilometer::rabbit_hosts: 
+ - osdbmq0.%{::domain}
+ - osdbmq1.%{::domain}
+ - osdbmq2.%{::domain}
+ceilometer::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
+ceilometer::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
+ceilometer::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
+ceilometer::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
+ceilometer::db::database_connection: "mongodb://ceilometer:%{hiera('ceilometer_db_password')}@osmongodb0.%{::domain},osmongodb1.%{::domain},osmongodb2.%{::domain}/ceilometer?replicaSet=ceilometer"
+ceilometer::api::keystone_host: "%{hiera('os_api_host')}"
+ceilometer::api::keystone_protocol: 'https'
+ceilometer::api::keystone_user: 'ceilometer'
+ceilometer::api::keystone_password: "%{hiera('keystone_ceilometer_password')}"
+ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/v2.0"
+ceilometer::agent::auth::auth_user: 'ceilometer'
+ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
+ceilometer::agent::auth::auth_region: "%{hiera('os_region')}"
+ceilometer::expirer::time_to_live: '2592000'
+ceilometer::agent::notification::enabled: true

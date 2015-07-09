@@ -1,0 +1,30 @@
+---
+classes:
+  - '::dc_yum'
+
+puppet::provider: 'yum'
+puppet::package: 'puppet'
+
+dc_yum::repo:
+  rdo:
+   name: 'rdo-kilo'
+   baseurl: 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/el7/'
+   gpgkey: 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-kilo'
+  ceph:
+    name: 'ceph-release'
+    baseurl: 'http://ceph.com/rpm-hammer/rhel7/$basearch'
+    gpgkey: 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
+  ceph-noarch:
+    name: 'ceph-noarch'
+    baseurl: 'http://ceph.com/rpm-hammer/rhel7/noarch'
+    gpgkey: 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
+  epel-testing:
+    name: 'epel-testing'
+    baseurl: 'http://download.fedoraproject.org/pub/epel/testing/7/$basearch'
+    gpgkey: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
+  # lldpd
+  vbernat:
+    name: 'vbernat'
+    baseurl: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/'
+    gpgkey: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/repodata/repomd.xml.key'
+

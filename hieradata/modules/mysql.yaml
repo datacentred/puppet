@@ -1,0 +1,18 @@
+---
+mysql::server::package_name: 'mariadb-server'
+mysql::server::override_options:
+  mysqld:
+    bind_address: '0.0.0.0'
+
+mysql::server::monitor::mysql_monitor_username: 'icinga'
+mysql::server::monitor::mysql_monitor_password: "%{hiera('mariadb_icinga_pw')}"
+mysql::server::monitor::mysql_monitor_hostname: "%{hiera('icinga_ip')}"
+
+mysql::server::backup::backupuser: 'backup'
+mysql::server::backup::backuppassword: "%{hiera('backup_mysql_pw')}"
+mysql::server::backup::backupdir: '/var/dbbackups'
+mysql::server::backup::backuprotate: 7
+mysql::server::backup::file_per_database: true
+mysql::server::backup::time:
+  - '3'
+  - '00'

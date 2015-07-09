@@ -1,0 +1,20 @@
+---
+classes:
+  - '::dc_profile::ceph::radosgw'
+
+apache::default_vhost: false
+apache::log_formats:
+    radosgw: '\"%%{}{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
+ceph::radosgw::configure::apache::access_log_format: 'radosgw'
+ceph::radosgw::configure::apache::access_log_env_var: '!healthcheck'
+loadbalancer::members::member_hash:
+  radosgw:
+    ipaddresses: "%{::ipaddress_p1p1}"
+    ports:       '80'
+    options:     'check'
+  radosgw_ssl:
+    ipaddresses: "%{::ipaddress_p1p1}"
+    ports:       '443'
+    options:     'check ssl ca-file /var/lib/puppet/ssl/certs/ca.pem'
+dc_nrpe::checks::net_interface::excluded_ints:
+  - 'p1p1'

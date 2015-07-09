@@ -1,0 +1,4 @@
+---
+classes:
+  -  '::dc_profile::net::phpipam'
+  -  '::dc_profile::db::duplicity_mariadb'

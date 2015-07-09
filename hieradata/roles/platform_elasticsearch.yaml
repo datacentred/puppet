@@ -1,0 +1,22 @@
+---
+classes:
+  - '::dc_elasticsearch'
+  - '::dc_elasticsearch::lbmember'
+
+dc_elasticsearch::es_hash:
+  cluster.name: 'logstash_platform_services'
+  indices.memory.index_buffer_size: '50%'
+  index.translog.flush_threshold_ops: '50000'
+  threadpool.search.type: 'fixed'
+  threadpool.search.size: '20'
+  threadpool.search.queue_size: '100'
+  threadpool.index.type: 'fixed'
+  threadpool.index.size: '60'
+  threadpool.index.queue_size: '200'
+  bootstrap.mlockall: 'true'
+  discovery.zen.minimum_master_nodes: '2'
+  indices.ttl.interval: '14d'
+  cloud.aws.s3.endpoint: 'storage.datacentred.io'
+  cloud.aws.ec2.endpoint: 'storage.datacentred.io'
+  http.cors.allow-origin: '"*"'
+  http.cors.enabled: 'true'

@@ -1,0 +1,13 @@
+---
+dc_nrpe::allowed_hosts: "127.0.0.1 %{hiera('icinga_ip')}/32"
+
+dc_nrpe::checks::neutron::keystone_port:            "%{hiera('keystone_port')}"
+dc_nrpe::checks::neutron::os_api_host:              "%{hiera('os_api_host')}"
+dc_nrpe::checks::neutron::neutron_api_port:         "%{hiera('neutron_api_port')}"
+dc_nrpe::checks::neutron::keystone_icinga_tenant:   "%{hiera('keystone_icinga_tenant')}"
+dc_nrpe::checks::neutron::keystone_icinga_password: "%{hiera('keystone_icinga_password')}"
+dc_nrpe::checks::neutron::keystone_icinga_user:     "%{hiera('keystone_icinga_user')}"
+dc_nrpe::checks::postgres::postgres_password:     "%{hiera('postgres_password')}"
+dc_nrpe::checks::foreman_interfaces::ignored_interfaces:
+    - 'lo'
+    - 'virbr0'

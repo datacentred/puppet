@@ -1,0 +1,11 @@
+---
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+  agent:
+    server: "puppet-the-next-generation.%{::domain}"
+
+puppet::autosign_manage: false

@@ -1,0 +1,75 @@
+dc_dhcp::pools:
+  ark-rack-infrastructure:
+    network:     '10.10.129.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.10.129.254'
+    options:
+      - 'interface-mtu 9000'
+    parameters:
+      - 'ddns-updates on'
+      - 'deny client-updates'
+  ark-storage-backend:
+    network:     '10.10.96.0'
+    mask:        '255.255.255.0'
+    options:
+      - 'interface-mtu 9000'
+  ark-storage-frontend:
+    network:     '10.10.104.0'
+    mask:        '255.255.255.0'
+    options:
+      - 'interface-mtu 9000'
+  ark-storage-management:
+    network:      '10.10.112.0'
+    mask:         '255.255.255.0'
+    gateway:      '10.10.112.254'
+    nextserver:   "%{::ipaddress}"
+    pxefile:      '/pxelinux.0'
+    options:
+      - 'interface-mtu 9000'
+      - "domain-search \"%{domain}\""
+  ark-storage-lb:
+    network:      '10.10.9.0'
+    mask:         '255.255.255.0'
+    options:
+      - 'interface-mtu 9000'
+  ark-compute-management:
+    network:     '10.10.160.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.10.160.254'
+    nextserver:  "%{::ipaddress}"
+    pxefile:     '/pxelinux.0'
+    options:
+      - 'interface-mtu 9000'
+      - "domain-search \"%{domain}\""
+  ark-compute-integration:
+    network:     '10.10.170.0'
+    mask:        '255.255.255.0'
+    options:
+      - 'interface-mtu 9000'
+      - "domain-search \"%{domain}\""
+  ark-platform-services:
+    network:     '10.10.192.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.10.192.254'
+    nextserver:  "%{::ipaddress}"
+    pxefile:     '/pxelinux.0'
+    options:
+      - 'interface-mtu 9000'
+      - "domain-search \"%{domain}\""
+  ark-bmc:
+    network:     '10.10.128.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.10.128.254'
+    options:
+      - 'interface-mtu 9000'
+    parameters:
+      - 'deny client-updates'
+  ark-hw-onboarding:
+    network:     '10.10.130.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.10.130.1'
+    nextserver:  "%{::ipaddress}"
+    pxefile:     '/pxelinux.0'
+    options:
+      - 'interface-mtu 9000'
+      - "domain-search \"%{domain}\""

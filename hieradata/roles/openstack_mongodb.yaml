@@ -1,0 +1,19 @@
+---
+classes:
+  - '::dc_profile::openstack::mongodb'
+
+mongodb::server::bind_ip: ''
+mongodb::server::dbpath: '/srv/mongodb'
+mongodb::server::smallfiles: true
+mongodb::server::replset: 'ceilometer'
+mongodb::server::auth: true
+mongodb::server::store_creds: true
+mongodb::server::admin_username: "%{hiera('mongodb_admin_user')}"
+mongodb::server::admin_password: "%{hiera('mongodb_admin_password')}"
+mongodb::server::keyfile: '/etc/mongodb.keyfile'
+mongodb::replset::sets:
+    ceilometer:
+        members:
+            - "osmongodb0.%{::domain}:27017"
+            - "osmongodb1.%{::domain}:27017"
+            - "osmongodb2.%{::domain}:27017"

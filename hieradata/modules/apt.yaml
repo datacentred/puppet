@@ -1,0 +1,7 @@
+---
+apt::purge_sources_list: true
+apt::purge_sources_list_d: true
+apt::unattended_upgrades::update: '0'
+apt::unattended_upgrades::download: '0'
+apt::unattended_upgrades::upgrade: '0'
+apt::unattended_upgrades::enable: '0'

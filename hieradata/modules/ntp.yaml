@@ -1,0 +1,7 @@
+---
+ntp::servers:
+  - "ntp0.%{::domain}"
+  - "ntp1.%{::domain}"
+ntp::autoupdate: false
+ntp::restrict:
+  - '127.0.0.1'

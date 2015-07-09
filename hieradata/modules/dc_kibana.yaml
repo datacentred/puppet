@@ -1,0 +1,2 @@
+---
+dc_kibana::elasticsearch_host: 'logstash0'

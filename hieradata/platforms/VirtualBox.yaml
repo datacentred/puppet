@@ -1,0 +1,16 @@
+---
+dc_ssh::config:
+  PermitRootLogin:
+    value: 'yes'
+  AllowGroups:
+    value:
+      - 'root'
+      - 'sysadmin'
+      - 'git'
+      - 'postgres'
+      - 'barman'
+      - 'juniperbackup'
+      - 'ceph-deploy'
+      - 'dhcp_sync_agent'
+      - 'tftpsync'
+      - 'nova'

@@ -1,0 +1,18 @@
+---
+dhcp::dnsdomain:
+  - "%{domain}"
+  - '0.0.10.in-addr.arpa'
+dhcp::nameservers:
+  - '10.10.192.250'
+  - '10.10.192.251'
+dhcp::ntpservers:
+  - "ntp0.%{::domain}"
+  - "ntp1.%{::domain}"
+dhcp::interfaces:
+  - 'bond0'
+dhcp::omapi_key: 'omapi_key'
+dhcp::omapi_secret: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAE9vQSGxcWDdiKSHhllSoBni2fHLevYGzjjoS7oknKN/6mUxS3FaPoPfJoaPZ5JDtc+h7g7Zxt/kQzGJ+58gjBzsnzBDRWedCfPU2OeqUgtIupzz+QdcJvxhosHVgIcgdPrI5/PpLfEv/esVIW8PSpvGCvH8XO13AJEyFi0QLZ+vq7ygSye753QkNNJeoNM9llikPe9fxx2/QZz5TlrRG72mRihmErxFfB1Wr/eiaQeZcEfUIE9ARx+b2q0ShqRLxm4/Uf23wTnwH/LX4xjfUhyOUrXhDxNg16DURBzBqaCrNT2BtXPDB2Qr266nAgotR0XL2lJWk8G0gAXzsP8fr6zCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQ+NoXzyybXrz2nQetxe1R3YBg4bcKtzvdp/5YXN+RVOW0laBu0IWRKFAE/ji11bh2feU95muUkd0aPCT/v0v6pjoir7QcJP1hApsmbt+P6+SRKL3lGjBz2DK2j/T7cTrrCtHslmgI3XWN98kDbUKwOHru]
+dhcp::ddns: true
+
+dhcp::ddns::key: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAI/W0iEDNaKoBuYzmqwVIuw5KBe3sMFi7EZBDSD3T46Bes4DYACMX2QEbtkw0wCKysEL7cigM6Bpi5vz9/iuh3R3ohe6sXOUA2zytWJXHxKdBlSUEycrZAcytEv8vQACjfF6VyCTPPqXr6Sp6ulaOzKBgcZbMSwhYkkhoZFsd7yZ7QsZJJWnI7lSnxnGgh+YTJqGpEGwOy750s3XKrNqdIUBcIK9iQtYWG2cGr31e/FiOJt3g+hJ+z+l6rZ4uD2xEoZdW7AaGthHQpu2SYW/8gOO1jDjhfk5+5SN1l3Va/d79cJK4ZxUXhhPya9hIJual1YSrw1Vs993jWSctwI0oMzCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQFhy5L+jhadXm7JzqIeRwaIBgav1AZIw5qrUtxqA84PobcvLnernyuPzEIUd6wpL9jPPYHTITcmooVlBS9yEcPgQsft4yjyIBhrtyzJaV0HZJerZfZe0mq7dzT8Kd5nfRs4IF1aeO1XOGVTaSovCA2+Rb]
+dhcp::ddns::zonemaster: '10.10.192.250'

@@ -1,0 +1,2 @@
+---
+dc_profile::openstack::duplicity_mongodb::ceilometer_db_password: "%{hiera('ceilometer_db_password')}"

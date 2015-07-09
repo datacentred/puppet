@@ -1,0 +1,52 @@
+---
+classes:
+  - '::dc_profile::net::loadbalancer'
+  - '::dc_ssl::haproxy' # TODO: review whether to include in loadbalancer class
+
+loadbalancer::keepalived_interfaces:
+  VI_1:
+    interface: 'bond0'
+    virtual_router_id: 1
+    virtual_ipaddress:
+      - "%{hiera('platform_services_logstash_vip')}"
+loadbalancer::haproxy_listeners:
+  kibana:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'http'
+    ports: '80'
+    options:
+      balance: 'source'
+  syslog:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'http'
+    ports: '5544'
+    options:
+      balance: 'source'
+  courier:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'tcp'
+    ports: '55516'
+    options:
+      balance: 'source'
+      timeout:
+          - 'client 40m'
+          - 'server 40m'
+  beaver:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'tcp'
+    ports: '9999'
+    options:
+      balance: 'source'
+      timeout:
+          - 'client 40m'
+          - 'server 40m'
+  elasticsearch:
+    ipaddress: "%{hiera('platform_services_logstash_vip')}"
+    mode: 'tcp'
+    ports: '9200'
+    options:
+      balance: 'source'
+loadbalancer::stats::ipaddress: "%{::ipaddress_bond0}"
+sysctls::values:
+  net.ipv4.ip_nonlocal_bind:
+    value: '1'

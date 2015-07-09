@@ -1,0 +1,6 @@
+---
+dc_apt::pins:
+  trusty-proposed:
+    packages: '*'
+    release: 'trusty-proposed'
+    priority: '400'

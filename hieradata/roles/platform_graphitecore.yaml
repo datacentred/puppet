@@ -1,0 +1,7 @@
+---
+classes:
+  - 'dc_profile::perf::graphite'
+  - 'dc_profile::perf::network_weathermap'
+  - 'dc_profile::perf::grafana'
+  - 'dc_profile::db::duplicity_mariadb'
+  - 'dc_collectd::agent::openstack'
