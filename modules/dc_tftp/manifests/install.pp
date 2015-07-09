@@ -40,8 +40,4 @@ class dc_tftp::install {
     include dc_tftp::sync_user
   }
 
-  unless $::is_vagrant {
-    include dc_tftp::icinga
-  }
-
 }
