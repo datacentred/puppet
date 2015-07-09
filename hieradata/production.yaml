@@ -6,10 +6,6 @@ classes:
   - '::dc_profile::net::mail'
   - '::dc_profile::perf::collectd::agent'
 
-# dhcpd
-#
-pxeserver: "%{hiera('platform_services_tftp_vip')}"
-
 # icinga
 #
 icinga_ip: '10.10.192.147'

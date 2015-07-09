@@ -11,7 +11,4 @@ dc_tftp::params::tftp_sync_home: '/var/lib/tftpsync'
 dc_tftp::params::tftp_user: 'tftp'
 dc_tftp::params::tftp_group: 'tftp'
 dc_tftp::params::dir_mode: '2775'
-dc_tftp::params::virtual_address: "%{hiera('platform_services_tftp_vip')}"
-dc_tftp::params::virtual_netmask: "24"
-dc_tftp::params::virtual_router_id: '2'
 dc_tftp::params::conf_template: 'dc_tftp/lsyncd.conf.lua.trusty.erb'
