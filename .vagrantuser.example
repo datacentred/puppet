@@ -1,3 +1,7 @@
+eyaml:
+  public_key: /path/to/eyaml/public_key.pkcs7.pem
+  private_key: /path/to/eyaml/private_key.pkcs7.pem
+
 boxes:
   # Define our first server. You can define as many as you want.
   #
