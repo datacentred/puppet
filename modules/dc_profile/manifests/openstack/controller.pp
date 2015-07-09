@@ -1,16 +1,8 @@
-# Class: dc_role::oscontroller
+# == Class: dc_profile::openstack::controller
 #
-# OpenStack Cloud Controller role class
+# Top level controller profile
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-class dc_role::oscontroller {
+class dc_profile::openstack::controller {
 
   contain dc_profile::openstack::keystone
   contain dc_profile::openstack::cinder

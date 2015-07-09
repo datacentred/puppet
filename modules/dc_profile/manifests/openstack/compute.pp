@@ -1,16 +1,8 @@
-# Class: dc_role::compute_node
+# == Class: dc_profile::openstack::compute
 #
-# OpenStack Compute role - nova-compute, neutron-agent
+# Compute node top level profile
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-class dc_role::compute_node {
+class dc_profile::openstack::compute {
 
   contain dc_profile::openstack::neutron_agent
   contain dc_profile::openstack::nova_compute
