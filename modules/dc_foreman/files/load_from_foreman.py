@@ -9,13 +9,10 @@ import os
 import ConfigParser
 import dc_foreman
 import dc_omapi
-from pypureomapi import OmapiErrorNotFound
 import dc_dhcp_parser
 import dns.query
 import dns.tsigkeyring
 import dns.update
-import dns.reversename
-from dns.exception import DNSException
 
 # Look up hostname in DNS
 def dns_lookup(name):
@@ -65,9 +62,10 @@ def gen_rev(ip_address):
     """
     Return the reverse-map domain name of an IP address
     """
-    rev_domain = '.'.join(list(reversed(ip_address.split('.')[:-1]))) + ".in-addr.arpa"
+    rev_domain = '.'.join(list(
+        reversed(ip_address.split('.')[:-1]))) + ".in-addr.arpa"
     return rev_domain
-   
+
 ############################################
 
 def main():
@@ -140,8 +138,6 @@ def main():
         else:
             print "%s already exists" % interface['name']
         # If DNS entry doesn't exist then create it
-        # FIXME check if the entry exists
-        # FIXME Handle reverse pointer
         dns_entries = []
         dns_name, domain_name = interface['name'].split('.', 1)
         dns_entries.append({
@@ -156,8 +152,8 @@ def main():
                     'ttl':'86400',
                     'zone':gen_rev(interface['ip']),
                     'type':'PTR'})
-        for entry in dns_entries:          
-                add_dns_entry(entry, dns_keyring)
+        for entry in dns_entries:
+            add_dns_entry(entry, dns_keyring)
 
         # If TFTP object doesn't exist then create it
         if interface['type'] in ['bond', 'main']:
