@@ -14,11 +14,9 @@ dc_bmc::radius_server: "radius.%{::domain}"
 dc_bmc::radius_secret: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAe0oYprmJBfgkOUribWTU3ld50acu1AFOSjHe4mV1tSurSstLdU3rHRskZ95593BwmiCK1NuKZe0i9A7jAsphDo4sg80dYtNb2o66K3FfsVUm3VL5oq0CgkPINn0dtdrR1vqSEF+kNz64UChUK22eFPl75l68znhV4MT9wX28cUVTUnb0c63FarLjYcvwjXy63StTSsqA1XrqkP5f3uhTlYlwGOPqUHYZkDpB1Rdg/svGegw2SXZ/ciEEH5LXQQRMfyyACjnGIelT1iE1WhaupRe9swDpIuyOl169DQkbPYKUstGP6UINiAOvZiCgNFXRjCsLvR99vxp4RNWZMnHmxTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBA2tljdW+Za85zJfCya6g7wgBA+InCjxCUb85Zdd+7ZjAYF]
 dc_bmc::radius_port: '1812'
 dc_bmc::radius_timeout: '3'
-dc_bmc::omapi_key: 'omapi_key'
-dc_bmc::omapi_secret: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAp2ftQgr6dUO6Re67rYoH1mLGMWj99yInmSh2e0utiTJX/sScfXay7Z5gsW47EZSgkkxVSGpOwGT1nhP7/gN+8+yiX+Ixq0dqLMbk+Dc7Un+ueBjZgVYaFyOHiVebCuuCSXWbI6UcqFmEbLW1X2K7uRFNA9ooV9dekRWVnG7U4QFvhbkvDJf/dCxBWwvpXzdL2hgrEsYBIPDBO+GhQC89Pz0kHcTqapgeSrpXImx+EVM9JzP9mzKcXytEP8IIvN+l9Z6MxyA4Wa+MzqR0OuTtPAsfVDg1XAuRloGOnBc3lFFVP+NjZMgdvjIELMzuTWyy8SlrzcV17RvngVaWxa4sVzCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQruw0hrhcyYTvN347jNd/loBge+nYr5fQRfT4+ca0YKRUYOwz3GjZxq6AnJ+7Zo+T3eu0xU+T40p0dBymsxGKBOygowkHeKCDJhHOrJJ0o6QW4M7bOrQwUpwVlUXFY0Ou881qMQ+BJZmSsS9NLqKT+JCs]
-dc_bmc::omapi_port: '7911'
-dc_bmc::omapi_host: '10.10.192.250'
-dc_bmc::bmc_subnet: '10.10.128.0'
+dc_bmc::omapi_key: "%{hiera('omapi_key')}"
+dc_bmc::omapi_secret: "%{hiera('omapi_secret')}"
+dc_bmc::omapi_port: "%{hiera('omapi_port')}"
 dc_bmc::foreman_url: "%{hiera('foreman_url')}"
 dc_bmc::foreman_admin_passwd: "%{hiera('foreman_admin_pw')}"
 dc_bmc::foreman_admin_user: 'admin'
