@@ -37,9 +37,6 @@ Vagrant.configure('2') do |config|
     config.vm.define name.to_s do |box|
       box.vm.hostname = "#{name.to_s}.vagrant.dev"
 
-      # Copy the gemfile
-      config.vm.provision 'file', source: 'vagrant/Gemfile', destination: 'Gemfile'
-
       # Copy the eyaml keys
       config.vm.provision 'file', source: config.user.eyaml.private_key, destination: 'private_key.pkcs7.pem'
       config.vm.provision 'file', source: config.user.eyaml.public_key,  destination: 'public_key.pkcs7.pem'
@@ -95,7 +92,7 @@ Vagrant.configure('2') do |config|
         }
 
         puppet.options = [
-          '--debug',
+          '--verbose',
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
           '--environment vagrant',
