@@ -29,5 +29,6 @@ dc_yum::repo:
     gpgkey: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/repodata/repomd.xml.key'
 
 
-# This value should only be picked up here when we're in a Vagrant VM
-neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_ens33}" 
+# These values should only be picked up at this point when we're in a Vagrant VM
+network_node_extif: 'ens33'
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_ens33}"
