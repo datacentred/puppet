@@ -28,3 +28,6 @@ dc_yum::repo:
     baseurl: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/'
     gpgkey: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/repodata/repomd.xml.key'
 
+
+# This value should only be picked up here when we're in a Vagrant VM
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_ens33}" 
