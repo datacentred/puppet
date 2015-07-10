@@ -20,7 +20,8 @@ class dc_profile::foreman::foreman {
   include foreman::plugin::puppetdb
   # TODO: this should probably have some deps and notifies between package
   #       and service will need testing when bringing up in CI
-  include dc_foreman::ignored_environments
+  # TODO: needs work on foreman to work properly - BRB!
+  #include dc_foreman::ignored_environments
 
   package { 'foreman-cli':
     ensure => installed,
