@@ -34,7 +34,7 @@ puppet::hiera:
   hierarchy:
     - '"nodes/%%{}{hostname}"'
     - '"platforms/%%{}{productname}"'
-    - '"architectures/%%{}{architecture}"'
+    - '"%%{}{virtual}/architectures/%%{}{architecture}"'
     - '"environments/%%{}{environment}/roles/%%{}{role}"'
     - '"roles/%%{}{role}"'
     - '"releases/%%{}{lsbdistcodename}/%%{}{architecture}/%%{}{calling_module}"'
