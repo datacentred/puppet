@@ -5,7 +5,7 @@
 test -f /root/.provisioned && exit 0
 
 DEBIAN_PACKAGES='puppetdb-terminus bundler'
-RHEL_PACKAGES='puppetdb-terminus bundler'
+RHEL_PACKAGES='puppetdb-terminus rubygem-bundler'
 
 # By default the puppet VMs have vagrant at 1000:1000 which interferes with
 # our hard coded IDs.  Removing this hurdle allows testing of user account
@@ -28,7 +28,7 @@ else
 fi
 
 # Install gems
-bundle install
+bundle install --gemfile /vagrant/vagrant/Gemfile
 
 # Setup PuppetDB
 cat << EOF > /etc/puppet/puppetdb.conf
