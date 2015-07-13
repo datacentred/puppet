@@ -11,6 +11,7 @@
 class dc_profile::openstack::nova {
 
   include ::nova
+  include ::nova::keystone::auth
   include ::nova::api
   include ::nova::network::neutron
   include ::nova::cert
