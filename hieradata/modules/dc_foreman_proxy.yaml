@@ -1,13 +1,12 @@
 ---
-dc_foreman_proxy::omapi_key: 'omapi_key'
-dc_foreman_proxy::omapi_secret: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAvlQWIqh4/N9W9bN/37g0xvidnwpZ0kGaafjXJQGoKGEoJ5zr800TAzy9JjQY3oOq6SiimCg5uF5MKoOnWwuv7isOqWvdCOXgG3gKNsAzWGbQ1RGhDa7DGln49qzm6fc4BiKoKeyQkK0ph4WYSii0zwqZl9DegN+IYwNdIjPvEDTl8mBX84bi7SM5c4F+2ed2zwCpwi1REcZnS7fwTw2xKDPeWCGDsXSSqEb882LejpcaxGWcvJwj1BSX0XuvWliunoviYJp22am4EEHqh0VhyYVyPfdfydb/yhrea+KGc2ZNlPFMregd1yhgXBdy+ozt4WefCgiVzOv+B+IelR0tKjCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQeX17qdhenfNhG2THN33EPoBgdbb8Y+uJ21bVre2kxlUtcy8w3TWGWbaA/Q3vHGR24y84gGfl5WzjrTfADztPvRnyRyhu3+GN7Z3c5F0zbyYApHhv/i7XWA+XkDeKRbe4gkKti6yGq5IK3/Ddp+GJCD94]
-
+dc_foreman_proxy::omapi_secret: "%{hiera('omapi_secret')}"
+dc_foreman_proxy::omapi_key: "%{hiera('omapi_key')}"
 dc_foreman_proxy::params::use_dns: false
 dc_foreman_proxy::params::use_dhcp: false
 dc_foreman_proxy::params::use_bmc: false
 dc_foreman_proxy::params::use_puppetca: false
 dc_foreman_proxy::params::use_puppet: false
-dc_foreman_proxy::params::dns_key: '/etc/bind/rndc.key'
+dc_foreman_proxy::params::dns_key: "%{hiera('dns_key')}"
 dc_foreman_proxy::params::omapi_key: ''
 dc_foreman_proxy::params::omapi_secret: ''
 dc_foreman_proxy::params::use_tftp: false

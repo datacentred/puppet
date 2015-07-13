@@ -9,14 +9,19 @@ class dc_foreman::service_checks (
   $tftp_dir,
   $dhcp_server,
   $lease_file,
+  $dns_key,
 ){
 
   ensure_packages(['python-pip', 'git'])
 
   package { 'pypureomapi':
-    ensure   => 'd56018c1e022977720f87de8675f372f629f6ca6',
     provider => 'pip',
     source   => 'git+https://github.com/CygnusNetworks/pypureomapi.git',
+    require  => Package['python-pip'],
+  }
+
+  package { 'dnspython':
+    provider => 'pip',
     require  => Package['python-pip'],
   }
 
@@ -29,6 +34,12 @@ class dc_foreman::service_checks (
   file { '/usr/local/bin/foreman_check.py':
     ensure => file,
     source => 'puppet:///modules/dc_foreman/foreman_check.py',
+    mode   => '0755',
+  }
+
+  file { '/usr/local/bin/load_from_foreman.py':
+    ensure => file,
+    source => 'puppet:///modules/dc_foreman/load_from_foreman.py',
     mode   => '0755',
   }
 

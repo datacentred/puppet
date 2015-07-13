@@ -6,9 +6,10 @@ dc_foreman::hooks::foreman_hipchat_room:  ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCC
 dc_foreman::hooks::nagios_api_host: "%{hiera('nagios_api_host')}"
 dc_foreman::hooks::nagios_api_username: "%{hiera('nagios_api_username')}"
 dc_foreman::hooks::nagios_api_password: "%{hiera('nagios_api_password')}"
-dc_foreman::service_checks::omapi_key: 'omapi_key'
-dc_foreman::service_checks::omapi_secret: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAgGSST3cef6fjSAtQcOumcSc3LNF20EDPEOjm6RCUWDI6EsbTK38vyzK0hoBBZcTtZCoMjnZZdOmNlnTMt3z4IpjUpaSImEfDntiktxw0tI0F4O0FJZndOKJt/Z/HRTD25H2YCgUnl7BnaN7NmEsf2Os2doOlcUM/dY3g5L8zw9ek2DUVojiw63Mg6c0Xx4WZiTETENEQjAN6Lx9zD44GBU3WXLS/aeNAW27VSnmW2hPdaAR0k1QvLIOexMvtbc1dz63nZGLUe31Lxv+zANBZB2f7rxBkDT0Dj2jM0TeEg2G2WEJX12A29CVpxX20opKhYRNvNwxeEQ9W/045c3YSJDCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQKGVPCXIKANzSwCKMIqbcp4Bgbf/Ij31Y9whpXxPvchuHYg22xY2OUJxJvpvCXRqH9CNTJPQdFP8k6l86Xw/P/5Hw1LsfGlfxTTcDs1jE7gXrxubhZDrWneDo9Z0t+1AqmF8ytHpoLGi8U24qbrMG0oHg]
-dc_foreman::service_checks::omapi_port: '7911'
+dc_foreman::service_checks::omapi_secret: "%{hiera('omapi_secret')}"
+dc_foreman::service_checks::omapi_key: "%{hiera('omapi_key')}"
+dc_foreman::service_checks::omapi_port: "%{hiera('omapi_port')}"
+dc_foreman::service_checks::dns_key: "%{hiera('dns_key')}"
 dc_foreman::service_checks::foreman_url: "%{hiera('foreman_url')}"
 dc_foreman::service_checks::foreman_admin_pw: "%{hiera('foreman_admin_pw')}"
 dc_foreman::service_checks::foreman_admin_user: 'admin'
