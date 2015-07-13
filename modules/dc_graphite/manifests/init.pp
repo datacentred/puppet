@@ -116,4 +116,10 @@ class dc_graphite (
     }
   }
 
+  tidy { '/srv/graphite/storage/whisper/collectd/uk/co/datacentred/sal01':
+    age     => '7D',
+    recurse => True,
+    rmdirs  => True,
+  }
+
 }
