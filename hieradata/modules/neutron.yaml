@@ -1,4 +1,15 @@
 ---
+neutron::keystone::auth::auth_name: 'neutron'
+neutron::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
+neutron::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
+neutron::keystone::auth::region: "%{hiera('os_region')}"
+neutron::keystone::auth::public_address: "%{hiera('os_api_host')}"
+neutron::keystone::auth::admin_address: "%{hiera('os_api_host')}"
+neutron::keystone::auth::internal_address: "%{hiera('os_api_host')}"
+neutron::keystone::auth::public_protocol: 'https'
+neutron::keystone::auth::internal_protocol: 'https'
+neutron::keystone::auth::admin_protocol: 'https'
+
 neutron::enabled: true
 neutron::bind_host: '0.0.0.0'
 neutron::rabbit_hosts:

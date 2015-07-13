@@ -3,6 +3,9 @@ cinder::keystone::auth::auth_name: 'cinder'
 cinder::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 cinder::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 cinder::keystone::auth::region: "%{hiera('os_region')}"
+cinder::keystone::auth::public_address: "%{hiera('os_api_host')}"
+cinder::keystone::auth::admin_address: "%{hiera('os_api_host')}"
+cinder::keystone::auth::internal_address: "%{hiera('os_api_host')}"
 cinder::keystone::auth::public_protocol: 'https'
 cinder::keystone::auth::internal_protocol: 'https'
 cinder::keystone::auth::admin_protocol: 'https'
