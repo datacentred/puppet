@@ -12,22 +12,20 @@
 #
 class dc_profile::openstack::nova_compute {
 
+  include ::nova
+  include ::nova::compute
+  include ::nova::compute::libvirt
+  include ::nova::compute::neutron
+  include ::nova::compute::rbd
+  include ::nova::network::neutron
+  include ::nova::scheduler::filter
+
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
     path    => '/var/lib/nova/instances',
     owner   => 'nova',
     group   => 'nova',
     require => Class['::Nova'],
-  }
-
-  # Patch in the fix for revert resize deleting the rbd
-  file { '/usr/lib/python2.7/dist-packages/nova/compute/manager.py':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/dc_openstack/manager.py',
-    require => Package['python-nova'],
-    notify  => Service['nova-compute'],
   }
 
   # Ensure ARM-based hypervisors don't advertise the ability to virtualise i686 and x86_64
@@ -66,13 +64,6 @@ class dc_profile::openstack::nova_compute {
   Ceph::Keyring['ceph.client.admin.keyring'] ->
   Class['::nova::compute::rbd']
 
-  include ::nova
-  include ::nova::compute
-  include ::nova::compute::libvirt
-  include ::nova::compute::neutron
-  include ::nova::compute::rbd
-  include ::nova::network::neutron
-  include ::nova::scheduler::filter
 
   nova_config { 'serial_console/enabled':
     value => false,
@@ -114,6 +105,30 @@ class dc_profile::openstack::nova_compute {
 
   package { 'sysfsutils':
     ensure => installed,
+  }
+
+  case $::osfamily {
+    'Debian': {
+      include ::dc_profile::openstack::nova_apparmor
+      # Patch in the fix for revert resize deleting the rbd
+      file { '/usr/lib/python2.7/dist-packages/nova/compute/manager.py':
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        source  => 'puppet:///modules/dc_openstack/manager.py',
+        require => Package['python-nova'],
+        notify  => Service['nova-compute'],
+      }
+    }
+    'RedHat': {
+      service { 'firewalld':
+        ensure => 'stopped',
+      }
+      service { 'NetworkManager':
+        ensure => 'stopped',
+      }
+    }
+    default: {}
   }
 
   unless $::is_vagrant {
