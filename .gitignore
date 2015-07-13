@@ -6,3 +6,4 @@ tags
 *.orig
 *.rej
 *.DS_Store
+Gemfile.lock
