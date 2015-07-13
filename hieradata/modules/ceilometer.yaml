@@ -1,6 +1,17 @@
 ---
+ceilometer::keystone::auth::auth_name: 'ceilometer'
+ceilometer::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
+ceilometer::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
+ceilometer::keystone::auth::region: "%{hiera('os_region')}"
+ceilometer::keystone::auth::public_address: "%{hiera('os_api_host')}"
+ceilometer::keystone::auth::admin_address: "%{hiera('os_api_host')}"
+ceilometer::keystone::auth::internal_address: "%{hiera('os_api_host')}"
+ceilometer::keystone::auth::public_protocol: 'https'
+ceilometer::keystone::auth::internal_protocol: 'https'
+ceilometer::keystone::auth::admin_protocol: 'https'
+
 ceilometer::metering_secret: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAaBLVair6QL+4aNmKcb4mD8YL0kpKZVdgr97Jl2BXMyCDn0Wj7TP3FlHlLhrUBSecCDjuBgtfY/d8ChOLmLrlDRJ5uoknZ9OjZryUQcVV/Ckg3yc/GAz9SEYhe23TLKVg7D/zk0Eh2BiueKUo3m+6U6J/MwtvhrAn1T2hfOlwxnDzn8yPY/bEg/zKu/Y6ThVsIjyQYBTdXSF7Xa+o3Cr4hbvQHmMTmsEUijGGcamox26bANoKCtj6aqK9lDac5Dl+qsU+aegrSckKeLauKsVSQkZ0B4CsomkVjqgqmznw/TkB6adUCLiBm62OJT2bI7nSkK8UcuCz9dRjRcPJg9zXwzBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBvZE4BtvzKHip92MI0j51CgCC31fpuQ3iqETG4tl23SbG5xYjIVl7TuNovt5RLOzWbZA==]
-ceilometer::rabbit_hosts: 
+ceilometer::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
  - osdbmq2.%{::domain}

@@ -13,6 +13,7 @@
 class dc_profile::openstack::ceilometer {
 
   include ::ceilometer
+  include ::ceilometer::keystone::auth
   include ::ceilometer::api
   include ::ceilometer::agent::auth
   include ::ceilometer::agent::central
@@ -34,7 +35,7 @@ class dc_profile::openstack::ceilometer {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include dc_logstash::client::ceilometer
+      include ::dc_logstash::client::ceilometer
     }
   }
 }
