@@ -1,4 +1,12 @@
 ---
+glance::keystone::auth::auth_name: 'glance'
+glance::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
+glance::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
+glance::keystone::auth::region: "%{hiera('os_region')}"
+glance::keystone::auth::public_url: "https://%{hiera('os_api_host')}:9292"
+glance::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:9292"
+glance::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:9292"
+
 glance::api::registry_host: "%{hiera('os_api_host')}"
 glance::api::auth_host: "%{hiera('os_api_host')}"
 glance::api::registry_client_protocol:  'https'
