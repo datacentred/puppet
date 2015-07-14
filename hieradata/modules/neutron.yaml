@@ -1,5 +1,6 @@
 ---
 neutron::keystone::auth::auth_name: 'neutron'
+neutron::keystone::auth::password: "%{hiera('keystone_neutron_password')}"
 neutron::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 neutron::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 neutron::keystone::auth::region: "%{hiera('os_region')}"

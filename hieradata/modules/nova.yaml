@@ -1,5 +1,6 @@
 ---
 nova::keystone::auth::auth_name: 'nova'
+nova::keystone::auth::password: "%{hiera('keystone_nova_password')}"
 nova::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 nova::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 nova::keystone::auth::region: "%{hiera('os_region')}"

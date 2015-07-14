@@ -1,5 +1,6 @@
 ---
 glance::keystone::auth::auth_name: 'glance'
+glance::keystone::auth::password: "%{hiera('keystone_glance_password')}"
 glance::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 glance::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 glance::keystone::auth::region: "%{hiera('os_region')}"

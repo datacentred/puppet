@@ -1,5 +1,6 @@
 ---
 ceilometer::keystone::auth::auth_name: 'ceilometer'
+ceilometer::keystone::auth::password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 ceilometer::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 ceilometer::keystone::auth::region: "%{hiera('os_region')}"

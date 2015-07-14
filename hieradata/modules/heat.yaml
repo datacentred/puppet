@@ -1,5 +1,7 @@
 ---
 heat::keystone::auth::auth_name: 'heat'
+heat::keystone::auth::password: "%{hiera('keystone_heat_password')}"
+heat::keystone::auth_cfn::password: "%{hiera('keystone_heat_password')}"
 heat::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 heat::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 heat::keystone::auth::region: "%{hiera('os_region')}"
