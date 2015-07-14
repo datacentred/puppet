@@ -117,7 +117,7 @@ class dc_graphite (
   }
 
   cron { 'clean_graphite_files':
-    command  => "find ${graphite_link_path}/storage/whisper/ -type f -mtime +7 -exec rm {} \\; 2>&1",
+    command  => "find ${graphite_link_path}/storage/whisper/ -type f -mtime +7 -delete",
     user     => 'root',
     month    => '*',
     monthday => '*',
@@ -126,7 +126,7 @@ class dc_graphite (
   }
 
   cron { 'clean_graphite_dirs':
-    command  => "find ${graphite_link_path}/storage/whisper/ -type d -mtime +7 -exec rmdir {} \\; &>/dev/null",
+    command  => "find ${graphite_link_path}/storage/whisper/ -type d -empty -delete",
     user     => 'root',
     month    => '*',
     monthday => '*',
