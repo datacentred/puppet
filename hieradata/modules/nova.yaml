@@ -10,6 +10,7 @@ nova::keystone::auth::internal_address: "%{hiera('os_api_host')}"
 nova::keystone::auth::public_protocol: 'https'
 nova::keystone::auth::internal_protocol: 'https'
 nova::keystone::auth::admin_protocol: 'https'
+nova::keystone::auth::configure_endpoint_v3: false
 
 nova::database_connection: "mysql://%{hiera('nova_db_user')}:%{hiera('nova_db_pass')}@%{hiera('os_api_host')}/%{hiera('nova_db')}"
 nova::image_service: 'nova.image.glance.GlanceImageService'
