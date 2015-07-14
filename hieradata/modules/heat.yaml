@@ -1,4 +1,26 @@
 ---
+heat::keystone::auth::auth_name: 'heat'
+heat::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
+heat::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
+heat::keystone::auth::region: "%{hiera('os_region')}"
+heat::keystone::auth::public_address: "%{hiera('os_api_host')}"
+heat::keystone::auth::admin_address: "%{hiera('os_api_host')}"
+heat::keystone::auth::internal_address: "%{hiera('os_api_host')}"
+heat::keystone::auth::public_protocol: 'https'
+heat::keystone::auth::internal_protocol: 'https'
+heat::keystone::auth::admin_protocol: 'https'
+heat::keystone::auth_cfn::configure_user: false
+heat::keystone::auth_cfn::configure_user_role: false
+heat::keystone::auth_cfn::email: "%{hiera('internal_sysmail_address')}"
+heat::keystone::auth_cfn::tenant: "%{hiera('os_service_tenant')}"
+heat::keystone::auth_cfn::region: "%{hiera('os_region')}"
+heat::keystone::auth_cfn::public_address: "%{hiera('os_api_host')}"
+heat::keystone::auth_cfn::admin_address: "%{hiera('os_api_host')}"
+heat::keystone::auth_cfn::internal_address: "%{hiera('os_api_host')}"
+heat::keystone::auth_cfn::public_protocol: 'https'
+heat::keystone::auth_cfn::internal_protocol: 'https'
+heat::keystone::auth_cfn::admin_protocol: 'https'
+
 heat::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
