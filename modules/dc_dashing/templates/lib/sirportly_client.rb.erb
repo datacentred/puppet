@@ -1,0 +1,52 @@
+require 'sirportly'
+
+class SirportlyClient 
+  DOMAIN = <%= @sirportly_url %>
+  TOKEN  = <%= @sirportly_api_token %>
+  SECRET = <%= @sirportly_secret_token %>
+
+  def initialize
+    @sirp = Sirportly::Client.new(TOKEN, SECRET)
+    Sirportly.domain = DOMAIN 
+  end
+
+  #returns array of department names
+  def get_departments
+    data = @sirp.spql(
+      "SELECT departments.name FROM tickets GROUP BY departments.name"
+    ).results.flatten
+    return data
+  end
+  
+  #get all open tickets for 'department_name'
+  def get_open_tickets_for_department(department_name)
+    new = @sirp.spql(
+      "SELECT COUNT FROM tickets WHERE status.name='New' AND 
+        department.name = #{department_name}"
+    ).results.flatten.first
+    c_wait = @sirp.spql(
+      "SELECT COUNT FROM tickets WHERE status.name='Waiting for Customer' AND 
+        department.name = #{department_name}"
+    ).results.flatten.first
+    s_wait = @sirp.spql(
+      "SELECT COUNT FROM tickets WHERE status.name='Waiting for Staff' AND 
+        department.name = #{department_name}"
+    ).results.flatten.first
+    open_tickets = { "new" => new, "waiting_for_customer" => c_wait, "waiting_for_staff" => s_wait }
+    return open_tickets
+  end
+  #get summary of all open tickets across all departments
+  def get_open_ticket_summary
+    new = @sirp.spql(
+      "SELECT COUNT FROM tickets WHERE status.name='New'"
+    ).results.flatten.first
+    c_wait = @sirp.spql(
+      "SELECT COUNT FROM tickets WHERE status.name='Waiting for Customer'"
+    ).results.flatten.first
+    s_wait = @sirp.spql(
+      "SELECT COUNT FROM tickets WHERE status.name='Waiting for Staff'"
+    ).results.flatten.first
+    open_tickets = { "new" => new, "waiting_for_customer" => c_wait, "waiting_for_staff" => s_wait }
+    return open_tickets
+  end
+end
