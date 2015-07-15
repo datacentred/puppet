@@ -1,6 +1,7 @@
 ---
 classes:
-  - '::dc_profile::openstack::network'
+  - '::dc_profile::openstack::neutron_agent'
+  - '::dc_icinga::hostgroup_neutron_node'
 
 neutron::agents::ml2::ovs::bridge_uplinks:
  - "br-ex:em2"
