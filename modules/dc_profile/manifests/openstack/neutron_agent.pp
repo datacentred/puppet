@@ -15,33 +15,50 @@ class dc_profile::openstack::neutron_agent {
   include ::neutron::plugins::ml2
   include ::neutron::agents::ml2::ovs
 
+
   if $::network_node {
-    # We want to disable GRO on the external interface
-    # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
     # Physical interface plumbed into external network
     $uplink_if = hiera(network_node_extif)
 
+    # We want to disable GRO on the external interface
+    # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
     include ::ethtool
     ethtool { $uplink_if:
       gro => 'disabled',
     }
 
-    # Ensure configuration is in place so that the external (bridged)
-    # is actually brought up at boot
-    if $::osfamily == 'Debian' {
-      augeas { $uplink_if:
-        context => '/files/etc/network/interfaces',
-        changes => [
-            "set iface[. = '${uplink_if}'] ${uplink_if}",
-            "set iface[. = '${uplink_if}']/family inet",
-            "set iface[. = '${uplink_if}']/method manual",
-            "set iface[. = '${uplink_if}'] ${uplink_if}",
-            # Now set via DHCP
-            "rm iface[. = '${uplink_if}']/pre-up 'ip link set ${uplink_if} mtu 9000'",
-            "set iface[. = '${uplink_if}']/up 'ip link set dev ${uplink_if} up'",
-            "set iface[. = '${uplink_if}']/down 'ip link set dev ${uplink_if} down'",
-        ],
+    # Distribution-specific hacks^Wconsiderations
+    case $::osfamily {
+      'Debian': {
+        augeas { $uplink_if:
+          context => '/files/etc/network/interfaces',
+          changes => [
+              "set iface[. = '${uplink_if}'] ${uplink_if}",
+              "set iface[. = '${uplink_if}']/family inet",
+              "set iface[. = '${uplink_if}']/method manual",
+              "set iface[. = '${uplink_if}'] ${uplink_if}",
+              # Now set via DHCP
+              "rm iface[. = '${uplink_if}']/pre-up 'ip link set ${uplink_if} mtu 9000'",
+              "set iface[. = '${uplink_if}']/up 'ip link set dev ${uplink_if} up'",
+              "set iface[. = '${uplink_if}']/down 'ip link set dev ${uplink_if} down'",
+          ],
+        }
+        # Neutron module barfs if this doesn't exist.
+        # It's usually created by the neutron-server package, which we
+        # don't install on network nodes
+        file { '/etc/default/neutron-server':
+          ensure => present,
+        }
       }
+      'RedHat': {
+        service { 'firewalld':
+          ensure => 'stopped',
+        }
+        service { 'NetworkManager':
+          ensure => 'stopped',
+        }
+      }
+      default: {}
     }
 
     # Set default domain
