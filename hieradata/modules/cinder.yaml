@@ -1,6 +1,6 @@
 ---
 cinder::keystone::auth::auth_name: 'cinder'
-cinder::keystone::auth::password: "{hiera('keystone_cinder_password')}"
+cinder::keystone::auth::password: "%{hiera('keystone_cinder_password')}"
 cinder::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 cinder::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 cinder::keystone::auth::region: "%{hiera('os_region')}"
