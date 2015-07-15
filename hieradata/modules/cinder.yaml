@@ -1,10 +1,22 @@
 ---
+cinder::keystone::auth::auth_name: 'cinder'
+cinder::keystone::auth::password: "{hiera('keystone_cinder_password')}"
+cinder::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
+cinder::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
+cinder::keystone::auth::region: "%{hiera('os_region')}"
+cinder::keystone::auth::public_address: "%{hiera('os_api_host')}"
+cinder::keystone::auth::admin_address: "%{hiera('os_api_host')}"
+cinder::keystone::auth::internal_address: "%{hiera('os_api_host')}"
+cinder::keystone::auth::public_protocol: 'https'
+cinder::keystone::auth::internal_protocol: 'https'
+cinder::keystone::auth::admin_protocol: 'https'
+
 cinder::rpc_backend: 'cinder.openstack.common.rpc.impl_kombu'
 cinder::database_connection: "mysql://%{hiera('cinder_db_user')}:%{hiera('cinder_db_pass')}@%{hiera('os_api_host')}/%{hiera('cinder_db')}?charset=utf8"
 cinder::verbose: true
 cinder::debug:   true
 
-cinder::rabbit_hosts: 
+cinder::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
  - osdbmq2.%{::domain}
@@ -28,6 +40,3 @@ cinder::volume::rbd::rbd_secret_uuid: '42991612-85dc-42e4-ae3c-49cf07e98b70'
 cinder::quota::quota_volumes: '10'
 cinder::quota::quota_snapshots: '10'
 cinder::quota::quota_gigabytes: '200'
-
-
-

@@ -12,6 +12,7 @@ class dc_profile::openstack::neutron_server {
 
   # Enable Neutron server services
   include ::neutron
+  include ::neutron::keystone::auth
   include ::neutron::server
   include ::neutron::server::notifications
   include ::neutron::plugins::ml2

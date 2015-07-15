@@ -13,6 +13,7 @@
 class dc_profile::openstack::cinder {
 
   include ::cinder
+  include ::cinder::keystone::auth
   include ::cinder::api
   include ::cinder::scheduler
   include ::cinder::glance

@@ -12,16 +12,16 @@
 #
 class dc_profile::openstack::keystone {
 
-  contain ::keystone
-  contain ::keystone::roles::admin
-  contain ::keystone::endpoint
+  include ::keystone
+  include ::keystone::roles::admin
+  include ::keystone::endpoint
   include ::dc_icinga::hostgroup_keystone
+
+  include ::sysctls
 
   # Data defined in the openstack_keystone role
   create_resources(keystone_tenant, hiera(keystone_tenants))
   create_resources(keystone_user, hiera(keystone_users))
-  create_resources(keystone_role, hiera(keystone_role))
-  create_resources(keystone_user_role, hiera(keystone_user_roles))
   create_resources(keystone_service, hiera(keystone_services))
   create_resources(keystone_endpoint, hiera(keystone_endpoints))
 
@@ -79,7 +79,7 @@ class dc_profile::openstack::keystone {
     options           => 'check inter 2000 rise 2 fall 5'
   }
 
-  # Increase number of open files for the keystone service
+  # Distribution-specific considerations
   case $::osfamily {
     'Debian': {
       file_line { 'keystone_nofiles':
@@ -97,10 +97,14 @@ class dc_profile::openstack::keystone {
         require => Package['keystone'],
         before  => Service['keystone'],
       }
+      service { 'firewalld':
+        ensure => 'stopped',
+      }
+      service { 'NetworkManager':
+        ensure => 'stopped',
+      }
     }
-    default: {
-      fail('Cannot configure nofiles for keystone.')
-    }
+    default: {}
   }
 
   logrotate::rule { 'keystone_all':
@@ -115,7 +119,7 @@ class dc_profile::openstack::keystone {
 
   unless $::is_vagrant {
     if $::environment == 'production' {
-      include dc_logstash::client::keystone
+      include ::dc_logstash::client::keystone
     }
   }
 

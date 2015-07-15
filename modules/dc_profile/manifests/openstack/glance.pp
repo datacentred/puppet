@@ -12,10 +12,11 @@
 #
 class dc_profile::openstack::glance {
 
-  contain ::glance::api
-  contain ::glance::registry
-  contain ::glance::backend::rbd
-  contain ::glance::notify::rabbitmq
+  include ::glance::keystone::auth
+  include ::glance::api
+  include ::glance::registry
+  include ::glance::backend::rbd
+  include ::glance::notify::rabbitmq
   include ::glance::cache::pruner
   include ::glance::cache::cleaner
   include ::glance::policy

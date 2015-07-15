@@ -1,6 +1,13 @@
 ---
 classes:
-  - '::dc_profile::openstack::controller'
+  - '::dc_profile::openstack::keystone'
+  - '::dc_profile::openstack::glance'
+  - '::dc_profile::openstack::cinder'
+  - '::dc_profile::openstack::neutron_server'
+  - '::dc_profile::openstack::nova'
+  - '::dc_profile::openstack::ceilometer'
+  - '::dc_profile::openstack::heat'
+  - '::dc_profile::openstack::horizon'
 
 keystone_tenants:
     icinga:
@@ -8,164 +15,19 @@ keystone_tenants:
         ensure: 'present'
 
 keystone_users:
-    glance:
-        enabled: true
-        ensure: 'present'
-        password: "%{hiera('keystone_glance_password')}"
-        email: "%{hiera('internal_sysmail_address')}"
-        tenant: "%{hiera('os_service_tenant')}"
-    cinder:
-        enabled: true
-        ensure: 'present'
-        password: "%{hiera('keystone_cinder_password')}"
-        email: "%{hiera('internal_sysmail_address')}"
-        tenant: "%{hiera('os_service_tenant')}"
-    nova:
-        enabled: true
-        ensure: 'present'
-        password: "%{hiera('keystone_nova_password')}"
-        email: "%{hiera('internal_sysmail_address')}"
-        tenant: "%{hiera('os_service_tenant')}"
-    neutron:
-        enabled: true
-        ensure: 'present'
-        password: "%{hiera('keystone_neutron_password')}"
-        email: "%{hiera('internal_sysmail_address')}"
-        tenant: "%{hiera('os_service_tenant')}"
-    ceilometer:
-        enabled: true
-        ensure: 'present'
-        password: "%{hiera('keystone_ceilometer_password')}"
-        email: "%{hiera('internal_sysmail_address')}"
-        tenant: "%{hiera('os_service_tenant')}"
-    heat:
-        enabled: true
-        ensure: 'present'
-        password: "%{hiera('keystone_heat_password')}"
-        email: "%{hiera('internal_sysmail_address')}"
-        tenant: "%{hiera('os_service_tenant')}"
     icinga:
         enabled: true
         ensure: 'present'
         password: "%{hiera('keystone_icinga_password')}"
         tenant: 'icinga'
 
-keystone_role:
-    'heat_stack_user':
-        ensure: 'present'
-    'heat_stack_owner':
-        ensure: 'present'
-    object-store:
-        ensure: 'present'
-
-keystone_user_roles:
-    "glance@%{hiera('os_service_tenant')}":
-        ensure: 'present'
-        roles: 'admin'
-    "cinder@%{hiera('os_service_tenant')}":
-        ensure: 'present'
-        roles: 'admin'
-    "nova@%{hiera('os_service_tenant')}":
-        ensure: 'present'
-        roles: 'admin'
-    "neutron@%{hiera('os_service_tenant')}":
-        ensure: 'present'
-        roles: 'admin'
-    "ceilometer@%{hiera('os_service_tenant')}":
-        ensure: 'present'
-        roles: 'admin'
-    "heat@%{hiera('os_service_tenant')}":
-        ensure: 'present'
-        roles: 'admin'
-
 keystone_services:
-    glance:
-        ensure: 'present'
-        type: 'image'
-        description: 'Glance Image Service'
-    cinder:
-        ensure: 'present'
-        type: 'volume'
-        description: 'Cinder Volume Service'
-    cinderv2:
-        ensure: 'present'
-        type: 'volumev2'
-        description: 'Cinder Volume Service V2'
-    nova:
-        ensure: 'present'
-        type: 'compute'
-        description: 'Nova Compute Service'
-    nova_ec2:
-        ensure: 'present'
-        type: 'ec2'
-        description: 'EC2 Service'
-    neutron:
-        ensure: 'present'
-        type: 'network'
-        description: 'OpenStack Networking Service'
-    ceilometer:
-        ensure: 'present'
-        type: 'metering'
-        description: 'Ceilometer Telemetry Service'
-    heat:
-        ensure: 'present'
-        type: 'orchestration'
-        description: 'Heat Orchestration Service'
-    heat-cfn:
-        ensure: 'present'
-        type: 'cloudformation'
-        description: 'Heat CFN Orchestration Service'
     swift:
         ensure: 'present'
         type:   'object-store'
         description: 'Swift Object Storage Service'
 
 keystone_endpoints:
-    "%{hiera('os_region')}/glance":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:9292"
-        admin_url:      "https://%{hiera('os_api_host')}:9292"
-        internal_url:   "https://%{hiera('os_api_host')}:9292"
-    "%{hiera('os_region')}/cinder":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8776/v1/%(tenant_id)s"
-        admin_url:      "https://%{hiera('os_api_host')}:8776/v1/%(tenant_id)s"
-        internal_url:   "https://%{hiera('os_api_host')}:8776/v1/%(tenant_id)s"
-    "%{hiera('os_region')}/cinderv2":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8776/v2/%(tenant_id)s"
-        admin_url:      "https://%{hiera('os_api_host')}:8776/v2/%(tenant_id)s"
-        internal_url:   "https://%{hiera('os_api_host')}:8776/v2/%(tenant_id)s"
-    "%{hiera('os_region')}/nova":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8774/v2/%(tenant_id)s"
-        admin_url:      "https://%{hiera('os_api_host')}:8774/v2/%(tenant_id)s"
-        internal_url:   "https://%{hiera('os_api_host')}:8774/v2/%(tenant_id)s"
-    "%{hiera('os_region')}/nova_ec2":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8773/v2/Cloud"
-        admin_url:      "https://%{hiera('os_api_host')}:8773/v2/Admin"
-        internal_url:   "https://%{hiera('os_api_host')}:8773/v2/Cloud"
-    "%{hiera('os_region')}/neutron":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:9696"
-        admin_url:      "https://%{hiera('os_api_host')}:9696"
-        internal_url:   "https://%{hiera('os_api_host')}:9696"
-    "%{hiera('os_region')}/ceilometer":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8777"
-        admin_url:      "https://%{hiera('os_api_host')}:8777"
-        internal_url:   "https://%{hiera('os_api_host')}:8777"
-    "%{hiera('os_region')}/heat":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
-        admin_url:      "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
-        internal_url:   "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
-    "%{hiera('os_region')}/heat-cfn":
-        ensure: 'present'
-        public_url:     "https://%{hiera('os_api_host')}:8000/v1"
-        admin_url:      "https://%{hiera('os_api_host')}:8000/v1"
-        internal_url:   "https://%{hiera('os_api_host')}:8000/v1"
     "%{hiera('os_region')}/swift":
         ensure: 'present'
         public_url:     'https://storage.datacentred.io/swift/v1'
