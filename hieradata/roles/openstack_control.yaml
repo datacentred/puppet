@@ -21,10 +21,6 @@ keystone_users:
         password: "%{hiera('keystone_icinga_password')}"
         tenant: 'icinga'
 
-keystone_role:
-    object-store:
-        ensure: 'present'
-
 keystone_services:
     swift:
         ensure: 'present'
