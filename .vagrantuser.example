@@ -1,7 +1,9 @@
 eyaml:
   public_key: /path/to/eyaml/public_key.pkcs7.pem
   private_key: /path/to/eyaml/private_key.pkcs7.pem
-
+# Top-level is_vagrant fact has to exist
+facts:
+  is_vagrant: true
 boxes:
   # Define our first server. You can define as many as you want.
   #
@@ -10,13 +12,11 @@ boxes:
   #          null string will suffice for role for example
   #
   os_compute_node:
-    # The puppet role (class) to include at the base level
-    # Default: None
-    puppet_role: dc_role::compute_node
-
-    # The hiera role to define.
-    # Default: None
-    hiera_role: openstack_compute
+    # Define any number of additional facts that will be passed to puppet
+    # when provisioning a node.  Specifying the role is a good start.
+    facts:
+      role: openstack_compute
+      condition: true
 
     # You can override the default CPU cores & memory
     # cpus: 4
@@ -36,3 +36,7 @@ boxes:
     #     guest: 443
     #     host: 8443
     #     protocol: tcp
+
+    # You can also provision a CentOS instance instead of the default
+    # Ubuntu one
+    # rhel: true

@@ -84,13 +84,11 @@ Vagrant.configure('2') do |config|
         puppet.manifests_path    = 'vagrant'
         puppet.module_path       = 'modules'
         puppet.hiera_config_path = 'vagrant/hiera.yaml'
-
-        puppet.facter = {
-          'is_vagrant'   => true,
-          'vagrant_role' => options.has_key?(:puppet_role) ? options.puppet_role.to_s : '',
-          'role'         => options.has_key?(:hiera_role) ? options.hiera_role.to_s : '',
-        }
-
+        if options.has_key?(:facts)
+          puppet.facter = config.user.facts.merge(options.facts)
+        else
+          puppet.facter = config.user.facts
+        end
         puppet.options = [
           '--verbose',
           '--storeconfigs',
