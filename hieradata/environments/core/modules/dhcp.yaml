@@ -1,0 +1,5 @@
+---
+dhcp::nameservers:
+  - '10.30.192.250'
+  - '10.30.192.251'
+dhcp::ddns::zonemaster: '10.30.192.250'

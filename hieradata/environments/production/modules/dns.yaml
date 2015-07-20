@@ -1,0 +1,17 @@
+---
+dns::dnsmasters:
+  - '10.10.192.250'
+dns::nameservers:
+  "ns0.%{::domain}": '10.10.192.250'
+  "ns1.%{::domain}": '10.10.192.251'
+dns::recursors:
+  - '10.10.192.0/24'  # ark-platform-services
+  - '10.10.128.0/24'  # ark-bmc
+  - '10.10.160.0/24'  # ark-compute-management
+  - '10.10.96.0/24'   # ark-storage-backend
+  - '10.10.129.0/24'  # ark-rack-infrastructure
+  - '10.10.104.0/24'  # ark-storage-frontend
+  - '10.10.112.0/24'  # ark-storage-loadbalance
+  - '10.253.2.0/24'   # vpn clients
+  - '10.10.9.0/24'    # ark-storage-api
+  - '10.10.130.0/24'  # ark-hw-onboarding

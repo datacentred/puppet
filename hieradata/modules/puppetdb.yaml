@@ -7,5 +7,3 @@ puppetdb::server::database_host:      "postgres0.%{domain}"
 puppetdb::server::database_name:      "%{hiera('puppetdb_database')}"
 puppetdb::server::database_username:  "%{hiera('puppetdb_user')}"
 puppetdb::server::database_password:  "%{hiera('puppetdb_pass')}"
-
-puppetdb::master::config::puppetdb_server: "puppetdb-2.%{domain}"
