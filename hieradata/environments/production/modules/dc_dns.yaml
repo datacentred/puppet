@@ -50,3 +50,74 @@ dc_dns::static::records:
     rdata: "puppet-the-next-generation.%{::domain}"
   "api-icinga.%{::domain}/CNAME":
     rdata: "icinga.%{::domain}"
+
+dc_dns::nameservers:
+  "ns0.%{::domain}": '10.10.192.250'
+  "ns1.%{::domain}": '10.10.192.251'
+
+dc_dns::dns_zones:
+  sal01.datacentred.co.uk:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+  test.sal01.datacentred.co.uk:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+  129.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  96.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  128.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  160.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  170.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  32.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  192.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  193.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  104.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  9.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  5.1.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  datacentred.io:
+    soa:        "%{::fqdn}"
+    soaip:      "%{::ipaddress}"
+  storage.datacentred.io:
+    soa:        "%{::fqdn}"
+    soaip:      "%{::ipaddress}"
+  112.10.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  130.10.10.in-addr.arpa:
+    soa:         "%{::fqdn}"
+    soaip:       "%{::ipaddress}"
+    reverse:     true
+

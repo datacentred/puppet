@@ -1,0 +1,9 @@
+dc_dhcp::pools:
+  core-platform-services:
+    network:     '10.30.192.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.30.192.1'
+    nextserver:  "%{::ipaddress}"
+    pxefile:     '/pxelinux.0'
+    options:
+      - 'interface-mtu 9000'

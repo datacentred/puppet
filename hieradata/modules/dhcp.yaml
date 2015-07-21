@@ -2,9 +2,6 @@
 dhcp::dnsdomain:
   - "%{domain}"
   - '0.0.10.in-addr.arpa'
-dhcp::nameservers:
-  - '10.10.192.250'
-  - '10.10.192.251'
 dhcp::ntpservers:
   - "ntp0.%{::domain}"
   - "ntp1.%{::domain}"
@@ -15,4 +12,3 @@ dhcp::omapi_secret: "%{hiera('omapi_secret')}"
 dhcp::ddns: true
 
 dhcp::ddns::key: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAI/W0iEDNaKoBuYzmqwVIuw5KBe3sMFi7EZBDSD3T46Bes4DYACMX2QEbtkw0wCKysEL7cigM6Bpi5vz9/iuh3R3ohe6sXOUA2zytWJXHxKdBlSUEycrZAcytEv8vQACjfF6VyCTPPqXr6Sp6ulaOzKBgcZbMSwhYkkhoZFsd7yZ7QsZJJWnI7lSnxnGgh+YTJqGpEGwOy750s3XKrNqdIUBcIK9iQtYWG2cGr31e/FiOJt3g+hJ+z+l6rZ4uD2xEoZdW7AaGthHQpu2SYW/8gOO1jDjhfk5+5SN1l3Va/d79cJK4ZxUXhhPya9hIJual1YSrw1Vs993jWSctwI0oMzCBjAYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQFhy5L+jhadXm7JzqIeRwaIBgav1AZIw5qrUtxqA84PobcvLnernyuPzEIUd6wpL9jPPYHTITcmooVlBS9yEcPgQsft4yjyIBhrtyzJaV0HZJerZfZe0mq7dzT8Kd5nfRs4IF1aeO1XOGVTaSovCA2+Rb]
-dhcp::ddns::zonemaster: '10.10.192.250'
