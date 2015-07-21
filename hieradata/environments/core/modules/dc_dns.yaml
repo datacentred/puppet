@@ -1,15 +1,5 @@
 ---
 dc_dns::static::records:
-  'my.datacentred.io/A':
-    rdata: '178.62.3.132'
-  'helpdesk.datacentred.io/A':
-    rdata: '178.62.37.236'
-  'usage.datacentred.io/A':
-    rdata: '178.62.81.198'
-  'docs.datacentred.io/A':
-    rdata: '185.43.218.237'
-  'status.datacentred.io/CNAME':
-    rdata: 'domain.status.io'
   "ntp0.%{::domain}/CNAME":
     rdata: "ns0.%{::domain}"
   "ntp1.%{::domain}/CNAME":
