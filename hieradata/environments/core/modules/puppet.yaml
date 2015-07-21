@@ -6,4 +6,4 @@ puppet::conf:
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
   agent:
-    server: "puppet.%{::domain}"
+    environment: "%{environment}"
