@@ -5,6 +5,6 @@ dns::nameservers:
   "ns0.%{::domain}": '10.30.192.250'
   "ns1.%{::domain}": '10.30.192.251'
 dns::recursors:
-  - '10.30.192.0/24'  # ark-platform-services
-  - '10.30.128.0/24'  # ark-bmc
-  - '10.253.2.0/24'   # vpn clients
+  - '10.30.192.0/24'  # core-platform-services
+  - '10.30.128.0/24'  # core-bmc
+  - '10.253.5.0/24'   # vpn clients
