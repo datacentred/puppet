@@ -56,12 +56,6 @@ class dc_profile::openstack::mongodb {
     include ::dc_profile::openstack::duplicity_mongodb
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_logstash::client::mongodb
-    }
-  }
-
 }
 
 

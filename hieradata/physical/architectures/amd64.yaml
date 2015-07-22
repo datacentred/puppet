@@ -2,7 +2,6 @@
 classes:
   - '::dc_profile::hardware::bmc' # Note: should be platform specific
   - '::dc_profile::hardware::board_support'
-  - '::dc_profile::log::log_shipper_log_courier'
   - '::dc_profile::mon::icinga_client_x86' # Note: needs scripting rather than a binary
   - '::dc_profile::mon::lmsensors' # Note: no sensors on moonshot, platform specific
   - '::dc_profile::perf::sysdig' # DKMS module doesn't compile on utopic armv8

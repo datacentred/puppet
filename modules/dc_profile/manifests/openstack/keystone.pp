@@ -117,10 +117,4 @@ class dc_profile::openstack::keystone {
     copytruncate  => true,
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_logstash::client::keystone
-    }
-  }
-
 }

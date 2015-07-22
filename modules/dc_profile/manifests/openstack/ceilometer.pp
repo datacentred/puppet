@@ -33,9 +33,4 @@ class dc_profile::openstack::ceilometer {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_logstash::client::ceilometer
-    }
-  }
 }

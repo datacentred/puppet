@@ -1,7 +1,4 @@
 ---
-classes:
-  - '::dc_profile::log::log_shipper_beaver'
-
 puppet::version: '3.7.4'
 puppet::package: 'puppet'
 puppet::provider: 'gem'
@@ -13,3 +10,5 @@ neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_bond0_170}" # TODO: This is 
 
 dc_nrpe::checks::check_hw::nova_cpu: 8  # Note: platform specific
 dc_nrpe::checks::check_hw::nova_mem: 66 # Note: platform specific
+
+dc_logstash::client::provider: 'beaver'

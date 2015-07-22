@@ -35,12 +35,6 @@ class dc_profile::openstack::heat {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_logstash::client::heat
-    }
-  }
-
   # Enable 'preview' Stack Adopt and Abandon features
   heat_config {
     'DEFAULT/stack_abandon' : value => true;
