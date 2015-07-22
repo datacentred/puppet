@@ -1,0 +1,52 @@
+---
+apt::sources:
+  foreman_mirror:
+    location: "http://%{hiera('foreman_mirror_path')}"
+    release: 'trusty'
+    repos: '1.7'
+    key: '7059542D5AEA367F78732D02B3484CB71AA043B8'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+    include_src: false
+  foreman_plugins_mirror:
+    location: "http://%{hiera('foreman_mirror_path')}"
+    release: 'plugins'
+    repos: '1.7'
+    key: '7059542D5AEA367F78732D02B3484CB71AA043B8'
+    key_source: 'http://deb.theforeman.org/foreman.asc'
+    include_src: false
+  hpsupport_mirror:
+    location: "http://%{hiera('hpsupport_mirror_path')}"
+    release: 'trusty/current'
+    repos: 'non-free'
+    key: '882F7199B20F94BD7E3E690EFADD8D64B1275EA3'
+    key_source: 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp'
+    include_src: false
+  puppetlabs_mirror:
+    location: "http://%{hiera('puppet_mirror_path')}"
+    release: 'trusty'
+    repos: 'main dependencies'
+    key: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
+    key_source: 'https://apt.puppetlabs.com/keyring.gpg'
+    include_src: false
+  sysdig:
+    location: 'http://download.draios.com/stable/deb'
+    release: 'stable-$(ARCH)/'
+    repos: ''
+    key: 'D27A72F32D867DF9300A241574490FD6EC51E8C4'
+    key_source: 'https://s3.amazonaws.com/download.draios.com/DRAIOS-GPG-KEY.public'
+    include_src: false
+  trusty_mirror:
+    location: "http://%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty'
+    repos: 'main restricted universe multiverse'
+    include_src: false
+  trusty_security_mirror:
+    location: "http://%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-security'
+    repos: 'main restricted universe'
+    include_src: false
+  trusty_updates_mirror:
+    location: "http://%{hiera('ubuntu_mirror_path')}"
+    release: 'trusty-updates'
+    repos: 'main restricted universe multiverse'
+    include_src: false
