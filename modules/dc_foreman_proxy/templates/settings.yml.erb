@@ -9,9 +9,12 @@
 :ssl_private_key: /var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem
 # the hosts which the proxy accepts connections from
 # commenting the following lines would mean every verified SSL connection allowed
-#:trusted_hosts:
-#- foreman.prod.domain
-#- foreman.dev.domain
+<% if @trusted_hosts -%>
+:trusted_hosts:
+<% @trusted_hosts.each do |host| -%>
+- <%= host %>
+<% end -%>
+<% end -%>
 
 # enable the daemon to run in the background
 :daemon: true
