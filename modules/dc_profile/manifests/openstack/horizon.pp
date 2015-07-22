@@ -37,10 +37,4 @@ class dc_profile::openstack::horizon {
     postrotate    => '/usr/sbin/service apache2 reload >/dev/null 2>/dev/null || true',
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include dc_logstash::client::horizon
-    }
-  }
-
 }

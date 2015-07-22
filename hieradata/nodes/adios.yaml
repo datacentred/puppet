@@ -1,3 +1,16 @@
+---
+# TODO: Collapse when hira supports structured lookups
+dc_logstash::client::nova_common::oslofmt_codec_hash:
+    multline1:
+        name: 'multiline'
+        pattern: '^%%{}{TIMESTAMP_ISO8601} '
+        negate: 'true'
+        what: 'previous'
+    multiline2:
+        name: 'multiline'
+        pattern: '^%%{}{TIMESTAMP_ISO8601}%%{}{SPACE}%%{}{NUMBER}?%%{}{SPACE}?TRACE'
+        negate: 'true'
+        what: 'previous'
 dc_logstash::client::nova_compute::oslofmt_codec_hash:
     multline1:
         name: 'multiline'

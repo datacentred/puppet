@@ -40,10 +40,4 @@ class dc_profile::foreman::foreman {
   include dc_icinga::hostgroup_https
   include dc_icinga::hostgroup_foreman
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      include ::dc_logstash::client::foreman
-    }
-  }
-
 }

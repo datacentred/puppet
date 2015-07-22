@@ -131,12 +131,4 @@ class dc_profile::openstack::nova_compute {
     default: {}
   }
 
-  unless $::is_vagrant {
-    if $::environment == 'production' {
-      # Logstash config
-      include ::dc_logstash::client::nova_compute
-      include ::dc_logstash::client::libvirt
-    }
-  }
-
 }

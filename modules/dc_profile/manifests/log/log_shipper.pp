@@ -14,9 +14,6 @@
 #
 class dc_profile::log::log_shipper {
 
-  contain dc_logstash::client::apache
-  contain dc_logstash::client::mysql
-  contain dc_logstash::client::mail
-  contain dc_logstash::client::syslog
+  include ::dc_logstash::client
 
 }

@@ -13,6 +13,6 @@
 #
 class dc_profile::log::logstash {
 
-  class { 'dc_logstash::server': }
+  include ::dc_logstash::server
 
 }
