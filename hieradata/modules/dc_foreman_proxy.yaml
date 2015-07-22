@@ -14,3 +14,5 @@ dc_foreman_proxy::params::trusted_hosts:
     - 'foreman-2.sal01.datacentred.co.uk'
     - 'foreman.datacentred.services'
     - 'foreman0.core.sal01.datacentred.co.uk'
+    - 'gateway0.core.sal01.datacentred.co.uk'
+    - 'gateway1.core.sal01.datacentred.co.uk'
