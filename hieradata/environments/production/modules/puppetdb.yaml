@@ -1,2 +1,0 @@
----
-puppetdb::master::config::puppetdb_server: "puppetdb-2.%{domain}"
