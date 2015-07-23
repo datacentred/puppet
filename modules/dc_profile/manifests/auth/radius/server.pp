@@ -1,6 +1,6 @@
 # Class: dc_profile::auth::radius::server
 #
-# Radius server§
+# Radius server
 #
 # Parameters:
 #
