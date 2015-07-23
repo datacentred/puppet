@@ -20,4 +20,5 @@ class dc_foreman_proxy::params (
   $omapi_key,
   $omapi_secret,
   $use_tftp,
+  $trusted_hosts,
 ) {}

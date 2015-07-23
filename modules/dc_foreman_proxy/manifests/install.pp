@@ -45,7 +45,8 @@ class dc_foreman_proxy::install {
   }
 
   sudo::conf { 'foreman-proxy':
-    content => 'foreman-proxy ALL=(ALL) NOPASSWD:ALL',
+    content => "foreman-proxy ALL = NOPASSWD: /usr/bin/puppet cert *\n
+    Defaults:foreman-proxy !requiretty",
   }
 
 }
