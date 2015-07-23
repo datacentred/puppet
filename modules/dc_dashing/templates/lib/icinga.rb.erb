@@ -1,0 +1,132 @@
+require 'httparty'
+class IcingaClient
+  AUTH      = <%= @icinga_auth_key %>
+  ADDRESS   = <%= @icinga_url %>
+  ENDPOINT  = "http://#{AUTH}@#{ADDRESS}/state"
+
+  #host status codes
+  HOST_OK      = 0
+  HOST_DOWN    = 1
+  HOST_UNREACH = 2
+
+  #service status codes
+  SERV_OK        = 0
+  SERV_WARN      = 1
+  SERV_CRIT      = 2
+  SERV_UNKNOWN   = 3
+
+  #get Icinga state from API - see ENDPOINT constant.
+  def getFromAPI
+    response = HTTParty.get(ENDPOINT)
+    return JSON.parse(response.body)
+  end
+
+  #Get summary of Host Status across Icinga hosts
+  def get_host_status_summary
+    hosts = {
+      'OK' => 0,
+      'DOWN' => 0,
+      'UNREACHABLE' => 0
+    }
+    data = getFromAPI
+    data['content'].each do |host|
+      status = host[1]['current_state'].to_i
+      hosts[host_status(status)] += 1
+    end
+    return hosts
+  end
+
+  #Get summery of Service Status for each host 
+  def get_service_status_summary
+    services = {
+      'OK' => 0,
+      'WARNING' => 0,
+      'CRITICAL' => 0,
+      'UKNOWN' => 0
+    }
+    data = getFromAPI
+    data['content'].each do |host|
+      host[1]['services'].each do |serv|
+        status = serv[1]['current_state'].to_i
+        services[service_status(status)] += 1
+      end
+    end
+    return services
+  end
+  
+  #get every host and its status
+  def get_all_hosts
+    hosts = Hash.new
+    data = getFromAPI
+    data['content'].each do |host|
+      hosts[host[0]] = host_status(host[1]['current_state'])
+    end
+    return hosts
+  end
+
+  #return name and status of all down/unreachable hosts
+  def get_down_hosts
+    hosts = Hash.new
+    data = getFromAPI
+    data['content'].each do |host|
+      if host[1]['current_state'].to_i == HOST_OK
+        next
+      end
+      hosts[host[0]] = host_status(host[1]['current_state'])
+    end
+    return hosts
+  end
+
+  #Get status of all Down
+  def get_down_hosts_and_services
+    hostsAndServices = Hash.new
+    data = getFromAPI
+    data['content'].each do |host|
+      services = Array.new
+      host[1]['services'].each do |serv|
+        if serv[1]['current_state'].to_i == SERV_OK
+          next
+        end
+        services << {serv[0] => service_status(serv[1]['current_state'])}
+      end
+      if services.empty?  
+        next 
+      end
+      hostsAndServices[host[0]] = services 
+    end
+    return hostsAndServices
+  end
+
+  private
+    #takes a status code returns a status string
+    def host_status(code)
+      case code.to_i
+        when HOST_OK
+          return "OK"
+        when HOST_DOWN
+          return "DOWN"
+        when HOST_UNREACH
+          return "UNREACHABLE"
+        else
+          puts "got illegal value for host status code: \'#{code}\'"
+      end
+    end
+
+    #takes a status code returns a status string
+    def service_status(code)
+      case code.to_i
+        when SERV_OK
+          return "OK"
+        when SERV_WARN
+          return "WARNING"
+        when SERV_CRIT
+          return "CRITICAL"
+        when SERV_UNKNOWN
+          return "UNKNWOWN"
+        else
+          puts "got illegal value for service status code: \'#{code}\'"
+      end
+    end
+
+      
+end

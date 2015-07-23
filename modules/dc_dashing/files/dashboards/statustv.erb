@@ -1,0 +1,65 @@
+<script type='text/javascript'>
+$(function() {
+    Dashing.gridsterLayout('[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":2,"size_y":1},{"col":1,"row":3,"size_x":2,"size_y":1},{"col":1,"row":4,"size_x":3,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":2,"size_y":1},{"col":3,"row":5,"size_x":2,"size_y":1},{"col":1,"row":6,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1}]')
+    });
+</script>
+<% content_for :title do %>1080p dashboard<% end %>
+<div class="gridster">
+  <ul>
+    <%#Openstack%>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="openstack" data-view="Image" data-title="openstack-logo" data-image="/openstack-logo.png"  data-width="250px"></div>
+    </li>
+    
+    <li data-row="1" data-col="2" data-sizex="1" data-sizey="1">
+      <div data-id="number_vcpus_used" data-view="Number" data-title="Number of VCPU's used."></div>
+    </li>
+
+    <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="ram-hypervisor" data-view="Number" data-title="Total Hypervisor Memory Usage"></div>
+    </li>
+    <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="running_vms-hypervisor" data-view="Number" data-title="Number of Running VM's"></div>
+    </li>
+    <%#Ceph%>
+    <li data-row="2" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="ceph-logo" data-view="Image" data-title="ceph-logo" data-image="/ceph-logo.png"  data-width="250px"></div>
+    </li>
+    <li data-row="2" data-col="2" data-sizex="1" data-sizey="1">
+      <div data-id="cluster_space" data-view="Meter" data-title="Available Cluster Space" value="0"></div>
+    </li>
+    <li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
+      <div data-id="cluster_iops" data-view="Graph" data-title="Current IOPS"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="icinga-logo" data-view="Image" data-title="icinga-logo" data-image="/icinga-logo.png"  data-width="250px"></div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="3" data-sizey="1">
+      <div data-id="service-problems" data-view="Table" data-title="service-problems" class="icinga-latest-problems"></div>
+    </li>
+    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="host-problems" data-view="Table" data-title="host-problems" class="icinga-latest-problems"></div>
+    </li>
+    <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="host_status" data-view="Icinga" data-title="Host Summary"</div>
+    </li>
+    <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="service_status" data-view="Icinga" data-title="Service Summary"</div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="pagerduty_logo" data-view="Image" data-title="pagerduty-logo" data-image="/pagerduty-logo.png"  data-width="250px"></div>
+    </li>
+    <li data-row="1" data-col="3" data-sizex="2" data-sizey="1">
+      <div data-id="sirportly_logo" data-view="Image" data-title="sirportly-logo" data-image="/sirportly-logo.png"  data-width="250px"></div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="on_call" data-view="Text" data-title="On Call" value="Nobody!!"></div>
+    </li>
+
+    <li data-row="2" data-col="2" data-sizex="1" data-sizey="1">
+      <div data-id="triggered_incidents" data-view="Number" data-title="Triggered Incidents" value="0"></div>
+    </li>
+    <li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="acked_incidents" data-view="Number" data-title="Acknowledged Incidents" value="0"></div>
+  </ul>
+</div>

@@ -1,0 +1,21 @@
+<%#A Dashboard for Icinga detailing down services and hosts.%>
+<div class="gridster">
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="icinga-logo" data-view="Image" data-title="icinga-logo" data-image="/icinga-logo.png"  data-width="250px"></div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="3" data-sizey="1">
+      <div data-id="service-problems" data-view="Table" data-title="service-problems" class="icinga-latest-problems"></div>
+    </li>
+    <li data-row="2" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="host-problems" data-view="Table" data-title="host-problems" class="icinga-latest-problems"></div>
+    </li>
+    <li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+      <div data-id="host_status" data-view="Icinga" data-title="Host Summary"</div>
+    </li>
+    <li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
+      <div data-id="service_status" data-view="Icinga" data-title="Service Summary"</div>
+    </li>
+  </ul>
+
+</div>
