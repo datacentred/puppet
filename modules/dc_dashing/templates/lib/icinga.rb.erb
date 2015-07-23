@@ -32,7 +32,7 @@ class IcingaClient
     data['content'].each do |host|
       status = host[1]['current_state'].to_i
       hosts[host_status(status)] += 1
-        end
+    end
     return hosts
   end
 
@@ -57,7 +57,7 @@ class IcingaClient
   #get every host and its status
   def get_all_hosts
     hosts = Hash.new
-    data = self.getFromAPI
+    data = getFromAPI
     data['content'].each do |host|
       hosts[host[0]] = host_status(host[1]['current_state'])
     end
@@ -67,7 +67,7 @@ class IcingaClient
   #return name and status of all down/unreachable hosts
   def get_down_hosts
     hosts = Hash.new
-    data = self.getFromAPI
+    data = getFromAPI
     data['content'].each do |host|
       if host[1]['current_state'].to_i == HOST_OK
         next
@@ -78,10 +78,9 @@ class IcingaClient
   end
 
   #Get status of all Down
-  #TODO: add extra method to handle packing of hash
   def get_down_hosts_and_services
     hostsAndServices = Hash.new
-    data = self.getFromAPI
+    data = getFromAPI
     data['content'].each do |host|
       services = Array.new
       host[1]['services'].each do |serv|

@@ -18,7 +18,7 @@ def host_summarize(hosts, status_map)
     end
     total = total + states[state][:value]
   end
-  states['Total'] = { label: 'Total', value: "%d / %d" % [err, total] }
+  states['Total'] = { label: 'Total', value: "#{err}/#{total}"}
   return states
 end
 #summarise service status
@@ -51,9 +51,8 @@ SCHEDULER.every '30s', :first_in => 0 do |job|
       ]
     }
   ]
-  host_rows = Array.new
-  down_hosts.each do |host, status|
-    host_rows << {"cols" => [{"value" => host}, {"value" => status}] }
+  host_rows = down_hosts.collect do |host, status|
+    {"cols" => [{"value" => host}, {"value" => status}]}
   end
   send_event('host-problems', { hrows: host_headers, rows: host_rows})
   #down services

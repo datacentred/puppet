@@ -7,10 +7,9 @@ class DataProvider
     @sir      = SirportlyClient.new
     @icinga   = IcingaClient.new
   end
-
   #CEPH
   #All ceph methods return 3 sets of results for each of the ceph-mon nodes
-  def get_available_cluster_space
+  def get_available_clusterSpace
     target = "#{GRAPHITE_PREFIX}.ceph-mon-0.ceph-ceph.cluster.gauge.total_avail"
     @graphite.value(target, "-3min")
   end
@@ -68,7 +67,7 @@ class DataProvider
   def get_all_hosts
     return @icinga.get_all_hosts
   end
-  #TODO: REMOVE
+
   def get_total_number_of_hosts
     @icinga.get_all_hosts.length
   end

@@ -19,12 +19,11 @@ class PagerDutyClient
     return response.body
   end
   #get array of hashes for users on call
-  #TODO: filter to devops
   def get_on_call_status
     target = '/api/v1/users/on_call'
     data   = get_from_api(target)
     json   =  JSON.parse(data)
-    if json['total'].to_i <= 0
+    if is_empty(json)
       return []
     end
     #user['on_call'][0]['escalation_policy']['name']
@@ -42,7 +41,7 @@ class PagerDutyClient
     target = '/api/v1/incidents'
     data   = get_from_api(target)
     json   =  JSON.parse(data)
-    if json['total'].to_i <= 0
+    if is_empty(json)
       return []
     end
     incidents = Array.new
@@ -55,7 +54,7 @@ class PagerDutyClient
     target = '/api/v1/incidents?status=triggered'
     data   = get_from_api(target)
     json   =  JSON.parse(data)
-    if json['total'].to_i <= 0
+    if is_empty(json)
       return []
     end
     incidents = Array.new
@@ -68,7 +67,7 @@ class PagerDutyClient
     target = '/api/v1/incidents?status=acknowledged'
     data   = get_from_api(target)
     json   =  JSON.parse(data)
-    if json['total'].to_i <= 0
+    if is_empty(json)
       return []
     end
     incidents = Array.new
@@ -78,6 +77,14 @@ class PagerDutyClient
 
 
   private 
+    def is_empty(json_data)
+      if json_data['total'].to_i <= 0
+        return true
+      else
+        return false
+      end
+    end
+
     def get_user_status_info(user)
       data = Hash.new
       data['id']    = user['id']

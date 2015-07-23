@@ -24,6 +24,6 @@ SCHEDULER.every '30s', :first_in => 0 do |job|
     value: available_space,
     max: max_capacity,
     min: 0,
-    moreinfo: "There currently #{available_space}/#{max_capacity} available"})
+    moreinfo: "There currently is #{available_space}/#{max_capacity} available"})
   send_event('cluster_iops', points: iops)
 end
