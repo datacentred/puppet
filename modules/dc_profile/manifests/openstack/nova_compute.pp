@@ -19,6 +19,7 @@ class dc_profile::openstack::nova_compute {
   include ::nova::compute::rbd
   include ::nova::network::neutron
   include ::nova::scheduler::filter
+  include ::nova::config
 
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
@@ -50,7 +51,6 @@ class dc_profile::openstack::nova_compute {
   ceph::client { 'cinder':
     perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
   } ->
-
   # Install the admin key on each host as ::nova::compute::rbd has a requirement
   # that 'ceph auth' works without specifying the keyring.
   # TODO: The hard-coded horror goes away in the next generation ceph module
@@ -63,11 +63,6 @@ class dc_profile::openstack::nova_compute {
   Class['::ceph::config'] ->
   Ceph::Keyring['ceph.client.admin.keyring'] ->
   Class['::nova::compute::rbd']
-
-
-  nova_config { 'serial_console/enabled':
-    value => false,
-  }
 
   # Make sure the Ceph client configuration is in place
   # before we do any of the Nova rbd-related configuration, and
