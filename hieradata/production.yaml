@@ -8,13 +8,11 @@ classes:
 
 # icinga
 #
-icinga_ip: '10.10.192.147'
 icinga_instance_net_name: 'icinga_net'
 icinga_instance_flavor: 'dc1.1x0'
 
 # foreman
 #
-foreman_url: "foreman-2.%{domain}"
 foreman_icinga_pw: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAKoXaL+BKdj+reQaugTWXghw6dIKRLAeIGPZ2tMvtQv/PP/Ueke0YtfyE2jvnG8N3Gz3nmX3zl3BHORQVhx6MwdpFOx3lQDFXeUWMXw4UYIvdLiNtjQn1tetUXJ9DmAA+JOvt6yo4u2zQemMUBywuCyrNaQA8sgfTzr0fz86Qfq1DSl4ntIBopSO3UtZHTZl79pB4/KYFcNNt89XA3Y+GyT3ccNiWb6VHDOpWjafNobkhwPx/6IlztnTL72DTUWcue73/ZAMeJT62wolsruose/ytc0xZNRUGWRNl2E+I8iSMwksKIqhDMPsn72BuXm+h+iUobafxyyfyqzg29QVzhzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAkaoceKG2dW2w1dE6ynZ3WgBB4DvEyAL+mmRcjQDfFcCKT]
 nagios_api_host: 'api-icinga.sal01.datacentred.co.uk'
 nagios_api_username: 'foreman'
@@ -187,5 +185,3 @@ galera::local_ip: "%{::ipaddress}"
 
 # DHCP
 dc_dhcp::params::dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
-dc_dhcp::params::dhcp_icinga_ip: '10.10.192.13'
-
