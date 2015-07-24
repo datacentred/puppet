@@ -9,7 +9,7 @@ class DataProvider
   end
   #CEPH
   #All ceph methods return 3 sets of results for each of the ceph-mon nodes
-  def get_available_clusterSpace
+  def get_available_cluster_space
     target = "#{GRAPHITE_PREFIX}.ceph-mon-0.ceph-ceph.cluster.gauge.total_avail"
     @graphite.value(target, "-3min")
   end
