@@ -35,4 +35,8 @@ class dc_profile::log::dashing {
       }
     ]
   }
+
+  @@dns_resource { "dashen.${::domain}/CNAME":
+    rdata => $::fqdn,
+  }
 }
