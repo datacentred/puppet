@@ -27,14 +27,13 @@ loadbalancer::haproxy_listeners:
         - 'forwardfor'
       balance: 'source'
   radosgw_ssl:
-    ipaddress: '*'
     mode: 'http'
-    ports: '443'
-    bind_options:
-      - 'ssl'
-      - 'no-sslv3'
-      - 'crt /etc/ssl/private/STAR_storage_datacentred_io.crt'
-      - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    bind:
+      ':443':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/private/STAR_storage_datacentred_io.crt'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
     options:
       option:
         - 'tcpka'
