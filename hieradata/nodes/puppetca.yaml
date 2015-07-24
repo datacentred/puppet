@@ -1,0 +1,20 @@
+---
+classes:
+  - '::puppet::master::apache'
+
+puppet::ssl: false
+
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+  master:
+    environmentpath: '$confdir/environments'
+    storeconfigs: 'true'
+    storeconfigs_backend: 'puppetdb'
+    node_terminus: 'exec'
+    external_nodes: '/etc/puppet/node.rb'
+
+puppet::hiera: "%{hiera('puppet_master_hiera')}"

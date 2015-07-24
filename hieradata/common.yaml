@@ -407,3 +407,30 @@ omapi_secret: ENC[PKCS7,MIIBygYJKoZIhvcNAQcDoIIBuzCCAbcCAQAxggEhMIIBHQIBADAFMAAC
 omapi_key: 'omapi_key'
 omapi_port: '7911'
 foreman_admin_pw: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAmFbSE72YsFZmXd0CTZiPe7UUF1xdIIGkucVIJfF5DO3+Slv2nEISZeuCCuPZkTmKkPDBqOWZ3pxTviPOFetPa3Lzj1IOfJPfg6i2rv6z5XP1kBmaJKFppnPg2lXwZfV8DG363nQQ4kIYdHL1cvajW42DjtR4sWi9U7tKLFDUk+E2Zc9Pu00oAJLoqj6+eig4V1dAHD9697WVZYqIiB8Ica7wgsdoUj3Arq5Ky2CKyeej2iWyViSorPZEw9bY7AfgGTiyf+Iy3SibSo1QPV0k//32oVvbns/YVycuF8aHpt2KTPWrQwQNZOaTQ1woyHZCR4WNIsattvo4SLzQ8NTAWjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD0XqEUWWuCNnF6XbCIdBdfgBAfEmLvB4BH1Hd8KH5Tk5yi]
+
+puppet_master_hiera:
+  backends:
+    - 'eyaml'
+    - 'yaml'
+  yaml:
+    datadir: '"/etc/puppet/environments/%%{}{environment}/hieradata"'
+  eyaml:
+    extension: 'yaml'
+    datadir: '"/etc/puppet/environments/%%{}{environment}/hieradata"'
+    pkcs7_private_key: '/etc/puppet/keys/private_key.pkcs7.pem'
+    pkcs7_public_key: '/etc/puppet/keys/public_key.pkcs7.pem'
+  merge_behavior: 'deeper'
+  hierarchy:
+    - '"nodes/%%{}{hostname}"'
+    - '"platforms/%%{}{productname}"'
+    - '"%%{}{virtual}/architectures/%%{}{architecture}"'
+    - '"environments/%%{}{environment}/roles/%%{}{role}"'
+    - '"roles/%%{}{role}"'
+    - '"releases/%%{}{lsbdistcodename}/%%{}{architecture}/%%{}{calling_module}"'
+    - '"releases/%%{}{lsbdistcodename}"'
+    - '"osfamilies/%%{}{osfamily}"'
+    - '"%%{}{environment}"'
+    - '"environments/%%{}{environment}/modules/%%{}{calling_module}"'
+    - '"domains/%%{}{domain}/modules/%%{}{calling_module}"'
+    - '"modules/%%{}{calling_module}"'
+    - 'common'

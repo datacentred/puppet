@@ -27,18 +27,23 @@ class dc_icinga::client (
     $description = $::fqdn
   }
 
-  @@icinga::host { $::hostname:
-    ensure          => present,
-    description     => $::fqdn,
-    address         => $address,
-    use             => 'dc_host_generic',
-    hostgroups      => template('dc_icinga/hostgroups.erb'),
-    icon_image      => 'base/ubuntu.png',
-    icon_image_alt  => 'Ubuntu 14.04 LTS (trusty)',
-    notes           => $description,
-    statusmap_image => 'base/ubuntu.gd2',
-    vrml_image      => 'ubuntu.png',
-    tag             => $host_tag,
+  # TEMPORARY HACK
+  if $::domain == 'sal01.datacentred.co.uk' {
+
+    @@icinga::host { $::hostname:
+      ensure          => present,
+      description     => $::fqdn,
+      address         => $address,
+      use             => 'dc_host_generic',
+      hostgroups      => template('dc_icinga/hostgroups.erb'),
+      icon_image      => 'base/ubuntu.png',
+      icon_image_alt  => 'Ubuntu 14.04 LTS (trusty)',
+      notes           => $description,
+      statusmap_image => 'base/ubuntu.gd2',
+      vrml_image      => 'ubuntu.png',
+      tag             => $host_tag,
+    }
+
   }
 
 }

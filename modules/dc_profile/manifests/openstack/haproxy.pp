@@ -41,17 +41,17 @@ class dc_profile::openstack::haproxy {
 
   # HAProxy Statistics
   haproxy::listen { 'haproxy-stats':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '1936',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':1936' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'stats'  => [
         'enable',
         'uri /',
@@ -64,16 +64,16 @@ class dc_profile::openstack::haproxy {
 
   # Keystone Auth
   haproxy::listen { 'keystone-auth':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '5000',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':5000' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -82,16 +82,16 @@ class dc_profile::openstack::haproxy {
 
   # Keystone Admin
   haproxy::listen { 'keystone-admin':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '35357',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':35357' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -100,16 +100,16 @@ class dc_profile::openstack::haproxy {
 
   # Glance API
   haproxy::listen { 'glance-api':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '9292',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':9292' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -118,16 +118,16 @@ class dc_profile::openstack::haproxy {
 
   # Glance Registry
   haproxy::listen { 'glance-registry':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '9191',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':9191' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -136,16 +136,16 @@ class dc_profile::openstack::haproxy {
 
   # Neutron
   haproxy::listen { 'neutron':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '9696',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':9696' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -154,16 +154,16 @@ class dc_profile::openstack::haproxy {
 
   # Nova Compute
   haproxy::listen { 'nova-compute':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8774',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':8774' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -184,16 +184,16 @@ class dc_profile::openstack::haproxy {
 
   # Amazon EC2-compatible nova API endpoint
   haproxy::listen { 'nova-ec2':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8773',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':8773' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -202,16 +202,16 @@ class dc_profile::openstack::haproxy {
 
   # Cinder
   haproxy::listen { 'cinder':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8776',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':8776' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -220,16 +220,16 @@ class dc_profile::openstack::haproxy {
 
   # Horizon
   haproxy::listen { 'horizon':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '443',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':443' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -238,16 +238,16 @@ class dc_profile::openstack::haproxy {
 
   # NoVNC Proxy
   haproxy::listen { 'novncproxy':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '6080',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':6080' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -269,16 +269,16 @@ class dc_profile::openstack::haproxy {
 
   # Ceilometer
   haproxy::listen { 'ceilometer':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8777',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':8777' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -287,16 +287,16 @@ class dc_profile::openstack::haproxy {
 
   # Heat
   haproxy::listen { 'heat':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8004',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':8004' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'tcplog', 'forwardfor'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -306,16 +306,16 @@ class dc_profile::openstack::haproxy {
 
   # Heat CloudFormation
   haproxy::listen { 'heat-cfn':
-    ipaddress    => '*',
-    mode         => 'http',
-    ports        => '8000',
-    bind_options => [
-      'ssl',
-      'no-sslv3',
-      'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-      'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-    ],
-    options      => {
+    mode    => 'http',
+    bind    => {
+      ':8000' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
