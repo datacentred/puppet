@@ -80,13 +80,13 @@ dc_apt_mirror::mirrors:
     release:
       - 'trusty'
     components:
-      - '1.7'
+      - '1.8'
     mirror: "%{hiera('foreman_mirror_path')}"
   foreman_plugins_mirror:
     release:
       - 'plugins'
     components:
-      - '1.7'
+      - '1.8'
     mirror: "%{hiera('foreman_mirror_path')}"
   rsyslog_mirror:
     release:
