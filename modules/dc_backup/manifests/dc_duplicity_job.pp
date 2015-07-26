@@ -83,7 +83,7 @@ define dc_backup::dc_duplicity_job (
     hour               => $ceph_backup_hour,
     cloud              => 's3',
     remove_older_than  => '3M',
-    custom_endpoint    => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::hostname}_backup/",
+    custom_endpoint    => "s3://${datacentred_ceph_access_point}/datacentred/${backup_content}_${::fqdn}_backup/",
   }
 
 
@@ -99,7 +99,7 @@ define dc_backup::dc_duplicity_job (
     create_cron            => $create_cron,
     cloud                  => 's3',
     remove_older_than      => '1M',
-    folder                 => "${backup_content}_${::hostname}_backup",
+    folder                 => "${backup_content}_${::fqdn}_backup",
     encrypt_key_id         => $datacentred_encryption_key_short_id,
     sign_key_id            => $datacentred_signing_key_short_id,
   }
