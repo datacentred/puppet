@@ -103,6 +103,14 @@ class dc_profile::net::core_gateway {
     },
   }
 
+  haproxy::listen { 'ldaps':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':636' => []
+    },
+  }
+
   haproxy::listen { 'stats':
     collect_exported => false,
     mode             => 'http',
@@ -149,6 +157,7 @@ class dc_profile::net::core_gateway {
     ],
     options           => 'check',
   }
+
   haproxy::balancermember { 'puppet':
     listening_service => 'puppet',
     ports             => '8140',
@@ -185,6 +194,14 @@ class dc_profile::net::core_gateway {
     server_names      => 'puppetca.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.5',
     options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt',
+  }
+
+  haproxy::balancermember { 'ldaps':
+    listening_service => 'ldaps',
+    ports             => '636',
+    server_names      => 'bonjour.core.sal01.datacentred.co.uk',
+    ipaddresses       => '10.30.192.100',
+    options           => 'check',
   }
 
   keepalived::vrrp::instance { 'VI_1':
