@@ -28,7 +28,7 @@ class dc_profile::openstack::keepalived {
     state             => 'SLAVE',
     priority          => '100',
     virtual_router_id => $vrhash['os_api_int']['id'],
-    virtual_ipaddress => [ $vrhash['os_api_int']['vip'] ],
+    virtual_ipaddress => $vrhash['os_api_int']['vip'],
   }
 
   keepalived::vrrp::instance { 'os_api_ext':
@@ -36,7 +36,7 @@ class dc_profile::openstack::keepalived {
     state             => 'SLAVE',
     priority          => '100',
     virtual_router_id => $vrhash['os_api_ext']['id'],
-    virtual_ipaddress => [ $vrhash['os_api_ext']['vip'] ],
+    virtual_ipaddress => $vrhash['os_api_ext']['vip'],
   }
 
 }

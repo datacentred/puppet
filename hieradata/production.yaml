@@ -130,12 +130,10 @@ internal_sysmail_address: "sysmail@%{domain}"
 virtual_routers:
   os_api_int: # 'Internal' facing VIP for the OpenStack API endpoints
     id:      '1'
-    vip:     "%{hiera('os_api_vip')}"
-    vlanid:  160
+    vip:     "%{hiera('os_api_vip')}/24"
   os_api_ext: # 'External' VIP for OS API endpoints
     id:      '2'
-    vip:     '185.43.218.26'
-    vlanid:  514
+    vip:     '185.43.218.26/29'
 
 # HAProxy
 haproxy_stats_user: 'haproxy'

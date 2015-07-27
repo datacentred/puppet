@@ -7,8 +7,7 @@ loadbalancer::keepalived_interfaces:
   VI_1:
     interface: 'bond0'
     virtual_router_id: 1
-    virtual_ipaddress:
-      - "%{hiera('platform_services_logstash_vip')}"
+    virtual_ipaddress: "%{hiera('platform_services_logstash_vip')}/24"
 loadbalancer::haproxy_listeners:
   kibana:
     mode: 'http'
