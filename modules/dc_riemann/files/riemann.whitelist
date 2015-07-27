@@ -12,3 +12,4 @@ Can\'t create new lease file: Permission denied
 ^.*Failed to inspect.*of instance.*domain is in state of SHUTOFF
 ^.*Unknown base file: /var/lib/nova/instances/_base/*
 ^.*Couldn\'t obtain IP address ofinstance.*
+\[*\] IPMI message handler: BMC returned incorrect response, expected*
