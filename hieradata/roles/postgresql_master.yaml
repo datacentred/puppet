@@ -7,6 +7,8 @@ dc_postgresql::params::config_entries:
     value: 'hot_standby'
   archive_mode:
     value: 'on'
+  archive_command:
+    value: 'cd .'
   max_wal_senders:
     value: '10'
   wal_keep_segments:
