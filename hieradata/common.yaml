@@ -368,6 +368,7 @@ dc_ssh::config:
       - 'dhcp_sync_agent'
       - 'tftpsync'
       - 'nova'
+      - 'puppet'
 
 # galera and rabbitmq cluster details
 #
