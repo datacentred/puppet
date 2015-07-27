@@ -11,7 +11,6 @@
 # Sample Usage:
 #
 class dc_postfix (
-  $primary_mail_server,
   $internal_sysmail_address,
   $gateway = false,
 ){

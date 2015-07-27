@@ -38,6 +38,7 @@ class dc_postfix::gateway (
 
   @@dns_resource { "${::fqdn}/MX":
     rdata => '10',
+    tags  => $::domain,
   }
 
 }
