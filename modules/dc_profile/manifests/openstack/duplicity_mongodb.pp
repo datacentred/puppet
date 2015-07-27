@@ -12,7 +12,7 @@ class dc_profile::openstack::duplicity_mongodb (
   }
 
   cron { 'mongodb_dump_for_duplicity':
-    command  => '/usr/local/sbin/mongodb_dump_for_duplicity.sh',
+    command  => '/usr/local/sbin/mongodb_dump_for_duplicity.sh > /dev/null',
     user     => 'root',
     month    => '*',
     monthday => '*',
@@ -22,7 +22,7 @@ class dc_profile::openstack::duplicity_mongodb (
 
   file { '/usr/local/sbin/mongodb_dump_for_duplicity.sh':
     ensure  => file,
-    content => "#!/bin/bash\n/usr/bin/mongodump --quiet --db ceilometer --username ceilometer --password ${ceilometer_db_password} --out /var/backup/mongodb/",
+    content => "#!/bin/bash\n/usr/bin/mongodump --db ceilometer --username ceilometer --password ${ceilometer_db_password} --out /var/backup/mongodb/",
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
