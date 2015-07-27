@@ -7,3 +7,12 @@ dc_dhcp::pools:
     pxefile:     '/pxelinux.0'
     options:
       - 'interface-mtu 9000'
+  core-bmc:
+    network:     '10.30.128.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.30.128.254'
+    options:
+      - 'interface-mtu 9000'
+    parameters:
+      - 'deny client-updates'
+

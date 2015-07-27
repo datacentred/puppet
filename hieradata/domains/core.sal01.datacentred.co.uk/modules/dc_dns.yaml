@@ -17,3 +17,7 @@ dc_dns::dns_zones:
     soa:         "%{fqdn}"
     soaip:       "%{ipaddress}"
     reverse:     true
+  128.30.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
