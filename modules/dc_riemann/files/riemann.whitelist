@@ -13,3 +13,4 @@ Can\'t create new lease file: Permission denied
 ^.*Unknown base file: /var/lib/nova/instances/_base/*
 ^.*Couldn\'t obtain IP address ofinstance.*
 \[*\] IPMI message handler: BMC returned incorrect response, expected*
+\[-\] While synchronizing instance power states, found \d+ instances in the database and \d+ instances on the hypervisor
