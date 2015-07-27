@@ -4,8 +4,6 @@ dc_dns::static::records:
     rdata: "ns0.%{::domain}"
   "ntp1.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
-  "ldap.%{::domain}/CNAME":
-    rdata: 'bonjour.core.sal01.datacentred.co.uk'
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.30.192.250'

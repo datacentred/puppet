@@ -41,6 +41,7 @@ puppet::hiera:
     - '"osfamilies/%%{}{osfamily}"'
     - '"%%{}{environment}"'
     - '"environments/%%{}{environment}/modules/%%{}{calling_module}"'
+    - '"domains/%%{}{domain}"'
     - '"domains/%%{}{domain}/modules/%%{}{calling_module}"'
     - '"modules/%%{}{calling_module}"'
     - 'common'
