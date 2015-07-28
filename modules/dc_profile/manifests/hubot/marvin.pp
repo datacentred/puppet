@@ -18,5 +18,6 @@ class dc_profile::hubot::marvin {
 
   @@dns_resource { "hubot.${::domain}/CNAME":
     rdata => $::fqdn,
+    tags  => $::domain,
   }
 }

@@ -28,5 +28,6 @@ class dc_profile::net::phpipam {
 
   @@dns_resource { "phpipam.${::domain}/CNAME":
     rdata => $::fqdn,
+    tags  => $::domain,
   }
 }

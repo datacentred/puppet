@@ -112,7 +112,8 @@ class dc_graphite (
   if $graphite_manage_cname == true {
     # Add an appropriate CNAME RR
     @@dns_resource { "graphite.${::domain}/CNAME":
-      rdata => $::fqdn,
+      rdata  => $::fqdn,
+      tags   => $::domain,
     }
   }
 
