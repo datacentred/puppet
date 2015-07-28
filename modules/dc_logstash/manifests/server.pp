@@ -13,7 +13,6 @@ class dc_logstash::server (
   $logstash_grok_patterns_dir = $dc_logstash::params::logstash_grok_patterns_dir,
   $logcourier_version         = $dc_logstash::params::logcourier_version,
   $logcourier_port            = $dc_logstash::params::logcourier_port,
-  $logstash_cert_alias        = $dc_logstash::params::logstash_cert_alias,
   $logstash_syslog_port       = $dc_logstash::params::logstash_syslog_port,
   $logstash_beavertcp_port    = $dc_logstash::params::logstash_beavertcp_port,
   $elasticsearch_host         = $dc_logstash::params::elasticsearch_host,
