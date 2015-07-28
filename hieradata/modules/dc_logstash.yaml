@@ -7,7 +7,6 @@ dc_logstash::params::logstash_server: "%{hiera('logstash_server')}"
 dc_logstash::params::logcourier_port: '55516'
 dc_logstash::params::logstash_grok_patterns_dir: '/etc/logstash/patterns/grok'
 dc_logstash::params::logstash_syslog_port: '5544'
-dc_logstash::params::logstash_cert_alias: "%{hiera('logstash_server')}.%{::domain}"
 dc_logstash::params::riemann_dev_host: 'logtest'
 dc_logstash::params::logstash_beavertcp_port: '9999'
 dc_logstash::params::logstash_api_version: '1'

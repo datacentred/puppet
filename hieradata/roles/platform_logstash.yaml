@@ -8,8 +8,6 @@ classes:
 
 dc_kibana::elasticsearch_host: 'logstash'
 
-dc_logstash::server::logstash_cert_alias: 'logstash.%{::domain}'
-
 loadbalancer::members::member_hash:
   kibana:
     ipaddresses: "%{::ipaddress}"
