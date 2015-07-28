@@ -4,7 +4,6 @@ classes:
   - '::dc_profile::log::logstash'
   - '::dc_profile::log::logstash_lbmember'
   - '::dc_profile::log::riemann'
-  - '::dc_ssl::logstash'
 
 dc_kibana::elasticsearch_host: 'logstash'
 
