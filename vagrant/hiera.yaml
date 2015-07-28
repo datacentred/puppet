@@ -2,7 +2,7 @@
     - "nodes/%{::hostname}"
     - "platforms/%{productname}"
     - "%{virtual}/architectures/%{architecture}"
-    - "environments/%{::environment}/roles/%{::role}"
+    - "domains/%{::domain}/roles/%{::role}"
     - "roles/%{::role}"
     - "releases/%{::lsbdistcodename}/%{::architecture}/%{calling_module}"
     - "osfamilies/%{osfamily}"
