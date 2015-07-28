@@ -86,3 +86,21 @@ nova::scheduler::filter::scheduler_default_filters:
  - IsolatedHostsFilter
 nova::scheduler::filter::ram_allocation_ratio: 0.9
 nova::scheduler::filter::cpu_allocation_ratio: 8.0
+
+nova::config::nova_config:
+  serial_console/enabled:
+    value:  false
+  upgrade_levels/compute:
+    value:  'juno'
+  upgrade_levels/conductor:
+    value:  'juno'
+  upgrade_levels/cert:
+    value:  'juno'
+  upgrade_levels/console:
+    value:  'juno'
+  upgrade_levels/consoleauth:
+    value:  'juno'
+  upgrade_levels/network:
+    value:  'juno'
+  upgrade_levels/scheduler:
+    value:  'juno'
