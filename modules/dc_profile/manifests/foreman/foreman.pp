@@ -31,12 +31,6 @@ class dc_profile::foreman::foreman {
     require => Class['foreman::plugin::hooks'],
   }
 
-  # TODO: Remove this if we ever introduce a second load-balanced
-  # instance of Foreman
-  @@dns_resource { "foreman.${::domain}/CNAME":
-    rdata => $::fqdn,
-  }
-
   include dc_icinga::hostgroup_https
   include dc_icinga::hostgroup_foreman
 
