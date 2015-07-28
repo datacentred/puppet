@@ -13,6 +13,8 @@ class dc_profile::ceph::radosgw_lb {
   Class['loadbalancer']
 
   $domain      = 'storage.datacentred.io'
+  # WARNING: ensure this A record is resolvable from the puppet master
+  #          e.g. CloudFlare
   $myip        = get_ip_addr("${::hostname}.${domain}")
   $ceph_public = 'p1p1' # Internet facing
   $ceph_lb     = 'p1p2' # Internally facing
@@ -38,8 +40,6 @@ class dc_profile::ceph::radosgw_lb {
         "set iface[. = '${ceph_lb}'] ${ceph_lb}",
         "set iface[. = '${ceph_lb}']/family inet",
         "set iface[. = '${ceph_lb}']/method dhcp",
-        # Now set via DHCP
-        "rm iface[. = '${ceph_lb}']/pre-up '/sbin/ip link set ${ceph_lb} mtu 9000'",
         "set iface[. = '${ceph_lb}']/post-up[1] 'ip route add 10.10.0.0/16 via 10.10.9.1'",
         "set iface[. = '${ceph_lb}']/post-up[2] 'ip route add 10.253.2.0/24 via 10.10.9.1'",
         "set iface[. = '${ceph_lb}']/post-down[1] 'ip route del 10.10.0.0/16 via 10.10.9.1'",
