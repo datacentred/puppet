@@ -21,14 +21,6 @@ ntp::restrict:
   - '127.0.0.1'
   - '-6 ::1'
 
-dc_dns::masters:
-  - '10.10.192.250'
-
-dhcp::failover::role: 'secondary'
-dhcp::failover::peer_address: '10.10.192.250'
-
-dc_dhcp::zonemaster: '10.10.192.250'
-
 dc_foreman_proxy::use_dns: true
 dc_foreman_proxy::use_dhcp: true
 dc_foreman_proxy::use_tftp: true
