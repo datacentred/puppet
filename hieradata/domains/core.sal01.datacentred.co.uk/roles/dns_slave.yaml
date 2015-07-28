@@ -1,0 +1,5 @@
+---
+dc_dns::masters:
+  - '10.30.192.250'
+
+dc_dhcp::zonemaster: '10.30.192.250'
