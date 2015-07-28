@@ -10,6 +10,7 @@ puppet::conf:
     vardir: '/var/lib/puppet'
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
+    reports: 'foreman'
   master:
     ca: 'false'
     environmentpath: '$confdir/environments'
@@ -41,6 +42,7 @@ puppet::hiera:
     - '"osfamilies/%%{}{osfamily}"'
     - '"%%{}{environment}"'
     - '"environments/%%{}{environment}/modules/%%{}{calling_module}"'
+    - '"domains/%%{}{domain}"'
     - '"domains/%%{}{domain}/modules/%%{}{calling_module}"'
     - '"modules/%%{}{calling_module}"'
     - 'common'
