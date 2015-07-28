@@ -11,7 +11,6 @@
 # Sample Usage:
 #
 class dc_profile::auth::radius::server (
-  $cname,
   $secret,
 ){
   include ::radius
@@ -44,9 +43,4 @@ class dc_profile::auth::radius::server (
       secret  => $secret,
   }
 
-  if $cname == true {
-    @@dns_resource { "radius.${::domain}/CNAME":
-      rdata => $::fqdn,
-    }
-  }
 }
