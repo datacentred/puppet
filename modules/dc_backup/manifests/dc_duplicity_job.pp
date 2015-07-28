@@ -64,7 +64,7 @@ define dc_backup::dc_duplicity_job (
     }
   }
 
-ensure_resource('tidy', "duplicity_signature_cache_${name}", {'path' => '/root/.cache/duplicity/', 'age' => '30d', 'recurse' => 'true', 'rmdirs'  => 'true' })
+ensure_resource('tidy', "duplicity_signature_cache_${name}", {'path' => '/root/.cache/duplicity/', 'age' => '30d', 'recurse' => true, 'rmdirs'  => true })
 
   duplicity { "${name}_datacentred_ceph":
     ensure             => $ensure_dc_ceph,
