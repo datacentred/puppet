@@ -10,7 +10,6 @@ dc_bmc::bmc_admin_passwd: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIB
 dc_bmc::bmc_admin_name: 'enoch' 
 dc_bmc::ilo_net_settings_file: '/etc/iloconfig.xml' 
 dc_bmc::ilo_net_settings_log: '/tmp/ilosettings.log' 
-dc_bmc::radius_server: "radius.%{::domain}"
 dc_bmc::radius_secret: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAe0oYprmJBfgkOUribWTU3ld50acu1AFOSjHe4mV1tSurSstLdU3rHRskZ95593BwmiCK1NuKZe0i9A7jAsphDo4sg80dYtNb2o66K3FfsVUm3VL5oq0CgkPINn0dtdrR1vqSEF+kNz64UChUK22eFPl75l68znhV4MT9wX28cUVTUnb0c63FarLjYcvwjXy63StTSsqA1XrqkP5f3uhTlYlwGOPqUHYZkDpB1Rdg/svGegw2SXZ/ciEEH5LXQQRMfyyACjnGIelT1iE1WhaupRe9swDpIuyOl169DQkbPYKUstGP6UINiAOvZiCgNFXRjCsLvR99vxp4RNWZMnHmxTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBA2tljdW+Za85zJfCya6g7wgBA+InCjxCUb85Zdd+7ZjAYF]
 dc_bmc::radius_port: '1812'
 dc_bmc::radius_timeout: '3'

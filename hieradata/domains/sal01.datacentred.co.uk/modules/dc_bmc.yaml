@@ -1,3 +1,4 @@
 ---
 dc_bmc::omapi_host: '10.10.192.250'
 dc_bmc::bmc_subnet: '10.10.128.0'
+dc_bmc::radius_server: '10.10.192.135'
