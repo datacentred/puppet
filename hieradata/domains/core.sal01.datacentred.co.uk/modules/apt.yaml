@@ -1,5 +1,12 @@
 ---
 apt::sources:
+  dell_openmanage_mirror:
+    location: "http://%{hiera('dell_openmanage_mirror_path')}"
+    release: 'trusty'
+    repos: 'openmanage'
+    key: '42550ABD1E80D7C1BC0BAD851285491434D8786F'
+    key_source: 'http://pool.sks-keyservers.net:11371/pks/lookup?op=get&search=0x1285491434D8786F'
+    include_src: false
   foreman_mirror:
     location: "http://%{hiera('foreman_mirror_path')}"
     release: 'trusty'
