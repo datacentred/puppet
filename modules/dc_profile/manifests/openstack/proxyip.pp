@@ -21,6 +21,8 @@ class dc_profile::openstack::proxyip {
   # which we obtain from DNS.  You need to ensure that this interface
   # is already configured in Foreman in order for the necessary RR
   # to exist.
+  # WARNING: ensure this A record is resolvable from the puppet master
+  #          e.g. CloudFlare
   $ip       = get_ip_addr("${::hostname}.${domain}")
 
   augeas { $int_if:
