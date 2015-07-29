@@ -79,11 +79,6 @@ class dc_profile::net::core_gateway {
         'verify optional',
       ],
     },
-    options          => {
-      'http-request' => [
-        'set-header X-Forwarded-Proto https',
-      ],
-    },
   }
 
   # Checks 'check' and 'check check-ssl' are disabled because the Layer 6 response
@@ -182,10 +177,10 @@ class dc_profile::net::core_gateway {
 
   haproxy::balancermember { 'foreman':
     listening_service => 'foreman',
-    ports             => '80',
+    ports             => '443',
     server_names      => 'foreman0.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.10',
-    options           => 'check',
+    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt',
   }
 
   haproxy::balancermember { 'foreman-puppet-proxy':
