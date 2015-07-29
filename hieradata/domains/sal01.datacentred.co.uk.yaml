@@ -1,7 +1,4 @@
 ---
-# Foreman
-#
-foreman_url: "foreman-2.%{domain}"
 # Icinga
 # 
 icinga_ip: '10.10.192.147'
