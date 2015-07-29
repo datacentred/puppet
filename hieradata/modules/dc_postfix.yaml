@@ -1,6 +1,5 @@
 ---
 dc_postfix::internal_sysmail_address: "%{hiera('internal_sysmail_address')}"
-dc_postfix::primary_mail_server: 'mx0.sal01.datacentred.co.uk'
 dc_postfix::gateway::external_sysmail_address: 'devops@datacentred.co.uk'
 dc_postfix::gateway::smarthostuser: 'autobot@datacentred.co.uk'
 dc_postfix::gateway::smarthostpass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAbKw45IdHA2EDc/mjegg7rjC4TonjIIHzlzVlWaZ5p+cft73VSzEFKrkAw4Zqk5CZev50TiE+uNww3Sz9Eyo3zhtVflAz/At5AcyaOO2dMagjgzrrAgOlxs2tlkxfeAy885aJfFRdmnUlojM/75E8N6hgfPzDTRp36iOPH9OZzIC2hwnbYBW2tdRxcDyut5k0HsXk3Mp0xRkzi8+GWTtqhTe7ZkildnnV/t1vPLBNXy7YHI1990Bk69XXsvZg13LZi5rDMnSiVX6CwCnzOeGQeS5NaVdZnEwjByj8X34EiyUYw5Gk++yDvYZ+4pNvbdWQIFfFB9cd1zjNFV7xQXtRMDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDKdeK8GGvZLWJ9oPjSzjaogBCDPu48r4vTfYfXBXTNjOXQ]
@@ -10,11 +9,11 @@ dc_postfix::gateway::restrictions_config_hash:
     'smtpd_helo_required':
         value: 'yes'
     'smtpd_helo_restrictions':
-        value: 'permit_mynetworks, reject_non_fqdn_helo_hostname, reject_invalid_helo_hostname, permit'
+        value: 'reject_non_fqdn_helo_hostname, reject_invalid_helo_hostname, permit'
     'smtpd_recipient_restrictions':
-        value: 'reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit_mynetworks, permit'
+        value: 'reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, reject_unauth_destination, permit'
     'smtpd_sender_restrictions':
-        value: 'permit_mynetworks, reject_non_fqdn_sender, reject_unknown_sender_domain, permit'
+        value: 'reject_non_fqdn_sender, reject_unknown_sender_domain, permit'
 dc_postfix::gateway::rate_limit_config_hash:
     'default_destination_rate_delay':
         value: '5s'
@@ -44,13 +43,3 @@ dc_postfix::gateway::networks_config_hash:
         value: "localhost.localdomain, localhost, %{::fqdn}"
     'inet_protocols':
         value: 'ipv4'
-dc_postfix::networks::client_networks:
-  - '10.10.192.0/24'  # ark-platform-services
-  - '10.10.128.0/24'  # ark-bmc
-  - '10.10.160.0/24'  # ark-compute-management
-  - '10.10.96.0/24'   # ark-storage-backend
-  - '10.10.129.0/24'  # ark-rack-infrastructure
-  - '10.10.104.0/24'  # ark-storage-frontend
-  - '10.10.112.0/24'  # ark-storage-loadbalance
-  - '10.253.2.0/24'   # vpn clients
-  - '10.10.9.0/24'    # ark-storage-api

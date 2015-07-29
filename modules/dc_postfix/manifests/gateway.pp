@@ -36,8 +36,4 @@ class dc_postfix::gateway (
   include dc_icinga::hostgroup_smtp
   include dc_icinga::hostgroup_postfix
 
-  @@dns_resource { "${::fqdn}/MX":
-    rdata => '10',
-  }
-
 }

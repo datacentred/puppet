@@ -50,6 +50,12 @@ dc_dns::static::records:
     rdata: "puppet-the-next-generation.%{::domain}"
   "api-icinga.%{::domain}/CNAME":
     rdata: "icinga.%{::domain}"
+  "mx0.%{::domain}/MX":
+    rdata: '10'
+  "mx1.%{::domain}/MX":
+    rdata: '10'
+
+
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.10.192.250'
