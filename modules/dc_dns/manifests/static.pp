@@ -4,8 +4,7 @@
 #
 class dc_dns::static {
 
-  # TODO: Delete me
-  Dns_resource <<||>>
+  Dns_resource <<| tag == $::domain |>>
 
   $records = hiera_hash('dc_dns::static::records')
 

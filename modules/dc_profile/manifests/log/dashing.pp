@@ -38,5 +38,6 @@ class dc_profile::log::dashing {
 
   @@dns_resource { "dashing.${::domain}/CNAME":
     rdata => $::fqdn,
+    tags  => $::domain,
   }
 }

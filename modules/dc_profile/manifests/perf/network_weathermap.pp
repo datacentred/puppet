@@ -27,5 +27,6 @@ class dc_profile::perf::network_weathermap {
 
   @@dns_resource { "weathermap.${::domain}/CNAME":
     rdata => $::fqdn,
+    tags  => $::domain,
   }
 }
