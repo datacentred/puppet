@@ -16,4 +16,7 @@ foreman::oauth_consumer_key:    "%{hiera('foreman_oauth_consumer_key')}"
 foreman::oauth_consumer_secret: "%{hiera('foreman_oauth_consumer_secret')}"
 foreman::plugin::discovery::tftp_root: "%{hiera('tftp_dir')}"
 foreman::plugin::discovery::install_images: false
-foreman::puppetmaster::foreman_url: "https://%{hiera('foreman_url')}"
+# DO NOT CHANGE THIS
+# A Foreman SNAFU dictates that X509 alternative names apparently don't
+# work.  Needs investigation
+foreman::puppetmaster::foreman_url: "https://foreman0.%{::domain}"
