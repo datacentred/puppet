@@ -33,7 +33,7 @@ class dc_profile::perf::grafana {
 
   @@dns_resource { "grafana.${::domain}/CNAME":
     rdata => $::fqdn,
-    tags  => $::domain,
+    tag   => $::domain,
   }
 
   dc_backup::dc_duplicity_job { "${::hostname}_grafana_db" :
