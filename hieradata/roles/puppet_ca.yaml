@@ -1,5 +1,6 @@
 ---
 classes:
+  - '::dc_profile::puppet::puppet_ca'
   - '::dc_profile::puppet::puppet_master'
 
 puppet::conf:
@@ -8,8 +9,8 @@ puppet::conf:
     vardir: '/var/lib/puppet'
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
+    reports: 'foreman'
   master:
-    ca: 'false'
     environmentpath: '$confdir/environments'
     node_terminus: 'exec'
     external_nodes: '/etc/puppet/node.rb'
