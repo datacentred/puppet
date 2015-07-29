@@ -8,6 +8,8 @@ dc_postfix::gateway::restrictions_config_hash:
         value: 'yes'
     'smtpd_helo_required':
         value: 'yes'
+    'smtpd_relay_restrictions':
+        value: 'permit_sasl_authenticated defer_unauth_destination'
     'smtpd_helo_restrictions':
         value: 'reject_non_fqdn_helo_hostname, reject_invalid_helo_hostname, permit'
     'smtpd_recipient_restrictions':
