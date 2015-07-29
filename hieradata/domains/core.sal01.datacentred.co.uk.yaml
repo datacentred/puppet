@@ -1,4 +1,7 @@
 ---
+# Foreman
+#
+foreman_url: "foreman.%{domain}"
 # DHCP
 #
 dc_dhcp::params::dhcp_icinga_ip: '10.30.192.13'
