@@ -8,6 +8,7 @@ puppet::conf:
     vardir: '/var/lib/puppet'
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
+    show_diff: 'true'
   master:
     ca: 'false'
     environmentpath: '$confdir/environments'

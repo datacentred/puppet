@@ -9,7 +9,7 @@ puppet::conf:
     vardir: '/var/lib/puppet'
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
-    reports: 'foreman'
+    show_diff: 'true'
   master:
     environmentpath: '$confdir/environments'
     node_terminus: 'exec'

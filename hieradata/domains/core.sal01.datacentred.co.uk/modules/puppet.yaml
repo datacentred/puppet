@@ -5,5 +5,4 @@ puppet::conf:
     vardir: '/var/lib/puppet'
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
-  agent:
-    environment: "%{environment}"
+    show_diff: 'true'
