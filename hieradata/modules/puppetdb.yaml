@@ -8,7 +8,7 @@ puppetdb::server::database_name:      "%{hiera('puppetdb_database')}"
 puppetdb::server::database_username:  "%{hiera('puppetdb_user')}"
 puppetdb::server::database_password:  "%{hiera('puppetdb_pass')}"
 
-puppetdb::master::config::puppetdb_server: "puppetdb0.%{::domain}"
+puppetdb::master::config::puppetdb_server: "puppetdb"
 puppetdb::master::config::strict_validation: false
 puppetdb::master::config::manage_routes: true
 puppetdb::master::config::manage_storeconfigs: false

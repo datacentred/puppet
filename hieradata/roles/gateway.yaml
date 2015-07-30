@@ -8,4 +8,4 @@ puppet::conf:
     vardir: '/var/lib/puppet'
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
-    dns_alt_names: 'puppet,puppet.core.sal01.datacentred.co.uk,puppet.datacentred.services,foreman,foreman.core.sal01.datacentred.co.uk,foreman.datacentred.services'
+    dns_alt_names: 'puppet,puppet.core.sal01.datacentred.co.uk,puppet.datacentred.services,puppetdb,puppetdb.core.sal01.datacentred.co.uk,foreman,foreman.core.sal01.datacentred.co.uk,foreman.datacentred.services'
