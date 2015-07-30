@@ -38,6 +38,22 @@ class dc_profile::net::core_gateway {
     },
   }
 
+  haproxy::listen { 'puppetdb':
+    collect_exported => false,
+    mode             => 'http',
+    bind             => {
+      ':8081' => [
+        'ssl',
+        'no-sslv3',
+        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
+        'crt /etc/ssl/private/puppet.crt',
+        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'verify none',
+      ],
+    },
+    options          => [],
+  }
+
   # Terminate SSL for web traffic.  Distribute to the relevant back-end
   # based on the host name prefix.  Public facing connections only e.g.
   # no firewalling as they are dependant on external services
@@ -79,6 +95,7 @@ class dc_profile::net::core_gateway {
         'verify optional',
       ],
     },
+    options          => [],
   }
 
   # Checks 'check' and 'check check-ssl' are disabled because the Layer 6 response
@@ -96,6 +113,7 @@ class dc_profile::net::core_gateway {
         'verify none',
       ],
     },
+    options          => [],
   }
 
   haproxy::listen { 'ldaps':
@@ -104,6 +122,7 @@ class dc_profile::net::core_gateway {
     bind             => {
       ':636' => []
     },
+    options          => [],
   }
 
   haproxy::listen { 'stats':
@@ -167,6 +186,18 @@ class dc_profile::net::core_gateway {
     options           => 'check',
   }
 
+  haproxy::balancermember { 'puppetdb':
+    listening_service => 'puppetdb',
+    ports             => '8081',
+    server_names      => [
+      'puppetdb0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.9',
+    ],
+    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
+  }
+
   haproxy::balancermember { 'jenkins':
     listening_service => 'jenkins',
     ports             => '8080',
@@ -180,7 +211,7 @@ class dc_profile::net::core_gateway {
     ports             => '443',
     server_names      => 'foreman0.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.10',
-    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt',
+    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
   }
 
   haproxy::balancermember { 'foreman-puppet-proxy':
@@ -188,7 +219,7 @@ class dc_profile::net::core_gateway {
     ports             => '8443',
     server_names      => 'puppetca.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.5',
-    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt',
+    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
   }
 
   haproxy::balancermember { 'ldaps':
