@@ -18,6 +18,10 @@ dc_yum::repo:
     name: 'ceph-noarch'
     baseurl: 'http://ceph.com/rpm-hammer/rhel7/noarch'
     gpgkey: 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
+  epel:
+    name: 'epel'
+    baseurl: 'http://download.fedoraproject.org/pub/epel/7/$basearch'
+    gpgkey: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
   epel-testing:
     name: 'epel-testing'
     baseurl: 'http://download.fedoraproject.org/pub/epel/testing/7/$basearch'
@@ -27,7 +31,6 @@ dc_yum::repo:
     name: 'vbernat'
     baseurl: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/'
     gpgkey: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/repodata/repomd.xml.key'
-
 
 # These values should only be picked up at this point when we're in a Vagrant VM
 network_node_extif: 'ens33'

@@ -12,28 +12,36 @@
 #
 class dc_profile::perf::collectd {
 
+  ensure_packages('sysstat')
+
   class { '::collectd':
     # Convert the hostname into Graphite friendly folder structure
     #   Before: test.box.com
     #   After:  com.box.test
-    hostname      => join(reverse(split($::fqdn, '[.]')), '.'),
-    fqdnlookup    => false,
-    purge         => true,
-    recurse       => true,
-    purge_config  => true,
+    hostname => join(reverse(split($::fqdn, '[.]')), '.'),
   }
 
-  class { 'collectd::plugin::syslog':
-    log_level => 'error',
+  include ::collectd::plugin::syslog
+  include ::collectd::plugin::write_graphite
+  include ::collectd::plugin::load
+  include ::collectd::plugin::memory
+  include ::collectd::plugin::cpu
+
+  include ::dc_collectd::agent::iostat
+
+  class { '::collectd::plugin::disk':
+    disks => ['/^dm/'],
   }
 
-  class { 'collectd::plugin::write_graphite':
-    graphitehost      => hiera('graphite_server'),
-    graphiteprefix    => 'collectd.',
-    escapecharacter   => '.',
-    storerates        => false,
-    separateinstances => true,
-    protocol          => 'tcp',
+  class { '::collectd::plugin::df':
+    mountpoints => split($::mounts, ','),
+  }
+
+  class { '::collectd::plugin::interface':
+    # Interface names returned from Facter need to have the underscores
+    # swapped back to hyphens.  We then reject OpenStack-specific interface
+    # names, i.ve the OVS-specific plumbing.
+    interfaces => reject(regsubst(regsubst(split($::interfaces, ','), 'br_', 'br-', 'G'), 'ovs_', 'ovs-', 'G'), '^qvo.*|^qvb.*|^tap.*|^qbr.*'),
   }
 
 }
