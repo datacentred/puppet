@@ -7,3 +7,5 @@ dc_icinga::server::gen_static_hosts::hostdefs:
     logstash:
         address: "%{hiera('platform_services_logstash_vip')}"
         description: 'logstash.sal01.datacentred.co.uk'
+
+dc_icinga::client::host_tag: "%{::domain}_%{::environment}"
