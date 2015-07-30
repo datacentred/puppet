@@ -46,15 +46,16 @@ dc_dns::static::records:
     rdata: "ns0.%{::domain}"
   "ntp1.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
-  "puppet.%{::domain}/CNAME":
-    rdata: "puppet-the-next-generation.%{::domain}"
   "api-icinga.%{::domain}/CNAME":
     rdata: "icinga.%{::domain}"
   "mx0.%{::domain}/MX":
     rdata: '10'
   "mx1.%{::domain}/MX":
     rdata: '10'
-
+  "foreman.%{::domain}/CNAME":
+    rdata: "foreman.datacentred.services."
+  "puppet.%{::domain}/CNAME":
+    rdata: "puppet.datacentred.services."
 
 
 dc_dns::nameservers:
