@@ -4,7 +4,7 @@ classes:
   - '::dc_elasticsearch::lbmember'
 
 dc_elasticsearch::es_hash:
-  cluster.name: 'logstash_platform_services'
+  cluster.name: 'logstash_core_services' #logstash_core?
   indices.memory.index_buffer_size: '50%'
   index.translog.flush_threshold_ops: '50000'
   threadpool.search.type: 'fixed'

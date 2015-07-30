@@ -34,14 +34,14 @@ dc_dns::static::records:
     rdata: '185.43.218.237'
   'status.datacentred.io/CNAME':
     rdata: 'domain.status.io'
-  'logstash.%{::domain}/A':
-    rdata: "%{hiera('platform_services_logstash_vip')}"
+  'logstash.core.sal01.datacentred.co.uk/A': #ALSO NEEDS FIXING
+    rdata: "%{hiera('core_services_logstash_vip')}" #AROOOOOO
   'vboxes.%{::domain}/CNAME':
     rdata: "bigyellow.%{::domain}"
   'mirror.%{::domain}/CNAME':
     rdata: "bigyellow.%{::domain}"
-  'kibana.%{::domain}/CNAME':
-    rdata: "logstash.%{::domain}"
+  'kibana.%{::domain}/CNAME': #AROOOOOOO
+    rdata: "logstash.%{::domain}" #WHAT DO ABOUT THIS
   "ntp0.%{::domain}/CNAME":
     rdata: "ns0.%{::domain}"
   "ntp1.%{::domain}/CNAME":

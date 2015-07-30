@@ -5,7 +5,7 @@
   },
   "network": {
     "transport": "tls",
-    "servers": [ "<%= @logstash_server %>.<%= @domain %>:<%= @logcourier_port %>" ],
+    "servers": [ "<%= @logstash_server %>:<%= @logcourier_port %>" ],
     "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
     "ssl key": "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem",
     "ssl ca": "/var/lib/puppet/ssl/certs/ca.pem",

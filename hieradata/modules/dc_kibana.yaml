@@ -1,2 +1,2 @@
 ---
-dc_kibana::elasticsearch_host: 'logstash0'
+dc_kibana::elasticsearch_host: "%{hiera('logstash_server')}"

@@ -7,7 +7,7 @@ loadbalancer::keepalived_interfaces:
   VI_1:
     interface: 'bond0'
     virtual_router_id: 1
-    virtual_ipaddress: "%{hiera('platform_services_logstash_vip')}/24"
+    virtual_ipaddress: "%{hiera('core_logstash_vip')}/24" #tbh this entire file can be moved, I mean the load balancer is going to go in front of new logstash in core
 loadbalancer::haproxy_listeners:
   kibana:
     mode: 'http'
