@@ -42,10 +42,6 @@ dc_dns::static::records:
     rdata: "bigyellow.%{::domain}"
   'kibana.%{::domain}/CNAME':
     rdata: "logstash.%{::domain}"
-  "ntp0.%{::domain}/CNAME":
-    rdata: "ns0.%{::domain}"
-  "ntp1.%{::domain}/CNAME":
-    rdata: "ns1.%{::domain}"
   "puppet.%{::domain}/CNAME":
     rdata: "puppet-the-next-generation.%{::domain}"
   "api-icinga.%{::domain}/CNAME":

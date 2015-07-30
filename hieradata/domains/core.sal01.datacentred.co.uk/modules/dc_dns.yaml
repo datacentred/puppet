@@ -1,13 +1,15 @@
 ---
 dc_dns::static::records:
-  "ntp0.%{::domain}/CNAME":
-    rdata: "ns0.%{::domain}"
-  "ntp1.%{::domain}/CNAME":
-    rdata: "ns1.%{::domain}"
   "mx0.%{::domain}/MX":
     rdata: '10'
   "mx1.%{::domain}/MX":
     rdata: '10'
+  "puppet.%{::domain}/A":
+    rdata: '10.30.192.2'
+  "puppetdb.%{::domain}/A":
+    rdata: '10.30.192.2'
+  "foreman.%{::domain}/A":
+    rdata: '10.30.192.2'
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.30.192.250'
