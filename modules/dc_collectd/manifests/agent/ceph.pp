@@ -7,7 +7,8 @@ class dc_collectd::agent::ceph(
 
   file { '/usr/lib/collectd/ceph' :
     ensure  => directory,
-    path    => '/usr/lib/collectd/ceph',
+    owner   => 'root',
+    group   => 'root',
     require => Package['collectd'],
     source  => 'puppet:///modules/dc_collectd/ceph',
     recurse => true,
