@@ -36,9 +36,15 @@ class dc_profile::perf::grafana {
     tag   => $::domain,
   }
 
+  dc_backup::dc_duplicity_job { "${::fqdn}_grafana_db" :
+    source_dir     => '/var/lib/grafana/',
+    backup_content => 'grafana_db',
+  }
+  #remove me once old hostname based scripts have been blatted
   dc_backup::dc_duplicity_job { "${::hostname}_grafana_db" :
     source_dir     => '/var/lib/grafana/',
     backup_content => 'grafana_db',
+    cloud          => 'none',
   }
 
 }
