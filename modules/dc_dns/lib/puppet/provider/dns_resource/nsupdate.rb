@@ -119,7 +119,7 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
             typeclass = Resolv::DNS::Resource::IN::MX
             domain = name.split('.', 2)[-1]
             mxrecords = r.getresources(domain, typeclass)
-            @dnsres = mxrecords.select { |v| v.exchange.to_s == name }.first || false
+            @dnsres = mxrecords.select { |v| v.exchange.to_s == name }.first || return false
         else
             raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
         end
