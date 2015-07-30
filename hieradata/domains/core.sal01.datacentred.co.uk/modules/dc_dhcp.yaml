@@ -8,6 +8,12 @@ dc_dhcp::pools:
     options:
       - 'interface-mtu 9000'
   core-rack-infrastructure:
+    network:     '10.30.129.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.30.129.1'
+    options:
+      - 'interface-mtu 9000'
+  core-bmc:
     network:     '10.30.128.0'
     mask:        '255.255.255.0'
     gateway:     '10.30.128.1'
