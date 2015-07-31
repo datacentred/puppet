@@ -26,6 +26,7 @@ class dc_postfix::gateway (
   class { 'postfix':
     smtp_listen         => 'all',
     root_mail_recipient => $internal_sysmail_address,
+    mastercf_source     => 'puppet:///modules/dc_postfix/master.cf'
   }
 
   contain dc_postfix::virtual
