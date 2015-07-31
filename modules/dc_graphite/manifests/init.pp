@@ -23,7 +23,7 @@ class dc_graphite (
   $mysql_pw,
 ){
 
-  include apache
+  include ::apache
 
   # Another hack as the Graphite module we're using is hardcoded to install
   # everything under /opt, so link it to where we need it
@@ -113,7 +113,7 @@ class dc_graphite (
     # Add an appropriate CNAME RR
     @@dns_resource { "graphite.${::domain}/CNAME":
       rdata => $::fqdn,
-      tags  => $::domain,
+      tag   => $::domain,
     }
   }
 
