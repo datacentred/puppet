@@ -28,6 +28,14 @@ apt::sources:
     key: '882F7199B20F94BD7E3E690EFADD8D64B1275EA3'
     key_source: 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp'
     include_src: false
+  pagerduty:
+    location: 'http://packages.pagerduty.com/pdagent deb/'
+    release: ''
+    repos: ''
+    include_src: false
+    key: '34241874978E85F344483D714037B2209E65C6CB'
+    key_source: 'http://packages.pagerduty.com/GPG-KEY-pagerduty'
+    include_src: false
   puppetlabs_mirror:
     location: "http://%{hiera('puppet_mirror_path')}"
     release: 'trusty'

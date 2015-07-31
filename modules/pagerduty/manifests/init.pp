@@ -1,20 +1,19 @@
 # == Class: pagerduty
 #
 class pagerduty {
+
   package { 'pdagent':
-    ensure  => installed,
-    require => Apt::Source['pagerduty'],
-  }
+    ensure => installed,
+  } ->
 
   package { 'pdagent-integrations':
-    ensure  => installed,
-    require => Apt::Source['pagerduty'],
-  }
+    ensure => installed,
+  } ->
 
   service { 'pdagent':
-    ensure  => running,
-    enable  => true,
-    require => Package['pdagent'],
+    ensure => running,
+    enable => true,
   }
+
 }
 
