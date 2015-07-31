@@ -8,5 +8,11 @@ class dc_profile::net::duplicity_dns {
     source_dir     => '/var/zonebackups',
     backup_content => 'dns',
   }
+  #remove me once old hostname based scripts have been blatted
+  dc_backup::dc_duplicity_job { "${::hostname}_dns" :
+    source_dir     => '/var/zonebackups',
+    backup_content => 'dns',
+    cloud          => 'none',
+  }
 
 }
