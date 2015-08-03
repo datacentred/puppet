@@ -1,0 +1,6 @@
+---
+dc_icinga::server::gen_static_hosts::hostdefs:
+  compute:
+    address: "%{hiera('os_api_vip')}"
+    hostgroups: 'dc_hostgroup_osapiendpoint'
+    description: 'compute.datacentred.io'
