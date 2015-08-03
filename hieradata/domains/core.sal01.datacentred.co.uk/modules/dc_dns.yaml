@@ -10,6 +10,8 @@ dc_dns::static::records:
     rdata: '10.30.192.2'
   "foreman.%{::domain}/A":
     rdata: '10.30.192.2'
+  "api-icinga.%{::domain}/CNAME":
+    rdata: "icinga0.%{::domain}"
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.30.192.250'
