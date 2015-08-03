@@ -44,6 +44,8 @@ dc_dns::static::records:
     rdata: "logstash.%{::domain}"
   "puppet.%{::domain}/CNAME":
     rdata: "puppet-the-next-generation.%{::domain}"
+  "icinga.%{::domain}/CNAME":
+    rdata: "icinga0.%{::domain}"
   "api-icinga.%{::domain}/CNAME":
     rdata: "icinga.%{::domain}"
   "mx0.%{::domain}/MX":
