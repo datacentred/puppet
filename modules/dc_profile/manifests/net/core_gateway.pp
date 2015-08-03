@@ -139,6 +139,19 @@ class dc_profile::net::core_gateway {
     },
   }
 
+  # Typical deployments use the proxy protocol between the balancer
+  # and the mail servers.  However, as the traffic is behind a NAT
+  # boundary this is pretty much pointless as it only allows mail
+  # filtering on a per domain basis.
+  haproxy::listen { 'smtp':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':25' => [],
+    },
+    options          => [],
+  }
+
   haproxy::backend { 'puppetca':
     collect_exported => false,
     options          => {
@@ -227,6 +240,20 @@ class dc_profile::net::core_gateway {
     ports             => '636',
     server_names      => 'bonjour.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.100',
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'smtp':
+    listening_service => 'smtp',
+    ports             => '25',
+    server_names      => [
+      'mx0.core.sal01.datacentred.co.uk',
+      'mx1.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.119',
+      '10.30.192.121',
+    ],
     options           => 'check',
   }
 
