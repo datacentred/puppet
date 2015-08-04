@@ -1,7 +1,7 @@
 ---
 # Icinga
 # 
-icinga_ip: '10.10.192.147'
+icinga_ip: '10.10.192.137'
 
 # DHCP
 #
