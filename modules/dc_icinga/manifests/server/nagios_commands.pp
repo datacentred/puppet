@@ -70,7 +70,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_foreman_proxy_dc':
-    command_line => "/usr/lib/nagios/plugins/check_http -J /var/lib/puppet/ssl/certs/${::fqdn}.pem -K /var/lib/puppet/ssl/private_keys/${::fqdn}.pem -H \$HOSTADDRESS$ --ssl -p 8443 -u /version",
+    command_line => "sudo /usr/lib/nagios/plugins/check_http -J /var/lib/puppet/ssl/certs/${::fqdn}.pem -K /var/lib/puppet/ssl/private_keys/${::fqdn}.pem -H \$HOSTADDRESS$ --ssl -p 8443 -u /version",
   }
 
   icinga::command { 'check_tftp_dc':
