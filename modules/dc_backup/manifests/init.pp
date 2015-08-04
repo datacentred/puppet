@@ -22,6 +22,13 @@ class dc_backup (
 
   include ::dc_backup::gpg_keys
 
+  tidy { 'duplicity_signature_cache':
+    path    => '/root/.cache/duplicity/',
+    age     => '30d',
+    recurse => true,
+    rmdirs  => true,
+  }
+
   Class['::dc_backup'] -> Dc_backup::Dc_duplicity_job <||>
 
 }
