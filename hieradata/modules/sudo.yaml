@@ -3,3 +3,8 @@ sudo::configs:
   sysadmin:
     priority: 10
     content: '%sysadmin ALL=(ALL) NOPASSWD: ALL'
+  # Required for icinga server checks which need access to puppet's
+  # private keys, e.g. SSL checks
+  nagios_check_http:
+    priority: 10
+    content: 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_http'
