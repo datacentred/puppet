@@ -66,14 +66,14 @@ apt::sources:
     repos: 'main restricted universe multiverse'
     include_src: false
   elasticsearch_1_4_mirror:
-    location: "%{hiera('mirror_server')}/%{hiera('elasticsearch_1_4_mirror_path')}"
+    location: "http://%{hiera('elasticsearch_1_4_mirror_path')}"
     release: 'stable'
     repos: 'main'
     key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
     key_source: 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch'
     include_src: false
   logstash_mirror:
-    location: "%{hiera('mirror_server')}/%{hiera('logstash_mirror_path')}"
+    location: "%http://%{hiera('logstash_mirror_path')}"
     release: 'stable'
     repos: 'main'
     key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
