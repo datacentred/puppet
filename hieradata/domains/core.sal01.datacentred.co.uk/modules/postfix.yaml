@@ -1,0 +1,6 @@
+---
+# Core Platform Services
+# Ark NAT
+# Ark Storage
+# Ark Compute
+postfix::mynetworks: '10.30.192.0/24 185.43.218.0/28 185.43.218.16/29 185.43.218.24/29'

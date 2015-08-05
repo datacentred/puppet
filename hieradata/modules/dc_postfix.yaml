@@ -16,7 +16,7 @@ dc_postfix::gateway::restrictions_config_hash:
     'smtpd_recipient_restrictions':
         value: 'reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unauth_destination, permit'
     'smtpd_sender_restrictions':
-        value: 'reject_non_fqdn_sender, reject_unknown_sender_domain, permit'
+        value: 'reject_non_fqdn_sender, permit'
     'relay_domains':
         value: '$mydestination, regexp:/etc/postfix/relaydomains'
 dc_postfix::gateway::rate_limit_config_hash:
