@@ -13,6 +13,7 @@
 class dc_postfix (
   $internal_sysmail_address,
   $gateway = false,
+  $relayhost = 'datacentred.services',
 ){
 
   if $gateway {

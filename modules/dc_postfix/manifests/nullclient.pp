@@ -13,7 +13,7 @@
 class dc_postfix::nullclient {
 
     class { 'postfix':
-      relayhost           => $::domain,
+      relayhost           => $dc_postfix::relayhost,
       myorigin            => $::fqdn,
       root_mail_recipient => $dc_postfix::internal_sysmail_address,
       satellite           => true,
