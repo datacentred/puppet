@@ -7,12 +7,18 @@ class dc_profile::openstack::duplicity_galera (
   $osdbmq_galera_backup_pw,
 ) {
 
-  dc_backup::dc_duplicity_job { "${::hostname}_galera" :
+  dc_backup::dc_duplicity_job { "${::fqdn}_galera" :
     source_dir     => '/var/local/backup',
     backup_content => 'galera',
   }
+  #remove me once old hostname based scripts have been blatted
+  dc_backup::dc_duplicity_job { "${::hostname}_galera" :
+    source_dir     => '/var/local/backup',
+    backup_content => 'galera',
+    cloud          => 'none',
+  }
 
-  cron { 'galera_dump_for_duplicity':
+  cron { "${::fqdn}_galera_dump_for_duplicity":
     command  => '/usr/local/sbin/galera_dump_for_duplicity.sh',
     user     => 'root',
     month    => '*',
