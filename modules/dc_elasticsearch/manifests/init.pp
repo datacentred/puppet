@@ -20,7 +20,7 @@ class dc_elasticsearch (
   $ceph_private_key   = $dc_elasticsearch::params::ceph_private_key,
 ) inherits dc_elasticsearch::params {
 
-  include ::ulimit 
+  include ::ulimit
 
   $half_RAM = floor($::memorysize_mb/2)
   $RAM_unit = 'M'
