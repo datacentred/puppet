@@ -245,7 +245,7 @@ class dc_profile::net::core_gateway {
 
   haproxy::balancermember { 'smtp':
     listening_service => 'smtp',
-    ports             => '25',
+    ports             => '10024',
     server_names      => [
       'mx0.core.sal01.datacentred.co.uk',
       'mx1.core.sal01.datacentred.co.uk',
@@ -254,7 +254,7 @@ class dc_profile::net::core_gateway {
       '10.30.192.119',
       '10.30.192.121',
     ],
-    options           => 'check',
+    options           => 'send-proxy check',
   }
 
   keepalived::vrrp::instance { 'VI_1':

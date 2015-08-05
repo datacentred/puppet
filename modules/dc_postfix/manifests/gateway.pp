@@ -29,6 +29,10 @@ class dc_postfix::gateway (
     mastercf_source     => 'puppet:///modules/dc_postfix/master.cf'
   }
 
+  postfix::config { 'postscreen_upstream_proxy_protocol':
+    value => 'haproxy',
+  }
+
   contain dc_postfix::virtual
   contain dc_postfix::networks
   contain dc_postfix::gmailrelay

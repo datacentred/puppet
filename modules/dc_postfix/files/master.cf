@@ -6,6 +6,7 @@
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
 10024     inet  n       -       n       -       1       postscreen
+smtpd     pass  -       -       n       -       -       smtpd
 smtp      inet  n       -       -       -       -       smtpd
 #submission inet n       -       -       -       -       smtpd
 #  -o smtpd_enforce_tls=yes
