@@ -1,0 +1,2 @@
+---
+dc_icinga::server::pagerduty_api_key: 'c3778839bfed4c5f9bec8cfc7a41690c'
