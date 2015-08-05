@@ -14,7 +14,9 @@
 #
 # class { 'dc_icinga::server': }
 #
-class dc_icinga::server {
+class dc_icinga::server (
+  $pagerduty_api_key,
+) {
 
   contain icinga::server
   contain dc_icinga::server::install

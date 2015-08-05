@@ -1,4 +1,6 @@
 ---
+dc_icinga::server::pagerduty_api_key: 'c7aa97ef9ba14c158f9e08363da71a59'
+
 dc_icinga::server::gen_static_hosts::hostdefs:
   compute:
     address: "%{hiera('os_api_vip')}"
