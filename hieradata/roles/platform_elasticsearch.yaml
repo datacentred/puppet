@@ -2,6 +2,7 @@
 classes:
   - '::dc_elasticsearch'
   - '::dc_elasticsearch::lbmember'
+  - '::dc_elasticsearch::elasticsearch_backup_destination'
 
 dc_elasticsearch::es_hash:
   cluster.name: 'logstash_platform_services'

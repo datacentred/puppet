@@ -20,9 +20,7 @@ class dc_elasticsearch (
   $ceph_private_key   = $dc_elasticsearch::params::ceph_private_key,
 ) inherits dc_elasticsearch::params {
 
-  include ::ulimit
-
-  ensure_packages(['curl'])
+  include ::ulimit 
 
   $half_RAM = floor($::memorysize_mb/2)
   $RAM_unit = 'M'
@@ -47,12 +45,6 @@ class dc_elasticsearch (
     java_install      => true,
     init_defaults     => $config_hash,
     version           => '1.4.4',
-  }
-
-  exec { 'setup-backup-to-ceph':
-    command => "curl -XPUT 'http://localhost:9200/_snapshot/${backup_name}' -d '{ \"type\": \"s3\", \"settings\": { \"bucket\": \"${backup_bucket}\", \"endpoint\": \"${ceph_access_point}\", \"access_key\": \"${ceph_access_key}\", \"secret_key\": \"${ceph_private_key}\" } }'",
-    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    unless  => "curl -XGET 'http://localhost:9200/_snapshot/?pretty' | grep \"${backup_name}\"",
   }
 
   include ::dc_icinga::hostgroup_elasticsearch
