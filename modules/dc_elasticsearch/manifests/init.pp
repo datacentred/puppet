@@ -22,6 +22,8 @@ class dc_elasticsearch (
 
   include ::ulimit
 
+  ensure_packages(['curl'])
+
   $half_RAM = floor($::memorysize_mb/2)
   $RAM_unit = 'M'
   $half_RAM_bytes = ($half_RAM * 1024 * 1024)
