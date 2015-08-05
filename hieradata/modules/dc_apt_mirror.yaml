@@ -137,7 +137,7 @@ dc_apt_mirror::mirrors:
       - 'stable'
     components:
       - 'main'
-    mirror: "%{hiera('logstash_mirror_path')}"
+    mirror: "%{hiera('apt_source_logstash')}"
   rabbitmq_mirror:
     release:
       - 'testing'
@@ -155,7 +155,7 @@ dc_apt_mirror::mirrors:
       - 'stable'
     components:
       - 'main'
-    mirror: "%{hiera('elasticsearch_1_4_mirror_path')}"
+    mirror: "%{hiera('apt_source_elasticsearch_1_4')}"
   dell_openmanage_mirror:
     release:
       - 'trusty'

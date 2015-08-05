@@ -23,7 +23,7 @@ apt::sources:
     key_source: 'http://downloads.linux.hp.com/SDR/downloads/MCP/GPG-KEY-mcp'
     include_src: false
   logstash_mirror:
-    location: "%{hiera('mirror_server')}/%{hiera('logstash_mirror_path')}"
+    location: "%{hiera('mirror_server')}/%{hiera('apt_source_logstash')}"
     release: 'stable'
     repos: 'main'
     key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
