@@ -120,7 +120,42 @@ class dc_profile::net::core_gateway {
     collect_exported => false,
     mode             => 'tcp',
     bind             => {
-      ':636' => []
+      ':636' => [],
+    },
+    options          => [],
+  }
+
+  haproxy::listen { 'log-courier':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':55516' => [
+        'ssl',
+        'no-sslv3',
+        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
+        'crt /etc/ssl/private/puppet.crt',
+        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'verify none',
+      ],
+    },
+    options          => [],
+  }
+
+  # TODO: SSL support ASAP!
+  haproxy::listen { 'beaver':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':9999' => [],
+    },
+    options          => [],
+  }
+
+  haproxy::listen { 'elasticsearch':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':9200' => [],
     },
     options          => [],
   }
@@ -255,6 +290,47 @@ class dc_profile::net::core_gateway {
       '10.30.192.121',
     ],
     options           => 'send-proxy check',
+  }
+
+  # TODO: Terminate SSL here
+  haproxy::balancermember { 'log-courier':
+    listening_service => 'log-courier',
+    ports             => '55516',
+    server_names      => [
+      'logstash0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.137',
+    ],
+    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
+  }
+
+  haproxy::balancermember { 'beaver':
+    listening_service => 'beaver',
+    ports             => '9999',
+    server_names      => [
+      'logstash0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.137',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'elasticsearch':
+    listening_service => 'elasticsearch',
+    ports             => '9200',
+    server_names      => [
+      'elasticsearch0.core.sal01.datacentred.co.uk',
+      'elasticsearch1.core.sal01.datacentred.co.uk',
+      'elasticsearch2.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.130',
+      '10.30.192.132',
+      '10.30.192.134',
+    ],
+    options           => 'check',
   }
 
   keepalived::vrrp::instance { 'VI_1':
