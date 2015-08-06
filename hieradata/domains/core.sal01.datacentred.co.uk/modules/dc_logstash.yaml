@@ -1,0 +1,3 @@
+---
+# This is an A record to the loadbalancer
+dc_logstash::server::elasticsearch_host: 'elasticsearch.core.sal01.datacentred.co.uk'
