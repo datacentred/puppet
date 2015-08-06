@@ -1,0 +1,4 @@
+---
+# Use the global server
+dc_logstash::client::config::log_courier::logstash_server: 'logstash.datacentred.services'
+dc_logstash::client::config::beaver::logstash_server: 'logstash.datacentred.services'
