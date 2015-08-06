@@ -10,6 +10,10 @@ dc_dns::static::records:
     rdata: '10.30.192.2'
   "foreman.%{::domain}/A":
     rdata: '10.30.192.2'
+  "elasticsearch.%{::domain}/A":
+    rdata: '10.30.192.2'
+  "logstash.%{::domain}/A":
+    rdata: '10.30.192.2'
   "icinga.%{::domain}/CNAME":
     rdata: "icinga0.%{::domain}"
   "api-icinga.%{::domain}/CNAME":
