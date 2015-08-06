@@ -65,7 +65,7 @@ class dc_logstash::server (
   }
 
   # Install the server side log-courier components
-  contain ::dc_logstash::server::courier
+  include ::dc_logstash::server::courier
 
   # Add config files
 
