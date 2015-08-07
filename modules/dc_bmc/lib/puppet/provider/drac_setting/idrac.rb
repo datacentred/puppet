@@ -5,7 +5,7 @@ Puppet::Type.type(:drac_setting).provide(:idrac) do
   commands :racadm => '/opt/dell/srvadmin/sbin/racadm'
 
   def object_value
-    zombie_check(racadm("getconfig", *resource_to_args).strip)
+    zombie_check(racadm("getconfig", *resource_to_args).split("\n").first)
   end
 
   def object_value=(value)
