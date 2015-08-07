@@ -11,4 +11,22 @@ puppet::conf:
     show_diff: 'true'
     dns_alt_names: 'puppet,puppet.core.sal01.datacentred.co.uk,puppet.datacentred.services,puppetdb,puppetdb.core.sal01.datacentred.co.uk,foreman,foreman.core.sal01.datacentred.co.uk,foreman.datacentred.services,logstash,logstash.core.sal01.datacentred.co.uk,logstash.datacentred.services'
 
+# WAN interface runs at internet MTU of 1500
 dc_nrpe::checks::net_interfaces::exclude: '^em2$'
+
+# Timeouts are important here
+# - Server time out: log running things like foreman/puppet
+# - Client time out: persistent connections such as log shippers
+haproxy::defaults_options:
+  log: 'global'
+  stats: 'enable'
+  option: 'redispatch'
+  retries: '3'
+  timeout:
+    - 'http-request 10s'
+    - 'queue 1m'
+    - 'connect 10s'
+    - 'client 5m'
+    - 'server 5m'
+    - 'check 10s'
+  maxconn: '8000'
