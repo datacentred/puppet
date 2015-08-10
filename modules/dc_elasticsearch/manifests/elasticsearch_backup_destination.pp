@@ -14,8 +14,7 @@ class dc_elasticsearch::elasticsearch_backup_destination (
   ensure_packages(['curl'])
 
   exec { 'install_elasticsearch_s3_plugin':
-    command => "bin/plugin install elasticsearch/elasticsearch-cloud-aws/${es_aws_plugin_version}",
-    cwd     => '/usr/share/elasticsearch',
+    command => "/usr/share/elasticsearch/bin/plugin install elasticsearch/elasticsearch-cloud-aws/${es_aws_plugin_version}",
     creates => '/usr/share/elasticsearch/plugins/cloud-aws',
     require => Package['elasticsearch'],
   }
