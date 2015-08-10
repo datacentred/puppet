@@ -26,8 +26,8 @@ class dc_logstash::server::courier {
   exec { 'install_log_courier_gem':
     cwd         => '/opt/logstash',
     environment => 'GEM_HOME=vendor/bundle/jruby/1.9',
-    command     => "java -jar vendor/jar/jruby-complete-1.7.11.jar -S gem install ${gem_path}",
-    unless      => 'java -jar vendor/jar/jruby-complete-1.7.11.jar -S gem list | grep log-courier',
+    command     => "java -jar vendor/jar/jruby-complete-*.jar -S gem install ${gem_path}",
+    unless      => 'java -jar vendor/jar/jruby-complete-*.jar -S gem list | grep log-courier',
   } ->
 
   file { '/opt/logstash/lib/logstash/inputs/courier.rb':
