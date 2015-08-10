@@ -53,7 +53,7 @@ define dc_backup::dc_duplicity_job (
     default    => absent,
   }
 
-  if $pre_command {
+  if ($pre_command) and ($ensure_s3 or $ensure_dc_ceph) {
     cron { "prep_for_${name}_backups":
       command  => $pre_command,
       user     => 'root',
