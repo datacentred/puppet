@@ -298,9 +298,11 @@ class dc_profile::net::core_gateway {
     ports             => '55516',
     server_names      => [
       'logstash0.core.sal01.datacentred.co.uk',
+      'logstash1.core.sal01.datacentred.co.uk',
     ],
     ipaddresses       => [
       '10.30.192.137',
+      '10.30.192.140',
     ],
     options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
   }
@@ -310,9 +312,11 @@ class dc_profile::net::core_gateway {
     ports             => '9999',
     server_names      => [
       'logstash0.core.sal01.datacentred.co.uk',
+      'logstash1.core.sal01.datacentred.co.uk',
     ],
     ipaddresses       => [
       '10.30.192.137',
+      '10.30.192.140',
     ],
     options           => 'check',
   }
