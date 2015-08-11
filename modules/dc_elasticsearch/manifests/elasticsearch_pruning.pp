@@ -2,9 +2,7 @@
 #
 # Create a cron job to prune elasticsearch
 #
-class dc_elasticsearch::elasticsearch_pruning (
-  $logstash_server   = $dc_elasticsearch::params::logstash_server,
-) inherits dc_elasticsearch::params {
+class dc_elasticsearch::elasticsearch_pruning {
 
   ensure_packages(['curl'])
 

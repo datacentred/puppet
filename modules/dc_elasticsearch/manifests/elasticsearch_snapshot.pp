@@ -3,7 +3,6 @@
 # Create cron jobs to run elasticsearch snapshots and prune old snapshots
 #
 class dc_elasticsearch::elasticsearch_snapshot (
-  $logstash_server   = $dc_elasticsearch::params::logstash_server,
   $backup_name       = $dc_elasticsearch::params::backup_name,
   $backup_bucket     = $dc_elasticsearch::params::backup_bucket,
   $ceph_access_point = $dc_elasticsearch::params::ceph_access_point,
