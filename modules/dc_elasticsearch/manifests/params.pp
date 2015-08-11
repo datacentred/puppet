@@ -11,4 +11,5 @@ class dc_elasticsearch::params (
   $ceph_access_point,
   $elasticsearch_data_dir,
   $es_aws_plugin_version,
+  $backup_node = false,
 ) {}

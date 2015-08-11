@@ -12,6 +12,7 @@
 #
 class dc_elasticsearch (
   $es_hash,
+  $backup_node        = $dc_elasticsearch::params::backup_node,
   $es_datadir         = $dc_elasticsearch::params::elasticsearch_data_dir,
   $backup_name        = $dc_elasticsearch::params::backup_name,
   $backup_bucket      = $dc_elasticsearch::params::backup_bucket,
@@ -50,4 +51,11 @@ class dc_elasticsearch (
   include ::dc_icinga::hostgroup_elasticsearch
 
   elasticsearch::instance { 'es-01': }
+
+  # $::backup_node is set via foreman
+  if $::backup_node {
+    include dc_elasticsearch::elasticsearch_pruning
+    include dc_elasticsearch::elasticsearch_snapshot
+  }
+
 }
