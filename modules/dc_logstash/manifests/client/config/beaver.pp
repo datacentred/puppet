@@ -7,6 +7,10 @@ class dc_logstash::client::config::beaver (
   $logstash_api_version,
   $logstash_beavertcp_port,
   $beaver_timeout,
+  $logstash_beaver_ssl_port,
+  $beaver_key,
+  $beaver_cert,
+  $beaver_cacert,
 ) {
 
   file { '/etc/beaver':
@@ -32,9 +36,10 @@ class dc_logstash::client::config::beaver (
   ensure_packages('python-pip')
 
   package { 'beaver':
-    ensure   => installed,
-    provider => 'pip',
-    require  => Package['python-pip']
+    ensure          => installed,
+    provider        => 'pip',
+    require         => Package['python-pip'],
+    install_options => ['>=34.0.1'],
   }
 
   concat { '/etc/beaver/beaver.conf':
