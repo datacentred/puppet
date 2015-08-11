@@ -192,6 +192,34 @@ ldap_groups:
         - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=dominic,ou=People,dc=datacentred,dc=co,dc=uk'
+  # Super users able to perform all operations
+  'cn=jenkins-admin,ou=Groups,dc=datacentred,dc=co,dc=uk':
+    tag: group_of_names
+    attributes:
+      cn: 'jenkins-admin'
+      objectClass:
+        - 'groupOfNames'
+      member:
+        - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
+  # Developers able to view and run jobs
+  'cn=jenkins-development,ou=Groups,dc=datacentred,dc=co,dc=uk':
+    tag: group_of_names
+    attributes:
+      cn: 'jenkins-development'
+      objectClass:
+        - 'groupOfNames'
+      member:
+        - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=dominic,ou=People,dc=datacentred,dc=co,dc=uk'
 
 ldap_users:
   'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk':
