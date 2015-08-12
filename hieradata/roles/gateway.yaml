@@ -9,7 +9,7 @@ puppet::conf:
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
     show_diff: 'true'
-    dns_alt_names: 'puppet,puppet.core.sal01.datacentred.co.uk,puppet.datacentred.services,puppetdb,puppetdb.core.sal01.datacentred.co.uk,foreman,foreman.core.sal01.datacentred.co.uk,foreman.datacentred.services,logstash,logstash.core.sal01.datacentred.co.uk,logstash.datacentred.services'
+    dns_alt_names: 'puppet,puppet.core.sal01.datacentred.co.uk,puppet.datacentred.services,puppetdb,puppetdb.core.sal01.datacentred.co.uk,foreman,foreman.core.sal01.datacentred.co.uk,foreman.datacentred.services,logstash,logstash.core.sal01.datacentred.co.uk,logstash.datacentred.services,ldap,ldap.core.sal01.datacentred.co.uk,ldap.datacentred.services'
 
 # WAN interface runs at internet MTU of 1500
 dc_nrpe::checks::net_interfaces::exclude: '^em2$'
