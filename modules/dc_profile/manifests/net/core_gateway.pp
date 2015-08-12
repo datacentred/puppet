@@ -352,8 +352,6 @@ class dc_profile::net::core_gateway {
     options           => 'check',
   }
 
-
-
   haproxy::balancermember { 'elasticsearch':
     listening_service => 'elasticsearch',
     ports             => '9200',
