@@ -150,9 +150,9 @@ class dc_profile::net::core_gateway {
 
   #Beaver SSL support
   haproxy::listen { 'beaver-ssl':
-    collect_export => false,
-    mode           => 'tcp',
-    bind           => {
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
       ':6666' => [
         'ssl',
         'no-ssl3',
@@ -162,7 +162,7 @@ class dc_profile::net::core_gateway {
         'verify none',
       ],
     },
-    options        => []
+    options          => []
   }
 
   # TODO: SSL support ASAP!
