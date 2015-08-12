@@ -16,3 +16,5 @@ mysql::server::backup::file_per_database: true
 mysql::server::backup::time:
   - '3'
   - '00'
+
+mysql::client::package_name: 'mariadb-client'
