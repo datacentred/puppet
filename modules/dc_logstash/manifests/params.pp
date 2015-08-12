@@ -22,4 +22,7 @@ class dc_logstash::params (
   $elasticsearch_protocol,
   $logstash_api_version,
   $beaver_timeout,
+  $beaver_key,
+  $beaver_cert,
+  $beaver_cacert,
 ){}
