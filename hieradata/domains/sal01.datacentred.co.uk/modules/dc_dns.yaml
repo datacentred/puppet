@@ -1,9 +1,5 @@
 ---
 dc_dns::static::records:
-  'bastion.%{::domain}/A':
-    rdata: '10.10.10.2'
-  'calamity.%{::domain}/A':
-    rdata: '10.10.10.18'
   'openstack.datacentred.io/A':
     rdata: '10.10.160.221'
   'my.datacentred.io/A':
@@ -34,26 +30,10 @@ dc_dns::static::records:
     rdata: '185.43.218.237'
   'status.datacentred.io/CNAME':
     rdata: 'domain.status.io'
-  'logstash.%{::domain}/A':
-    rdata: "%{hiera('platform_services_logstash_vip')}"
-  'vboxes.%{::domain}/CNAME':
-    rdata: "bigyellow.%{::domain}"
-  'mirror.%{::domain}/CNAME':
-    rdata: "bigyellow.%{::domain}"
-  'kibana.%{::domain}/CNAME':
-    rdata: "logstash.%{::domain}"
-  "puppet.%{::domain}/CNAME":
-    rdata: "puppet-the-next-generation.%{::domain}"
   "icinga.%{::domain}/CNAME":
     rdata: "icinga0.%{::domain}"
   "api-icinga.%{::domain}/CNAME":
     rdata: "icinga.%{::domain}"
-  "mx0.%{::domain}/MX":
-    rdata: '10'
-  "mx1.%{::domain}/MX":
-    rdata: '10'
-
-
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.10.192.250'
