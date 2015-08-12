@@ -155,7 +155,7 @@ class dc_profile::net::core_gateway {
     bind             => {
       ':6666' => [
         'ssl',
-        'no-ssl3',
+        'no-sslv3',
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
