@@ -14,55 +14,55 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc (
-  $ipmi_monitor_user,
-  $ipmi_monitor_password,
-  $ipmi_monitor_user_slot,
-  $ldap_server,
-  $ldap_basedn,
-  $ldap_port,
-  $ldap_role_group,
-  $ilo_net_settings_file,
-  $ilo_net_settings_log,
-  $radius_server,
-  $radius_secret,
-  $bmc_admin_passwd,
-  $bmc_admin_name,
+  $ipmi_monitor_user = undef,
+  $ipmi_monitor_password = undef,
+  $ipmi_monitor_user_slot = undef,
+  $ldap_server = undef,
+  $ldap_basedn = undef,
+  $ldap_port = undef,
+  $ldap_role_group = undef,
+  $ilo_net_settings_file = undef,
+  $ilo_net_settings_log = undef,
+  $radius_server = undef,
+  $radius_secret = undef,
+  $bmc_admin_passwd = undef,
+  $bmc_admin_name = undef,
   $std_fw_version = $dc_bmc::params::std_fw_version,
   $ipmi_user_channel = $dc_bmc::params::ipmi_user_channel,
   $ipmi_admin_user_slot = $dc_bmc::params::ipmi_admin_user_slot,
   $ipmi_smnew_admin_user_slot = $dc_bmc::params::ipmi_smnew_admin_user_slot,
-  $omapi_key,
-  $omapi_secret,
-  $omapi_host,
-  $omapi_port,
-  $bmc_subnet,
-  $foreman_url,
-  $foreman_admin_user,
-  $foreman_admin_passwd,
+  $omapi_key = undef,
+  $omapi_secret = undef,
+  $omapi_host = undef,
+  $omapi_port = undef,
+  $bmc_subnet = undef,
+  $foreman_url = undef,
+  $foreman_admin_user = undef,
+  $foreman_admin_passwd = undef,
 ) inherits dc_bmc::params {
 
   case $::productname {
 
     /ProLiant BL/: {
-      include dc_bmc::base
-      include dc_bmc::admin
-      include dc_bmc::housekeeper
-      include dc_bmc::hp::ilo
+      include ::dc_bmc::base
+      include ::dc_bmc::admin
+      include ::dc_bmc::housekeeper
+      include ::dc_bmc::hp::ilo
     }
     'X8DTT-H': {
-      include dc_bmc::base
-      include dc_bmc::admin
-      include dc_bmc::housekeeper
-      include dc_bmc::monitor_user
-      include dc_bmc::supermicro::reaper
-      include dc_bmc::supermicro::http_scripted
+      include ::dc_bmc::base
+      include ::dc_bmc::admin
+      include ::dc_bmc::housekeeper
+      include ::dc_bmc::monitor_user
+      include ::dc_bmc::supermicro::reaper
+      include ::dc_bmc::supermicro::http_scripted
     }
     /PowerEdge/: {
-      include dc_bmc::base
-      include dc_bmc::admin
-      include dc_bmc::housekeeper
-      include dc_bmc::monitor_user
-      include dc_bmc::dell::idrac
+      include ::dc_bmc::base
+      include ::dc_bmc::admin
+      include ::dc_bmc::housekeeper
+      include ::dc_bmc::monitor_user
+      include ::dc_bmc::dell::idrac
     }
     default : {
       notify { "Unsupported IPMI platform ${::productname}": }
