@@ -275,3 +275,6 @@
 [submodule "modules/keystone"]
 	path = modules/keystone
 	url = https://github.com/openstack/puppet-keystone.git
+[submodule "modules/ca_certificate"]
+	path = modules/ca_certificate
+	url = https://github.com/datacentred/puppet-ca_certificate

@@ -29,4 +29,9 @@ class dc_profile::net::phpipam {
     ],
   }
 
+  # Required for LDAPS support to trust the server certificate
+  ca_certificate { 'puppet-ca':
+    source => '/var/lib/puppet/ssl/certs/ca.pem',
+  }
+
 }
