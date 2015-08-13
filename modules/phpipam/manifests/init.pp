@@ -9,7 +9,7 @@ class phpipam(
   $base = '/',
 ) {
 
-  ensure_packages(['git'])
+  ensure_packages(['git', 'php5-gmp'])
 
   vcsrepo { '/var/www/phpipam':
     ensure   => present,

@@ -20,14 +20,13 @@ class dc_profile::net::phpipam {
   create_resources('mysql::db', hiera('databases'))
 
   apache::vhost { 'phpipam':
-    servername => "phpipam.${::domain}",
-    docroot    => '/var/www/phpipam',
-    override   => 'all',
-    port       => 80,
+    servername    => $::fqdn,
+    docroot       => '/var/www/phpipam',
+    override      => 'all',
+    port          => 80,
+    serveraliases => [
+      $::hostname,
+    ],
   }
 
-  @@dns_resource { "phpipam.${::domain}/CNAME":
-    rdata => $::fqdn,
-    tag   => $::domain,
-  }
 }
