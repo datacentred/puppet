@@ -50,3 +50,7 @@ puppet::hiera: |
 dc_foreman_proxy::use_puppetca: true
 dc_foreman_proxy::use_puppet: true
 dc_foreman_proxy::use_bmc: true
+
+sysctls::values:
+  fs.inotify.max_user_watches:
+    value: '524288'

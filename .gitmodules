@@ -230,9 +230,6 @@
 [submodule "modules/ulimit"]
 	path = modules/ulimit
 	url = https://github.com/arioch/puppet-ulimit
-[submodule "modules/lsyncd"]
-	path = modules/lsyncd
-	url = https://github.com/datacentred/puppet-lsyncd.git
 [submodule "modules/duplicity"]
 	path = modules/duplicity
 	url = https://github.com/datacentred/puppet-duplicity
@@ -278,3 +275,6 @@
 [submodule "modules/ca_certificate"]
 	path = modules/ca_certificate
 	url = https://github.com/datacentred/puppet-ca_certificate
+[submodule "modules/lsyncd"]
+	path = modules/lsyncd
+	url = https://github.com/datacentred/puppet-lsyncd-1
