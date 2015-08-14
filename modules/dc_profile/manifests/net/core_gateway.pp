@@ -83,8 +83,7 @@ class dc_profile::net::core_gateway {
   # citizen and has to run elsewhere, and support a different port, which could be
   # an arse.  It may be worth having 2 VIPs, one for puppety traffic and one for
   # regular traffic
-  haproxy::listen { 'foreman':
-    collect_exported => false,
+  haproxy::frontend { 'foreman':
     mode             => 'http',
     bind             => {
       ':443' => [
@@ -93,10 +92,20 @@ class dc_profile::net::core_gateway {
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'verify optional',
+        'crt-ignore-err all',
       ],
     },
-    options          => [],
+    options          => [
+      'option'          => 'http-server-close',
+      'use_backend'     => [
+        'foreman if { path_beg /unattended }',
+        'static unless { ssl_fc_has_crt }',
+        'static unless { ssl_c_verify 0 }',
+      ],
+      'default_backend' => 'foreman',
+    ],
   }
 
   # Checks 'check' and 'check check-ssl' are disabled because the Layer 6 response
@@ -231,6 +240,13 @@ class dc_profile::net::core_gateway {
   }
 
   haproxy::backend { 'puppet':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
+  haproxy::backend { 'foreman':
     collect_exported => false,
     options          => {
       'mode' => 'http',
