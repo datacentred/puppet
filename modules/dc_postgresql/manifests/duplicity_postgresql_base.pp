@@ -23,16 +23,9 @@ class dc_postgresql::duplicity_postgresql_base {
   }
 
   dc_backup::dc_duplicity_job { "${::fqdn}_postgresql_base" :
-    pre_command    => 'pg_basebackup --pgdata=/var/postgres_base_dump/$(date +\%F)/ --format=tar --gzip --progress --username=postgres --no-password',
+    pre_command    => 'pg_basebackup --pgdata=/var/postgres_base_dump/$(date +\%F)/ --format=tar --gzip --username=postgres --no-password > /dev/null',
     source_dir     => '/var/postgres_base_dump',
     backup_content => 'postgresql_base',
-  }
-  #remove me once old hostname based scripts have been blatted
-  dc_backup::dc_duplicity_job { "${::hostname}_postgresql_base" :
-    pre_command    => 'pg_basebackup --pgdata=/var/postgres_base_dump/$(date +\%F)/ --format=tar --gzip --progress --username=postgres --no-password',
-    source_dir     => '/var/postgres_base_dump',
-    backup_content => 'postgresql_base',
-    cloud          => 'none',
   }
 
   tidy { 'postgres_base_dump':
