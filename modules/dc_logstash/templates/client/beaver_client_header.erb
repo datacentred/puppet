@@ -1,8 +1,13 @@
 [beaver]
 transport: tcp
 tcp_host: <%= @logstash_server %>
-tcp_port: <%= @logstash_beavertcp_port %>
+tcp_port: <%= @logstash_beaver_ssl_port %>
 format: json
 logstash_version: <%= @logstash_api_version %>
 queue_timeout: <%= @beaver_timeout %>
+tcp_ssl: 1
+tcp_ssl_key: <%= @beaver_key %> 
+tcp_ssl_cert: <%= @beaver_cert %>
+tcp_ssl_cacert: <%= @beaver_cacert %> 
+
 

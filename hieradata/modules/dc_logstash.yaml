@@ -12,10 +12,13 @@ dc_logstash::params::logstash_beavertcp_port: '9999'
 dc_logstash::params::logstash_api_version: '1'
 dc_logstash::params::log_shipper: 'log-courier'
 dc_logstash::params::beaver_timeout: '42300'
-
 dc_logstash::client::config::log_courier::logcourier_version: '1.1.28.gd11a1b4'
 dc_logstash::client::config::log_courier::logcourier_port: '55516'
-
 dc_logstash::client::config::beaver::logstash_api_version: '1'
 dc_logstash::client::config::beaver::logstash_beavertcp_port: '9999'
 dc_logstash::client::config::beaver::beaver_timeout: '42300'
+dc_logstash::client::config::beaver::logstash_beaver_ssl_port: '6666'
+dc_logstash::client::config::beaver::beaver_key: '/var/lib/puppet/ssl/private_keys/${::fqdn}.pem'
+dc_logstash::client::config::beaver::beaver_cert: '/var/lib/puppet/ssl/certs/${::fqdn}.pem'
+dc_logstash::client::config::beaver::beaver_cacert: '/var/lib/puppet/ssl/certs/ca.pem'
+
