@@ -11,15 +11,16 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_tftp::sync_master {
 
-  include dc_tftp
-  include dc_tftp::sync_user
+  include ::dc_tftp
+  include ::dc_tftp::sync_user
+  include ::lsyncd
 
   sshkeys::create_key { $dc_tftp::tftp_sync_user :
     home        => $dc_tftp::tftp_sync_home,
     manage_home => true,
     ssh_keytype => 'rsa',
     require     => Class['dc_tftp::sync_user'],
-  }
+  } ->
 
   file { "${dc_tftp::tftp_sync_home}/.ssh/config" :
     ensure  => present,
@@ -27,14 +28,12 @@ class dc_tftp::sync_master {
     group   => $dc_tftp::tftp_sync_group,
     mode    => '0600',
     content => template('dc_tftp/ssh_config.erb'),
-    require => Sshkeys::Create_key[ $dc_tftp::tftp_sync_user ],
-  }
+  } ->
 
-  class { '::lsyncd':
-    lsyncd_config_content => template($dc_tftp::conf_template),
-    lsyncd_logdir_owner   => $dc_tftp::tftp_sync_user,
-    lsyncd_logdir_group   => $dc_tftp::tftp_sync_group,
-    require               => Sshkeys::Create_key[ $dc_tftp::tftp_sync_user ],
+  lsyncd::process { 'tftp':
+    content => template($dc_tftp::conf_template),
+    owner   => 'root',
+    group   => 'root',
   }
 
   include ::dc_icinga::hostgroup_lsyncd
