@@ -10,12 +10,6 @@ class dc_profile::openstack::duplicity_mongodb (
     source_dir     => '/var/backup/mongodb',
     backup_content => 'ceilometer',
   }
-  #remove me once old hostname based scripts have been blatted
-  dc_backup::dc_duplicity_job { "${::hostname}_mongodb" :
-    source_dir     => '/var/backup/mongodb',
-    backup_content => 'ceilometer',
-    cloud          => 'none',
-  }
 
   cron { "${::fqdn}_mongodb_dump_for_duplicity":
     command  => '/usr/local/sbin/mongodb_dump_for_duplicity.sh > /dev/null',

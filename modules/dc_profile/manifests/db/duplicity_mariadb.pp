@@ -8,11 +8,5 @@ class dc_profile::db::duplicity_mariadb {
     source_dir     => '/var/dbbackups',
     backup_content => 'mariadb',
   }
-  #remove me once old hostname based scripts have been blatted
-  dc_backup::dc_duplicity_job { "${::hostname}_mariadb" :
-    source_dir     => '/var/dbbackups',
-    backup_content => 'mariadb',
-    cloud          => 'none',
-  }
 
 }

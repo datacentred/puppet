@@ -37,13 +37,6 @@ class dc_ceph::keybackup (
       backup_content => 'ceph_keys',
     }
 
-    dc_backup::dc_duplicity_job { "${::hostname}_ceph_keys" :
-      pre_command    => '/usr/local/bin/cephkeybackup -o /var/ceph-keybackup/keys_`date +"\%m_\%d_\%Y"`.txt',
-      source_dir     => '/var/ceph-keybackup',
-      backup_content => 'ceph_keys',
-      cloud          => 'none',
-    }
-
     tidy { 'ceph_key_dir':
       path    => '/var/ceph-keybackup',
       age     => '7D',

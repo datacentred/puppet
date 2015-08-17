@@ -11,12 +11,6 @@ class dc_profile::openstack::duplicity_galera (
     source_dir     => '/var/local/backup',
     backup_content => 'galera',
   }
-  #remove me once old hostname based scripts have been blatted
-  dc_backup::dc_duplicity_job { "${::hostname}_galera" :
-    source_dir     => '/var/local/backup',
-    backup_content => 'galera',
-    cloud          => 'none',
-  }
 
   cron { "${::fqdn}_galera_dump_for_duplicity":
     command  => '/usr/local/sbin/galera_dump_for_duplicity.sh',
