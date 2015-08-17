@@ -171,7 +171,14 @@ class dc_profile::net::core_gateway {
     collect_exported => false,
     mode             => 'tcp',
     bind             => {
-      ':9999' => [],
+      ':9999' => [
+        'ssl',
+        'no-sslv3',
+        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
+        'crt /etc/ssl/private/puppet.crt',
+        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'verify required',
+      ],
     },
     options          => [],
   }

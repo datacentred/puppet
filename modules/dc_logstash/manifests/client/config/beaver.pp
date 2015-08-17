@@ -7,10 +7,10 @@ class dc_logstash::client::config::beaver (
   $logstash_api_version,
   $logstash_beavertcp_port,
   $beaver_timeout,
-  $logstash_beaver_ssl_port,
-  $beaver_key,
-  $beaver_cert,
-  $beaver_cacert,
+  $port,
+  $key,
+  $cert,
+  $cacert,
 ) {
 
   file { '/etc/beaver':
