@@ -26,6 +26,7 @@ class dc_profile::net::core_gateway {
       ],
     },
     options          => {
+      'option'          => 'http-server-close',
       'acl'             => 'is_puppetca path -m sub certificate',
       'default_backend' => 'puppet',
       'use_backend'     => 'puppetca if is_puppetca',
@@ -184,17 +185,28 @@ class dc_profile::net::core_gateway {
     options          => [],
   }
 
-  haproxy::listen { 'stats':
+  haproxy::frontend { 'stats':
     collect_exported => false,
     mode             => 'http',
     bind             => {
-      ':1936' => [],
+      ':1936' => [
+        'ssl',
+        'no-sslv3',
+        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
+        'crt /etc/ssl/private/puppet.crt',
+        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
+        'verify optional',
+        'crt-ignore-err all',
+      ],
     },
     options          => {
-      'stats' => [
-        'enable',
-        'uri /',
+      'option'          => 'http-server-close',
+      'use_backend'     => [
+        'static unless { ssl_fc_has_crt }',
+        'static unless { ssl_c_verify 0 }',
       ],
+      'default_backend' => 'stats',
     },
   }
 
@@ -214,21 +226,54 @@ class dc_profile::net::core_gateway {
   haproxy::backend { 'puppetca':
     collect_exported => false,
     options          => {
-      mode => 'http',
+      'mode' => 'http',
     },
   }
 
   haproxy::backend { 'puppet':
     collect_exported => false,
     options          => {
-      mode => 'http',
+      'mode' => 'http',
     },
   }
 
   haproxy::backend { 'jenkins':
     collect_exported => false,
     options          => {
-      mode => 'http',
+      'mode' => 'http',
+    },
+  }
+
+  # Statistics backend
+  haproxy::backend { 'stats':
+    collect_exported => false,
+    options          => {
+      'mode'  => 'http',
+      'stats' => [
+        'enable',
+        'uri /',
+      ],
+    },
+  }
+
+  # Backend to handle certificate errors and dispatch to the right place.
+  # To explain the redirect rules a little bit:
+  #
+  # * If the client has no certificate and the path isn't /nocert.html
+  #   redirect the client to that location.  When the redirected request
+  #   comes back with the path of /nocert.html it doesn't get redirected.
+  #   In this case with no certificate ssl_c_verify is zero so doesn't
+  #   trigger the final catch all error case
+  haproxy::backend { 'static':
+    collect_exported => false,
+    options          => {
+      'mode'     => 'http',
+      'redirect' => [
+        'location /nocert.html if ! { ssl_fc_has_crt } ! { path /nocert.html }',
+        'location /certexpired.html if { ssl_c_verify 10 } ! { path /certexpired.html }',
+        'location /certrevoked.html if { ssl_c_verify 23 } ! { path /certrevoked.html }',
+        'location /default.html if ! { ssl_c_verify 0 } ! { path /default.html }',
+      ],
     },
   }
 
@@ -372,6 +417,15 @@ class dc_profile::net::core_gateway {
       '10.30.192.132',
       '10.30.192.134',
     ],
+    options           => 'check',
+  }
+
+  # TODO: Move me to a real machine
+  haproxy::balancermember { 'static':
+    listening_service => 'static',
+    ports             => '80',
+    server_names      => 'jenkins0.core.sal01.datacentred.co.uk',
+    ipaddresses       => '10.30.192.7',
     options           => 'check',
   }
 
