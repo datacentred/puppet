@@ -26,6 +26,9 @@ class dc_profile::net::phpipam {
     port          => 80,
     serveraliases => [
       $::hostname,
+      'ipam',
+      'ipam.datacentred.services',
+      "ipam.${::domain}",
     ],
   }
 
