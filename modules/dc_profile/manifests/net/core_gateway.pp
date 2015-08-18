@@ -78,6 +78,18 @@ class dc_profile::net::core_gateway {
     },
   }
 
+  # HTTP Rules:
+  # 1: Redirect to HTTPS
+  haproxy::listen { 'http':
+    mode    => 'http',
+    bind    => {
+      ':80' => [],
+    },
+    options => {
+      'redirect' => 'scheme https',
+    },
+  }
+
   # HTTPS Rules:
   # 1: Unattended foreman traffic is allowed regardless to enable provisioning
   #    foreman handles authentication during this period
