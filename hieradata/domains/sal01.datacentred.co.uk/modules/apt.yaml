@@ -7,13 +7,13 @@ apt::sources:
     key: '7F6C9F236D170493FCF404F27EBFDD5D17ED316D'
     key_server: 'keyserver.ubuntu.com'
     include_src: false
-  datacentred_backports:
-    location: "http://%{hiera('datacentred_path')}"
-    release: 'trusty'
-    repos: 'universe'
-    key: '05FD11DA0455013EF36F0DFF655907C455AC5D6A'
-    key_source: "http://%{hiera('datacentred_path')}/repo.gpg.key"
-    include_src: false
+  #datacentred_backports:
+  #  location: "http://%{hiera('datacentred_path')}"
+  #  release: 'trusty'
+  #  repos: 'universe'
+  #  key: '05FD11DA0455013EF36F0DFF655907C455AC5D6A'
+  #  key_source: "http://%{hiera('datacentred_path')}/repo.gpg.key"
+  #  include_src: false
   dell_openmanage_mirror:
     location: "http://%{hiera('dell_openmanage_mirror_path')}"
     release: 'trusty'
