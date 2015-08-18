@@ -49,6 +49,8 @@ class dc_profile::mon::icinga_server {
     servername    => $::fqdn,
     serveraliases => [
       $::hostname,
+      'icinga',
+      'icinga.datacentred.services',
       "icinga.${::domain}",
     ],
     docroot       => '/usr/share/icinga-web/pub',
