@@ -333,8 +333,14 @@ class dc_profile::net::core_gateway {
   haproxy::balancermember { 'foreman':
     listening_service => 'foreman',
     ports             => '443',
-    server_names      => 'foreman0.core.sal01.datacentred.co.uk',
-    ipaddresses       => '10.30.192.10',
+    server_names      => [
+      'foreman0.core.sal01.datacentred.co.uk',
+      'foreman1.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.10',
+      '10.30.192.205',
+    ],
     options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
   }
 
