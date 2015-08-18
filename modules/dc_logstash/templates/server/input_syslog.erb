@@ -1,6 +1,6 @@
 input {
     syslog {
-        port => <%= @logstash_syslog_port %>
+        port => <%= @syslog_port %>
         type => "native_syslog"
     }
 }

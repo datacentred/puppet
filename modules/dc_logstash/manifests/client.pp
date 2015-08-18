@@ -8,8 +8,16 @@
 #   Which log shipper to install
 #
 class dc_logstash::client (
-  $provider = 'log_courier',
-) {
+  $provider = $dc_logstash::params::client_provider,
+  $version = $dc_logstash::params::client_version,
+  $server = $dc_logstash::params::client_server,
+  $api_version = $dc_logstash::params::api_version,
+  $port = $dc_logstash::params::client_port,
+  $key = $dc_logstash::params::client_key,
+  $cert = $dc_logstash::params::client_cert,
+  $cacert = $dc_logstash::params::client_cacert,
+  $timeout = $dc_logstash::params::client_timeout,
+) inherits dc_logstash::params {
 
   include "::dc_logstash::client::config::${provider}"
   # TODO: Hack Hack!!!

@@ -4,7 +4,7 @@ filter {
       drop {}
     }
     grok {
-      patterns_dir => ['<%= @logstash_grok_patterns_dir %>']
+      patterns_dir => ['<%= @grok_patterns_dir %>']
       match        => [ "message", "\[%{HTTPERRORTIMESTAMP:timestamp}\] \[:%{WORD:level}\] \[pid %{NUMBER:pid}\] FastCGI: %{IPORHOST:clientip} %{GREEDYDATA:message_tail}" ]
       match        => [ "message", "\[%{HTTPERRORTIMESTAMP:timestamp}\] \[fastcgi:%{WORD:level}\] \[pid %{NUMBER:pid}\] (%{NUMBER:http_error_code}) %{GREEDYDATA:message_tail}" ]
       match        => [ "message", "\[%{HTTPERRORTIMESTAMP:timestamp}\] %{GREEDYDATA:message_tail}" ]

@@ -1,30 +1,22 @@
-# Class: dc_logstash::server
+# == Class: dc_logstash::server
 #
-# Parameters:
+# Installs logstash server
 #
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
 class dc_logstash::server (
-  $logstash_grok_patterns_dir = $dc_logstash::params::logstash_grok_patterns_dir,
-  $logcourier_version         = $dc_logstash::params::logcourier_version,
-  $logcourier_port            = $dc_logstash::params::logcourier_port,
-  $logstash_syslog_port       = $dc_logstash::params::logstash_syslog_port,
-  $logstash_beavertcp_port    = $dc_logstash::params::logstash_beavertcp_port,
-  $elasticsearch_host         = $dc_logstash::params::elasticsearch_host,
-  $elasticsearch_embedded     = $dc_logstash::params::elasticsearch_embedded,
-  $elasticsearch_protocol     = $dc_logstash::params::elasticsearch_protocol,
-  $riemann_dev_host           = $dc_logstash::params::riemann_dev_host,
+  $grok_patterns_dir = $dc_logstash::params::grok_patterns_dir,
+  $logcourier_version = $dc_logstash::params::logcourier_version,
+  $logcourier_port = $dc_logstash::params::logcourier_port,
+  $logcourier_key = $dc_logstash::params::logcourier_key,
+  $logcourier_cert = $dc_logstash::params::logcourier_cert,
+  $logcourier_cacert = $dc_logstash::params::logcourier_cacert,
+  $beaver_port = $dc_logstash::params::beaver_port,
+  $syslog_port = $dc_logstash::params::syslog_port,
+  $elasticsearch_host = $dc_logstash::params::elasticsearch_host,
+  $elasticsearch_embedded = $dc_logstash::params::elasticsearch_embedded,
+  $elasticsearch_protocol = $dc_logstash::params::elasticsearch_protocol,
 ) inherits dc_logstash::params {
 
-  # Basic class for installing Logstash
-  class { '::logstash':
-    init_defaults_file => 'puppet:///modules/dc_logstash/logstash_default',
-  }
+  include ::logstash
 
   # Patch the module's init script in order for us to be able to read Puppet's
   # SSL certs.
@@ -50,7 +42,7 @@ class dc_logstash::server (
     enable => false,
   }
 
-  file { $logstash_grok_patterns_dir:
+  file { $grok_patterns_dir:
     ensure  => directory,
     owner   => 'root',
     group   => 'root',
@@ -68,26 +60,18 @@ class dc_logstash::server (
   include ::dc_logstash::server::courier
 
   # Add config files
-
-  contain ::dc_logstash::server::config::input_courier
-  contain ::dc_logstash::server::config::input_syslog
-  contain ::dc_logstash::server::config::input_beavertcp
-  contain ::dc_logstash::server::config::filter_grok_syslog
-  contain ::dc_logstash::server::config::output_elasticsearch
-  contain ::dc_logstash::server::config::output_riemann
-  contain ::dc_logstash::server::config::filter_grok_apache
-  contain ::dc_logstash::server::config::filter_grok_apache_err
-  contain ::dc_logstash::server::config::filter_grok_mongodb
-  contain ::dc_logstash::server::config::filter_grok_mysql_err
-  contain ::dc_logstash::server::config::filter_grok_openstack
-  contain ::dc_logstash::server::config::filter_grok_native_syslog
-  contain ::dc_logstash::server::config::filter_grok_libvirt
-
-  # Add icinga config
-  unless $::is_vagrant {
-    if $elasticsearch_embedded {
-      contain ::dc_logstash::server::icinga
-    }
-  }
+  include ::dc_logstash::server::config::input_beaver
+  include ::dc_logstash::server::config::input_log_courier
+  include ::dc_logstash::server::config::input_syslog
+  include ::dc_logstash::server::config::filter_grok_apache
+  include ::dc_logstash::server::config::filter_grok_apache_err
+  include ::dc_logstash::server::config::filter_grok_libvirt
+  include ::dc_logstash::server::config::filter_grok_mongodb
+  include ::dc_logstash::server::config::filter_grok_mysql_err
+  include ::dc_logstash::server::config::filter_grok_native_syslog
+  include ::dc_logstash::server::config::filter_grok_openstack
+  include ::dc_logstash::server::config::filter_grok_syslog
+  include ::dc_logstash::server::config::output_elasticsearch
+  include ::dc_logstash::server::config::output_riemann
 
 }

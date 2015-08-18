@@ -2,18 +2,24 @@
 #
 # Install and configure log-courier client for logstash
 #
-class dc_logstash::client::config::log_courier (
-  $logstash_server,
-  $logcourier_version,
-  $logcourier_port,
-) {
+class dc_logstash::client::config::log_courier {
+
+  include ::dc_logstash::client
+
+  $version = $::dc_logstash::client::version
+  $server = $::dc_logstash::client::server
+  $port = $::dc_logstash::client::port
+  $key = $::dc_logstash::client::key
+  $cert = $::dc_logstash::client::cert
+  $cacert = $::dc_logstash::client::cacert
+  $timeout = $::dc_logstash::client::timeout
 
   file { '/usr/sbin/log-courier':
     ensure => file,
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
-    source => "puppet:///modules/dc_logstash/log_courier/log-courier-${logcourier_version}",
+    source => "puppet:///modules/dc_logstash/log_courier/log-courier-${version}",
   }
 
   file { '/usr/sbin/lc-admin':
