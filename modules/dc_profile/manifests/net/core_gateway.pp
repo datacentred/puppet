@@ -12,9 +12,8 @@ class dc_profile::net::core_gateway {
   # Certificate requests are routed to the CA back-end, all others
   # are load balanced across all servers.
   haproxy::frontend { 'puppet':
-    collect_exported => false,
-    mode             => 'http',
-    bind             => {
+    mode    => 'http',
+    bind    => {
       ':8140' => [
         'ssl',
         'no-sslv3',
@@ -24,7 +23,7 @@ class dc_profile::net::core_gateway {
         'verify optional',
       ],
     },
-    options          => {
+    options => {
       'option'          => 'http-server-close',
       'default_backend' => 'puppet',
       'use_backend'     => [
@@ -52,16 +51,15 @@ class dc_profile::net::core_gateway {
         'verify required',
       ],
     },
-    options          => [],
+    options          => {},
   }
 
   # Terminate SSL for web traffic.  Distribute to the relevant back-end
   # based on the host name prefix.  Public facing connections only e.g.
   # no firewalling as they are dependant on external services
   haproxy::frontend { 'http-alt':
-    collect_exported => false,
-    mode             => 'http',
-    bind             => {
+    mode    => 'http',
+    bind    => {
       ':8080' => [
         'ssl',
         'no-sslv3',
@@ -69,7 +67,7 @@ class dc_profile::net::core_gateway {
         'crt /etc/ssl/private/STAR_datacentred_services.crt',
       ],
     },
-    options          => {
+    options => {
       'option'       => 'http-server-close',
       'use_backend'  => [
         'jenkins if { hdr_beg(host) -i jenkins }',
@@ -88,8 +86,8 @@ class dc_profile::net::core_gateway {
   # 3: Other traffic is routed to the correct hostgroup via the HTTP host much
   #    like an apache virtual host
   haproxy::frontend { 'https':
-    mode             => 'http',
-    bind             => {
+    mode    => 'http',
+    bind    => {
       ':443' => [
         'ssl',
         'no-sslv3',
@@ -101,7 +99,7 @@ class dc_profile::net::core_gateway {
         'crt-ignore-err all',
       ],
     },
-    options          => [
+    options => {
       'option'       => 'http-server-close',
       'use_backend'  => [
         'foreman if { hdr_beg(host) -i foreman } { path_beg /unattended }',
@@ -116,7 +114,7 @@ class dc_profile::net::core_gateway {
       'http-request' => [
         'set-header X-Forwarded-Proto https',
       ],
-    ],
+    },
   }
 
   haproxy::listen { 'foreman-puppet-proxy':
@@ -132,7 +130,7 @@ class dc_profile::net::core_gateway {
         'verify required',
       ],
     },
-    options          => [],
+    options          => {},
   }
 
   haproxy::listen { 'ldaps':
@@ -148,7 +146,7 @@ class dc_profile::net::core_gateway {
         'verify none',
       ],
     },
-    options          => [],
+    options          => {},
   }
 
   haproxy::listen { 'log-courier':
@@ -164,27 +162,9 @@ class dc_profile::net::core_gateway {
         'verify required',
       ],
     },
-    options          => [],
+    options          => {},
   }
 
-  #Beaver SSL support
-  haproxy::listen { 'beaver-ssl':
-    collect_exported => false,
-    mode             => 'tcp',
-    bind             => {
-      ':6666' => [
-        'ssl',
-        'no-sslv3',
-        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
-        'crt /etc/ssl/private/puppet.crt',
-        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify required',
-      ],
-    },
-    options          => []
-  }
-
-  # TODO: SSL support ASAP!
   haproxy::listen { 'beaver':
     collect_exported => false,
     mode             => 'tcp',
@@ -198,7 +178,7 @@ class dc_profile::net::core_gateway {
         'verify required',
       ],
     },
-    options          => [],
+    options          => {},
   }
 
   haproxy::listen { 'elasticsearch':
@@ -207,7 +187,7 @@ class dc_profile::net::core_gateway {
     bind             => {
       ':9200' => [],
     },
-    options          => [],
+    options          => {},
   }
 
   # Typical deployments use the proxy protocol between the balancer
@@ -220,7 +200,7 @@ class dc_profile::net::core_gateway {
     bind             => {
       ':25' => [],
     },
-    options          => [],
+    options          => {},
   }
 
   haproxy::backend { 'puppetca':
@@ -412,20 +392,6 @@ class dc_profile::net::core_gateway {
 
   haproxy::balancermember { 'beaver':
     listening_service => 'beaver',
-    ports             => '9999',
-    server_names      => [
-      'logstash0.core.sal01.datacentred.co.uk',
-      'logstash1.core.sal01.datacentred.co.uk',
-    ],
-    ipaddresses       => [
-      '10.30.192.137',
-      '10.30.192.140',
-    ],
-    options           => 'check',
-  }
-
-  haproxy::balancermember { 'beaver-ssl':
-    listening_service => 'beaver-ssl',
     ports             => '9999',
     server_names      => [
       'logstash0.core.sal01.datacentred.co.uk',
