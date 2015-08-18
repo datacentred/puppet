@@ -49,7 +49,7 @@ tftp_dir: '/var/tftpboot'
 
 # repos and mirrors
 #
-mirror_server: 'http://mirror.sal01.datacentred.co.uk:80'
+mirror_server: 'http://mirror.datacentred.co.uk'
 ubuntu_mirror_path: 'gb.archive.ubuntu.com/ubuntu'
 cloudarchive_mirror_path: 'ubuntu-cloud.archive.canonical.com/ubuntu'
 puppet_mirror_path: 'apt.puppetlabs.com'
