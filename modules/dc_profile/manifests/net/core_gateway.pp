@@ -10,8 +10,7 @@ class dc_profile::net::core_gateway {
 
   # Terminate SSL for puppet, setting the correct verify variables.
   # Certificate requests are routed to the CA back-end, all others
-  # are load balanced across all servers.  The upstream firewall
-  # only allows connections from cloud cell NAT pools
+  # are load balanced across all servers.
   haproxy::frontend { 'puppet':
     collect_exported => false,
     mode             => 'http',
@@ -27,9 +26,10 @@ class dc_profile::net::core_gateway {
     },
     options          => {
       'option'          => 'http-server-close',
-      'acl'             => 'is_puppetca path -m sub certificate',
       'default_backend' => 'puppet',
-      'use_backend'     => 'puppetca if is_puppetca',
+      'use_backend'     => [
+        'puppetca if { path -m sub certificate }',
+      ],
       'http-request'    => [
         'set-header X-SSL-Subject %{+Q}[ssl_c_s_dn]',
         'set-header X-Client-DN %{+Q}[ssl_c_s_dn]',
@@ -49,7 +49,7 @@ class dc_profile::net::core_gateway {
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify none',
+        'verify required',
       ],
     },
     options          => [],
@@ -70,21 +70,24 @@ class dc_profile::net::core_gateway {
       ],
     },
     options          => {
-      'acl '                => 'is_jenkins hdr_beg(host) -i jenkins',
-      'use_backend jenkins' => 'if is_jenkins',
-      'http-request'        => [
+      'option'       => 'http-server-close',
+      'use_backend'  => [
+        'jenkins if { hdr_beg(host) -i jenkins }',
+      ],
+      'http-request' => [
         'set-header X-Forwarded-Proto https',
       ],
     },
   }
 
-  # Foreman is rubbish and needs 443 all to itself with a puppet signed certificate
-  # meaning anything using the datacentred.services wildcard cert is a second class
-  # citizen and has to run elsewhere, and support a different port, which could be
-  # an arse.  It may be worth having 2 VIPs, one for puppety traffic and one for
-  # regular traffic
-  haproxy::listen { 'foreman':
-    collect_exported => false,
+  # HTTPS Rules:
+  # 1: Unattended foreman traffic is allowed regardless to enable provisioning
+  #    foreman handles authentication during this period
+  # 2: All other traffic must have a valid certificate otherwise it is
+  #    redirected to static error pages
+  # 3: Other traffic is routed to the correct hostgroup via the HTTP host much
+  #    like an apache virtual host
+  haproxy::frontend { 'https':
     mode             => 'http',
     bind             => {
       ':443' => [
@@ -93,14 +96,29 @@ class dc_profile::net::core_gateway {
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'verify optional',
+        'crt-ignore-err all',
       ],
     },
-    options          => [],
+    options          => [
+      'option'       => 'http-server-close',
+      'use_backend'  => [
+        'foreman if { hdr_beg(host) -i foreman } { path_beg /unattended }',
+        'static unless { ssl_c_used }',
+        'static unless { ssl_c_verify 0 }',
+        'foreman if { hdr_beg(host) -i foreman }',
+        'icinga if { hdr_beg(host) -i icinga }',
+        'ipam if { hdr_beg(host) -i ipam }',
+        'kibana if { hdr_beg(host) -i kibana }',
+        'stats if { hdr_beg(host) -i stats }',
+      ],
+      'http-request' => [
+        'set-header X-Forwarded-Proto https',
+      ],
+    ],
   }
 
-  # Checks 'check' and 'check check-ssl' are disabled because the Layer 6 response
-  # is invalid, e.g. Foreman is rubbish yet again
   haproxy::listen { 'foreman-puppet-proxy':
     collect_exported => false,
     mode             => 'http',
@@ -111,7 +129,7 @@ class dc_profile::net::core_gateway {
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify none',
+        'verify required',
       ],
     },
     options          => [],
@@ -143,7 +161,7 @@ class dc_profile::net::core_gateway {
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify none',
+        'verify required',
       ],
     },
     options          => [],
@@ -160,7 +178,7 @@ class dc_profile::net::core_gateway {
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify none',
+        'verify required',
       ],
     },
     options          => []
@@ -192,31 +210,6 @@ class dc_profile::net::core_gateway {
     options          => [],
   }
 
-  haproxy::frontend { 'stats':
-    collect_exported => false,
-    mode             => 'http',
-    bind             => {
-      ':1936' => [
-        'ssl',
-        'no-sslv3',
-        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
-        'crt /etc/ssl/private/puppet.crt',
-        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'crl-file /var/lib/puppet/ssl/crl.pem',
-        'verify optional',
-        'crt-ignore-err all',
-      ],
-    },
-    options          => {
-      'option'          => 'http-server-close',
-      'use_backend'     => [
-        'static unless { ssl_fc_has_crt }',
-        'static unless { ssl_c_verify 0 }',
-      ],
-      'default_backend' => 'stats',
-    },
-  }
-
   # Typical deployments use the proxy protocol between the balancer
   # and the mail servers.  However, as the traffic is behind a NAT
   # boundary this is pretty much pointless as it only allows mail
@@ -244,7 +237,35 @@ class dc_profile::net::core_gateway {
     },
   }
 
+  haproxy::backend { 'foreman':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
   haproxy::backend { 'jenkins':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
+  haproxy::backend { 'icinga':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
+  haproxy::backend { 'ipam':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
+  haproxy::backend { 'kibana':
     collect_exported => false,
     options          => {
       'mode' => 'http',
@@ -276,7 +297,7 @@ class dc_profile::net::core_gateway {
     options          => {
       'mode'     => 'http',
       'redirect' => [
-        'location /nocert.html if ! { ssl_fc_has_crt } ! { path /nocert.html }',
+        'location /nocert.html if ! { ssl_c_used } ! { path /nocert.html }',
         'location /certexpired.html if { ssl_c_verify 10 } ! { path /certexpired.html }',
         'location /certrevoked.html if { ssl_c_verify 23 } ! { path /certrevoked.html }',
         'location /default.html if ! { ssl_c_verify 0 } ! { path /default.html }',
@@ -413,6 +434,44 @@ class dc_profile::net::core_gateway {
     ipaddresses       => [
       '10.30.192.137',
       '10.30.192.140',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'kibana':
+    listening_service => 'kibana',
+    ports             => '80',
+    server_names      => [
+      'logstash0.core.sal01.datacentred.co.uk',
+      'logstash1.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.137',
+      '10.30.192.140',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'ipam':
+    listening_service => 'ipam',
+    ports             => '80',
+    server_names      => [
+      'ipam0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.184',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'icinga':
+    listening_service => 'icinga',
+    ports             => 80,
+    server_names      => [
+      'icinga0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.123',
     ],
     options           => 'check',
   }
