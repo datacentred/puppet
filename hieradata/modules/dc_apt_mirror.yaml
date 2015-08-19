@@ -2,7 +2,6 @@
 dc_apt_mirror::mirrors:
   ubuntu_mirror:
     release:
-      - 'precise'
       - 'trusty'
     components:
       - 'main'
@@ -12,7 +11,6 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('ubuntu_mirror_path')}"
   ubuntu_updates_mirror:
     release:
-      - 'precise-updates'
       - 'trusty-updates'
     components:
       - 'main'
@@ -22,7 +20,6 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('ubuntu_mirror_path')}"
   ubuntu_security_mirror:
     release:
-      - 'precise-security'
       - 'trusty-security'
     components:
       - 'main'
@@ -32,7 +29,6 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('ubuntu_mirror_path')}"
   ubuntu_backports_mirror:
     release:
-      - 'precise-backports'
       - 'trusty-backports'
     components:
       - 'main'
@@ -42,7 +38,6 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('ubuntu_mirror_path')}"
   ubuntu_debinst_mirror:
     release:
-      - 'precise'
       - 'trusty'
     components:
       - 'main/debian-installer'
@@ -52,7 +47,6 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('ubuntu_mirror_path')}"
   puppetlabs_mirror:
     release:
-      - 'precise'
       - 'trusty'
     components:
       - 'main'
@@ -72,7 +66,7 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('virtualbox_mirror_path')}"
   foreman_mirror:
     release:
-      - 'precise'
+      - 'trusty'
     components:
       - 'stable'
     mirror: "%{hiera('foreman_mirror_path')}"
@@ -88,12 +82,6 @@ dc_apt_mirror::mirrors:
     components:
       - '1.8'
     mirror: "%{hiera('foreman_mirror_path')}"
-  rsyslog_mirror:
-    release:
-      - 'precise'
-    components:
-      - 'main'
-    mirror: "%{hiera('rsyslog_mirror_path')}"
   HP_blade_support_mirror:
     release:
       - 'trusty/current'
@@ -114,20 +102,12 @@ dc_apt_mirror::mirrors:
     mirror: "%{hiera('ceph_libapache_mod_fastcgi_path')}"
   postgresql_mirror:
     release:
-      - 'precise-pgdg'
       - 'trusty-pgdg'
     components:
       - 'main'
     mirror: "%{hiera('postgres_mirror_path')}"
-  collectd_mirror:
-    release:
-      - 'precise'
-    components:
-      - 'main'
-    mirror: "%{hiera('collectd_mirror_path')}"
   mariadb_mirror:
     release:
-      - 'precise'
       - 'trusty'
     components:
       - 'main'

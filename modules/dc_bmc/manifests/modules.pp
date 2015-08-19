@@ -14,19 +14,10 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::modules {
 
-  case $::lsbdistcodename {
-    'precise': {
-      $module_service = 'module-init-tools'
-    }
-    default: {
-      $module_service = 'kmod'
-    }
-  }
-
   include stdlib
 
   exec { 'module_refresh':
-    command     => "/usr/sbin/service ${module_service} restart",
+    command     => '/usr/sbin/service kmod restart',
     refreshonly => true,
   }
 
