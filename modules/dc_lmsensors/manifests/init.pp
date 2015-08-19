@@ -16,15 +16,6 @@ class dc_lmsensors {
 
     physical: {
 
-      case $::lsbdistcodename {
-        'precise': {
-          $sensor_service = 'module-init-tools'
-        }
-        default: {
-          $sensor_service = 'kmod'
-        }
-      }
-
       package { 'lm-sensors':
         ensure => installed,
       } ->
@@ -36,13 +27,13 @@ class dc_lmsensors {
       # Annoyingly these always get run if we use the puppet
       # service type, so run once per reboot
       runonce { 'sensors-module-load':
-        command    => "service ${sensor_service} start",
+        command    => 'service kmod start',
         persistent => false,
       } ->
 
       service { 'lm-sensors':
-        ensure  => running,
-        enable  => true,
+        ensure => running,
+        enable => true,
       }
 
       # X8DTT-H = Compute / Storage nodes

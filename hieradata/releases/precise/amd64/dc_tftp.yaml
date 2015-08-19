@@ -1,2 +1,0 @@
----
-dc_tftp::conf_template: 'dc_tftp/lsyncd.conf.lua.precise.erb'
