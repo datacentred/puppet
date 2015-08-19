@@ -11,8 +11,8 @@ dc_foreman_proxy::params::omapi_key: ''
 dc_foreman_proxy::params::omapi_secret: ''
 dc_foreman_proxy::params::use_tftp: false
 dc_foreman_proxy::params::trusted_hosts:
-    - 'foreman-2.sal01.datacentred.co.uk'
     - 'foreman.datacentred.services'
     - 'foreman0.core.sal01.datacentred.co.uk'
+    - 'foreman1.core.sal01.datacentred.co.uk'
     - 'gateway0.core.sal01.datacentred.co.uk'
     - 'gateway1.core.sal01.datacentred.co.uk'
