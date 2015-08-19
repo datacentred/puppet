@@ -2,9 +2,9 @@
     <LOGIN USER_LOGIN="Administrator" PASSWORD="password">
         <USER_INFO MODE="write">
             <ADD_USER
-                USER_NAME = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_user') %>"
-                USER_LOGIN = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_user') %>"
-                PASSWORD = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_password') %>">
+                USER_NAME = "<%= @ipmi_monitor_user %>"
+                USER_LOGIN = "<%= @ipmi_monitor_user %>"
+                PASSWORD = "<%= @ipmi_monitor_password %>">
                 <ADMIN_PRIV value = "N"/>
                 <REMOTE_CONS_PRIV value = "N"/>
                 <RESET_SERVER_PRIV value = "N"/>
