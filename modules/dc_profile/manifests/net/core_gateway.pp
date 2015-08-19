@@ -112,9 +112,13 @@ class dc_profile::net::core_gateway {
       ],
     },
     options => {
-      'option'       => 'http-server-close',
+      'option'       => [
+        'httplog',
+        'http-server-close',
+      ],
       'use_backend'  => [
         'foreman if { hdr_beg(host) -i foreman } { path_beg /unattended }',
+        'foreman if { hdr_beg(host) -i foreman } { path /api/v2/discovered_hosts/facts }',
         'static unless { ssl_c_used }',
         'static unless { ssl_c_verify 0 }',
         'foreman if { hdr_beg(host) -i foreman }',
