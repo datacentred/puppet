@@ -31,7 +31,7 @@ class dc_profile::openstack::nova_compute {
 
   # Workaround missing dependancy in one of the Neutron packages
   # Should be able to remove this once we go to Kilo
-  file { '/etc/defaults/neutron-server':
+  file { '/etc/default/neutron-server':
     ensure => exists,
   }
 
