@@ -78,6 +78,13 @@ apt::sources:
     key: '34241874978E85F344483D714037B2209E65C6CB'
     key_source: 'http://packages.pagerduty.com/GPG-KEY-pagerduty'
     include_src: false
+  phusion_passenger:
+    location: 'https://oss-binaries.phusionpassenger.com/apt/passenger'
+    release: 'trusty'
+    repos: 'main'
+    key: '16378A33A6EF16762922526E561F9B9CAC40B2F7'
+    key_server: 'hkp://keyserver.ubuntu.com'
+    include_src: false
   postgres_mirror:
     location: "http://%{hiera('postgres_mirror_path')}"
     release: 'trusty-pgdg'
