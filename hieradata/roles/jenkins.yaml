@@ -1,0 +1,5 @@
+---
+classes:
+  - '::dc_profile::ci::jenkins'
+
+puppetdeploy::is_jenkins: true

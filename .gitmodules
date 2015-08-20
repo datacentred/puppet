@@ -278,3 +278,6 @@
 [submodule "modules/lsyncd"]
 	path = modules/lsyncd
 	url = https://github.com/datacentred/puppet-lsyncd-1
+[submodule "modules/puppetdeploy"]
+	path = modules/puppetdeploy
+	url = https://github.com/datacentred/puppet-puppetdeploy

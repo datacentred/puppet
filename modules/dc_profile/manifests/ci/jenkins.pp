@@ -2,6 +2,8 @@
 #
 class dc_profile::ci::jenkins {
 
+  include ::puppetdeploy
+
   # Required for LDAPS support to trust the server certificate
   ca_certificate { 'puppet-ca':
     source => '/var/lib/puppet/ssl/certs/ca.pem',
