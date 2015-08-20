@@ -29,6 +29,12 @@ class dc_profile::openstack::nova_compute {
     require => Class['::Nova'],
   }
 
+  # Workaround missing dependancy in one of the Neutron packages
+  # Should be able to remove this once we go to Kilo
+  file { '/etc/defaults/neutron-server':
+    ensure => exists,
+  }
+
   # Ensure ARM-based hypervisors don't advertise the ability to virtualise i686 and x86_64
   # based instances and vice-versa
   case $::architecture {
