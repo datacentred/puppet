@@ -39,8 +39,8 @@ class dc_profile::openstack::nova_compute {
       }
     }
     'amd64': {
-      package { 'qemu-system-arm':
-        ensure => absent,
+      file { '/usr/bin/qemu-system-arm':
+        mode   => '0000',
         notify => Service['nova-compute'],
       }
     }
