@@ -6,10 +6,8 @@ class dc_profile::hardware::x9drt {
   file_line { 'irqbalance':
     path => '/etc/default/irqbalance',
     line => 'OPTIONS="--hintpolicy=ignore"'
-  }
+  } ~>
 
-  exec { '/usr/sbin/service irqbalance restart':
-    subscribe => File['irqbalance'],
-  }
+  exec { '/usr/sbin/service irqbalance restart': }
 
 }
