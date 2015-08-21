@@ -16,7 +16,11 @@ class dc_logstash::server (
   $elasticsearch_protocol = $dc_logstash::params::elasticsearch_protocol,
 ) inherits dc_logstash::params {
 
-  include ::logstash
+  class { '::logstash':
+    ensure            => 'present',
+    restart_on_change => false,
+    version           => '1:1.5.4-1',
+  }
 
   # Patch the module's init script in order for us to be able to read Puppet's
   # SSL certs.
@@ -50,10 +54,6 @@ class dc_logstash::server (
     recurse => true,
     source  => 'puppet:///modules/dc_logstash/grok',
     require => Class['::logstash'],
-  }
-
-  package { 'logstash-contrib':
-    ensure => installed,
   }
 
   # Install the server side log-courier components

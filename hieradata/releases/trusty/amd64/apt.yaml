@@ -21,8 +21,8 @@ apt::sources:
     key: '42550ABD1E80D7C1BC0BAD851285491434D8786F'
     key_source: 'http://pool.sks-keyservers.net:11371/pks/lookup?op=get&search=0x1285491434D8786F'
     include_src: false
-  elasticsearch_1_4_mirror:
-    location: "http://%{hiera('apt_source_elasticsearch_1_4')}"
+  elasticsearch_mirror:
+    location: "http://%{hiera('apt_source_elasticsearch')}"
     release: 'stable'
     repos: 'main'
     key: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
