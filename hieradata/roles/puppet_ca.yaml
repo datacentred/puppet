@@ -54,3 +54,7 @@ dc_foreman_proxy::use_bmc: true
 sysctls::values:
   fs.inotify.max_user_watches:
     value: '524288'
+
+puppetdeploy::is_puppet_ca: true
+puppetdeploy::puppet_masters:
+  - 'puppet0'

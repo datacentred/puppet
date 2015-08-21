@@ -9,6 +9,7 @@ class dc_profile::puppet::puppet_master {
   include ::puppetdb::master::config
   include ::foreman::puppetmaster
   include ::deepmerge
+  include ::puppetdeploy
   include ::dc_icinga::hostgroup_puppetmaster
 
   Class['::puppet::master'] -> Class['::foreman::puppetmaster']

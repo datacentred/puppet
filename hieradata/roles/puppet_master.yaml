@@ -50,3 +50,5 @@ puppet::hiera: |
 dc_foreman_proxy::use_puppetca: true
 dc_foreman_proxy::use_puppet: true
 dc_foreman_proxy::use_bmc: true
+
+puppetdeploy::is_puppet_master: true
