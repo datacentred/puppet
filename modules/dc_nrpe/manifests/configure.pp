@@ -23,6 +23,7 @@ class dc_nrpe::configure {
     mode  => '0644',
   }
 
+  include ::dc_nrpe::checks::bmc
   include ::dc_nrpe::checks::ceilometer_compute
   include ::dc_nrpe::checks::ceilometer_oscontrol
   include ::dc_nrpe::checks::ceph
