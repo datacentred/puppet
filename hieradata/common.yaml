@@ -126,11 +126,7 @@ admins:
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCX4WFE2BIc9yW2M323aGqiKX1MrMyXEH3EhzLVDmBLBpSQebH2I3wQfNVIiEILn4MV02hAsSW/308qmx5T/087SutNEux4m/rSfcdyQRFGfZu1zCAZyBwPO4ZjsW0TS0Jre3ycuZ5QdPCcZ9GDyFhCZiLQaq8ieWM+ZIcFv9/asp/d8CeR7XS9maww2d/sUqo8+v52anmv0J977VEt+jNFweXj87EpNApVS11p8QlCPHzchL6YdGkSoB2uAQICMTQ5jp7aUJAdL7xotLM6Bx0PibTLHZEheCqBKQJ9j2dQY8A6ads5UMWiZge2XY/iSOI4wGc10i9NQDWdXrIy68ft'
     email: 'max.siegieda@datacentred.co.uk'
   dominic:
-    uid: '1010'
-    gid: 'sysadmin'
-    pass: '$6$Y669otGj$vuyGSeQoZYnaVLZoBDzbcewA/DE6RGSptt/NOGcsK5ry4/4o2Sm13TjZ6nLQ.6e4rYxf7Oftly0/YhUCKpg69/'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDKm6KdrMOPR1PC1oZrtsZF2GZNrhmXgSK20hW6I9bm0LlK3+p/AQ+94cy6dpJjPO+q2wGMRhB9/8SE2BZWAxeoQsvxjMWIHYW3E7MvdWNTPHyKC1mBct8Gq7RQXHl58oKoT9sd4tZtsnXyDdoWS519tsoniNFah0p8r6upNd5AmUZ5G+F4fXAUVT2pCsfB4XdZ3l2Ah1+dONnZP1LV3Na+S/1dWk5L3k3sFO3vvtdsA1HVx7fHrTUZsTciBIAyH7j4PIc+pssX2Nks9tS3NrQeTffJqdGmYNumBjf4hm1JaNysWY4KhN6Ul7RX2b05i7ELVzRZuR08xPZ/0+vStr5rzjfbViR7Nleiup2Ky+t7YvfEq6oWFMA7jta0U8FP7lDXjSyClfSWMDEHNv6L8+F4HNaCtKMVg9BVkiKMP7yCwSCnruhyL0Tu2YBqXZ1zcU/5dUe5WfNNMXTn1dtORMYYIpXy3JexsI+WStbUEVrEjKyT2MMQmNzDiOBRw4pdrgE2oQ5UzlgM5i/C2LbMlnTeuOZdnoOKkW+Mc/qP1KVUMEM7lkQoxKrFA1xL37NbcAsKu86OqgywySX7RcLNgcroYFp1mdTck+koUih5OboaIkIB7IVqKAHVTLKMiTk/Kci9ThWRxXqdF45+iEANNESjiuaAjYE+z0zwjgFA9x6fOQ=='
-    email: 'dominic.lindsay@datacentred.co.uk'
+    ensure: 'absent'
 
 # storage server directory location
 #
@@ -176,7 +172,6 @@ ldap_groups:
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=dominic,ou=People,dc=datacentred,dc=co,dc=uk'
   'cn=PFSense Admins,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
     attributes:
@@ -191,7 +186,6 @@ ldap_groups:
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=dominic,ou=People,dc=datacentred,dc=co,dc=uk'
   # Super users able to perform all operations
   'cn=jenkins-admin,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
@@ -219,7 +213,6 @@ ldap_groups:
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=dominic,ou=People,dc=datacentred,dc=co,dc=uk'
 
 ldap_users:
   'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk':
@@ -361,23 +354,10 @@ ldap_users:
         - cn=PFSense Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
   'cn=dominic,ou=People,dc=datacentred,dc=co,dc=uk':
     tag: user
-    attributes:
-      uid: dominic
-      givenName: Dominic
-      sn: Lindsay
-      mail: "dominic.lindsay@datacentred.co.uk"
-      userPassword: "{CRYPT}$6$Y669otGj$vuyGSeQoZYnaVLZoBDzbcewA/DE6RGSptt/NOGcsK5ry4/4o2Sm13TjZ6nLQ.6e4rYxf7Oftly0/YhUCKpg69/"
-      radiusReplyItem: APC-Service-Type = 1
-      objectClass:
-        - person
-        - inetOrgPerson
-        - user
-        - radiusprofile
-      ou:
-        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
-        - cn=PFSense Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
-#
+    ensure: absent
+
 # Add APC PDU default user password
+#
 apc_defaultuser_pwd: Phath3shnuOs
 
 # SSH groups
