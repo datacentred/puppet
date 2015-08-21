@@ -1,5 +1,6 @@
 ---
 classes:
   - '::dc_profile::util::firmware'
+  - '::dc_profile::hardware::x9drt'
 
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p3p1}"
