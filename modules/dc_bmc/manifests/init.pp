@@ -47,7 +47,7 @@ class dc_bmc (
       include ::dc_bmc::base
       include ::dc_bmc::admin
       include ::dc_bmc::housekeeper
-      include ::dc_bmc::hp::ilo
+      include ::dc_bmc::hp
     }
     'X8DTT-H': {
       include ::dc_bmc::base

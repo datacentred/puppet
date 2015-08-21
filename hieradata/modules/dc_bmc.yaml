@@ -23,5 +23,4 @@ dc_bmc::foreman_admin_user: 'admin'
 dc_bmc::params::dell_fw_version: '1.57'
 dc_bmc::params::hp_fw_version: '2.25'
 dc_bmc::params::supermicro_fw_version: '2.20'
-dc_bmc::hp::base::hparray_tool: 'hpssacli'
 
