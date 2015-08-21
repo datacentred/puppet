@@ -1,10 +1,10 @@
 input {
  courier {
-     port => <%= @logcourier_port %>
+     port => <%= @port %>
      ssl_verify => true
-     ssl_verify_ca => "/var/lib/puppet/ssl/certs/ca.pem"
-     ssl_certificate => "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem"
-     ssl_key => "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem"
+     ssl_verify_ca => "<%= @cacert %>"
+     ssl_certificate => "<%= @cert %>"
+     ssl_key => "<%= @key %>"
      type => "log-courier"
  }
 }

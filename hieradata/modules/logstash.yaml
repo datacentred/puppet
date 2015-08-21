@@ -1,0 +1,2 @@
+---
+logstash::init_defaults_file: 'puppet:///modules/dc_logstash/logstash_default'

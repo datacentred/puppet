@@ -5,10 +5,10 @@
   },
   "network": {
     "transport": "tls",
-    "servers": [ "<%= @logstash_server %>:<%= @logcourier_port %>" ],
-    "ssl certificate": "/var/lib/puppet/ssl/certs/<%= @fqdn %>.pem",
-    "ssl key": "/var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem",
-    "ssl ca": "/var/lib/puppet/ssl/certs/ca.pem",
-    "timeout": 40
+    "servers": [ "<%= @server %>:<%= @port %>" ],
+    "ssl certificate": "<%= @cert %>"
+    "ssl key": "<%= @key %>",
+    "ssl ca": "<%= @cacert %>",
+    "timeout": <%= @timeout %>
   },
   "files": [

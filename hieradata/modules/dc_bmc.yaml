@@ -1,13 +1,13 @@
 ---
-dc_bmc::ipmi_monitor_user: 'icinga'
-dc_bmc::ipmi_monitor_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAGq25vDNPPnIx0ewqS0CTkpJkvsysDPG4N9Qj5PkkknTajG0iLAqpsu5H9T4SIZVaC1bWVaWwbQiMDiOzCf/APb7ilZEXw0ND6cQ9oL05oX2LOFHWYdynlNDEn4UmcT9dBP6oMhG8pi3g4chofjSMDWJxTyFNO2SNzRrKAUK5/K/g3V4l185Fd7gfPL9dWUHt9ckTp6O3G9CfbwSo9zmcuMT3qscOx4a1EHnelsyA6ytx++qHa9P8n+mfZf7yzWFxg65m2bZLwRFin6oHLXtcrrrfdX+ZJeIlmF7zIj/eJNThXkWJnWwXy7Hw5gehwvf7dJs6qN/3FZPkYmF2bsDSmjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCK4M3CO5G/rZMuU8JberA0gBD40i+DAaKhE1Z4vCMa+7md]
+dc_bmc::ipmi_monitor_user: "%{hiera('ipmi_monitor_user')}"
+dc_bmc::ipmi_monitor_password: "%{hiera('ipmi_monitor_password')}"
 dc_bmc::ipmi_monitor_user_slot: '10'
 dc_bmc::ldap_server: 'ldap.datacentred.services'
 dc_bmc::ldap_basedn: "%{hiera('ldap_suffix')}"
 dc_bmc::ldap_port: '636'
 dc_bmc::ldap_role_group: 'cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk' 
-dc_bmc::bmc_admin_passwd: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAjz7Mcf6ANrdd1rpfKbNhrIvzZ3uemHoHQBkfs6ZU2U4OjVOuKz9hh5aVmeUgq3LGcd/bAHuoV/B+I1cLGXj1FCvJMVM+JtgZ2yhUtbtL6cEkixkw4Fu9e7CUawW31a14qpijDtXo6qBKAEYB4KHuw1bys2mXBRR4ARNTJ8gf7q/sg2CSSHN+ChMPOsU8zaEfPWDuc8D+FssOuXeLYnk19w7Al+Y97ECKdeGzdmm6kgkVHcPtJMsBZ41xzR9eg1kBizhgccGVoovmGpr+4YgmEH2xezpHYA/smzUGNyht83/aqErSWtp16mAf6dxLuN0CHN//JjrQr23NLWrG5XeSNjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBASTV9HoeB/DFtufPx99dvsgBCleDLOsoHNqbOI54mlUuhC]
-dc_bmc::bmc_admin_name: 'enoch' 
+dc_bmc::bmc_admin_passwd: "%{hiera('bmc_admin_password')}"
+dc_bmc::bmc_admin_name: "%{hiera('bmc_admin_name')}"
 dc_bmc::ilo_net_settings_file: '/etc/iloconfig.xml' 
 dc_bmc::ilo_net_settings_log: '/tmp/ilosettings.log' 
 dc_bmc::radius_secret: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAe0oYprmJBfgkOUribWTU3ld50acu1AFOSjHe4mV1tSurSstLdU3rHRskZ95593BwmiCK1NuKZe0i9A7jAsphDo4sg80dYtNb2o66K3FfsVUm3VL5oq0CgkPINn0dtdrR1vqSEF+kNz64UChUK22eFPl75l68znhV4MT9wX28cUVTUnb0c63FarLjYcvwjXy63StTSsqA1XrqkP5f3uhTlYlwGOPqUHYZkDpB1Rdg/svGegw2SXZ/ciEEH5LXQQRMfyyACjnGIelT1iE1WhaupRe9swDpIuyOl169DQkbPYKUstGP6UINiAOvZiCgNFXRjCsLvR99vxp4RNWZMnHmxTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBA2tljdW+Za85zJfCya6g7wgBA+InCjxCUb85Zdd+7ZjAYF]
@@ -20,7 +20,3 @@ dc_bmc::omapi_port: "%{hiera('omapi_port')}"
 dc_bmc::foreman_url: "%{hiera('foreman_url')}"
 dc_bmc::foreman_admin_passwd: "%{hiera('foreman_admin_pw')}"
 dc_bmc::foreman_admin_user: 'admin'
-dc_bmc::params::dell_fw_version: '1.57'
-dc_bmc::params::hp_fw_version: '2.25'
-dc_bmc::params::supermicro_fw_version: '2.20'
-

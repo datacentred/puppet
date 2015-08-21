@@ -15,4 +15,7 @@ class dc_profile::log::logstash {
 
   include ::dc_logstash::server
 
+  include ::dc_icinga::hostgroup_http
+  include ::dc_icinga::hostgroup_logstashes
+
 }

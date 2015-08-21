@@ -9,17 +9,38 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class dc_logstash::params (
-  $logstash_server,
-  $logstash_syslog_port,
-  $logstash_beavertcp_port,
-  $logcourier_port,
-  $logcourier_version,
-  $logstash_grok_patterns_dir,
-  $riemann_dev_host,
-  $elasticsearch_host,
-  $elasticsearch_embedded,
-  $elasticsearch_protocol,
-  $logstash_api_version,
-  $beaver_timeout,
-){}
+class dc_logstash::params {
+
+  # Generic options
+  $api_version = 1
+  $grok_patterns_dir = '/etc/logstash/patterns/grok'
+
+  # Log Courier options
+  $logcourier_version = '1.1.28.gd11a1b4'
+  $logcourier_port = '55516'
+  $logcourier_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+  $logcourier_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+  $logcourier_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+
+  # Beaver options
+  $beaver_port = '9999'
+
+  # Syslog options
+  $syslog_port = '5544'
+
+  # Elasticsearch backend options
+  $elasticsearch_host = 'elasticsearch'
+  $elasticsearch_embedded = false
+  $elasticsearch_protocol = 'http'
+
+  # Generic client options
+  $client_provider = 'log_courier'
+  $client_version = $logcourier_version
+  $client_server = 'logstash'
+  $client_port = $logcourier_port
+  $client_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+  $client_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+  $client_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+  $client_timeout = '40'
+
+}

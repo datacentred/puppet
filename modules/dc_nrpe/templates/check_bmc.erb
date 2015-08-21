@@ -47,11 +47,11 @@ def main():
         print arg
 
     bmc_ipaddress  = "<%= @ipmi_ipaddress %>"
-    std_fw_version = "<%= scope.lookupvar('dc_bmc::std_fw_version') %>"
-    icinga_user    = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_user') %>"
-    admin_user     = "<%= scope.lookupvar('dc_bmc::bmc_admin_name') %>"
-    icinga_pwd     = "<%= scope.lookupvar('dc_bmc::ipmi_monitor_password') %>"
-    admin_pwd      = "<%= scope.lookupvar('dc_bmc::bmc_admin_passwd') %>"
+    std_fw_version = "<%= @std_fw_version %>"
+    admin_user     = "<%= @bmc_admin_name %>"
+    admin_pwd      = "<%= @bmc_admin_password%>"
+    icinga_user    = "<%= @ipmi_monitor_user %>"
+    icinga_pwd     = "<%= @ipmi_monitor_password %>"
 
     # Test the admin user
     admin_cmd_args="ipmitool -I lanplus -H %s -U %s -P %s mc info" % (bmc_ipaddress,admin_user,admin_pwd)

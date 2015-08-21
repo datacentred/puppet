@@ -2,16 +2,17 @@
 #
 # Install and configure beaver client for logstash
 #
-class dc_logstash::client::config::beaver (
-  $logstash_server,
-  $logstash_api_version,
-  $logstash_beavertcp_port,
-  $beaver_timeout,
-  $port,
-  $key,
-  $cert,
-  $cacert,
-) {
+class dc_logstash::client::config::beaver {
+
+  include ::dc_logstash::client
+
+  $server = $::dc_logstash::client::server
+  $api_version = $::dc_logstash::client::api_version
+  $port = $::dc_logstash::client::port
+  $key = $::dc_logstash::client::key
+  $cert = $::dc_logstash::client::cert
+  $cacert = $::dc_logstash::client::cacert
+  $timeout = $::dc_logstash::client::timeout
 
   file { '/etc/beaver':
     ensure => directory,

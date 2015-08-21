@@ -23,6 +23,7 @@ class dc_nrpe::configure {
     mode  => '0644',
   }
 
+  include ::dc_nrpe::checks::bmc
   include ::dc_nrpe::checks::ceilometer_compute
   include ::dc_nrpe::checks::ceilometer_oscontrol
   include ::dc_nrpe::checks::ceph
@@ -31,6 +32,7 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::glance
   include ::dc_nrpe::checks::hpblade
   include ::dc_nrpe::checks::logstash
+  include ::dc_nrpe::checks::logstash_server
   include ::dc_nrpe::checks::lsyncd
   include ::dc_nrpe::checks::neutron
   include ::dc_nrpe::checks::neutron_agent
