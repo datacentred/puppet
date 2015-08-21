@@ -7,7 +7,14 @@ dc_nrpe::checks::neutron::neutron_api_port:         "%{hiera('neutron_api_port')
 dc_nrpe::checks::neutron::keystone_icinga_tenant:   "%{hiera('keystone_icinga_tenant')}"
 dc_nrpe::checks::neutron::keystone_icinga_password: "%{hiera('keystone_icinga_password')}"
 dc_nrpe::checks::neutron::keystone_icinga_user:     "%{hiera('keystone_icinga_user')}"
+
 dc_nrpe::checks::postgres::postgres_password:     "%{hiera('postgres_password')}"
+
 dc_nrpe::checks::foreman_interfaces::ignored_interfaces:
     - 'lo'
     - 'virbr0'
+
+dc_nrpe::checks::bmc::ipmi_monitor_user: "%{hiera('ipmi_monitor_user')}"
+dc_nrpe::checks::bmc::ipmi_monitor_password: "%{hiera('ipmi_monitor_password')}"
+dc_nrpe::checks::bmc::bmc_admin_name: "%{hiera('bmc_admin_name')}"
+dc_nrpe::checks::bmc::bmc_admin_password: "%{hiera('bmc_admin_password')}"
