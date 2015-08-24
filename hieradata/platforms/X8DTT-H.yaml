@@ -5,3 +5,5 @@ classes:
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p1p1}"
 
 dc_nrpe::checks::bmc::std_fw_version: '2.20'
+dc_nrpe::checks::check_hw::nova_cpu: '16'
+dc_nrpe::checks::check_hw::nova_mem: '65'
