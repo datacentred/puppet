@@ -18,6 +18,10 @@ class dc_postgresql::repmgr::slave::sync {
     command => '/usr/sbin/service postgresql start'
   } ->
 
+  runonce { 'repmgr_standby_register':
+    command => "repmgr -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose standby register"
+  } ->
+
   service { 'repmgrd':
     ensure     => running,
     provider   => base,
