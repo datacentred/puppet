@@ -8,3 +8,5 @@ neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p3p1}"
 dc_nrpe::checks::bmc::std_fw_version: '2.20'
 dc_nrpe::checks::check_hw::nova_cpu: '24'
 dc_nrpe::checks::check_hw::nova_mem: '132'
+dc_nrpe::checks::supermicro_psu_ipmi::raw_power1: '0x06 0x52 0x07 0x70 0x01 0x0c'
+dc_nrpe::checks::supermicro_psu_ipmi::raw_power2: '0x06 0x52 0x07 0x72 0x01 0x0c'
