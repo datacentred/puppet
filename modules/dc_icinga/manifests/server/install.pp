@@ -57,6 +57,10 @@ class dc_icinga::server::install {
     ensure => installed,
   }
 
+  package { 'python-ceilometerclient':
+    ensure => installed,
+  }
+
   package { 'curl':
     ensure => installed,
   }
