@@ -1,3 +1,7 @@
+# == Class: dc_postgresql::repmgr::slave::sync
+#
+# Synchronise the slave to the master
+#
 class dc_postgresql::repmgr::slave::sync {
 
   include ::dc_postgresql::params
@@ -16,6 +20,10 @@ class dc_postgresql::repmgr::slave::sync {
 
   runonce { 'restart_postgres':
     command => '/usr/sbin/service postgresql start'
+  } ->
+
+  runonce { 'repmgr_standby_register':
+    command => "repmgr -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose standby register"
   } ->
 
   service { 'repmgrd':
