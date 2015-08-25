@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Ceilometer API monitoring script
+# Ceilometer API monitoring script for Nagios
 #
 # Copyright © 2013 eNovance <licensing@enovance.com>
 #
@@ -31,15 +31,31 @@ STATE_DEPENDENT=4
 usage ()
 {
     echo "Usage: $0 [OPTIONS]"
-    echo " -h        Get help"
+    echo " -h               Get help"
+    echo " -H <Auth URL>    URL for obtaining an auth token"
+    echo " -U <username>    Username to use to get an auth token"
+    echo " -T <tenant>      Tenant to use to get an auth token"
+    echo " -P <password>    Password to use ro get an auth token"
 }
 
-while getopts 'h' OPTION
+while getopts 'h:H:U:T:P:' OPTION
 do
     case $OPTION in
         h)
             usage
             exit 0
+            ;;
+        H)
+            export OS_AUTH_URL=$OPTARG
+            ;;
+        U)
+            export OS_USERNAME=$OPTARG
+            ;;
+        T)
+            export OS_TENANT_NAME=$OPTARG
+            ;;
+        P)
+            export OS_PASSWORD=$OPTARG
             ;;
         *)
             usage
@@ -48,6 +64,7 @@ do
     esac
 done
 
+
 if ! which ceilometer >/dev/null 2>&1
 then
     echo "python-ceilometerclient is not installed."
@@ -55,12 +72,11 @@ then
 fi
 
 
-if ! KEY=$(ceilometer meter-list 2>/dev/null)
+if ! KEY=$(ceilometer -k sample-list -l 10 -m image 2>/dev/null)
 then
-    echo "Unable to list meters"
+    echo "Unable to list samples"
     exit $STATE_CRITICAL
+else
+    echo "Ceilometer API is working"
 fi
 
-count=$(($(ceilometer meter-list 2>/dev/null | wc -l)-4))
-
-echo "Ceilometer API is working with $count meters."

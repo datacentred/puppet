@@ -190,7 +190,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_ceilometer_api_connect':
-    command_line => "/usr/lib/nagios/plugins/check_ceilometer_api_curl.sh -E https://\$HOSTALIAS\$:8777/v2 -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
+    command_line => "/usr/lib/nagios/plugins/check_ceilometer-api.sh -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
   icinga::command { 'check_mongodb':
