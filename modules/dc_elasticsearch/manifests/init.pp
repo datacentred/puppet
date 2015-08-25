@@ -45,7 +45,7 @@ class dc_elasticsearch (
     restart_on_change => false,
     java_install      => true,
     init_defaults     => $config_hash,
-    version           => '1.4.4',
+    version           => '1.7.1',
   }
 
   include ::dc_icinga::hostgroup_elasticsearch
