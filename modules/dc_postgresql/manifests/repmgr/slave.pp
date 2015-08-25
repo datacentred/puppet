@@ -4,6 +4,7 @@ class dc_postgresql::repmgr::slave {
 
   # floating postgres configuration
   include ::dc_postgresql::repmgr::slave::local_connection
+  include ::dc_postgresql::repmgr::slave::cluster_connections
 
   # repmgr configuration
   include ::dc_postgresql::repmgr::install
