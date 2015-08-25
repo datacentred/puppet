@@ -13,8 +13,8 @@
 class dc_profile::util::hosts {
 
   augeas { 'remove_loopback_etc_hosts':
-    context   => '/files/etc/hosts',
-    changes   => [
+    context => '/files/etc/hosts',
+    changes => [
       "rm *[ipaddr = '127.0.1.1']",
     ],
   }
