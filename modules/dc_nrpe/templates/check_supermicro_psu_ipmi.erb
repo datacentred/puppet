@@ -6,7 +6,7 @@
 #
 #  Copyright (c) 2010, tummy.com, ltd., All Rights Reserved.
 #  Written by Kyle Anderson, tummy.com, ltd.
-#  Under the GPL v2 License 
+#  Under the GPL v2 License
 
 # check for plugin directory where utils.sh lives
 [ -d /usr/lib/nagios/plugins ]   && UTILPATH=/usr/lib/nagios/plugins
@@ -25,8 +25,8 @@ if ! which ipmitool >/dev/null 2>&1; then
 fi
 
 #Secret RAW IPMI Commands Passed down from Supermicro Sages
-POWER1=`ipmitool raw 0x06 0x52 0x07 0x78 0x01 0x78 2>&1`
-POWER2=`ipmitool raw 0x06 0x52 0x07 0x7a 0x01 0x78 2>&1`
+POWER1=`ipmitool raw <%= @raw_power1 %> 2>&1`
+POWER2=`ipmitool raw <%= @raw_power2 %> 2>&1`
 
 # These commands only work on the sled in slot A
 # We have no way of testing this so assume the error means we're in slot B
