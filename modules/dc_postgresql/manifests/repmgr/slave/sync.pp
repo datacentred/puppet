@@ -1,3 +1,7 @@
+# == Class: dc_postgresql::repmgr::slave::sync
+#
+# Synchronise the slave to the master
+#
 class dc_postgresql::repmgr::slave::sync {
 
   include ::dc_postgresql::params
