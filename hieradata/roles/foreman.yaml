@@ -1,3 +1,4 @@
 ---
 classes:
   - '::dc_profile::foreman::foreman'
+apache::mod::passenger::mod_package_ensure: '5.0.16-1~trusty1'
