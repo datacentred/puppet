@@ -1,3 +1,7 @@
+# == Class: dc_postgresql::repmgr::slave::cluster_connections
+#
+# Allow connections from the cluster
+#
 class dc_postgresql::repmgr::slave::cluster_connections {
 
   include ::dc_postgresql::config
