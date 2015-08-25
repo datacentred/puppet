@@ -27,7 +27,7 @@ class dc_icinga::server::install {
     'bc',
     'postgresql-client',
     'python-pymongo',
-    'python-psycog2',
+    'python-psycopg2',
     'libcache-memcached-perl',
   ]
 
