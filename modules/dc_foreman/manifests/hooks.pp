@@ -1,3 +1,7 @@
+# == Class: dc_foreman::hooks
+#
+# Adds custom hooks into Foreman
+#
 class dc_foreman::hooks (
   $foreman_oauth_consumer_key,
   $foreman_oauth_consumer_secret,
