@@ -13,11 +13,11 @@ class dc_foreman::memcached {
   }
 
   file { '/usr/share/foreman/config/settings.plugins.d/foreman_memcache.yaml':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => 'puppet:///modules/dc_foreman/foreman_memcache.yaml',
-    notify  => Service['httpd'],
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/dc_foreman/foreman_memcache.yaml',
+    notify => Service['httpd'],
   }
 
 }
