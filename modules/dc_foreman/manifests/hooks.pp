@@ -1,6 +1,8 @@
+# == Class: dc_foreman::hooks
+#
+# Adds custom hooks into Foreman
+#
 class dc_foreman::hooks (
-  $foreman_hipchat_token,
-  $foreman_hipchat_room,
   $foreman_oauth_consumer_key,
   $foreman_oauth_consumer_secret,
   $nagios_api_host,
@@ -38,11 +40,6 @@ class dc_foreman::hooks (
           "${home}/config/hooks/host/managed/after_build"
   ]:
     ensure => directory,
-  }
-
-  file { "${home}/config/hooks/host/managed/before_provision/10_hipchat.py":
-    ensure  => file,
-    content => template('dc_foreman/hooks/10_hipchat.py.erb'),
   }
 
   file { "${home}/config/hooks/host/managed/before_provision/20_enable_icinga.rb":
