@@ -4,7 +4,7 @@
 #
 class dc_foreman::memcached {
 
-  class { 'memcached':
+  class { '::memcached':
     max_memory => '10%'
   }
 
