@@ -17,7 +17,7 @@ class dc_foreman::memcached {
     group   => 'root',
     mode    => '0644',
     content => 'puppet:///modules/dc_foreman/foreman_memcache.yaml',
-    notify  => Service['apache'],
+    notify  => Service['httpd'],
   }
 
 }
