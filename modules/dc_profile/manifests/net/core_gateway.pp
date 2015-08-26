@@ -236,7 +236,8 @@ class dc_profile::net::core_gateway {
   haproxy::backend { 'foreman':
     collect_exported => false,
     options          => {
-      'mode' => 'http',
+      'mode'   => 'http',
+      'cookie' => 'SRV_ID prefix',
     },
   }
 
@@ -358,7 +359,7 @@ class dc_profile::net::core_gateway {
       '10.30.192.10',
       '10.30.192.205',
     ],
-    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
+    options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl cookie',
   }
 
   haproxy::balancermember { 'foreman-puppet-proxy':
