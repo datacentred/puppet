@@ -165,6 +165,15 @@ class dc_profile::net::core_gateway {
     options          => {},
   }
 
+  haproxy::listen { 'ldap_internal':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      "${::ipaddress}:389" => [],
+    },
+    options          => {},
+  }
+
   haproxy::listen { 'log-courier':
     collect_exported => false,
     mode             => 'tcp',
@@ -371,6 +380,14 @@ class dc_profile::net::core_gateway {
 
   haproxy::balancermember { 'ldap':
     listening_service => 'ldaps',
+    ports             => '389',
+    server_names      => 'bonjour.core.sal01.datacentred.co.uk',
+    ipaddresses       => '10.30.192.100',
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'ldap_internal':
+    listening_service => 'ldap_internal',
     ports             => '389',
     server_names      => 'bonjour.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.100',
