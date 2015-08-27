@@ -4,15 +4,19 @@
 #
 class dc_foreman::memcached {
 
-  class { '::memcached':
-    max_memory => '10%'
+  service { 'memcached':
+    ensure => stopped,
+  } ->
+  package { 'memcached':
+    ensure => absent
   }
 
   package { 'ruby-foreman-memcache':
-    ensure => installed,
+    ensure => absent,
   }
 
   file { '/usr/share/foreman/config/settings.plugins.d/foreman_memcache.yaml':
+    ensure => absent,
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
