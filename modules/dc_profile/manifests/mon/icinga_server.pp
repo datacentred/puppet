@@ -12,6 +12,11 @@
 #
 class dc_profile::mon::icinga_server {
 
+  contain ::dc_ssl
+  contain ::dc_ssl::slapd
+  contain ::dc_ldap
+  contain ::ldap::client
+
   contain apache
   contain apache::mod::php
   contain apache::mod::rewrite
