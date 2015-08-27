@@ -20,7 +20,7 @@ ldap::server::overlays:
 ldap::client::uri: "ldaps://%{hiera('ldap_host')}"
 ldap::client::base: "%{hiera('ldap::server::suffix')}"
 ldap::client::ssl: true
-ldap::client::ssl_cacert: '/etc/ssl/certs/datacentred-ca.pem'
-ldap::client::ssl_cert: '/etc/ssl/certs/slapd-server.crt'
-ldap::client::ssl_key: '/etc/ssl/private/slapd-server.key'
+ldap::client::ssl_cacert: '/var/lib/puppet/ssl/certs/ca.pem'
+ldap::client::ssl_cert: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+ldap::client::ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
 ldap::client::ssl_reqcert: 'never'

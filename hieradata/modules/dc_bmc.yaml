@@ -2,7 +2,7 @@
 dc_bmc::ipmi_monitor_user: "%{hiera('ipmi_monitor_user')}"
 dc_bmc::ipmi_monitor_password: "%{hiera('ipmi_monitor_password')}"
 dc_bmc::ipmi_monitor_user_slot: '10'
-dc_bmc::ldap_server: 'ldap.datacentred.services'
+dc_bmc::ldap_server: "%{hiera('ldap_host')}"
 dc_bmc::ldap_basedn: "%{hiera('ldap_suffix')}"
 dc_bmc::ldap_port: '636'
 dc_bmc::ldap_role_group: 'cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk' 
