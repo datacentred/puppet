@@ -136,3 +136,9 @@ dc_apt_mirror::mirrors:
     components:
       - 'openmanage'
     mirror: "%{hiera('dell_openmanage_mirror_path')}"
+  log_courier_mirror:
+    release:
+      - 'trusty'
+    components:
+      - 'main'
+    mirror: "%{hiera('log_courier_apt_source')}"

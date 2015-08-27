@@ -148,3 +148,10 @@ apt::sources:
     key: '391A9AA2147192839E9DB0315EDB1B62EC4926EA'
     key_server: 'keyserver.ubuntu.com'
     include_src: false
+  log_courier_mirror:
+    location: "http://%{hiera('log_courier_apt_source')}"
+    release: 'trusty'
+    repos: 'main'
+    key: '6BC5B9584A6C7318FF63ED4B4E1E64FA396E0886'
+    key_source: 'http://keyserver.ubuntu.com:11371/pks/lookup?op=get&search=0x4E1E64FA396E0886'
+    include_src: false
