@@ -9,8 +9,8 @@ class dc_logstash::server::riemann {
   Package['logstash'] ->
 
   exec { 'install_riemann_plugin':
-    command     => '/opt/logstash/bin/plugin install logstash-output-riemann',
-    unless      => '/opt/logstash/bin/plugin list | grep logstash-output-riemann',
+    command => '/opt/logstash/bin/plugin install logstash-output-riemann',
+    unless  => '/opt/logstash/bin/plugin list | grep logstash-output-riemann',
   } ->
 
   Service['logstash']
