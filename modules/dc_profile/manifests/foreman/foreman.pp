@@ -21,7 +21,7 @@ class dc_profile::foreman::foreman {
   #       and service will need testing when bringing up in CI
   # TODO: needs work on foreman to work properly - BRB!
   #include ::dc_foreman::ignored_environments
-  include ::dc_foreman::memcached
+  include ::dc_foreman::comms
   include ::dc_icinga::hostgroup_https
   include ::dc_icinga::hostgroup_foreman
 
