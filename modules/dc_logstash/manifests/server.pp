@@ -56,8 +56,9 @@ class dc_logstash::server (
     require => Class['::logstash'],
   }
 
-  # Install the server side log-courier components
+  # Install the server side log-courier and riemann components
   include ::dc_logstash::server::courier
+  include ::dc_logstash::server::riemann
 
   # Add config files
   include ::dc_logstash::server::config::input_beaver
