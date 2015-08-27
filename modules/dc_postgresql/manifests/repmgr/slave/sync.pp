@@ -26,13 +26,18 @@ class dc_postgresql::repmgr::slave::sync {
     command => "repmgr -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose standby register"
   } ->
 
+  file { '/etc/default/repmgrd':
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('dc_postgresql/repmgrd.default.erb'),
+    notify  => Service['repmgrd'],
+  }
+
   service { 'repmgrd':
-    ensure     => running,
-    provider   => base,
-    start      => "/usr/bin/repmgrd -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose --monitoring-history > ${dc_postgresql::params::pghome}/repmgr/repmgr.log 2>&1 &",
-    stop       => 'killall repmgrd',
-    hasrestart => false,
-    hasstatus  => false,
+    ensure  => running,
+    require => File['/etc/default/repmgrd'],
   }
 
 }
