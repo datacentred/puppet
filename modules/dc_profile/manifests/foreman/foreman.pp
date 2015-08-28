@@ -12,6 +12,10 @@
 #
 class dc_profile::foreman::foreman {
 
+  class { '::memcached':
+    max_memory => 2048,
+  }
+
   include ::foreman
   include ::foreman::plugin::discovery
   include ::foreman::plugin::digitalocean
