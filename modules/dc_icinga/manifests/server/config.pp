@@ -39,6 +39,11 @@ class dc_icinga::server::config {
   package { 'php-net-ldap':
     ensure => installed,
   }
+  # www-data user needs to read the puppet certs for LDAPS
+  user { 'www-data':
+    ensure => present,
+    groups => [ 'puppet' ],
+  }
 
   file { '/usr/share/icinga-web/app/modules/AppKit/config/auth.xml':
     ensure  => file,
