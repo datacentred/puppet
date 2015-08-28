@@ -17,8 +17,8 @@
 #
 class dc_icinga::server::config {
 
-  $ldap_server_suffix = hiera(ldap_suffix)
-  $ldap_server = "ldap.${::domain}"
+  $ldap_suffix = hiera(ldap_suffix)
+  $ldap_host = hiera(ldap_host)
 
   # Add custom plugins
   include dc_icinga::server::custom_plugins
