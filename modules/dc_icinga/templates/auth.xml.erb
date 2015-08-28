@@ -173,7 +173,6 @@
             <ae:parameter name="auth_module">AppKit</ae:parameter>
             <ae:parameter name="auth_provider">Auth.Provider.LDAP</ae:parameter>
             <ae:parameter name="auth_enable">true</ae:parameter>
-            <ae:parameter name="auth_authoritative">false</ae:parameter>
             <ae:parameter name="auth_create">true</ae:parameter>
             <ae:parameter name="auth_update">true</ae:parameter>
             
@@ -183,7 +182,7 @@
                 <ae:parameter name="user_email">mail</ae:parameter> 
             </ae:parameter>
             <ae:parameter name="ldap_allow_anonymous">true</ae:parameter>
-            <ae:parameter name="ldap_dsn">ldaps://<%= @ldap_host %>/</ae:parameter>
+            <ae:parameter name="ldap_dsn">ldaps://<%= @ldap_host %></ae:parameter>
             <ae:parameter name="ldap_start_tls">false</ae:parameter>
             <ae:parameter name="ldap_basedn"><%= @ldap_suffix %></ae:parameter>
 <!--
