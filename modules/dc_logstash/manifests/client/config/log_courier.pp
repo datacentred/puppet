@@ -14,38 +14,11 @@ class dc_logstash::client::config::log_courier {
   $cacert = $::dc_logstash::client::cacert
   $timeout = $::dc_logstash::client::timeout
 
-  file { '/usr/sbin/log-courier':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => "puppet:///modules/dc_logstash/log_courier/log-courier-${version}",
-  }
-
-  file { '/usr/sbin/lc-admin':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_logstash/log_courier/lc-admin',
-  }
-
-  file { '/etc/init.d/log-courier':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_logstash/log_courier/log_courier.init',
+  package { 'log-courier':
+    ensure  => '1.8.1-1~trusty1',
   }
 
   file { '/etc/log-courier':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-  }
-
-  file { '/var/lib/log-courier':
     ensure => directory,
     owner  => 'root',
     group  => 'root',
@@ -75,8 +48,8 @@ class dc_logstash::client::config::log_courier {
   service { 'log-courier':
     ensure    => running,
     enable    => true,
-    require   => [ File['/usr/sbin/log-courier'], File['/etc/init.d/log-courier'] ],
-    subscribe => [ Concat['/etc/log-courier/log-courier.conf'], File['/usr/sbin/log-courier'] ],
+    require   => Package['log-courier'],
+    subscribe => [ Concat['/etc/log-courier/log-courier.conf'], Package['log-courier'] ],
   }
 
   logrotate::rule { 'log-courier':
