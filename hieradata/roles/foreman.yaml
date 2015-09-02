@@ -2,3 +2,6 @@
 classes:
   - '::dc_profile::foreman::foreman'
 apache::mod::passenger::mod_package_ensure: '1:5.0.16-1~trusty1'
+apache::mod::passenger::passenger_max_pool_size: '5'
+apache::mod::passenger::passenger_max_requests: '500'
+apache::mod::passenger::passenger_high_performance: 'on'
