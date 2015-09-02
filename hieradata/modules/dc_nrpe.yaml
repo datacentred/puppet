@@ -18,3 +18,7 @@ dc_nrpe::checks::bmc::ipmi_monitor_user: "%{hiera('ipmi_monitor_user')}"
 dc_nrpe::checks::bmc::ipmi_monitor_password: "%{hiera('ipmi_monitor_password')}"
 dc_nrpe::checks::bmc::bmc_admin_name: "%{hiera('bmc_admin_name')}"
 dc_nrpe::checks::bmc::bmc_admin_password: "%{hiera('bmc_admin_password')}"
+dc_nrpe::checks::disk_stats::queue_depth_warn: '50'
+dc_nrpe::checks::disk_stats::queue_depth_crit: '100'
+dc_nrpe::checks::disk_stats::ssd_queue_depth_warn: '15'
+dc_nrpe::checks::disk_stats::ssd_queue_depth_crit: '30'
