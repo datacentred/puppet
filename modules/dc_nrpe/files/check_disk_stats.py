@@ -79,19 +79,29 @@ def add_output(context, message):
 def check_queue_depth(context, config, stats):
     """Check the queue depth at the current time"""
     for device in stats:
-        if stats[device][FIELD_IO] >= config['queue_depth']['crit']:
+        try:
+            model_file = open('/sys/class/block/%s/device/model'
+                    % device, 'r')
+            lines = model_file.readlines()
+            if re.search(r"SSD", lines[0]):
+                queue_depth = config['ssd_queue_depth']
+            else:
+                queue_depth = config['queue_depth']
+        except IOError:
+            queue_depth = config['queue_depth']
+        if stats[device][FIELD_IO] >= queue_depth['crit']:
             set_status(context, NAGIOS_CRITICAL)
             add_output(context, 'CRITICAL: {}: io queue {} >= {}'.format(
                 device,
                 stats[device][FIELD_IO],
-                config['queue_depth']['crit']
+                queue_depth['crit']
                 ))
-        elif stats[device][FIELD_IO] >= config['queue_depth']['warn']:
+        elif stats[device][FIELD_IO] >= queue_depth['warn']:
             set_status(context, NAGIOS_CRITICAL)
             add_output(context, 'WARNING: {}: io queue {} >= {}'.format(
                 device,
                 stats[device][FIELD_IO],
-                config['queue_depth']['warn'],
+                queue_depth['warn'],
                 ))
 
 def main():
