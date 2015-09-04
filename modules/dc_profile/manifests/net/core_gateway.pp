@@ -236,7 +236,8 @@ class dc_profile::net::core_gateway {
   haproxy::backend { 'foreman':
     collect_exported => false,
     options          => {
-      'mode' => 'http',
+      'mode'    => 'http',
+      'balance' => 'source',
     },
   }
 
