@@ -1,7 +1,6 @@
 ---
 classes:
   - '::dc_elasticsearch'
-  - '::dc_elasticsearch::lbmember'
   - '::dc_elasticsearch::elasticsearch_backup_destination'
 
 dc_elasticsearch::es_hash:
@@ -15,8 +14,7 @@ dc_elasticsearch::es_hash:
   threadpool.index.size: '60'
   threadpool.index.queue_size: '200'
   bootstrap.mlockall: 'true'
-  discovery.zen.minimum_master_nodes: '2'
-  indices.ttl.interval: '14d'
+  discovery.zen.minimum_master_nodes: '4'
   cloud.aws.s3.endpoint: 'storage.datacentred.io'
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'
   http.cors.allow-origin: '"*"'
