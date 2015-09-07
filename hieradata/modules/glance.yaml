@@ -9,11 +9,10 @@ glance::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:9292"
 glance::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:9292"
 
 glance::api::registry_host: "%{hiera('os_api_host')}"
-glance::api::auth_host: "%{hiera('os_api_host')}"
 glance::api::registry_client_protocol:  'https'
-glance::api::auth_protocol: 'https'
 glance::api::auth_type: 'keystone'
 glance::api::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+glance::api::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 glance::api::keystone_tenant: 'services'
 glance::api::keystone_user: 'glance'
 glance::api::keystone_password: "%{hiera('keystone_glance_password')}"
@@ -28,9 +27,8 @@ glance::api::debug: true
 glance::api::verbose: true
 
 glance::registry::auth_type: 'keystone'
-glance::registry::auth_host: "%{hiera('os_api_host')}"
 glance::registry::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
-glance::registry::auth_protocol: 'https'
+glance::registry::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 glance::registry::keystone_tenant: 'services'
 glance::registry::keystone_user: 'glance'
 glance::registry::keystone_password: "%{hiera('keystone_glance_password')}"
