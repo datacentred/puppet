@@ -21,6 +21,10 @@ class dc_logstash::params {
   $logcourier_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
   $logcourier_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
   $logcourier_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+  $logcourier_server_version = '1.8.1'
+
+  #Riemann options
+  $riemann_plugin_version = '0.2.0'
 
   # Beaver options
   $beaver_port = '9999'
