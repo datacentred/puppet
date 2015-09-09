@@ -2,15 +2,15 @@
 #
 # Install the server side components of riemann
 #
-class dc_logstash::server::riemann (
-  $riemann_plugin_version = $dc_logstash::params::riemann_plugin_version,
-) inherits dc_logstash::params {
+class dc_logstash::server::riemann {
 
   include dc_logstash::server
 
+  $riemann_version = $dc_logstash::server::riemann_version
+
   exec { 'install_riemann_plugin':
-    command => "/opt/logstash/bin/plugin install --version ${riemann_plugin_version} logstash-output-riemann",
-    unless  => "/opt/logstash/bin/plugin list | grep logstash-output-riemann (${riemann_plugin_version})",
+    command => "/opt/logstash/bin/plugin install --version ${riemann_version} logstash-output-riemann",
+    unless  => "/opt/logstash/bin/plugin list | grep logstash-output-riemann (${riemann_version})",
     require => Package['logstash'],
   } ~>
 
