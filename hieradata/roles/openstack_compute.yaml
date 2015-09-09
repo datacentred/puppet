@@ -1,8 +1,8 @@
 ---
 classes:
-  - '::dc_profile::openstack::nova_compute'
-  - '::dc_profile::openstack::neutron_agent'
-  - '::dc_profile::openstack::ceilometer_agent'
+  - '::dc_profile::openstack::nova::compute'
+  - '::dc_profile::openstack::neutron::agent_compute'
+  - '::dc_profile::openstack::ceilometer::agent'
   - '::dc_icinga::hostgroup_nova_compute'
 
 sudo::configs:

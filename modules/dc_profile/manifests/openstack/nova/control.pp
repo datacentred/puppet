@@ -1,4 +1,6 @@
-# Class: dc_profile::openstack::nova
+# Class: dc_profile::openstack::nova::control
+# 
+# OpenStack Nova control components profile class
 #
 # Parameters:
 #
@@ -8,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::nova {
+class dc_profile::openstack::nova::control {
 
   include ::nova
   include ::nova::keystone::auth
