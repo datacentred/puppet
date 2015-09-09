@@ -281,3 +281,6 @@
 [submodule "modules/puppetdeploy"]
 	path = modules/puppetdeploy
 	url = https://github.com/datacentred/puppet-puppetdeploy
+[submodule "modules/nscd"]
+	path = modules/nscd
+	url = https://github.com/ghoneycutt/puppet-module-nscd
