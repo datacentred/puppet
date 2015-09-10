@@ -152,7 +152,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_postfix_queue':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_postfix',
     check_command       => 'check_nrpe_1arg!check_mailq_postfix',
     service_description => 'Postfix Mail Queue',
