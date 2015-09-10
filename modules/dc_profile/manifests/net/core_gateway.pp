@@ -468,9 +468,9 @@ class dc_profile::net::core_gateway {
       'elasticsearch2.core.sal01.datacentred.co.uk',
     ],
     ipaddresses       => [
-      '10.30.192.130',
-      '10.30.192.132',
-      '10.30.192.134',
+      '10.30.192.208',
+      '10.30.192.206',
+      '10.30.192.203',
     ],
     options           => 'check',
   }
