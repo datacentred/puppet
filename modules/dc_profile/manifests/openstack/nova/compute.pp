@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::nova_compute
+# Class: dc_profile::openstack::nova::compute
 #
 # OpenStack Nova compute profile class
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::nova_compute {
+class dc_profile::openstack::nova::compute {
 
   include ::nova
   include ::nova::compute
@@ -113,7 +113,7 @@ class dc_profile::openstack::nova_compute {
 
   case $::osfamily {
     'Debian': {
-      include ::dc_profile::openstack::nova_apparmor
+      include ::dc_profile::openstack::nova::apparmor
       # Patch in the fix for revert resize deleting the rbd
       file { '/usr/lib/python2.7/dist-packages/nova/compute/manager.py':
         owner   => 'root',

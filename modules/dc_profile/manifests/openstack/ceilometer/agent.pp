@@ -1,6 +1,7 @@
-# Class: dc_profile::openstack::ceilometer_agent
+# Class: dc_profile::openstack::ceilometer::agent
 #
-# OpenStack Ceilometer - cloud utilisation and monitoring
+# Ceilometer agent components for deployment on compute
+# and network nodes.
 #
 # Parameters:
 #
@@ -10,7 +11,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::ceilometer_agent {
+class dc_profile::openstack::ceilometer::agent {
 
   include ::ceilometer
   include ::ceilometer::agent::auth

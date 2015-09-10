@@ -1,6 +1,6 @@
-# Class: dc_profile::openstack::ceilometer
+# Class: dc_profile::openstack::ceilometer::control
 #
-# OpenStack Ceilometer - cloud utilisation and monitoring
+# Main Ceilometer components for deployment on a cloud control node
 #
 # Parameters:
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::ceilometer {
+class dc_profile::openstack::ceilometer::control {
 
   include ::ceilometer
   include ::ceilometer::keystone::auth

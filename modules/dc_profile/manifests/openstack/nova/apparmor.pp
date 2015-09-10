@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::nova_apparmor
+# Class: dc_profile::openstack::nova::apparmor
 #
 # OpenStack apparmor configuration for libvirt
 #
@@ -9,7 +9,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::nova_apparmor {
+class dc_profile::openstack::nova::apparmor {
 
   # Install modified libvirt-qemu configuration for apparmor
   file { 'libvirt-qemu-apparmor':

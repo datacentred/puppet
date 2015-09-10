@@ -3,14 +3,17 @@ classes:
   - '::dc_profile::openstack::keystone'
   - '::dc_profile::openstack::glance'
   - '::dc_profile::openstack::cinder'
-  - '::dc_profile::openstack::neutron_server'
-  - '::dc_profile::openstack::nova'
-  - '::dc_profile::openstack::ceilometer'
+  - '::dc_profile::openstack::neutron::server'
+  - '::dc_profile::openstack::nova::control'
+  - '::dc_profile::openstack::ceilometer::control'
   - '::dc_profile::openstack::heat'
   - '::dc_profile::openstack::horizon'
 
 keystone_tenants:
     icinga:
+        enabled: true
+        ensure: 'present'
+    test:
         enabled: true
         ensure: 'present'
 
@@ -20,6 +23,11 @@ keystone_users:
         ensure: 'present'
         password: "%{hiera('keystone_icinga_password')}"
         tenant: 'icinga'
+    test:
+        enabled: true
+        ensure: 'present'
+        password: 'test123'
+        tenant: 'test'
 
 keystone_services:
     swift:

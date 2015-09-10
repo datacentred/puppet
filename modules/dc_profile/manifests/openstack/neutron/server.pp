@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::neutron_server
+# Class: dc_profile::openstack::neutron::server
 #
 # Parameters:
 #
@@ -8,9 +8,8 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::neutron_server {
+class dc_profile::openstack::neutron::server {
 
-  # Enable Neutron server services
   include ::neutron
   include ::neutron::keystone::auth
   include ::neutron::server

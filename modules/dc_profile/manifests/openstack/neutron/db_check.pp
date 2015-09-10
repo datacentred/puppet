@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::neutron_db_check
+# Class: dc_profile::openstack::neutron::db_check
 #
 # Neutron db check script configuration
 #
@@ -9,7 +9,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::neutron_db_check {
+class dc_profile::openstack::neutron::db_check {
 
   $neutron_host = 'localhost'
   $neutron_db = hiera(neutron_db)

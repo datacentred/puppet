@@ -27,7 +27,6 @@ class dc_profile::openstack::keystone {
 
   # Ensure that the various PKI-related certificates and keys
   # are the same across all nodes running Keystone
-
   $keystone_signing_key  = hiera(keystone_signing_key)
   $keystone_signing_cert = hiera(keystone_signing_cert)
   $keystone_ca_key       = hiera(keystone_ca_key)
