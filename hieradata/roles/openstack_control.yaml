@@ -13,9 +13,6 @@ keystone_tenants:
     icinga:
         enabled: true
         ensure: 'present'
-    test:
-        enabled: true
-        ensure: 'present'
 
 keystone_users:
     icinga:
@@ -23,11 +20,6 @@ keystone_users:
         ensure: 'present'
         password: "%{hiera('keystone_icinga_password')}"
         tenant: 'icinga'
-    test:
-        enabled: true
-        ensure: 'present'
-        password: 'test123'
-        tenant: 'test'
 
 keystone_services:
     swift:
