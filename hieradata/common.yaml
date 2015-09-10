@@ -9,6 +9,7 @@ classes:
   - '::dc_profile::net::lldp'
   - '::dc_profile::net::ntp'
   - '::dc_profile::net::ssh'
+  - '::dc_profile::net::nscd'
   - '::dc_profile::puppet::puppet'
   - '::dc_profile::util::augeas'
   - '::dc_profile::util::dnsclient'

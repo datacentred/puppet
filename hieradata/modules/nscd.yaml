@@ -1,0 +1,6 @@
+---
+nscd::passwd_enable_cache: 'no'
+nscd::group_enable_cache: 'no'
+nscd::services_enable_cache: 'no'
+nscd::hosts_positive_time_to_live: '600'
+nscd::hosts_persistent: 'no'
