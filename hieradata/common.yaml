@@ -107,6 +107,7 @@ admins:
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC9wUebrBAw2xuaeLIs9JkKp0sAPtACzXWgbNHrr4+4+5u0cjQ2P4bM6eLzj//DSFLAgezvMgOVprcGKWk2ezqZrMhmOgsSqfZiqjkUQKasa5pc6fgvAjYFIXn8P63w+ApLM0h5U4tWkZSOJp8zTyNFt3PFg7BU7Dxs6J8QdPYGbv3zCbruPFHx/UP+ihM2X7BEFwRST/LCdzuxCLMw7gfII7882ao//6usX7Gcslj/MU7crgASGiqlzpVdxv+PuloaM/6uUsAUS+bZ+RLDXqsDebO2Yc0pBKPCDcsJT23JgQn6XSMa3AUsnwvQ3jJwTwU0D/n1Cb/GzSSgPb2MkWox'
     email: 'sean.handley@datacentred.co.uk'
   rob:
+    ensure: absent
     uid: '1006'
     gid: 'sysadmin'
     pass: '$6$PVZKBkTw$/XYkUJjQB29l0UrDpQ1ZxzlnZF1GFEEWeEHshk5GNfeYAD7FYCyMkDKKZeWxMmT1VpwUK9cbodqDYbpBUyd.Z1'
@@ -170,7 +171,6 @@ ldap_groups:
         - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
   'cn=PFSense Admins,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
@@ -184,7 +184,6 @@ ldap_groups:
         - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
   # Super users able to perform all operations
   'cn=jenkins-admin,ou=Groups,dc=datacentred,dc=co,dc=uk':
@@ -197,7 +196,6 @@ ldap_groups:
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
   # Developers able to view and run jobs
   'cn=jenkins-development,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
@@ -211,7 +209,6 @@ ldap_groups:
         - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=max,ou=People,dc=datacentred,dc=co,dc=uk'
 
 ldap_users:
@@ -301,6 +298,7 @@ ldap_users:
         - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
         - cn=PFSense Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
   'cn=rob,ou=People,dc=datacentred,dc=co,dc=uk':
+    ensure: absent
     tag: user
     attributes:
       uid: rob
