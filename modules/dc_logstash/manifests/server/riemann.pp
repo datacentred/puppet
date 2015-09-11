@@ -10,7 +10,7 @@ class dc_logstash::server::riemann {
 
   exec { 'install_riemann_plugin':
     command => "/opt/logstash/bin/plugin install --version ${riemann_version} logstash-output-riemann",
-    unless  => "/opt/logstash/bin/plugin list | grep logstash-output-riemann (${riemann_version})",
+    unless  => "/opt/logstash/bin/plugin list --verbose | grep logstash-output-riemann (${riemann_version})",
     require => Package['logstash'],
   } ~>
 
