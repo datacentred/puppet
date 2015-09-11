@@ -2,4 +2,4 @@
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p2p1}"
 network_node_extif: 'p2p2'
 
-dc_nrpe::checks::bmc::std_fw_version: '1.57'
+dc_nrpe::checks::bmc::std_fw_version: '2.20'
