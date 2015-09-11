@@ -10,7 +10,7 @@ class dc_logstash::server::courier {
 
   exec { 'install_log_courier_gem':
     command => "/opt/logstash/bin/plugin install --version ${logcourier_server_version} logstash-input-courier",
-    unless  => "/opt/logstash/bin/plugin list | grep logstash-input-courier (${logcourier_server_version})",
+    unless  => "/opt/logstash/bin/plugin list --verbose | grep logstash-input-courier (${logcourier_server_version})",
     require => Package['logstash'],
   } ~>
 
