@@ -284,3 +284,9 @@
 [submodule "modules/nscd"]
 	path = modules/nscd
 	url = https://github.com/ghoneycutt/puppet-module-nscd
+[submodule "modules/influxdb"]
+	path = modules/influxdb
+	url = https://github.com/n1tr0g/golja-influxdb
+[submodule "modules/stunnel"]
+	path = modules/stunnel
+	url = https://github.com/arusso/puppet-stunnel.git
