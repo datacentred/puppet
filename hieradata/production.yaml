@@ -4,7 +4,6 @@ classes:
   - '::dc_profile::log::rsyslog_client'
   - '::dc_profile::log::log_shipper'
   - '::dc_profile::net::mail'
-  - 'dc_profile::perf::collectd'
 
 # icinga
 #

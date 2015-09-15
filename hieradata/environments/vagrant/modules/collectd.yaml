@@ -1,0 +1,4 @@
+---
+collectd::plugin::network::server: "influxdb0.%{::domain}"
+collectd::plugin::network::serverport: '8096'
+collectd::plugin::write_graphite::ensure: 'absent'

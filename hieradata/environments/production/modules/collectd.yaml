@@ -1,0 +1,2 @@
+---
+collectd::plugin::network::ensure: 'absent'
