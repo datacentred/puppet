@@ -4,14 +4,11 @@ apt::sources:
     location: 'http://ports.ubuntu.com/ubuntu-ports'
     release: 'utopic'
     repos: 'main restricted universe multiverse'
-    include_src: false
   utopic_security:
     location: 'http://ports.ubuntu.com/ubuntu-ports'
     release: 'utopic-security'
     repos: 'main restricted universe multiverse'
-    include_src: false
   utopic_updates:
     location: 'http://ports.ubuntu.com/ubuntu-ports'
     release: 'utopic-updates'
     repos: 'main restricted universe multiverse'
-    include_src: false

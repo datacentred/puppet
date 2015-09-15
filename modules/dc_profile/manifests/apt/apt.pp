@@ -16,7 +16,6 @@ class dc_profile::apt::apt {
 
   contain ::dpkg
   contain ::apt
-  contain ::apt::unattended_upgrades
   contain ::dc_apt
 
   # Ensure supported architectures are set up before apt updates
