@@ -147,3 +147,7 @@ apt::sources:
     key:
       id: '7B0FAB3A13B907435925D9C954422A4B98AB5139'
       source: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'
+
+apt::ppas:
+  ppa:devel-k/log-courier:
+    ensure: 'present'
