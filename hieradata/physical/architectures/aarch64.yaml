@@ -9,7 +9,7 @@ nova::compute::vnc_enabled: false
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_bond0_170}" # TODO: This is hardware specific
 
 dc_nrpe::checks::check_hw::nova_cpu: 8  # Note: platform specific
-dc_nrpe::checks::check_hw::nova_mem: 66 # Note: platform specific
+dc_nrpe::checks::check_hw::nova_mem: 65 # Note: platform specific
 
 dc_logstash::client::provider: 'beaver'
 dc_logstash::client::port: '9999'
