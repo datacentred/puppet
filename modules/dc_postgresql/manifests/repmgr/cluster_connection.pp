@@ -1,8 +1,8 @@
-# == Define: dc_postgresql::repmgr::master::cluster_connection
+# == Define: dc_postgresql::repmgr::cluster_connection
 #
 # A singlular hostname based allowed connection
 #
-define dc_postgresql::repmgr::master::cluster_connection {
+define dc_postgresql::repmgr::cluster_connection {
 
   postgresql::server::pg_hba_rule { "repmgr accesss from ${title}":
     type        => 'host',

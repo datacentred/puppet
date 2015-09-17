@@ -4,8 +4,7 @@
 #
 class dc_postgresql::repmgr::install {
 
-  package { 'postgresql-9.3-repmgr':
-    ensure => installed,
-  }
+
+  ensure_packages(['postgresql-9.3-repmgr', 'repmgr'])
 
 }
