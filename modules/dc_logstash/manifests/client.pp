@@ -17,6 +17,7 @@ class dc_logstash::client (
   $cert = $dc_logstash::params::client_cert,
   $cacert = $dc_logstash::params::client_cacert,
   $timeout = $dc_logstash::params::client_timeout,
+  $log_courier_config,
 ) inherits dc_logstash::params {
 
   include "::dc_logstash::client::config::${provider}"
