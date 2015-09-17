@@ -23,7 +23,7 @@ class dc_postgresql::install {
     postgres_password          => $dc_postgresql::params::postgres_password,
   } ->
 
-  package { 'postgresql-contrib':
+  package { 'postgresql-contrib-9.3':
     ensure => installed,
   }
 
