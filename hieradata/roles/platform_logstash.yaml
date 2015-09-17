@@ -6,21 +6,3 @@ classes:
   - '::dc_profile::log::riemann'
 
 dc_kibana::elasticsearch_host: 'logstash'
-
-loadbalancer::members::member_hash:
-  kibana:
-    ipaddresses: "%{::ipaddress}"
-    ports:       '80'
-    options:     'check'
-  syslog:
-    ipaddresses: "%{::ipaddress}"
-    ports:       '5544'
-    options:     'check'
-  courier:
-    ipaddresses: "%{::ipaddress}"
-    ports:       '55516'
-    options:     'check'
-  beaver:
-    ipaddresses: "%{::ipaddress}"
-    ports:       '9999'
-    options:     'check'

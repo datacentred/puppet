@@ -9,7 +9,6 @@ class dc_logstash::server (
   $logcourier_key = $dc_logstash::params::logcourier_key,
   $logcourier_cert = $dc_logstash::params::logcourier_cert,
   $logcourier_cacert = $dc_logstash::params::logcourier_cacert,
-  $beaver_port = $dc_logstash::params::beaver_port,
   $syslog_port = $dc_logstash::params::syslog_port,
   $elasticsearch_host = $dc_logstash::params::elasticsearch_host,
   $elasticsearch_embedded = $dc_logstash::params::elasticsearch_embedded,
@@ -62,7 +61,6 @@ class dc_logstash::server (
   include ::dc_logstash::server::riemann
 
   # Add config files
-  include ::dc_logstash::server::config::input_beaver
   include ::dc_logstash::server::config::input_log_courier
   include ::dc_logstash::server::config::input_syslog
   include ::dc_logstash::server::config::filter_grok_apache

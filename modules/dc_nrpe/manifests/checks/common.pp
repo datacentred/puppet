@@ -43,11 +43,6 @@ class dc_nrpe::checks::common {
     sudo   => true,
   }
 
-  dc_nrpe::check { 'check_beaver':
-    path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -a beaver',
-  }
-
   dc_nrpe::check { 'check_log_courier':
     path   => '/usr/local/bin/check_log_courier',
     source => 'puppet:///modules/dc_nrpe/check_log_courier.py',
