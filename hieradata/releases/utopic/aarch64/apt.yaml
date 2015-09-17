@@ -13,7 +13,7 @@ apt::sources:
     release: 'utopic-updates'
     repos: 'main restricted universe multiverse'
   datacentred:
-    location: 'http://apt.datacentred.services'
+    location: 'http://apt.datacentred.services/ubuntu'
     release: 'vivid'
     repos: 'main'
     key:
