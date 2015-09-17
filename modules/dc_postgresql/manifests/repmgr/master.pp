@@ -9,12 +9,8 @@ class dc_postgresql::repmgr::master {
   # repmgr configuration
   include ::dc_postgresql::repmgr::install
   include ::dc_postgresql::repmgr::config
-  include ::dc_postgresql::repmgr::master::config
 
   Class['::dc_postgresql::repmgr::install'] ->
-  Class['::dc_postgresql::repmgr::config'] ->
-  Class['::dc_postgresql::repmgr::master::config']
+  Class['::dc_postgresql::repmgr::config']
 
-  Class['::dc_postgresql::repmgr::master::db'] ->
-  Class['::dc_postgresql::repmgr::master::config']
 }

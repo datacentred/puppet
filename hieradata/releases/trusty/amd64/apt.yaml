@@ -91,13 +91,6 @@ apt::sources:
     key:
       id: '16378A33A6EF16762922526E561F9B9CAC40B2F7'
       server: 'hkp://keyserver.ubuntu.com'
-  postgres_mirror:
-    location: "http://%{hiera('postgres_mirror_path')}"
-    release: 'trusty-pgdg'
-    repos: 'main'
-    key:
-      id: 'B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8'
-      source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
   puppetlabs_mirror:
     location: "http://%{hiera('puppet_mirror_path')}"
     release: 'trusty'
