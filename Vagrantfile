@@ -25,11 +25,11 @@ Vagrant.configure('2') do |config|
   #config.vm.network :private_network, type: :dhcp
 
   # Setup a dedicated PuppetDB for storedconfigs
-  config.vm.define 'puppetdb' do |box|
+  config.vm.define 'puppet' do |box|
     box.vm.network :private_network, type: :dhcp
-    box.vm.hostname = 'puppetdb.vagrant.dev'
+    box.vm.hostname = 'puppet.vagrant.dev'
     box.vm.synced_folder '.', '/vagrant', :disabled => true
-    box.vm.provision 'shell', path: 'vagrant/bootstrap_puppetdb.sh'
+    box.vm.provision 'shell', path: 'vagrant/bootstrap_puppet.sh'
   end
 
   # Environment specific boxes (defined in .vagrantuser)

@@ -23,17 +23,26 @@ if [ -f /etc/redhat-release ]; then
 else
   apt-get update &> /dev/null
   for package in ${DEBIAN_PACKAGES}; do
-    dpkg -s ${i} &> /dev/null || apt-get -y install ${package} > /dev/null
+    dpkg -s ${i} >/dev/null 2>&1 || apt-get -y install ${package} > /dev/null
   done
 fi
 
 # Install gems
 bundle install --gemfile /vagrant/vagrant/Gemfile
 
+# Setup Puppet
+cat << EOF > /etc/puppet/puppet.conf
+[main]
+  logdir = /var/lib/puppet
+  vardir = /var/lib/puppet
+  ssldir = /var/lib/puppet/ssl
+  rundir = /var/run/puppet
+EOF
+
 # Setup PuppetDB
 cat << EOF > /etc/puppet/puppetdb.conf
 [main]
-server = puppetdb.$(hostname -d)
+server = puppet.$(hostname -d)
 EOF
 
 # Set up routes.yaml to ensure facts are up to date
@@ -48,8 +57,8 @@ apply:
     cache: puppetdb_apply
 EOF
 
-# Clean out stale SSL certificates
-find /var/lib/puppet/ssl -type f -delete
+# Run against the puppet server to generate certificates
+puppet agent --test
 
 # Done provisioning
 touch /root/.provisioned
