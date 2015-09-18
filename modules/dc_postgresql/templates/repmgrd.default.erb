@@ -9,7 +9,7 @@ REPMGRD_ENABLED=yes
 REPMGRD_CONF="<%= scope.lookupvar('dc_postgresql::params::pg_home') %>/repmgr/repmgr.conf"
 
 # additional options
-#REPMGRD_OPTS=""
+REPMGRD_OPTS="-m"
 
 # user to run repmgrd as
 #REPMGRD_USER=postgres
@@ -18,4 +18,4 @@ REPMGRD_CONF="<%= scope.lookupvar('dc_postgresql::params::pg_home') %>/repmgr/re
 #REPMGR_BIN=/usr/bin/repmgr
 
 # pid file
-#REPMGR_PIDFILE=/var/run/repmgrd.pid
+REPMGR_PIDFILE=/var/run/repmgrd.pid

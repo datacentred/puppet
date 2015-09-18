@@ -4,7 +4,7 @@ class dc_postgresql::repmgr::master {
 
   # floating postgres configuration
   include ::dc_postgresql::repmgr::master::db
-  include ::dc_postgresql::repmgr::master::cluster_connections
+  include ::dc_postgresql::repmgr::cluster_connections
 
   # repmgr configuration
   include ::dc_postgresql::repmgr::install
