@@ -181,22 +181,6 @@ class dc_profile::net::core_gateway {
     options          => {},
   }
 
-  haproxy::listen { 'beaver':
-    collect_exported => false,
-    mode             => 'tcp',
-    bind             => {
-      ':9999' => [
-        'ssl',
-        'no-sslv3',
-        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
-        'crt /etc/ssl/private/puppet.crt',
-        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify required',
-      ],
-    },
-    options          => {},
-  }
-
   haproxy::listen { 'elasticsearch':
     collect_exported => false,
     mode             => 'tcp',
@@ -405,20 +389,6 @@ class dc_profile::net::core_gateway {
       '10.30.192.140',
     ],
     options           => 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl',
-  }
-
-  haproxy::balancermember { 'beaver':
-    listening_service => 'beaver',
-    ports             => '9999',
-    server_names      => [
-      'logstash0.core.sal01.datacentred.co.uk',
-      'logstash1.core.sal01.datacentred.co.uk',
-    ],
-    ipaddresses       => [
-      '10.30.192.137',
-      '10.30.192.140',
-    ],
-    options           => 'check',
   }
 
   haproxy::balancermember { 'kibana':

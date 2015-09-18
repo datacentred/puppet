@@ -1,7 +1,5 @@
 ---
-dc_logstash::client::server: "%{hiera('logstash_server')}"
-
-dc_logstash::client::log_courier_config:
+dc_logstash::client::config:
   general:
     'log file': '/var/log/log-courier.log'
     'admin enabled': true

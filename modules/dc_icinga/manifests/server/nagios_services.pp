@@ -510,16 +510,9 @@ class dc_icinga::server::nagios_services {
 
   icinga::service { 'check_log_courier':
     use                 => 'dc_service_secondary',
-    hostgroup_name      => 'dc_hostgroup_log_courier',
+    hostgroup_name      => 'dc_hostgroup_generic',
     check_command       => 'check_nrpe_1arg!check_log_courier',
     service_description => 'Log Courier Status',
-  }
-
-  icinga::service { 'check_beaver':
-    use                 => 'dc_service_secondary',
-    hostgroup_name      => 'dc_hostgroup_beaver',
-    check_command       => 'check_nrpe_1arg!check_beaver',
-    service_description => 'Beaver Status',
   }
 
   icinga::service { 'check_elasticsearch_cluster_health':

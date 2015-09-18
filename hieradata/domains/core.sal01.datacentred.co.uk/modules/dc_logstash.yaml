@@ -1,7 +1,3 @@
 ---
 # This is an A record to the loadbalancer
 dc_logstash::server::elasticsearch_host: 'elasticsearch'
-
-# Use the local version
-dc_logstash::client::config::log_courier::logstash_server: "%{hiera('logstash_server')}"
-dc_logstash::client::config::beaver::logstash_server: "%{hiera('logstash_server')}"
