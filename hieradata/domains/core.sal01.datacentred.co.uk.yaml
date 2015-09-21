@@ -1,4 +1,7 @@
 ---
+classes:
+  - '::dc_profile::perf::collectd_stunnel'
+
 # Foreman
 #
 foreman_url: "foreman.%{domain}"
@@ -10,3 +13,8 @@ icinga_ip: '10.30.192.123'
 # DHCP
 #
 dc_dhcp::params::dhcp_icinga_ip: '10.30.192.13'
+#
+
+# Graphite / InfluxDB
+#
+graphite_server: 'influxdb.datacentred.services'

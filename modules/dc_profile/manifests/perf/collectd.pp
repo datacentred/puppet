@@ -25,7 +25,6 @@ class dc_profile::perf::collectd {
   include ::collectd::plugin::load
   include ::collectd::plugin::memory
   include ::collectd::plugin::cpu
-  include ::collectd::plugin::network
   include ::collectd::plugin::write_graphite
 
   include ::dc_collectd::agent::iostat
