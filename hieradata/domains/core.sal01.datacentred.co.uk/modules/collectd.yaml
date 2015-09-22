@@ -1,0 +1,3 @@
+---
+collectd::plugin::write_graphite::graphitehost: 'localhost'
+collectd::plugin::write_graphite::graphiteport: '20030'

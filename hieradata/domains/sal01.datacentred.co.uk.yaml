@@ -1,8 +1,12 @@
 ---
 # Icinga
-# 
+#
 icinga_ip: '10.10.192.137'
 
 # DHCP
 #
 dc_dhcp::params::dhcp_icinga_ip: '10.10.192.13'
+
+# Graphite
+#
+graphite_server: "graphite.%{domain}"

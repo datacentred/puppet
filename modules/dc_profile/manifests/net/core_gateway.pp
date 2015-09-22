@@ -181,6 +181,22 @@ class dc_profile::net::core_gateway {
     options          => {},
   }
 
+  haproxy::listen { 'graphite':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':2003' => [
+        'ssl',
+        'no-sslv3',
+        'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
+        'crt /etc/ssl/private/puppet.crt',
+        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'verify required',
+      ],
+    },
+    options          => {},
+  }
+
   haproxy::listen { 'elasticsearch':
     collect_exported => false,
     mode             => 'tcp',
@@ -441,6 +457,18 @@ class dc_profile::net::core_gateway {
       '10.30.192.208',
       '10.30.192.206',
       '10.30.192.203',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'graphite':
+    listening_service => 'graphite',
+    ports             => '2003',
+    server_names      => [
+      'influxdb0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.207',
     ],
     options           => 'check',
   }

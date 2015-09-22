@@ -1,4 +1,7 @@
 ---
+classes:
+  - '::dc_profile::perf::collectd_stunnel'
+
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
   y8CwUxRvBlljukX/uGEYPhmlPtqmBOJyIcvUOo8efH2L6NvOZ9Mcg7/PX/eG1owc
@@ -116,3 +119,5 @@ virtual_routers:
 dc_dhcp::params::dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
 dc_dhcp::params::dhcp_icinga_ip: '10.10.192.13'
 dc_tftp::sync_interface: 'eth1'
+
+graphite_server: "influxdb0.%{::domain}"

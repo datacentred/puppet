@@ -1,7 +1,2 @@
 ---
 collectd::plugin::write_graphite::graphitehost: "%{hiera('graphite_server')}"
-collectd::plugin::write_graphite::graphiteprefix: 'collectd.'
-collectd::plugin::write_graphite::escapecharacter: '.'
-collectd::plugin::write_graphite::storerates: false
-collectd::plugin::write_graphite::separateinstances: true
-collectd::plugin::write_graphite::protocol: 'tcp'
