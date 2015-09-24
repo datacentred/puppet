@@ -290,3 +290,6 @@
 [submodule "modules/stunnel"]
 	path = modules/stunnel
 	url = https://github.com/arusso/puppet-stunnel.git
+[submodule "modules/telegraf"]
+	path = modules/telegraf
+	url = git@github.com:yankcrime/puppet-telegraf.git
