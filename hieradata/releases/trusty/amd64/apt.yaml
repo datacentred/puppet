@@ -49,6 +49,13 @@ apt::sources:
     key:
       id: '7059542D5AEA367F78732D02B3484CB71AA043B8'
       source: 'http://deb.theforeman.org/foreman.asc'
+  galera:
+    location: 'http://mirror.aarnet.edu.au/pub/MariaDB/repo/5.5/ubuntu'
+    release: 'trusty'
+    repos: 'main'
+    key:
+      id: '199369E5404BD5FC7D2FE43BCBCB082A1BB943DB'
+      server: 'keys.gnupg.net'
   hpsupport_mirror:
     location: "http://%{hiera('hpsupport_mirror_path')}"
     release: 'trusty/current'

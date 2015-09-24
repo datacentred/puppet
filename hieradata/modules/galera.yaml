@@ -1,9 +1,8 @@
 ---
-galera::repo::apt_mariadb_repo_key: '199369E5404BD5FC7D2FE43BCBCB082A1BB943DB'
 galera::vendor_type: 'mariadb'
 galera::root_password: "%{hiera('osdbmq_galera_pw')}"
 galera::configure_firewall: false
-galera::configure_repo: true
+galera::configure_repo: false
 galera::bind_address: '*'
 galera::override_options:
   mysqld:
