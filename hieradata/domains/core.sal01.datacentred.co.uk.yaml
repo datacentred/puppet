@@ -1,6 +1,6 @@
 ---
 classes:
-  - '::dc_profile::perf::collectd_stunnel'
+  - '::dc_profile::perf::telegraf'
 
 # Foreman
 #
