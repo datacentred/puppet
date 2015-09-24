@@ -38,14 +38,14 @@ apt::sources:
   foreman_mirror:
     location: "http://%{hiera('foreman_mirror_path')}"
     release: 'trusty'
-    repos: '1.8'
+    repos: '1.9'
     key:
       id: '7059542D5AEA367F78732D02B3484CB71AA043B8'
       source: 'http://deb.theforeman.org/foreman.asc'
   foreman_plugins_mirror:
     location: "http://%{hiera('foreman_mirror_path')}"
     release: 'plugins'
-    repos: '1.8'
+    repos: '1.9'
     key:
       id: '7059542D5AEA367F78732D02B3484CB71AA043B8'
       source: 'http://deb.theforeman.org/foreman.asc'
