@@ -23,6 +23,11 @@ dc_logstash::client::config:
         shipper: 'log-courier'
         type: 'apache_error'
     - paths:
+      - '/var/log/apache2/error.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'apache_error'
+    - paths:
       - '/var/log/ceilometer/ceilometer-agent-central.log'
       fields:
         shipper: 'log-courier'
