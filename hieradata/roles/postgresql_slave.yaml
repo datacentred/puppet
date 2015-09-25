@@ -5,3 +5,5 @@ classes:
 dc_postgresql::params::config_entries:
   hot_standby:
     value: 'on'
+  ssl_renegotiation_limit:
+    value: 0
