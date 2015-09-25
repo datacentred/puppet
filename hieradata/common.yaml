@@ -19,7 +19,6 @@ classes:
   - '::dc_profile::util::motd'
   - '::dc_profile::util::timezone'
   - '::dc_profile::util::hosts'
-  - '::dc_profile::perf::collectd'
 
 # ntp servers
 #
