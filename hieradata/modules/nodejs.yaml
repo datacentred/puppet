@@ -1,0 +1,3 @@
+---
+# The upstream module contains horror code incompatible with our setup
+nodejs::repo_ensure: false
