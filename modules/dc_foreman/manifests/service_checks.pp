@@ -10,6 +10,7 @@ class dc_foreman::service_checks (
   $dhcp_server,
   $lease_file,
   $dns_key,
+  $proxy_alias = $::fqdn,
 ){
 
   ensure_packages(['python-pip', 'git'])
