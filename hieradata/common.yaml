@@ -256,6 +256,22 @@ ldap_users:
         - radiusprofile
       ou:
         - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
+  'cn=tristan,ou=People,dc=datacentred,dc=co,dc=uk':
+    tag: user
+    attributes:
+      uid: tristan
+      givenName: Tristan
+      sn: Watson
+      mail: "tristan.watson@datacentred.co.uk"
+      userPassword: "{CRYPT}$6$ap/a01lq$0ItREGLUsIgv21sUUSXU8oweA2yWIIEQxEqPaRphabAi81i49a19GE3mQrO3W4UUiMLkR6LC4tZONWF.FW2vU1"
+      radiusReplyItem: APC-Service-Type = 1
+      objectClass:
+        - person
+        - inetOrgPerson
+        - user
+        - radiusprofile
+      ou:
+        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
 
 # Add APC PDU default user password
 #
