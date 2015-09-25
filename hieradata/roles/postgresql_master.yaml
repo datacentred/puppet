@@ -35,3 +35,5 @@ dc_postgresql::params::config_entries:
     value: '3840MB'
   max_connections:
     value: '80'
+  shared_preload_libraries:
+    value: 'repmgr_funcs'
