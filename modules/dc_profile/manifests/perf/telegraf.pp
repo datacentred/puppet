@@ -4,7 +4,6 @@
 class dc_profile::perf::telegraf {
 
   include ::stunnel
-  include ::telegraf
 
   $influxdb_server  = hiera(influxdb_server)
   $influxdb_port    = hiera(influxdb_port)
