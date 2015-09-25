@@ -19,4 +19,10 @@ class dc_profile::perf::telegraf {
     client      => true,
   }
 
+  # FIXME
+  #
+  package { [ 'collectd', 'telegraf' ]:
+    ensure => purged,
+  }
+
 }
