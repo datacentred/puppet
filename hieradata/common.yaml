@@ -20,7 +20,6 @@ classes:
   - '::dc_profile::util::timezone'
   - '::dc_profile::util::hosts'
   - '::dc_profile::perf::collectd'
-  - '::dc_profile::perf::telegraf'
 
 # ntp servers
 #
