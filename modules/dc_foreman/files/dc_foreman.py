@@ -22,6 +22,8 @@ import sys
 from base64 import b64encode
 import ConfigParser
 import warnings
+from collections import defaultdict
+import urlparse,urllib
 
 class Foreman(object):
     """
@@ -101,6 +103,9 @@ class Foreman(object):
         """
         ints = []
         for host in self.get_from_api('hosts'):
+	    # exclude cloud hosts
+	    if host['provision_method'] == 'image':
+                continue
             # Load the main interface
             ints.append({
                 'name':host['name'].encode("ascii"),
@@ -136,6 +141,39 @@ class Foreman(object):
         tftp_proxy = subnet_info['tftp']['url']
         return dhcp_proxy, dns_proxy, tftp_proxy
 
+    def netloc_from_url(self, url):
+	"""
+	Extract a netloc given a valid url
+	If argument is not a url, just return it back
+	"""
+	try:
+		parse_result = urlparse.urlsplit(url)
+		return parse_result.netloc.split(':')[0]
+	except:
+		return url
+
+    def get_all_subnet_proxies(self):
+        """
+        Return a list of dictionaries with proxies for all subnets
+        """
+	proxy_list = []
+	dynamic_subnets = [ subnet for subnet in self.get_from_api('subnets/') if subnet['boot_mode'] != "Static" ]
+	for subnet in dynamic_subnets:
+		# Handle non-provisioning managed networks
+		# Foreman returns this as None, so normalize the url field
+		if not subnet['tftp']:
+			subnet['tftp'] = {'url':None}
+		# Extract the netloc from the URL and add to the dictionary
+		for proxy in [ subnet['dns'],subnet['dhcp'],subnet['tftp'] ]:
+			proxy['netloc'] = self.netloc_from_url(proxy['url'])
+		proxy_list.append({
+ 			'subnet_id':subnet['id'],
+ 			'dns_proxy':{'url': subnet['dns']['url'],'netloc': subnet['dns']['netloc']},
+ 			'tftp_proxy':{ 'url': subnet['tftp']['url'],'netloc': subnet['tftp']['netloc']},
+ 			'dhcp_proxy':{'url': subnet['dhcp']['url'],'netloc': subnet['dhcp']['netloc']},
+			})
+	return proxy_list
+ 
     def get_host_info(self, host_id):
         """
         Return info about a host
