@@ -4,6 +4,7 @@
 class dc_profile::perf::telegraf {
 
   include ::stunnel
+  include ::telegraf
 
   $influxdb_server  = hiera(influxdb_server)
   $influxdb_port    = hiera(influxdb_port)
@@ -16,12 +17,6 @@ class dc_profile::perf::telegraf {
     global_opts => {
       'key' => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem" },
     client      => true,
-  }
-
-  # FIXME
-  #
-  package { [ 'collectd', 'telegraf' ]:
-    ensure => purged,
   }
 
 }
