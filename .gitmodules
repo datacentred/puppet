@@ -257,9 +257,6 @@
 [submodule "modules/drbd"]
 	path = modules/drbd
 	url = https://github.com/datacentred/puppetlabs-drbd
-[submodule "modules/foreman"]
-	path = modules/foreman
-	url = https://github.com/theforeman/puppet-foreman.git
 [submodule "modules/gnupg"]
 	path = modules/gnupg
 	url = https://github.com/datacentred/golja-gnupg.git
@@ -293,3 +290,6 @@
 [submodule "modules/telegraf"]
 	path = modules/telegraf
 	url = git@github.com:yankcrime/puppet-telegraf.git
+[submodule "modules/foreman"]
+	path = modules/foreman
+	url = https://github.com/theforeman/puppet-foreman.git
