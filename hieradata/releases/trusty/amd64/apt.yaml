@@ -161,6 +161,13 @@ apt::sources:
     key:
       id: '7B0FAB3A13B907435925D9C954422A4B98AB5139'
       source: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'
+  datacentred:
+    location: 'http://apt.datacentred.services/ubuntu'
+    release: 'trusty'
+    repos: 'main'
+    key:
+      id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
+      source: 'http://apt.datacentred.services/pubkey.gpg'
 
 apt::ppas:
   ppa:devel-k/log-courier:
