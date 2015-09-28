@@ -1,7 +1,7 @@
 ---
 telegraf::agent_hostname: "%{::hostname}"
-telegraf::install_from_repository: false
-telegraf::version: '0.1.9'
+telegraf::install_from_repository: true
+telegraf::version: '0.1.9-17-g0ffaafd'
 telegraf::outputs_influxdb_url: 'http://localhost:18086'
 telegraf::outputs_influxdb_database: 'telegraf'
 telegraf::outputs_influxdb_password: 'ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAU9+6K0HtpTDyUuN+/ib7sOT4zu5kfJFmnXaFVok6Hf7S9nPdK7hfMUdmeCxGw4t8Ntssh7IjSz05OGqVFo/WvP/T0+O4m1K9Eg8roBPDZmdLiaWYMSNa1WociAUbDIeW9G3sXu8c8ZszG5TBtccftN9rT50D2plbqy1ZUBjtZVCnzOZC+u44xiqsDjPQeS4MLDRJzZun6ruxmbewCDCRwYDqn72nPdTv/MZnL7o4zypIfbb8Q1pbXZ5dss6jaeGphr4mwoydaNKZWeoi2KssI5X35w9yV5uU4xm8STIHy5KNbN2WBUilPOruw6IyHWE1GnWTc3FO2AqGHhhvh+gHPjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCOLE4ZbzMvprsEQMQxHWd6gBC58l/Rt0Y/my5fkBoVY2Gf]'
