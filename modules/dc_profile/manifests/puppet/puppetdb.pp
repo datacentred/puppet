@@ -12,7 +12,27 @@
 #
 class dc_profile::puppet::puppetdb {
 
-  contain puppetdb::server
+  # See role specific apache config in hiera
+  include ::apache
+  include ::apache::mod::proxy
+  include ::apache::mod::proxy_connect
+  include ::apache::mod::proxy_http
+
+  apache::vhost { 'puppetdb-dashboard':
+    docroot             => '/var/www/html',
+    servername          => 'localhost',
+    port                => 80,
+    proxy_preserve_host => true,
+    proxy_pass          => [
+      {
+        'path'         => '/',
+        'url'          => 'http://localhost:8080/',
+        'reverse_urls' => 'http://localhost:8080/',
+      },
+    ],
+  }
+
+  include ::puppetdb::server
 
   # Puppetdb with default settings OOM kills itself so hack
   # the defaults to increase memory to 2GB
