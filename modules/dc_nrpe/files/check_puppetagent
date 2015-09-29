@@ -91,7 +91,7 @@ def optionsparser():
 def getdisabledmessage():
     """Get the disabled status.  Return the reason if it exists else False"""
 
-    if os.access('/var/lib/puppet/state/agent_disabled.lock', os.F_OK):
+    if not os.access('/var/lib/puppet/state/agent_disabled.lock', os.F_OK):
         return False
 
     try:
