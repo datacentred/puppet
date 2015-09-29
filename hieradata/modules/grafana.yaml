@@ -10,7 +10,25 @@ grafana::cfg:
   database:
     type: sqlite3
   'auth.anonymous':
-    enabled: true
+    enabled: false
     org_name: DataCentred
     org_role: Admin
-
+  'auth.ldap':
+    enabled: true
+    config_file: '/etc/grafana/ldap.toml'
+grafana::ldap_cfg:
+  servers:
+    - host: 'ldap.datacentred.services'
+      port: 636
+      use_ssl: true
+      bind_dn: "cn=%s,ou=People,dc=datacentred,dc=co,dc=uk"
+      bind_password: ''
+      search_filter: "(cn=%s)"
+      search_base_dns: ["ou=People,dc=datacentred,dc=co,dc=uk"]
+  'servers.attributes':
+    name: 'cn'
+    surname: 'sn'
+    username: 'cn'
+  'servers.group_mappings':
+    - group_dn: '*'
+      org_role: 'Admin'
