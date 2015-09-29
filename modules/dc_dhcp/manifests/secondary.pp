@@ -35,4 +35,9 @@ class dc_dhcp::secondary {
     group   => 'root',
   }
 
+  sudo::conf { 'dhcp_sync_hosts':
+    priority => 10,
+    content  => 'dhcp_sync_agent ALL=NOPASSWD:/usr/local/bin/dhcp_sync_hosts.sh'
+  }
+
 }
