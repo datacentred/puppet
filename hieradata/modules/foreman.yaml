@@ -17,3 +17,4 @@ foreman::oauth_consumer_secret: "%{hiera('foreman_oauth_consumer_secret')}"
 foreman::plugin::discovery::tftp_root: "%{hiera('tftp_dir')}"
 foreman::plugin::discovery::install_images: false
 foreman::puppetmaster::foreman_url: "https://%{hiera('foreman_url')}"
+foreman::puppetmaster::timeout: '300'
