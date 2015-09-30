@@ -13,7 +13,6 @@ class dc_profile::net::phpipam {
   include ::mysql::server
   include ::mysql::server::monitor
   include ::mysql::server::backup
-  include ::dc_collectd::agent::mysql
 
   include ::phpipam
 
