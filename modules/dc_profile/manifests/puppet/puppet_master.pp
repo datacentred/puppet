@@ -14,4 +14,6 @@ class dc_profile::puppet::puppet_master {
 
   Class['::puppet::master'] -> Class['::foreman::puppetmaster']
 
+  ensure_packages('toml', { provider => 'gem' })
+
 }

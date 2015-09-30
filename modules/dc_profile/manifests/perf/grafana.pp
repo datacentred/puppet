@@ -31,6 +31,11 @@ class dc_profile::perf::grafana {
     require       => Class['::grafana'],
   }
 
+  # Required for Grafana to trust the server certificate
+  ca_certificate { 'puppet-ca':
+    source => '/var/lib/puppet/ssl/certs/ca.pem',
+  }
+
   @@dns_resource { "grafana.${::domain}/CNAME":
     rdata => $::fqdn,
     tag   => $::domain,
