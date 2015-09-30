@@ -13,7 +13,7 @@ if ! diff /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts; then
     echo "Could not copy file"
     exit 1
   fi
-  if ! sudo service isc-dhcp-server stop
+  if ! service isc-dhcp-server stop
   then
     echo "Could not stop server"
     exit 1
@@ -25,7 +25,7 @@ if ! diff /tmp/dhcpd.hosts /etc/dhcp/dhcpd.hosts; then
   else
     touch /var/lib/dhcp/dhcpd.leases
   fi
-  if ! sudo service isc-dhcp-server start
+  if ! service isc-dhcp-server start
   then
     echo "Could not start server"
     exit 1
