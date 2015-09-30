@@ -84,7 +84,7 @@ apt::sources:
     key:
       id: '492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10'
       server: 'hkp://keyserver.ubuntu.com'
-  nodesource:
+  nodejs:
     location: 'https://deb.nodesource.com/node_0.10'
     release: 'trusty'
     repos: 'main'
