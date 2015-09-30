@@ -114,7 +114,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_rabbitmq_server':
-    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_server -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTNAME$ --port=15672"
+    command_line => "/usr/lib/nagios/plugins/check_rabbitmq_server -u ${rabbitmq_monuser} -p ${rabbitmq_monuser_password} -H \$HOSTNAME$ --port=15672 -w 80,80,80,90 -c 90,90,90,95"
   }
 
   icinga::command { 'check_rabbitmq_overview':
