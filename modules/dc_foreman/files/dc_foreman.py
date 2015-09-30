@@ -22,6 +22,18 @@ import sys
 from base64 import b64encode
 import ConfigParser
 import warnings
+import urlparse
+
+def netloc_from_url(url):
+    """
+    Extract a netloc given a valid url
+    If argument is not a url, just return it back
+    """
+    try:
+        parse_result = urlparse.urlsplit(url)
+        return parse_result.netloc.split(':')[0]
+    except AttributeError:
+        return url
 
 class Foreman(object):
     """
@@ -41,18 +53,17 @@ class Foreman(object):
         key_path = parser.get('foreman', 'key_path')
         cacert_path = parser.get('foreman', 'cacert_path')
         auth_encode = b64encode('%s:%s' % (foreman_admin_user,
-                                    foreman_admin_pw)).decode("ascii")
+                                           foreman_admin_pw)).decode("ascii")
         self.headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Basic %s'
-            % auth_encode}
+            'Authorization': 'Basic %s' % auth_encode}
         self.cacert = cacert_path
         self.certs = (cert_path, key_path)
 
         with warnings.catch_warnings():
-            warnings.filterwarnings(
-                    "ignore", message=".*InsecureRequestWarning.*")
+            warnings.filterwarnings("ignore",
+                                    message=".*InsecureRequestWarning.*")
 
 
     def get_from_api(self, api_url):
@@ -61,9 +72,8 @@ class Foreman(object):
         """
         url = self.foreman_api_baseurl + api_url + '?per_page=10000'
         try:
-            req = requests.get(
-                 url, verify=self.cacert,
-                    headers=self.headers, cert=self.certs)
+            req = requests.get(url, verify=self.cacert,
+                               headers=self.headers, cert=self.certs)
         except requests.exceptions.RequestException as err:
             print "Error - got %s" % err
             sys.exit(1)
@@ -85,7 +95,7 @@ class Foreman(object):
         """
         try:
             req = requests.get(self.foreman_api_baseurl, verify=self.cacert,
-                    headers=self.headers, cert=self.certs)
+                               headers=self.headers, cert=self.certs)
         except requests.exceptions.RequestException as err:
             print "Connection Error - got %s" % err
             sys.exit(1)
@@ -101,18 +111,22 @@ class Foreman(object):
         """
         ints = []
         for host in self.get_from_api('hosts'):
+	    # exclude cloud hosts
+            if host['provision_method'] == 'image':
+                continue
             # Load the main interface
             ints.append({
                 'name':host['name'].encode("ascii"),
                 'ip':host['ip'].encode("ascii"),
                 'mac':host['mac'].encode("ascii"),
                 'subnet_id':host['subnet_id'],
-		'host_id':host['id'],
+                'host_id':host['id'],
                 'type':'main'
             })
           # Check for any additional interfaces
-            for foreman_int in self.get_from_api(
-                        'hosts/' + str(host['id']) + '/interfaces'):
+            for foreman_int in self.get_from_api('hosts/' +
+                                                 str(host['id']) +
+                                                 '/interfaces'):
                 # Filter out bonds which are the main interface
                 if foreman_int['managed'] == True and not \
                         any(d['mac'] == foreman_int['mac'] for d in ints):
@@ -135,6 +149,30 @@ class Foreman(object):
         dns_proxy = subnet_info['dns']['url']
         tftp_proxy = subnet_info['tftp']['url']
         return dhcp_proxy, dns_proxy, tftp_proxy
+
+    def get_all_subnet_proxies(self):
+        """
+        Return a list of dictionaries with proxies for all subnets
+        """
+        proxy_list = []
+        dynamic_subnets = [subnet for subnet in self.get_from_api('subnets/')
+                           if subnet['boot_mode'] != "Static"]
+        for subnet in dynamic_subnets:
+	    # Handle non-provisioning managed networks
+	    # Foreman returns this as None, so normalize the url field
+            if subnet['tftp'] == None:
+                subnet['tftp'] = {'url':None}
+	    # Extract the netloc from the URL and add to the dictionary
+            proxy_list.append({
+                'subnet_id':subnet['id'],
+                'dns_proxy':{'url': subnet['dns']['url'],
+                             'netloc': netloc_from_url(subnet['dns']['url'])},
+                'tftp_proxy':{'url': subnet['tftp']['url'],
+                              'netloc': netloc_from_url(subnet['tftp']['url'])},
+                'dhcp_proxy':{'url': subnet['dhcp']['url'],
+                              'netloc': netloc_from_url(subnet['dhcp']['url'])},
+                })
+        return proxy_list
 
     def get_host_info(self, host_id):
         """
