@@ -230,7 +230,7 @@ class dc_icinga::server::nagios_commands {
   }
 
   icinga::command { 'check_dhcp_by_mac':
-    command_line => "/usr/lib/nagios/plugins/check_dhcp -s \$HOSTADDRESS$ -i \$ARG1 -m ${dhcp_icinga_mac} -r ${dhcp_icinga_ip}",
+    command_line => "/usr/lib/nagios/plugins/check_dhcp -s \$HOSTADDRESS$ -u -i \$ARG1 -m ${dhcp_icinga_mac} -r ${dhcp_icinga_ip}",
   }
 
 }
