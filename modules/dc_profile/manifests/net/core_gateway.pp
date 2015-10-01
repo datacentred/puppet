@@ -222,6 +222,15 @@ class dc_profile::net::core_gateway {
     options          => {},
   }
 
+  haproxy::listen { 'radius':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':1812' => [],
+    },
+    options          => {},
+  }
+
   # Typical deployments use the proxy protocol between the balancer
   # and the mail servers.  However, as the traffic is behind a NAT
   # boundary this is pretty much pointless as it only allows mail
@@ -474,6 +483,14 @@ class dc_profile::net::core_gateway {
       '10.30.192.206',
       '10.30.192.203',
     ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'radius':
+    listening_service => 'radius',
+    ports             => '1812',
+    server_names      => 'bonjour.core.sal01.datacentred.co.uk',
+    ipaddresses       => '10.30.192.100',
     options           => 'check',
   }
 
