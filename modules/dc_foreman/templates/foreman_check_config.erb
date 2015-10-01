@@ -5,7 +5,7 @@ foreman_api_baseurl = http://<%= @foreman_url %>/api/v2/
 cert_path = /var/lib/puppet/ssl/certs/<%= @fqdn %>
 cacert_path = /var/lib/puppet/ssl/certs/ca.pem
 key_path = /var/lib/puppet/ssl/private_keys/<%= @fqdn %>
-alias = <%= @proxy_alias %>
+proxy_alias = <%= @proxy_alias %>
 
 [omapi]
 omapi_port = <%= @omapi_port %>
