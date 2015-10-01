@@ -13,6 +13,11 @@ dc_logstash::client::config:
     timeout: 40
   files:
     - paths:
+      - '/var/log/postgresql/postgresql-9.*-main.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'postgres'
+    - paths:
       - '/var/log/apache2/*access.log'
       fields:
         shipper: 'log-courier'
