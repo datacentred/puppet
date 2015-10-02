@@ -19,3 +19,10 @@ apt::sources:
     key:
       id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
       source: 'http://apt.datacentred.services/pubkey.gpg'
+  puppetlabs:
+    location: 'http://apt.puppetlabs.com'
+    release: 'trusty'
+    repos: 'main dependencies'
+    key:
+      id: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
+      source: 'http://apt.puppetlabs.com/pubkey.gpg'
