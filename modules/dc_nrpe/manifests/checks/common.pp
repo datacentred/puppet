@@ -1,6 +1,10 @@
 # == Class: dc_nrpe::checks::common
 #
-class dc_nrpe::checks::common {
+class dc_nrpe::checks::common (
+  $check_users = { warn => '5', crit   => '10' },
+  $check_procs = { warn => '500', crit => '600' },
+  $check_disks = { warn => '10%', crit => '5%' },
+) {
 
   $python_yaml = $::operatingsystem ? {
     /(RedHat|CentOS)/ => 'PyYAML',
@@ -18,7 +22,7 @@ class dc_nrpe::checks::common {
 
   dc_nrpe::check { 'check_users':
     path => '/usr/lib/nagios/plugins/check_users',
-    args => '-w 5 -c 10',
+    args => "-w ${check_users[warn]} -c ${check_users[crit]}",
   }
 
   dc_nrpe::check { 'check_load':
@@ -28,12 +32,12 @@ class dc_nrpe::checks::common {
 
   dc_nrpe::check { 'check_total_procs':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-w 500 -c 600',
+    args => "-w ${check_procs[warn]} -c ${check_procs[crit]}",
   }
 
   dc_nrpe::check { 'check_all_disks':
     path => '/usr/lib/nagios/plugins/check_disk',
-    args => '-w 10% -c 5%',
+    args => "-w ${check_disks[warn]} -c ${check_disks[crit]}",
   }
 
   dc_nrpe::check { 'check_puppetagent':

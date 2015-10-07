@@ -17,3 +17,7 @@ sudo::configs:
     content: |
       Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
       neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap
+
+dc_nrpe::checks::common::check_procs:
+  warn: 800
+  crit: 1000
