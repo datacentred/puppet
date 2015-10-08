@@ -13,8 +13,6 @@ class dc_elasticsearch::elasticsearch_snapshot (
   ensure_packages(['python-pip', 'curl'])
   ensure_packages(['boto', 'datetime'], {'provider' => 'pip', require => Package['python-pip']})
 
-  # FIXME: Snapshots currently broke
-  # See https://datacentred.atlassian.net/browse/PD-1708
   file { 'elasticsearch_snapshot.sh':
     ensure  => file,
     path    => '/usr/local/bin/elasticsearch_snapshot.sh',
@@ -26,7 +24,6 @@ class dc_elasticsearch::elasticsearch_snapshot (
   } ->
 
   cron { 'elasticsearch_snapshot':
-    ensure  => absent,
     command => '/usr/local/bin/elasticsearch_snapshot.sh',
     user    => root,
     hour    => 2,
@@ -43,9 +40,7 @@ class dc_elasticsearch::elasticsearch_snapshot (
     require => Package['python-pip', 'curl', 'boto', 'datetime'],
   } ->
 
-  # FIXME: See above
   cron { 'elasticsearch_snapshot_pruning':
-    ensure  => absent,
     command => '/usr/local/bin/elasticsearch_snapshot_pruning.py',
     user    => root,
     hour    => 3,
