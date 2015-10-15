@@ -2,6 +2,7 @@
 classes:
   - 'dc_profile::net::dns_master'
   - 'dc_profile::net::foreman_checks'
+  - 'dc_profile::auth::radius::server'
 
 ntp::servers:
   - '0.uk.pool.ntp.org'
