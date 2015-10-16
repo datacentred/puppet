@@ -43,4 +43,10 @@ class dc_profile::auth::radius::server (
       secret  => $secret,
   }
 
+  exec { 'puppet_radius_group':
+    unless  => '/usr/bin/getent group puppet | /usr/bin/cut -d: -f4 | /bin/grep -q freerad',
+    command => '/usr/sbin/usermod -a -G puppet freerad',
+    require => Package['freeradius'],
+  }
+
 }

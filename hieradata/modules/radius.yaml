@@ -4,8 +4,8 @@ radius::module::ldap::basedn: "%{hiera('ldap_account_base')}"
 radius::module::ldap::filter: '(uid=%u)'
 radius::module::ldap::use_ssl: true
 radius::module::ldap::start_tls: 'no'
-radius::module::ldap::ssl_cacert: '/usr/lib/puppet/ssl/certs/ca.pem'
-radius::module::ldap::ssl_cert: "/usr/lib/puppet/ssl/certs/%{::fqdn}.pem"
-radius::module::ldap::ssl_key: "/usr/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+radius::module::ldap::ssl_cacert: '/var/lib/puppet/ssl/certs/ca.pem'
+radius::module::ldap::ssl_cert: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+radius::module::ldap::ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
 radius::module::ldap::require_cert: 'never'
 radius::module::ldap::port: '636'
