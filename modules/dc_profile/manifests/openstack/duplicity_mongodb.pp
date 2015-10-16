@@ -7,7 +7,7 @@ class dc_profile::openstack::duplicity_mongodb (
 ) {
 
   dc_backup::dc_duplicity_job { "${::fqdn}_mongodb" :
-    source_dir     => '/var/backup/mongodb',
+    source_dir     => '/srv/backup/mongodb',
     backup_content => 'ceilometer',
   }
 
@@ -22,13 +22,13 @@ class dc_profile::openstack::duplicity_mongodb (
 
   file { '/usr/local/sbin/mongodb_dump_for_duplicity.sh':
     ensure  => file,
-    content => "#!/bin/bash\n/usr/bin/mongodump --db ceilometer --username ceilometer --password ${ceilometer_db_password} --out /var/backup/mongodb/",
+    content => "#!/bin/bash\n/usr/bin/mongodump --db ceilometer --username ceilometer --password ${ceilometer_db_password} --out /srv/backup/mongodb/",
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
   }
 
-  file { '/var/backup/mongodb':
+  file { '/srv/backup/mongodb':
     ensure => directory,
     owner  => 'root',
     group  => 'root',
@@ -36,7 +36,7 @@ class dc_profile::openstack::duplicity_mongodb (
   }
 
   tidy { 'mongodb_dumps':
-    path    => '/var/backup/mongodb/',
+    path    => '/srv/backup/mongodb/',
     age     => '2D',
     recurse => true,
     rmdirs  => true,
