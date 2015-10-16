@@ -1,9 +1,4 @@
 ---
-puppet::version: '3.7.4'
-puppet::package: 'puppet'
-puppet::provider: 'gem'
-puppet::path: '/usr/local/bin/puppet'
-
 nova::compute::vnc_enabled: false
 
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_bond0_170}" # TODO: This is hardware specific
