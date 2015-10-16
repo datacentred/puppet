@@ -293,3 +293,6 @@
 [submodule "modules/foreman"]
 	path = modules/foreman
 	url = https://github.com/theforeman/puppet-foreman.git
+[submodule "modules/knot"]
+	path = modules/knot
+	url = https://github.com/datacentred/puppet-knot.git

@@ -1,0 +1,12 @@
+knot::zone_defaults:
+  semantic-checks: 'on'
+
+knot::zones:
+  148.98.185.in-addr.arpa:
+  149.98.185.in-addr.arpa:
+  150.98.185.in-addr.arpa:
+  151.98.185.in-addr.arpa:
+  
+knot::zone_storage: '/var/lib/knot/zones/'
+knot::manage_zones: true
+knot::package_ensure: 'installed'
