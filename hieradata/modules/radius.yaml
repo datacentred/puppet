@@ -8,3 +8,4 @@ radius::module::ldap::ssl_cacert: '/usr/lib/puppet/ssl/certs/ca.pem'
 radius::module::ldap::ssl_cert: "/usr/lib/puppet/ssl/certs/%{::fqdn}.pem"
 radius::module::ldap::ssl_key: "/usr/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
 radius::module::ldap::require_cert: 'never'
+radius::module::ldap::port: '636'
