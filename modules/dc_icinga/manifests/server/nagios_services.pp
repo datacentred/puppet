@@ -735,21 +735,21 @@ class dc_icinga::server::nagios_services {
 
   icinga::service { 'check_ovswitch_proc':
     use                 => 'dc_service_nrpe',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    hostgroup_name      => 'dc_hostgroup_neutron_node, dc_hostgroup_nova_compute',
     check_command       => 'check_nrpe_1arg!check_ovswitch_proc',
     service_description => 'OpenvSwitch Process Check',
   }
 
   icinga::service { 'check_neutron_vswitch_agent':
     use                 => 'dc_service_nrpe',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    hostgroup_name      => 'dc_hostgroup_neutron_node, dc_hostgroup_nova_compute',
     check_command       => 'check_nrpe_1arg!check_neutron_vswitch_agent',
     service_description => 'Neutron OpenvSwitch Agent Check',
   }
 
   icinga::service { 'check_ovswitch_server_proc':
     use                 => 'dc_service_nrpe',
-    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    hostgroup_name      => 'dc_hostgroup_neutron_node, dc_hostgroup_nova_compute',
     check_command       => 'check_nrpe_1arg!check_ovswitch_server_proc',
     service_description => 'OpenvSwitch DB Server Check',
   }
