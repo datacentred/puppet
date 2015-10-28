@@ -4,7 +4,6 @@ class dc_profile::openstack::neutron::agent_network {
   include ::neutron
   include ::neutron::plugins::ml2
   include ::neutron::agents::ml2::ovs
-  include ::neutron::agents::l3
   include ::neutron::agents::dhcp
   include ::neutron::agents::vpnaas
   include ::neutron::agents::lbaas
@@ -25,6 +24,14 @@ class dc_profile::openstack::neutron::agent_network {
   neutron_dhcp_agent_config {
     'DEFAULT/dhcp_domain': value => 'datacentred.io';
   }
+
+  # FIXME: Address shortcomings in the puppet-neutron module that
+  # don't allow this to be configured by just including ::neutron::agents::l3
+  neutron_l3_agent_config {
+    'DEFAULT/allow_automatic_l3agent_failover': value => true;
+    'DEFAULT/router_delete_namespaces':         value => true;
+  }
+  Neutron_l3_agent_config<||> ~> Service['neutron-vpnaas-service']
 
   # Distribution-specific hacks^Wconsiderations
   case $::osfamily {
