@@ -4,7 +4,6 @@ class dc_profile::openstack::neutron::agent_network {
   include ::neutron
   include ::neutron::plugins::ml2
   include ::neutron::agents::ml2::ovs
-  include ::neutron::agents::l3
   include ::neutron::agents::dhcp
   include ::neutron::agents::vpnaas
   include ::neutron::agents::lbaas

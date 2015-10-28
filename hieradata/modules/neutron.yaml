@@ -64,7 +64,6 @@ neutron::agents::metadata::metadata_ip: "%{hiera('os_api_vip')}"
 neutron::agents::dhcp::enabled: true
 neutron::agents::dhcp::dhcp_delete_namespaces: true
 neutron::agents::l3::router_delete_namespaces: true
-neutron::agents::l3::allow_automatic_l3agent_failover: true
 neutron::agents::vpnaas::enabled: true
 neutron::agents::lbaas::enabled: true
 neutron::agents::lbaas::use_namespaces: true
