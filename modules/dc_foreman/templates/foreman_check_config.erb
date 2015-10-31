@@ -1,10 +1,10 @@
 [foreman]
 foreman_admin_user = <%= @foreman_admin_user %>
 foreman_admin_pw = <%= @foreman_admin_pw %>
-foreman_api_baseurl = http://<%= @foreman_url %>/api/v2/
-cert_path = /var/lib/puppet/ssl/certs/<%= @fqdn %>
+foreman_api_baseurl = https://<%= @foreman_url %>/api/
+cert_path = /var/lib/puppet/ssl/certs/<%= @fqdn %>.pem
 cacert_path = /var/lib/puppet/ssl/certs/ca.pem
-key_path = /var/lib/puppet/ssl/private_keys/<%= @fqdn %>
+key_path = /var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem
 proxy_alias = <%= @proxy_alias %>
 
 [omapi]
