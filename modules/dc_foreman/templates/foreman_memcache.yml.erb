@@ -1,0 +1,9 @@
+:memcache:
+  :hosts:
+<% @memcache_servers.each do |memcache_server| -%>
+    - <%= memcache_server %>
+<% end -%>
+  :options:
+    :namespace: <%= @memcache_namespace %>
+    :expires_in: <%= @memcache_expiry %>
+    :compress: <%= @memcache_compress %>
