@@ -1,0 +1,2 @@
+---
+dc_icinga2::agent::parent_fqdn: 'icinga2.core.datacentred.co.uk'

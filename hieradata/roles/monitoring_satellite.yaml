@@ -1,0 +1,6 @@
+---
+# TODO: Make global post bootstrap
+classes:
+  - '::dc_icinga2'
+
+dc_icinga2::role: 'satellite'

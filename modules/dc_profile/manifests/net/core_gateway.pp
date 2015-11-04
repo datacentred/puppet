@@ -222,6 +222,15 @@ class dc_profile::net::core_gateway {
     options          => {},
   }
 
+  haproxy::listen { 'icinga2':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':5665' => [],
+    },
+    options          => {},
+  }
+
   # Typical deployments use the proxy protocol between the balancer
   # and the mail servers.  However, as the traffic is behind a NAT
   # boundary this is pretty much pointless as it only allows mail
@@ -497,6 +506,18 @@ class dc_profile::net::core_gateway {
     ],
     ipaddresses       => [
       '10.30.192.207',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'icinga2':
+    listening_service => 'icinga2',
+    ports             => '5665',
+    server_names      => [
+      'icinga2.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.114',
     ],
     options           => 'check',
   }
