@@ -8,7 +8,7 @@ class dc_foreman::memcache (
 
   package { 'ruby-foreman-memcache':
     ensure  => installed,
-    require => File['/etc/foreman/plugins/foreman_memcache.yaml']
+    require => File['/etc/foreman/plugins/foreman_memcache.yaml'],
   }
 
   File {
@@ -20,7 +20,7 @@ class dc_foreman::memcache (
   file { '/etc/foreman/plugins/foreman_memcache.yaml':
     ensure  => file,
     content => template('dc_foreman/foreman_memcache.yml.erb'),
-    require => Package['foreman'],
+    require => Class['::foreman::install'],
   }
 
 }
