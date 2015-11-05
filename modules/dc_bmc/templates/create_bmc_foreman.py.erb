@@ -73,7 +73,7 @@ def get_host_id(fqdn):
 # Create BMC interface in Foreman
 def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
     url = foreman_int_api
-    payload = {'interface': {'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
+    payload = {'interface': {'identifier': 'ipmi', 'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
     try:
         r = requests.post(url, verify=cacert, data=json.dumps(payload), headers=headers, cert=certs)
     except requests.exceptions.RequestException as e :
