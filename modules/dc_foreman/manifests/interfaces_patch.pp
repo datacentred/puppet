@@ -6,7 +6,7 @@ class dc_foreman::interfaces_patch {
     ensure  => file,
     owner   => 'foreman',
     group   => 'foreman',
-    content => 'puppet:///modules/dc_foreman/files/fact_parser.rb',
+    source  => 'puppet:///modules/dc_foreman/files/fact_parser.rb',
     require => [ Class['::apache'], Class['::foreman::install'] ],
     notify  => Class['::apache::service'],
   }
