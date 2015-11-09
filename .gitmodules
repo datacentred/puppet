@@ -296,3 +296,6 @@
 [submodule "modules/knot"]
 	path = modules/knot
 	url = https://github.com/datacentred/puppet-knot.git
+[submodule "modules/icinga2"]
+	path = modules/icinga2
+	url = https://github.com/spjmurray/puppet-icinga2
