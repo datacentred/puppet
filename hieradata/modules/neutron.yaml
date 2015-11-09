@@ -29,6 +29,7 @@ neutron::service_plugins:
  - 'lbaas'
  - 'vpnaas'
  - 'metering'
+neutron::verbose: true
 
 neutron::server::auth_host: "%{hiera('os_api_host')}"
 neutron::server::auth_protocol: 'https'

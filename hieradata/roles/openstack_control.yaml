@@ -44,6 +44,8 @@ sysctls::values:
     fs.file-max:
         value: '4096000'
 
+neutron::debug: true
+
 sudo::configs:
   nova:
     content: |
