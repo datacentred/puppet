@@ -12,6 +12,8 @@ neutron::agents::ml2::ovs::bridge_mappings:
 neutron::agents::l3::external_network_bridge: ''
 neutron::agents::l3::gateway_external_network_id: ''
 
+neutron::debug: true
+
 sudo::configs:
   neutron:
     content: |
