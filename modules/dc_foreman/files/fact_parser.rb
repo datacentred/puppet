@@ -163,7 +163,7 @@ class FactParser
 
   # these interfaces are ignored when parsing interface facts
   def ignored_interfaces
-     /\A(lo(?!cal_area_connection)|usb|vnet|qbr|qvo|qvb|tap|ovs)/    
+     /\A(lo(?!cal_area_connection)|usb|vnet|qbr|qvo|qvb|tap|ovs|br_int|br_ex|br_tun|int_br|phy_br)/    
   end
 
   def remove_ignored(interfaces)
