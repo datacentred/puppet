@@ -1,8 +1,8 @@
-# == Class: profiles::icinga2::services::generic
+# == Class: dc_icinga2::services::generic
 #
 # Install generic service checks
 #
-class profiles::icinga2::services::generic {
+class dc_icinga2::services::generic {
 
   tag $::fqdn, $::domain
 

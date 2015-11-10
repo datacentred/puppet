@@ -1,8 +1,8 @@
-# == Class: profiles::icinga2::services::puppetdb
+# == Class: dc_icinga2::services::puppetdb
 #
 # Check PuppetDB is running and responding to requests
 #
-class profiles::icinga2::services::puppetdb {
+class dc_icinga2::services::puppetdb {
 
   tag $::fqdn, $::domain
 

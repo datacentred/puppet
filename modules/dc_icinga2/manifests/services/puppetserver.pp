@@ -1,8 +1,8 @@
-# == Class: profiles::icinga2::services::puppetserver
+# == Class: dc_icinga2::services::puppetserver
 #
 # Check Jenkins is running and responding to requests
 #
-class profiles::icinga2::services::puppetserver {
+class dc_icinga2::services::puppetserver {
 
   tag $::fqdn, $::domain
 
