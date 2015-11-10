@@ -1,8 +1,8 @@
-# == Class: profiles::icinga2::services::icingaweb2
+# == Class: dc_icinga2::services::icingaweb2
 #
 # Checks icingaweb2 is responding
 #
-class profiles::icinga2::services::icingaweb2 {
+class dc_icinga2::services::icingaweb2 {
 
   tag $::fqdn, $::domain
 

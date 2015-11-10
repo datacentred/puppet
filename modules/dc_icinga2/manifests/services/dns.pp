@@ -1,8 +1,8 @@
-# == Class: profiles::icinga2::services::dns
+# == Class: dc_icinga2::services::dns
 #
 # Monitor DNS services
 #
-class profiles::icinga2::services::dns {
+class dc_icinga2::services::dns {
 
   tag $::fqdn, $::domain
 
