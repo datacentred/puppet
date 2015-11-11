@@ -8,7 +8,7 @@ class dc_foreman::interfaces_patch {
     owner   => 'foreman',
     group   => 'foreman',
     source  => 'puppet:///modules/dc_foreman/fact_parser.rb',
-    require => [ Class['::apache'], Class['::foreman::install'] ],
+    require => Class['::foreman::install'],
     notify  => Class['::apache::service'],
   }
 
@@ -17,7 +17,7 @@ class dc_foreman::interfaces_patch {
     owner   => 'foreman',
     group   => 'foreman',
     source  => 'puppet:///modules/dc_foreman/dhcp.rb',
-    require => [ Class['::apache'], Class['::foreman::install'] ],
+    require => Class['::foreman::install'],
     notify  => Class['::apache::service'],
   }
 
