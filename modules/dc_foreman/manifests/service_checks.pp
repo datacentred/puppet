@@ -1,8 +1,8 @@
 # Class dc_foreman::service_checks
 class dc_foreman::service_checks (
   $foreman_url,
-  $foreman_admin_pw,
-  $foreman_admin_user,
+  $foreman_view_api_pw,
+  $foreman_view_api_user,
   $omapi_key,
   $omapi_secret,
   $omapi_port,

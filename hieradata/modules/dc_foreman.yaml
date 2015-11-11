@@ -11,8 +11,10 @@ dc_foreman::service_checks::omapi_key: "%{hiera('omapi_key')}"
 dc_foreman::service_checks::omapi_port: "%{hiera('omapi_port')}"
 dc_foreman::service_checks::dns_key: "%{hiera('dns_key')}"
 dc_foreman::service_checks::foreman_url: "%{hiera('foreman_url')}"
-dc_foreman::service_checks::foreman_admin_pw: "%{hiera('foreman_admin_pw')}"
-dc_foreman::service_checks::foreman_admin_user: 'admin'
+dc_foreman::service_checks::foreman_view_api_pw: "%{hiera('foreman_view_api_pw')}"
+dc_foreman::service_checks::foreman_view_api_user: "%{hiera('foreman_view_api_user')}"
 dc_foreman::service_checks::tftp_dir: "%{hiera('tftp_dir')}"
 dc_foreman::service_checks::dhcp_server: '127.0.0.1'
 dc_foreman::service_checks::lease_file: '/var/lib/dhcp/dhcpd.leases'
+dc_foreman::api_config::foreman_view_api_pw: "%{hiera('foreman_view_api_pw')}"
+dc_foreman::api_config::foreman_view_api_user: "%{hiera('foreman_view_api_user')}"

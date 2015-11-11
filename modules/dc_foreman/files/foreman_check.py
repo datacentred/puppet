@@ -26,7 +26,9 @@ def get_proxy_subnets(proxy_name, proxy_dict, proxy_type):
     """
     Return a list of subnet_ids where proxy_name is the proxy
     """
-    subnetid_list = [subnet['subnet_id'] for subnet in proxy_dict if subnet[proxy_type]['netloc'] == proxy_name]
+    subnetid_list = [subnet['subnet_id'] \
+            for subnet in proxy_dict \
+            if subnet[proxy_type]['netloc'] == proxy_name]
     return subnetid_list
 
 def get_host_list(lease_file):
@@ -142,8 +144,8 @@ def main():
     Expects config file in ini format eg.
 
     [foreman]
-    foreman_admin_user = some_user
-    foreman_admin_pw = some_password
+    foreman_api_user = some_user
+    foreman_api_pw = some_password
     foreman_api_baseurl = https://foreman-server/api/v2/
     cert_path = a_cert
     cacert_path = a_cacert
