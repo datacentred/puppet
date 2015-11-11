@@ -104,7 +104,9 @@ module Orchestration::DHCP
 
   # do we need to update our dhcp reservations
   def dhcp_update_required?
+    # MJ added line below
     return unless ((build? and old) or old)
+    # MJ
     # IP Address / name changed, or 'rebuild' action is triggered and DHCP record on the smart proxy is not present/identical.
     return true if ((old.ip != ip) or (old.hostname != hostname) or (old.mac != mac) or (old.subnet != subnet) or
                     (!old.build? and build? and !dhcp_record.valid?))
@@ -148,8 +150,9 @@ module Orchestration::DHCP
   def dhcp_conflict_detected?
     # we can't do any dhcp based validations when our MAC address is defined afterwards (e.g. in vm creation)
     return false if mac.blank? or hostname.blank?
+    # MJ original was return false unless dhcp?
     return false unless dhcp? and dhcp_update_required?
-
+    # MJ
     if dhcp_record and dhcp_record.conflicting? and (not overwrite?)
       failure(_("DHCP records %s already exists") % dhcp_record.conflicts.to_sentence, nil, :conflict)
       return true
