@@ -13,6 +13,9 @@ class dc_icinga2 (
     'satellite': {
       include ::dc_icinga2::satellite
     }
+    'none': {
+      # do nothing!
+    }
     default: {
       include ::dc_icinga2::agent
     }

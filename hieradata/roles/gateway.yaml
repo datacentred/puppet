@@ -30,3 +30,8 @@ haproxy::defaults_options:
     - 'server 5m'
     - 'check 10s'
   maxconn: '8000'
+
+# As the gateways are acting as proxies for port 5665 they cannot
+# run icinga in active mode (much like SMTP).  These are checked
+# passively via HTTP
+dc_icinga2::role: 'none'
