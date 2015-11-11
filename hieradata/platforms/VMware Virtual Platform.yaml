@@ -14,3 +14,6 @@ dc_ssh::config:
       - 'dhcp_sync_agent'
       - 'tftpsync'
       - 'nova'
+
+excludes:
+  - '::dc_profile::mon::icinga2'
