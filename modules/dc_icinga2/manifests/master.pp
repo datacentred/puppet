@@ -6,6 +6,11 @@ class dc_icinga2::master (
   $icon_image = $::dc_icinga2::params::icon_image,
 ) inherits dc_icinga2::params {
 
+  # TODO: Move me when this gets refactored properly
+  ca_certificate { 'puppet-ca':
+    source => '/var/lib/puppet/ssl/certs/ca.pem',
+  }
+
   include ::icinga2
   include ::icinga2::web
   include ::icinga2::features::api
