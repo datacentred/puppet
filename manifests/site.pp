@@ -8,5 +8,12 @@ Exec {
   ],
 }
 
-# Probe hiera for our class list
-hiera_include('classes')
+# Probe hiera for our class list (e.g. classy version of hiera_include)
+#
+# Apply an exclusion filter so that common classes can be removed from certain
+# classes of hosts (e.g. all boxxen need a mail daemon, except a haproxy
+# gateway, which by necessity has to listen on the SMTP port)
+$classes = hiera_array('classes')
+$excludes = hiera_array('excludes')
+$includes = delete($classes, $excludes)
+include $includes
