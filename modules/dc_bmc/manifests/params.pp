@@ -12,7 +12,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::params {
 
-  if $::productname == 'X8DTT-H' {
+  if (($::productname == 'X8DTT-H') or ($::productname == 'X9DRT')) {
     $ipmi_smnew_admin_user_slot = '9'
   } else {
     $ipmi_smnew_admin_user_slot = undef
