@@ -14,7 +14,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::admin {
 
-  if $::productname == 'X8DTT-H' {
+  if (($::productname == 'X8DTT-H') or ($::productname == 'X9DRT')) {
 
     runonce { 'disable_sm_admin':
       command => "ipmitool user disable ${dc_bmc::ipmi_admin_user_slot}",

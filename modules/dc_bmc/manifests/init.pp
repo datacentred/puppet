@@ -56,6 +56,12 @@ class dc_bmc (
       include ::dc_bmc::supermicro::reaper
       include ::dc_bmc::supermicro::http_scripted
     }
+    'X9DRT': {
+      include ::dc_bmc::base
+      include ::dc_bmc::admin
+      include ::dc_bmc::housekeeper
+      include ::dc_bmc::monitor_user
+    }
     /PowerEdge/: {
       include ::dc_bmc::base
       include ::dc_bmc::admin
