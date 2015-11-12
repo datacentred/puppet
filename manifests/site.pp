@@ -14,6 +14,6 @@ Exec {
 # classes of hosts (e.g. all boxxen need a mail daemon, except a haproxy
 # gateway, which by necessity has to listen on the SMTP port)
 $classes = hiera_array('classes')
-$excludes = hiera_array('excludes')
+$excludes = hiera_array('excludes', [])
 $includes = delete($classes, $excludes)
 include $includes
