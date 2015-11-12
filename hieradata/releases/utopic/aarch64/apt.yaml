@@ -12,7 +12,14 @@ apt::sources:
     location: 'http://ports.ubuntu.com/ubuntu-ports'
     release: 'utopic-updates'
     repos: 'main restricted universe multiverse'
-  datacentred:
+  datacentred-utopic:
+    location: 'http://apt.datacentred.services/ubuntu'
+    release: 'utopic'
+    repos: 'main'
+    key:
+      id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
+      source: 'http://apt.datacentred.services/pubkey.gpg'
+  datacentred-vivid:
     location: 'http://apt.datacentred.services/ubuntu'
     release: 'vivid'
     repos: 'main'

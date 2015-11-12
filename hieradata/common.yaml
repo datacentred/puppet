@@ -1,6 +1,15 @@
 # default classes to install
 #
 classes:
+  - '::dc_icinga2'
+  - '::dc_icinga2::services::generic'
+  - '::dc_icinga2::services::icingaweb2'
+  - '::dc_icinga2::checks'
+  - '::dc_icinga2::groups'
+  - '::dc_icinga2::pagerduty'
+  - '::dc_icinga2::templates'
+  - '::dc_icinga2::timeperiods'
+  - '::dc_icinga2::users'
   - '::dc_profile::auth::admins'
   - '::dc_profile::auth::sudoers'
   - '::dc_profile::editors::vim'
