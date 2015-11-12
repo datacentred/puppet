@@ -3,8 +3,8 @@ DataCentred Foreman module
 Expects a config file in ini format eg.
 
 [foreman]
-foreman_admin_user = some_user
-foreman_admin_pw = some_password
+foreman_api_user = some_user
+foreman_api_pw = some_password
 foreman_api_baseurl = https://foreman-server/api/v2/
 cert_path = a_cert
 cacert_path = a_cacert
@@ -47,13 +47,13 @@ class Foreman(object):
             print 'Could not parse config file:', err
             sys.exit(1)
         self.foreman_api_baseurl = parser.get('foreman', 'foreman_api_baseurl')
-        foreman_admin_user = parser.get('foreman', 'foreman_admin_user')
-        foreman_admin_pw = parser.get('foreman', 'foreman_admin_pw')
+        foreman_api_user = parser.get('foreman', 'foreman_api_user')
+        foreman_api_pw = parser.get('foreman', 'foreman_api_pw')
         cert_path = parser.get('foreman', 'cert_path')
         key_path = parser.get('foreman', 'key_path')
         cacert_path = parser.get('foreman', 'cacert_path')
-        auth_encode = b64encode('%s:%s' % (foreman_admin_user,
-                                           foreman_admin_pw)).decode("ascii")
+        auth_encode = b64encode('%s:%s' % (foreman_api_user,
+                                           foreman_api_pw)).decode("ascii")
         self.headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -99,7 +99,7 @@ class Foreman(object):
         except requests.exceptions.RequestException as err:
             print "Connection Error - got %s" % err
             sys.exit(1)
-        if req.status_code != 200:
+        if req.status_code not in (403, 200):
             print "Connection Error - got %s" % req.status_code
             sys.exit(1)
         else:

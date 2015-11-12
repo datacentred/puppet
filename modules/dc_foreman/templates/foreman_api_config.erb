@@ -5,19 +5,3 @@ foreman_api_baseurl = https://<%= @foreman_url %>/api/
 cert_path = /var/lib/puppet/ssl/certs/<%= @fqdn %>.pem
 cacert_path = /var/lib/puppet/ssl/certs/ca.pem
 key_path = /var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem
-proxy_alias = <%= @proxy_alias %>
-
-[omapi]
-omapi_port = <%= @omapi_port %>
-omapi_key = <%= @omapi_key %>
-omapi_secret = <%= @omapi_secret %>
-dhcp_server = <%= @dhcp_server %>
-
-[pxe]
-pxe_root = <%= @tftp_dir %>/pxelinux.cfg
-
-[dhcp]
-lease_file = <%= @lease_file %>
-
-[dns]
-key = <%= @dns_key %>
