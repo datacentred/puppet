@@ -74,7 +74,8 @@ def main():
         # The actual version number is the last element
         ver_num = ver_line[-1]
         if ver_num != std_fw_version:
-            print "BMC firmware version is incorrect"
+            print "BMC firmware version is incorrect " \
+                  "(expected {}, actual {})".format(std_fw_version, ver_num)
             sys.exit(1)
     else:
         print "BMC monitoring user login failed"
