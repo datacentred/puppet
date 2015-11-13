@@ -26,6 +26,9 @@ dc_dns::static::records:
     rdata: "icinga0.%{::domain}"
   "ldap.%{::domain}/CNAME":
     rdata: '10.30.192.2'
+  "_x-foreman._tcp.%{::domain}/SRV":
+      rdata: "ns0.%{::domain}"
+
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.30.192.250'

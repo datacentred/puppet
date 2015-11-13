@@ -1,4 +1,14 @@
 ---
+excludes:
+  - '::dc_profile::auth::rootpw'
+  - '::dc_profile::log::rsyslog_client'
+  - '::dc_profile::log::log_shipper'
+  - '::dc_profile::net::mail'
+  - '::dc_profile::perf::collectd_stunnel'
+  - '::dc_profile::perf::telegraf'
+  - '::dc_profile::log::logrotate'
+  - '::dc_profile::net::nscd'
+
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
   y8CwUxRvBlljukX/uGEYPhmlPtqmBOJyIcvUOo8efH2L6NvOZ9Mcg7/PX/eG1owc

@@ -1,3 +1,7 @@
 ---
+dhcp::nameservers:
+      - '172.22.5.250'
+      - '172.22.5.251'
+dhcp::ddns::zonemaster: '172.22.5.250'
 dhcp::interfaces:
       - 'eth1'

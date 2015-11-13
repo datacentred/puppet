@@ -37,6 +37,11 @@ class dc_foreman_proxy::install {
     name   => 'foreman-proxy',
   }
 
+  package { 'ruby-smart-proxy-discovery':
+    ensure => installed,
+    name   => 'ruby-smart-proxy-discovery',
+  }
+
   # The proxy will use the puppet certificates signed by the CA
   user { 'foreman-proxy':
     ensure  => present,
