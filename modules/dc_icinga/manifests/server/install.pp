@@ -31,11 +31,7 @@ class dc_icinga::server::install {
     'libcache-memcached-perl',
   ]
 
-  $package_defaults = {
-    'ensure' => 'installed',
-  }
-
-  ensure_packages($packages, $package_defaults)
+  ensure_packages($packages)
 
   # Fix the RPC check, easiest way is to symlink
   file { '/usr/bin/rpcinfo':
