@@ -18,6 +18,7 @@ class dc_profile::openstack::nova::apparmor {
     group  => 'root',
     mode   => '0644',
     source => 'puppet:///modules/dc_openstack/libvirt-qemu',
+    notify => [ Service['libvirt'], Service['nova-compute'], Service['apparmor'] ],
   }
 
 }

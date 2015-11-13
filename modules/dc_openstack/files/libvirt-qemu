@@ -149,3 +149,6 @@
 
   # testing libvirt fix for rbd resizing
   /run/shm/lttng-ust-wait-5 r,
+
+  # enable qemu-guest-agent support
+  /var/lib/libvirt/qemu/*.sock rw,
