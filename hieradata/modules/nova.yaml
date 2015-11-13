@@ -14,7 +14,7 @@ nova::keystone::auth::configure_endpoint_v3: false
 
 nova::database_connection: "mysql://%{hiera('nova_db_user')}:%{hiera('nova_db_pass')}@%{hiera('os_api_host')}/%{hiera('nova_db')}"
 nova::image_service: 'nova.image.glance.GlanceImageService'
-nova::glance_api_servers: "https://%{hiera('os_api_host')}:9292"
+nova::glance_api_servers: "http://oscontrol0-storage.%{::domain}:9292,http://oscontrol1-storage.%{::domain}:9292"
 nova::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
