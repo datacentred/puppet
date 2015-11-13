@@ -30,3 +30,8 @@ haproxy::defaults_options:
     - 'server 5m'
     - 'check 10s'
   maxconn: '8000'
+
+# Remove services that clash with ports the gateway is listening on
+excludes:
+  - '::dc_profile::mon::icinga2'
+  - '::dc_profile::net::mail'

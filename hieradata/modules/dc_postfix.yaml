@@ -48,6 +48,3 @@ dc_postfix::gateway::networks_config_hash:
         value: "localhost.localdomain, localhost, %{::fqdn}"
     'inet_protocols':
         value: 'ipv4'
-dc_postfix::excluded_hosts:
-  - 'gateway0.core.sal01.datacentred.co.uk'
-  - 'gateway1.core.sal01.datacentred.co.uk'
