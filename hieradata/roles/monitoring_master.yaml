@@ -1,6 +1,16 @@
 ---
-# TODO: Make global post bootstrap
 classes:
   - '::dc_icinga2::services::icingaweb2'
 
 dc_icinga2::role: 'master'
+
+# TODO: make the compilation time more performant!
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+    show_diff: 'true'
+  agent:
+    configtimeout: '30m'

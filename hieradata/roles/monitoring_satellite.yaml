@@ -1,2 +1,14 @@
 ---
 dc_icinga2::role: 'satellite'
+
+# TODO: make the compilation time more performant!
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+    show_diff: 'true'
+  agent:
+    server: 'puppet.datacentred.services'
+    configtimeout: '30m'
