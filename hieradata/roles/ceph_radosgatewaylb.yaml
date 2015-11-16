@@ -47,3 +47,16 @@ loadbalancer::certs::cert_hash:
     ssl_key: '/etc/ssl/private/STAR_storage_datacentred_io.key'
 loadbalancer::stats::ipaddress: "%{::ipaddress_p1p2}"
 
+haproxy::defaults_options:
+  log: 'global'
+  stats: 'enable'
+  option: 'redispatch'
+  retries: '3'
+  timeout:
+    http-request: '10s'
+    queue: '1m'
+    connect: '10s'
+    client: '30m'
+    server: '30m'
+    check: '10s'
+  maxconn: '8000'
