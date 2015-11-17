@@ -22,12 +22,21 @@ keystone_users:
         tenant: 'icinga'
 
 keystone_services:
+    keystone:
+        ensure: 'present'
+        type: 'identity'
+        description: 'OpenStack Identity Service'
     swift:
         ensure: 'present'
         type:   'object-store'
         description: 'Swift Object Storage Service'
 
 keystone_endpoints:
+    "%{hiera('os_region')}/keystone":
+        ensure: 'present'
+        public_url: "https://%{hiera('os_api_host')}:5000/"
+        internal_url: "https://%{hiera('os_api_host')}:5000/"
+        admin_url: "https://%{hiera('os_api_host')}:35357/"
     "%{hiera('os_region')}/swift":
         ensure: 'present'
         public_url:     'https://storage.datacentred.io/swift/v1'

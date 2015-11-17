@@ -14,7 +14,6 @@ class dc_profile::openstack::keystone {
 
   include ::keystone
   include ::keystone::roles::admin
-  include ::keystone::endpoint
   include ::dc_icinga::hostgroup_keystone
 
   include ::sysctls

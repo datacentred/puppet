@@ -1,8 +1,4 @@
 ---
-classes:
-  - '::dc_profile::perf::collectd_stunnel'
-  - '::dc_profile::perf::telegraf'
-
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
   y8CwUxRvBlljukX/uGEYPhmlPtqmBOJyIcvUOo8efH2L6NvOZ9Mcg7/PX/eG1owc
