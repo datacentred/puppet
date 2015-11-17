@@ -6,6 +6,7 @@ class dc_icinga2::users {
 
   icinga2::object::usergroup { 'icingaadmins':
     display_name => 'Icinga 2 Admin Group',
+    target       => '/etc/icinga2/zones.d/global-templates/users.conf',
   }
 
   icinga2::object::user { 'icingaadmin':
@@ -13,6 +14,7 @@ class dc_icinga2::users {
     groups       => [
       'icingaadmins',
     ],
+    target       => '/etc/icinga2/zones.d/global-templates/users.conf',
   }
 
 }

@@ -2,9 +2,7 @@
 #
 # Profile for an icinga2 master
 #
-class dc_icinga2::master (
-  $icon_image = $::dc_icinga2::params::icon_image,
-) inherits dc_icinga2::params {
+class dc_icinga2::master {
 
   # TODO: Move me when this gets refactored properly
   ca_certificate { 'puppet-ca':
@@ -17,7 +15,15 @@ class dc_icinga2::master (
   include ::icinga2::features::command
   include ::icinga2::features::ido_mysql
 
-  # Define our endpoint zone and host statically
+  include ::dc_icinga2::host
+  include ::dc_icinga2::services
+  include ::dc_icinga2::checks
+  include ::dc_icinga2::groups
+  include ::dc_icinga2::pagerduty
+  include ::dc_icinga2::templates
+  include ::dc_icinga2::timeperiods
+  include ::dc_icinga2::users
+
   icinga2::object::endpoint { $::fqdn: }
 
   icinga2::object::zone { $::fqdn:
@@ -26,49 +32,14 @@ class dc_icinga2::master (
     ],
   }
 
-  icinga2::object::host { $::fqdn:
-    import       => 'generic-host',
-    display_name => $::fqdn,
-    address      => $::ipaddress,
-    vars         => {
-      'architecture'    => $::architecture,
-      'lsbdistcodename' => $::lsbdistcodename,
-      'operatingsystem' => $::operatingsystem,
-      'os'              => $::kernel,
-    },
-    icon_image   => $icon_image,
+  icinga2::object::zone { 'global-templates':
+    global => true,
   }
 
-  # Collect our local checks
-  Icinga2::Object::Service <<| tag == $::fqdn |>>
+  Icinga2::Object::Endpoint <<||>>
 
-  # Collect endpoints and zones globally
-  Icinga2::Object::Endpoint <<||>> {
-    repository => true,
-  }
+  Icinga2::Object::Zone <<||>>
 
-  Icinga2::Object::Zone <<||>> {
-    repository => true,
-  }
-
-  # Collect hosts in the local domain and perform cluster checks,
-  # this also includes directly connected satellite hosts
-  Icinga2::Object::Host <<| tag == $::domain |>> {
-    check_command => 'cluster-zone',
-    repository    => true,
-  }
-
-  # Collect hosts in remote domains performing no checks this is
-  # performed via the satellites
-  Icinga2::Object::Host <<| tag != $::domain |>> {
-    check_command => 'dummy',
-    repository    => true,
-  }
-
-  Icinga2::Object::Service <<| tag != $::fqdn |>> {
-    import        => 'satellite-service',
-    check_command => 'dummy',
-    repository    => true,
-  }
+  Icinga2::Object::Host <<| |>>
 
 }

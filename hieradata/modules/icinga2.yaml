@@ -1,0 +1,2 @@
+---
+icinga2::features::api::accept_config: true

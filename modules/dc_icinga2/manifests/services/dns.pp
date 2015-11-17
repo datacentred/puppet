@@ -4,15 +4,16 @@
 #
 class dc_icinga2::services::dns {
 
-  tag $::fqdn, $::domain
-
-  @@icinga2::object::service { "${::fqdn} dns":
+  icinga2::object::apply_service { 'dns':
     check_name    => 'dns',
     import        => 'generic-service',
     check_command => 'dns',
     vars          => {
       'enable_pagerduty' => true,
     },
+    zone          => 'host.name',
+    assign_where  => 'match("dns_*, host.vars.role)',
+    target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
 }

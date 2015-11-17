@@ -10,6 +10,7 @@ class dc_icinga2::checks {
       '-u' => '$memory_unit$',
       '-t' => '$memory_timeout$',
     },
+    target    => '/etc/icinga2/zones.d/global-templates/checks.conf',
   }
 
 }

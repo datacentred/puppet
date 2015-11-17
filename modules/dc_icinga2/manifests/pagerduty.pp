@@ -36,6 +36,7 @@ class dc_icinga2::pagerduty (
       'ICINGA_HOSTSTATE'        => '$host.state$',
       'ICINGA_HOSTOUTPUT'       => '$host.output$',
     },
+    target  => '/etc/icinga2/zones.d/global-templates/notifications.conf',
   }
 
   icinga2::object::notificationcommand { 'notify-service-by-pagerduty':
@@ -50,6 +51,7 @@ class dc_icinga2::pagerduty (
       'ICINGA_SERVICESTATE'     => '$service.state$',
       'ICINGA_SERVICEOUTPUT'    => '$service.output$',
     },
+    target  => '/etc/icinga2/zones.d/global-templates/notifications.conf',
   }
 
   icinga2::object::apply_notification { 'pagerduty-host':
@@ -60,6 +62,7 @@ class dc_icinga2::pagerduty (
     period       => '24x7',
     users        => [ 'pagerduty' ],
     assign_where => 'host.vars.enable_pagerduty == true',
+    target       => '/etc/icinga2/zones.d/global-templates/notifications.conf',
   }
 
   icinga2::object::apply_notification { 'pagerduty-service':
@@ -70,6 +73,7 @@ class dc_icinga2::pagerduty (
     period       => '24x7',
     users        => [ 'pagerduty' ],
     assign_where => 'service.vars.enable_pagerduty == true',
+    target       => '/etc/icinga2/zones.d/global-templates/notifications.conf',
   }
 
 }
