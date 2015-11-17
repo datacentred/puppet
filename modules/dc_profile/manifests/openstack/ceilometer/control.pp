@@ -24,6 +24,10 @@ class dc_profile::openstack::ceilometer::control {
   include ::ceilometer::alarm::evaluator
   include ::ceilometer::alarm::notifier
 
+  ceilometer_config { 'database/use_tpool':
+    value => true,
+  }
+
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-ceilometer":
     listening_service => 'ceilometer',
