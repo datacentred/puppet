@@ -54,7 +54,7 @@ keystone::token_expiration: '14400'
 keystone::token_provider: 'keystone.token.providers.uuid.Provider'
 keystone::database_connection: "mysql://%{hiera('keystone_db_user')}:%{hiera('keystone_db_pass')}@%{hiera('os_api_host')}/keystone"
 keystone::log_level: 'DEBUG'
-keystone::rabbit_hosts: 
+keystone::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
  - osdbmq2.%{::domain}
@@ -72,10 +72,6 @@ keystone::admin_endpoint: "https://%{hiera('os_api_host')}:35357"
 keystone::roles::admin::email: "%{hiera('internal_sysmail_address')}"
 keystone::roles::admin::password: "%{hiera('keystone_admin_pw')}"
 keystone::roles::admin::service_tenant: "%{hiera('os_service_tenant')}"
-keystone::endpoint::public_url: "https://%{hiera('os_api_host')}:5000"
-keystone::endpoint::internal_url: "https://%{hiera('os_api_host')}:5000"
-keystone::endpoint::admin_url: "https://%{hiera('os_api_host')}:35357"
-keystone::endpoint::region: "%{hiera('os_region')}"
 keystone::wsgi::apache::ssl: false
 keystone::wsgi::apache::workers: 4
 keystone::wsgi::apache::servername: "%{::fqdn}"
