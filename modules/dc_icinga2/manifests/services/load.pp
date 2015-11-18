@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::load {
 
-  icinga2::object::service { 'load':
+  icinga2::object::apply_service { 'load':
     import        => 'generic-service',
     check_command => 'load',
     zone          => 'host.name',

@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::disk {
 
-  icinga2::object::service { 'disk':
+  icinga2::object::apply_service { 'disk':
     import        => 'generic-service',
     check_command => 'disk',
     vars          => {

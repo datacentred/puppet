@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::icingaweb2 {
 
-  icinga2::object::service { 'icingaweb2':
+  icinga2::object::apply_service { 'icingaweb2':
     import        => 'generic-service',
     check_command => 'http',
     zone          => 'host.name',

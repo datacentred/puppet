@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::ssh {
 
-  icinga2::object::service { 'ssh':
+  icinga2::object::apply_service { 'ssh':
     import        => 'generic-service',
     check_command => 'ssh',
     zone          => 'host.name',
