@@ -6,7 +6,6 @@ class dc_icinga2::services {
 
   include ::dc_icinga2::services::disk
   include ::dc_icinga2::services::dns
-  include ::dc_icinga2::services::generic
   include ::dc_icinga2::services::icingaweb2
   include ::dc_icinga2::services::jenkins
   include ::dc_icinga2::services::load
