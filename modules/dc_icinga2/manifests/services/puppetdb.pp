@@ -4,20 +4,20 @@
 #
 class dc_icinga2::services::puppetdb {
 
-  tag $::fqdn, $::domain
-
-  @@icinga2::object::service { "${::fqdn} puppetdb":
-    check_name    => 'puppetdb',
+  icinga2::object::service { 'puppetdb':
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
       'http_uri'         => '/v3/version',
       'http_port'        => 8081,
       'http_ssl'         => true,
-      'http_clientcert'  => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
-      'http_privatekey'  => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
+      'http_clientcert'  => '/var/lib/puppet/ssl/certs/$host.name$.pem',
+      'http_privatekey'  => '/var/lib/puppet/ssl/private_keys/$host.name$.pem',
       'enable_pagerduty' => true,
     },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "puppetdb"',
+    target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
 }

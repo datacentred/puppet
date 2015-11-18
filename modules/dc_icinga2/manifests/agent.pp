@@ -10,15 +10,11 @@
 #
 class dc_icinga2::agent (
   $parent_fqdn,
-  $icon_image = $::dc_icinga2::params::icon_image,
-) inherits dc_icinga2::params {
+) {
 
   include ::icinga2
   include ::icinga2::features::api
-
-  # Tag all resources with the fqdn and domain.  The fqdn is used to collect
-  # resources locally, the domain to collect on the satellite
-  tag $::fqdn, $::domain
+  include ::dc_icinga2::host
 
   # Define the endpoint and zone of the parent satellite or master
   icinga2::object::endpoint { $parent_fqdn:
@@ -31,39 +27,29 @@ class dc_icinga2::agent (
     ],
   }
 
-  # Define local resources and tag with the domain.  The satellite for
-  # this domain and the master need to know about them
-  @@icinga2::object::endpoint { $::fqdn: }
+  # Define the global-templates zone to acquire global configuration
+  icinga2::object::zone { 'global-templates':
+    global => true,
+  }
+
+  # Export the local endpoint and zone.  The master will collect unconditionally
+  # satellites will collect conditionally based on the domain, and this node will
+  # collect its own
+  @@icinga2::object::endpoint { $::fqdn:
+    tag => [ $::fqdn, $::domain ]
+  }
 
   @@icinga2::object::zone { $::fqdn:
     endpoints => [
       $::fqdn,
     ],
     parent    => $parent_fqdn,
+    tag       => [ $::fqdn, $::domain ]
   }
 
-  @@icinga2::object::host { $::fqdn:
-    import       => 'generic-host',
-    display_name => $::fqdn,
-    address      => $::ipaddress,
-    vars         => {
-      'architecture'     => $::architecture,
-      'lsbdistcodename'  => $::lsbdistcodename,
-      'operatingsystem'  => $::operatingsystem,
-      'os'               => $::kernel,
-      'enable_pagerduty' => true,
-    },
-    zone         => $parent_fqdn,
-    icon_image   => $icon_image,
-  }
-
-  # Collect all resources for the fqdn
+  # Collect all zone resources for the fqdn
   Icinga2::Object::Endpoint <<| tag == $::fqdn |>>
 
   Icinga2::Object::Zone <<| tag == $::fqdn |>>
-
-  Icinga2::Object::Host <<| tag == $::fqdn |>>
-
-  Icinga2::Object::Service <<| tag == $::fqdn |>>
 
 }

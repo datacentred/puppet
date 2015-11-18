@@ -1,26 +1,32 @@
 # == Class: dc_icinga2::templates
 #
-# Generic host and service templates
+# Generic host and service templates.  The master node uses the master-host
+# template as a dummy hostalive check.  All other nodes are checked with
+# the cluster-zone check from their parent to ascertain liveness.
 #
 class dc_icinga2::templates {
 
-  # Local host and service checks
-  icinga2::object::template_host { 'generic-host':
+  icinga2::object::template_host { 'master-host':
     max_check_attempts => 3,
     check_interval     => '1m',
     retry_interval     => '30s',
     check_command      => 'hostalive',
+    target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
+  }
+
+  icinga2::object::template_host { 'satellite-host':
+    max_check_attempts => 3,
+    check_interval     => '1m',
+    retry_interval     => '30s',
+    check_command      => 'cluster-zone',
+    target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
   }
 
   icinga2::object::template_service { 'generic-service':
     max_check_attempts => 5,
     check_interval     => '1m',
     retry_interval     => '30s',
+    target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
   }
-
-  # Satellite host and service checks
-  icinga2::object::template_host { 'satellite-host':  }
-
-  icinga2::object::template_service { 'satellite-service': }
 
 }

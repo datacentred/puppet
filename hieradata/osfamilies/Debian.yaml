@@ -7,3 +7,5 @@ classes:
 # These values should only be picked up at this point when we're in a Vagrant VM
 network_node_extif: 'eth1'
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_eth1}"
+
+dc_icinga2::host::icon_image: 'http://incubator.storage.datacentred.io/ubuntu-logo-16x16.png'

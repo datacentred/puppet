@@ -16,6 +16,7 @@ class dc_icinga2::timeperiods {
       'saturday'  => '00:00-24:00',
       'sunday'    => '00:00-24:00',
     },
+    target       => '/etc/icinga2/zones.d/global-templates/timeperiods.conf',
   }
 
 }
