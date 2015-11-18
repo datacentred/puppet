@@ -5,7 +5,6 @@
 class dc_icinga2::services::dns {
 
   icinga2::object::apply_service { 'dns':
-    check_name    => 'dns',
     import        => 'generic-service',
     check_command => 'dns',
     vars          => {
