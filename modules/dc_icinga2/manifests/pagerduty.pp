@@ -23,6 +23,7 @@ class dc_icinga2::pagerduty (
     pager        => $pager,
     states       => [ 'OK', 'Warning', 'Critical', 'Unknown', 'Up', 'Down' ],
     types        => [ 'Problem', 'Recovery' ],
+    target       => '/etc/icinga2/zones.d/global-templates/users.conf',
   }
 
   icinga2::object::notificationcommand { 'notify-host-by-pagerduty':
