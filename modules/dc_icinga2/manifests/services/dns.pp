@@ -11,7 +11,7 @@ class dc_icinga2::services::dns {
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
-    assign_where  => 'match("dns_*, host.vars.role)',
+    assign_where  => 'match("dns_*", host.vars.role)',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
