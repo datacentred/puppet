@@ -12,6 +12,9 @@ class dc_icinga2::master {
   include ::icinga2
   include ::icinga2::web
   include ::icinga2::features::api
+  include ::icinga2::features::checker
+  include ::icinga2::features::notification
+  include ::icinga2::features::mainlog
   include ::icinga2::features::command
   include ::icinga2::features::ido_mysql
 
