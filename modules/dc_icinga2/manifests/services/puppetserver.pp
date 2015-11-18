@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::puppetserver {
 
-  icinga2::object::service { 'puppetserver':
+  icinga2::object::apply_service { 'puppetserver':
     import        => 'generic-service',
     check_command => 'http',
     vars          => {

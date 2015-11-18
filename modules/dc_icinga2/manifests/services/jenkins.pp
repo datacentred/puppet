@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::jenkins {
 
-  icinga2::object::service { 'jenkins':
+  icinga2::object::apply_service { 'jenkins':
     import        => 'generic-service',
     check_command => 'http',
     vars          => {

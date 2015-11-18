@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::procs {
 
-  icinga2::object::service { 'procs':
+  icinga2::object::apply_service { 'procs':
     import        => 'generic-service',
     check_command => 'procs',
     zone          => 'host.name',

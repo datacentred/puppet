@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::puppetdb {
 
-  icinga2::object::service { 'puppetdb':
+  icinga2::object::apply_service { 'puppetdb':
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
