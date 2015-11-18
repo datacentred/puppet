@@ -26,6 +26,7 @@ class dc_icinga2::host (
     },
     zone         => $zone,
     icon_image   => $icon_image,
+    target       => "/etc/icinga2/zones.d/${::fqdn}/hosts.conf",
   }
 
 }
