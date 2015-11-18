@@ -11,6 +11,8 @@ class dc_profile::openstack::neutron::agent_network {
   include ::neutron::agents::metering
   include ::neutron::services::fwaas
 
+  include ::sysctls
+
   $uplink_if = hiera(network_node_extif)
 
   # We want to disable GRO on the external interface
