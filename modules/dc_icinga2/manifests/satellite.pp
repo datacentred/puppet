@@ -19,6 +19,9 @@ class dc_icinga2::satellite (
 
   include ::icinga2
   include ::icinga2::features::api
+  include ::icinga2::features::checker
+  include ::icinga2::features::notification
+  include ::icinga2::features::mainlog
 
   include ::dc_icinga2::host
 
