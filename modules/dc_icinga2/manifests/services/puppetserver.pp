@@ -17,7 +17,7 @@ class dc_icinga2::services::puppetserver {
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
-    assign_where  => 'match("puppet_*, host.vars.role)',
+    assign_where  => 'match("puppet_*", host.vars.role)',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
