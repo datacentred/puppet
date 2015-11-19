@@ -3,3 +3,4 @@ ata\d+.\d+: exception.*
 ata\d+.\d+: failed command:.*
 ata\d+: link is slow to respond, please be patient.*
 ata\d+.\d+:.*failed.*
+nf_conntrack: table full, dropping packet.*
