@@ -60,7 +60,7 @@ class dc_profile::openstack::nova::compute {
 
   # Configure Ceph client, this installs ceph and the client keyring
   ceph::client { 'cinder':
-    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"'
+    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"',
   } ->
   # Install the admin key on each host as ::nova::compute::rbd has a requirement
   # that 'ceph auth' works without specifying the keyring.

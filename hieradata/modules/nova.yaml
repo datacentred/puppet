@@ -65,6 +65,8 @@ nova::compute::rbd::libvirt_images_rbd_pool: 'cinder.vms'
 nova::compute::rbd::libvirt_rbd_user: 'cinder'
 nova::compute::rbd::libvirt_rbd_secret_uuid: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAL7QmbJLDjHE40JCTYpyLv/lg3Ng8NUmVT7t7IsWMONLramFrxD+wCAijucalk+QKM+uwWu7ONkAqJalrWSb+ZxsIxJ4jmC4aRefPvJGzb2saT0ibpzbjQ6kb8hc7z8HeTJduDolawHD3UDiXBDyINQiUAMC4Sggl/yqtXW9wcjZmDCw95W7P+hW6akMGVgsAV1O+fOeKpVdaIxTz3ninEQ/gkAPfiAhONesyjNrbfhICE6AqjkiC2zgbufTRsiJPWhmc9TImAzMwIADeU32nFSmTWGOPDrGdgawp7D5sCrFmrRSoHxE1okPiCx1j3v2OASBTU9rgn/n29TGsWh4+LjBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBC3dKYvoWDgomZjEiXOXrDogDCoaqeoPNyuh/S/010ajm4KZ5SgBUp9kzA/NpKylpB1y7iKQVuHhT7BZrsWIFAcLMc=]
 nova::compute::rbd::rbd_keyring: 'client.cinder'
+nova::compute::libvirt::libvirt_disk_cachemodes:
+ - '"network=writeback"'
 nova::compute::instance_usage_audit: true
 nova::compute::instance_usage_audit_period: 'hour'
 nova::network::neutron::neutron_url: "https://%{hiera('os_api_host')}:9696"
