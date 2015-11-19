@@ -21,6 +21,8 @@ class dc_profile::openstack::nova::compute {
   include ::nova::scheduler::filter
   include ::nova::config
 
+  include ::sysctls
+
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
     path    => '/var/lib/nova/instances',
