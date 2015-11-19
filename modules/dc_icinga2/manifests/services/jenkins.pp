@@ -9,6 +9,7 @@ class dc_icinga2::services::jenkins {
     check_command => 'http',
     vars          => {
       'http_port'        => 8080,
+      'http_uri'         => '/login',
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
