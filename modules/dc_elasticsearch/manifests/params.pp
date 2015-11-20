@@ -10,6 +10,8 @@ class dc_elasticsearch::params (
   $ceph_private_key,
   $ceph_access_point,
   $elasticsearch_data_dir,
+  $total_retention,
+  $ssd_tier_retention,
   $es_aws_plugin_version,
   $backup_node = false,
 ) {}
