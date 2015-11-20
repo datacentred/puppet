@@ -20,17 +20,23 @@ class dc_elasticsearch::elasticsearch_pruning (
   }
 
   cron { 'elasticsearch_tier_pruning':
-    command => "/usr/local/bin/curator --host localhost --port 9200 allocation --rule storage_type=hdd indices --older-than ${ssd_tier_retention} --time-unit days --timestring %Y.%m.%d",
-    user    => root,
+    command => "/usr/local/bin/curator --host localhost --port 9200 allocation --rule storage_type=hdd indices --older-than ${ssd_tier_retention} --time-unit days --timestring %Y.%m.%d >/dev/null",
+    user    => 'root',
     hour    => 3,
-    minute  => 0
+    minute  => 0,
   }
 
   cron { 'elasticsearch_pruning':
-    command => "/usr/local/bin/curator --host localhost --port 9200 delete indices --older-than ${total_retention} --time-unit days --timestring %Y.%m.%d",
-    user    => root,
+    command => "/usr/local/bin/curator --host localhost --port 9200 delete indices --older-than ${total_retention} --time-unit days --timestring %Y.%m.%d >/dev/null",
+    user    => 'root',
     hour    => 5,
-    minute  => 0
+    minute  => 0,
   }
 
+  cron { 'elasticsearch_optimise':
+    command => "/usr/local/bin/curator --host localhost --port 9200 optimize indices --older-than ${ssd_tier_retention} >/dev/null",
+    user    => 'root',
+    hour    => 20,
+    minute  => 0,
+  }
 }
