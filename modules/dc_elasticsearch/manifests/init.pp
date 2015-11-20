@@ -18,6 +18,8 @@ class dc_elasticsearch (
   $ceph_access_point  = $dc_elasticsearch::params::ceph_access_point,
   $ceph_access_key    = $dc_elasticsearch::params::ceph_access_key,
   $ceph_private_key   = $dc_elasticsearch::params::ceph_private_key,
+  $ssd_tier_retention = $dc_elasticsearch::params::ssd_tier_retention,
+  $total_retention    = $dc_elasticsearch::params::total_retention,
 ) inherits dc_elasticsearch::params {
 
   include ::ulimit
@@ -59,7 +61,7 @@ class dc_elasticsearch (
     datadir => [ '/var/storage/ssd_sdb', '/var/storage/ssd_sdc' ],
     config  => $config_hash_for_ssds,
   }
-  
+
   elasticsearch::instance { 'hdd-01':
     datadir => [ '/var/storage/hdd_sdd', '/var/storage/hdd_sde', '/var/storage/hdd_sdf', '/var/storage/hdd_sdg' ],
     config  => $config_hash_for_hdds,
@@ -69,6 +71,7 @@ class dc_elasticsearch (
   if $::backup_node {
     include dc_elasticsearch::elasticsearch_pruning
     include dc_elasticsearch::elasticsearch_snapshot
+    include dc_elasticsearch::template_install
   }
 
 }
