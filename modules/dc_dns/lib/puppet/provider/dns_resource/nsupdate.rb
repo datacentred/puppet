@@ -32,6 +32,13 @@ class Resolv::DNS::Resource::IN::CNAME
   end
 end
 
+# SRV check
+class Resolv::DNS::Resource::IN::SRV
+  def to_rdata
+    @target.to_s
+  end
+end
+
 # MX check
 class Resolv::DNS::Resource::IN::MX
   def to_rdata
@@ -70,14 +77,24 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     name, type = resource[:name].split('/')
     rdata = resource[:rdata]
     ttl = resource[:ttl]
-    if type != 'MX'
-        nsupdate("server 127.0.0.1
-                  update add #{name}. #{ttl} #{type} #{rdata}
-                  send")
-    else
+    case type
+    when 'MX'
         domain = name.split('.', 2)[-1]
         nsupdate("server 127.0.0.1
                   update add #{domain} #{ttl} #{type} #{rdata} #{name}
+                  send")
+    # We make an assumption that we only ever have 1 SRV record for a service
+    # so priority is set to 0 as per the docs
+    # this will need to change if that's no longer the case
+    when 'SRV'
+        port = resource[:port]
+        weight = resource[:weight]
+        nsupdate("server 127.0.0.1
+                  update add #{name}. #{ttl} #{type} 0 #{weight} #{port} #{rdata}
+                  send")
+    else
+        nsupdate("server 127.0.0.1
+                  update add #{name}. #{ttl} #{type} #{rdata}
                   send")
     end
   end
@@ -85,14 +102,28 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   # Destroy an existing DNS resource
   def destroy
     name, type = resource[:name].split('/')
-    if type != 'MX'
+    case type
+    when 'MX'
+        domain = name.split('.', 2)[-1]
+        preference = resource[:rdata]
         nsupdate("server 127.0.0.1
-                update delete #{name}. #{type}
+                update delete #{domain} #{type} #{preference } #{name}.
+                send")
+    # We make an assumption that we only ever have 1 SRV record for a service
+    # so priority is set to 0 as per the docs
+    # this will need to change if that's no longer the case
+    when 'SRV'
+        port = resource[:port]
+        target = resource[:rdata]
+        weight = resource[:weight]
+        nsupdate("server 127.0.0.1
+                update delete #{name}. #{type} 0 #{weight} #{port} #{target}
                 send")
     else
         domain = name.split('.', 2)[-1]
+        rdata = resource[:rdata]
         nsupdate("server 127.0.0.1
-                update delete #{domain} #{type} #{rdata} #{name}.
+                update delete #{name} #{type} #{rdata}
                 send")
     end
   end
@@ -105,6 +136,7 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     r = Resolv::DNS.new(:nameserver => '127.0.0.1')
     begin
         # Set the typeclass and attempt the lookup via DNS
+        # for SRV records arbitrarily force different weights for records
         case type
         when 'A'
             typeclass = Resolv::DNS::Resource::IN::A
@@ -121,6 +153,13 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
             mxrecords = r.getresources(domain, typeclass)
             @dnsres = mxrecords.select { |v| v.exchange.to_s == name }.first
             return false unless @dnsres
+        when 'SRV'
+            weight = resource[:weight]
+            port = resource[:port] 
+            typeclass = Resolv::DNS::Resource::IN::SRV
+            srvrecords = r.getresources(name, typeclass)
+            @dnsres = srvrecords.select { |v| v.weight.to_s == weight && v.port.to_s == port }.first
+            return false unless @dnsres
         else
             raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
         end
@@ -136,13 +175,38 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   end
 
   def rdata=(value)
+    destroy
+    create
+  end
+
+  def port
+    if @dnsres.respond_to?(:port)
+        @dnsres.port.to_s
+    else 
+        '0'
+    end
+  end
+
+  def port=(value)
+    destroy
+    create
+  end
+
+  def weight
+    if @dnsres.respond_to?(:weight)
+        @dnsres.weight.to_s
+    else
+        '0'
+    end
+  end
+
+  def weight=(value)
+    destroy
     create
   end
 
   def ttl
-    '86400'
-    #TODO: requires 14.04 LTS upgrade, ruby too old
-    #@dnsres.ttl.to_s
+    @dnsres.ttl.to_s
   end
 
   def ttl=(value)

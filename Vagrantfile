@@ -18,8 +18,7 @@ Vagrant.configure('2') do |config|
   config.landrush.enabled = true
 
   # Recurse all DNS queries via ns0/ns1 for now
-  config.landrush.upstream '10.10.192.250'
-  config.landrush.upstream '10.10.192.251'
+  config.landrush.upstream '8.8.8.8'
 
   # Give every guest private networking
   #config.vm.network :private_network, type: :dhcp

@@ -19,8 +19,16 @@ Puppet::Type.newtype(:dns_resource) do
   newparam(:name) do
     desc 'Unique identifier in the form "<name>/<type>"'
     validate do |value|
-      unless value =~ /^[a-z0-9\-\.\*]+\/(A|PTR|CNAME|MX)$/
-        raise ArgumentError, 'dns_resource::name invalid'
+      name, type = value.split('/')
+      case type
+      when 'SRV'
+        unless name =~ /^_[a-z0-9\-]+\._(tcp|udp)\..*$/
+          raise ArgumentError, 'dns_resource::name invalid for SRV record'
+        end
+      else
+        unless value =~ /^[a-z0-9\-\.\*]+\/(A|PTR|CNAME|MX)$/
+          raise ArgumentError, 'dns_resource::name invalid'
+        end
       end
     end
   end
@@ -35,6 +43,26 @@ Puppet::Type.newtype(:dns_resource) do
     validate do |value|
       unless value =~ /^\d+$/
         raise ArgumentError, "dns_resource::ttl invalid"
+      end
+    end
+  end
+
+  newproperty(:port) do
+    desc 'Port - only used for SRV records'
+    defaultto '0'
+    validate do |value|
+      unless value =~ /^\d+$/
+        raise ArgumentError, "dns_resource::port invalid"
+      end
+    end
+  end
+
+  newproperty(:weight) do
+    desc 'Weight - only used for SRV records'
+    defaultto '0'
+    validate do |value|
+      unless value =~ /^\d+$/
+        raise ArgumentError, "dns_resource::weight invalid"
       end
     end
   end
