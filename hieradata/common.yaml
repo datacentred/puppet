@@ -321,7 +321,7 @@ dc_ssh::config:
       - 'git'
       - 'postgres'
       - 'barman'
-      - 'juniperbackup'
+      - 'junos'
       - 'ceph-deploy'
       - 'dhcp_sync_agent'
       - 'tftpsync'

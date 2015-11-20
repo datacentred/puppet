@@ -8,6 +8,7 @@ excludes:
   - '::dc_profile::perf::telegraf'
   - '::dc_profile::log::logrotate'
   - '::dc_profile::net::nscd'
+  - '::dc_profile::mon::icinga2'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
@@ -142,3 +143,21 @@ ldap_rootdn: 'cn=admin,dc=datacentred,dc=co,dc=uk'
 ldap_rootpw: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAtj+u+9jfSsNB6FeFLGwdkO2OUz4cIhS68/yjQ835QhZVaDfaHlyfkNunLpqroDx5q7yFvZK9pD6HTWZbwV9E0mplxuscC7sze7FbodWcB+llf0uz5ByShvqpZz583XTuXbo2t5ehJzophmSCecR4BoSvtZ5NtFq2hyTU79auFnB9mTH7sD1lI0+ecqhI0XaUIb0BT6jYLmAma3SY/iRlFgu1L/qGTIS8PSOUjZUF0RA65O26Ly9HRlCJXG2o8erlmc3DOAwNpNLHzDtEHQGoAFBYvXUQoSk4KOnFjl+qNpTSzKsrXK4s6KCkjS6liac5fjMula0Col1j7t4V9ufDXDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDEJOQw/AZIGzf8nmDAs56mgBDs8MNG/8du8eXnq8VBqdSE]
 ldap_account_base: "ou=People,%{hiera('ldap_suffix')}"
 ldap_group_base: "ou=Groups,%{hiera('ldap_suffix')}"
+
+# Allow Groups
+#
+dc_ssh::config:
+  PermitRootLogin:
+    value: 'yes'
+  AllowGroups:
+    value:
+      - 'root'
+      - 'sysadmin'
+      - 'git'
+      - 'postgres'
+      - 'barman'
+      - 'junos'
+      - 'ceph-deploy'
+      - 'dhcp_sync_agent'
+      - 'tftpsync'
+      - 'nova'
