@@ -3,9 +3,9 @@
 # Create cron jobs to prune elasticsearch
 #
 class dc_elasticsearch::elasticsearch_pruning (
-  $total_retention,
-  $ssd_tier_retention,
-){
+  $total_retention    = $dc_elasticsearch::params::total_retention,
+  $ssd_tier_retention = $dc_elasticsearch::params::ssd_tier_retention,
+) inherits dc_elasticsearch::params {
 
   ensure_packages(['python-pip'])
 
