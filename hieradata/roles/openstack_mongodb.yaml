@@ -17,3 +17,5 @@ mongodb::replset::sets:
             - "osmongodb0.%{::domain}:27017"
             - "osmongodb1.%{::domain}:27017"
             - "osmongodb2.%{::domain}:27017"
+
+dc_profile::openstack::duplicity_mongodb::ceilometer_db_password: "%{hiera('ceilometer_db_password')}"

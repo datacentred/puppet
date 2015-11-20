@@ -59,3 +59,5 @@ databases:
     password: "%{hiera('nova_db_pass')}"
     host: '%'
 
+dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_user: "%{hiera('osdbmq_galera_backup_user')}"
+dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_pw: "%{hiera('osdbmq_galera_backup_pw')}"
