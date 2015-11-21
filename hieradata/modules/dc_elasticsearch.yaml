@@ -9,4 +9,4 @@ dc_elasticsearch::params::ceph_access_point: "%{hiera('datacentred_ceph_access_p
 dc_elasticsearch::params::elasticsearch_data_dir: '/var/lib/elasticsearch/data'
 dc_elasticsearch::params::es_aws_plugin_version: '2.7.1'
 dc_elasticsearch::params::total_retention: '30'
-dc_elasticsearch::params::ssd_tier_retention: '5'
+dc_elasticsearch::params::ssd_tier_retention: '3'
