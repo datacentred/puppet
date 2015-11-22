@@ -3,9 +3,9 @@
 # Collect stats and dashboards for mysql
 #
 class dc_collectd::agent::mysql (
-  $username = 'collectd',
-  $password = 'collectd',
-  $hostname = 'localhost',
+  $username,
+  $password,
+  $hostname,
 ) {
 
   include stdlib
@@ -26,7 +26,7 @@ class dc_collectd::agent::mysql (
 
   # Generate the collectd config
   collectd::plugin::mysql::database { $::hostname:
-    host     => 'localhost',
+    host     => $hostname,
     username => $username,
     password => $password,
   }

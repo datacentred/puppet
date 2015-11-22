@@ -1,0 +1,4 @@
+---
+classes:
+  - '::dc_collectd::agent::mysql'
+  - '::dc_collectd::agent::rabbitmq'

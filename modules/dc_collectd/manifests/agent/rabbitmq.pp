@@ -1,7 +1,7 @@
 # == Class: dc_collectd::agent::rabbitmq
 class dc_collectd::agent::rabbitmq (
-  $rabbitmq_monuser = hiera(rabbitmq_monuser),
-  $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password),
+  $rabbitmq_monuser,
+  $rabbitmq_monuser_password,
   $realm = 'RabbitMQ Management',
   $port = '15672',
   $rabbithost = 'localhost',
