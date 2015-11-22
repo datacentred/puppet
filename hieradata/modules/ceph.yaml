@@ -1,7 +1,7 @@
 ---
 ceph::params::deploy_user: 'ceph-deploy'
 ceph::params::deploy_user_is_system: true
-ceph::params::fsid: 'd222d2b3-b4c4-4443-9717-0c4ccadae458'
+ceph::params::fsid: "%{hiera('ceph_cluster_fsid')"
 ceph::params::mon_initial_member: 'ceph-mon-0,ceph-mon-1,ceph-mon-2'
 ceph::params::mon_host: '10.10.104.187,10.10.104.214,10.10.104.184'
 ceph::params::public_network: '10.10.104.0/24'
