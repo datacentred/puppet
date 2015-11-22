@@ -72,6 +72,7 @@ class dc_elasticsearch (
     include dc_elasticsearch::elasticsearch_pruning
     include dc_elasticsearch::elasticsearch_snapshot
     include dc_elasticsearch::template_install
+    include dc_collectd::agent::elasticsearch
   }
 
 }
