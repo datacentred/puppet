@@ -47,6 +47,7 @@ nova::api::enabled_apis: 'ec2,osapi_compute,metadata'
 nova::api::auth_host: "%{hiera('os_api_host')}"
 nova::api::auth_protocol: 'https'
 nova::api::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+nova::api::auth_version: 'V2.0'
 nova::api::neutron_metadata_proxy_shared_secret: "%{hiera('neutron_metadata_secret')}"
 nova::api::keystone_ec2_url: "https://%{hiera('os_api_host')}:5000/v2.0/tokens"
 nova::cert::enabled: true
