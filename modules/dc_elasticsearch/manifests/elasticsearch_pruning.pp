@@ -19,15 +19,31 @@ class dc_elasticsearch::elasticsearch_pruning (
     path   => '/usr/local/bin/elasticsearch_pruning.sh',
   }
 
+  file { '/usr/local/bin/es_pruning.sh':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template('dc_elasticsearch/pruning.sh.erb')
+  }
+
+  file { '/usr/local/bin/es_tier_pruning.sh':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template('dc_elasticsearch/tier_pruning.sh.erb')
+  }
+
   cron { 'elasticsearch_tier_pruning':
-    command => "/usr/local/bin/curator --host localhost --port 9200 allocation --rule storage_type=hdd indices --older-than ${ssd_tier_retention} --time-unit days --timestring %Y.%m.%d >/dev/null",
+    command => '/usr/local/bin/es_tier_pruning.sh >/dev/null',
     user    => 'root',
     hour    => 3,
     minute  => 0,
   }
 
   cron { 'elasticsearch_pruning':
-    command => "/usr/local/bin/curator --host localhost --port 9200 delete indices --older-than ${total_retention} --time-unit days --timestring %Y.%m.%d >/dev/null",
+    command => '/usr/local/bin/es_pruning.sh >/dev/null',
     user    => 'root',
     hour    => 5,
     minute  => 0,
