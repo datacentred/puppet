@@ -6,6 +6,8 @@ class dc_profile::openstack::duplicity_mongodb (
   $ceilometer_db_password,
 ) {
 
+  ensure_packages(['mongodb-org-tools'])
+
   dc_backup::dc_duplicity_job { "${::fqdn}_mongodb" :
     source_dir     => '/srv/backup/mongodb',
     backup_content => 'ceilometer',
@@ -26,6 +28,7 @@ class dc_profile::openstack::duplicity_mongodb (
     owner   => 'root',
     group   => 'root',
     mode    => '0700',
+    require => Package['mongodb-org-tools'],
   }
 
   file { '/srv/backup/mongodb':
