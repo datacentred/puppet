@@ -189,31 +189,31 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_ceilometer-api.sh -H https://\$HOSTALIAS\$:${keystone_port}/v2.0 -T ${keystone_icinga_tenant} -U ${keystone_icinga_user} -P ${keystone_icinga_password}"
   }
 
-  icinga::command { 'check_mongodb':
+  icinga::command { 'check_mongodb_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
-  icinga::command { 'check_mongodb_alias':
+  icinga::command { 'check_mongodb_alias_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
-  icinga::command { 'check_mongodb_admin':
+  icinga::command { 'check_mongodb_admin_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_admin_user} -p ${mongodb_admin_password} -H \$HOSTALIAS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$",
   }
 
-  icinga::command { 'check_mongodb_database':
+  icinga::command { 'check_mongodb_database_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -d \$ARG5$",
   }
 
-  icinga::command { 'check_mongodb_collection':
+  icinga::command { 'check_mongodb_collection_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -d \$ARG5$ -c \$ARG6$",
   }
 
-  icinga::command { 'check_mongodb_replicaset':
+  icinga::command { 'check_mongodb_replicaset_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -r \$ARG5$",
   }
 
-  icinga::command { 'check_mongodb_query':
+  icinga::command { 'check_mongodb_query_dc':
     command_line => "/usr/lib/nagios/plugins/check_mongodb.py -u ${mongodb_monitor_user} -p ${mongodb_monitor_password} -H \$HOSTADDRESS$ -A \$ARG1$ -P \$ARG2$ -W \$ARG3$ -C \$ARG4$ -q \$ARG5$",
   }
 
