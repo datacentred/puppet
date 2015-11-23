@@ -1,0 +1,1 @@
+dc_collectd::agent::elasticsearch::es_cluster_name: 'logstash_platform_services'
