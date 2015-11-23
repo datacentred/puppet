@@ -30,4 +30,7 @@ class dc_profile::foreman::foreman {
   include ::dc_icinga::hostgroup_https
   include ::dc_icinga::hostgroup_foreman
   include ::dc_foreman::interfaces_patch
+
+  include ::dc_collectd::agent::apache
+
 }
