@@ -221,7 +221,7 @@ class dc_icinga::server::nagios_commands {
     command_line => "/usr/lib/nagios/plugins/check_bmc -H \$HOSTNAME$",
   }
 
-  icinga::command { 'check_memcached':
+  icinga::command { 'check_memcached_dc':
     command_line => "/usr/lib/nagios/plugins/check_memcached.pl -H \$HOSTNAME$ -p 11211",
   }
 
