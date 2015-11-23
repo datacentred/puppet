@@ -574,77 +574,77 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_connect':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!connect!27017!2!4',
+    check_command       => 'check_mongodb_dc!connect!27017!2!4',
     service_description => 'MongoDB Connect Check',
   }
 
   icinga::service { 'check_mongo_free_connections':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!connections!27017!70!80',
+    check_command       => 'check_mongodb_dc!connections!27017!70!80',
     service_description => 'MongoDB Free Connections',
   }
 
   icinga::service { 'check_mongo_replication_lag':
     use                 => 'dc_service_slowcheck',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb_alias!replication_lag!27017!15!30',
+    check_command       => 'check_mongodb_alias_dc!replication_lag!27017!15!30',
     service_description => 'MongoDB Replication Lag',
   }
 
   icinga::service { 'check_mongo_replication_lag_percent':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb_admin!replication_lag_percent!27017!50!75',
+    check_command       => 'check_mongodb_admin_dc!replication_lag_percent!27017!50!75',
     service_description => 'MongoDB Replication Lag Percentage',
   }
 
   icinga::service { 'check_mongo_memory':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!memory!27017!20!28',
+    check_command       => 'check_mongodb_dc!memory!27017!20!28',
     service_description => 'MongoDB Memory Usage',
   }
 
   icinga::service { 'check_mongo_lock_time_percentage':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!lock!27017!5!10',
+    check_command       => 'check_mongodb_dc!lock!27017!5!10',
     service_description => 'MongoDB Lock Percentage',
   }
 
   icinga::service { 'check_mongo_flush_average':
     use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!flushing!27017!5000!15000',
+    check_command       => 'check_mongodb_dc!flushing!27017!5000!15000',
     service_description => 'MongoDB Flush Average',
   }
 
   icinga::service { 'check_mongo_last_flush':
     use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!last_flush_time!27017!5000!15000',
+    check_command       => 'check_mongodb_dc!last_flush_time!27017!5000!15000',
     service_description => 'MongoDB Last Flush Time',
   }
 
   icinga::service { 'check_mongo_replica_state':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!replset_state!27017!0!0',
+    check_command       => 'check_mongodb_dc!replset_state!27017!0!0',
     service_description => 'MongoDB Replica State',
   }
 
   icinga::service { 'check_mongo_index_miss':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!index_miss_ratio!27017!.005!.01',
+    check_command       => 'check_mongodb_dc!index_miss_ratio!27017!.005!.01',
     service_description => 'MongoDB Index Miss Ratio',
   }
 
   icinga::service { 'check_mongo_primary_connection':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb!connect_primary!27017!2!4',
+    check_command       => 'check_mongodb_dc!connect_primary!27017!2!4',
     service_description => 'MongoDB Primary Connection',
   }
 
