@@ -10,6 +10,7 @@ class dc_profile::openstack::neutron::agent_network {
   include ::neutron::agents::metadata
   include ::neutron::agents::metering
   include ::neutron::services::fwaas
+  include ::collectd::plugin::protocols
 
   include ::sysctls
 

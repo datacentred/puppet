@@ -140,9 +140,6 @@
 	path = modules/logrotate
 	url = https://github.com/blkperl/puppet-logrotate.git
 	branch = trusty_fixes
-[submodule "modules/collectd"]
-	path = modules/collectd
-	url = git@github.com:datacentred/puppet-module-collectd.git
 [submodule "modules/php"]
 	path = modules/php
 	url = https://github.com/jippi/puppet-php.git
@@ -299,3 +296,6 @@
 [submodule "modules/icinga2"]
 	path = modules/icinga2
 	url = https://github.com/spjmurray/puppet-icinga2
+[submodule "modules/collectd"]
+	path = modules/collectd
+	url = https://github.com/puppet-community/puppet-collectd.git
