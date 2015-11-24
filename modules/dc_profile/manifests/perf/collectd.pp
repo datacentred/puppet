@@ -18,7 +18,7 @@ class dc_profile::perf::collectd {
     # Convert the hostname into Graphite friendly folder structure
     #   Before: test.box.com
     #   After:  com.box.test
-    hostname => join(reverse(split($::fqdn, '[.]')), '.'),
+    collectd_hostname => join(reverse(split($::fqdn, '[.]')), '.'),
   }
 
   include ::collectd::plugin::syslog
