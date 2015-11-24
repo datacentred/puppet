@@ -12,18 +12,28 @@ class dc_icinga2::host (
   $icon_image = undef,
 ) {
 
+  $_vars_common = {
+    'architecture'     => $::architecture,
+    'lsbdistcodename'  => $::lsbdistcodename,
+    'operatingsystem'  => $::operatingsystem,
+    'os'               => $::kernel,
+    'role'             => $::role,
+    'enable_pagerduty' => true,
+  }
+
+  if $::ipmi_ipaddress {
+    $_vars_bmc = {
+      'address_bmc' => $::ipmi_ipaddress,
+    }
+  }
+
+  $_vars = merge($_vars_common, $_vars_bmc)
+
   @@icinga2::object::host { $::fqdn:
     import       => $import,
     display_name => $display_name,
     address      => $address,
-    vars         => {
-      'architecture'     => $::architecture,
-      'lsbdistcodename'  => $::lsbdistcodename,
-      'operatingsystem'  => $::operatingsystem,
-      'os'               => $::kernel,
-      'role'             => $::role,
-      'enable_pagerduty' => true,
-    },
+    vars         => $_vars,
     zone         => $zone,
     icon_image   => $icon_image,
     target       => "/etc/icinga2/zones.d/${::fqdn}/hosts.conf",
