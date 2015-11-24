@@ -20,7 +20,6 @@ class dc_profile::net::network_device_backup {
         password       => '$6$OmomDUedirt2Sz$J95Pp0pjXRhxLjLeT6Hj3du1jS4OYNrJIzMX98cQijyXrIrvDHbvXJ7Gi/VeuSyTpU5NrZyNFQD.u5id34F1s.',
         shell          => '/bin/bash',
         system         => true,
-        purge_ssh_keys => true,
     }
 
     file { '/home/junos/backups':
