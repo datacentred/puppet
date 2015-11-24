@@ -7,4 +7,3 @@ apache::mod::passenger::passenger_pool_idle_time: '0'
 apache::mod::passenger::passenger_high_performance: 'on'
 apache::mod::status::allow_from: 
     - '127.0.0.1'
-apache::mod::status::status_path: '/mod_status' 
