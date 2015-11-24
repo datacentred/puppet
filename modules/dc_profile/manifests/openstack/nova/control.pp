@@ -1,5 +1,5 @@
 # Class: dc_profile::openstack::nova::control
-# 
+#
 # OpenStack Nova control components profile class
 #
 # Parameters:
@@ -23,6 +23,8 @@ class dc_profile::openstack::nova::control {
   include ::nova::scheduler::filter
   include ::nova::vncproxy
   include ::dc_icinga::hostgroup_nova_server
+  include ::apache::mod::status
+  include ::dc_collectd::agent::apache
 
   nova_config { 'DEFAULT/default_floating_pool':
     value => 'external',

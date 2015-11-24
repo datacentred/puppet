@@ -10,3 +10,6 @@ collectd::plugin::write_graphite::escapecharacter: '.'
 collectd::plugin::write_graphite::storerates: false
 collectd::plugin::write_graphite::separateinstances: true
 collectd::plugin::write_graphite::protocol: 'tcp'
+collectd::plugin::apache::instances:
+  localhost:
+    url: 'http://localhost/server_status?auto'
