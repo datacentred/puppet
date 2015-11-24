@@ -746,4 +746,12 @@ class dc_icinga::server::nagios_services {
     check_command       => 'check_nrpe_1arg!check_ovswitch_server_proc',
     service_description => 'OpenvSwitch DB Server Check',
   }
+
+  icinga::service { 'check_haproxy':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_haproxy',
+    check_command       => 'check_haproxy_dc',
+    service_description => 'HAProxy Status',
+  }
+
 }
