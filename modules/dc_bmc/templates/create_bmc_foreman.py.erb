@@ -10,8 +10,6 @@ import subprocess
 import os
 
 fqdn = '<%= @fqdn %>'
-hostname = fqdn.split('.')[0]
-domainname = fqdn.split('.',1)[1]
 cacert = '/var/lib/puppet/ssl/certs/ca.pem'
 certs= ('/var/lib/puppet/ssl/certs/%s.pem' % fqdn, '/var/lib/puppet/ssl/private_keys/%s.pem' % fqdn)
 bmc_subnet = '<%= scope.lookupvar('dc_bmc::bmc_subnet') %>'
@@ -72,6 +70,7 @@ def get_host_id(fqdn):
 
 # Create BMC interface in Foreman
 def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
+    hostname = fqdn.split('.')[0]
     url = foreman_int_api
     payload = {'interface': {'identifier': 'ipmi', 'type': 'bmc', 'name': hostname + '-bmc', 'ip': ip, 'mac': mac, 'username': username, 'password': password, 'provider': 'IPMI', 'domain_id': domain_id, 'subnet_id': subnet_id }} 
     try:
@@ -83,6 +82,7 @@ def add_bmc_int(ip, mac, username, password, domain_id, subnet_id):
         print "Unexpected return code creating interface - code returned was %s" % r.status_code
         print r.text
         sys.exit(1)
+
 
 # Check if an interface exists in Foreman, return it if it does
 def check_bmc_int(fqdn):
@@ -101,7 +101,19 @@ def check_bmc_int(fqdn):
     else:
         print "Unexpected return code %s" % r.status_code
         sys.exit(1)
-	
+
+# Delete an interface
+def delete_int(host_id, interface_id):
+    url = foreman_api_baseurl + 'hosts/' + host_id + '/interfaces/'+ interface_id'
+    try:
+        r = requests.get(url, verify=cacert, headers=headers, cert=certs)
+    except requests.exceptions.RequestException as e :
+        print "Error - got %s" % e
+        sys.exit(1)
+    if r.status_code != 200:
+        print "Unexpected return code %s" % r.status_code
+        sys.exit(1)
+
 # Find domain which a subnet belongs to
 def find_domain(subnet_id):
     url = foreman_api_baseurl + 'domains'
@@ -162,10 +174,11 @@ def find_subnet_info(subnet):
 
 ############################################
 # Check in Foreman if the interface is already defined
+# if it is then delete it
 interface = check_bmc_int(fqdn)
 if interface:
-    print "Interface is already defined"
-    sys.exit(0)
+    host_id = get_host_id(fqdn)
+    delete_int(host_id,interface['id'])
 # Get the variables we need to start configuring things
 dhcp_proxy,dns_proxy,domain,subnet_id = find_subnet_info(bmc_subnet)
 domain_id = domain[0]
