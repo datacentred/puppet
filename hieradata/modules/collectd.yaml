@@ -5,10 +5,5 @@ collectd::purge_config: true
 collectd::recurse: true
 collectd::plugin::syslog::log_level: 'error'
 collectd::plugin::disk::ignoreselected: true
-collectd::plugin::write_graphite::graphiteprefix: ''
-collectd::plugin::write_graphite::escapecharacter: '.'
-collectd::plugin::write_graphite::storerates: false
-collectd::plugin::write_graphite::separateinstances: true
-collectd::plugin::write_graphite::protocol: 'tcp'
 collectd::plugin::protocols::values:
     - '/^TCPExt:.*/'
