@@ -6,6 +6,7 @@ class dc_collectd::agent::mysql (
   $username,
   $password,
   $hostname,
+  $databases,
 ) {
 
   include stdlib
@@ -21,14 +22,16 @@ class dc_collectd::agent::mysql (
     ensure     => present,
     user       => "${username}@${hostname}",
     table      => '*.*',
-    privileges => [ 'USAGE', 'REPLICATION CLIENT', 'SHOW DATABASES' ],
+    privileges => [ 'REPLICATION CLIENT', 'SHOW DATABASES' ],
   }
 
-  # Generate the collectd config
-  collectd::plugin::mysql::database { $::hostname:
+  Collectd::Plugin::Mysql::Database {
     host     => $hostname,
     username => $username,
     password => $password,
   }
+
+  # Generate the collectd config
+  create_resources(collectd::plugin::mysql::database, $databases)
 
 }
