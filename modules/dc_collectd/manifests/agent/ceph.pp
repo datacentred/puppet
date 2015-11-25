@@ -5,13 +5,6 @@ class dc_collectd::agent::ceph(
   $ceph_test_pool,
 ) {
 
-  file { '/usr/lib/collectd/ceph' :
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    require => Package['collectd'],
-  }
-
   class { 'collectd::plugin::python':
     modulepaths => ['/usr/lib/collectd/ceph'],
     modules     => {

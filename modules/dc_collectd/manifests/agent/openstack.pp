@@ -11,12 +11,6 @@ class dc_collectd::agent::openstack(
 
   ensure_packages(['python-novaclient', 'python-glanceclient', 'python-cinderclient', 'python-keystoneclient', 'python-neutronclient'])
 
-  file { '/usr/lib/collectd/openstack' :
-    ensure  => directory,
-    path    => '/usr/lib/collectd/openstack',
-    require => Package['collectd'],
-  }
-
   class { 'collectd::plugin::python':
     modulepaths => ['/usr/lib/collectd/openstack'],
     modules     => {
