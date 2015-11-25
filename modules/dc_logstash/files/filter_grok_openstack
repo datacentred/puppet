@@ -65,4 +65,7 @@ filter {
             add_field => { "received_at" => "%{@timestamp}" }
         }
     }
+    date {
+       match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS" ]
+    }
 }
