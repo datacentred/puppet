@@ -28,7 +28,7 @@ class dc_dhcp::primary::config {
 
   # Work around bug in dhcp server which doesn't rotate leases file
   cron { 'dhcp_restart':
-    command => '/usr/sbin/service isc-dhcp-server restart',
+    command => '/sbin/restart isc-dhcp-server',
     user    => 'root',
     hour    => 6,
     minute  => 0,
