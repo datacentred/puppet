@@ -12,7 +12,7 @@ class dc_collectd::agent::ceph(
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_pool_plugin.py',
         'config'        => {
           'Verbose'  => true,
-          'Cluster'  => $ceph_cluster_name,
+          'Cluster'  => "\"${ceph_cluster_name}\"",
           'Interval' => 60,
           'TestPool' => $ceph_test_pool,
         },
@@ -21,7 +21,7 @@ class dc_collectd::agent::ceph(
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_osd_plugin.py',
         'config'        => {
           'Verbose'  => true,
-          'Cluster'  => $ceph_cluster_name,
+          'Cluster'  => "\"${ceph_cluster_name}\"",
           'Interval' => 60,
           'TestPool' => $ceph_test_pool,
         },
@@ -30,7 +30,7 @@ class dc_collectd::agent::ceph(
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_pg_plugin.py',
         'config'        => {
           'Verbose'  => true,
-          'Cluster'  => $ceph_cluster_name,
+          'Cluster'  => "\"${ceph_cluster_name}\"",
           'Interval' => 60,
           'TestPool' => $ceph_test_pool,
         },
@@ -39,7 +39,7 @@ class dc_collectd::agent::ceph(
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_latency_plugin.py',
         'config'        => {
           'Verbose'  => true,
-          'Cluster'  => $ceph_cluster_name,
+          'Cluster'  => "\"${ceph_cluster_name}\"",
           'Interval' => 60,
           'TestPool' => $ceph_test_pool,
         },
@@ -48,7 +48,7 @@ class dc_collectd::agent::ceph(
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_monitor_plugin.py',
         'config'        => {
           'Verbose'  => true,
-          'Cluster'  => $ceph_cluster_name,
+          'Cluster'  => "\"${ceph_cluster_name}\"",
           'Interval' => 60,
           'TestPool' => $ceph_test_pool,
         },
@@ -57,7 +57,7 @@ class dc_collectd::agent::ceph(
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_iops_plugin.py',
         'config'        => {
           'Verbose'  => true,
-          'Cluster'  => $ceph_cluster_name,
+          'Cluster'  => "\"${ceph_cluster_name}\"",
           'Interval' => 60,
           'TestPool' => $ceph_test_pool,
         },
