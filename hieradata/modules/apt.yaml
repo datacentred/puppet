@@ -1,4 +1,4 @@
 ---
 apt::purge:
-  - 'sources.list'
-  - 'sources.list.d'
+  sources.list: true
+  sources.list.d: true
