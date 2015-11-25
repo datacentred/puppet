@@ -9,79 +9,49 @@ class dc_collectd::agent::openstack(
   $openstack_authURL,
 ) {
 
-  ensure_packages([python-novaclient, python-glanceclient, python-cinderclient, python-keystoneclient, python-neutronclient])
+  ensure_packages(['python-novaclient', 'python-glanceclient', 'python-cinderclient', 'python-keystoneclient', 'python-neutronclient'])
 
   file { '/usr/lib/collectd/openstack' :
     ensure  => directory,
     path    => '/usr/lib/collectd/openstack',
     require => Package['collectd'],
-    source  => 'puppet:///modules/dc_collectd/openstack',
-    recurse => true,
   }
 
-  collectd::plugin::python { 'keystone':
-    modulepath    => '/usr/lib/collectd/openstack',
+  Collectd::Plugin::Python::Module {
+    modulepath => '/usr/lib/collectd/openstack',
+    require    => File['/usr/lib/collectd/openstack'],
+    config        => {
+      'Username'   => $openstack_username,
+      'Password'   => $openstack_password,
+      'TenantName' => $openstack_tenant,
+      'AuthURL'    => $openstack_authURL,
+      'Verbose'    => true,
+    },
+  }
+
+  collectd::plugin::python::module { 'keystone':
     module        => 'keystone_plugin',
     script_source => 'puppet:///modules/dc_collectd/openstack/keystone_plugin.py',
-    config        => {
-      'Username'   => $openstack_username,
-      'Password'   => $openstack_password,
-      'TenantName' => $openstack_tenant,
-      'AuthURL'    => $openstack_authURL,
-      'Verbose'    => true,
-    },
   }
 
-  collectd::plugin::python { 'cinder':
-    modulepath    => '/usr/lib/collectd/openstack',
+  collectd::plugin::python::module { 'cinder':
     module        => 'cinder_plugin',
     script_source => 'puppet:///modules/dc_collectd/openstack/cinder_plugin.py',
-    config        => {
-      'Username'   => $openstack_username,
-      'Password'   => $openstack_password,
-      'TenantName' => $openstack_tenant,
-      'AuthURL'    => $openstack_authURL,
-      'Verbose'    => true,
-    },
   }
 
-    collectd::plugin::python { 'glance':
-    modulepath    => '/usr/lib/collectd/openstack',
+  collectd::plugin::python::module { 'glance':
     module        => 'glance_plugin',
     script_source => 'puppet:///modules/dc_collectd/openstack/glance_plugin.py',
-    config        => {
-      'Username'   => $openstack_username,
-      'Password'   => $openstack_password,
-      'TenantName' => $openstack_tenant,
-      'AuthURL'    => $openstack_authURL,
-      'Verbose'    => true,
-    },
   }
 
-    collectd::plugin::python { 'neutron':
-    modulepath    => '/usr/lib/collectd/openstack',
+  collectd::plugin::python::module { 'neutron':
     module        => 'neutron_plugin',
     script_source => 'puppet:///modules/dc_collectd/openstack/neutron_plugin.py',
-    config        => {
-      'Username'   => $openstack_username,
-      'Password'   => $openstack_password,
-      'TenantName' => $openstack_tenant,
-      'AuthURL'    => $openstack_authURL,
-      'Verbose'    => true,
-    },
   }
 
-    collectd::plugin::python { 'nova':
-    modulepath    => '/usr/lib/collectd/openstack',
+  collectd::plugin::python::module { 'nova':
     module        => 'nova_plugin',
     script_source => 'puppet:///modules/dc_collectd/openstack/nova_plugin.py',
-    config        => {
-      'Username'   => $openstack_username,
-      'Password'   => $openstack_password,
-      'TenantName' => $openstack_tenant,
-      'AuthURL'    => $openstack_authURL,
-      'Verbose'    => true,
-    },
   }
 
 }
