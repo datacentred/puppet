@@ -56,7 +56,7 @@ filter {
             add_field => { "received_at" => "%{@timestamp}" }
         }
         date {
-            match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS" ]
+            match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS", "ISO8601" ]
         }
     } else if "keystonefmt" in [tags] {
         grok {
@@ -67,7 +67,7 @@ filter {
             add_field => { "received_at" => "%{@timestamp}" }
         }
         date {
-            match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS" ]
+            match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS", "ISO8601" ]
         }
     }
 }
