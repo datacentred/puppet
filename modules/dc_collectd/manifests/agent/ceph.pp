@@ -10,80 +10,47 @@ class dc_collectd::agent::ceph(
     owner   => 'root',
     group   => 'root',
     require => Package['collectd'],
-    source  => 'puppet:///modules/dc_collectd/ceph',
-    recurse => true,
   }
 
-  collectd::plugin::python { 'ceph_pool':
-    modulepath    => '/usr/lib/collectd/ceph',
+  Collectd::Plugin::Python::Module {
+    modulepath => '/usr/lib/collectd/ceph',
+    require    => File['/usr/lib/collectd/ceph'],
+    config        => {
+      'Verbose'  => true,
+      'Cluster'  => $ceph_cluster_name,
+      'Interval' => 60,
+      'TestPool' => $ceph_test_pool,
+    },
+  }
+
+  collectd::plugin::python::module { 'ceph_pool':
     module        => 'ceph_pool_plugin',
     script_source => 'puppet:///modules/dc_collectd/ceph/ceph_pool_plugin.py',
-    config        => {
-      'Verbose'  => true,
-      'Cluster'  => $ceph_cluster_name,
-      'Interval' => 60,
-      'TestPool' => $ceph_test_pool,
-    },
   }
 
-  collectd::plugin::python { 'ceph_osd':
-    modulepath    => '/usr/lib/collectd/ceph',
+  collectd::plugin::python::module { 'ceph_osd':
     module        => 'ceph_osd_plugin',
     script_source => 'puppet:///modules/dc_collectd/ceph/ceph_osd_plugin.py',
-    config        => {
-      'Verbose'  => true,
-      'Cluster'  => $ceph_cluster_name,
-      'Interval' => 60,
-      'TestPool' => $ceph_test_pool,
-    },
   }
 
-  collectd::plugin::python { 'ceph_monitor':
-    modulepath    => '/usr/lib/collectd/ceph',
+  collectd::plugin::python::module { 'ceph_monitor':
     module        => 'ceph_monitor_plugin',
     script_source => 'puppet:///modules/dc_collectd/ceph/ceph_monitor_plugin.py',
-    config        => {
-      'Verbose'  => true,
-      'Cluster'  => $ceph_cluster_name,
-      'Interval' => 60,
-      'TestPool' => $ceph_test_pool,
-    },
   }
 
-  collectd::plugin::python { 'ceph_pg':
-    modulepath    => '/usr/lib/collectd/ceph',
+  collectd::plugin::python::module { 'ceph_pg':
     module        => 'ceph_pg_plugin',
     script_source => 'puppet:///modules/dc_collectd/ceph/ceph_pg_plugin.py',
-    config        => {
-      'Verbose'  => true,
-      'Cluster'  => $ceph_cluster_name,
-      'Interval' => 60,
-      'TestPool' => $ceph_test_pool,
-    },
   }
 
-  collectd::plugin::python { 'ceph_latency':
-    modulepath    => '/usr/lib/collectd/ceph',
+  collectd::plugin::python::module { 'ceph_latency':
     module        => 'ceph_latency_plugin',
     script_source => 'puppet:///modules/dc_collectd/ceph/ceph_latency_plugin.py',
-    config        => {
-      'Verbose'  => true,
-      'Cluster'  => $ceph_cluster_name,
-      'Interval' => 60,
-      'TestPool' => $ceph_test_pool,
-    },
   }
 
-  collectd::plugin::python { 'ceph_iops':
-    modulepath    => '/usr/lib/collectd/ceph',
+  collectd::plugin::python::module { 'ceph_iops':
     module        => 'ceph_iops_plugin',
     script_source => 'puppet:///modules/dc_collectd/ceph/ceph_iops_plugin.py',
-    config        => {
-      'Verbose'  => true,
-      'Cluster'  => $ceph_cluster_name,
-      'Interval' => 60,
-      'TestPool' => $ceph_test_pool,
-    },
   }
 
 }
