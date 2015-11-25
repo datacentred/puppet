@@ -1,3 +1,4 @@
 ---
-apt::purge_sources_list: true
-apt::purge_sources_list_d: true
+apt::purge:
+  - 'sources.list'
+  - 'sources.list.d'
