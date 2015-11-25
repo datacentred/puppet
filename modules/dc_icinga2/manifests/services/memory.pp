@@ -8,7 +8,7 @@ class dc_icinga2::services::memory {
     import        => 'generic-service',
     check_command => 'memory',
     zone          => 'host.name',
-    assign_where  => 'host.name',
+    assign_where  => true,
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 

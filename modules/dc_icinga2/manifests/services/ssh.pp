@@ -8,7 +8,7 @@ class dc_icinga2::services::ssh {
     import        => 'generic-service',
     check_command => 'ssh',
     zone          => 'host.name',
-    assign_where  => 'host.name',
+    assign_where  => true,
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
