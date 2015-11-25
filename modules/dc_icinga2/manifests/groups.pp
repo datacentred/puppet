@@ -8,7 +8,7 @@ class dc_icinga2::groups {
 
   icinga2::object::hostgroup { 'linux-servers':
     display_name => 'Linux Servers',
-    assign_where => 'host.vars.os == "Linux"',
+    assign_where => 'host.vars.kernel == "Linux"',
     target       => '/etc/icinga2/zones.d/global-templates/groups.conf',
   }
 

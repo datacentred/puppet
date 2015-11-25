@@ -16,7 +16,8 @@ class dc_icinga2::host (
     'architecture'     => $::architecture,
     'lsbdistcodename'  => $::lsbdistcodename,
     'operatingsystem'  => $::operatingsystem,
-    'os'               => $::kernel,
+    'kernel'           => $::kernel,
+    'productname'      => $::productname,
     'role'             => $::role,
     'enable_pagerduty' => true,
   }
