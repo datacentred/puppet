@@ -9,7 +9,7 @@ apt::sources:
       source: 'https://git.ceph.com/release.asc'
   cloudarchive_mirror:
     location: "http://%{hiera('cloudarchive_mirror_path')}"
-    release: 'trusty-updates/juno'
+    release: 'trusty-updates/kilo'
     repos: 'main'
     key:
       id: '391A9AA2147192839E9DB0315EDB1B62EC4926EA'
