@@ -11,7 +11,7 @@ class dc_icinga2::services::disk {
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
-    assign_where  => 'host.name',
+    assign_where  => true,
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
