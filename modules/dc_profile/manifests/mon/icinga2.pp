@@ -5,5 +5,9 @@
 class dc_profile::mon::icinga2 {
 
   include ::dc_icinga2
+  include ::dc_icinga2_plugins
+
+  Class['::dc_icinga2_plugins'] ->
+  Class['::dc_icinga2']
 
 }
