@@ -8,7 +8,6 @@ dc_collectd::agent::mysql::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCA
 dc_collectd::agent::rabbitmq::rabbitmq_monuser: "%{hiera('rabbitmq_monuser')}"
 dc_collectd::agent::rabbitmq::rabbitmq_monuser_password: "%{hiera('rabbitmq_monuser_password')}"
 dc_collectd::agent::mysql::username: 'collectd'
-dc_collectd::agent::mysql::password: 'collectd'
 dc_collectd::agent::mysql::hostname: 'localhost'
 dc_collectd::agent::haproxy::verbose: 'false'
 dc_collectd::agent::haproxy::socket: '/var/lib/haproxy/stats'
