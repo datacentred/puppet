@@ -3,14 +3,14 @@ classes:
   - '::dc_collectd::agent::mysql'
 dc_collectd::agent::mysql::databases:
     cinder:
-        masterstats: 'true'
+        masterstats: true
     glance:             
-        masterstats: 'true'
+        masterstats: true
     heat :              
-        masterstats: 'true'
+        masterstats: true
     keystone:           
-        masterstats: 'true'
+        masterstats: true
     neutron:            
-        masterstats: 'true'
+        masterstats: true
     nova:               
-        masterstats: 'true'
+        masterstats: true
