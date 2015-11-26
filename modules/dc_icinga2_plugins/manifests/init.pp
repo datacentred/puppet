@@ -5,9 +5,10 @@
 class dc_icinga2_plugins {
 
   File {
-    owner => 'root',
-    group => 'root',
-    mode  => '0755',
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
   }
 
   file { [
@@ -18,12 +19,26 @@ class dc_icinga2_plugins {
   }
 
   file { '/usr/local/lib/nagios/plugins/check_bmc':
-    ensure => file,
     source => 'puppet:///modules/dc_icinga2_plugins/check_bmc',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_ceph_health':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_health',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_ceph_mon':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_mon',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_ceph_osd':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_osd',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_ceph_rgw':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_rgw',
+  }
+
   file { '/usr/local/lib/nagios/plugins/check_psu':
-    ensure => file,
     source => 'puppet:///modules/dc_icinga2_plugins/check_psu',
   }
 
