@@ -99,7 +99,6 @@ class dc_graphite (
     include ::mysql::server
     include ::mysql::server::monitor
     include ::mysql::server::backup
-    include ::dc_collectd::agent::mysql
 
     mysql::db { 'graphite':
       user     => $graphite_db_user,
