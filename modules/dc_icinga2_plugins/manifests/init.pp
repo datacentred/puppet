@@ -22,4 +22,9 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_bmc',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_psu':
+    ensure => file,
+    source => 'puppet:///modules/dc_icinga2_plugins/check_psu',
+  }
+
 }

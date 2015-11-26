@@ -26,4 +26,12 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'psu':
+    command   => '"/usr/local/lib/nagios/plugins/check_psu"',
+    arguments => {
+      '-a' => '$psu_a_raw$',
+      '-b' => '$psu_b_raw$',
+    },
+  }
+
 }
