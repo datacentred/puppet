@@ -83,3 +83,8 @@ sysctls::values:
         value: '262144'
     vm.swappiness:
         value: '10'
+
+dc_nrpe::checks::neutron_routers::username: "%{hiera('keystone_icinga_user')}"
+dc_nrpe::checks::neutron_routers::password: "%{hiera('keystone_icinga_password')}"
+dc_nrpe::checks::neutron_routers::tenant_name: "%{hiera('keystone_icinga_tenant')}" 
+dc_nrpe::checks::neutron_routers::auth_url: "https://%{hiera('os_api_host')}:35357/v2.0/" 
