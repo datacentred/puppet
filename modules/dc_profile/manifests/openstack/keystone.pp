@@ -14,15 +14,10 @@ class dc_profile::openstack::keystone {
 
   include ::keystone
   include ::keystone::roles::admin
+  include ::keystone::wsgi::apache
   include ::dc_icinga::hostgroup_keystone
 
   include ::sysctls
-
-  # Data defined in the openstack_keystone role
-  create_resources(keystone_tenant, hiera(keystone_tenants))
-  create_resources(keystone_user, hiera(keystone_users))
-  create_resources(keystone_service, hiera(keystone_services))
-  create_resources(keystone_endpoint, hiera(keystone_endpoints))
 
   # Ensure that the various PKI-related certificates and keys
   # are the same across all nodes running Keystone

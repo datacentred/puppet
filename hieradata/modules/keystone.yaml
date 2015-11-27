@@ -69,9 +69,9 @@ keystone::memcache_servers:
  - osdbmq2.%{::domain}
 keystone::public_endpoint: "https://%{hiera('os_api_host')}:5000"
 keystone::admin_endpoint: "https://%{hiera('os_api_host')}:35357"
+keystone::service_name: 'httpd'
 keystone::roles::admin::email: "%{hiera('internal_sysmail_address')}"
 keystone::roles::admin::password: "%{hiera('keystone_admin_pw')}"
 keystone::roles::admin::service_tenant: "%{hiera('os_service_tenant')}"
 keystone::wsgi::apache::ssl: false
-keystone::wsgi::apache::workers: 4
 keystone::wsgi::apache::servername: "%{::fqdn}"
