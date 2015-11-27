@@ -4,3 +4,4 @@ dc_foreman::memcache::memcache_servers:
 dc_foreman::memcache::memcache_namespace: 'foreman'
 dc_foreman::memcache::memcache_compress: true
 dc_foreman::memcache::memcache_expiry: '86400'
+dc_foreman::update_bmc::bmc_subnet: '10.30.128.0'

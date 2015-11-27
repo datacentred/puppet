@@ -65,7 +65,6 @@ class Foreman(object):
             warnings.filterwarnings("ignore",
                                     message=".*InsecureRequestWarning.*")
 
-
     def get_from_api(self, api_url):
         """
         Get stuff from Foreman
@@ -88,7 +87,44 @@ class Foreman(object):
             print req.text
             sys.exit(1)
 
-   # Check Foreman API endpoint
+    def put_to_api(self, api_url, payload):
+        """
+        Update stuff in Foreman
+        """
+        url = self.foreman_api_baseurl + api_url
+        try:
+            req = requests.put(url, verify=self.cacert,
+                               data=json.dumps(payload),
+                               headers=self.headers, cert=self.certs)
+        except requests.exceptions.RequestException as err:
+            print "Error - got %s" % err
+            sys.exit(1)
+        if req.status_code == 200:
+            return
+        else:
+            print "Unexpected return code %s" % req.status_code
+            print req.text
+            sys.exit(1)
+
+    def post_to_api(self, api_url, payload):
+        """
+        Create stuff in Foreman
+        """
+        url = self.foreman_api_baseurl + api_url
+        try:
+            req = requests.post(url, verify=self.cacert,
+                                data=json.dumps(payload),
+                                headers=self.headers, cert=self.certs)
+        except requests.exceptions.RequestException as err:
+            print "Error - got %s" % err
+            sys.exit(1)
+        if req.status_code == 200:
+            return
+        else:
+            print "Unexpected return code %s" % req.status_code
+            print req.text
+            sys.exit(1)
+
     def check_api_endpoint(self):
         """
         Check the Foreman API endpoint is working
@@ -140,6 +176,13 @@ class Foreman(object):
                     })
         return ints
 
+    def get_host_id(self, fqdn):
+        """
+        Get host id
+        """
+        host = self.get_from_api('hosts/' + fqdn)
+        return host['id']
+
     def get_subnet_proxies(self, subnet_id):
         """
         Return subnet proxies URL given a subnet_id
@@ -149,6 +192,29 @@ class Foreman(object):
         dns_proxy = subnet_info['dns']['url']
         tftp_proxy = subnet_info['tftp']['url']
         return dhcp_proxy, dns_proxy, tftp_proxy
+
+    def find_domain(self, subnet_id):
+        """
+        Find which domain a subnet belongs to
+        """
+        for domain in  self.get_from_api('domains'):
+            for subnet in self.get_from_api('domains' + '/'
+                                            + str(domain['id']))['subnets']:
+                if subnet['id'] == subnet_id:
+                    return domain['id'], domain['name']
+                else:
+                    continue
+        print "Could not find domain for subnet_id %s" % subnet_id
+        sys.exit(1)
+
+    def find_subnet_info(self, subnet):
+        """
+        Return network info and domain for a subnet
+        """
+        subnet_info = [network for network in self.get_from_api('subnets')
+                       if network['network'] == subnet][0]
+        domain = self.find_domain(subnet_info['id'])
+        return subnet_info, domain
 
     def get_all_subnet_proxies(self):
         """

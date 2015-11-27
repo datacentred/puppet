@@ -10,7 +10,7 @@ dc_dhcp::pools:
   ark-platform-services:
     range:       '10.10.192.16 10.10.192.100'
   ark-bmc:
-    range:       '10.10.128.16 10.10.128.100'
+    range:       '10.10.128.16 10.10.128.200'
   ark-hw-onboarding:
     range:       '10.10.130.16 10.10.130.100'
 dc_foreman::service_checks::proxy_alias: 'ark.datacentred.services'
