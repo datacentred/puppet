@@ -5,8 +5,8 @@
 class dc_icinga2 (
   $role = undef,
   $pagerduty_deps = $::dc_icinga2::params::pagerduty_deps,
-  $user = $::dc_icinga2::user,
-) {
+  $user = $::dc_icinga2::params::user,
+) inherits dc_icinga2::params {
 
   case $role {
     'master': {
