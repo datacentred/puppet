@@ -97,6 +97,11 @@ class dc_icinga2::groups {
     assign_where => 'match("procs", service.name)',
   }
 
+  icinga2::object::servicegroup { 'psu':
+    display_name => 'PSU Checks',
+    assign_where => 'match("psu*", service.name)',
+  }
+
   icinga2::object::servicegroup { 'puppetdb':
     display_name => 'PuppetDB Checks',
     assign_where => 'match("puppetdb", service.name)',

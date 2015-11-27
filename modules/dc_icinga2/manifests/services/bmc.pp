@@ -20,7 +20,7 @@ class dc_icinga2::services::bmc (
   }
 
   icinga2::object::apply_service { 'bmc R220':
-    import        => 'generic_service',
+    import        => 'generic-service',
     check_command => 'bmc',
     vars          => {
       'bmc_host'     => 'host.vars.address_bmc',
@@ -33,7 +33,7 @@ class dc_icinga2::services::bmc (
   }
 
   icinga2::object::apply_service { 'bmc R420':
-    import        => 'generic_service',
+    import        => 'generic-service',
     check_command => 'bmc',
     vars          => {
       'bmc_host'     => 'host.vars.address_bmc',
@@ -46,7 +46,7 @@ class dc_icinga2::services::bmc (
   }
 
   icinga2::object::apply_service { 'bmc BL460c G1':
-    import        => 'generic_service',
+    import        => 'generic-service',
     check_command => 'bmc',
     vars          => {
       'bmc_host'     => 'host.vars.address_bmc',
@@ -59,7 +59,7 @@ class dc_icinga2::services::bmc (
   }
 
   icinga2::object::apply_service { 'bmc BL465c G1':
-    import        => 'generic_service',
+    import        => 'generic-service',
     check_command => 'bmc',
     vars          => {
       'bmc_host'     => 'host.vars.address_bmc',
@@ -72,7 +72,7 @@ class dc_icinga2::services::bmc (
   }
 
   icinga2::object::apply_service { 'bmc X8DTT-H':
-    import        => 'generic_service',
+    import        => 'generic-service',
     check_command => 'bmc',
     vars          => {
       'bmc_host'     => 'host.vars.address_bmc',
@@ -85,7 +85,7 @@ class dc_icinga2::services::bmc (
   }
 
   icinga2::object::apply_service { 'bmc X9DRT':
-    import        => 'generic_service',
+    import        => 'generic-service',
     check_command => 'bmc',
     vars          => {
       'bmc_host'     => 'host.vars.address_bmc',

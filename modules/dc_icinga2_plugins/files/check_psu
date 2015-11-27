@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+"""
+Checks the PSU state on supermicro hardware
+"""
+
+import argparse
+import re
+import subprocess
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def exec_raw(raw):
+    """Execute a raw ipmitool command and return the output"""
+
+    command = [
+        'ipmitool',
+        'raw',
+    ]
+    command.extend(raw.split())
+
+    process = subprocess.Popen(command, stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+
+    if process.returncode != 0:
+        if re.search(r'Unable to send RAW command', stderr):
+            print 'OK: PSU check on sled in slot A'
+            sys.exit(NAGIOS_OK)
+        else:
+            print 'UNKNOWN: Unable to execute raw command'
+            sys.exit(NAGIOS_UNKNOWN)
+
+    return stdout.split('\n')[0]
+
+def main():
+    """Check the PSU state using an ipmitool raw command"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-a', '--powera', required=True)
+    parser.add_argument('-b', '--powerb', required=True)
+    args = parser.parse_args()
+
+    powera = exec_raw(args.powera)
+    powerb = exec_raw(args.powerb)
+
+    if powera == ' 01' and powerb == ' 01':
+        print 'OK: Power supply status OK'
+        sys.exit(NAGIOS_OK)
+    if powera != ' 01':
+        print 'CRITICAL: Power supply A failure'
+        sys.exit(NAGIOS_CRITICAL)
+    print 'CRITICAL: Power supply B failure'
+    sys.exit(NAGIOS_CRITICAL)
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
