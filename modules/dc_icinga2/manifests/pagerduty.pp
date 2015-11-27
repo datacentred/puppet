@@ -6,7 +6,7 @@ class dc_icinga2::pagerduty (
   $pager,
 ) {
 
-  ensure_packages($::icinga2::pagerduty_deps)
+  ensure_packages($::dc_icinga2::pagerduty_deps)
 
   file { '/usr/local/bin/pagerduty_icinga.pl':
     ensure => file,
