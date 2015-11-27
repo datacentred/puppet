@@ -4,6 +4,8 @@
 #
 class dc_icinga2 (
   $role = undef,
+  $pagerduty_deps = $::dc_icinga2::params::pagerduty_deps,
+  $user = $::dc_icinga2::user,
 ) {
 
   case $role {

@@ -24,6 +24,8 @@ class dc_icinga2::satellite (
   include ::icinga2::features::mainlog
 
   include ::dc_icinga2::host
+  include ::dc_icinga2::pagerduty
+  include ::dc_icinga2::sudoers
 
   # Define the endpoint and zone of the parent
   icinga2::object::endpoint { $parent_fqdn:

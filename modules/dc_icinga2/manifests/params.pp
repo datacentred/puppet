@@ -10,12 +10,14 @@ class dc_icinga2::params {
         'libsys-syslog-perl',
         'libwww-perl',
       ]
+      $user = 'nagios'
     }
     'RedHat': {
       $pagerduty_deps = [
         'perl-Sys-Syslog',
         'perl-libwww-perl',
       ]
+      $user = 'icinga'
     }
     default: {
       $pagerduty_deps = []
