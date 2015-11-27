@@ -23,11 +23,6 @@ class dc_profile::openstack::neutron::agent_network {
     gro => 'disabled',
   }
 
-  # Set default domain
-  neutron_dhcp_agent_config {
-    'DEFAULT/dhcp_domain': value => 'datacentred.io';
-  }
-
   # FIXME: Address shortcomings in the puppet-neutron module that
   # don't allow this to be configured by just including ::neutron::agents::l3
   neutron_l3_agent_config {
@@ -51,12 +46,6 @@ class dc_profile::openstack::neutron::agent_network {
             "set iface[. = '${uplink_if}']/up 'ip link set dev ${uplink_if} up'",
             "set iface[. = '${uplink_if}']/down 'ip link set dev ${uplink_if} down'",
         ],
-      }
-      # Neutron module barfs if this doesn't exist.
-      # It's usually created by the neutron-server package, which we
-      # don't install on network nodes
-      file { '/etc/default/neutron-server':
-        ensure => present,
       }
     }
     'RedHat': {

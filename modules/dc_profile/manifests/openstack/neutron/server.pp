@@ -18,9 +18,7 @@ class dc_profile::openstack::neutron::server {
   include ::neutron::quota
   include ::dc_icinga::hostgroup_neutron_server
 
-  neutron_config {
-    'keystone_authtoken/auth_version': value => 'V2.0';
-  }
+  ensure_packages( ['python-neutron-vpnaas', 'python-neutron-lbaas'] )
 
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
