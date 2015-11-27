@@ -24,10 +24,6 @@ class dc_profile::openstack::nova::control {
   include ::nova::vncproxy
   include ::dc_icinga::hostgroup_nova_server
 
-  nova_config { 'DEFAULT/default_floating_pool':
-    value => 'external',
-  }
-
   nova_config { 'DEFAULT/restrict_isolated_hosts_to_isolated_images':
     value => true,
   }
