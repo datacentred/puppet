@@ -7,7 +7,9 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'memory':
-    command   => 'PluginDir + "/check_memory"',
+    command   => [
+      'PluginDir + "/check_memory"',
+    ],
     arguments => {
       '-w' => '$memory_warn_bytes$',
       '-c' => '$memory_critical_bytes$',
@@ -17,7 +19,9 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'bmc':
-    command   => '"/usr/local/lib/nagios/plugins/check_bmc"',
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_bmc"',
+    ],
     arguments => {
       '-H' => '$bmc_host$',
       '-u' => '$bmc_username$',
@@ -27,7 +31,10 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'psu':
-    command   => '"/usr/local/lib/nagios/plugins/check_psu"',
+    command   => [
+      '"sudo"',
+      '"/usr/local/lib/nagios/plugins/check_psu"',
+    ],
     arguments => {
       '-a' => '$psu_a_raw$',
       '-b' => '$psu_b_raw$',
@@ -35,7 +42,9 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'ceph-health':
-    command   => '"/usr/local/lib/nagios/plugins/check_ceph_health"',
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ceph_health"',
+    ],
     arguments => {
       '-e' => '$ceph_health_exe$',
       '-c' => '$ceph_health_conf$',
@@ -52,7 +61,9 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'ceph-mon':
-    command   => '"/usr/local/lib/nagios/plugins/check_ceph_mon"',
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ceph_mon"',
+    ],
     arguments => {
       '-e' => '$ceph_mon_exe$',
       '-c' => '$ceph_mon_conf$',
@@ -65,7 +76,9 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'ceph-osd':
-    command   => '"/usr/local/lib/nagios/plugins/check_ceph_osd"',
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ceph_osd"',
+    ],
     arguments => {
       '-e' => '$ceph_osd_exe$',
       '-c' => '$ceph_osd_conf$',
@@ -79,7 +92,9 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'ceph-rgw':
-    command   => '"/usr/local/lib/nagios/plugins/check_ceph_rgw"',
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ceph_rgw"',
+    ],
     arguments => {
       '-e' => '$ceph_rgw_exe$',
       '-c' => '$ceph_rgw_conf$',
