@@ -72,6 +72,26 @@ class dc_icinga2::groups {
     assign_where => 'match("bmc*", service.name)',
   }
 
+  icinga2::object::servicegroup { 'ceph health':
+    display_name => 'Ceph Health Checks',
+    assign_where => 'service.name == "ceph health"',
+  }
+
+  icinga2::object::servicegroup { 'ceph monitor':
+    display_name => 'Ceph Monitor Checks',
+    assign_where => 'service.name == "ceph monitor"',
+  }
+
+  icinga2::object::servicegroup { 'ceph osd':
+    display_name => 'Ceph OSD Checks',
+    assign_where => 'service.name == "ceph osd"',
+  }
+
+  icinga2::object::servicegroup { 'ceph radosgw':
+    display_name => 'Ceph Rados Gateway Checks',
+    assign_where => 'service.name == "ceph radosgw"',
+  }
+
   icinga2::object::servicegroup { 'disk':
     display_name => 'Disk Checks',
     assign_where => 'match("disk", service.name)',
