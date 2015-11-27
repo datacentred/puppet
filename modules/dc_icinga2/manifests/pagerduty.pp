@@ -4,10 +4,9 @@
 #
 class dc_icinga2::pagerduty (
   $pager,
-  $pagerduty_deps = $::dc_icinga2::params::pagerduty_deps,
-) inherits dc_icinga2::params {
+) {
 
-  ensure_packages($pagerduty_deps)
+  ensure_packages($::icinga2::pagerduty_deps)
 
   file { '/usr/local/bin/pagerduty_icinga.pl':
     ensure => file,

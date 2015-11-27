@@ -26,6 +26,7 @@ class dc_icinga2::master {
   include ::dc_icinga2::templates
   include ::dc_icinga2::timeperiods
   include ::dc_icinga2::users
+  include ::dc_icinga2::sudoers
 
   icinga2::object::endpoint { $::fqdn: }
 
