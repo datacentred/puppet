@@ -19,7 +19,7 @@ class dc_icinga2::agent (
   include ::icinga2::features::mainlog
 
   include ::dc_icinga2::host
-  include ::dc_icinga2::pagerduty
+  include ::dc_icinga2::pagerduty::agent
   include ::dc_icinga2::sudoers
 
   # Define the endpoint and zone of the parent satellite or master
