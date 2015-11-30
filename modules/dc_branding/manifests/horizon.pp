@@ -22,6 +22,7 @@ class dc_branding::horizon {
     mode    => '0644',
     recurse => true,
     purge   => true,
+    force   => true,
     source  => 'puppet:///modules/dc_branding/horizon',
   } ->
 

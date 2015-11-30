@@ -13,10 +13,10 @@
 class dc_profile::openstack::horizon {
 
   include ::horizon
-  include ::dc_branding::openstack::horizon
+  include ::dc_branding::horizon
 
   Class['::horizon'] ->
-  Class['::dc_branding::openstack::horizon']
+  Class['::dc_branding::horizon']
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
