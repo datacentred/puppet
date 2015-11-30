@@ -1,27 +1,22 @@
 ---
 heat::keystone::auth::auth_name: 'heat'
 heat::keystone::auth::password: "%{hiera('keystone_heat_password')}"
-heat::keystone::auth_cfn::password: "%{hiera('keystone_heat_password')}"
 heat::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 heat::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 heat::keystone::auth::region: "%{hiera('os_region')}"
-heat::keystone::auth::public_address: "%{hiera('os_api_host')}"
-heat::keystone::auth::admin_address: "%{hiera('os_api_host')}"
-heat::keystone::auth::internal_address: "%{hiera('os_api_host')}"
-heat::keystone::auth::public_protocol: 'https'
-heat::keystone::auth::internal_protocol: 'https'
-heat::keystone::auth::admin_protocol: 'https'
+heat::keystone::auth::public_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s')"
+heat::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s')"
+heat::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s')"
+
 heat::keystone::auth_cfn::configure_user: false
 heat::keystone::auth_cfn::configure_user_role: false
 heat::keystone::auth_cfn::email: "%{hiera('internal_sysmail_address')}"
 heat::keystone::auth_cfn::tenant: "%{hiera('os_service_tenant')}"
 heat::keystone::auth_cfn::region: "%{hiera('os_region')}"
-heat::keystone::auth_cfn::public_address: "%{hiera('os_api_host')}"
-heat::keystone::auth_cfn::admin_address: "%{hiera('os_api_host')}"
-heat::keystone::auth_cfn::internal_address: "%{hiera('os_api_host')}"
-heat::keystone::auth_cfn::public_protocol: 'https'
-heat::keystone::auth_cfn::internal_protocol: 'https'
-heat::keystone::auth_cfn::admin_protocol: 'https'
+heat::keystone::auth_cfn::password: "%{hiera('keystone_heat_password')}"
+heat::keystone::auth_cfn::public_url: "https://%{hiera('os_api_host')}:8000/v1"
+heat::keystone::auth_cfn::admin_url: "https://%{hiera('os_api_host')}:8000/v1"
+heat::keystone::auth_cfn::internal_url: "https://%{hiera('os_api_host')}:8000/v1"
 
 heat::rabbit_hosts:
  - osdbmq0.%{::domain}
@@ -31,18 +26,22 @@ heat::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
 heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
-heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
-heat::keystone_host: "%{hiera('os_api_host')}"
-heat::keystone_protocol: 'https'
+
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/"
+heat::identity_uri: "https://%{hiera('os_api_host')}:35357/"
+
 heat::keystone_user: 'heat'
 heat::keystone_password: "%{hiera('keystone_heat_password')}"
-heat::keystone_ec2_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+heat::keystone_ec2_uri: "https://%{hiera('os_api_host')}:5000/"
+
 heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
+
 heat::api::enabled: true
 heat::api::api_cfn::enabled: true
+
 heat::engine::enabled: true
 heat::engine::heat_metadata_server_url: "https://%{hiera('os_api_host')}:8000"
 heat::engine::heat_waitcondition_server_url: "https://%{hiera('os_api_host')}:8000/v1/waitcondition"
 heat::engine::heat_watch_server_url: "https://%{hiera('os_api_host')}:8003"
-heat::engine::auth_encryption_key: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAO6wiQVE5JMdUm8Zc5yKva/avHvU3haqAuI8h/LHjtANCqbJdBJf9j34mMuP6b6lOAfFFJ2pXXlW9i+41SPC2trXYPkMOSIq/DNUXjDNnRBcWybhAYi/xJs7slMeeVkK9u2GYVpaNZIkgDdicFuccy0tlmXcdAAPukA23XyYeKBhMWYyrzw4qmRWnQB9M9oCDsheXloudEJcqUpHjFLHTvS2dDIY8SNnHpCHJboyD7GEKdQzeAr2RAM8EMRPTiz4732VQh9LOXDBf6eyw8kubw2AY8tG0HfmEe/aiAmr5iQsQDZn8NhDHtazlQLgdrQWjylBc3Et1ggM8jBfBNvOTpzB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAh+VAx3LEMM3o9sPJhyYksgFDlZbxDeqdMZ/STl29pqnE0iQzvvzi094EYRzdkYm10MmfR8pFXRFLJLPpafGGCj/UzIBXCNU3pDjR3+UojCVyMIaholK1QuvCxAVp8sXeI3Q==]
+heat::engine::auth_encryption_key: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAL1UrPA+kOTYc0Vc0bF40nVBCCzNfDtjg0HkKOcNkhfdYeNu4BgUx7iI7/W1Sl8unzJ2oqV8R3VPtDeR+rZjp2PicbukS4iwr/U6e23lcbUdXXvqAHcES8DCT7hpXO7WfosTYufzQmiVvqeSoSwzDUBGOeSIxSODSYIKLkZuRCv8844J7cxVUVMlmI7bGpVGdhfHIY2kaD/5uwci+VFZxrKqZcY9mPwqwOV/l7o6I1YPvO3KFlF+kmd7t9P5eGq4HGOksU1u9ujV+8ScAdOdYa6NWOAp1YBaCrX+C3/TLt64DfM/d3qAxoCs/PbTmOJKadRo66CBFDrZ+96CLJrXETDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAUjmzGMzRUbGreThM7SUcFgDA9yYasx3OoNOZ8h6KvY2sKeSCMg4f5B35GCOZV05pnZ1c4ExswZp8X42VOt0KmY+c=]
 heat::engine::configure_delegated_roles: false

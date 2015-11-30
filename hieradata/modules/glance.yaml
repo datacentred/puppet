@@ -27,7 +27,7 @@ glance::api::debug: true
 glance::api::verbose: true
 
 glance::registry::auth_type: 'keystone'
-glance::registry::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+glance::registry::auth_uri: "https://%{hiera('os_api_host')}:5000/"
 glance::registry::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 glance::registry::keystone_tenant: 'services'
 glance::registry::keystone_user: 'glance'
