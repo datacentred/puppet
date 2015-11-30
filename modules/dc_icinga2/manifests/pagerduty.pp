@@ -6,15 +6,7 @@ class dc_icinga2::pagerduty (
   $pager,
 ) {
 
-  ensure_packages($::dc_icinga2::pagerduty_deps)
-
-  file { '/usr/local/bin/pagerduty_icinga.pl':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => 'puppet:///modules/dc_icinga2/pagerduty_icinga.pl',
-  }
+  include ::dc_icinga2::pagerduty::agent
 
   icinga2::object::user { 'pagerduty':
     display_name => 'PagerDuty Notification User',
