@@ -747,6 +747,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'OpenvSwitch DB Server Check',
   }
 
+  icinga::service { 'check_neutron_routers':
+    use                 => 'dc_service_nrpe',
+    hostgroup_name      => 'dc_hostgroup_neutron_node',
+    check_command       => 'check_nrpe_1arg!check_neutron_routers',
+    service_description => 'Neutron Duplicate Routers',
+  }
+
   icinga::service { 'check_haproxy':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_haproxy',
