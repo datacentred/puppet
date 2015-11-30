@@ -18,6 +18,14 @@ class dc_profile::openstack::neutron::server {
   include ::neutron::quota
   include ::dc_icinga::hostgroup_neutron_server
 
+  # TODO: Remove post-upgrade
+  file_line { 'neutron_auth_version':
+    ensure => absent,
+    path   => '/etc/neutron/neutron.conf',
+    line   => 'auth_version=V2.0',
+    notify => Service['neutron-server'],
+  }
+
   # Workaround for upstream packaging bugs, such as:
   # https://bugs.launchpad.net/ubuntu/+source/neutron-lbaas/+bug/1460228
   ensure_packages( ['python-neutron-vpnaas', 'python-neutron-lbaas'] )

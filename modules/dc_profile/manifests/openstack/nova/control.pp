@@ -1,5 +1,5 @@
 # Class: dc_profile::openstack::nova::control
-# 
+#
 # OpenStack Nova control components profile class
 #
 # Parameters:
@@ -26,6 +26,14 @@ class dc_profile::openstack::nova::control {
 
   nova_config { 'DEFAULT/restrict_isolated_hosts_to_isolated_images':
     value => true,
+  }
+
+  # TODO: Remove post-upgrade
+  file_line { 'nova_auth_version':
+    ensure => absent,
+    path   => '/etc/nova/nova.conf',
+    line   => 'auth_version=V2.0',
+    notify => Service['nova-api'],
   }
 
   # Add the various services from this node into our loadbalancers

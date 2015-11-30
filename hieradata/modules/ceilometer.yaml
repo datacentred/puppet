@@ -10,7 +10,7 @@ ceilometer::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:8777"
 
 ceilometer::metering_secret: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAaBLVair6QL+4aNmKcb4mD8YL0kpKZVdgr97Jl2BXMyCDn0Wj7TP3FlHlLhrUBSecCDjuBgtfY/d8ChOLmLrlDRJ5uoknZ9OjZryUQcVV/Ckg3yc/GAz9SEYhe23TLKVg7D/zk0Eh2BiueKUo3m+6U6J/MwtvhrAn1T2hfOlwxnDzn8yPY/bEg/zKu/Y6ThVsIjyQYBTdXSF7Xa+o3Cr4hbvQHmMTmsEUijGGcamox26bANoKCtj6aqK9lDac5Dl+qsU+aegrSckKeLauKsVSQkZ0B4CsomkVjqgqmznw/TkB6adUCLiBm62OJT2bI7nSkK8UcuCz9dRjRcPJg9zXwzBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBvZE4BtvzKHip92MI0j51CgCC31fpuQ3iqETG4tl23SbG5xYjIVl7TuNovt5RLOzWbZA==]
 ceilometer::metering_time_to_live: '1209600'
-ceilometer::event_time_ti_live: '1209600'
+ceilometer::event_time_to_live: '1209600'
 ceilometer::alarm_history_time_to_live: '86400'
 
 ceilometer::rabbit_hosts:
@@ -29,7 +29,7 @@ ceilometer::api::keystone_identity_uri: "https://%{hiera('os_api_host')}:35357/"
 ceilometer::api::keystone_user: 'ceilometer'
 ceilometer::api::keystone_password: "%{hiera('keystone_ceilometer_password')}"
 
-ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/v2.0"
+ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/"
 ceilometer::agent::auth::auth_user: 'ceilometer'
 ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::agent::auth::auth_region: "%{hiera('os_region')}"
