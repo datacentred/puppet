@@ -1,0 +1,6 @@
+<% if @use_discovery == true -%>
+:enabled: http
+:foreman_url: https://<%= @foreman_url %>
+<% else %>
+:enabled: false
+<% end -%>

@@ -20,9 +20,11 @@
 :daemon: true
 :daemon_pid: /var/run/foreman-proxy/foreman-proxy.pid
 
+:foreman_url: https://<%= @foreman_url %>    
 # port used by the proxy
-:port: 8443
-    
+:https_port: <%= @proxy_https_port %>
+:http_port: <%= @proxy_http_port %>
+
 # Where our proxy log files are stored
 # filename or STDOUT
 :log_file: /var/log/foreman-proxy/foreman-proxy.log
