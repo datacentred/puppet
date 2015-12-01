@@ -22,13 +22,15 @@ class dc_icinga2::host (
     'enable_pagerduty' => true,
   }
 
+  $_vars_interfaces = icinga2_interfaces()
+
   if $::ipmi_ipaddress {
     $_vars_bmc = {
       'address_bmc' => $::ipmi_ipaddress,
     }
   }
 
-  $_vars = merge($_vars_common, $_vars_bmc)
+  $_vars = merge($_vars_common, $_vars_interfaces, $_vars_bmc)
 
   @@icinga2::object::host { $::fqdn:
     import       => $import,
