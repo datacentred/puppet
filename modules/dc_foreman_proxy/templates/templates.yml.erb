@@ -1,5 +1,6 @@
+---
 <% if @use_templates == true -%>
-:enabled: http
+:enabled: true
 :template_url: http://<%= @fqdn %>:<%= @proxy_http_port %>
 <% else %>
 :enabled: false
