@@ -30,14 +30,6 @@ class dc_bmc (
   $ipmi_user_channel = $dc_bmc::params::ipmi_user_channel,
   $ipmi_admin_user_slot = $dc_bmc::params::ipmi_admin_user_slot,
   $ipmi_smnew_admin_user_slot = $dc_bmc::params::ipmi_smnew_admin_user_slot,
-  $omapi_key = undef,
-  $omapi_secret = undef,
-  $omapi_host = undef,
-  $omapi_port = undef,
-  $bmc_subnet = undef,
-  $foreman_url = undef,
-  $foreman_admin_user = undef,
-  $foreman_admin_passwd = undef,
 ) inherits dc_bmc::params {
 
   case $::productname {

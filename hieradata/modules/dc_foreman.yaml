@@ -18,3 +18,8 @@ dc_foreman::service_checks::dhcp_server: '127.0.0.1'
 dc_foreman::service_checks::lease_file: '/var/lib/dhcp/dhcpd.leases'
 dc_foreman::api_config::foreman_view_api_pw: "%{hiera('foreman_view_api_pw')}"
 dc_foreman::api_config::foreman_view_api_user: "%{hiera('foreman_view_api_user')}"
+dc_foreman::update_bmc::foreman_update_bmc_pw: "%{hiera('foreman_update_bmc_pw')}"
+dc_foreman::update_bmc::foreman_update_bmc_user: "%{hiera('foreman_update_bmc_user')}"
+dc_foreman::update_bmc::foreman_url: "%{hiera('foreman_url')}"
+dc_foreman::update_bmc::bmc_user: "%{hiera('bmc_admin_name')}"
+dc_foreman::update_bmc::bmc_password: "%{hiera('bmc_admin_password')}"
