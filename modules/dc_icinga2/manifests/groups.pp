@@ -8,6 +8,10 @@ class dc_icinga2::groups {
     target => '/etc/icinga2/zones.d/global-templates/groups.conf',
   }
 
+  Icinga2::Object::Servicegroup {
+    target => '/etc/icinga2/zones.d/global-templates/groups.conf',
+  }
+
   # Host Groups
 
   icinga2::object::hostgroup { 'linux-servers':

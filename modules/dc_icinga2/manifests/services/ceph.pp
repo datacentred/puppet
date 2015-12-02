@@ -8,6 +8,10 @@ class dc_icinga2::services::ceph {
     target => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
+  Icinga2::Object::Apply_service_for {
+    target => '/etc/icinga2/zones.d/global-templates/services.conf',
+  }
+
   icinga2::object::apply_service { 'ceph health':
     import        => 'generic-service',
     check_command => 'ceph-health',
