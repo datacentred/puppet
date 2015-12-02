@@ -12,7 +12,7 @@ dc_foreman_proxy::params::dns_key: "%{hiera('dns_key')}"
 dc_foreman_proxy::params::omapi_key: ''
 dc_foreman_proxy::params::omapi_secret: ''
 dc_foreman_proxy::params::use_tftp: false
-dc_foreman_proxy::params::foreman_url: "%{hiera('foreman_url')"
+dc_foreman_proxy::params::foreman_url: "%{hiera('foreman_url')}"
 dc_foreman_proxy::params::proxy_https_port: '8443'
 dc_foreman_proxy::params::proxy_http_port: '8000'
 dc_foreman_proxy::params::trusted_hosts:
