@@ -18,18 +18,33 @@ class dc_icinga2::services::ceph {
     assign_where  => 'host.vars.role == "ceph_monitor"',
   }
 
-  icinga2::object::apply_service { 'ceph monitor':
+  icinga2::object::apply_service_for { 'ceph monitor':
+    key           => 'interface',
+    value         => 'attributes',
+    hash          => 'host.vars.interfaces',
     import        => 'generic-service',
     check_command => 'ceph-mon',
+    display_name  => 'ceph monitor',
+    vars          => {
+      'ceph_mon_monid'   => 'host.name.split(".").get(0)',
+      'ceph_mon_monhost' => 'attributes.address',
+    },
     zone          => 'host.name',
-    assign_where  => 'host.vars.role == "ceph_monitor"',
+    assign_where  => 'host.vars.role == "ceph_monitor" && attributes.cidr == "10.10.104.0/24"',
   }
 
-  icinga2::object::apply_service { 'ceph osd':
+  icinga2::object::apply_service_for { 'ceph osd':
+    key           => 'interface',
+    value         => 'attributes',
+    hash          => 'host.vars.interfaces',
     import        => 'generic-service',
     check_command => 'ceph-osd',
+    display_name  => 'ceph osd',
+    vars          => {
+      'ceph_osd_host' => 'attributes.address',
+    },
     zone          => 'host.name',
-    assign_where  => 'host.vars.role == "ceph_osd"',
+    assign_where  => 'host.vars.role == "ceph_osd" && attributes.cidr == "10.10.104.0/24"',
   }
 
   icinga2::object::apply_service { 'ceph radosgw':
