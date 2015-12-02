@@ -24,3 +24,5 @@ dc_foreman_proxy::use_dns: true
 dc_foreman_proxy::use_dhcp: true
 dc_foreman_proxy::use_tftp: true
 dc_foreman_proxy::use_bmc: true
+dc_foreman_proxy::use_discovery: true
+dc_foreman_proxy::use_templates: true

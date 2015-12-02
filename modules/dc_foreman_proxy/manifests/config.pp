@@ -44,6 +44,14 @@ class dc_foreman_proxy::config {
     content => template('dc_foreman_proxy/puppet.yml.erb'),
   }
 
+  file { '/etc/foreman-proxy/settings.d/discovery.yml':
+    content => template('dc_foreman_proxy/discovery.yml.erb'),
+  }
+
+  file { '/etc/foreman-proxy/settings.d/templates.yml':
+    content => template('dc_foreman_proxy/templates.yml.erb'),
+  }
+
   file { '/etc/foreman-proxy/settings.yml':
     content => template('dc_foreman_proxy/settings.yml.erb'),
   }
