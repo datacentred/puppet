@@ -2,6 +2,27 @@
 classes:
   - '::dc_profile::ceph::osd'
 
+ceph::osd: true
+
+ceph::conf:
+  osd:
+    filestore xattr use omap: 'true'
+    osd journal size: '10000'
+    osd mount options xfs: 'noatime,inode64,logbsize=256k,logbufs=8'
+    osd crush location hook: '/usr/local/bin/location_hook.py'
+    osd recovery max active: '1'
+    osd max backfills: '1'
+    osd recovery threads: '1'
+    osd recovery op priority: '1'
+
+ceph::keys:
+  /etc/ceph/ceph.client.admin.keyring:
+    user: 'client.admin'
+    key: "%{hiera('ceph_key_client_admin')}"
+  /var/lib/ceph/bootstrap-osd/ceph.keyring:
+    user: 'client.bootstrap-osd'
+    key: "%{hiera('ceph_key_bootstrap_osd')}"
+
 sysctls::values:
     fs.file-max:
         value: '4096000'

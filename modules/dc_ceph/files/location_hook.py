@@ -2,35 +2,41 @@
 
 """
 DataCentred Ceph OSD location hook
-Location information is passed in from the ENC via a local external fact
 """
 
-import sys
-import getopt
-import subprocess
+import ConfigParser
 
-def main(argv):
-	"""A comment"""
-	# Ceph provided options
-	opt = getopt.getopt(argv, '', ['cluster=', 'id=', 'type='])
-	# Location from facter/ENC
-	locstr = subprocess.check_output(['facter', 'crush_location']).rstrip()
-	locarr = locstr.split(':')
-	# Host from the system
-	host = subprocess.check_output(['hostname', '-s'])
+def main():
+    """
+    Reads puppet generated configuration data and creates a physical location
+    for ceph OSD placement in the crush map.
+    """
 
-	# Build the names in a heirarchical manner as crush references child
-	# entities by name and not uuid
-	datacenter = locarr[0]
-	room = "{0}-{1}".format(locarr[0], locarr[1])
-	rack = "{0}-{1}-{2}".format(locarr[0], locarr[1], locarr[2])
-	chassis = "{0}-{1}-{2}-{3}".format(locarr[0], locarr[1], locarr[2], locarr[3])
+    config = ConfigParser.ConfigParser()
+    config.read('/usr/local/etc/location_hook.ini')
 
-	# Dump out the crush location
-	print "root=default datacenter={0} room={1} rack={2} chassis={3} host={4}".\
-		format(datacenter, room, rack, chassis, host)
+    root = config.get('main', 'root')
+    datacenter = config.get('main', 'datacenter')
+    room = config.get('main', 'room')
+    rack = config.get('main', 'rack')
+    chassis = config.get('main', 'chassis')
+    host = config.get('main', 'host')
+
+    if root != 'default':
+        prefix = root + '-'
+    else:
+        prefix = ''
+
+    print "root={} datacenter={} room={} rack={} chassis={} host={}".format(
+        root,
+        prefix + datacenter,
+        prefix + datacenter + '-' + room,
+        prefix + datacenter + '-' + room + '-' + rack,
+        prefix + datacenter + '-' + room + '-' + rack + '-' + chassis,
+        host,
+    )
 
 if __name__ == '__main__':
-	main(sys.argv[1:])
+    main()
 
-# vi: ts=4 noet:
+# vi: ts=4 et:

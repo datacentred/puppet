@@ -12,7 +12,7 @@
 #
 class dc_profile::ceph::mon {
 
-  include ::ceph::mon
+  include ::ceph
   include ::dc_ceph::keybackup
   include ::dc_icinga::hostgroup_ceph_mon
 

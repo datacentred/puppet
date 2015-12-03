@@ -1,0 +1,5 @@
+---
+ceph::keys:
+  /etc/ceph/ceph.client.radosgw.ceph-rgw-0.keyring:
+    user: 'client.radosgw.ceph-rgw-0'
+    key: "%{hiera('ceph_key_client_radosgw_ceph-rgw-0')}"

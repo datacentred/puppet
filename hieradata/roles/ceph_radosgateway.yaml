@@ -2,11 +2,35 @@
 classes:
   - '::dc_profile::ceph::radosgw'
 
+ceph::rgw: true
+
+ceph::conf:
+  client.radosgw.%{hostname}:
+    host: "%{hostname}"
+    keyring: "/etc/ceph/ceph.client.radosgw.%{hostname}.keyring"
+    rgw region: 'uk'
+    rgw region root pool: '.uk.rgw.root'
+    rgw zone: 'uk-sal01'
+    rgw zone root pool: '.uk-sal01.rgw.root'
+    rgw enable ops log: 'true'
+    rgw enable usage log: 'true'
+    rgw thread pool size: '4096'
+    rgw dns name: 'storage.datacentred.io'
+    rgw socket path: "/var/run/ceph/ceph.client.radosgw.%{hostname}.fastcgi.sock"
+    rgw keystone url: 'https://compute.datacentred.io:35357'
+    rgw keystone admin token: 'b87a49b7-7297-43f7-8a95-7ca26f0516ff'
+    rgw keystone accepted roles: '_member_,admin'
+    rgw relaxed s3 bucket names: 'true'
+
+ceph::keys:
+  /etc/ceph/ceph.client.admin.keyring:
+    user: 'client.admin'
+    key: "%{hiera('ceph_key_client_admin')}"
+
 apache::default_vhost: false
 apache::log_formats:
     radosgw: '\"%%{}{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
-ceph::radosgw::configure::apache::access_log_format: 'radosgw'
-ceph::radosgw::configure::apache::access_log_env_var: '!healthcheck'
+
 loadbalancer::members::member_hash:
   radosgw:
     ipaddresses: "%{::ipaddress_p1p1}"

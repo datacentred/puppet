@@ -12,42 +12,22 @@
 #
 # Sample Usage:
 #
-class dc_ceph::osd (
-  $journal_disk,
-  $journal_size,
-  $num_osds,
-){
+class dc_ceph::osd {
 
-  Exec {
-    path => '/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin',
-  }
-
-  package { 'xfsprogs':
-    ensure => installed,
-  } ->
-
-  file { '/usr/local/bin/journal-provision':
-    source => 'puppet:///modules/dc_ceph/provision.py',
+  File {
     owner  => 'root',
     group  => 'root',
-    mode   => '0755',
-  } ->
-
-  exec { "/usr/local/bin/journal-provision ${journal_disk} ${num_osds} ${journal_size}":
-    unless => "[ `sgdisk -p ${journal_disk}|grep osd|wc -l` -eq ${num_osds} ]",
   }
 
   # OSD location hook script
   file { '/usr/local/bin/location_hook.py':
-    source => 'puppet:///modules/dc_ceph/location_hook.py',
-    owner  => 'root',
-    group  => 'root',
     mode   => '0755',
+    source => 'puppet:///modules/dc_ceph/location_hook.py',
   }
 
-  # OSD location fact specified in the ENC
-  external_facts::fact { 'crush_location':
-    value => $::crush_location,
+  file { '/usr/local/etc/location_hook.ini':
+    mode    => '0644',
+    content => template('dc_ceph/location_hook.ini.erb'),
   }
 
 }
