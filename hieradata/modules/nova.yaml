@@ -91,6 +91,11 @@ nova::scheduler::filter::scheduler_default_filters:
 nova::scheduler::filter::ram_allocation_ratio: 0.9
 nova::scheduler::filter::cpu_allocation_ratio: 8.0
 
+nova::scheduler::filter::isolated_hosts:
+  - 'absorb'
+nova::scheduler::filter::isolated_images:
+  - '07a93cc5-b3f1-499b-a7f2-ab420526ae1f'
+
 nova::config::nova_config:
   serial_console/enabled:
     value:  false
