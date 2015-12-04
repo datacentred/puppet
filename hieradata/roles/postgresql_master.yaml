@@ -37,3 +37,8 @@ dc_postgresql::params::config_entries:
     value: '80'
   shared_preload_libraries:
     value: 'repmgr_funcs'
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'postgres'

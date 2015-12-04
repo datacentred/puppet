@@ -68,3 +68,8 @@ sudo::configs:
     content: |
       Defaults: cinder !requiretty
       cinder ALL = (root) NOPASSWD: /usr/bin/cinder-rootwrap /etc/cinder/rootwrap.conf *
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'nova'

@@ -4,3 +4,8 @@ classes:
 
 excludes:
   -  '::dc_profile::mon::icinga2'
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'junos'

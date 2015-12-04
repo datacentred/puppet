@@ -82,3 +82,8 @@ ceph::params::client_params:
   'rbd cache dirty target': '134217728'
   'rbd cache max dirty age': '2'
   'rbd cache writethrough until flush': true
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'nova'
