@@ -13,6 +13,8 @@ class dc_foreman::service_checks (
   $proxy_alias = $::fqdn,
 ){
 
+  include ::dc_foreman::python_lib
+
   ensure_packages(['python-pip', 'git'])
 
   package { 'pypureomapi':
@@ -32,6 +34,11 @@ class dc_foreman::service_checks (
     mode   => '0644',
   }
 
+  file { '/usr/local/lib/python2.7/dist-packages/dc_omapi.py':
+    ensure => file,
+    source => 'puppet:///modules/dc_foreman/dc_omapi.py'
+  }
+
   file { '/usr/local/bin/foreman_check.py':
     ensure => file,
     source => 'puppet:///modules/dc_foreman/foreman_check.py',
@@ -42,16 +49,6 @@ class dc_foreman::service_checks (
     ensure => file,
     source => 'puppet:///modules/dc_foreman/load_from_foreman.py',
     mode   => '0755',
-  }
-
-  file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':
-    ensure => file,
-    source => 'puppet:///modules/dc_foreman/dc_foreman.py'
-  }
-
-  file { '/usr/local/lib/python2.7/dist-packages/dc_omapi.py':
-    ensure => file,
-    source => 'puppet:///modules/dc_foreman/dc_omapi.py'
   }
 
   file { '/usr/local/etc/foreman_check.config':
