@@ -313,14 +313,39 @@ apc_defaultuser_pwd: Phath3shnuOs
 # SSH groups
 #
 dc_ssh::config:
+  RSAAuthentication:
+    value: 'yes'
+  PubkeyAuthentication:
+    value: 'yes'
+  X11Forwarding:
+    value: 'no'
+  MaxAuthTries:
+    value: '1'
+  IgnoreRhosts:
+    value: 'yes'
+  PermitEmptyPasswords:
+    value: 'no'
+  HostBasedAuthentication:
+    value: 'no'
+  SysLogFacility:
+    value: 'AUTH'
+  PermitUserEnvironment:
+    value: 'no'
+  PrintLastLog:
+    value: 'yes'
+  GatewayPorts:
+    value: 'no'
+  LogLevel:
+    value: 'INFO'
   PermitRootLogin:
     value: 'no'
+  Protocol:
+    value: '2'
   AllowGroups:
     value:
       - 'sysadmin'
       - 'git'
       - 'postgres'
-      - 'barman'
       - 'junos'
       - 'ceph-deploy'
       - 'dhcp_sync_agent'

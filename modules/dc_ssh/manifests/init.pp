@@ -17,12 +17,13 @@
 # to allow root login for vagrant ssh and provison commands to work post
 # provisioning)
 #
-class dc_ssh (
-  $config = {},
-) {
+class dc_ssh {
+
   include dc_ssh::params
 
-  create_resources('sshd_config', $config)
+  $merged_config = hiera_hash(dc_ssh::config)
+
+  create_resources('sshd_config', $merged_config)
 
   service { 'ssh':
     ensure     => true,

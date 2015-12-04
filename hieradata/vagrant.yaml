@@ -152,12 +152,3 @@ dc_ssh::config:
   AllowGroups:
     value:
       - 'root'
-      - 'sysadmin'
-      - 'git'
-      - 'postgres'
-      - 'barman'
-      - 'junos'
-      - 'ceph-deploy'
-      - 'dhcp_sync_agent'
-      - 'tftpsync'
-      - 'nova'
