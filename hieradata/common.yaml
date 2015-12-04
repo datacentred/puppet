@@ -339,6 +339,8 @@ dc_ssh::config:
     value: 'INFO'
   PermitRootLogin:
     value: 'no'
+  PasswordAuthentication:
+    value: 'no'
   Protocol:
     value: '2'
   AllowGroups:
