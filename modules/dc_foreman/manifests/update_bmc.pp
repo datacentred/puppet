@@ -8,6 +8,8 @@ class dc_foreman::update_bmc (
   $bmc_password,
 ){
 
+  include ::dc_foreman::python_lib
+
   File {
     owner  => 'root',
     group  => 'root',
@@ -22,11 +24,6 @@ class dc_foreman::update_bmc (
     mode   => '0755',
   }
 
-  file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':
-    ensure => file,
-    source => 'puppet:///modules/dc_foreman/dc_foreman.py'
-  }
-
   file { '/usr/local/etc/update_bmc.config':
     ensure  => file,
     content => template('dc_foreman/update_bmc_config.erb'),
@@ -35,7 +32,7 @@ class dc_foreman::update_bmc (
   runonce { 'update_bmc_interface':
     command    => '/usr/local/bin/update_bmc_interface.py',
     persistent => true,
-    require    => [File['/usr/local/etc/update_bmc.config'], File['/usr/local/bin/update_bmc_interface.py'], File['/usr/local/lib/python2.7/dist-packages/dc_foreman.py']]
+    require    => [File['/usr/local/etc/update_bmc.config'], File['/usr/local/bin/update_bmc_interface.py'], Class['::dc_foreman::python_lib']]
   }
 
 }
