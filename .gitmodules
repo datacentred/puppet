@@ -299,3 +299,6 @@
 [submodule "modules/collectd"]
 	path = modules/collectd
 	url = https://github.com/puppet-community/puppet-collectd.git
+[submodule "modules/augeasproviders_pam"]
+	path = modules/augeasproviders_pam
+	url = https://github.com/hercules-team/augeasproviders_pam.git
