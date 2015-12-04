@@ -27,3 +27,9 @@ dc_foreman_proxy::use_tftp: true
 dc_foreman_proxy::use_bmc: true
 dc_foreman_proxy::use_discovery: true
 dc_foreman_proxy::use_templates: true
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'dhcp_sync_agent'
+      - 'tftpsync'
