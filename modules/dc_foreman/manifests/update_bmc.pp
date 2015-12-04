@@ -3,7 +3,7 @@ class dc_foreman::update_bmc (
   $foreman_url,
   $foreman_update_bmc_pw,
   $foreman_update_bmc_user,
-  $bmc_network,
+  $bmc_subnet,
   $bmc_user,
   $bmc_password,
 ){
