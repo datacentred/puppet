@@ -29,5 +29,5 @@ ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/v2.0"
 ceilometer::agent::auth::auth_user: 'ceilometer'
 ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::agent::auth::auth_region: "%{hiera('os_region')}"
-ceilometer::expirer::time_to_live: '2592000'
+ceilometer::expirer::time_to_live: '1209600'
 ceilometer::agent::notification::enabled: true
