@@ -11,4 +11,10 @@ class dc_nrpe::checks::supermicro_psu_ipmi (
     sudo    => true,
   }
 
+  dc_nrpe::check { 'check_psu_supermicro_x9':
+    path   => '/usr/local/bin/check_psu_supermicro_x9',
+    source => 'puppet:///modules/dc_nrpe/check_psu_supermicro_x9',
+    sudo   => true,
+  }
+
 }
