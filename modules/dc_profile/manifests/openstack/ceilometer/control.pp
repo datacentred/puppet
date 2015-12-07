@@ -30,6 +30,7 @@ class dc_profile::openstack::ceilometer::control {
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-ceilometer":
+    instance          => 'openstack',
     listening_service => 'ceilometer',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,

@@ -20,6 +20,7 @@ class dc_profile::openstack::heat {
   include ::heat::api_cfn
 
   @@haproxy::balancermember { "${::fqdn}-heat":
+    instance          => 'openstack',
     listening_service => 'heat',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
@@ -28,6 +29,7 @@ class dc_profile::openstack::heat {
   }
 
   @@haproxy::balancermember { "${::fqdn}-heat-cfn":
+    instance          => 'openstack',
     listening_service => 'heat-cfn',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,

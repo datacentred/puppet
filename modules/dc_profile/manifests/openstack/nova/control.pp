@@ -34,6 +34,7 @@ class dc_profile::openstack::nova::control {
 
   # Add the various services from this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-compute":
+    instance          => 'openstack',
     listening_service => 'nova-compute',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
@@ -41,6 +42,7 @@ class dc_profile::openstack::nova::control {
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-metadata":
+    instance          => 'openstack',
     listening_service => 'nova-metadata',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
@@ -48,6 +50,7 @@ class dc_profile::openstack::nova::control {
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-novnc":
+    instance          => 'openstack',
     listening_service => 'novncproxy',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
@@ -55,6 +58,7 @@ class dc_profile::openstack::nova::control {
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-ec2":
+    instance          => 'openstack',
     listening_service => 'nova-ec2',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
