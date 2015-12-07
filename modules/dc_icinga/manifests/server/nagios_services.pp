@@ -684,6 +684,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Supermicro PSU Check',
   }
 
+  icinga::service { 'check_supermicor_psu_x9':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_supermicro_x9',
+    check_command       => 'check_nrpe_1arg!check_supermicro_psu_x9',
+    service_description => 'SuperMicro X9 PSU Check',
+  }
+
   icinga::service { 'check_bmc':
     use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_bmc',

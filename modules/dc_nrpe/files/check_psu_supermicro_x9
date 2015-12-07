@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+"""
+Checks Redundant PSUs on SuperMicro X9 Class Hardware
+"""
+
+import re
+import subprocess
+import sys
+
+NAGIOS_OK = 1
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """Parse ipmitool output for PSU status"""
+    try:
+        output = subprocess.check_output(['ipmitool', 'sdr'])
+    except subprocess.CalledProcessError:
+        print 'UNKNOWN: Unable to execute check'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    output = output.split('\n')
+    psu_output = [x for x in output if re.match(r'PS\d Status', x)]
+
+    statuses = {}
+    for psu in psu_output:
+        matches = re.match(r'(PS\d) Status\s+\|\s+(\w+)', psu)
+        statuses[matches.group(1)] = bool(int(matches.group(2), 0))
+
+    if all(statuses.values()):
+        print 'OK'
+        sys.exit(NAGIOS_OK)
+
+    faulty = [x for x in statuses if not statuses[x]]
+    print 'CRITICAL: PSU(s) {} in a critical state'.format(', '.join(faulty))
+    sys.exit(NAGIOS_CRITICAL)
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

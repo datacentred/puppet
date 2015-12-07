@@ -426,7 +426,11 @@ class dc_icinga::server::config {
   }
 
   icinga::hostgroup { 'dc_hostgroup_supermicro':
-    description => 'Supermicro Hardware',
+    description => 'Supermicro X8 Class Hardware',
+  }
+
+  icinga::hostgroup { 'dc_hostgroup_supermicro_x9':
+    description => 'SuperMicro X9 Class Hardware',
   }
 
   icinga::hostgroup { 'dc_hostgroup_bmc':
