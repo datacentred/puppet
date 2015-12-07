@@ -18,6 +18,11 @@ dc_logstash::client::config:
         shipper: 'log-courier'
         type: 'postgres'
     - paths:
+      - '/var/log/auth.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'auth'
+    - paths:
       - '/var/log/apache2/*access.log'
       fields:
         shipper: 'log-courier'

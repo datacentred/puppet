@@ -1,5 +1,5 @@
 filter {
-  if [type] == "syslog" {
+  if [type] == "syslog" or [type] == "auth" {
     if [message] =~ /Registrar received .* event/ {
         drop {}
     }
