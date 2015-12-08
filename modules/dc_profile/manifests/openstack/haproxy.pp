@@ -26,10 +26,10 @@ class dc_profile::openstack::haproxy {
   dc_haproxy::service { 'galera': }
 
   haproxy::instance { 'openstack':
-    require        => Class['::dc_haproxy'],
     global_options => {
       'chroot' => '/var/lib/haproxy/openstack',
-    }
+    },
+    require        => Class['::dc_haproxy'],
   }
 
   haproxy::instance_service { 'openstack':
@@ -37,10 +37,10 @@ class dc_profile::openstack::haproxy {
   }
 
   haproxy::instance { 'galera':
-    require        => Class['::dc_haproxy'],
     global_options => {
       'chroot' => '/var/lib/haproxy/galera',
-    }
+    },
+    require        => Class['::dc_haproxy'],
   }
 
   haproxy::instance_service { 'galera':
@@ -58,12 +58,36 @@ class dc_profile::openstack::haproxy {
     }
   }
 
-  # HAProxy Statistics
-  haproxy::listen { 'haproxy-stats':
+  # HAProxy Statistics for OpenStack APIs
+  haproxy::listen { 'haproxy-stats-openstack':
     instance => 'openstack',
     mode     => 'http',
     bind     => {
       ':1936' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options  => {
+      'stats'  => [
+        'enable',
+        'uri /',
+        'hide-version',
+        "auth ${haproxy_stats_user}:${haproxy_stats_password}",
+      ],
+      'rspadd' => 'Strict-Transport-Security:\ max-age=31536000',
+    },
+  }
+
+  # HAProxy Statistics for Galera
+  haproxy::listen { 'haproxy-stats-galera':
+    instance => 'galera',
+    mode     => 'http',
+    bind     => {
+      ':1937' => [
         'ssl',
         'no-sslv3',
         'crt /etc/ssl/certs/STAR_datacentred_io.pem',
