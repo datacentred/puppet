@@ -8,7 +8,7 @@ import re
 import subprocess
 import sys
 
-NAGIOS_OK = 1
+NAGIOS_OK = 0
 NAGIOS_WARNING = 1
 NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
