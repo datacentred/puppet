@@ -58,6 +58,6 @@ class dc_branding::horizon {
   File[$theme_dir] ~> Exec['dc_branding::horizon compress']
 
   # Restart the webserver on creation of new static resources
-  #Exec['dc_branding::horizon compress'] ~> Service['apache2']
+  Exec['dc_branding::horizon compress'] ~> Service['apache2']
 
 }
