@@ -32,8 +32,9 @@ class dc_branding::horizon {
   } ->
 
   file_line { 'dc_branding::horizon configure':
-    path => '/etc/openstack-dashboard/local_settings.py',
-    line => "CUSTOM_THEME_PATH = '${theme_dir}'",
+    path    => '/etc/openstack-dashboard/local_settings.py',
+    line    => "CUSTOM_THEME_PATH = '${theme_dir}'",
+    replace => false,
   } ->
 
   exec { 'dc_branding::horizon collect':
