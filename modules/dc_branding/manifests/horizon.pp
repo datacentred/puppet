@@ -54,10 +54,10 @@ class dc_branding::horizon {
   Package['openstack-dashboard'] -> Class['dc_branding::horizon']
 
   # Ensure we collect and compress only on changes to the branding resources
-  #File[$theme_dir] ~> Exec['dc_branding::horizon collect']
-  #File[$theme_dir] ~> Exec['dc_branding::horizon compress']
+  File[$theme_dir] ~> Exec['dc_branding::horizon collect']
+  File[$theme_dir] ~> Exec['dc_branding::horizon compress']
 
   # Restart the webserver on creation of new static resources
-  Exec['dc_branding::horizon compress'] ~> Service['apache2']
+  #Exec['dc_branding::horizon compress'] ~> Service['apache2']
 
 }
