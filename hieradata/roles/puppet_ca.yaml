@@ -57,3 +57,8 @@ sysctls::values:
 puppetdeploy::is_puppet_ca: true
 puppetdeploy::puppet_masters:
   - 'puppet0'
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'puppet'

@@ -51,5 +51,6 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::foreman_interfaces
   include ::dc_nrpe::checks::disk_stats
   include ::dc_nrpe::checks::journal_disk_latency
+  include ::dc_nrpe::checks::configured_users
 
 }
