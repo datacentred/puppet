@@ -1,0 +1,4 @@
+---
+glance::api::known_stores:
+    - glance.store.filesystem.Store
+    - glance.store.http.Store

@@ -47,15 +47,5 @@ class dc_profile::openstack::mongodb {
     recurse => true,
   }
 
-  # $::backup_node is set via the ENC (Foreman)
-  if $::backup_node {
-    file { '/srv/backup':
-      ensure => directory,
-      mode   => '0700',
-    }
-    include ::dc_profile::openstack::duplicity_mongodb
-  }
-
 }
-
 

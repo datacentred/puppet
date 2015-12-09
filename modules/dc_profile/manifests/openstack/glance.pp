@@ -22,6 +22,21 @@ class dc_profile::openstack::glance {
   include ::glance::policy
   include ::dc_icinga::hostgroup_glance
 
+  # TODO: Remove post-upgrade
+  file_line { 'glance_api_auth_version':
+    ensure => absent,
+    path   => '/etc/glance/glance-api.conf',
+    line   => 'auth_version=V2.0',
+    notify => Service['glance-api'],
+  }
+
+  file_line { 'glance_registry_auth_version':
+    ensure => absent,
+    path   => '/etc/glance/glance-registry.conf',
+    line   => 'auth_version=V2.0',
+    notify => Service['glance-registry'],
+  }
+
   # Add this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-glance-registry":
     listening_service => 'glance-registry',

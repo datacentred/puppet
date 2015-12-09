@@ -1,10 +1,10 @@
-# == Class: dc_profile::openstack::duplicity_mongodb
+# == Class: dc_profile::openstack::backups::mongodb
 #
-# Backs up mongodb to amazon S3 and Ceph
+# Ceilometer MongoDB replicaset to Amazon S3 and storage.datacentred.io
 #
-class dc_profile::openstack::duplicity_mongodb (
-  $ceilometer_db_password,
-) {
+class dc_profile::openstack::backups::mongodb {
+
+  $ceilometer_db_password = hiera(ceilometer_db_password)
 
   ensure_packages(['mongodb-org-tools'])
 
@@ -22,6 +22,13 @@ class dc_profile::openstack::duplicity_mongodb (
     minute   => '0',
   }
 
+  file { ['/srv/backup', '/srv/backup/mongodb']:
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
   file { '/usr/local/sbin/mongodb_dump_for_duplicity.sh':
     ensure  => file,
     content => "#!/bin/bash\n/usr/bin/mongodump --db ceilometer --username ceilometer --password ${ceilometer_db_password} --out /srv/backup/mongodb/",
@@ -29,13 +36,6 @@ class dc_profile::openstack::duplicity_mongodb (
     group   => 'root',
     mode    => '0700',
     require => Package['mongodb-org-tools'],
-  }
-
-  file { '/srv/backup/mongodb':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
   }
 
   tidy { 'mongodb_dumps':

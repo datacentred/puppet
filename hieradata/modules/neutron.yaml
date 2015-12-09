@@ -4,12 +4,9 @@ neutron::keystone::auth::password: "%{hiera('keystone_neutron_password')}"
 neutron::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 neutron::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 neutron::keystone::auth::region: "%{hiera('os_region')}"
-neutron::keystone::auth::public_address: "%{hiera('os_api_host')}"
-neutron::keystone::auth::admin_address: "%{hiera('os_api_host')}"
-neutron::keystone::auth::internal_address: "%{hiera('os_api_host')}"
-neutron::keystone::auth::public_protocol: 'https'
-neutron::keystone::auth::internal_protocol: 'https'
-neutron::keystone::auth::admin_protocol: 'https'
+neutron::keystone::auth::public_url: "https://%{hiera('os_api_host')}:9696"
+neutron::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:9696"
+neutron::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:9696"
 
 neutron::enabled: true
 neutron::bind_host: '0.0.0.0'
@@ -31,10 +28,11 @@ neutron::service_plugins:
  - 'metering'
 neutron::verbose: true
 
-neutron::server::auth_host: "%{hiera('os_api_host')}"
-neutron::server::auth_protocol: 'https'
+neutron::server::auth_uri: "https://%{hiera('os_api_host')}:5000/"
+neutron::server::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 neutron::server::auth_password: "%{hiera('keystone_neutron_password')}"
-neutron::server::database_connection: "mysql://neutron:%{hiera('neutron_db_pass')}@%{hiera('os_api_host')}/neutron"
+
+neutron::db::database_connection: "mysql://neutron:%{hiera('neutron_db_pass')}@%{hiera('os_api_host')}/neutron"
 
 neutron::plugins::ml2::type_drivers:
  - 'gre'
@@ -64,15 +62,14 @@ neutron::agents::metadata::auth_region: "%{hiera('os_region')}"
 neutron::agents::metadata::metadata_ip: "%{hiera('os_api_vip')}"
 neutron::agents::dhcp::enabled: true
 neutron::agents::dhcp::dhcp_delete_namespaces: true
+neutron::agents::dhcp::dhcp_domain: 'datacentred.io'
 neutron::agents::l3::router_delete_namespaces: true
 neutron::agents::l3::allow_automatic_l3agent_failover: true
 neutron::agents::vpnaas::enabled: true
 neutron::agents::lbaas::enabled: true
-neutron::agents::lbaas::use_namespaces: true
 neutron::agents::metering::enabled: true
 
 neutron::services::fwaas::enabled: true
 neutron::services::fwaas::driver: 'neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver'
-neutron::services::fwaas::vpnaas_agent_package: true
 
 neutron::quota::quota_floatingip: '1'

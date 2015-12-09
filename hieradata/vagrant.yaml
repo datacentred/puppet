@@ -9,6 +9,8 @@ excludes:
   - '::dc_profile::log::logrotate'
   - '::dc_profile::net::nscd'
   - '::dc_profile::mon::icinga2'
+  - '::cinder::volume::rbd'
+  - '::collectd::plugin::protocols'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
@@ -85,6 +87,9 @@ glance_db:       'glance'
 glance_db_user:  'glance'
 glance_db_pass:  'DishrubChop2'
 glance_api_port: '9292'
+glance::api::known_stores:
+    - glance.store.http.Store
+    - glance.store.filesystem.Store
 
 # cinder
 #
@@ -136,7 +141,7 @@ influxdb_server: "influxdb0.%{::domain}"
 influxdb_port: 8086
 
 # Internal LDAP
-# 
+#
 ldap_host: "ldap.datacentred.services"
 ldap_suffix: 'dc=datacentred,dc=co,dc=uk'
 ldap_rootdn: 'cn=admin,dc=datacentred,dc=co,dc=uk'
