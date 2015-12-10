@@ -31,11 +31,6 @@ class dc_branding::horizon {
     target => $theme_dir,
   } ->
 
-  file_line { 'dc_branding::horizon configure':
-    path    => '/etc/openstack-dashboard/local_settings.py',
-    line    => "CUSTOM_THEME_PATH = '${theme_dir}'",
-  } ->
-
   exec { 'dc_branding::horizon collect':
     cwd         => $horizon_dir,
     command     => 'python manage.py collectstatic --noinput',
@@ -52,6 +47,10 @@ class dc_branding::horizon {
   # installed before removing ubuntu branding and configuring the new one,
   # this will deconfigure the existing theme first
   Package['openstack-dashboard'] -> Class['dc_branding::horizon']
+
+  # Perform the collection and compression only after the configuration file
+  # is generated
+  File['/etc/openstack-dashboard/local_settings.py'] -> Exec['dc_branding::horizon collect']
 
   # Ensure we collect and compress only on changes to the branding resources
   File[$theme_dir] ~> Exec['dc_branding::horizon collect']

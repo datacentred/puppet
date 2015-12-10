@@ -73,9 +73,6 @@
 [submodule "modules/bundler"]
 	path = modules/bundler
 	url = https://github.com/puppetlabs-operations/puppet-bundler.git
-[submodule "modules/horizon"]
-	path = modules/horizon
-	url = https://github.com/datacentred/puppet-horizon
 [submodule "modules/memcached"]
 	path = modules/memcached
 	url = https://github.com/saz/puppet-memcached
@@ -302,3 +299,6 @@
 [submodule "modules/augeasproviders_pam"]
 	path = modules/augeasproviders_pam
 	url = https://github.com/hercules-team/augeasproviders_pam.git
+[submodule "modules/horizon"]
+	path = modules/horizon
+	url = https://github.com/openstack/puppet-horizon
