@@ -55,6 +55,8 @@ neutron::server::notifications::nova_admin_tenant_name: 'services'
 neutron::agents::ml2::ovs::bridge_mappings:
  - 'default:br-ex'
 neutron::agents::ml2::ovs::enable_tunneling: true
+neutron::agents::ml2::ovs::tunnel_types:
+ - 'gre'
 neutron::agents::metadata::shared_secret: "%{hiera('neutron_metadata_secret')}"
 neutron::agents::metadata::auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
 neutron::agents::metadata::auth_password: "%{hiera('keystone_neutron_password')}"
