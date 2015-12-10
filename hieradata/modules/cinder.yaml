@@ -31,6 +31,7 @@ cinder::api::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 cinder::api::keystone_user: 'cinder'
 cinder::api::keystone_password: "%{hiera('keystone_cinder_password')}"
 cinder::api::os_region_name: "%{hiera('os_region')}"
+cinder::api::default_volume_type: 'Ceph'
 cinder::scheduler::scheduler_driver: 'cinder.scheduler.simple.SimpleScheduler'
 cinder::glance::glance_api_servers: "https://%{hiera('os_api_host')}:%{hiera('glance_api_port')}"
 cinder::volume::rbd::rbd_pool: 'cinder.volumes'
