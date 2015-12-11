@@ -27,7 +27,7 @@ a:visited {
 }
 
 .topbar h1.brand a {
-	background-image: url("/static/themes/datacentred/datacentred-white.png");
+	background-image: url("/horizon/static/themes/datacentred/datacentred-white.png");
 	background-position: left 6px;
 	background-size: 118px 26px;
 }
@@ -81,11 +81,11 @@ a.btn-primary {
 }
 
 #splash {
-	background: url("/static/themes/datacentred/image-background-pattern.png");
+	background: url("/horizon/static/themes/datacentred/image-background-pattern.png");
 
 	.login {
 		background-color: $white;
-		background-image: url("/static/themes/datacentred/datacentred-blue.png");
+		background-image: url("/horizon/static/themes/datacentred/datacentred-blue.png");
 		background-position: 50% 35px;
                 background-size: 200px 44px;
 		padding-top: 125px;
