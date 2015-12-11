@@ -40,12 +40,7 @@ nova::nova_private_key:
 nova::debug: true
 nova::verbose: true
 
-nova::upgrade_level_cert: 'juno'
 nova::upgrade_level_compute: 'juno'
-nova::upgrade_level_conductor: 'juno'
-nova::upgrade_level_console: 'juno'
-nova::upgrade_level_consoleauth: 'juno'
-nova::upgrade_level_scheduler: 'juno'
 
 nova::api::enabled: true
 nova::api::admin_tenant_name: "%{hiera('nova_admin_tenant')}"
@@ -57,11 +52,16 @@ nova::api::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 nova::api::neutron_metadata_proxy_shared_secret: "%{hiera('neutron_metadata_secret')}"
 nova::api::keystone_ec2_url: "https://%{hiera('os_api_host')}:5000/v2.0/tokens"
 nova::api::default_floating_pool: 'external'
+
 nova::cert::enabled: true
 nova::conductor::enabled: true
 nova::consoleauth::enabled: true
 nova::scheduler::enabled: true
+
 nova::vncproxy::enabled: true
+nova::vncproxy::common::vncproxy_host: 'compute.datacentred.io'
+nova::vncproxy::common::vncproxy_protocol: 'https'
+
 nova::compute::enabled: true
 nova::compute::vncproxy_host: "%{hiera('os_api_host')}"
 nova::compute::vncserver_proxyclient_address: '%{::ipaddress}'

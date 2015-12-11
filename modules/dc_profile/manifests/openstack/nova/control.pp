@@ -28,14 +28,6 @@ class dc_profile::openstack::nova::control {
     value => true,
   }
 
-  # TODO: Remove post-upgrade
-  file_line { 'nova_auth_version':
-    ensure => absent,
-    path   => '/etc/nova/nova.conf',
-    line   => 'auth_version=V2.0',
-    notify => Service['nova-api'],
-  }
-
   # Add the various services from this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-compute":
     listening_service => 'nova-compute',
