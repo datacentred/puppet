@@ -43,6 +43,8 @@ neutron::plugins::ml2::mechanism_drivers:
  - 'openvswitch'
 neutron::plugins::ml2::tunnel_id_ranges:
  - '1:1000'
+neutron::plugins::ml2::prevent_arp_spoofing: false
+neutron::plugins::ml2::arp_responder: true
 
 neutron::server::notifications::nova_url: "https://%{hiera('os_api_host')}:8774/v2"
 neutron::server::notifications::nova_admin_auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
@@ -57,16 +59,21 @@ neutron::agents::ml2::ovs::bridge_mappings:
 neutron::agents::ml2::ovs::enable_tunneling: true
 neutron::agents::ml2::ovs::tunnel_types:
  - 'gre'
+
 neutron::agents::metadata::shared_secret: "%{hiera('neutron_metadata_secret')}"
 neutron::agents::metadata::auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
 neutron::agents::metadata::auth_password: "%{hiera('keystone_neutron_password')}"
 neutron::agents::metadata::auth_region: "%{hiera('os_region')}"
 neutron::agents::metadata::metadata_ip: "%{hiera('os_api_vip')}"
+
 neutron::agents::dhcp::enabled: true
 neutron::agents::dhcp::dhcp_delete_namespaces: true
 neutron::agents::dhcp::dhcp_domain: 'datacentred.io'
+
 neutron::agents::l3::router_delete_namespaces: true
 neutron::agents::l3::allow_automatic_l3agent_failover: true
+neutron::agents::l3::interface_driver: 'neutron.agent.linux.interface.OVSInterfaceDriver'
+
 neutron::agents::vpnaas::enabled: true
 neutron::agents::lbaas::enabled: true
 neutron::agents::metering::enabled: true
