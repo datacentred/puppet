@@ -39,6 +39,7 @@ class dc_profile::openstack::cinder {
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-cinder":
+    instance          => 'openstack',
     listening_service => 'cinder',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,

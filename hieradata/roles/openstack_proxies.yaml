@@ -2,6 +2,8 @@
 classes:
   - '::dc_profile::openstack::proxy'
 
+haproxy::package_name: ''
+haproxy::instance::package_name: ''
 haproxy::package_ensure: '1.5.4-1ubuntu2.1~ubuntu14.04.1'
 haproxy::global_options:
         tune.bufsize: 32000

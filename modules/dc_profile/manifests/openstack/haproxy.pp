@@ -6,18 +6,11 @@
 # Parameters:
 #
 # Actions:
-#
-# Requires: datacentred-haproxy, dev version of haproxy that
-#           includes SSL support
-#
-# Sample Usage:
-#
-# TODO: Enable SSL endpoints once we've stood up the necessary
-# infrastructure
 
 class dc_profile::openstack::haproxy {
 
   include ::haproxy
+  include ::dc_haproxy
   include ::dc_ssl::haproxy
   include ::dc_icinga::hostgroup_haproxy
 
@@ -29,8 +22,34 @@ class dc_profile::openstack::haproxy {
 
   $internal_vip = hiera(os_api_vip)
 
+  dc_haproxy::service { 'openstack': }
+  dc_haproxy::service { 'galera': }
+
+  haproxy::instance { 'openstack':
+    global_options => {
+      'chroot' => '/var/lib/haproxy/openstack',
+    },
+    require        => Class['::dc_haproxy'],
+  }
+
+  haproxy::instance_service { 'openstack':
+    require => ::Dc_haproxy::Service['openstack'],
+  }
+
+  haproxy::instance { 'galera':
+    global_options => {
+      'chroot' => '/var/lib/haproxy/galera',
+    },
+    require        => Class['::dc_haproxy'],
+  }
+
+  haproxy::instance_service { 'galera':
+    require => ::Dc_haproxy::Service['galera'],
+  }
+
   # Redirect all non-SSL requests to SSL
   haproxy::listen { 'http-to-https-redirect':
+    instance  => 'openstack',
     ipaddress => '*',
     mode      => 'http',
     ports     => '80',
@@ -39,10 +58,11 @@ class dc_profile::openstack::haproxy {
     }
   }
 
-  # HAProxy Statistics
-  haproxy::listen { 'haproxy-stats':
-    mode    => 'http',
-    bind    => {
+  # HAProxy Statistics for OpenStack APIs
+  haproxy::listen { 'haproxy-stats-openstack':
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':1936' => [
         'ssl',
         'no-sslv3',
@@ -51,7 +71,31 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
+      'stats'  => [
+        'enable',
+        'uri /',
+        'hide-version',
+        "auth ${haproxy_stats_user}:${haproxy_stats_password}",
+      ],
+      'rspadd' => 'Strict-Transport-Security:\ max-age=31536000',
+    },
+  }
+
+  # HAProxy Statistics for Galera
+  haproxy::listen { 'haproxy-stats-galera':
+    instance => 'galera',
+    mode     => 'http',
+    bind     => {
+      ':1937' => [
+        'ssl',
+        'no-sslv3',
+        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
+        'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
+        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+      ],
+    },
+    options  => {
       'stats'  => [
         'enable',
         'uri /',
@@ -64,8 +108,9 @@ class dc_profile::openstack::haproxy {
 
   # Keystone Auth
   haproxy::listen { 'keystone-auth':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':5000' => [
         'ssl',
         'no-sslv3',
@@ -73,7 +118,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -82,8 +127,9 @@ class dc_profile::openstack::haproxy {
 
   # Keystone Admin
   haproxy::listen { 'keystone-admin':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':35357' => [
         'ssl',
         'no-sslv3',
@@ -91,7 +137,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -100,8 +146,9 @@ class dc_profile::openstack::haproxy {
 
   # Glance API
   haproxy::listen { 'glance-api':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':9292' => [
         'ssl',
         'no-sslv3',
@@ -109,7 +156,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -118,8 +165,9 @@ class dc_profile::openstack::haproxy {
 
   # Glance Registry
   haproxy::listen { 'glance-registry':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':9191' => [
         'ssl',
         'no-sslv3',
@@ -127,7 +175,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -136,8 +184,10 @@ class dc_profile::openstack::haproxy {
 
   # Neutron
   haproxy::listen { 'neutron':
-    mode    => 'http',
-    bind    => {
+    instance         => 'openstack',
+    collect_exported => false,
+    mode             => 'http',
+    bind             => {
       ':9696' => [
         'ssl',
         'no-sslv3',
@@ -145,7 +195,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options          => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -154,8 +204,9 @@ class dc_profile::openstack::haproxy {
 
   # Nova Compute
   haproxy::listen { 'nova-compute':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':8774' => [
         'ssl',
         'no-sslv3',
@@ -163,7 +214,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -173,6 +224,7 @@ class dc_profile::openstack::haproxy {
   # Nova Metadata
   # TODO: Renable SSL for this service when we go to Juno
   haproxy::listen { 'nova-metadata':
+    instance  => 'openstack',
     ipaddress => '*',
     mode      => 'http',
     ports     => '8775',
@@ -184,8 +236,9 @@ class dc_profile::openstack::haproxy {
 
   # Amazon EC2-compatible nova API endpoint
   haproxy::listen { 'nova-ec2':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':8773' => [
         'ssl',
         'no-sslv3',
@@ -193,7 +246,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -202,8 +255,9 @@ class dc_profile::openstack::haproxy {
 
   # Cinder
   haproxy::listen { 'cinder':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':8776' => [
         'ssl',
         'no-sslv3',
@@ -211,7 +265,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -220,8 +274,9 @@ class dc_profile::openstack::haproxy {
 
   # Horizon
   haproxy::listen { 'horizon':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':443' => [
         'ssl',
         'no-sslv3',
@@ -229,7 +284,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -238,8 +293,9 @@ class dc_profile::openstack::haproxy {
 
   # NoVNC Proxy
   haproxy::listen { 'novncproxy':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':6080' => [
         'ssl',
         'no-sslv3',
@@ -247,7 +303,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -256,10 +312,12 @@ class dc_profile::openstack::haproxy {
 
   # Galera
   haproxy::listen { 'galera':
-    ipaddress => $internal_vip,
-    mode      => 'tcp',
-    ports     => '3306',
-    options   => {
+    instance         => 'galera',
+    collect_exported => true,
+    ipaddress        => $internal_vip,
+    mode             => 'tcp',
+    ports            => '3306',
+    options          => {
       'option'         => ['httpchk'],
       'balance'        => 'source',
       'timeout client' => '8h',
@@ -269,8 +327,9 @@ class dc_profile::openstack::haproxy {
 
   # Ceilometer
   haproxy::listen { 'ceilometer':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':8777' => [
         'ssl',
         'no-sslv3',
@@ -278,7 +337,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'         => ['tcpka', 'tcplog'],
       'balance'        => 'source',
       'rspadd'         => 'Strict-Transport-Security:\ max-age=31536000',
@@ -289,8 +348,9 @@ class dc_profile::openstack::haproxy {
 
   # Heat
   haproxy::listen { 'heat':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':8004' => [
         'ssl',
         'no-sslv3',
@@ -298,7 +358,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'tcplog', 'forwardfor'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
@@ -308,8 +368,9 @@ class dc_profile::openstack::haproxy {
 
   # Heat CloudFormation
   haproxy::listen { 'heat-cfn':
-    mode    => 'http',
-    bind    => {
+    instance => 'openstack',
+    mode     => 'http',
+    bind     => {
       ':8000' => [
         'ssl',
         'no-sslv3',
@@ -317,7 +378,7 @@ class dc_profile::openstack::haproxy {
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
       ],
     },
-    options => {
+    options  => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',

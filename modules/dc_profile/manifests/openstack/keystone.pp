@@ -58,6 +58,7 @@ class dc_profile::openstack::keystone {
   }
 
   @@haproxy::balancermember { "${::fqdn}-keystone-auth":
+    instance          => 'openstack',
     listening_service => 'keystone-auth',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
@@ -65,6 +66,7 @@ class dc_profile::openstack::keystone {
     options           => 'check inter 2000 rise 2 fall 5'
   }
   @@haproxy::balancermember { "${::fqdn}-keystone-admin":
+    instance          => 'openstack',
     listening_service => 'keystone-admin',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,

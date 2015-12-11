@@ -39,6 +39,7 @@ class dc_profile::openstack::glance {
 
   # Add this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-glance-registry":
+    instance          => 'openstack',
     listening_service => 'glance-registry',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
@@ -46,6 +47,7 @@ class dc_profile::openstack::glance {
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-glance-api":
+    instance          => 'openstack',
     listening_service => 'glance-api',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,

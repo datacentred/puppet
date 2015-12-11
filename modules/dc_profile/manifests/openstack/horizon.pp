@@ -20,6 +20,7 @@ class dc_profile::openstack::horizon {
 
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
+    instance          => 'openstack',
     listening_service => 'horizon',
     server_names      => $::hostname,
     ipaddresses       => $::ipaddress,
