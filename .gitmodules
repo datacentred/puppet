@@ -302,3 +302,6 @@
 [submodule "modules/augeasproviders_pam"]
 	path = modules/augeasproviders_pam
 	url = https://github.com/hercules-team/augeasproviders_pam.git
+[submodule "modules/confluence"]
+	path = modules/confluence
+	url = git@github.com:puppet-community/puppet-confluence.git
