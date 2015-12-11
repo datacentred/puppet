@@ -17,3 +17,4 @@ horizon::cache_server_ip:
  - "osdbmq1.%{::domain}"
  - "osdbmq2.%{::domain}"
 horizon::cache_server_port: '11211'
+horizon::custom_theme_path: 'static/themes/datacentred'
