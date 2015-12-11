@@ -46,6 +46,10 @@ a:visited {
 	border-color: $brand-color;
 }
 
+a.btn-primary {
+  color: #eeeeee;
+}
+
 .btn-danger {
   background: $alt-color;
   border-color: darken($alt-color, 5%);
@@ -91,7 +95,7 @@ a:visited {
 
 		&:after {
 			color: $brand-color;
-			content: "Openstack Dashboard";
+			content: "OpenStack Dashboard";
 			position: absolute;
 			top: 85px;
 			display: block;
