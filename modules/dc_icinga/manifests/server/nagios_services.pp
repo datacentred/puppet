@@ -616,14 +616,14 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_flush_average':
     use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb_dc!flushing!27017!5000!15000',
+    check_command       => 'check_mongodb_dc!flushing!27017!30000!50000',
     service_description => 'MongoDB Flush Average',
   }
 
   icinga::service { 'check_mongo_last_flush':
     use                 => 'dc_service_secondary',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb_dc!last_flush_time!27017!5000!15000',
+    check_command       => 'check_mongodb_dc!last_flush_time!27017!30000!50000',
     service_description => 'MongoDB Last Flush Time',
   }
 
