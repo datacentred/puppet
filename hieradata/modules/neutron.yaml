@@ -82,3 +82,11 @@ neutron::services::fwaas::enabled: true
 neutron::services::fwaas::driver: 'neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver'
 
 neutron::quota::quota_floatingip: '1'
+
+neutron::policy::policies:
+  neutron-create_firewall_policy-shared:
+    key: 'create_firewall_policy:shared'
+    value: 'rule:admin_only'
+  neutron-create_firewall_rule-shared:
+    key: 'create_firewall_rule:shared'
+    value: 'rule:admin_only'
