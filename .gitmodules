@@ -302,3 +302,6 @@
 [submodule "modules/horizon"]
 	path = modules/horizon
 	url = https://github.com/openstack/puppet-horizon
+[submodule "modules/confluence"]
+	path = modules/confluence
+	url = git@github.com:datacentred/puppet-confluence.git
