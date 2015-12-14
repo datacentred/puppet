@@ -1,6 +1,6 @@
 # Class: dc_profile::util::docs
 #
-# Manage apparmor
+# Manage in-house Confluence installation  
 #
 # Parameters:
 #
