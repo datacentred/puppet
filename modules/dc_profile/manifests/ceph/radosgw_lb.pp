@@ -27,8 +27,8 @@ class dc_profile::ceph::radosgw_lb {
           "set iface[. = '${ceph_public}']/family inet",
           "set iface[. = '${ceph_public}']/method static",
           "set iface[. = '${ceph_public}']/address ${myip}",
-          "set iface[. = '${ceph_public}']/netmask 255.255.255.248",
-          "set iface[. = '${ceph_public}']/post-up 'ip route replace default via 185.43.218.17'",
+          "set iface[. = '${ceph_public}']/netmask 255.255.255.240",
+          "set iface[. = '${ceph_public}']/post-up 'ip route replace default via 185.43.218.49'",
           "set iface[. = '${ceph_public}']/post-down 'ip route replace default via 10.10.9.1'",
       ],
   }
