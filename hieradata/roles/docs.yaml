@@ -1,2 +1,10 @@
 classes:
   - 'dc_profile::util::docs'
+
+postgresql:globals:
+  encoding: 'UTF-8'
+  locale: 'en_US.UTF-8'
+postgresql::server::database_grant:
+  confluencedb:
+    privilege: 'ALL'
+    db: 'confluencedb'
