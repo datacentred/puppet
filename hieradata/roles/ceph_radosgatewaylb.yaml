@@ -12,6 +12,10 @@ loadbalancer::keepalived_interfaces:
     interface: 'p1p2'
     virtual_router_id: 70
     virtual_ipaddress: '10.10.9.2/24'
+  VI_71:
+    interface: 'p1p1'
+    virtual_router_id: 71
+    virtual_ipaddress: '185.43.218.55/28'
 loadbalancer::haproxy_listeners:
   radosgw:
     ipaddress: '*'
