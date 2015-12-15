@@ -45,6 +45,7 @@ class dc_icinga2::checks {
     command   => [
       '"/usr/local/lib/nagios/plugins/check_ceph_health"',
     ],
+    timeout   => 120,
     arguments => {
       '-e' => '$ceph_health_exe$',
       '-c' => '$ceph_health_conf$',
@@ -64,6 +65,7 @@ class dc_icinga2::checks {
     command   => [
       '"/usr/local/lib/nagios/plugins/check_ceph_mon"',
     ],
+    timeout   => 120,
     arguments => {
       '-e' => '$ceph_mon_exe$',
       '-c' => '$ceph_mon_conf$',
@@ -79,6 +81,7 @@ class dc_icinga2::checks {
     command   => [
       '"/usr/local/lib/nagios/plugins/check_ceph_osd"',
     ],
+    timeout   => 120,
     arguments => {
       '-e' => '$ceph_osd_exe$',
       '-c' => '$ceph_osd_conf$',
@@ -95,6 +98,7 @@ class dc_icinga2::checks {
     command   => [
       '"/usr/local/lib/nagios/plugins/check_ceph_rgw"',
     ],
+    timeout   => 120,
     arguments => {
       '-e' => '$ceph_rgw_exe$',
       '-c' => '$ceph_rgw_conf$',
