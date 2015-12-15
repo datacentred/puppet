@@ -1,4 +1,4 @@
-confluence::javahome: 'usr'
+confluence::javahome: '/usr/'
 confluence::version: '5.7.1'
 confluence::facts_ensure: false
 confluence::tomcat_port: '8080'
