@@ -32,6 +32,8 @@ cinder::api::keystone_user: 'cinder'
 cinder::api::keystone_password: "%{hiera('keystone_cinder_password')}"
 cinder::api::os_region_name: "%{hiera('os_region')}"
 cinder::api::default_volume_type: 'Ceph'
+cinder::api::nova_catalog_info: 'compute:nova:publicURL'
+cinder::api::nova_catalog_admin_info: 'compute:nova:adminURL'
 cinder::scheduler::scheduler_driver: 'cinder.scheduler.simple.SimpleScheduler'
 cinder::glance::glance_api_servers: "https://%{hiera('os_api_host')}:%{hiera('glance_api_port')}"
 cinder::volume::rbd::rbd_pool: 'cinder.volumes'
