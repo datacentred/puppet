@@ -20,6 +20,7 @@ class dc_profile::openstack::cinder {
   include ::cinder::glance
   include ::cinder::quota
   include ::cinder::volume
+  include ::cinder::backends
   include ::cinder::ceilometer
   include ::cinder::volume::rbd
   include ::dc_icinga::hostgroup_cinder
@@ -36,5 +37,12 @@ class dc_profile::openstack::cinder {
   # Ensure Ceph is configured before we do anything with Cinder, and
   # restart the cinder-volume service if anything changes
   Class['::ceph'] ~> Class['::cinder::volume']
+
+  $cinder_rbd_defaults = {
+    rbd_user        => 'cinder',
+    rbd_secret_uuid => '42991612-85dc-42e4-ae3c-49cf07e98b70'
+  }
+
+  create_resources(cinder::backend::rbd, hiera('cinder_rbd_pools'), $cinder_rbd_defaults)
 
 }

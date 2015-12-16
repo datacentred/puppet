@@ -11,10 +11,11 @@ cinder::keystone::auth::public_url_v2: "https://%{hiera('os_api_host')}:8776/v2/
 cinder::keystone::auth::internal_url_v2: "https://%{hiera('os_api_host')}:8776/v2/%(tenant_id)s"
 cinder::keystone::auth::admin_url_v2: "https://%{hiera('os_api_host')}:8776/v2/%(tenant_id)s"
 
-cinder::rpc_backend: 'cinder.openstack.common.rpc.impl_kombu'
-cinder::database_connection: "mysql://%{hiera('cinder_db_user')}:%{hiera('cinder_db_pass')}@%{hiera('os_api_host')}/%{hiera('cinder_db')}?charset=utf8"
 cinder::verbose: true
 cinder::debug:   true
+cinder::database_connection: "mysql://%{hiera('cinder_db_user')}:%{hiera('cinder_db_pass')}@%{hiera('os_api_host')}/%{hiera('cinder_db')}?charset=utf8"
+cinder::control_exchange: 'cinder'
+cinder::rpc_backend: 'cinder.openstack.common.rpc.impl_kombu'
 
 cinder::rabbit_hosts:
  - osdbmq0.%{::domain}
@@ -24,7 +25,8 @@ cinder::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
 cinder::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 cinder::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 cinder::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
-cinder::control_exchange: 'cinder'
+
+
 cinder::api::keystone_enabled: true
 cinder::api::auth_uri: "https://%{hiera('os_api_host')}:5000/"
 cinder::api::identity_uri: "https://%{hiera('os_api_host')}:35357/"
@@ -34,11 +36,19 @@ cinder::api::os_region_name: "%{hiera('os_region')}"
 cinder::api::default_volume_type: 'Ceph'
 cinder::api::nova_catalog_info: 'compute:nova:publicURL'
 cinder::api::nova_catalog_admin_info: 'compute:nova:adminURL'
+
 cinder::scheduler::scheduler_driver: 'cinder.scheduler.simple.SimpleScheduler'
+
 cinder::glance::glance_api_servers: "https://%{hiera('os_api_host')}:%{hiera('glance_api_port')}"
+
 cinder::volume::rbd::rbd_pool: 'cinder.volumes'
 cinder::volume::rbd::rbd_user: 'cinder'
 cinder::volume::rbd::rbd_secret_uuid: '42991612-85dc-42e4-ae3c-49cf07e98b70'
+
 cinder::quota::quota_volumes: '10'
 cinder::quota::quota_snapshots: '10'
 cinder::quota::quota_gigabytes: '200'
+
+cinder::backends::enabled_backends:
+  - 'cinder.volumes'
+  - 'cinder.volumes.flash'
