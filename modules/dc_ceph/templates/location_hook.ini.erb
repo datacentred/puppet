@@ -1,0 +1,8 @@
+<%- location = @crush_location.split(':') -%>
+[main]
+root=<%= location[0] %>
+datacenter=<%= location[1] %>
+room=<%= location[2] %>
+rack=<%= location[3] %>
+chassis=<%= location[4] %>
+host=<%= @hostname %>

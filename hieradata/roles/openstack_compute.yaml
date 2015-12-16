@@ -75,15 +75,25 @@ sysctls::values:
     vm.swappiness:
         value: '10'
 
-ceph::params::client_params:
-  'rbd cache': true
-  'rbd cache size': '268435456'
-  'rbd cache max dirty': '201326592'
-  'rbd cache dirty target': '134217728'
-  'rbd cache max dirty age': '2'
-  'rbd cache writethrough until flush': true
-
 dc_ssh::config:
   AllowGroups:
     value:
       - 'nova'
+
+ceph::conf:
+  client:
+    rbd cache: 'true'
+    rbd cache size: '268435456'
+    rbd cache max dirty: '201326592'
+    rbd cache dirty target: '134217728'
+    rbd cache max dirty age: '2'
+    rbd cache writethrough until flush: 'true'
+
+# Note: client.admin required by nova::compute::rbd
+ceph::keys:
+  /etc/ceph/ceph.client.admin.keyring:
+    user: 'client.admin'
+    key: "%{hiera('ceph_key_client_admin')}"
+  /etc/ceph/ceph.client.cinder.keyring:
+    user: 'client.cinder'
+    key: "%{hiera('ceph_key_client_cinder')}"

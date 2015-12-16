@@ -12,6 +12,7 @@
 #
 class dc_profile::openstack::nova::compute {
 
+  include ::ceph
   include ::nova
   include ::nova::compute
   include ::nova::compute::libvirt
@@ -58,28 +59,13 @@ class dc_profile::openstack::nova::compute {
     default: {}
   }
 
-  # Configure Ceph client, this installs ceph and the client keyring
-  ceph::client { 'cinder':
-    perms => 'osd \"allow class-read object_prefix rbd_children, allow rwx pool=cinder.volumes, allow rwx pool=cinder.vms, allow rx pool=glance\" mon \"allow r\"',
-  } ->
-  # Install the admin key on each host as ::nova::compute::rbd has a requirement
-  # that 'ceph auth' works without specifying the keyring.
-  # TODO: The hard-coded horror goes away in the next generation ceph module
-  ceph::keyring { 'ceph.client.admin.keyring':
-    user => 'client.admin',
-    key  => hiera('ceph_admin_key'),
-  }
-
   # Ensure ceph is installed and configured before installing the cinder secret
-  Class['::ceph::config'] ->
-  Ceph::Keyring['ceph.client.admin.keyring'] ->
-  Class['::nova::compute::rbd']
+  Class['::ceph'] -> Class['::nova::compute::rbd']
 
   # Make sure the Ceph client configuration is in place
   # before we do any of the Nova rbd-related configuration, and
   # restart if there's any changes
-  Ceph::Client['cinder'] ~>
-  Class['::nova::compute']
+  Class['::ceph'] ~> Class['::nova::compute']
 
   # Manage the user so we can set the shell
   user { 'nova':

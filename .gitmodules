@@ -91,9 +91,6 @@
 [submodule "modules/file_concat"]
 	path = modules/file_concat
 	url = https://github.com/electrical/puppet-lib-file_concat
-[submodule "modules/ceph"]
-	path = modules/ceph
-	url = https://github.com/datacentred/datacentred-ceph
 [submodule "modules/gcc"]
 	path = modules/gcc
 	url = https://github.com/puppetlabs/puppetlabs-gcc
@@ -305,3 +302,6 @@
 [submodule "modules/confluence"]
 	path = modules/confluence
 	url = git@github.com:datacentred/puppet-confluence.git
+[submodule "modules/ceph"]
+	path = modules/ceph
+	url = https://github.com/spjmurray/puppet-ceph

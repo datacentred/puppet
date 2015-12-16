@@ -12,16 +12,12 @@
 #
 class dc_profile::ceph::osd {
 
+  include ::sysctls
   include ::dc_ceph::osd
-  include ::dc_ceph::osd_sysctl
-  include ::ceph::osd
+  include ::ceph
   include ::dc_icinga::hostgroup_ceph_osd
 
-  # Proprietary additions first to partition the
-  # journal SSDs
-  Class['dc_ceph::osd'] ->
-  Class['ceph::osd']
-
+  Class['::dc_ceph::osd'] -> Class['::ceph']
 
   # Ensure both 10GbE interfaces are properly configured
   $ceph_public = 'p1p1'

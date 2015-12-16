@@ -39,3 +39,11 @@ dc_ssh::config:
   AllowGroups:
     value:
       - 'nova'
+
+ceph::keys:
+  /etc/ceph/ceph.client.cinder.keyring:
+    user: 'client.cinder'
+    key: "%{hiera('ceph_key_client_cinder')}"
+  /etc/ceph/ceph.client.glance.keyring:
+    user: 'client.glance'
+    key: "%{hiera('ceph_key_client_glance')}"

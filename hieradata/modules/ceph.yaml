@@ -1,33 +1,18 @@
 ---
-ceph::params::deploy_user: 'ceph-deploy'
-ceph::params::deploy_user_is_system: true
-ceph::params::fsid: "%{hiera('ceph_cluster_fsid')}"
-ceph::params::mon_initial_member: 'ceph-mon-0,ceph-mon-1,ceph-mon-2'
-ceph::params::mon_host: '10.10.104.187,10.10.104.214,10.10.104.184'
-ceph::params::public_network: '10.10.104.0/24'
-ceph::params::cluster_network: '10.10.96.0/24'
-ceph::params::monitor_secret: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAnZgpJlN0JRIuokJNU660mBapSsnLbfEojkgYCWKGdGedoKRB1lppzeTrH/giMLagoFLBVYV7oYWhoT0nS9wHlPlOdh4Czuqwqwh5lnhuNhxSkem9u6qOlvUgeudH9FGsuhUTjJiOrvIfRfx0qdiNmsePB8KBjVAgsytHWQSwEAjSRfWL5CXGy6A9Nse8Jug+GlcbFeDqxGA1+yVsFD1BPHYUI3D2cactcDuvNKB+33sf7bcjNnqgPiVERnleUNplQyr54/vqJr+tVa4w5wARTI9ACEMo0UPl+ucWNwnGk/IBUzYX7VZi05Y80753eFUNNEwj5wOVGJ2w/VYX+Gak6DBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBB1MmB0txEFTWSKGxj2LnmkgDDkmBKFuv8UX4PYwt6OzZTclNrVDRhckLMHvybr/bXlnTYHZGGfInM3DeO2QO5wHrk=]
-ceph::params::id_rsa: ENC[PKCS7,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]
-ceph::params::id_rsa_pub: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCz4W9OwTuHNIyo50pHBbmoT5T6GejbrHXQ9R5Kd+45UyG/V1Ugj7/v6NFALxGNlnpqZt+DlZVaF9wU05KTKqKBCcl5PxtqdQYCYgNFLii/sLgZG8KqAj2dUdJjZcsa3wUBAR5gD3whsml2GRmxqP4oUkFl7lqE1SkV6wKLXApnQRc50MYetfI/NW0Q+8fEsxI1CdssyIqtYr1kZvxhPL/7aPaAxnIO2Um/hOpL5E+Bd3iNubXFvoHBxFG9vSNnQxlyvuJ8LjHw6tDF0giee47nTcj+tADBWNhR5kc810YnUhkd020Pq9jmEmYj8w+3/m5bio0+CRl4r91vb/MFIvid'
-ceph::params::disks:
-  - 'sdb:/dev/sdg1'
-  - 'sdc:/dev/sdg2'
-  - 'sdd:/dev/sdg3'
-  - 'sde:/dev/sdg4'
-  - 'sdf:/dev/sdg5'
-ceph::params::rados_region: 'uk'
-ceph::params::rados_zone: 'sal01'
-ceph::params::pg_num: 4096
-ceph::params::osd_location_hook: '/usr/local/bin/location_hook.py'
-ceph::params::rgw_pool_size: 4096
-ceph::params::keystone_url: 'https://compute.datacentred.io:35357'
-ceph::params::keystone_admin_token: "%{hiera('keystone_admin_uuid')}"
-ceph::params::keystone_accepted_roles: '_member_,admin'
-ceph::params::rgw_dns_name: 'storage.datacentred.io'
-ceph::params::ssl: true
-ceph::params::global_params:
-  osd_max_backfills: 1
-  osd_recovery_max_active: 1
-  osd_recovery_threads: 1
-  osd_recovery_op_priority: 1
-  osd_crush_chooseleaf_type: 2
+ceph::manage_repo: false
+
+ceph::mon_key: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAloCX4UvrM1E/Nz6UJXGQSQNPBgfuCqYz8a9y7uVeGC9iJURt2VTd9YtMuJ02bQQUePUGsV4h2lJtQROeOlqVOIDITmu/csajpA2GHr6vCjDZoiePxNk1oXHYZthbvOGI+yM9zTyL+nWiVZL2iMAeM+s0r2DEDDh8R5Q020Jn5EGbgsI1zyW1tHtLqEO3UyGlLzfkXaUXzPv3jIutyvtmi0JmHu1UTEAD1+0QBs1qdBhPVGJeBpDTOIQ/puP1V3OYOTRfBXc42IdvovtKYXJ0rQvymnFDncahtBpijVLU7WLFTaNWxzKyU4Lm3bqev3d8Hpu+oxEGrpHnnNCckzl9KzBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCgt7VMXhyBNovYn8RsFgqtgDC8jPQ3tPH9zsfS4iPv6BaouJUzx+OFqiEDVA4Opyah0H2BbbYPd7iEL4VZGmlCm0E=]
+
+ceph::conf_merge: true
+
+ceph::conf:
+  global:
+    fsid: 'd222d2b3-b4c4-4443-9717-0c4ccadae458'
+    mon initial members: 'ceph-mon-0,ceph-mon-1,ceph-mon-2'
+    mon host: '10.10.104.187,10.10.104.214,10.10.104.184'
+    auth supported: 'cephx'
+    public network: '10.10.104.0/24'
+    cluster network: '10.10.96.0/24'
+    osd crush chooseleaf type: '2'
+
+ceph::keys_merge: true
