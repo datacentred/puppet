@@ -3,23 +3,23 @@
 # e.g. port ID on the SXP
 # TODO: This is only for SSD class nodes
 ceph::disks: {}
-#  0:0:0:0/0:0:0:0:
-#    fstype: 'xfs'
-#  0:0:1:0/0:0:1:0:
-#    fstype: 'xfs'
-#  0:0:2:0/0:0:2:0:
-#    fstype: 'xfs'
-#  0:0:3:0/0:0:3:0:
-#    fstype: 'xfs'
-#  0:0:4:0/0:0:4:0:
-#    fstype: 'xfs'
-#  0:0:5:0/0:0:5:0:
-#    fstype: 'xfs'
-#  0:0:6:0/0:0:6:0:
-#    fstype: 'xfs'
-#  0:0:7:0/0:0:7:0:
-#    fstype: 'xfs'
-#  0:0:8:0/0:0:8:0:
-#    fstype: 'xfs'
-#  0:0:9:0/0:0:9:0:
-#    fstype: 'xfs'
+  0:0:0:0/0:0:0:0:
+    fstype: 'xfs'
+  0:0:1:0/0:0:1:0:
+    fstype: 'xfs'
+  0:0:2:0/0:0:2:0:
+    fstype: 'xfs'
+  0:0:3:0/0:0:3:0:
+    fstype: 'xfs'
+  0:0:4:0/0:0:4:0:
+    fstype: 'xfs'
+  0:0:5:0/0:0:5:0:
+    fstype: 'xfs'
+  0:0:6:0/0:0:6:0:
+    fstype: 'xfs'
+  0:0:7:0/0:0:7:0:
+    fstype: 'xfs'
+  0:0:8:0/0:0:8:0:
+    fstype: 'xfs'
+  0:0:9:0/0:0:9:0:
+    fstype: 'xfs'
