@@ -2,7 +2,7 @@
 # Temporary - Modules needs to us a predictable hardware addressing mode
 # e.g. port ID on the SXP
 # TODO: This is only for SSD class nodes
-ceph::disks: {}
+ceph::disks:
   0:0:0:0/0:0:0:0:
     fstype: 'xfs'
   0:0:1:0/0:0:1:0:
