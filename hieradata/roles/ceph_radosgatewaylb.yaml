@@ -4,10 +4,6 @@ classes:
 
 dc_icinga::client::address: "%{::ipaddress_p1p2}"
 loadbalancer::keepalived_interfaces:
-  VI_69:
-    interface: 'p1p1'
-    virtual_router_id: 69
-    virtual_ipaddress: '185.43.218.18/29'
   VI_70:
     interface: 'p1p2'
     virtual_router_id: 70
