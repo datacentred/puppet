@@ -3,6 +3,7 @@ classes:
   - '::dc_profile::ceph::radosgw'
 
 ceph::rgw: true
+ceph::rgw_id: "radosgw.%{hostname}"
 
 ceph::conf:
   client.radosgw.%{hostname}:
