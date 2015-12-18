@@ -8,8 +8,13 @@
 #   FQDN of the parent node.  Must be the same as the subject name of the X509
 #   certificate used by the API
 #
+# [*parent_host*]
+#   IP address or hostname of the parent node.  If using a host name it must
+#   be resolvable via DNS
+#
 class dc_icinga2::agent (
   $parent_fqdn,
+  $parent_host = undef,
 ) {
 
   include ::icinga2
@@ -22,9 +27,15 @@ class dc_icinga2::agent (
   include ::dc_icinga2::pagerduty::agent
   include ::dc_icinga2::sudoers
 
+  if $parent_host {
+    $_parent_host = $parent_host
+  } else {
+    $_parent_host = $parent_fqdn
+  }
+
   # Define the endpoint and zone of the parent satellite or master
   icinga2::object::endpoint { $parent_fqdn:
-    host => $parent_fqdn,
+    host => $_parent_host,
   }
 
   icinga2::object::zone { $parent_fqdn:

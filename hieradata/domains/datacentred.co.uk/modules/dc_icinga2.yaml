@@ -1,1 +1,3 @@
-dc_icinga2::agent::parent_fqdn: 'icinga2.datacentred.services'
+---
+dc_icinga2::agent::parent_fqdn: 'icinga2.core.sal01.datacentred.co.uk'
+dc_icinga2::agent::parent_host: 'icinga2.datacentred.services'
