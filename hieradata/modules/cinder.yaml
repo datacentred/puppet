@@ -15,7 +15,7 @@ cinder::verbose: true
 cinder::debug:   true
 cinder::database_connection: "mysql://%{hiera('cinder_db_user')}:%{hiera('cinder_db_pass')}@%{hiera('os_api_host')}/%{hiera('cinder_db')}?charset=utf8"
 cinder::control_exchange: 'cinder'
-cinder::rpc_backend: 'cinder.openstack.common.rpc.impl_kombu'
+cinder::rpc_backend: 'rabbit'
 
 cinder::rabbit_hosts:
  - osdbmq0.%{::domain}
