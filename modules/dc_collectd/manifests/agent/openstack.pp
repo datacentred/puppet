@@ -24,26 +24,6 @@ class dc_collectd::agent::openstack(
           'Verbose'    => true,
         },
       },
-      'cinder_plugin'   => {
-        'script_source' => 'puppet:///modules/dc_collectd/openstack/cinder_plugin.py',
-        'config'        => {
-          'Username'   => $openstack_username,
-          'Password'   => $openstack_password,
-          'TenantName' => $openstack_tenant,
-          'AuthURL'    => "\"${openstack_authURL}\"",
-          'Verbose'    => true,
-        },
-      },
-      'glance_plugin'   => {
-        'script_source' => 'puppet:///modules/dc_collectd/openstack/glance_plugin.py',
-        'config'        => {
-          'Username'   => $openstack_username,
-          'Password'   => $openstack_password,
-          'TenantName' => $openstack_tenant,
-          'AuthURL'    => "\"${openstack_authURL}\"",
-          'Verbose'    => true,
-        },
-      },
       'neutron_plugin'  => {
         'script_source' => 'puppet:///modules/dc_collectd/openstack/neutron_plugin.py',
         'config'        => {
