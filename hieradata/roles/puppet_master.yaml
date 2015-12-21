@@ -52,3 +52,8 @@ dc_foreman_proxy::use_puppet: true
 
 
 puppetdeploy::is_puppet_master: true
+
+dc_ssh::config:
+  AllowGroups:
+    value:
+      - 'puppet'

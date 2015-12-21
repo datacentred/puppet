@@ -347,9 +347,7 @@ dc_ssh::config:
   AllowGroups:
     value:
       - 'sysadmin'
-      - 'git'
       - 'ceph-deploy'
-      - 'puppet'
 
 # galera and rabbitmq cluster details
 #
