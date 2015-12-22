@@ -25,11 +25,12 @@ def main():
     dupes = []
     i = 0
     for router in neutron.list_routers()['routers']:
-        l3_agents = neutron.list_l3_agent_hosting_routers(router['id'])
-        if len(l3_agents['agents']) > 1:
+        rid = router['id']
+        l3_agents = neutron.list_l3_agent_hosting_routers(rid)
+        nagents = l3_agents['agents']
+        if len(nagents) > 1:
             i += 1
-            dupes.append("%s has %s l3 agents" %
-                         (router['id'], len(l3_agents['agents'])))
+            dupes.append('{} has {} l3 agents'.format(rid, nagents))
 
     if i == 0:
         print "No duplicate l3 agents found"
