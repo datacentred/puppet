@@ -167,8 +167,8 @@ class dc_profile::openstack::haproxy {
       'option'         => ['tcpka', 'httpchk', 'tcplog'],
       'balance'        => 'source',
       'rspadd'         => 'Strict-Transport-Security:\ max-age=31536000',
-      'timeout client' => '30s',
-      'timeout server' => '30s',
+      'timeout client' => '180s',
+      'timeout server' => '180s',
     },
   }
 
