@@ -26,17 +26,6 @@ boxes:
     # Default: DHCP
     # ip: 192.168.1.50
 
-    # You can forward ports from your local machine to the guest
-    # forwarded_ports:
-    #   http:
-    #     guest: 80
-    #     host: 8080
-    #     protocol: tcp
-    #   https:
-    #     guest: 443
-    #     host: 8443
-    #     protocol: tcp
-
     # You can also provision a CentOS instance instead of the default
     # Ubuntu one
     # rhel: true
