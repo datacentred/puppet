@@ -26,7 +26,7 @@ STATE_OK=0
 STATE_WARNING=1
 STATE_CRITICAL=2
 STATE_UNKNOWN=3
-DEAMON='cinder-volume'
+DAEMON='cinder-volume'
 
 usage ()
 {
@@ -55,32 +55,34 @@ then
     exit $STATE_UNKNOWN
 fi
 
-MASTER_PID=$(ps -ef | awk "BEGIN {FS=\" \"}{if (/python(2.7)? [^ ]+${DEAMON}/) {print \$2 ; exit}}")
+MASTER_PID=$(ps -ef | awk "BEGIN {FS=\" \"}{if (/python(2.7)? [^ ]+${DAEMON}/) {print \$2 ; exit}}")
 
-if [ -z $MASTER_PID ]; then
-    echo "$DEAMON is not running."
+if [[ -z $MASTER_PID ]]; then
+    echo "$DAEMON is not running."
     exit $STATE_CRITICAL
 fi
 
 CHILD_PID=$(ps h --ppid ${MASTER_PID} -o pid)
 
-if [ -z $CHILD_PID ]; then
-    echo "$DEAMON is not running."
+if [[ -z $CHILD_PID ]]; then
+    echo "$DAEMON is not running."
     exit $STATE_CRITICAL
 fi
 
-if [ "$(id -u)" != "0" ]; then
-    echo "$DEAMON is running but the script must be run as root"
+if [[ "$(id -u)" != "0" ]]; then
+    echo "$DAEMON is running but the script must be run as root"
     exit $STATE_WARNING
 else
 
     #Need root to "run netstat -p"
-    if ! KEY=$(netstat -epta 2>/dev/null | awk "{if (/amqp.*${CHILD_PID}\/python/) {print ; exit}}") || test -z "$KEY"
-    then
-        echo "$DEAMON is not connected to AMQP"
-        exit $STATE_CRITICAL
-    fi
+    for PID in $CHILD_PID ; do
+        if ! KEY=$(netstat -epta 2>/dev/null | awk "{if (/amqp.*${PID}\/python/) {print ; exit}}") || test -z "$KEY"
+        then
+            echo "$DAEMON is not connected to AMQP"
+            exit $STATE_CRITICAL
+        fi
+    done
 fi
 
-echo "$DEAMON is working."
+echo "$DAEMON is working."
 exit $STATE_OK
