@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 # Ensure everyone is running a consistent vagrant version
-Vagrant.require_version '~> 1.7.2'
+Vagrant.require_version '~> 1.8.0'
 
 Vagrant.configure('2') do |config|
   config.vm.box              = 'puppetlabs/ubuntu-14.04-64-puppet'
@@ -14,14 +14,10 @@ Vagrant.configure('2') do |config|
   config.ssh.username = 'root'
   config.ssh.password = 'puppet'
 
-  # Use landrush for DNS resolution
-  config.landrush.enabled = true
-
-  # Recurse all DNS queries via ns0/ns1 for now
-  config.landrush.upstream '8.8.8.8'
-
-  # Give every guest private networking
-  #config.vm.network :private_network, type: :dhcp
+  if Vagrant.has_plugin?("landrush")
+		config.landrush.enabled = true
+		config.landrush.upstream '8.8.8.8'
+  end
 
   # Setup a dedicated PuppetDB for storedconfigs
   config.vm.define 'puppet' do |box|
@@ -32,6 +28,7 @@ Vagrant.configure('2') do |config|
   end
 
   # Environment specific boxes (defined in .vagrantuser)
+  # vagrant-nugrant is required for this to work
   config.user.boxes.each do |name, options|
     config.vm.define name.to_s do |box|
       box.vm.hostname = "#{name.to_s}.vagrant.dev"
@@ -47,16 +44,7 @@ Vagrant.configure('2') do |config|
         box.vm.network :private_network, type: :dhcp
       end
 
-      # Allow ports to be forwarded
-      if options.has_key?(:forwarded_ports)
-        options.forwarded_ports.each do |name, forwarded_port|
-          config.vm.network 'forwarded_port', guest: forwarded_port[:guest],
-                                              host: forwarded_port[:host],
-                                              protocol: forwarded_port[:protocol]
-        end
-      end
-
-      # Provision some flavour of RHEL instead of the default Ubuntu Trusty
+      # Optionally provision CentOS
       if options.has_key?(:rhel)
         box.vm.box = 'puppetlabs/centos-7.0-64-puppet'
         box.vm.box_version = '1.0.1'
@@ -67,6 +55,7 @@ Vagrant.configure('2') do |config|
         virtualbox.cpus   = options.has_key?(:cpus) ? options.cpus.to_i : 2
         virtualbox.memory = options.has_key?(:memory) ? options.memory.to_i : 1024
         virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+		virtualbox.linked_clone = true
       end
 
       # VMware Fusion Provider
@@ -75,6 +64,7 @@ Vagrant.configure('2') do |config|
         vmware.vmx["vhv.enable"] = "TRUE"
         vmware.vmx['numvcpus'] = options.has_key?(:cpus) ? options.cpus.to_i : 2
         vmware.vmx['memsize']  = options.has_key?(:memory) ? options.memory.to_i : 1024
+		vmware.linked_clone = true
       end
 
       # Provision the box
