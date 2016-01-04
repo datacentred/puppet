@@ -42,4 +42,6 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_psu',
   }
 
+  package { 'nagios-plugin-check-scsi-smart': }
+
 }
