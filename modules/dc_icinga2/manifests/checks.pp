@@ -108,6 +108,7 @@ class dc_icinga2::checks {
 
   icinga2::object::checkcommand { 'smart':
     command   => [
+      '"sudo"',
       'PluginDir + "/check_scsi_smart"',
     ],
     arguments => {
