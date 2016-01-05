@@ -21,6 +21,7 @@ class dc_icinga2::services::smart {
     hash          => 'host.vars.blockdevices',
     import        => 'generic-service',
     check_command => 'smart',
+    display_name  => '"smart " + blockdevice',
     vars          => {
       'smart_device' => 'attributes.path',
     },
