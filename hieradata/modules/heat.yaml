@@ -4,9 +4,9 @@ heat::keystone::auth::password: "%{hiera('keystone_heat_password')}"
 heat::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
 heat::keystone::auth::tenant: "%{hiera('os_service_tenant')}"
 heat::keystone::auth::region: "%{hiera('os_region')}"
-heat::keystone::auth::public_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s')"
-heat::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s')"
-heat::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s')"
+heat::keystone::auth::public_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
+heat::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
+heat::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
 
 heat::keystone::auth_cfn::configure_user: false
 heat::keystone::auth_cfn::configure_user_role: false
