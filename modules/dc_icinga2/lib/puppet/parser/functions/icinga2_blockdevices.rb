@@ -17,12 +17,16 @@ module Puppet::Parser::Functions
     output = {}
     blockdevices.each do |device|
 
+      # Translate the device name e.g. cciss!c0d0 into a valid object name
+      # and path (i.e. '!' is illegal as an object name)
+      device_clean = device.tr('!', '/')
+
       # Generate a key to be inserted into icinga2::object::host::vars
-      key = "blockdevices[\"#{device}\"]"
+      key = "blockdevices[\"#{device_clean}\"]"
 
       # Buffer the result
       output[key] = {
-        'path' => '/dev/' + device.tr('!', '/')
+        'path' => '/dev/' + device_clean
       }
 
     end
