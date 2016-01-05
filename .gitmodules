@@ -227,9 +227,6 @@
 [submodule "modules/lldp"]
 	path = modules/lldp
 	url = https://github.com/mfournier/puppet-lldp.git
-[submodule "modules/augeasproviders_ssh"]
-	path = modules/augeasproviders_ssh
-	url = https://github.com/hercules-team/augeasproviders_ssh
 [submodule "modules/gerrit"]
 	path = modules/gerrit
 	url = https://github.com/datacentred/datacentred-gerrit
@@ -293,9 +290,6 @@
 [submodule "modules/collectd"]
 	path = modules/collectd
 	url = https://github.com/puppet-community/puppet-collectd.git
-[submodule "modules/augeasproviders_pam"]
-	path = modules/augeasproviders_pam
-	url = https://github.com/hercules-team/augeasproviders_pam.git
 [submodule "modules/horizon"]
 	path = modules/horizon
 	url = https://github.com/openstack/puppet-horizon
