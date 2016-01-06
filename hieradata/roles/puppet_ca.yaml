@@ -4,12 +4,6 @@ classes:
   - '::dc_profile::puppet::puppet_master'
 
 puppet::conf:
-  main:
-    logdir: '/var/lib/puppet'
-    vardir: '/var/lib/puppet'
-    ssldir: '/var/lib/puppet/ssl'
-    rundir: '/var/run/puppet'
-    show_diff: 'true'
   master:
     environmentpath: '$confdir/environments'
     node_terminus: 'exec'
