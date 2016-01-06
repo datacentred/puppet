@@ -7,4 +7,4 @@ influxdb::server::collectd_typesdb: '/usr/share/collectd/types.db'
 influxdb::server::graphite_enabled: true
 influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
-influxdb::server::version: '0.9.4'
+influxdb::server::version: '0.9.6'

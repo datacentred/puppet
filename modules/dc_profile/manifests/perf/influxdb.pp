@@ -15,4 +15,16 @@ class dc_profile::perf::influxdb {
     group   => 'influxdb',
     require => Package['influxdb'],
   }
+
+  logrotate::rule { 'influxdb':
+    path         => '/var/log/influxdb/influxd.log',
+    rotate       => 7,
+    rotate_every => 'day',
+    ifempty      => false,
+    compress     => true,
+    copytruncate => true,
+    dateext      => true,
+    missingok    => true,
+  }
+
 }
