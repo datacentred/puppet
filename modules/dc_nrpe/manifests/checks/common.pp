@@ -32,7 +32,7 @@ class dc_nrpe::checks::common (
 
   dc_nrpe::check { 'check_total_procs':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => "-w ${check_procs[warn]} -c ${check_procs[crit]}",
+    args => "-w ${check_procs[warn]} -c ${check_procs[crit]} -k",
   }
 
   dc_nrpe::check { 'check_all_disks':
