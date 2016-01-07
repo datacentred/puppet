@@ -26,7 +26,7 @@ class dc_icinga2::services::bmc (
       'bmc_host'     => 'host.vars.address_bmc',
       'bmc_username' => $username,
       'bmc_password' => $password,
-      'bmc_revision' => '2.0f',
+      'bmc_revision' => '2.21',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.productname == "PowerEdge R220"',
