@@ -173,9 +173,6 @@
 [submodule "modules/git"]
 	path = modules/git
 	url = https://github.com/mxhero/puppet-git.git
-[submodule "modules/augeasproviders"]
-	path = modules/augeasproviders
-	url = https://github.com/hercules-team/augeasproviders.git
 [submodule "modules/xinetd"]
 	path = modules/xinetd
 	url = https://github.com/puppetlabs/puppetlabs-xinetd.git
@@ -302,3 +299,36 @@
 [submodule "modules/augeasproviders_ssh"]
 	path = modules/augeasproviders_ssh
 	url = https://github.com/hercules-team/augeasproviders_ssh
+[submodule "modules/augeasproviders_postgresql"]
+	path = modules/augeasproviders_postgresql
+	url = https://github.com/hercules-team/augeasproviders_postgresql
+[submodule "modules/augeasproviders_sysctl"]
+	path = modules/augeasproviders_sysctl
+	url = https://github.com/hercules-team/augeasproviders_sysctl
+[submodule "modules/augeasproviders_syslog"]
+	path = modules/augeasproviders_syslog
+	url = https://github.com/hercules-team/augeasproviders_syslog
+[submodule "modules/augeasproviders_mounttab"]
+	path = modules/augeasproviders_mounttab
+	url = https://github.com/hercules-team/augeasproviders_mounttab
+[submodule "modules/augeasproviders_shellvar"]
+	path = modules/augeasproviders_shellvar
+	url = https://github.com/hercules-team/augeasproviders_shellvar
+[submodule "modules/augeasproviders_pam"]
+	path = modules/augeasproviders_pam
+	url = https://github.com/hercules-team/augeasproviders_pam
+[submodule "modules/augeasproviders_apache"]
+	path = modules/augeasproviders_apache
+	url = https://github.com/hercules-team/augeasproviders_apache
+[submodule "modules/augeasproviders_core"]
+	path = modules/augeasproviders_core
+	url = https://github.com/hercules-team/augeasproviders_core
+[submodule "modules/augeasproviders_puppet"]
+	path = modules/augeasproviders_puppet
+	url = https://github.com/hercules-team/augeasproviders_puppet
+[submodule "modules/augeasproviders_nagios"]
+	path = modules/augeasproviders_nagios
+	url = https://github.com/hercules-team/augeasproviders_nagios
+[submodule "modules/augeasproviders_grub"]
+	path = modules/augeasproviders_grub
+	url = https://github.com/hercules-team/augeasproviders_grub
