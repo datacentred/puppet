@@ -299,3 +299,6 @@
 [submodule "modules/ceph"]
 	path = modules/ceph
 	url = https://github.com/spjmurray/puppet-ceph
+[submodule "modules/augeasproviders_ssh"]
+	path = modules/augeasproviders_ssh
+	url = https://github.com/hercules-team/augeasproviders_ssh
