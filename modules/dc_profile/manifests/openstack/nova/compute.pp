@@ -32,15 +32,6 @@ class dc_profile::openstack::nova::compute {
     require => Class['::Nova'],
   }
 
-  # Workaround missing dependancy in one of the Neutron packages
-  # Should be able to remove this once we go to Kilo
-  #file { '/etc/default/neutron-server':
-  #  ensure => file,
-  #  owner  => 'root',
-  #  group  => 'root',
-  #  mode   => '0644',
-  #}
-
   # Ensure ARM-based hypervisors don't advertise the ability to virtualise i686 and x86_64
   # based instances and vice-versa
   case $::architecture {
@@ -102,15 +93,6 @@ class dc_profile::openstack::nova::compute {
   case $::osfamily {
     'Debian': {
       include ::dc_profile::openstack::nova::apparmor
-      # Patch in the fix for revert resize deleting the rbd
-      file { '/usr/lib/python2.7/dist-packages/nova/compute/manager.py':
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        source  => 'puppet:///modules/dc_openstack/manager.py',
-        require => Package['python-nova'],
-        notify  => Service['nova-compute'],
-      }
     }
     'RedHat': {
       service { 'firewalld':
