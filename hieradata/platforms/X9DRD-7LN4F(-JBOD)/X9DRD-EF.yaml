@@ -30,3 +30,4 @@ ceph::conf:
     filestore op threads: '4'
 
 dc_icinga::client::address: "%{::ipaddress_em1}"
+dc_nrpe::checks::ceph::public_ip: "%{::ipaddress_bond104}"
