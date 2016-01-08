@@ -666,7 +666,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_cephosd_hw':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_ceph_osd',
-    check_command       => 'check_nrpe_1arg!check_cephosd_hw',
+    check_command       => 'check_nrpe_1arg!check_ceph_memory',
     service_description => 'OSD Node Hardware Config',
   }
 
