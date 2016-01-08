@@ -29,4 +29,4 @@ ceph::conf:
     osd op threads: '5'
     filestore op threads: '4'
 
-dc_icinga2::host::address: "%{::ipaddress_em1}"
+dc_icinga::client::address: "%{::ipaddress_em1}"
