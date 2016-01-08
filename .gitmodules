@@ -230,9 +230,6 @@
 [submodule "modules/gerrit"]
 	path = modules/gerrit
 	url = https://github.com/datacentred/datacentred-gerrit
-[submodule "modules/mcollective"]
-	path = modules/mcollective
-	url = https://github.com/datacentred/puppetlabs-mcollective.git
 [submodule "modules/grafana"]
 	path = modules/grafana
 	url = https://github.com/bfraser/puppet-grafana.git
