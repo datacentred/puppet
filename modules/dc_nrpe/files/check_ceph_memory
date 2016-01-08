@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+"""
+Checks the server has enough memory to support the number of OSDs provisioned
+"""
+
+import subprocess
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """
+    Gather stats with df, check memory available is greater than
+    1GiB per TB
+    """
+
+    # Get all mounted filesystems
+    output = subprocess.check_output(['df'])
+
+    # Select the OSDs only
+    osds = [x for x in output.split("\n") if '/var/lib/ceph/osd' in x]
+
+    if not len(osds):
+        print 'OK: no OSDs discovered'
+        sys.exit(NAGIOS_OK)
+
+    # Get the total OSD size in TB
+    osd_total = reduce(lambda x, y: x + int(y.split()[1]), osds, 0)
+    osd_total_tb = float(osd_total) / 1000000000.0
+
+    # Get the total memory in GiB
+    with open('/proc/meminfo') as meminfo_file:
+        mem_total = int(meminfo_file.readline().split()[1])
+    mem_total_gib = float(mem_total) / 1048576.0
+
+    # Check all is fine
+    if mem_total_gib < osd_total_tb:
+        print 'WARNING: insufficient memory for OSDs ({:.3f} GiB, {:.3f} TB)'\
+            .format(mem_total_gib, osd_total_tb)
+        sys.exit(NAGIOS_WARNING)
+
+    print 'OK: sufficient memory for OSDs ({:.3f} GiB, {:.3f} TB)'\
+        .format(mem_total_gib, osd_total_tb)
+    sys.exit(NAGIOS_OK)
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
