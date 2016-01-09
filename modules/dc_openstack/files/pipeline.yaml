@@ -1,4 +1,4 @@
-ources:
+sources:
     - name: meter_source
       interval: 600
       meters:
