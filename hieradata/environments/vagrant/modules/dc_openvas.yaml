@@ -1,0 +1,2 @@
+---
+dc_openvas::params::gsa_listen_address: "%{::ipaddress_eth1}"

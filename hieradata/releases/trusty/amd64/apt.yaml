@@ -172,3 +172,5 @@ apt::sources:
 apt::ppas:
   ppa:devel-k/log-courier:
     ensure: 'present'
+  ppa:mrazavi/openvas:
+    ensure: 'present'
