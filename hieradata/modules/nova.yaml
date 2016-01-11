@@ -29,8 +29,7 @@ nova::memcached_servers:
  - osdbmq2.%{::domain}
 nova::notify_on_state_change: 'vm_and_task_state'
 nova::notification_driver:
- - nova.openstack.common.notifier.rpc_notifier
- - ceilometer.compute.nova_notifier
+ - messagingv2
 nova::nova_public_key:
     type: 'ssh-rsa'
     key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCp0QeLfnFz+rg1GouozDok/6S9iIknFbWE72qMXyN7LQBGQLPjQ5PMBE9oOvavkU71xvfMNmNADN2ce7R9x9O+1+SqiFAiW7FlDk9tgMoVOc1Gx/mY6zHMwhHeYF4N889G1Q1Ijx6z/g2iVgZI6VKNxxovWBRVshlI5WwbPFRP0CSNHTFw8OWi08e1ET2yKdccprR8ZI85ElNDI9zpyBPyaIRehpHXLsa5nWFVfsECGMwazx/DWpj0KzTebY2Dbhn0e/TwtQorerTiYONRIJZ00oSD8wRKSZNw4TVULmHhvY9oJu4y4nwkYBa8gOJhm84qfL0KLvxzlV4E0OAGyMD5'
