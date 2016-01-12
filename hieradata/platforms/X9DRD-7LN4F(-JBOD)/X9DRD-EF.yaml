@@ -3,25 +3,25 @@
 # e.g. port ID on the SXP
 # TODO: This is only for SSD class nodes
 ceph::disks:
-  0:0:0:0/0:0:0:0:
+  Slot 01/Slot 01:
     fstype: 'xfs'
-  0:0:1:0/0:0:1:0:
+  Slot 02/Slot 02:
     fstype: 'xfs'
-  0:0:2:0/0:0:2:0:
+  Slot 03/Slot 03:
     fstype: 'xfs'
-  0:0:3:0/0:0:3:0:
+  Slot 04/Slot 04:
     fstype: 'xfs'
-  0:0:4:0/0:0:4:0:
+  Slot 05/Slot 05:
     fstype: 'xfs'
-  0:0:5:0/0:0:5:0:
+  Slot 06/Slot 06:
     fstype: 'xfs'
-  0:0:6:0/0:0:6:0:
+  Slot 07/Slot 07:
     fstype: 'xfs'
-  0:0:7:0/0:0:7:0:
+  Slot 08/Slot 08:
     fstype: 'xfs'
-  0:0:8:0/0:0:8:0:
+  Slot 09/Slot 09:
     fstype: 'xfs'
-  0:0:9:0/0:0:9:0:
+  Slot 10/Slot 10:
     fstype: 'xfs'
 
 ceph::conf:
