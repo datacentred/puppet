@@ -1,0 +1,6 @@
+---
+excludes:
+  - '::dc_profile::hardware::bmc' # No BMC on virtual machines
+  - '::dc_profile::hardware::board_support' # No hardware
+  - '::dc_profile::mon::lmsensors' # No sensors
+  - '::dc_profile::util::grub' # Grub config not relevant
