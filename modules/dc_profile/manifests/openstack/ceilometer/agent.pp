@@ -21,6 +21,8 @@ class dc_profile::openstack::ceilometer::agent {
   file { '/etc/ceilometer/pipeline.yaml':
     ensure  => file,
     source  => 'puppet:///modules/dc_openstack/pipeline.yaml',
+    owner   => 'ceilometer',
+    group   => 'ceilometer',
     require => Class['::ceilometer'],
     notify  => Service['ceilometer-agent-compute'],
   }
