@@ -18,6 +18,12 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'sensors':
+    command => [
+      'PluginDir + "/check_sensors"',
+    ],
+  }
+
   icinga2::object::checkcommand { 'bmc':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_bmc"',
