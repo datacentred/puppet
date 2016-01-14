@@ -17,12 +17,16 @@ class dc_openvas::config {
 
   file { '/etc/default/openvas-gsa':
     ensure  => file,
+    owner   => 'root',
+    group   => 'root',
     content => template('dc_openvas/default.erb'),
     notify  => Service['openvas-gsa'],
   }
 
   file { '/etc/openvas/gsad_log.conf':
     ensure => file,
+    owner  => 'root',
+    group  => 'root',
     source => 'puppet:///modules/dc_openvas/gsad_log.conf',
     notify => Service['openvas-gsa'],
   }
@@ -30,12 +34,16 @@ class dc_openvas::config {
   file { '/usr/local/bin/create_task.sh':
     ensure => file,
     mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
     source => 'puppet:///modules/dc_openvas/create_task.sh',
   }
 
   file { '/usr/local/bin/openvas_sync.sh':
     ensure => file,
     mode   => '0755',
+    owner  => 'root',
+    group  => 'root',
     source => 'puppet:///modules/dc_openvas/openvas_sync.sh',
   }
 
