@@ -14,7 +14,6 @@
 class dc_openvas::config {
 
   include dc_openvas
-  #FIXME - add cron script to sync and rebuild
 
   file { '/etc/default/openvas-gsa':
     ensure  => file,
@@ -79,13 +78,13 @@ class dc_openvas::config {
 
   create_resources(dc_openvas::load_target, $dc_openvas::scan_targets)
 
-  exec { 'openvas_daily_schedule':
+  exec { 'openvas_weekly_schedule':
     command => "omp -u ${::dc_openvas::gsa_user} \
     -w ${::dc_openvas::gsa_password} -X \
-    \'<create_schedule><name>Daily</name><first_time><hour>1</hour><minute>0</minute></first_time><period>1<unit>day</unit></period></create_schedule>\'",
+    \'<create_schedule><name>Weekly</name><first_time><hour>1</hour><minute>0</minute></first_time><period>1<unit>week</unit></period></create_schedule>\'",
     unless  => "omp -u ${::dc_openvas::gsa_user} \
     -w ${::dc_openvas::gsa_password} -X \
-    \'<get_schedule filter=Daily/>\' | grep schedule_id",
+    \'<get_schedule filter=Weekly/>\' | grep schedule_id",
     require => Runonce['delete_admin'],
   }
 

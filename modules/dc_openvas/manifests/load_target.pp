@@ -23,7 +23,7 @@ define dc_openvas::load_target (
     require => Runonce['delete_admin'],
   } ->
   exec { "${name}_task":
-    command => "/usr/local/bin/create_task.sh -u ${::dc_openvas::gsa_user} -p ${::dc_openvas::gsa_password} -c \'Full and fast\' -t ${name} -s \'Daily\'",
+    command => "/usr/local/bin/create_task.sh -u ${::dc_openvas::gsa_user} -p ${::dc_openvas::gsa_password} -c \'Full and fast\' -t ${name} -s \'Weekly\'",
     unless  => "omp --get-tasks -u ${::dc_openvas::gsa_user} -w ${::dc_openvas::gsa_password} | grep -w ${name}",
     require => [ File['/usr/local/bin/create_task.sh'], Runonce['delete_admin'], Exec['openvas_daily_schedule'] ],
   }
