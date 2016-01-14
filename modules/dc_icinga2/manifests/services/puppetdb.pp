@@ -4,6 +4,10 @@
 #
 class dc_icinga2::services::puppetdb {
 
+  Icinga2::Object::Apply_service {
+    target => '/etc/icinga2/zones.d/global-templates/services.conf',
+  }
+
   icinga2::object::apply_service { 'puppetdb':
     import        => 'generic-service',
     check_command => 'http',
@@ -17,7 +21,23 @@ class dc_icinga2::services::puppetdb {
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "puppetdb"',
-    target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+  }
+
+  icinga2::object::apply_service { 'puppetdb dashboard':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8080,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "puppetdb"',
+  }
+
+  icinga2::object::apply_service { 'puppetdb dashboard reverse-proxy':
+    import        => 'generic-service',
+    check_command => 'http',
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "puppetdb"',
   }
 
 }
