@@ -23,7 +23,7 @@ class dc_bmc::housekeeper {
   }
 
   cron { 'bmc_housekeeper':
-    ensure  => present,
+    ensure  => absent,
     command => '/usr/local/bin/bmc_housekeeper.sh',
     require => File['/usr/local/bin/bmc_housekeeper.sh'],
     weekday => 0,
