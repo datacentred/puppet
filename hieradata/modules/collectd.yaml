@@ -7,3 +7,4 @@ collectd::plugin::syslog::log_level: 'error'
 collectd::plugin::disk::ignoreselected: true
 collectd::plugin::protocols::values:
     - '/^TcpExt:.*/'
+collectd::plugin::sensors::manage_package: false
