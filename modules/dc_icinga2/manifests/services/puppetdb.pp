@@ -27,7 +27,8 @@ class dc_icinga2::services::puppetdb {
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 8080,
+      'http_address' => '127.0.0.1',
+      'http_port'    => 8080,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "puppetdb"',
@@ -39,5 +40,7 @@ class dc_icinga2::services::puppetdb {
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "puppetdb"',
   }
+
+  # TODO: Add a service dependency between proxy -> dashboard
 
 }
