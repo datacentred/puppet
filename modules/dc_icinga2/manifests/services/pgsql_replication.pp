@@ -7,7 +7,7 @@ class dc_icinga2::services::pgsql_replication (
 ) {
 
   icinga2::object::apply_service { 'pgsql replication':
-    include       => 'generic-service',
+    import        => 'generic-service',
     check_command => 'pgsql_replication',
     vars          => {
       'pgsql_replication_password' => $password,
