@@ -26,7 +26,7 @@ class dc_profile::perf::collectd {
   include ::collectd::plugin::memory
   include ::collectd::plugin::cpu
   include ::collectd::plugin::write_graphite
-
+  include ::collectd::plugin::sensors
   include ::dc_collectd::agent::iostat
 
   class { '::collectd::plugin::disk':
