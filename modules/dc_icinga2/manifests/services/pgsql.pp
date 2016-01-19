@@ -16,7 +16,7 @@ class dc_icinga2::services::pgsql (
       'pgqsl_username' => $username,
       'pgqsl_password' => $password,
     },
-    apply_where   => 'match("postgresql_*", host.vars.role)',
+    assign_where  => 'match("postgresql_*", host.vars.role)',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
