@@ -142,4 +142,14 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'pgsql_replication':
+    command   => [
+      '"sudo"',
+      '"/usr/local/lib/nagios/plugins/check_pgsql_replication"',
+    ],
+    arguments => {
+      '-p' => '$pgsql_replication_password$',
+    }
+  }
+
 }
