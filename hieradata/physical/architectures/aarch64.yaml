@@ -1,4 +1,7 @@
 ---
+excludes:
+    - 'collectd::plugin::sensors'
+
 nova::compute::vnc_enabled: false
 
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_bond0_170}" # TODO: This is hardware specific
