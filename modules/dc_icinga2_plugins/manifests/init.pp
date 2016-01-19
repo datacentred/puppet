@@ -38,6 +38,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_rgw',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_pgsql_replication':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_pgsql_replication',
+  }
+
   file { '/usr/local/lib/nagios/plugins/check_psu':
     source => 'puppet:///modules/dc_icinga2_plugins/check_psu',
   }

@@ -1,0 +1,150 @@
+#!/usr/bin/env python
+
+"""
+Checks streaming replication on a Postgres cluster is working
+
+Adapted from a script by Benjamin Renard
+http://git.zionetrix.net/check_pg_streaming_replication
+"""
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+VARDIR = '/var/lib/postgresql/9.3/main'
+
+
+def psql_exec(command):
+    """Execute the specified command via psql"""
+
+    cmd = ['su', '-', 'postgres', '-c', 'psql -t -P format=unaligned']
+    process = subprocess.Popen(cmd, stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate(command)
+
+    if process.returncode != 0:
+        print 'UNKNOWN: unable to execute psql command: {}'.format(command)
+        print stderr
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # All output will have an newline termination, discard it
+    return stdout.rstrip()
+
+
+def psql_exec_remote(command, host, port, password):
+    """Exec the specified command via psql on a remote host"""
+
+    cmd = ['su', '-', 'postgres', '-c',
+           'PGPASSWORD={} psql -h {} -p {} -t -P format=unaligned'.\
+           format(password, host, port)]
+    process = subprocess.Popen(cmd, stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate(command)
+
+    if process.returncode != 0:
+        print 'UNKNOWN: unable to execute remote psql command: {}'.\
+              format(command)
+        print stderr
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # All output will have an newline termination, discard it
+    return stdout.rstrip()
+
+
+def get_primary_connection_info(filename):
+    """Extract primary connection data as a dictionary"""
+
+    with open(filename, 'r') as config_file:
+        config_lines = config_file.read().split("\n")
+
+    for line in config_lines:
+        # We expect the configuration to look like
+        # primary_conninfo = 'key1=value1 key2=value2'
+        matches = re.match(r'primary_conninfo\s*=\s*\'([^\']+)\'', line)
+        if matches:
+            # Extract all text: ['key1', 'value1', 'key2', 'value2']
+            config_array = re.findall(r'[\w]+', matches.group(1))
+            # Extract all keys and values, zip into an array of tuples and
+            # finally cast into a dictionary
+            config = dict(zip(config_array[0::2], config_array[1::2]))
+            break
+
+    return config
+
+
+def check_standby(args, config):
+    """Checks XLOGs are up to date with the master and have been replayed"""
+
+    # Get local statistics
+    last_xlog_receive = psql_exec('SELECT pg_last_xlog_receive_location();')
+    last_xlog_replay = psql_exec('SELECT pg_last_xlog_replay_location();')
+
+    # Get master statistics
+    cur_xlog = psql_exec_remote('SELECT pg_current_xlog_location();',
+                                config['host'], config['port'],
+                                args.password)
+
+    if cur_xlog != last_xlog_receive:
+        print 'CRITICAL: replication lag ({} vs {})'.\
+              format(cur_xlog, last_xlog_receive)
+        sys.exit(NAGIOS_CRITICAL)
+
+    if last_xlog_receive != last_xlog_replay:
+        print 'WARNING: replay lag ({} vs {})'.\
+              format(last_xlog_receive, last_xlog_replay)
+        sys.exit(NAGIOS_WARNING)
+
+    print 'OK: standby server up to date'
+    sys.exit(NAGIOS_OK)
+
+
+def check_master():
+    """Checks node is not in recovery mode and has clients connected"""
+
+    # Check whether postgres is in recovery
+    recovery_mode = psql_exec('SELECT pg_is_in_recovery();') == 't'
+    if recovery_mode:
+        print 'CRITICAL: master in recovery mode'
+        sys.exit(NAGIOS_CRITICAL)
+
+    # Get all standby clients
+    clients = psql_exec(('SELECT client_addr, sync_state '
+                         'FROM pg_stat_replication;')).split("\n")
+
+    if not len(clients):
+        print 'WARNING: no standby clients connected'
+        sys.exit(NAGIOS_WARNING)
+
+    # Format the output
+    output = ', '.join(['{} (mode={})'.format(*x.split('|')) for x in clients])
+    print 'OK: {} standby client(s) connected - '.format(len(clients)) + output
+    sys.exit(NAGIOS_OK)
+
+
+def main():
+    """Performs the correct checks based on configuration"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--password', required=True)
+    args = parser.parse_args()
+
+    recovery_config = '{}/recovery.conf'.format(VARDIR)
+
+    if os.access(recovery_config, os.F_OK):
+        config = get_primary_connection_info(recovery_config)
+        check_standby(args, config)
+    else:
+        check_master()
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
