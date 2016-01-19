@@ -6,6 +6,7 @@ class dc_icinga2::services {
 
   include ::dc_icinga2::services::bmc
   include ::dc_icinga2::services::ceph
+  include ::dc_icinga2::services::dhcp
   include ::dc_icinga2::services::disk
   include ::dc_icinga2::services::dns
   include ::dc_icinga2::services::icingaweb2

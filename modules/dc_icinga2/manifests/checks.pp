@@ -122,4 +122,24 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'dhcp_sudo':
+    command   => [
+      '"sudo"',
+      'PluginDir + "/check_dhcp"',
+    ],
+    arguments => {
+      '-s' => '$dhcp_serverip$',
+      '-r' => '$dhcp_requestedip$',
+      '-t' => '$dhcp_timeout$',
+      '-i' => '$dhcp_interface$',
+      '-m' => '$dhcp_mac$',
+      '-u' => {
+        'set_if' => '$dhcp_unicast',
+      },
+    },
+    vars      => {
+      'dhcp_unicast' => false,
+    },
+  }
+
 }
