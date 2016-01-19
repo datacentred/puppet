@@ -20,5 +20,5 @@ dc_postgresql::params::databases:
     grant:    'all'
   nagiostest:
     user:     'nagios'
-    password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAAoj8zRP5XX2Jhdg7eBzX4gOh8Cs6MTkMyGvTRBDkK3NhA77UVJq9uz1Bg15OTOwtgeS//+CyIz8BRI1J4jqLwaplMj3Q+J3iOWkPw8bKNTh623a933+FwIQV2NCelmFCm7DOMk+IQjcVktpRJm4VwceFDh15xNtHqEmh9fxoysjuoqr/sOL6+RoIpz9HEBzWYn89pCtTTY2mnWgplgQYXma78t7zepXQ138OokJXdsLZp8xxhjzAiStirmddAgWagYUFdX2iwmdWQ4w+12jwjQJTI/SJSXAWZd/5VCLTMvFGFQbUoW0PJHv6guaYO/7KCTeNVSwi2Q1t9TKFDN2ZOjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBB/zaRHFfHi45v4cIBYd3m8gBAlODroQiKsrfYSRj5gZPQT]
+    password: "%{hiera('postgresql_icinga_password')}"
     grant:    'all'
