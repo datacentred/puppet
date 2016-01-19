@@ -14,6 +14,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::load
   include ::dc_icinga2::services::memory
   include ::dc_icinga2::services::pgsql
+  include ::dc_icinga2::services::pgsql_replication
   include ::dc_icinga2::services::procs
   include ::dc_icinga2::services::psu
   include ::dc_icinga2::services::puppetdb
