@@ -134,7 +134,7 @@ class dc_icinga2::checks {
       '-i' => '$dhcp_interface$',
       '-m' => '$dhcp_mac$',
       '-u' => {
-        'set_if' => '$dhcp_unicast',
+        'set_if' => '$dhcp_unicast$',
       },
     },
     vars      => {
