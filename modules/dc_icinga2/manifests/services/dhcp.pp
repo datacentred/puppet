@@ -12,7 +12,7 @@
 class dc_icinga2::services::dhcp {
 
   icinga2::object::apply_service { 'dhcp':
-    import        => 'default-service',
+    import        => 'generic-service',
     check_command => 'dhcp_sudo',
     vars          => {
       'dhcp_serverip'  => 'host.address',
