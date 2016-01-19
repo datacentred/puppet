@@ -9,7 +9,7 @@ class dc_icinga2::services::pgsql (
 ) {
 
   icinga2::object::apply_service { 'pgsql':
-    include       => 'generic-service',
+    import        => 'generic-service',
     check_command => 'pgsql',
     vars          => {
       'pgsql_database' => $database,
