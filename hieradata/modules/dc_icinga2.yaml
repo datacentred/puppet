@@ -3,3 +3,5 @@ dc_icinga2::pagerduty::pager: '01f256e615c148f0980e8c35cf19de77'
 
 dc_icinga2::services::bmc::username: "%{hiera('bmc_admin_name')}"
 dc_icinga2::services::bmc::password: "%{hiera('bmc_admin_password')}"
+
+dc_icinga2::services::pgsql::password: "%{hiera('postgresql_icinga_password')}"
