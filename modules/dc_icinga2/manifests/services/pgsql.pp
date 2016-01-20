@@ -13,8 +13,8 @@ class dc_icinga2::services::pgsql (
     check_command => 'pgsql',
     vars          => {
       'pgsql_database' => $database,
-      'pgqsl_username' => $username,
-      'pgqsl_password' => $password,
+      'pgsql_username' => $username,
+      'pgsql_password' => $password,
     },
     zone          => 'host.name',
     assign_where  => 'match("postgresql_*", host.vars.role)',

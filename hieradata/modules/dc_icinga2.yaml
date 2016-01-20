@@ -6,4 +6,4 @@ dc_icinga2::services::bmc::password: "%{hiera('bmc_admin_password')}"
 
 dc_icinga2::services::pgsql::password: "%{hiera('postgresql_icinga_password')}"
 
-dc_icinga2::services::pgsql_replication::password: "%{hiera('postgresql_password')}"
+dc_icinga2::services::pgsql_replication::password: "%{hiera('postgres_password')}"
