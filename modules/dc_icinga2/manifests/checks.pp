@@ -152,4 +152,14 @@ class dc_icinga2::checks {
     }
   }
 
+  icinga2::object::checkcommand { 'nova-service':
+    command   => [
+      '"sudo"',
+      '"/usr/local/lib/nagios/plugins/check_nova_service"',
+    ],
+    arguments => {
+      '-p' => '$nova_service_process$',
+    },
+  }
+
 }
