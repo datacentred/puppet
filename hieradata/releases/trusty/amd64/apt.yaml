@@ -21,6 +21,34 @@ apt::sources:
   #  key:
   #    id: '05FD11DA0455013EF36F0DFF655907C455AC5D6A'
   #    source: "http://%{hiera('datacentred_path')}/repo.gpg.key"
+  ubuntu_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
+  ubuntu_updates_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty-updates'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
+  ubuntu_security_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty-security'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
+  ubuntu_proposed_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty-proposed'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
   dell_openmanage_mirror:
     location: "http://%{hiera('dell_openmanage_mirror_path')}"
     release: 'trusty'
