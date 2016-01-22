@@ -1,0 +1,94 @@
+#!/usr/bin/env python
+
+"""
+Checks nova service is running and has a connection to the
+message broker
+"""
+
+import argparse
+import os
+import re
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def pgrep(string):
+    """Search proc for the first PID featuring the search string"""
+
+    pids = [int(x) for x in os.listdir('/proc') if re.match(r'^\d+$', x)]
+    for pid in pids:
+        # Handle processes terminating
+        try:
+            with open('/proc/{}/cmdline'.format(pid)) as cmd_file:
+                cmd = cmd_file.read()
+        except IOError:
+            continue
+
+        # Check we are not returning ourselves
+        if re.search(string, cmd) and not re.search('check_nova_service', cmd):
+            return pid
+
+    return 0
+
+
+def get_sockets(pid):
+    """Given the PID find a list of open TCP sockets"""
+
+    descs = os.listdir('/proc/{}/fd'.format(pid))
+    sockets = []
+    for desc in descs:
+        target = os.readlink('/proc/{}/fd/{}'.format(pid, desc))
+        matches = re.match(r'^socket:\[(\d+)\]$', target)
+        if matches:
+            sockets.append(int(matches.group(1)))
+
+    return sockets
+
+
+def has_remote_connection(sockets, port):
+    """Checks whether the specified process has a connection to the port"""
+
+    with open('/proc/net/tcp') as tcp_file:
+        # First line is headers, last is blank, so discard
+        tcp_lines = tcp_file.read().split("\n")[1:-1]
+
+    for tcp in tcp_lines:
+        fields = tcp.split()
+        inode = int(fields[9])
+        if inode in sockets:
+            remote = fields[2].split(':')
+            if int(remote[1], 16) == port:
+                return True
+
+    return False
+
+
+def main():
+    """Finds the process PID then its AMQP connection"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--process', required=True)
+    args = parser.parse_args()
+
+    pid = pgrep(args.process)
+    if not pid:
+        print 'CRITICAL: service not running'
+        sys.exit(NAGIOS_CRITICAL)
+
+    sockets = get_sockets(pid)
+
+    if not has_remote_connection(sockets, 5672):
+        print 'CRITICAL: service has no AMQP connection'
+        sys.exit(NAGIOS_CRITICAL)
+
+    print 'OK'
+    sys.exit(NAGIOS_OK)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
