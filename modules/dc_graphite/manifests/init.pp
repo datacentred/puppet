@@ -63,7 +63,7 @@ class dc_graphite (
       },
       {
         name       => 'collectd',
-        pattern    => '^collectd.*',
+        pattern    => '^uk.*',
         retentions => '1m:5d,5m:30d,15m:1y',
       },
     ],
