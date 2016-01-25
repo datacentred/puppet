@@ -71,14 +71,18 @@ class CephPoolPlugin(base.Base):
         for pool in json_stats_data:
             pool_key = "pool-%s" % pool['pool_name']
             data[ceph_cluster][pool_key] = {}
-            pool_data = data[ceph_cluster][pool_key] 
+            pool_data = data[ceph_cluster][pool_key]
+            if pool['pool_name'] in self.rbd_pool_stats:
+                rbd_stats = json.loads(subprocess.check_output('rbd -p %s ls -l --format=json' % pool['pool_name'], shell=True))
+                pool_data['rbd_usage_gb' ] = sum(rbd['size'] for rbd in rbd_stats) / 1073741824
             for stat in ('read_bytes_sec', 'write_bytes_sec', 'op_per_sec'):
                 pool_data[stat] = pool['client_io_rate'][stat] if pool['client_io_rate'].has_key(stat) else 0
+            
 
         # push df results
         for pool in json_df_data['pools']:
             pool_data = data[ceph_cluster]["pool-%s" % pool['name']]
-            for stat in ('bytes_used', 'kb_used', 'objects'):
+            for stat in ('max_avail', 'bytes_used', 'kb_used', 'objects'):
                 pool_data[stat] = pool['stats'][stat] if pool['stats'].has_key(stat) else 0
 
         # push totals from df
