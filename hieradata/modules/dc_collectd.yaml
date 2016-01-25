@@ -4,6 +4,7 @@ dc_collectd::agent::openstack::openstack_tenant: 'collectd'
 dc_collectd::agent::openstack::openstack_authURL: "https://%{hiera('os_api_host')}:5000/v2.0"
 dc_collectd::agent::ceph::ceph_cluster_name: 'ceph'
 dc_collectd::agent::ceph::ceph_test_pool: 'collectd'
+dc_collectd::agent::ceph::rbd_stats_pools: 'cinder.volumes,cinder.vms,cinder.volumes.flash'
 dc_collectd::agent::mysql::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAN5KBU4sqQWxd8z3Hm0ZwEPsih6j87UcVp4rGOYMcQ9ykM9jwhiMYp74F70oD2jIjOsiYqqH6kHSVTd6fVCAikVl2wTZQnbAS1WBVA58qX+Q2s6OG+lQj9tLOVsz7My3EPCdMJc+w64Y7mcmX6UzbGGhyoKkHZuzHL+p58abm9uA8MHFSMwzU0PtkknTftQv4JXUpXUlokyEavkNgpe68iG9Nn37zGiYElMdiZMvMmyXgiuO2ndX2tjC4B6BCpEX8vspr+g8nA2x0u+9bIM/NZUn0BqHowbtLLa54fuac/LB6Y9WPZxE7YrevE0/DJ5PWQrfTI0VHFJw0uwiZLl2MejA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBC+L06zNgrfEd9MwvNtYw1egBAtzJ7Nlt4OgS8g/aj8qRQg]
 dc_collectd::agent::rabbitmq::rabbitmq_monuser: "%{hiera('rabbitmq_monuser')}"
 dc_collectd::agent::rabbitmq::rabbitmq_monuser_password: "%{hiera('rabbitmq_monuser_password')}"

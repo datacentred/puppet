@@ -39,6 +39,7 @@ class Base(object):
         self.prefix = ''
         self.cluster = 'ceph'
         self.testpool = 'test'
+        self.rbd_pool_stats = []
         self.interval = 60.0
 
     def config_callback(self, conf):
@@ -52,6 +53,8 @@ class Base(object):
                     self.debug = True
             elif node.key == "Prefix":
                 self.prefix = node.values[0]
+            elif node.key == 'RBDPoolStats':
+                self.rbd_pool_stats = node.values[0].split(',')
             elif node.key == 'Cluster':
                 self.cluster = node.values[0]
             elif node.key == 'TestPool':
