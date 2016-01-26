@@ -6,6 +6,15 @@ class dc_collectd::agent::ceph(
   $rbd_stats_pools,
 ) {
 
+  file { '/usr/lib/collectd/ceph/base.py':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0640',
+    source => 'puppet:///modules/dc_collectd/ceph/base.py',
+    notify => Service['collectd'],
+  }
+
   class { 'collectd::plugin::python':
     modulepaths => ['/usr/lib/collectd/ceph'],
     modules     => {
