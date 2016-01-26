@@ -3,6 +3,7 @@
 class dc_collectd::agent::ceph(
   $ceph_cluster_name,
   $ceph_test_pool,
+  $rbd_stats_pools,
 ) {
 
   class { 'collectd::plugin::python':
@@ -11,10 +12,11 @@ class dc_collectd::agent::ceph(
       'ceph_pool_plugin'    => {
         'script_source' => 'puppet:///modules/dc_collectd/ceph/ceph_pool_plugin.py',
         'config'        => {
-          'Verbose'  => true,
-          'Cluster'  => "\"${ceph_cluster_name}\"",
-          'Interval' => 60,
-          'TestPool' => $ceph_test_pool,
+          'Verbose'       => true,
+          'Cluster'       => "\"${ceph_cluster_name}\"",
+          'Interval'      => 60,
+          'RBDStatsPools' => "\"${rbd_stats_pools}\"",
+          'TestPool'      => $ceph_test_pool,
         },
       },
       'ceph_osd_plugin'     => {
