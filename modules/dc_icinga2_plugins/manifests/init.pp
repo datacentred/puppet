@@ -50,6 +50,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_psu',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_sas_phy':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_sas_phy',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
