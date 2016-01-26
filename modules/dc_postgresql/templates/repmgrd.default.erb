@@ -6,7 +6,7 @@
 REPMGRD_ENABLED=yes
 
 # configuration file (required)
-REPMGRD_CONF="<%= scope.lookupvar('dc_postgresql::params::pg_home') %>/repmgr/repmgr.conf"
+REPMGRD_CONF="<%= @_pg_home %>/repmgr/repmgr.conf"
 
 # additional options
 REPMGRD_OPTS="-m"
