@@ -104,4 +104,7 @@ nova::scheduler::filter::isolated_images:
 
 nova::config::nova_config:
   serial_console/enabled:
-    value:  false
+    value: false
+nova::config::nova_config:
+  DEFAULT/resume_guests_state_on_host_boot:
+    value: true
