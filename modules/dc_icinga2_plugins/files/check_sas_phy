@@ -1,0 +1,112 @@
+#!/usr/bin/env python
+"""
+check_sas_phy
+
+Finds all SAS phys on the system and checks sysfs for invalid DWORDs on each.
+This is done based on past history as we are only concerned if the numbers
+are constantly increasing e.g. an existing problem may have been solved by a
+re-seat however the counters cannot be reset.
+"""
+
+import json
+import os
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+STATUS_TEXT = [
+    'OK',
+    'WARNING',
+    'CRITICAL',
+    'UNKNOWN',
+]
+
+COUNTERS = [
+    'invalid_dword_count',
+    'loss_of_dword_sync_count',
+    'phy_reset_problem_count',
+    'running_disparity_error_count',
+]
+
+
+def load_historical():
+    """Load historical data from /tmp"""
+
+    try:
+        with open('/tmp/.phy_history') as history_file:
+            return json.loads(history_file.read())
+    except IOError:
+        return False
+
+
+def save_historical(history):
+    """Save historical data to /tmp"""
+
+    with open('/tmp/.phy_history', 'w') as history_file:
+        history_file.write(json.dumps(history))
+
+
+def read_counter(path, name):
+    """Read a counters value"""
+
+    with open(path + '/' + name) as counter_file:
+        return int(counter_file.read())
+
+
+def load_current():
+    """Loads the current phy statistics from proc"""
+
+    current = {}
+    try:
+        phys = os.listdir('/sys/class/sas_phy')
+    except OSError:
+        print 'OK: no phys discovered'
+        sys.exit(NAGIOS_OK)
+
+    for phy in phys:
+        path = '/sys/class/sas_phy/' + phy
+        current[phy] = {}
+        for counter in COUNTERS:
+            current[phy][counter] = read_counter(path, counter)
+    return current
+
+
+def main():
+    """Checks current vs historical data for changes in counters"""
+
+    current = load_current()
+    if not current:
+        print 'OK: no phys discovered'
+        sys.exit(NAGIOS_OK)
+
+    historical = load_historical()
+    save_historical(current)
+
+    if not historical:
+        print 'OK: no historical data'
+        sys.exit(NAGIOS_OK)
+
+    errors = []
+    for phy in historical:
+        if not phy in current:
+            continue
+        for counter in COUNTERS:
+            delta = current[phy][counter] - historical[phy][counter]
+            if delta:
+                errors.append('{}/{}={}'.format(phy, counter, delta))
+
+    if errors:
+        print 'WARNING: ' + ', '.join(errors)
+        sys.exit(NAGIOS_WARNING)
+
+    print 'OK: all counters stable'
+    sys.exit(NAGIOS_OK)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
