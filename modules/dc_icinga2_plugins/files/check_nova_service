@@ -40,7 +40,10 @@ def get_sockets(pid):
     descs = os.listdir('/proc/{}/fd'.format(pid))
     sockets = []
     for desc in descs:
-        target = os.readlink('/proc/{}/fd/{}'.format(pid, desc))
+        try:
+            target = os.readlink('/proc/{}/fd/{}'.format(pid, desc))
+        except OSError:
+            continue
         matches = re.match(r'^socket:\[(\d+)\]$', target)
         if matches:
             sockets.append(int(matches.group(1)))
