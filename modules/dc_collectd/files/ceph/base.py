@@ -45,7 +45,7 @@ class Base(object):
         self.prefix = ''
         self.cluster = 'ceph'
         self.testpool = 'test'
-        self.rbd_pool_stats = []
+        self.rbd_stats_pools = []
         self.interval = 60.0
 
     def config_callback(self, conf):
