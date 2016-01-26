@@ -152,13 +152,13 @@ class dc_icinga2::checks {
     }
   }
 
-  icinga2::object::checkcommand { 'nova-service':
+  icinga2::object::checkcommand { 'openstack-service':
     command   => [
       '"sudo"',
-      '"/usr/local/lib/nagios/plugins/check_nova_service"',
+      '"/usr/local/lib/nagios/plugins/check_openstack_service"',
     ],
     arguments => {
-      '-p' => '$nova_service_process$',
+      '-p' => '$openstack_service_process$',
     },
   }
 
@@ -196,6 +196,21 @@ class dc_icinga2::checks {
       'ssl_cert_rootcert' => '/etc/ssl/certs',
       'ssl_cert_warning'  => 28,
       'ssl_cert_critical' => 7,
+    },
+  }
+
+  icinga2::object::checkcommand { 'neutron-api':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_neutron_api"',
+    ],
+    arguments => {
+      '-a' => 'neutron_api_auth_url$',
+      '-n' => 'neutron_api_url$',
+      '-t' => 'neutron_api_tenant$',
+      '-u' => 'neutron_api_username$',
+      '-p' => 'neutron_api_password$',
+      '-w' => 'neutron_api_warning$',
+      '-c' => 'neutron_api_critical$',
     },
   }
 

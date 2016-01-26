@@ -38,8 +38,12 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_rgw',
   }
 
-  file { '/usr/local/lib/nagios/plugins/check_nova_service':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_nova_service',
+  file { '/usr/local/lib/nagios/plugins/check_neutron_api':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_neutron_api',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_openstack_service':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_openstack_service',
   }
 
   file { '/usr/local/lib/nagios/plugins/check_pgsql_replication':
