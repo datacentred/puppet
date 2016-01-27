@@ -2,6 +2,7 @@
 classes:
   - '::dc_profile::util::firmware'
   - '::dc_profile::hardware::x9drt'
+  - '::dc_collectd::agent::ipmi'
 
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p3p1}"
 
