@@ -48,7 +48,7 @@ class dc_bmc (
       include ::dc_bmc::supermicro::reaper
       include ::dc_bmc::supermicro::http_scripted
     }
-    'X9DRT': {
+    'X9DRT', 'X9DRD-7LN4F(-JBOD)/X9DRD-EF', 'SSG-6027R-E1R12L': {
       include ::dc_bmc::base
       include ::dc_bmc::admin
       include ::dc_bmc::housekeeper
