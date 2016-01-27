@@ -1,3 +1,0 @@
----
-classes:
-  - '::dc_collectd::agent::ipmi'
