@@ -100,4 +100,98 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_control"',
   }
 
+  icinga2::object::apply_service { 'neutron dhcp agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'neutron',
+      'procs_argument' => 'neutron-dhcp-agent',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'neutron metadata agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'neutron',
+      'procs_argument' => 'neutron-ns-metadata-proxy',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'neutron vpnaas agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'neutron',
+      'procs_argument' => 'neutron-vpn-agent',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'neutron lbaas agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'neutron',
+      'procs_argument' => 'neutron-lbaas-agent',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'neutron metering agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'neutron',
+      'procs_argument' => 'neutron-metering-agent',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'neutron openvswitch agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'neutron',
+      'procs_argument' => 'neutron-openvswitch-agent',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'openvswitch':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_command'  => 'ovs-vswitchd',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
+  }
+
+  icinga2::object::apply_service { 'openvswitch database':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_command'  => 'ovsdb-server',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
+  }
+
 }
