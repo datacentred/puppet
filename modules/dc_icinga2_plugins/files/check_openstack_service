@@ -18,6 +18,8 @@ NAGIOS_UNKNOWN = 3
 def pgrep(string):
     """Search proc for the first PID featuring the search string"""
 
+    script_name = os.path.basename(__file__)
+
     pids = [int(x) for x in os.listdir('/proc') if re.match(r'^\d+$', x)]
     for pid in pids:
         # Handle processes terminating
@@ -28,7 +30,7 @@ def pgrep(string):
             continue
 
         # Check we are not returning ourselves
-        if re.search(string, cmd) and not re.search('check_nova_service', cmd):
+        if re.search(string, cmd) and not re.search(script_name, cmd):
             return pid
 
     return 0

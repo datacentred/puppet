@@ -204,13 +204,13 @@ class dc_icinga2::checks {
       '"/usr/local/lib/nagios/plugins/check_neutron_api"',
     ],
     arguments => {
-      '-a' => 'neutron_api_auth_url$',
-      '-n' => 'neutron_api_url$',
-      '-t' => 'neutron_api_tenant$',
-      '-u' => 'neutron_api_username$',
-      '-p' => 'neutron_api_password$',
-      '-w' => 'neutron_api_warning$',
-      '-c' => 'neutron_api_critical$',
+      '-a' => '$neutron_api_auth_url$',
+      '-n' => '$neutron_api_url$',
+      '-t' => '$neutron_api_tenant$',
+      '-u' => '$neutron_api_username$',
+      '-p' => '$neutron_api_password$',
+      '-w' => '$neutron_api_warning$',
+      '-c' => '$neutron_api_critical$',
     },
   }
 
