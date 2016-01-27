@@ -6,6 +6,8 @@ class dc_postgresql::repmgr::slave::sync {
 
   include ::dc_postgresql::params
 
+  $_pg_home = $::dc_postgresql::params::pghome
+
   runonce { 'stop_pg_presync':
     command => '/usr/sbin/service postgresql stop',
   } ->
@@ -23,7 +25,7 @@ class dc_postgresql::repmgr::slave::sync {
   } ->
 
   runonce { 'repmgr_standby_register':
-    command => "repmgr -f ${dc_postgresql::params::pghome}/repmgr/repmgr.conf --verbose standby register"
+    command => "repmgr -f ${_pg_home}/repmgr/repmgr.conf --verbose standby register"
   } ->
 
   file { '/etc/default/repmgrd':
