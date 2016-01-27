@@ -1,0 +1,125 @@
+#!/usr/bin/env python
+"""
+Checks the Neutron API responds to requests.
+
+This script grabs an authentication token from Keystone and uses it to perform
+API calls against neutron.  The API calls are instrumented for performance
+metrics and can be used to raise alerts when the service level is too poor.
+"""
+
+import argparse
+import json
+import sys
+import time
+import urllib2
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+KEYSTONE_URI = 'http://localhost:5000/v2.0'
+NEUTRON_URI = 'http://localhost:9696/v2.0'
+WARNING = 10
+CRITICAL = 15
+
+
+def get_authentication_token(args):
+    """Get an authentication token from Keystone"""
+
+    request = {
+        'auth': {
+            'passwordCredentials': {
+                'username': args.username,
+                'password': args.password,
+            },
+            'tenantName': args.tenant,
+        },
+    }
+
+    headers = {
+        'Content-type': 'application/json',
+    }
+
+    req = urllib2.Request(args.auth_url + '/tokens', headers=headers)
+    try:
+        response = json.loads(urllib2.urlopen(req, json.dumps(request)).read())
+    except urllib2.URLError:
+        print 'UNKNOWN: Unable to get authentication token'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    try:
+        return response['access']['token']['id']
+    except KeyError:
+        print 'UNKNOWN: Malformed authentication response'
+        sys.exit(NAGIOS_UNKNOWN)
+
+
+def get_neutron_networks(args, token):
+    """Get a list of neutron networks"""
+
+    headers = {
+        'X-Auth-Token': token,
+        'Content-type': 'application/json',
+    }
+
+    req = urllib2.Request(args.neutron_url + '/networks', headers=headers)
+    try:
+        response = json.loads(urllib2.urlopen(req).read())
+    except urllib2.URLError, exception:
+        print 'CRITICAL: Unable to poll neutron - {}'.format(exception.reason)
+        sys.exit(NAGIOS_CRITICAL)
+
+    return response
+
+
+def main():
+    """Gets an access token and polls the neutron API"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-a', '--auth-url', default=KEYSTONE_URI)
+    parser.add_argument('-n', '--neutron-url', default=NEUTRON_URI)
+    parser.add_argument('-t', '--tenant', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-w', '--warning', default=WARNING)
+    parser.add_argument('-c', '--critical', default=CRITICAL)
+    args = parser.parse_args()
+
+    # Sanitise possibly tainted input
+    try:
+        critical = float(args.critical)
+        warning = float(args.warning)
+    except ValueError:
+        print 'UNKNOWN: warning/critical syntax error'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    token = get_authentication_token(args)
+
+    start = time.time()
+    get_neutron_networks(args, token)
+    end = time.time()
+    delta = end - start
+
+    if delta >= critical:
+        print ('CRITICAL: Neutron server responded too slowly in {0:0.3f}s '
+               '| time={0:0.3f}s,{1:0.3f}s,{2:0.3f}s,,')\
+              .format(delta, warning, critical)
+        sys.exit(NAGIOS_CRITICAL)
+
+    if delta >= warning:
+        print ('WARNING: Neutron server responded slowly in {0:0.3f}s '
+               '| time={0:0.3f}s,{1:0.3f}s,{2:0.3f}s,,')\
+              .format(delta, warning, critical)
+        sys.exit(WARNING)
+
+    print ('OK: Neutron responsed in {0:0.3f}s '
+           '| time={0:0.3f}s,{1:0.3f}s,{2:0.3f}s,,')\
+          .format(delta, warning, critical)
+    sys.exit(NAGIOS_OK)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
