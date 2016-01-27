@@ -9,6 +9,7 @@ import argparse
 import re
 import subprocess
 import sys
+import time
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -35,19 +36,22 @@ def main():
         'info',
     ]
 
+    start = time.time()
     try:
         output = subprocess.check_output(command, stderr=subprocess.PIPE)
     except subprocess.CalledProcessError:
         print 'CRITICAL: Unable to contact BMC'
         sys.exit(NAGIOS_CRITICAL)
+    end = time.time()
+    delta = end - start
 
     revision_real = re.findall(r'Firmware Revision\s+:\s+(\S+)', output)[0]
     if revision_real != args.revision:
-        print 'WARNING: Revision mismatch, expected={}, actual={}'.format(
-            args.revision, revision_real)
+        print ('WARNING: Revision mismatch, expected {}, actual {} | '
+               'time={:0.3f};;;;').format(args.revision, revision_real, delta)
         sys.exit(NAGIOS_WARNING)
 
-    print 'OK'
+    print 'OK: Revision {} | time={:0.3f}s;;;;'.format(revision_real, delta)
     sys.exit(NAGIOS_OK)
 
 if __name__ == '__main__':
