@@ -168,4 +168,35 @@ class dc_icinga2::checks {
     ],
   }
 
+  icinga2::object::checkcommand { 'ssl-cert':
+    command   => [
+      'PluginDir + "/check_ssl_cert"',
+    ],
+    arguments => {
+      '-H' => '$ssl_cert_host$',
+      '-A' => '$ssl_cert_noauth$',
+      '-C' => '$ssl_cert_clientcert$',
+      '-c' => '$ssl_cert_critical$',
+      '-e' => '$ssl_cert_email$',
+      '-f' => '$ssl_cert_file$',
+      '-i' => '$ssl_cert_issuer$',
+      '-n' => '$ssl_cert_cn$',
+      '-N' => '$ssl_cert_hostcn$',
+      '-o' => '$ssl_client_org$',
+      '-p' => '$ssl_cert_port$',
+      '-P' => '$ssl_cert_protocol$',
+      '-s' => '$ssl_cert_selfsigned$',
+      '-S' => '$ssl_cert_ssl$',
+      '-r' => '$ssl_cert_rootcert$',
+      '-t' => '$ssl_cert_timeout$',
+      '-w' => '$ssl_cert_warning$',
+    },
+    vars      => {
+      'ssl_cert_host'     => 'localhost',
+      'ssl_cert_rootcert' => '/etc/ssl/certs',
+      'ssl_cert_warning'  => 28,
+      'ssl_cert_critical' => 7,
+    },
+  }
+
 }
