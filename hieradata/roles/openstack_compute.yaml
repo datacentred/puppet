@@ -4,6 +4,7 @@ classes:
   - '::dc_profile::openstack::neutron::agent_compute'
   - '::dc_profile::openstack::ceilometer::agent'
   - '::dc_icinga::hostgroup_nova_compute'
+  - '::dc_profile::util::blacklist_modules'
 
 sudo::configs:
   nova:
@@ -79,6 +80,16 @@ dc_ssh::config:
   AllowGroups:
     value:
       - 'nova'
+
+dc_profile::util::blacklist_modules::modules:
+    - 'ib_addr'
+    - 'ib_core'
+    - 'ib_iser'
+    - 'rdma_cm'
+    - 'iw_cm'
+    - 'ib_cm'
+    - 'ib_sa'
+    - 'ib_mad'
 
 ceph::conf:
   client:
