@@ -6,7 +6,6 @@ classes:
   - '::dc_profile::auth::tally'
   - '::dc_profile::editors::vim'
   - '::dc_profile::log::logrotate'
-  - '::dc_profile::mon::icinga2'
   - '::dc_profile::mon::icinga_client'
   - '::dc_profile::net::lldp'
   - '::dc_profile::net::ntp'
