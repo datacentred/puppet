@@ -27,10 +27,7 @@ class dc_bmc (
   $radius_secret = undef,
   $bmc_admin_passwd = undef,
   $bmc_admin_name = undef,
-  $ipmi_user_channel = $dc_bmc::params::ipmi_user_channel,
-  $ipmi_admin_user_slot = $dc_bmc::params::ipmi_admin_user_slot,
-  $ipmi_smnew_admin_user_slot = $dc_bmc::params::ipmi_smnew_admin_user_slot,
-) inherits dc_bmc::params {
+) {
 
   case $::productname {
 
