@@ -8,7 +8,6 @@
 # Actions:
 #
 # Requires:
-# Grub2.0 Installed (dc_grub)
 # Stdin
 #
 # Sample Usage:
@@ -24,7 +23,7 @@ class dc_profile::util::kdump {
     require => Package['linux-crashdump'],
   }
 
-  file_line { 'grub update':
+  file_line { 'grub.d update':
     path    => '/etc/default/grub.d/kexec-tools.cfg',
     line    => 'GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT crashkernel=384M-:256M"',
     match   => '^GRUB',
