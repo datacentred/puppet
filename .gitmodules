@@ -329,3 +329,6 @@
 [submodule "modules/kmod"]
 	path = modules/kmod
 	url = https://github.com/camptocamp/puppet-kmod
+[submodule "modules/sasl"]
+	path = modules/sasl
+	url = https://github.com/bodgit/puppet-sasl.git
