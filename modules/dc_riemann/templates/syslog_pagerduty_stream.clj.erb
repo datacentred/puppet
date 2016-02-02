@@ -14,7 +14,7 @@
 (streams
  (by :host
    (where (description (re-pattern blacklist_pattern))
-     (with {:state "Failure" :service "Hardware"}
+     (with {:state "failing" :service " : Riemann syslog keyword check"}
         (throttle 1 43200
          #(info %)
          (:trigger pd)))))) 
