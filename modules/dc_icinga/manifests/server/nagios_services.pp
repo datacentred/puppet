@@ -761,12 +761,12 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron Duplicate Routers',
   }
 
-  #  icinga::service { 'check_md_raid':
-  #  use                 => 'dc_service_nrpe',
-  #  hostgroup_name      => 'dc_hostgroup_generic',
-  #  check_command       => 'check_nrpe_1arg!check_md_raid',
-  #  service_description => 'Software Raid Health',
-  #}
+  icinga::service { 'check_md_raid':
+    use                 => 'dc_service_nrpe',
+    hostgroup_name      => 'dc_hostgroup_generic',
+    check_command       => 'check_nrpe_1arg!check_md_raid',
+    service_description => 'Software Raid Health',
+  }
 
   icinga::service { 'check_haproxy':
     use                 => 'dc_service_generic',
