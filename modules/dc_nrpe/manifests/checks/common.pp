@@ -53,14 +53,9 @@ class dc_nrpe::checks::common (
     sudo   => true,
   }
 
-  dc_nrpe::check { 'check_free_mem':
-    path   => '/usr/local/bin/check_mem.pl',
-    source => 'puppet:///modules/dc_nrpe/check_mem.pl',
-  }
-
-  dc_nrpe::check { 'check_free_swap':
-    path   => '/usr/local/bin/check_swap.sh',
-    source => 'puppet:///modules/dc_nrpe/check_swap.sh',
+  dc_nrpe::check { 'check_memory':
+    path => '/usr/lib/nagios/plugins/check_memory',
+    args => '-w 10% -c 5%',
   }
 
 }
