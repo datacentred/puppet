@@ -29,37 +29,24 @@ class dc_bmc (
   $bmc_admin_name = undef,
 ) {
 
+  include ::dc_bmc::base
+  include ::dc_bmc::users
+  include ::dc_bmc::housekeeper
+
   case $::productname {
 
     /ProLiant BL/: {
-      include ::dc_bmc::base
-      include ::dc_bmc::admin
-      include ::dc_bmc::housekeeper
       include ::dc_bmc::hp
     }
     'X8DTT-H': {
-      include ::dc_bmc::base
-      include ::dc_bmc::admin
-      include ::dc_bmc::housekeeper
-      include ::dc_bmc::monitor_user
       include ::dc_bmc::supermicro::reaper
       include ::dc_bmc::supermicro::http_scripted
     }
-    'X9DRT', 'X9DRD-7LN4F(-JBOD)/X9DRD-EF', 'SSG-6027R-E1R12L': {
-      include ::dc_bmc::base
-      include ::dc_bmc::admin
-      include ::dc_bmc::housekeeper
-      include ::dc_bmc::monitor_user
-    }
     /PowerEdge/: {
-      include ::dc_bmc::base
-      include ::dc_bmc::admin
-      include ::dc_bmc::housekeeper
-      include ::dc_bmc::monitor_user
       include ::dc_bmc::dell::idrac
     }
-    default : {
-      notify { "Unsupported IPMI platform ${::productname}": }
+    default: {
+      # Stop compiler warnings
     }
 
   }
