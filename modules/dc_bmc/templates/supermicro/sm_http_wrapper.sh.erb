@@ -10,7 +10,7 @@ fi
 
 if curl -s http://$IPADDRESS/login.asp | grep login.html
 then
-    /usr/local/bin/sm_http.rb  --ip $IPADDRESS --hostname <%= @hostname %>-bmc --server <%= @radius_server_ip %> --secret <%= scope.lookupvar('dc_bmc::radius_secret') %> --password <%= scope.lookupvar('dc_bmc::bmc_admin_passwd') %> --username <%= scope.lookupvar('dc_bmc::bmc_admin_name') %>
+    /usr/local/bin/sm_http.rb  --ip $IPADDRESS --hostname <%= @hostname %>-bmc --server <%= @_radius_server_ip %> --secret <%= @_radius_secret %> --password <%= @_bmc_admin_passwd %> --username <%= @_bmc_admin_name %>
 else
     echo "Cannot connect to IPMI web interface"
     exit 1

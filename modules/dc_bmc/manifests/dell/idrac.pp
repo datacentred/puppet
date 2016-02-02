@@ -13,16 +13,15 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_bmc::dell::idrac {
 
-  Drac_setting {
-    require => Service['dataeng'],
-  }
-
   # Install racadm and start dataeng service
-  include dc_bmc::dell::racadm
+  include ::dc_bmc::dell::racadm
   # Configure racadm network
-  include dc_bmc::dell::network
+  include ::dc_bmc::dell::network
   # Configure LDAP auth
-  include dc_bmc::dell::ldap
-  Class['dc_bmc::dell::racadm'] -> Class['dc_bmc::dell::network'] -> Class['dc_bmc::dell::ldap']
+  include ::dc_bmc::dell::ldap
+
+  Class['::dc_bmc::dell::racadm'] ->
+  Class['::dc_bmc::dell::network'] ->
+  Class['::dc_bmc::dell::ldap']
 
 }
