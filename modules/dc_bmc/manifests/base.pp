@@ -17,10 +17,12 @@ class dc_bmc::base {
   # We want to load the kernel modules before installing the ipmi services
   include ::dc_bmc::modules
   include ::dc_bmc::install
+  include ::dc_bmc::configure
   include ::dc_bmc::service
 
   Class['::dc_bmc::modules'] ->
   Class['::dc_bmc::install'] ->
+  Class['::dc_bmc::configure'] ~>
   Class['::dc_bmc::service']
 
   # Icinga

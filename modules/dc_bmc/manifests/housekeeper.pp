@@ -20,12 +20,11 @@ class dc_bmc::housekeeper {
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
-  }
+  } ->
 
   cron { 'bmc_housekeeper':
     ensure  => present,
     command => '/usr/local/bin/bmc_housekeeper.sh',
-    require => File['/usr/local/bin/bmc_housekeeper.sh'],
     weekday => 0,
     hour    => 2,
     minute  => 0,

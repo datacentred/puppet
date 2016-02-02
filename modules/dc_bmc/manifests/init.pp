@@ -41,6 +41,9 @@ class dc_bmc (
     'X8DTT-H': {
       include ::dc_bmc::supermicro::reaper
       include ::dc_bmc::supermicro::http_scripted
+
+      # Ensure the admin user is installed before trying to screen-scrape...
+      Class['::dc_bmc::users'] -> Class['::dc_bmc::supermicro::http_scripted']
     }
     /PowerEdge/: {
       include ::dc_bmc::dell::idrac
