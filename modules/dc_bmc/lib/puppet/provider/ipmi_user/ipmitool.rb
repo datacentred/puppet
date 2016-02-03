@@ -2,7 +2,7 @@
 #
 Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
 
-  private
+  has_feature :ipmitool
 
   # Translate type enumeration to integer equivalent
   # @param value [Symbol] the privilege symbol as used by the type e.g. :user
@@ -88,8 +88,6 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
     $? == 0 && password || 'unknown'
   end
 
-  public
-
   # Create a list of providers populated with properties
   # @return [Array] array of providers for all instances found on the system
   def self.instances
@@ -150,14 +148,10 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
     privilege = to_priviege(resource[:privilege])
 
     # Create the user
-    execute("ipmitool user enable #{userid}",
-            :options => {:failonfail => true, :combine => true})
-    execute("ipmitool user set name #{userid} #{resource[:name]}",
-            :options => {:failonfail => true, :combine => true})
-    execute("ipmitool user set password #{userid} #{resource[:password]}",
-            :options => {:failonfail => true, :combine => true})
-    execute("ipmitool channel setaccess #{@channel} #{userid} callin=#{callin} ipmi=#{ipmi} link=#{link} privilege=#{privilege}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool user enable #{userid}")
+    execute("ipmitool user set name #{userid} #{resource[:name]}")
+    execute("ipmitool user set password #{userid} #{resource[:password]}")
+    execute("ipmitool channel setaccess #{@channel} #{userid} callin=#{callin} ipmi=#{ipmi} link=#{link} privilege=#{privilege}")
 
     # Update the property hash
     @property_hash = {
@@ -175,12 +169,9 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Destroy a user resource
   def destroy
     # Delete the user
-    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} callin=off ipmi=off link=off privilege=15",
-            :options => {:failonfail => true, :combine => true})
-    execute("ipmitool user set name #{@property_hash[:userid]} ''",
-            :options => {:failonfail => true, :combine => true})
-    execute("ipmitool user disable #{@property_hash[:userid]}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} callin=off ipmi=off link=off privilege=15")
+    execute("ipmitool user set name #{@property_hash[:userid]} ''")
+    execute("ipmitool user disable #{@property_hash[:userid]}")
 
     # Update the property hash
     @property_hash[:ensure] = :absent
@@ -195,8 +186,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Set a new password
   # @param value [String] new password value
   def password=(value)
-    execute("ipmitool user set password #{@property_hash[:userid]} #{value}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool user set password #{@property_hash[:userid]} #{value}")
   end
 
   # Get the current call-in access rights
@@ -208,8 +198,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Set a new call-in access right
   # @param value [Symbol] :true or :false
   def callin=(value)
-    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} callin=#{to_enable(value)}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} callin=#{to_enable(value)}")
   end
 
   # Get whether link authentication is enabled
@@ -221,8 +210,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Set whether link authentication is enabled
   # @param value [Symbol] :true or :false
   def link=(value)
-    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} link=#{to_enable(value)}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} link=#{to_enable(value)}")
   end
 
   # Get whether IPMI messaging is enabled
@@ -234,8 +222,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Set whether IPMI messaging is enabled
   # @param value [Symbol] :true or :false
   def ipmi=(value)
-    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} ipmi=#{to_enable(value)}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} ipmi=#{to_enable(value)}")
   end
 
   # Get the curremt privilege limit
@@ -247,8 +234,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Set a new privilege limit
   # @param value [Symbol] sybolic representation of privilege limits e.g. :user, :administrator
   def privilege=(value)
-    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} privilege=#{to_priviege(value)}",
-            :options => {:failonfail => true, :combine => true})
+    execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} privilege=#{to_priviege(value)}")
   end
 
 end
