@@ -23,6 +23,10 @@ ceph::disks:
     fstype: 'xfs'
   Slot 10/Slot 10:
     fstype: 'xfs'
+  Slot 11/Slot 11:
+    fstype: 'xfs'
+  Slot 12/Slot 12:
+    fstype: 'xfs'
 
 ceph::conf:
   osd:
