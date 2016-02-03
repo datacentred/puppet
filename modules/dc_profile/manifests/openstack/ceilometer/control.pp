@@ -28,6 +28,22 @@ class dc_profile::openstack::ceilometer::control {
     value => true,
   }
 
+  file { '/etc/ceilometer/event_definitions.yaml':
+    source  => 'puppet:///modules/dc_openstack/event_definitions.yaml',
+    owner   => 'ceilometer',
+    group   => 'ceilometer',
+    require => Class['::ceilometer'],
+    notify  => Service['ceilometer-collector', 'ceilometer-agent-notification', 'ceilometer-api'],
+  }
+
+  file { '/etc/ceilometer/event_pipeline.yaml':
+    source  => 'puppet:///modules/dc_openstack/event_pipeline.yaml',
+    owner   => 'ceilometer',
+    group   => 'ceilometer',
+    require => Class['::ceilometer'],
+    notify  => Service['ceilometer-collector', 'ceilometer-agent-notification', 'ceilometer-api'],
+  }
+
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-ceilometer":
     listening_service => 'ceilometer',
