@@ -36,6 +36,12 @@ class dc_profile::net::network_device_backup {
         dport  => 22,
         proto  => tcp,
         action => accept,
+    } ->
+    firewall { '016 Allow inbound SSH from MSPW':
+        source => '185.8.133.16/32',
+        dport  => 22,
+        proto  => tcp,
+        action => accept,
     }
 
     firewall { '020 accept related established rules':
