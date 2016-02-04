@@ -4,16 +4,15 @@
 #
 class dc_bmc::users {
 
-  # HP Proliant blades do not support link authentication
-  if $::productname =~ /^ProLiant BL.*/ {
-    Ipmi_user {
-      link => false,
-    }
-  }
-
   ipmi_user { $::dc_bmc::bmc_admin_name:
-    password  => $::dc_bmc::bmc_admin_passwd,
-    privilege => 'administrator',
+    password   => $::dc_bmc::bmc_admin_passwd,
+    privilege  => 'administrator',
+    ilo_name   => 'Administrator',
+    ilo_admin  => true,
+    ilo_remote => true,
+    ilo_power  => true,
+    ilo_media  => true,
+    ilo_config => true,
   }
 
   ipmi_user { $::dc_bmc::ipmi_monitor_user:
