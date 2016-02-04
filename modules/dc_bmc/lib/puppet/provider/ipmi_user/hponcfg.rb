@@ -6,6 +6,7 @@ Puppet::Type.type(:ipmi_user).provide(:hponcfg) do
   has_feature :ilo
 
   defaultfor :bios_vendor => 'HP'
+  confine :bios_vendor => 'HP'
 
   mk_resource_methods
 
