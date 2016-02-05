@@ -14,6 +14,6 @@ class dc_profile::util::blacklist_modules (
   $modules = [],
 ){
 
-  ensure_resource( 'kmod::blacklist', $modules, { ensure => present } )
+  ensure_resource( 'kmod::install', $modules )
 
 }
