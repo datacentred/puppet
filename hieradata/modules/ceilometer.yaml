@@ -34,3 +34,4 @@ ceilometer::agent::auth::auth_user: 'ceilometer'
 ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::agent::auth::auth_region: "%{hiera('os_region')}"
 ceilometer::agent::notification::enabled: true
+ceilometer::agent::notification::store_events: true
