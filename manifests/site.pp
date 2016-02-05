@@ -8,6 +8,13 @@ Exec {
   ],
 }
 
+# Hack for Ubuntu while puppetlabs get their shit together for 16.04
+if ($::operatingsystem == 'Ubuntu') and ($::operatingsystemrelease == '15.04') {
+  Service {
+    provider => 'systemd',
+  }
+}
+
 # Probe hiera for our class list (e.g. classy version of hiera_include)
 #
 # Apply an exclusion filter so that common classes can be removed from certain
