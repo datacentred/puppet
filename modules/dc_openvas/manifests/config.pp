@@ -90,9 +90,7 @@ class dc_openvas::config {
     command => "omp -u ${::dc_openvas::gsa_user} \
     -w ${::dc_openvas::gsa_password} -X \
     \'<create_schedule><name>Weekly</name><first_time><hour>1</hour><minute>0</minute></first_time><period>1<unit>week</unit></period></create_schedule>\'",
-    unless  => "omp -u ${::dc_openvas::gsa_user} \
-    -w ${::dc_openvas::gsa_password} -X \
-    \'<get_schedule filter=Weekly/>\' | grep schedule_id",
+    unless  => "omp -u ${::dc_openvas::gsa_user} -w ${::dc_openvas::gsa_password} -X \'<get_schedules filter=\"Weekly\"/>\' | grep \'schedule id=\'",
     require => Runonce['delete_admin'],
   }
 
