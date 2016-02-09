@@ -14,6 +14,9 @@ class dc_postfix (
   $internal_sysmail_address,
   $gateway = false,
   $relayhost = 'datacentred.services',
+  $sasl_user,
+  $sasl_domain,
+  $sasl_password,
 ){
 
   if $gateway {
