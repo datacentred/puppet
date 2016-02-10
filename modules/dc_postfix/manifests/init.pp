@@ -17,6 +17,7 @@ class dc_postfix (
   $sasl_user,
   $sasl_domain,
   $sasl_password,
+  $sasl_db,
 ){
 
   if $gateway {

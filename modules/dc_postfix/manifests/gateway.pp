@@ -18,6 +18,7 @@ class dc_postfix::gateway (
   $smarthost_config_hash,
   $restrictions_config_hash,
   $networks_config_hash,
+  $sasl_config_hash,
   $top_level_domain,
   $alias_domains,
 ){
