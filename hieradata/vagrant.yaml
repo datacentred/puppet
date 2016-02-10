@@ -1,9 +1,7 @@
 ---
 excludes:
   - '::dc_profile::auth::rootpw'
-  - '::dc_profile::log::rsyslog_client'
   - '::dc_profile::log::log_shipper'
-  - '::dc_profile::net::mail'
   - '::dc_profile::perf::collectd_stunnel'
   - '::dc_profile::perf::telegraf'
   - '::dc_profile::log::logrotate'
@@ -162,3 +160,6 @@ dc_ssh::config:
 #
 confluence_postgresql_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAq911XV/e8bNqZrrTxhrBbDx//zab4hJAi3msLKOyDXFm1pt4o/9+KAyFT3uW/cEBXJ/nMM62Kg+hoKWf2Upvc4NMD3FDswZhaqvkAMOQT1+MdAGIfxfqyttir7vXJiDqH5eodXUE1W5w5EPMP+03TOSHZohaMF8V2vVgqvbxj/oMVXAA9Zjti4DMU/kpBg8kUtQRHXOmxCo7SHQ40xn7gcDRsHrq0F27oUNMmF9uIv8bc0SKW9KbiX8I/rPENbEH1+mfVYcEuIJlZrfTI1EFV8C+siS6o5vviPyngmfmwFhh80VDszxdTwwBo3uUmUDGKjYzxzABHp5rrhkpHcaFVDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBA9OJWBpKoEMyWM9vR3JaSWgBDWT4sEcW+S+yWQXJBsCWYZ]
 confluence_database_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEApAVUHMEz34ozAxly+pb9+XzLeDpMMce+FBfD99gCxDA8iOVXGcHojMF6GXzdj2KOdkaxcmkHPIyiyo9WjQh6vdCsg33caoP0G+3O2jvHaa8KZ4BUsdBGP5D6FL7ql/feBCYcfahxDO36Y/uSV8PxvMOF1LSHi0Ev/tuIcERrq5p07vAfzLCe4iTGVZckGs9K3Eb6nl3Q6qreR9VmUUaaC0tTm/1GjD7uLL7U2WYfJzaJmAS9bWfUVqXC1XTKZbJbR27p5irMCCI/xOJIukdHzfwPPU93L6UIi8LpfPIhf6gkCN5nOu9xvfUwBIiobOwzA90VnsH75/LwrpendR5c9TA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD0/KySRiswixmRtIVJ09PLgBCqGs72A7i7Zst6yks3hdOL]
+
+# Postfix
+internal_sysmail_address: "sysmail@%{domain}"

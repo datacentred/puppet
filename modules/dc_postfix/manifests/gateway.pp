@@ -19,6 +19,7 @@ class dc_postfix::gateway (
   $restrictions_config_hash,
   $networks_config_hash,
   $top_level_domain,
+  $alias_domains,
 ){
 
   $internal_sysmail_address = $dc_postfix::internal_sysmail_address

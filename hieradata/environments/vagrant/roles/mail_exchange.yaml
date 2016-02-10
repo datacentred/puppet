@@ -1,0 +1,8 @@
+---
+classes:
+  - '::dc_rsyslog::mx'
+  - '::dc_profile::log::rsyslog_client'
+  - '::dc_profile::net::mail'
+dc_postfix::gateway: true
+dc_nrpe::checks::postfix::warn: '50'
+dc_nrpe::checks::postfix::crit: '100'
