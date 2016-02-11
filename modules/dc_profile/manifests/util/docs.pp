@@ -1,6 +1,6 @@
 # Class: dc_profile::util::docs
 #
-# Manage in-house Confluence installation  
+# Manage in-house Confluence installation
 #
 # Parameters:
 #
@@ -14,9 +14,10 @@ class dc_profile::util::docs {
   include ::confluence
   include ::nginx
   include ::postgresql::server
+  include ::dc_backup::duplicity
 
   $database_password = hiera('confluence_database_password')
-  
+
   nginx::resource::upstream { 'confluence':
     ensure  => present,
     members => [ 'localhost:8080' ],
@@ -36,5 +37,11 @@ class dc_profile::util::docs {
     owner    => 'confluenceuser',
     user     => 'confluenceuser',
     password => $database_password,
+  }
+
+  dc_backup::dc_duplicity_job { "${::fqdn}_confluencexml" :
+    cloud          => 's3',
+    backup_content => 'homedir',
+    source_dir     => '/home/confluence/backups/',
   }
 }
