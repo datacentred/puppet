@@ -1,7 +1,4 @@
 ---
-classes:
-  - '::dc_icinga2::services::icingaweb2'
-
 dc_icinga2::role: 'master'
 dc_icinga2::host::import: 'master-host'
 
