@@ -782,4 +782,11 @@ class dc_icinga::server::nagios_services {
     service_description => 'Configured Users',
   }
 
+  icinga::service { 'check_memory':
+    use                 => 'dc_service_generic',
+    hostgroup_name      => 'dc_hostgroup_generic',
+    check_command       => 'check_nrpe_1arg!check_memory',
+    service_description => 'Memory Utilisation',
+  }
+
 }
