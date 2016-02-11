@@ -97,4 +97,17 @@ class dc_icinga2::services::bmc (
     assign_where  => 'host.vars.productname == "X9DRT"',
   }
 
+  icinga2::object::apply_service { 'bmc X9DRD':
+    import        => 'generic-service',
+    check_command => 'bmc',
+    vars          => {
+      'bmc_host'     => 'host.vars.address_bmc',
+      'bmc_username' => $username,
+      'bmc_password' => $password,
+      'bmc_revision' => '3.40',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.productname == "X9DRD-7LN4F(-JBOD)/X9DRD-EF"',
+  }
+
 }
