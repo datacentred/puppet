@@ -250,7 +250,10 @@ class dc_profile::net::core_gateway {
     bind             => {
       ':587' => [],
     },
-    options          => {},
+    options          => {
+      'option'         => "smtpchk EHLO ${::hostname}",
+      'default-server' => 'inter 60s',
+    },
   }
 
   haproxy::backend { 'puppetca':
