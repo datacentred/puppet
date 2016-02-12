@@ -2,10 +2,12 @@
 #
 class dc_postfix::restrictions {
 
+  include ::dc_postfix::gateway
+
   postfix::hash { '/etc/postfix/relaydomains':
     ensure    => present,
     map_owner => 'postfix',
-    content   => "/^.*${dc_postfix::gateway::top_level_domain}$/ OK",
+    content   => template('dc_postfix/relaydomains.erb'),
   }
 
   create_resources ( postfix::config, $dc_postfix::gateway::restrictions_config_hash )
