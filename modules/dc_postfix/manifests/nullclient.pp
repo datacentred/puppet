@@ -19,5 +19,13 @@ class dc_postfix::nullclient {
       satellite           => true,
     }
 
+    # Manage the postfix user and add it to the puppet group
+    # so that postfix can use the puppet certs
+    user { 'postfix':
+      ensure  => present,
+      groups  => [ 'puppet' ],
+      require => Package['postfix'],
+    }
+
     include dc_icinga::hostgroup_postfix
 }
