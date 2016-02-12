@@ -82,3 +82,16 @@ dc_postfix::gateway::sasl_config_hash:
         value: '$myhostname'
     'smtpd_sasl_security_options':
         value: 'noanonymous'
+dc_postfix::client_sec::client_sec_config_hash:
+    'smtp_sasl_auth_enable':
+        value: 'yes'
+    'smtp_sasl_security_options':
+        value: 'noanonymous'
+    'smtp_tls_cert_file':
+        value: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+    'smtp_tls_key_file':
+        value: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+    'smtp_tls_CAfile':
+        value: '/var/lib/puppet/ssl/certs/ca.pem'
+    'smtp_use_tls':
+        value: 'yes'
