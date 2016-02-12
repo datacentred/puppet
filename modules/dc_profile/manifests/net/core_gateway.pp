@@ -244,6 +244,18 @@ class dc_profile::net::core_gateway {
     options          => {},
   }
 
+  haproxy::listen { 'smtp_auth':
+    collect_exported => false,
+    mode             => 'tcp',
+    bind             => {
+      ':587' => [],
+    },
+    options          => {
+      'option'         => "smtpchk EHLO ${::hostname}",
+      'default-server' => 'inter 60s',
+    },
+  }
+
   haproxy::backend { 'puppetca':
     collect_exported => false,
     options          => {
@@ -406,6 +418,20 @@ class dc_profile::net::core_gateway {
   haproxy::balancermember { 'smtp':
     listening_service => 'smtp',
     ports             => '10024',
+    server_names      => [
+      'mx0.core.sal01.datacentred.co.uk',
+      'mx1.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.119',
+      '10.30.192.121',
+    ],
+    options           => 'send-proxy check',
+  }
+
+  haproxy::balancermember { 'smtp_auth':
+    listening_service => 'smtp_auth',
+    ports             => '587',
     server_names      => [
       'mx0.core.sal01.datacentred.co.uk',
       'mx1.core.sal01.datacentred.co.uk',
