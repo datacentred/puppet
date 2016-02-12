@@ -8,6 +8,7 @@ class dc_postfix::client_sec (
 
   $_sasl_user     = $::dc_postfix::sasl_user
   $_sasl_password = $::dc_postfix::sasl_password
+  $_sasl_domain   = $::dc_postfix::sasl_domain
   $_relayhost     = $::dc_postfix::relayhost
 
   postfix::hash { '/etc/postfix/sasl_passwd':
