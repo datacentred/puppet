@@ -69,7 +69,7 @@ dc_postfix::gateway::sasl_config_hash:
     'smtpd_use_tls':
         value: 'yes'
     'smtpd_tls_loglevel':
-        value: '3'
+        value: '1'
     'smtpd_tls_received_header':
         value: 'yes'
     'smtpd_tls_session_cache_timeout':
