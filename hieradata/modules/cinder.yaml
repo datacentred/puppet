@@ -17,6 +17,9 @@ cinder::database_connection: "mysql://%{hiera('cinder_db_user')}:%{hiera('cinder
 cinder::control_exchange: 'cinder'
 cinder::rpc_backend: 'rabbit'
 
+cinder::storage_availability_zone: 'Production'
+cinder::default_availability_zone: 'Production'
+
 cinder::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
@@ -25,7 +28,6 @@ cinder::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
 cinder::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 cinder::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 cinder::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
-
 
 cinder::api::keystone_enabled: true
 cinder::api::auth_uri: "https://%{hiera('os_api_host')}:5000/"
