@@ -332,3 +332,9 @@
 [submodule "modules/sasl"]
 	path = modules/sasl
 	url = https://github.com/bodgit/puppet-sasl.git
+[submodule "modules/nfdump"]
+	path = modules/nfdump
+	url = git://github.com/jvoss/puppet-module-nfdump.git
+[submodule "modules/nfsen"]
+	path = modules/nfsen
+	url = git://github.com/jvoss/puppet-module-nfsen.git
