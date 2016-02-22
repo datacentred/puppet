@@ -40,7 +40,8 @@ class dc_profile::openstack::cinder {
 
   $cinder_rbd_defaults = {
     rbd_user        => 'cinder',
-    rbd_secret_uuid => '42991612-85dc-42e4-ae3c-49cf07e98b70'
+    rbd_secret_uuid => '42991612-85dc-42e4-ae3c-49cf07e98b70',
+    extra_options   => { 'storage_availability_zone' => 'Production' },
   }
 
   create_resources(cinder::backend::rbd, hiera('cinder_rbd_pools'), $cinder_rbd_defaults)
