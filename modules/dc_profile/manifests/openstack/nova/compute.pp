@@ -32,24 +32,6 @@ class dc_profile::openstack::nova::compute {
     require => Class['::Nova'],
   }
 
-  # Ensure ARM-based hypervisors don't advertise the ability to virtualise i686 and x86_64
-  # based instances and vice-versa
-  case $::architecture {
-    'aarch64': {
-      file { [ '/usr/bin/qemu-system-x86_64', '/usr/bin/qemu-system-i386' ]:
-        mode   => '0000',
-        notify => Service['nova-compute'],
-      }
-    }
-    'amd64': {
-      file { '/usr/bin/qemu-system-arm':
-        mode   => '0000',
-        notify => Service['nova-compute'],
-      }
-    }
-    default: {}
-  }
-
   # Ensure ceph is installed and configured before installing the cinder secret
   Class['::ceph'] -> Class['::nova::compute::rbd']
 
