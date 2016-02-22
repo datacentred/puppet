@@ -50,7 +50,3 @@ cinder::volume::rbd::rbd_secret_uuid: '42991612-85dc-42e4-ae3c-49cf07e98b70'
 cinder::quota::quota_volumes: '10'
 cinder::quota::quota_snapshots: '10'
 cinder::quota::quota_gigabytes: '200'
-
-cinder::backends::enabled_backends:
-  - 'cinder.volumes'
-  - 'cinder.volumes.flash'

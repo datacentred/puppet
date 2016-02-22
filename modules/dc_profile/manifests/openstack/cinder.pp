@@ -38,12 +38,21 @@ class dc_profile::openstack::cinder {
   # restart the cinder-volume service if anything changes
   Class['::ceph'] ~> Class['::cinder::volume']
 
-  $cinder_rbd_defaults = {
-    rbd_user        => 'cinder',
-    rbd_secret_uuid => '42991612-85dc-42e4-ae3c-49cf07e98b70',
-    extra_options   => { 'storage_availability_zone' => 'Production' },
+  $rbd_user        = 'cinder'
+  $rbd_secret_uuid = '42991612-85dc-42e4-ae3c-49cf07e98b70'
+
+  cinder::backend::rbd { 'cinder.volumes':
+    rbd_pool        => 'cinder.volumes',
+    rbd_user        => $rbd_user,
+    rbd_secret_uuid => $rbd_secret_uuid,
+    extra_options   => { 'cinder.volumes/storage_availability_zone' => { 'value' => 'Production' } },
   }
 
-  create_resources(cinder::backend::rbd, hiera('cinder_rbd_pools'), $cinder_rbd_defaults)
+  cinder::backend::rbd { 'cinder.volumes.flash':
+    rbd_pool        => 'cinder.volumes.flash',
+    rbd_user        => $rbd_user,
+    rbd_secret_uuid => $rbd_secret_uuid,
+    extra_options   => { 'cinder.volumes.flash/storage_availability_zone' => { 'value' => 'Production' } },
+  }
 
 }
