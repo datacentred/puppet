@@ -54,16 +54,6 @@ class dc_icinga2::groups {
     assign_where => 'host.vars.operatingsystem == "Centos"',
   }
 
-  icinga2::object::hostgroup { 'aarch64-servers':
-    display_name => 'Aarch64 Servers',
-    assign_where => 'host.vars.architecture == "aarch64"',
-  }
-
-  icinga2::object::hostgroup { 'amd64-servers':
-    display_name => 'Amd64 Servers',
-    assign_where => 'host.vars.architecture == "amd64"',
-  }
-
   # Service Groups
 
   icinga2::object::servicegroup { 'apt':

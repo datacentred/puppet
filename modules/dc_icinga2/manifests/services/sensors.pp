@@ -9,7 +9,7 @@ class dc_icinga2::services::sensors {
     check_command => 'sensors',
     zone          => 'host.name',
     assign_where  => true,
-    ignore_where  => 'host.vars.architecture == "aarch64" || host.vars.is_virtual || host.vars.productname == "OpenStack Nova"',
+    ignore_where  => 'host.vars.is_virtual || host.vars.productname == "OpenStack Nova"',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
