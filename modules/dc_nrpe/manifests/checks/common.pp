@@ -55,7 +55,7 @@ class dc_nrpe::checks::common (
 
   dc_nrpe::check { 'check_memory':
     path => '/usr/lib/nagios/plugins/check_memory',
-    args => '-w 10% -c 5%',
+    args => '-w 1000000000 -c 500000000',
   }
 
 }
