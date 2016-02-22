@@ -21,12 +21,6 @@ sysctls::values:
 
 neutron::debug: true
 
-cinder_rbd_pools:
-  'cinder.volumes':
-    rbd_pool: 'cinder.volumes'
-  'cinder.volumes.flash':
-    rbd_pool: 'cinder.volumes.flash'
-
 sudo::configs:
   nova:
     content: |
