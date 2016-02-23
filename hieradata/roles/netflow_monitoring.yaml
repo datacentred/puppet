@@ -1,0 +1,13 @@
+---
+classes:
+  -  '::dc_profile::net::nfdump'
+  -  '::dc_profile::net::nfsen'
+
+apache::default_vhost: false
+nfdump::use_with_nfsen: true
+nfsen::basedir: '/var/nfsen'
+nfsen::htmldir: '/var/www/html/nfsen/'
+nfsen::version: '1.3.7'
+nfsen::subdirlayout: '1'
+nfsen::user: 'netflow'
+nfsen::mail_from: "netflow@%{::fqdn}"
