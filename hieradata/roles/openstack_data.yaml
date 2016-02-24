@@ -21,17 +21,25 @@ rabbitmq::environment_variables:
     RABBITMQ_MNESIA_BASE: '/srv/rabbitmq'
     RABBITMQ_MNESIA_DIR: "/srv/rabbitmq/%{::hostname}"
 rabbitmq::erlang_cookie: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAoIoYoyYPz0rf9wCxBzQ3kRpWam2y7WTvN7X53utx9cTxQgDfSpfVPD/87xB2gGhF27iVG6xh4U0WcQPXM33akSIArQDCTnG7lGaMFX2b+iMNk3LbaXNNqbqZ2fqVXsmjg4nv6OmaxB5WOOLn5TMc9a5msVmh5Q/T/1N/yCiIb23BzJevCvtuo8XVgDNd7D43tRMohJd0YRGM9xx5/gmdYGdEnhR9Uxs06zlcgviFGq0HIHdI7hTsTzWaHcFBRIx+yKeqYgG3St9v9o/whyYkJYLvBUihLJ/9SpKAPAU9/0Jk83eqgYaaVfPATpiCg9M7olPr+TbYuD9NAz/DiXs+KTBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCCrXi2n9ZAHSVQHWZqVAVogCB6TCjDdTxmNNHNiWjLQtfmG9XpLC3B81WgjArlkaELxQ==]
+rabbitmq::cluster_nodes:
+  - osdbmq0
+  - osdbmq1
+  - osdbmq2
+rabbitmq::cluster_node_type: 'disc'
+
 galera::galera_servers:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
  - osdbmq2.%{::domain}
 galera::galera_master: osdbmq0.%{::domain}
 
-# Increase number of file handles
-#
 sysctls::values:
     fs.file-max:
         value: '4096000'
+    net.core.rmem_max:
+        value: '16777216'
+    net.core.wmem_max:
+        value: '16777216'
 
 databases:
   "%{hiera('cinder_db')}":
