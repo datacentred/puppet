@@ -13,7 +13,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_openvas::install {
 
-  $openvas_packages = [ 'sqlite3', 'gnupg2', 'nmap', 'openvas-manager', 'openvas-cli', 'openvas-gsa' ]
+  $openvas_packages = [ 'pnscan', 'snmp', 'netdiag', 'ike-scan', 'w3af-console', 'nikto', 'wapiti', 'sqlite3', 'gnupg2', 'nmap', 'openvas-manager', 'openvas-cli', 'openvas-gsa' ]
   $package_defaults = { require => Exec['install_openvas_scanner'] }
 
   ensure_packages($openvas_packages)
