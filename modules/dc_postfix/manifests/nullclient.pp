@@ -27,5 +27,6 @@ class dc_postfix::nullclient {
       require => Package['postfix'],
     }
 
+    include dc_postfix::client_sec
     include dc_icinga::hostgroup_postfix
 }

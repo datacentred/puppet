@@ -1,5 +1,0 @@
----
-classes:
-  - '::dc_postfix::client_sec'
-
-dc_postfix::relayhost: '[mail.datacentred.services]:587'
