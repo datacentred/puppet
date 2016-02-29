@@ -1,5 +1,6 @@
 ---
 dc_postfix::internal_sysmail_address: "%{hiera('internal_sysmail_address')}"
+dc_postfix::relayhost: '[mail.datacentred.services]:587'
 dc_postfix::gateway::external_sysmail_address: 'devops@datacentred.co.uk'
 dc_postfix::gateway::top_level_domain: 'datacentred.co.uk'
 dc_postfix::gateway::alias_domains:
