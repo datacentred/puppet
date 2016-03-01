@@ -6,6 +6,9 @@ classes:
   - '::dc_icinga::hostgroup_nova_compute'
   - '::dc_profile::util::blacklist_modules'
 
+excludes:
+  - '::dc_profile::mon::icinga2'
+
 sudo::configs:
   nova:
     content: |

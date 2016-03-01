@@ -2,6 +2,9 @@
 classes:
   - '::dc_profile::ceph::osd'
 
+excludes:
+  - '::dc_profile::mon::icinga2'
+
 ceph::osd: true
 
 ceph::conf:
