@@ -36,6 +36,24 @@ def pgrep(string):
     return 0
 
 
+def get_child_pid(ppid):
+    """Search proc for the first child PID of the specified parent"""
+
+    pids = [int(x) for x in os.listdir('/proc') if re.match(r'^\d+$', x)]
+    for pid in pids:
+        # Handle processes terminating
+        try:
+            with open('/proc/{}/stat'.format(pid)) as stat_file:
+                stat = stat_file.read()
+        except IOError:
+            continue
+
+        if int(stat.split()[3]) == ppid:
+            return int(stat.split()[0])
+
+    return 0
+
+
 def get_sockets(pid):
     """Given the PID find a list of open TCP sockets"""
 
@@ -76,12 +94,19 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--process', required=True)
+    parser.add_argument('-c', '--child', action='store_true')
     args = parser.parse_args()
 
     pid = pgrep(args.process)
     if not pid:
         print 'CRITICAL: service not running'
         sys.exit(NAGIOS_CRITICAL)
+
+    if args.child:
+        pid = get_child_pid(pid)
+        if not pid:
+            print 'CRITICAL: service has no children'
+            sys.exit(NAGIOS_CRITICAL)
 
     sockets = get_sockets(pid)
 

@@ -159,6 +159,9 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-p' => '$openstack_service_process$',
+      '-c' => {
+        'set_if' => '$openstack_service_child$',
+      }
     },
   }
 
