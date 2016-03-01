@@ -220,4 +220,15 @@ class dc_icinga2::checks {
     ],
   }
 
+  icinga2::object::checkcommand { 'disk-queue':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_disk_queue"',
+    ],
+    arguments => {
+      '-d' => '$disk_queue_device$',
+      '-w' => '$disk_queue_warning$',
+      '-c' => '$disk_queue_critical$',
+    },
+  }
+
 }
