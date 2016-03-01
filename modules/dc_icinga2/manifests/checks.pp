@@ -214,4 +214,10 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'ceph-memory':
+    command => [
+      '"/usr/local/lib/nagios/plugins/check_ceph_memory"',
+    ],
+  }
+
 }

@@ -58,4 +58,11 @@ class dc_icinga2::services::ceph {
     assign_where  => 'host.vars.role == "ceph_radosgateway"',
   }
 
+  icinga2::object::apply_service { 'ceph osd memory':
+    import        => 'generic-service',
+    check_command => 'ceph-memory',
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "ceph_osd"',
+  }
+
 }
