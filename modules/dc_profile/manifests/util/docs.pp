@@ -10,11 +10,12 @@
 #
 # Sample Usage:
 class dc_profile::util::docs {
+
   include ::java
   include ::confluence
   include ::nginx
   include ::postgresql::server
-  include ::dc_backup::duplicity
+  include ::dc_backup
 
   $database_password = hiera('confluence_database_password')
 
@@ -44,4 +45,5 @@ class dc_profile::util::docs {
     backup_content => 'homedir',
     source_dir     => '/home/confluence/backups/',
   }
+
 }
