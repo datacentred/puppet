@@ -194,4 +194,64 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
   }
 
+  icinga2::object::apply_service { 'ceilometer agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'ceilometer',
+      'procs_argument' => 'ceilometer-agent-compute',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_compute"',
+  }
+
+  icinga2::object::apply_service { 'ceilometer notification agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'ceilometer',
+      'procs_argument' => 'ceilometer-agent-notification',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'ceilometer central agent':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'ceilometer',
+      'procs_argument' => 'ceilometer-agent-central',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'ceilometer collector':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'ceilometer',
+      'procs_argument' => 'ceilometer-collector',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'ceilometer api':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '1:',
+      'procs_user'     => 'ceilometer',
+      'procs_argument' => 'ceilometer-api',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
 }
