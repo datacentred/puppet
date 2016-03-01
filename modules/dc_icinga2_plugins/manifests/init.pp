@@ -58,6 +58,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_sas_phy',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_ceph_memory':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_memory',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
