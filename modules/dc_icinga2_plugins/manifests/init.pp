@@ -66,6 +66,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_disk_queue',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_disk_latency':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_disk_latency',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }

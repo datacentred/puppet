@@ -1,0 +1,143 @@
+#!/usr/bin/env python
+"""
+Checks Disk Read & Write Latency
+
+By default checks a rotational storage device's read and write times are below
+warning and critical thresholds.  These thresholds are specified as a comma
+separated tuple via the -w and -c arguments where x,y are read and write latency
+respecitively in milliseconds.  If the device is detected to be a solid state
+device then the check expects an additional 2 items in the tuple for ssd read
+and write latency thresholds.
+"""
+
+import argparse
+import json
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def get_last(dev):
+    """Returns the last set of statistics"""
+    try:
+        with open('/tmp/check_disk_latency.{}.json'.format(dev)) as historyfd:
+            return json.loads(historyfd.read())
+    except IOError:
+        return None
+
+
+def set_last(dev, last):
+    """Sets the last set of statistics"""
+    with open('/tmp/check_disk_latency.{}.json'.format(dev), 'w') as historyfd:
+        historyfd.write(json.dumps(last))
+
+
+def get_curr(dev):
+    """Returns the current set of statistics"""
+
+    with open('/proc/diskstats') as diskstatsfd:
+        all_stats = diskstatsfd.read().rstrip().split("\n")
+    stats = [x for x in all_stats if dev in x][0].split()
+
+    curr = {}
+    curr['reads'] = int(stats[3])
+    curr['read_ms'] = int(stats[6])
+    curr['writes'] = int(stats[7])
+    curr['write_ms'] = int(stats[10])
+
+    return curr
+
+
+def get_latencies(last, curr):
+    """Calculate the latencies, returned as a tuple of floats"""
+
+    reads = curr['reads'] - last['reads']
+    read_ms = curr['read_ms'] - last['read_ms']
+
+    writes = curr['writes'] - last['writes']
+    write_ms = curr['write_ms'] - last['write_ms']
+
+    # Guard against divide by zero when no IOs have been performed
+    read_latency = float(read_ms) / float(reads) if reads else 0.0
+    write_latency = float(write_ms) / float(writes) if writes else 0.0
+
+    return (read_latency, write_latency)
+
+
+def dev_is_ssd(dev):
+    """Returns true if the device is an SSD"""
+
+    try:
+        with open('/sys/block/{}/queue/rotational'.format(dev)) as typefd:
+            return int(typefd.read()) == 0
+    except IOError:
+        print 'UNKNOWN: unable to read device type'
+        sys.exit(NAGIOS_UNKNOWN)
+
+
+def main():
+    """Compare historical data with current and compare to thresholds"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--dev', required=True)
+    parser.add_argument('-w', '--warn', required=True)
+    parser.add_argument('-c', '--crit', required=True)
+    args = parser.parse_args()
+
+    # Derive the device type from sysfs
+    ssd = dev_is_ssd(args.dev)
+
+    # Get the historical and current statistics
+    last = get_last(args.dev)
+    curr = get_curr(args.dev)
+
+    # Save the historical statistics
+    set_last(args.dev, curr)
+
+    # Handle the first run after startup
+    if not last:
+        print 'UNKNOWN: history data not available'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # Calculate the current latencies for the check period
+    read_latency, write_latency = get_latencies(last, curr)
+
+    # Select the correct thresholds based on disk type
+    crit_array = args.crit.split(',')
+    try:
+        read_crit = float(crit_array[2] if ssd else crit_array[0])
+        write_crit = float(crit_array[3] if ssd else crit_array[1])
+    except IndexError:
+        print 'UNKNOWN: SSD detected but no critcal latencies provided'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    warn_array = args.warn.split(',')
+    try:
+        read_warn = float(warn_array[2] if ssd else warn_array[0])
+        write_warn = float(warn_array[3] if ssd else warn_array[1])
+    except IndexError:
+        print 'UNKNOWN: SSD detected but no warning latencies provided'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # Calculate the status based on thresholds
+    code = NAGIOS_OK
+    if read_latency > read_warn or write_latency > write_warn:
+        code = NAGIOS_WARNING
+    if read_latency > read_crit or write_latency > write_crit:
+        code = NAGIOS_CRITICAL
+
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print ('{0}: read latency {1:.3f}ms, write latency {2:.3f}ms | '
+           'read={1:.3f}ms;{3:.3f}:;{4:.3f}:;; '
+           'write={2:.3f}ms;{5:.3f}:;{6:.3f}:;;').\
+          format(status, read_latency, write_latency, read_warn, read_crit,
+                 write_warn, write_crit)
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
