@@ -12,4 +12,12 @@ class dc_icinga2::services::memory {
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
+  icinga2::object::apply_service { 'memory edac':
+    import        => 'generic-service',
+    check_command => 'memory-edac',
+    zone          => 'host.name',
+    assign_where  => true,
+    target        => '/etc/icinga2/zones.d/global-templates/services.conf',
+  }
+
 }
