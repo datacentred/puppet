@@ -12,6 +12,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::icingaweb2
   include ::dc_icinga2::services::jenkins
   include ::dc_icinga2::services::load
+  include ::dc_icinga2::services::log_courier
   include ::dc_icinga2::services::mailq
   include ::dc_icinga2::services::memory
   include ::dc_icinga2::services::openstack

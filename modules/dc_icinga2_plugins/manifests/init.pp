@@ -70,6 +70,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_disk_latency',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_log_courier':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_log_courier',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
