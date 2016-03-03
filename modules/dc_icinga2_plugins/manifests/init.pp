@@ -62,6 +62,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_memory',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_disk_queue':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_disk_queue',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }

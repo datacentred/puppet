@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+"""
+Checks Disk Queue Depths
+
+By default checks a rotational storage device's queue depth is below warning
+and critical thresholds.  If the disk is detected to be a solid state device
+then the -w and -c options must specifiy SSD specific thresholds via a comma
+separated list.
+"""
+
+import argparse
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """Checks whether the requested block device has a large queue depth"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--dev', required=True)
+    parser.add_argument('-w', '--warn', required=True)
+    parser.add_argument('-c', '--crit', required=True)
+    args = parser.parse_args()
+
+    # Derive the device type from sysfs
+    try:
+        with open('/sys/block/{}/queue/rotational'.format(args.dev)) as typefd:
+            ssd = int(typefd.read()) == 0
+    except IOError:
+        print 'UNKNOWN: unable to read device type'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # Get the queue depth from proc
+    with open('/proc/diskstats') as diskstatsfd:
+        all_stats = diskstatsfd.read().rstrip().split("\n")
+    stats = [x for x in all_stats if args.dev in x][0]
+    depth = int(stats.split()[11])
+
+    # Select the correct thresholds based on disk type
+    crit_array = args.crit.split(',')
+    try:
+        crit = int(crit_array[1] if ssd else crit_array[0])
+    except IndexError:
+        print 'UNKNOWN: SSD detected but no critical depth provided'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    warn_array = args.warn.split(',')
+    try:
+        warn = int(warn_array[1] if ssd else warn_array[0])
+    except IndexError:
+        print 'UNKNOWN: SSD detected but no warning depth provided'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # Generate output
+    if depth >= crit:
+        print 'CRITICAL: queue too deep {0} | depth={0};{1}:;{2}:;;'.\
+            format(depth, warn, crit)
+        sys.exit(NAGIOS_CRITICAL)
+
+    if depth >= warn:
+        print 'WARNING: queue too deep {0} | depth={0};{1}:;{2}:;;'.\
+            format(depth, warn, crit)
+        sys.exit(NAGIOS_WARNING)
+
+    print 'OK: queue depth {0} | depth={0};{1}:;{2}:;;'.\
+        format(depth, warn, crit)
+    sys.exit(NAGIOS_OK)
+
+
+if __name__ == '__main__':
+    main()
+
+
+# vi: ts=4 et:
