@@ -14,11 +14,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'nova cert':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'nova',
-      'procs_argument' => 'nova-cert',
+      'openstack_service_process' => 'openstack-cert',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -36,11 +34,10 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'nova conductor':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'nova',
-      'procs_argument' => 'nova-conductor',
+      'openstack_service_process' => 'openstack-cert',
+      'openstack_service_child'   => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -102,11 +99,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'neutron dhcp agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-dhcp-agent',
+      'openstack_service_process' => 'neutron-dhcp-agent',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -126,11 +121,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'neutron vpnaas agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-vpn-agent',
+      'openstack_service_process' => 'neutron-vpn-agent',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -138,11 +131,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'neutron lbaas agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-lbaas-agent',
+      'openstack_service_process' => 'neutron-lbaas-agent',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -150,11 +141,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'neutron metering agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-metering-agent',
+      'openstack_service_process' => 'neutron-metering-agent',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -162,11 +151,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'neutron openvswitch agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-openvswitch-agent',
+      'openstack_service_process' => 'neutron-openvswitch-agent',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
@@ -196,11 +183,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'ceilometer agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'ceilometer',
-      'procs_argument' => 'ceilometer-agent-compute',
+      'openstack_service_process' => 'ceilometer-agent-compute',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute"',
@@ -208,11 +193,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'ceilometer notification agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'ceilometer',
-      'procs_argument' => 'ceilometer-agent-notification',
+      'openstack_service_process' => 'ceilometer-agent-notification',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -220,11 +203,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'ceilometer central agent':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'ceilometer',
-      'procs_argument' => 'ceilometer-agent-central',
+      'openstack_service_process' => 'ceilometer-agent-central',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -232,11 +213,9 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'ceilometer collector':
     import        => 'generic-service',
-    check_command => 'procs',
+    check_command => 'openstack-service',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'ceilometer',
-      'procs_argument' => 'ceilometer-collector',
+      'openstack_service_process' => 'ceilometer-collector',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -249,6 +228,38 @@ class dc_icinga2::services::openstack (
       'procs_critical' => '1:',
       'procs_user'     => 'ceilometer',
       'procs_argument' => 'ceilometer-api',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'cinder api':
+    import        => 'generic-service',
+    check_command => 'openstack-service',
+    vars          => {
+      'openstack_service_process' => 'cinder-api',
+      'openstack_service_child'   => true,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'cinder scheduler':
+    import        => 'generic-service',
+    check_command => 'openstack-service',
+    vars          => {
+      'openstack_service_process' => 'cinder-scheduler',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'cinder volume':
+    import        => 'generic-service',
+    check_command => 'openstack-service',
+    vars          => {
+      'openstack_service_process' => 'cinder-volume',
+      'openstack_service_child'   => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',

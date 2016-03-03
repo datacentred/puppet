@@ -159,6 +159,9 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-p' => '$openstack_service_process$',
+      '-c' => {
+        'set_if' => '$openstack_service_child$',
+      }
     },
   }
 
@@ -228,6 +231,17 @@ class dc_icinga2::checks {
       '-d' => '$disk_queue_device$',
       '-w' => '$disk_queue_warning$',
       '-c' => '$disk_queue_critical$',
+    },
+  }
+
+  icinga2::object::checkcommand { 'disk-latency':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_disk_latency"',
+    ],
+    arguments => {
+      '-d' => '$disk_latency_device$',
+      '-w' => '$disk_latency_warning$',
+      '-c' => '$disk_latency_critical$',
     },
   }
 

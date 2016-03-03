@@ -49,6 +49,7 @@ class dc_profile::openstack::proxyip {
           "set iface[. = '${ext_if}']/address ${ip}",
           "set iface[. = '${ext_if}']/netmask 255.255.255.248",
           "set iface[. = '${ext_if}']/post-up[1] 'ip route replace default via 185.43.218.25'",
+          "set iface[. = '${ext_if}']/post-up[2] 'ip link set mtu 9000 ${ext_if}'",
           "set iface[. = '${ext_if}']/post-down[1] 'ip route replace default via 10.10.160.1'",
       ],
   }
