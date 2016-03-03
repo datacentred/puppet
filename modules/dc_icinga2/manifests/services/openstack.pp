@@ -16,7 +16,7 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'openstack-service',
     vars          => {
-      'openstack_service_process' => 'openstack-cert',
+      'openstack_service_process' => 'nova-cert',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -36,7 +36,7 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'openstack-service',
     vars          => {
-      'openstack_service_process' => 'openstack-cert',
+      'openstack_service_process' => 'nova-conductor',
       'openstack_service_child'   => true,
     },
     zone          => 'host.name',
