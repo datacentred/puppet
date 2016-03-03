@@ -2,15 +2,7 @@
 classes:
   - '::dc_profile::openstack::neutron::agent_network'
   - '::dc_icinga::hostgroup_neutron_node'
-
-neutron::agents::ml2::ovs::bridge_uplinks:
- - "br-ex:em2"
- - "br-p2p2:p2p2"
-neutron::agents::ml2::ovs::bridge_mappings:
- - 'default:br-ex'
- - 'as201541:br-p2p2'
-neutron::agents::l3::external_network_bridge: ''
-neutron::agents::l3::gateway_external_network_id: ''
+  - '::collectd::plugin::protocols'
 
 neutron::debug: true
 

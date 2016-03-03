@@ -1,5 +1,14 @@
 ---
+neutron::agents::ml2::ovs::bridge_uplinks:
+ - "br-ex:em2"
+ - "br-p2p2:p2p2"
+neutron::agents::ml2::ovs::bridge_mappings:
+ - 'default:br-ex'
+ - 'as201541:br-p2p2'
+neutron::agents::l3::external_network_bridge: ''
+neutron::agents::l3::gateway_external_network_id: ''
 neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p2p1}"
+
 network_node_extif: 'p2p2'
 
 dc_nrpe::checks::bmc::std_fw_version: '2.20'

@@ -15,8 +15,8 @@ Vagrant.configure('2') do |config|
   config.ssh.password = 'puppet'
 
   if Vagrant.has_plugin?("landrush")
-		config.landrush.enabled = true
-		config.landrush.upstream '8.8.8.8'
+    config.landrush.enabled = true
+    config.landrush.upstream '8.8.8.8'
   end
 
   # Setup a dedicated PuppetDB for storedconfigs
@@ -50,12 +50,16 @@ Vagrant.configure('2') do |config|
         box.vm.box_version = '1.0.1'
       end
 
+      if options.has_key?(:network_node)
+        box.vm.network "public_network", auto_config: false
+      end
+
       # Virtualbox Provider
       box.vm.provider 'virtualbox' do |virtualbox, override|
         virtualbox.cpus   = options.has_key?(:cpus) ? options.cpus.to_i : 2
         virtualbox.memory = options.has_key?(:memory) ? options.memory.to_i : 1024
         virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-		virtualbox.linked_clone = true
+        virtualbox.linked_clone = true
       end
 
       # VMware Fusion Provider
@@ -64,7 +68,7 @@ Vagrant.configure('2') do |config|
         vmware.vmx["vhv.enable"] = "TRUE"
         vmware.vmx['numvcpus'] = options.has_key?(:cpus) ? options.cpus.to_i : 2
         vmware.vmx['memsize']  = options.has_key?(:memory) ? options.memory.to_i : 1024
-		vmware.linked_clone = true
+        vmware.linked_clone = true
       end
 
       # Provision the box
