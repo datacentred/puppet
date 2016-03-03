@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+"""
+Checks log courier is connected and keeping up
+"""
+
+import argparse
+import subprocess
+import sys
+import yaml
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """
+    Main subroutine
+    Runs lc-admin, cleans output, parses and runs some rudimentary checks
+    """
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--warn', required=True)
+    parser.add_argument('-c', '--crit', required=True)
+    args = parser.parse_args()
+
+    try:
+        output = subprocess.check_output(['lc-admin', 'status'])
+    except subprocess.CalledProcessError:
+        print 'UNKNOWN: lc-admin returned non-zero status'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # Clean up the ouput into raw YAML
+    output = '\n'.join(output.split('\n')[5:])
+    output = yaml.load(output)
+
+    # Check things are doing something
+    try:
+        if output['Publisher']['Status'] != 'Connected':
+            print 'CRITICAL: not connected to logstash'
+            sys.exit(NAGIOS_CRITICAL)
+
+        pending = int(output['Publisher']['Pending Payloads'])
+        speed = float(output['Publisher']['Speed (Lps)'])
+
+        warn = int(args.warn)
+        crit = int(args.crit)
+
+        code = NAGIOS_OK
+        if pending >= warn:
+            code = NAGIOS_WARNING
+        if pending >= crit:
+            code = NAGIOS_CRITICAL
+
+        status = ['OK', 'WARNING', 'CRITICAL'][code]
+        print ('{0}: pending {1}, speed {4:.3f} lps | '
+               'pending={1};{2}:;{3}:;; speed={4:.3f};;;;').\
+              format(status, pending, warn, crit, speed)
+
+        sys.exit(code)
+
+    except KeyError:
+        print 'UNKNOWN: malformed output'
+        sys.exit(NAGIOS_UNKNOWN)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
