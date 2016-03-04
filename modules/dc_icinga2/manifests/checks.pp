@@ -234,4 +234,15 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'disk-latency':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_disk_latency"',
+    ],
+    arguments => {
+      '-d' => '$disk_latency_device$',
+      '-w' => '$disk_latency_warning$',
+      '-c' => '$disk_latency_critical$',
+    },
+  }
+
 }
