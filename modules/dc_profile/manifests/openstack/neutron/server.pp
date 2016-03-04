@@ -44,6 +44,29 @@ class dc_profile::openstack::neutron::server {
     require => Package['python-neutron-vpnaas'],
   }
 
+  # TODO: Remove once we've upgraded to Liberty
+  # This patch enables migration of legacy routers to L3-HA via router-update
+  # See https://bugs.launchpad.net/neutron/+bug/1365426
+  file {'/usr/lib/python2.7/dist-packages/neutron/db/l3_hamode_db.py':
+    mode    => '0644',
+    owner   => 'neutron',
+    group   => 'neutron',
+    source  => 'puppet:///modules/dc_openstack/l3_hamode_db.py',
+    notify  => Service['neutron-server'],
+    require => Package['neutron-server'],
+  }
+
+  # TODO: Remove once we've upgraded to Liberty
+  # As above
+  file {'/usr/lib/python2.7/dist-packages/neutron/extensions/l3_ext_ha_mode.py':
+    mode    => '0644',
+    owner   => 'neutron',
+    group   => 'neutron',
+    source  => 'puppet:///modules/dc_openstack/l3_ext_ha_mode.py',
+    notify  => Service['neutron-server'],
+    require => Package['neutron-server'],
+  }
+
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
     listening_service => 'neutron',
