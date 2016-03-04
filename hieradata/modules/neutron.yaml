@@ -73,6 +73,7 @@ neutron::agents::dhcp::dhcp_domain: 'datacentred.io'
 
 neutron::agents::l3::package_ensure: 'absent'
 neutron::agents::l3::manage_service: false
+neutron::agents::l3::enabled: false
 neutron::agents::l3::router_delete_namespaces: true
 neutron::agents::l3::interface_driver: 'neutron.agent.linux.interface.OVSInterfaceDriver'
 
