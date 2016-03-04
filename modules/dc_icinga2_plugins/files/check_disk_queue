@@ -62,7 +62,7 @@ def main():
     status = ['OK', 'WARNING', 'CRITICAL'][code]
     print '{0}: queue depth {1} | depth={1};{2};{3};0;{4}'.\
           format(status, depth, warn, crit, nr_requests)
-    sys.exit(NAGIOS_OK)
+    sys.exit(code)
 
 
 if __name__ == '__main__':
