@@ -54,7 +54,7 @@ def main():
 
         status = ['OK', 'WARNING', 'CRITICAL'][code]
         print ('{0}: pending {1}, speed {4:.3f} lps | '
-               'pending={1};{2}:;{3}:;; speed={4:.3f};;;;').\
+               'pending={1};{2};{3};; speed={4:.3f};;;;').\
               format(status, pending, warn, crit, speed)
 
         sys.exit(code)

@@ -145,8 +145,8 @@ def main():
 
     status = ['OK', 'WARNING', 'CRITICAL'][code]
     print ('{0}: read latency {1:.3f}ms, write latency {2:.3f}ms | '
-           'read={1:.3f}ms;{3:.3f}:;{4:.3f}:;; '
-           'write={2:.3f}ms;{5:.3f}:;{6:.3f}:;;').\
+           'read={1:.3f}ms;{3:.3f};{4:.3f};; '
+           'write={2:.3f}ms;{5:.3f};{6:.3f};;').\
           format(status, read_latency, write_latency, read_warn, read_crit,
                  write_warn, write_crit)
     sys.exit(code)
