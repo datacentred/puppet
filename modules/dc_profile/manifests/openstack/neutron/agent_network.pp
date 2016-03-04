@@ -23,6 +23,14 @@ class dc_profile::openstack::neutron::agent_network {
     gro => 'disabled',
   }
 
+  # FIXME: Workaround for the way in which the puppet-neutron module handles services
+  file { '/etc/init.d/neutron-l3-agent':
+    ensure => present,
+    mode   => '0644',
+    owner  => 'root',
+    group  => 'root'
+  }
+
   # Workaround for the fact that we're using the Neutron VPN agent, which
   # handles L3 instead of the vanilla Neutron L3 agent.  The current
   # puppet-neutron module doesn't handle this properly.
