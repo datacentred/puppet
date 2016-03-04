@@ -19,8 +19,20 @@ NAGIOS_WARNING = 1
 NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
 
+def proc_dev_to_sysfs_dev(dev):
+    """Translate procfs device name into that used by sysfs"""
+
+    # On HP blades facter returns block devices as cciss/c0d0 which correctly
+    # addresses the device in /proc/diskstats however when generating hisory
+    # files this adds an implicit directory and sysfs refers to cciss!c0d0.
+    # The latter form can be used for both sysfs and file creation.
+    return dev.replace('/', '!')
+
+
 def get_last(dev):
     """Returns the last set of statistics"""
+
+    dev = proc_dev_to_sysfs_dev(dev)
     try:
         with open('/tmp/check_disk_latency.{}.json'.format(dev)) as historyfd:
             return json.loads(historyfd.read())
@@ -30,6 +42,8 @@ def get_last(dev):
 
 def set_last(dev, last):
     """Sets the last set of statistics"""
+
+    dev = proc_dev_to_sysfs_dev(dev)
     with open('/tmp/check_disk_latency.{}.json'.format(dev), 'w') as historyfd:
         historyfd.write(json.dumps(last))
 
@@ -69,6 +83,7 @@ def get_latencies(last, curr):
 def dev_is_ssd(dev):
     """Returns true if the device is an SSD"""
 
+    dev = proc_dev_to_sysfs_dev(dev)
     try:
         with open('/sys/block/{}/queue/rotational'.format(dev)) as typefd:
             return int(typefd.read()) == 0
