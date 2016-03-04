@@ -7,6 +7,7 @@ excludes:
   - '::dc_profile::log::logrotate'
   - '::dc_profile::net::nscd'
   - '::dc_profile::mon::icinga2'
+  - '::dc_profile::openstack::nova::ceph'
   - '::cinder::volume::rbd'
   - '::collectd::plugin::protocols'
   - '::dc_icinga::hostgroup_neutron_node'

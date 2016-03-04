@@ -12,12 +12,10 @@
 #
 class dc_profile::openstack::nova::compute {
 
-  include ::ceph
   include ::nova
   include ::nova::compute
   include ::nova::compute::libvirt
   include ::nova::compute::neutron
-  include ::nova::compute::rbd
   include ::nova::network::neutron
   include ::nova::scheduler::filter
   include ::nova::config
@@ -31,14 +29,6 @@ class dc_profile::openstack::nova::compute {
     group   => 'nova',
     require => Class['::Nova'],
   }
-
-  # Ensure ceph is installed and configured before installing the cinder secret
-  Class['::ceph'] -> Class['::nova::compute::rbd']
-
-  # Make sure the Ceph client configuration is in place
-  # before we do any of the Nova rbd-related configuration, and
-  # restart if there's any changes
-  Class['::ceph'] ~> Class['::nova::compute']
 
   # Manage the user so we can set the shell
   user { 'nova':
