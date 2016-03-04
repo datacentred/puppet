@@ -24,8 +24,8 @@ class dc_icinga2::services::disk {
     display_name  => '"disk queue " + blockdevice',
     vars          => {
       'disk_queue_device'   => 'blockdevice',
-      'disk_queue_warning'  => '15,50',
-      'disk_queue_critical' => '30,100',
+      'disk_queue_warning'  => '60',
+      'disk_queue_critical' => '80',
     },
     zone          => 'host.name',
     assign_where  => true,

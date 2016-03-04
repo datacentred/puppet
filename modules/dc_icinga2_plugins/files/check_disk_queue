@@ -3,9 +3,8 @@
 Checks Disk Queue Depths
 
 By default checks a rotational storage device's queue depth is below warning
-and critical thresholds.  If the disk is detected to be a solid state device
-then the -w and -c options must specifiy SSD specific thresholds via a comma
-separated list.
+and critical thresholds.  The thresholds are specified as a percentage of the
+current disk queue depth.
 """
 
 import argparse
@@ -16,6 +15,16 @@ NAGIOS_WARNING = 1
 NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
 
+def proc_dev_to_sysfs_dev(dev):
+    """Translate procfs device name into that used by sysfs"""
+
+    # On HP blades facter returns block devices as cciss/c0d0 which correctly
+    # addresses the device in /proc/diskstats however when generating hisory
+    # files this adds an implicit directory and sysfs refers to cciss!c0d0.
+    # The latter form can be used for both sysfs and file creation.
+    return dev.replace('/', '!')
+
+
 def main():
     """Checks whether the requested block device has a large queue depth"""
 
@@ -25,12 +34,13 @@ def main():
     parser.add_argument('-c', '--crit', required=True)
     args = parser.parse_args()
 
-    # Derive the device type from sysfs
+    # Derive the queue depth from sysfs
+    dev = proc_dev_to_sysfs_dev(args.dev)
     try:
-        with open('/sys/block/{}/queue/rotational'.format(args.dev)) as typefd:
-            ssd = int(typefd.read()) == 0
+        with open('/sys/block/{}/queue/nr_requests'.format(dev)) as reqfd:
+            nr_requests = int(reqfd.read())
     except IOError:
-        print 'UNKNOWN: unable to read device type'
+        print 'UNKNOWN: unable to read device queue depth'
         sys.exit(NAGIOS_UNKNOWN)
 
     # Get the queue depth from proc
@@ -39,34 +49,19 @@ def main():
     stats = [x for x in all_stats if args.dev in x][0]
     depth = int(stats.split()[11])
 
-    # Select the correct thresholds based on disk type
-    crit_array = args.crit.split(',')
-    try:
-        crit = int(crit_array[1] if ssd else crit_array[0])
-    except IndexError:
-        print 'UNKNOWN: SSD detected but no critical depth provided'
-        sys.exit(NAGIOS_UNKNOWN)
+    # Calculate the thresholds (multiply first to maintain precision)
+    warn = (nr_requests * int(args.warn)) / 100
+    crit = (nr_requests * int(args.crit)) / 100
 
-    warn_array = args.warn.split(',')
-    try:
-        warn = int(warn_array[1] if ssd else warn_array[0])
-    except IndexError:
-        print 'UNKNOWN: SSD detected but no warning depth provided'
-        sys.exit(NAGIOS_UNKNOWN)
+    code = NAGIOS_OK
+    if depth > warn:
+        code = NAGIOS_WARNING
+    if depth > crit:
+        code = NAGIOS_CRITICAL
 
-    # Generate output
-    if depth >= crit:
-        print 'CRITICAL: queue too deep {0} | depth={0};{1}:;{2}:;;'.\
-            format(depth, warn, crit)
-        sys.exit(NAGIOS_CRITICAL)
-
-    if depth >= warn:
-        print 'WARNING: queue too deep {0} | depth={0};{1}:;{2}:;;'.\
-            format(depth, warn, crit)
-        sys.exit(NAGIOS_WARNING)
-
-    print 'OK: queue depth {0} | depth={0};{1}:;{2}:;;'.\
-        format(depth, warn, crit)
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{0}: queue depth {1} | depth={1};{2};{3};0;{4}'.\
+          format(status, depth, warn, crit, nr_requests)
     sys.exit(NAGIOS_OK)
 
 
