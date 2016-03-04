@@ -74,6 +74,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_log_courier',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_memory_edac':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_memory_edac',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }

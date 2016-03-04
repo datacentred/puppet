@@ -255,4 +255,10 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'memory-edac':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_memory_edac"',
+    ],
+  }
+
 }
