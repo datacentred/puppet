@@ -213,6 +213,11 @@ dc_logstash::client::config:
         shipper: 'log-courier'
         type: 'neutron_server'
     - paths:
+        - '/var/log/neutron/neutron-server.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'neutron_server'
+    - paths:
       - '/var/log/nova/nova-api.log'
       fields:
         shipper: 'log-courier'
