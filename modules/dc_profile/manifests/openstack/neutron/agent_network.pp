@@ -23,6 +23,11 @@ class dc_profile::openstack::neutron::agent_network {
     gro => 'disabled',
   }
 
+  # Workaround for the fact that we're using the Neutron VPN agent, which
+  # handles L3 instead of the vanilla Neutron L3 agent.  The current
+  # puppet-neutron module doesn't handle this properly.
+  Neutron_l3_agent_config<||> ~> Service['neutron-vpnaas-service']
+
   # Distribution-specific hacks^Wconsiderations
   case $::osfamily {
     'Debian': {

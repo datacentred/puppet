@@ -1,6 +1,7 @@
 ---
 classes:
   - '::dc_profile::openstack::nova::compute'
+  - '::dc_profile::openstack::nova::ceph'
   - '::dc_profile::openstack::neutron::agent_compute'
   - '::dc_profile::openstack::ceilometer::agent'
   - '::dc_icinga::hostgroup_nova_compute'
