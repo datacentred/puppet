@@ -245,7 +245,7 @@ class dc_icinga2::checks {
     },
   }
 
-  icinga2::command::checkcommand { 'log-courier':
+  icinga2::object::checkcommand { 'log-courier':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_log_courier"',
     ],
