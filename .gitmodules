@@ -266,9 +266,6 @@
 [submodule "modules/stunnel"]
 	path = modules/stunnel
 	url = https://github.com/arusso/puppet-stunnel.git
-[submodule "modules/telegraf"]
-	path = modules/telegraf
-	url = git@github.com:yankcrime/puppet-telegraf.git
 [submodule "modules/foreman"]
 	path = modules/foreman
 	url = https://github.com/theforeman/puppet-foreman.git
@@ -335,3 +332,6 @@
 [submodule "modules/nfsen"]
 	path = modules/nfsen
 	url = https://github.com/datacentred/puppet-nfsen.git
+[submodule "modules/telegraf"]
+	path = modules/telegraf
+	url = https://github.com/datacentred/puppet-telegraf.git

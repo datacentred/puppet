@@ -1,21 +1,22 @@
 ---
-telegraf::agent_hostname: "%{::hostname}"
-telegraf::install_from_repository: true
-telegraf::version: '0.1.9-17-g0ffaafd'
-telegraf::outputs_influxdb_url: 'http://localhost:18086'
-telegraf::outputs_influxdb_database: 'telegraf'
-telegraf::outputs_influxdb_password: 'ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAU9+6K0HtpTDyUuN+/ib7sOT4zu5kfJFmnXaFVok6Hf7S9nPdK7hfMUdmeCxGw4t8Ntssh7IjSz05OGqVFo/WvP/T0+O4m1K9Eg8roBPDZmdLiaWYMSNa1WociAUbDIeW9G3sXu8c8ZszG5TBtccftN9rT50D2plbqy1ZUBjtZVCnzOZC+u44xiqsDjPQeS4MLDRJzZun6ruxmbewCDCRwYDqn72nPdTv/MZnL7o4zypIfbb8Q1pbXZ5dss6jaeGphr4mwoydaNKZWeoi2KssI5X35w9yV5uU4xm8STIHy5KNbN2WBUilPOruw6IyHWE1GnWTc3FO2AqGHhhvh+gHPjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCOLE4ZbzMvprsEQMQxHWd6gBC58l/Rt0Y/my5fkBoVY2Gf]'
-telegraf::tags:
+telegraf::global_tags:
   role: "%{::role}"
   hostgroup: "%{::hostgroup}"
   domain: "%{::domain}"
-telegraf::plugins:
+telegraf::inputs:
   cpu:
-    percpu: 'true'
-    totalcpu: 'true'
+    percpu: true
+    totalcpu: true
   mem:
   io:
   net:
   disk:
   swap:
   system:
+telegraf::outputs:
+  influxdb:
+    urls:
+      - 'http://localhost:18086'
+    database: 'influxdb'
+    username: 'telegraf'
+    password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAAma1UjzfZi3coBXjJX07VOj8TLlX6wQmmghszbAgYT0YY+45vN59PiNnIKcXHRBjlV7bJRw/S+ZhbxfUiOmCzro9BlRG0b6Zf1jmJhQQdQz2HGwRHqnrnAdE7jJ0BAOa60BzQzmCBQj/0a8kmw92GuPAx64p7MF77OmDDM+xCfbP22Mo9+O+Pdu3liCQtWUnxow+EPWxasCcQlwg8XijjUXfyLTyQ0hP9errDOQth01McooNOB6vwTKzGqtSPnav0gVI0W5RcmJZT4A944W9fA7Ouo0KnvTvqJmZlIVQKWxy/NXaIqO7UT8wV4zyFV6S6Afp1an5RWgpeoz804JaVDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBC3p7WFLm3xneexn+WxUejhgBCoW32aTxXt6bqNmGMZtl+5]
