@@ -37,7 +37,6 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::neutron
   include ::dc_nrpe::checks::neutron_agent
   include ::dc_nrpe::checks::neutron_common
-  include ::dc_nrpe::checks::neutron_routers
   include ::dc_nrpe::checks::nova_compute
   include ::dc_nrpe::checks::nova_server
   include ::dc_nrpe::checks::postfix
