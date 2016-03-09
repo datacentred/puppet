@@ -39,8 +39,6 @@ nova::nova_private_key:
 nova::debug: true
 nova::verbose: true
 
-nova::upgrade_level_compute: 'juno'
-
 nova::api::enabled: true
 nova::api::admin_tenant_name: "%{hiera('nova_admin_tenant')}"
 nova::api::admin_user: "%{hiera('nova_admin_user')}"
