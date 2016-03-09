@@ -23,6 +23,9 @@ class dc_profile::openstack::neutron::agent_network {
     gro => 'disabled',
   }
 
+  # Required for L3-HA
+  ensure_packages(['keepalived'])
+
   # FIXME: Workaround for the way in which the puppet-neutron module handles services
   file { '/etc/init.d/neutron-l3-agent':
     ensure => present,
