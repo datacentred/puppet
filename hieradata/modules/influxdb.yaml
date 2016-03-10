@@ -2,9 +2,6 @@
 influxdb::server::hostname: '%{::fqdn}'
 influxdb::server::collectd_bind_address: ':8096'
 influxdb::server::collectd_enabled: false
-influxdb::server::collectd_database: collectd
-influxdb::server::collectd_typesdb: '/usr/share/collectd/types.db'
-influxdb::server::graphite_enabled: true
+influxdb::server::graphite_enabled: false
 influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
-influxdb::server::version: '0.9.6.1'
