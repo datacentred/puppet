@@ -17,4 +17,8 @@ class dc_icinga2::users {
     target       => '/etc/icinga2/zones.d/global-templates/users.conf',
   }
 
+  icinga2::object::apiuser { 'dashing':
+    client_cn   => 'simon.murray@datacentred.co.uk',
+    permissions => [ '*' ],
+  }
 }
