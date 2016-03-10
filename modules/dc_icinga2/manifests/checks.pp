@@ -229,6 +229,7 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-d' => '$disk_queue_device$',
+      '-a' => '$disk_queue_average$',
       '-w' => '$disk_queue_warning$',
       '-c' => '$disk_queue_critical$',
     },
