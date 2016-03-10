@@ -8,6 +8,7 @@ current disk queue depth.
 """
 
 import argparse
+import json
 import sys
 
 NAGIOS_OK = 0
@@ -25,11 +26,45 @@ def proc_dev_to_sysfs_dev(dev):
     return dev.replace('/', '!')
 
 
+def get_last(dev):
+    """Gets the raw results from the previous N runs"""
+
+    try:
+        with open('/tmp/check_disk_queue.{}.json'.format(dev)) as historyfd:
+            return json.loads(historyfd.read())
+    except IOError:
+        return []
+
+
+def set_last(dev, last):
+    """Sets the raw results fron the last N runs"""
+
+    with open('/tmp/check_disk_queue.{}.json'.format(dev), 'w') as historyfd:
+        historyfd.write(json.dumps(last))
+
+
+def get_average_depth(dev, average, depth):
+    """Loads/saves the history and calculates and average depth"""
+
+    # Load and prune history to N-1 entries
+    last = get_last(dev)
+    if len(last) >= average:
+        last = last[:average-1]
+
+    # Push the new depth to the front and save
+    last.insert(0, depth)
+    set_last(dev, last)
+
+    # Return the average depth
+    return reduce(lambda x, y: x+y, last) / average
+
+
 def main():
     """Checks whether the requested block device has a large queue depth"""
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dev', required=True)
+    parser.add_argument('-a', '--average')
     parser.add_argument('-w', '--warn', required=True)
     parser.add_argument('-c', '--crit', required=True)
     args = parser.parse_args()
@@ -48,6 +83,11 @@ def main():
         all_stats = diskstatsfd.read().rstrip().split("\n")
     stats = [x for x in all_stats if args.dev in x][0]
     depth = int(stats.split()[11])
+
+    # Average the queue depth over N iterations to remove spikiness
+    average = int(args.average)
+    if average:
+        depth = get_average_depth(dev, average, depth)
 
     # Calculate the thresholds (multiply first to maintain precision)
     warn = (nr_requests * int(args.warn)) / 100
