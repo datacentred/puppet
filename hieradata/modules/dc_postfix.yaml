@@ -67,6 +67,8 @@ dc_postfix::gateway::sasl_config_hash:
         value: '/var/lib/puppet/ssl/certs/ca.pem'
     'smtpd_tls_key_file':
         value: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+    'smtpd_tls_protocols':
+        value: '!SSLv2, !SSLv3, !TLSv1.1'
     'smtpd_use_tls':
         value: 'yes'
     'smtpd_tls_loglevel':
