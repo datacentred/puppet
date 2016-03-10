@@ -235,15 +235,6 @@ class dc_profile::net::core_gateway {
   # and the mail servers.  However, as the traffic is behind a NAT
   # boundary this is pretty much pointless as it only allows mail
   # filtering on a per domain basis.
-  haproxy::listen { 'smtp':
-    collect_exported => false,
-    mode             => 'tcp',
-    bind             => {
-      ':25' => [],
-    },
-    options          => {},
-  }
-
   haproxy::listen { 'smtp_auth':
     collect_exported => false,
     mode             => 'tcp',
@@ -413,20 +404,6 @@ class dc_profile::net::core_gateway {
     server_names      => 'bonjour.core.sal01.datacentred.co.uk',
     ipaddresses       => '10.30.192.100',
     options           => 'check',
-  }
-
-  haproxy::balancermember { 'smtp':
-    listening_service => 'smtp',
-    ports             => '10024',
-    server_names      => [
-      'mx0.core.sal01.datacentred.co.uk',
-      'mx1.core.sal01.datacentred.co.uk',
-    ],
-    ipaddresses       => [
-      '10.30.192.119',
-      '10.30.192.121',
-    ],
-    options           => 'send-proxy check',
   }
 
   haproxy::balancermember { 'smtp_auth':
