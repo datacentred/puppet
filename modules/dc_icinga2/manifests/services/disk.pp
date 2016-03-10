@@ -24,6 +24,7 @@ class dc_icinga2::services::disk {
     display_name  => '"disk queue " + blockdevice',
     vars          => {
       'disk_queue_device'   => 'blockdevice',
+      'disk_queue_average'  => '5',
       'disk_queue_warning'  => '60',
       'disk_queue_critical' => '80',
     },
