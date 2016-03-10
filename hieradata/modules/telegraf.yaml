@@ -17,6 +17,6 @@ telegraf::outputs:
   influxdb:
     urls:
       - 'http://localhost:18086'
-    database: 'influxdb'
+    database: 'telegraf'
     username: 'telegraf'
     password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAAma1UjzfZi3coBXjJX07VOj8TLlX6wQmmghszbAgYT0YY+45vN59PiNnIKcXHRBjlV7bJRw/S+ZhbxfUiOmCzro9BlRG0b6Zf1jmJhQQdQz2HGwRHqnrnAdE7jJ0BAOa60BzQzmCBQj/0a8kmw92GuPAx64p7MF77OmDDM+xCfbP22Mo9+O+Pdu3liCQtWUnxow+EPWxasCcQlwg8XijjUXfyLTyQ0hP9errDOQth01McooNOB6vwTKzGqtSPnav0gVI0W5RcmJZT4A944W9fA7Ouo0KnvTvqJmZlIVQKWxy/NXaIqO7UT8wV4zyFV6S6Afp1an5RWgpeoz804JaVDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBC3p7WFLm3xneexn+WxUejhgBCoW32aTxXt6bqNmGMZtl+5]
