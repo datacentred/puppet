@@ -7,7 +7,7 @@
 # ==========================================================================
 10024     inet  n       -       n       -       1       postscreen
 smtpd     pass  -       -       n       -       -       smtpd
-127.0.0.1:smtp  inet  n       -       -       -       -       smtpd
+smtp  inet  n       -       -       -       -       smtpd
 submission inet n       -       -       -       -       smtpd
   -o smtpd_tls_security_level=encrypt
   -o smtpd_tls_req_ccert=yes
