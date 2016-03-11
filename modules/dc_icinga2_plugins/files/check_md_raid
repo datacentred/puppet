@@ -89,7 +89,7 @@ def main():
         for device in mdstat[array]['devices']:
             if mdstat[array]['devices'][device]['failed']:
                 failed.append(device)
-        perfdata = perfdata + ' {}_synchronisation {}%;;;0;100'.\
+        perfdata = perfdata + ' {}_synchronisation={}%'.\
                    format(array, synchronisation)
 
     # Calculate the status code
