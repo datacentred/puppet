@@ -78,6 +78,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_memory_edac',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_md_raid':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_md_raid',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
