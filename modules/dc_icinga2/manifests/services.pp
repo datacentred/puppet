@@ -22,6 +22,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::psu
   include ::dc_icinga2::services::puppetdb
   include ::dc_icinga2::services::puppetserver
+  include ::dc_icinga2::services::raid
   include ::dc_icinga2::services::sas
   include ::dc_icinga2::services::sensors
   include ::dc_icinga2::services::smart

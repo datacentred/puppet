@@ -1,0 +1,118 @@
+#!/usr/bin/env python
+"""
+Checks for error and warning conditions of software RAID
+
+Parses /proc/mdstat into a generic data structure then applies checks
+across the array and device elements.  At present it will raise a critical
+alert if an array is inactive or an array device has failed.  Warnings are
+raised during recovery and resync operations.
+"""
+
+import re
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def parse_mdstat():
+    """Parses /proc/mdestat into a generic data structure"""
+
+    with open('/proc/mdstat') as mdstatfd:
+        lines = mdstatfd.read().split("\n")
+
+    mdstat = {}
+    for line in lines:
+
+        # Match 'md0 : active raid1'
+        attributes = re.match(r'(md\d+)\s+:\s+(\w+)\s+(\w+)', line)
+        if attributes:
+
+            # Cache array for use with subsequent lines
+            array = attributes.group(1)
+
+            # Match 'sda1[0] sdb[1](F)'
+            devices_raw = re.findall(r'(sd\w+)\[\d+\](\((\w)\))?', line)
+
+            devices = {}
+            for device in devices_raw:
+                devices[device[0]] = {
+                    'spare': device[2] == 'S',
+                    'failed': device[2] == 'F',
+                }
+
+            mdstat[array] = {
+                'active': attributes.group(2) == 'active',
+                'level': attributes.group(3),
+                'recovery': False,
+                'resync': False,
+                'devices': devices,
+            }
+
+        # Record the recovery percentage string for output
+        elif 'recovery' in line:
+            mdstat[array]['recovery'] = float(line.split()[3][:-1])
+
+        # Record the resync percentage string for ouput
+        elif 'resync'  in line:
+            mdstat[array]['resync'] = float(line.split()[3][:-1])
+
+    return mdstat
+
+
+def main():
+    """Parse mdstat, determine the state and dump out the information"""
+
+    # Gather statistics about all arrays
+    mdstat = parse_mdstat()
+
+    # Iterate through all arrays and devices gathering interesting
+    # statistics
+    inactive = []
+    recovery = []
+    resync = []
+    failed = []
+    perfdata = ""
+
+    for array in mdstat:
+        synchronisation = 100.0
+        if not mdstat[array]['active']:
+            inactive.append(array)
+        if mdstat[array]['resync']:
+            resync.append('{} = {}%'.format(array, mdstat[array]['resync']))
+            synchronisation = mdstat[array]['resync']
+        if mdstat[array]['recovery']:
+            recovery.append('{} = {}%'.format(array, mdstat[array]['recovery']))
+            synchronisation = mdstat[array]['recovery']
+        for device in mdstat[array]['devices']:
+            if mdstat[array]['devices'][device]['failed']:
+                failed.append(device)
+        perfdata = perfdata + ' {}_synchronisation {}%;;;0;100'.\
+                   format(array, synchronisation)
+
+    # Calculate the status code
+    code = NAGIOS_OK
+    if recovery or resync:
+        code = NAGIOS_WARNING
+    if inactive or failed:
+        code = NAGIOS_CRITICAL
+
+    # Dump out the pertinent information
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{}: inactive {}; recovery {}; resync {}; failed {} |{}'.format(
+        status,
+        ', '.join(inactive) if inactive else 'none',
+        ', '.join(recovery) if recovery else 'none',
+        ', '.join(resync) if resync else 'none',
+        ', '.join(failed) if failed else 'none',
+        perfdata)
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
