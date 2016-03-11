@@ -85,9 +85,8 @@ def main():
     depth = int(stats.split()[11])
 
     # Average the queue depth over N iterations to remove spikiness
-    average = int(args.average)
-    if average:
-        depth = get_average_depth(dev, average, depth)
+    if args.average:
+        depth = get_average_depth(dev, int(args.average), depth)
 
     # Calculate the thresholds (multiply first to maintain precision)
     warn = (nr_requests * int(args.warn)) / 100
