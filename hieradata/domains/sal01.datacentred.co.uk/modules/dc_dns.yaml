@@ -35,7 +35,8 @@ dc_dns::static::records:
   "api-icinga.%{::domain}/CNAME":
     rdata: "icinga.%{::domain}"
   "_x-foreman._tcp.%{::domain}/SRV":
-      rdata: "ns0.%{::domain}"
+    rdata: "ns0.%{::domain}"
+    port: '8000'
 
 dc_dns::nameservers:
   "ns0.%{::domain}": '10.10.192.250'
