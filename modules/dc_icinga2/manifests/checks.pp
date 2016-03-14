@@ -281,4 +281,14 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'mtu':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_mtu"',
+    ],
+    arguments => {
+      '-i' => '$mtu_interface$',
+      '-m' => '$mtu_mtu$',
+    },
+  }
+
 }

@@ -20,13 +20,17 @@ def get_active_sessions():
     """Uses the who command to get a list of active sessions"""
 
     try:
-        output = subprocess.check_output(['who']).rstrip().split("\n")
+        output = subprocess.check_output(['who']).rstrip()
     except subprocess.CalledProcessError:
         print 'UNKNOWN: unable to invoke who'
         sys.exit(NAGIOS_UNKNOWN)
 
+    # Nothing to process
+    if not output:
+        return {}
+
     sessions = {}
-    for line in output:
+    for line in output.split("\n"):
         fields = line.split()
         sessions[fields[1]] = {
             'user': fields[0],
@@ -147,7 +151,7 @@ def main():
         ', '.join(illegal_users) if illegal_users else 'none',
         ', '.join(illegal_address) if illegal_address else 'none')
 
-    return code
+    sys.exit(code)
 
 
 if __name__ == '__main__':

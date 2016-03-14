@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+"""
+Checks the specified interface is of the correct MTU
+"""
+
+import argparse
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def main():
+    """Compares the requested mtu with that from sysfs for the interface"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--interface', required=True)
+    parser.add_argument('-m', '--mtu', required=True)
+    args = parser.parse_args()
+
+    try:
+        with open('/sys/class/net/{}/mtu'.format(args.interface)) as mtufd:
+            mtu = mtufd.read().rstrip()
+    except IOError:
+        print 'UNKNOWN: unable to access {}'.format(args.interface)
+        sys.exit(NAGIOS_UNKNOWN)
+
+    code = NAGIOS_OK
+    if mtu != args.mtu:
+        code = NAGIOS_WARNING
+
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{}: mtu {}, requested {}'.format(status, mtu, args.mtu)
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
