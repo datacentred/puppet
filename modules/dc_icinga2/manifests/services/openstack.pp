@@ -265,4 +265,27 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_control"',
   }
 
+  icinga2::object::apply_service { 'glance api':
+    import        => 'generic-service',
+    check_command => 'openstack-service',
+    vars          => {
+      'openstack_service_process' => 'glance-api',
+      'openstack_service_child'   => true,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
+  icinga2::object::apply_service { 'glance registry':
+    import        => 'generic-service',
+    check_command => 'procs',
+    vars          => {
+      'procs_critical' => '2:',
+      'procs_user'     => 'glance',
+      'procs_argument' => 'glance-registry',
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
 }
