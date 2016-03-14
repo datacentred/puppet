@@ -14,7 +14,7 @@ class dc_icinga2::host (
 
   $_vars_common = {
     'architecture'     => $::architecture,
-    'is_virtual'       => $::is_virtual,
+    'is_virtual'       => str2bool($::is_virtual),
     'lsbdistcodename'  => $::lsbdistcodename,
     'operatingsystem'  => $::operatingsystem,
     'kernel'           => $::kernel,
