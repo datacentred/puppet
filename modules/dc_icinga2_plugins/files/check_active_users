@@ -1,0 +1,156 @@
+#!/usr/bin/env python
+"""
+Checks that the only active users are permitted to be on this machine.  It also
+permits the monitoring software to specify a list of subnets that are allowed
+to be logged in from (e.g. an RFC 1918 VPN range) for pty sessions.
+"""
+
+import argparse
+import netaddr
+import subprocess
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def get_active_sessions():
+    """Uses the who command to get a list of active sessions"""
+
+    try:
+        output = subprocess.check_output(['who']).rstrip().split("\n")
+    except subprocess.CalledProcessError:
+        print 'UNKNOWN: unable to invoke who'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    sessions = {}
+    for line in output:
+        fields = line.split()
+        sessions[fields[1]] = {
+            'user': fields[0],
+            'date': fields[2],
+            'time': fields[3],
+            'source': fields[4][1:-1] if len(fields) >= 5 else None,
+        }
+
+    return sessions
+
+
+def get_illegal_tty_logins(sessions, illegal):
+    """Return a list of active tty loging"""
+
+    # Don't care about local logins
+    if not illegal:
+        return []
+
+    tty_logins = []
+
+    # Record users with tty sessions e.g. tty/0, tty/3
+    for session in sessions:
+        user = sessions[session]['user']
+        if 'tty' in session:
+            tty_logins.append(session + ':' + user)
+
+    return tty_logins
+
+
+def get_illegal_users(sessions, users):
+    """Return a list of illegal user logins"""
+
+    # Don't care about specific users being allowed to log in
+    if not users:
+        return []
+
+    illegal_users = []
+
+    # Record user sessions not whitelisted by the check
+    for session in sessions:
+        user = sessions[session]['user']
+        if users:
+            if user not in users:
+                illegal_users.append(session + ':' + user)
+
+    return illegal_users
+
+
+def get_illegal_source_addresses(sessions, subnets):
+    """Return a list of source addresses that aren't in the select subnets"""
+
+    # Don't care about login source address
+    if not subnets:
+        return []
+
+    illegal_address = []
+
+    for session in sessions:
+        user = sessions[session]['user']
+        source = sessions[session]['source']
+
+        # If the login has a source (e.g. 192.168.0.1, 192.168.0.2:S.1, :0)
+        if source:
+            # Extract the first field which will always be an IP if it exists
+            address = source.split(':')[0]
+            if len(address):
+                addr = netaddr.IPAddress(address)
+                match = False
+                # Compare with the first and last addresses in the subnet
+                # recording if it is contained within any defined allowed range
+                for subnet in subnets:
+                    if addr >= subnet[0] and addr <= subnet[-1]:
+                        match = True
+                        break
+                if not match:
+                    illegal_address.append(session + ':' + user + ':' + address)
+
+    return illegal_address
+
+
+def main():
+    """Gather the current state, metrics, check for errors and report"""
+
+    # Parse the arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--ttylogin', action='store_true')
+    parser.add_argument('-u', '--users')
+    parser.add_argument('-s', '--subnets')
+    args = parser.parse_args()
+
+    # Marshal arguments into a canonical form
+    users = args.users.split(',') if args.users else []
+    subnets = args.subnets.split(',') if args.subnets else []
+    subnets = [netaddr.IPNetwork(x) for x in subnets]
+
+    # Grab the sessions from utmp
+    sessions = get_active_sessions()
+
+    # Gather the metrics
+    illegal_logins = get_illegal_tty_logins(sessions, args.ttylogin)
+    illegal_users = get_illegal_users(sessions, users)
+    illegal_address = get_illegal_source_addresses(sessions, subnets)
+
+    # Set the status codes if requested and we have detected breaches
+    code = NAGIOS_OK
+    if illegal_logins:
+        code = NAGIOS_CRITICAL
+    if illegal_users:
+        code = NAGIOS_CRITICAL
+    if illegal_address:
+        code = NAGIOS_CRITICAL
+
+    # Return the status
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{}: tty logins {}; illegal users {}; illegal addresses {}'.format(
+        status,
+        ', '.join(illegal_logins) if illegal_logins else 'none',
+        ', '.join(illegal_users) if illegal_users else 'none',
+        ', '.join(illegal_address) if illegal_address else 'none')
+
+    return code
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

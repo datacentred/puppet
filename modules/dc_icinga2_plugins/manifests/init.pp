@@ -82,6 +82,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_md_raid',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_active_users':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_active_users',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
