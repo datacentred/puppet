@@ -257,15 +257,28 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'memory-edac':
-    command   => [
+    command => [
       '"/usr/local/lib/nagios/plugins/check_memory_edac"',
     ],
   }
 
   icinga2::object::checkcommand { 'md-raid':
-    command   => [
+    command => [
       '"/usr/local/lib/nagios/plugins/check_md_raid"',
     ],
+  }
+
+  icinga2::object::checkcommand { 'active-users':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_active_users"',
+    ],
+    arguments => {
+      '-t' => {
+        'set_if' => '$active_users_no_tty_logins$',
+      },
+      '-u' => '$active_users_allowed_users$',
+      '-s' => '$active_users_allowed_subnets$',
+    },
   }
 
 }
