@@ -86,6 +86,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_active_users',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_mtu':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_mtu',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
