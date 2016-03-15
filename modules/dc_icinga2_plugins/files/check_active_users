@@ -7,6 +7,7 @@ to be logged in from (e.g. an RFC 1918 VPN range) for pty sessions.
 
 import argparse
 import netaddr
+import os
 import subprocess
 import sys
 
@@ -19,6 +20,9 @@ NAGIOS_UNKNOWN = 3
 def get_active_sessions():
     """Uses the who command to get a list of active sessions"""
 
+    # The output changes based on locales, force it to be YY-MM-DD
+    # for the benefit of split()
+    os.environ['LANG'] = 'en_GB.utf8'
     try:
         output = subprocess.check_output(['who']).rstrip()
     except subprocess.CalledProcessError:
