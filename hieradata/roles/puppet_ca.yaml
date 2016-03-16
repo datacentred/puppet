@@ -11,6 +11,7 @@ puppet::conf:
     reports: 'foreman'
     storeconfigs: 'true'
     storeconfigs_backend: 'puppetdb'
+    certificate_revocation: false
 
 puppet::hiera: |
   :backends:
