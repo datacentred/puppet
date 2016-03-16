@@ -1,0 +1,137 @@
+#!/usr/bin/env python
+"""
+Checks HA Proxy
+
+Performs a statistics interface poll over a mutually verified SSL connection,
+interrogates the resultant data and checks that frontends, backends and
+balancer members are up.  A warning status is raised if a member is down and
+a critical raised if a front end id not open or a backend is down in its
+entirety.
+"""
+
+import argparse
+import httplib
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def get_csv(args):
+    """Polls HAProxy for statistics"""
+
+    connection = httplib.HTTPSConnection(args.host, key_file=args.key,
+                                         cert_file=args.cert)
+    connection.request('GET', args.url + ';csv')
+    response = connection.getresponse()
+
+    return response.read().rstrip().split("\n")
+
+
+def get_rows(csv):
+    """Returns an generator object for rows of statistics"""
+
+    labels = csv[0][2:].split(',')
+
+    # Convert each row into a hash of label: value
+    return [dict(zip(labels, row.split(','))) for row in csv[1:]]
+
+
+def get_frontend_errors(rows):
+    """Returns a list of errored frontends"""
+
+    frontend_errors = []
+
+    for row in rows:
+        if row['svname'] == 'FRONTEND' and row['status'] != 'OPEN':
+            frontend_errors.append(row['pxname'])
+
+    return frontend_errors
+
+
+def get_backend_errors(rows):
+    """Returns a list of errored backends"""
+
+    backend_errors = []
+
+    for row in rows:
+        if row['svname'] == 'BACKEND' and row['status'] != 'UP':
+            backend_errors.append(row['pxname'])
+
+    return backend_errors
+
+
+def get_member_errors(rows):
+    """Returns a list of errored blanacer members"""
+
+    member_errors = []
+
+    for row in rows:
+        if row['svname'] not in ['FRONTEND', 'BACKEND'] and \
+           row['status'] not in ['UP', 'no check']:
+            member_errors.append(row['pxname'] + ':' + row['svname'])
+
+    return member_errors
+
+
+def get_perfdata(args, rows):
+    """Returns the requested performance data"""
+
+    if not args.perfdata:
+        return []
+
+    perfdata = []
+    labels = args.perfdata.split(',')
+    for row in rows:
+        for label in labels:
+            if not label or label not in row:
+                continue
+            perfdata.append('{}_{}_{}={}'.\
+                format(row['pxname'], row['svname'], label,
+                       row[label] if row[label] else '0'))
+
+    return perfdata
+
+
+def main():
+    """Gathers the stats, grabs metrics and outputs the status"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--url', default='/')
+    parser.add_argument('-c', '--cert', required=True)
+    parser.add_argument('-k', '--key', required=True)
+    parser.add_argument('-p', '--perfdata')
+    args = parser.parse_args()
+
+    csv = get_csv(args)
+    rows = get_rows(csv)
+
+    frontend_errors = get_frontend_errors(rows)
+    backend_errors = get_backend_errors(rows)
+    member_errors = get_member_errors(rows)
+    perfdata = get_perfdata(args, rows)
+
+    code = NAGIOS_OK
+    if member_errors:
+        code = NAGIOS_WARNING
+    if frontend_errors or backend_errors:
+        code = NAGIOS_CRITICAL
+
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{} frontend errors {}; backend errors {}; member errors {} | {}'.\
+        format(status,
+               ', '.join(frontend_errors) if frontend_errors else 'none',
+               ', '.join(backend_errors) if backend_errors else 'none',
+               ', '.join(member_errors) if member_errors else 'none',
+               ' '.join(perfdata))
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

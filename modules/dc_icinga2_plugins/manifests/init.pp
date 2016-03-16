@@ -90,6 +90,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_mtu',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_haproxy':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_haproxy',
+  }
+
   package { 'nagios-plugin-check-scsi-smart': }
 
 }
