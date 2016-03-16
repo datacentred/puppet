@@ -291,4 +291,17 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'haproxy':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_haproxy"',
+    ],
+    arguments => {
+      '-H' => '$haproxy_host$',
+      '-u' => '$haproxy_url$',
+      '-k' => '$haproxy_privatekey$',
+      '-c' => '$haproxy_clientcert$',
+      '-p' => '$haproxy_perfdata$',
+    },
+  }
+
 }
