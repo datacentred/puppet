@@ -79,6 +79,13 @@ def get_primary_connection_info(filename):
     return config
 
 
+def get_position(xlog):
+    """Convert an xlog into a scalar value"""
+
+    log, offt = xlog.split('/')
+    return int(log, 16) * 0x100000000 + int(offt, 16)
+
+
 def check_standby(args, config):
     """Checks XLOGs are up to date with the master and have been replayed"""
 
@@ -92,9 +99,18 @@ def check_standby(args, config):
                                 args.password)
 
     if cur_xlog != last_xlog_receive:
-        print 'CRITICAL: replication lag ({} vs {})'.\
-              format(cur_xlog, last_xlog_receive)
-        sys.exit(NAGIOS_CRITICAL)
+        curr = get_position(cur_xlog)
+        last = get_position(last_xlog_receive)
+        diff = curr - last
+
+        if diff > args.critical:
+            print 'CRITICAL: replication lag ({} vs {})'.\
+                  format(cur_xlog, last_xlog_receive)
+            sys.exit(NAGIOS_CRITICAL)
+        if diff > args.warning:
+            print 'WARNING: replication lag ({} vs {})'.\
+                  format(cur_xlog, last_xlog_receive)
+            sys.exit(NAGIOS_CRITICAL)
 
     if last_xlog_receive != last_xlog_replay:
         print 'WARNING: replay lag ({} vs {})'.\
@@ -133,6 +149,8 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-w', '--warning', default=0)
+    parser.add_argument('-c', '--critical', default=0)
     args = parser.parse_args()
 
     recovery_config = '{}/recovery.conf'.format(VARDIR)
