@@ -149,6 +149,8 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-p' => '$pgsql_replication_password$',
+      '-w' => '$pgsql_replication_warning$',
+      '-c' => '$pgsql_replication_critical$',
     }
   }
 
