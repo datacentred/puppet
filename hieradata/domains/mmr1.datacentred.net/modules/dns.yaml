@@ -1,0 +1,6 @@
+---
+dns::dnsmasters:
+  - '10.254.0.27'
+dns::nameservers:
+  "ns0.%{::domain}": '10.254.0.27'
+  "ns1.%{::domain}": '10.254.0.28'
