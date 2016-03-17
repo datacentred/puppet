@@ -1,3 +1,5 @@
 ---
 classes:
  - 'dc_profile::perf::influxdb'
+
+telegraf::manage_repo: false
