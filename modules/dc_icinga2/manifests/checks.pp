@@ -307,4 +307,15 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'tftp':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_tftp"',
+    ],
+    arguments => {
+      '-H' => '$tftp_host$',
+      '-p' => '$tftp_port$',
+      '-u' => '$tftp_url$',
+    },
+  }
+
 }

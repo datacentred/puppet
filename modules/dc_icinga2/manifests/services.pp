@@ -31,6 +31,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::smart
   include ::dc_icinga2::services::ssh
   include ::dc_icinga2::services::ssl
+  include ::dc_icinga2::services::tftp
   include ::dc_icinga2::services::users
 
 }
