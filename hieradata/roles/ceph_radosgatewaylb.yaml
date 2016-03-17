@@ -3,49 +3,6 @@ classes:
   - '::dc_profile::ceph::radosgw_lb'
 
 dc_icinga::client::address: "%{::ipaddress_p1p2}"
-loadbalancer::keepalived_interfaces:
-  VI_70:
-    interface: 'p1p2'
-    virtual_router_id: 70
-    virtual_ipaddress: '10.10.9.2/24'
-  VI_71:
-    interface: 'p1p1'
-    virtual_router_id: 71
-    virtual_ipaddress: '185.43.218.55/28'
-loadbalancer::haproxy_listeners:
-  radosgw:
-    ipaddress: '*'
-    mode: 'http'
-    ports: '80'
-    options:
-      option:
-        - 'tcpka'
-        - 'httpchk GET / HTTP/1.1\r\nHost:\ storage.datacentred.io\r\nUser-Agent:\ HAProxy'
-        - 'httplog'
-        - 'forwardfor'
-      balance: 'source'
-  radosgw_ssl:
-    mode: 'http'
-    bind:
-      ':443':
-        - 'ssl'
-        - 'no-sslv3'
-        - 'crt /etc/ssl/private/STAR_storage_datacentred_io.crt'
-        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
-    options:
-      option:
-        - 'tcpka'
-        - 'httpchk GET / HTTP/1.1\r\nHost:\ storage.datacentred.io\r\nUser-Agent:\ HAProxy'
-        - 'httplog'
-        - 'forwardfor'
-      rspadd:
-        - 'Strict-Transport-Security:\ max-age=31536000'
-      balance: 'source'
-loadbalancer::certs::cert_hash:
-  /etc/ssl/private/STAR_storage_datacentred_io.crt:
-    ssl_cert: '/etc/ssl/certs/STAR_storage_datacentred_io.pem'
-    ssl_key: '/etc/ssl/private/STAR_storage_datacentred_io.key'
-loadbalancer::stats::ipaddress: "%{::ipaddress_p1p2}"
 
 haproxy::defaults_options:
   log: 'global'
