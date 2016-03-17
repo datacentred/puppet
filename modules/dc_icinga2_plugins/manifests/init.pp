@@ -94,6 +94,15 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_haproxy',
   }
 
-  package { 'nagios-plugin-check-scsi-smart': }
+  file { '/usr/local/lib/nagios/plugins/check_tftp':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_tftp',
+  }
+
+  $packages = [
+    'python-tftpy',
+    'nagios-plugin-check-scsi-smart',
+  ]
+
+  ensure_packages($packages)
 
 }
