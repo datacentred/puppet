@@ -1,0 +1,7 @@
+dc_dhcp::pools:
+  mmr1-oob:
+    network:     '10.254.0.0'
+    mask:        '255.255.255.128'
+    gateway:     '10.254.0.1'
+    nextserver:  "%{::ipaddress}"
+    pxefile:     '/pxelinux.0'
