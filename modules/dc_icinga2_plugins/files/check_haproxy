@@ -22,10 +22,13 @@ NAGIOS_UNKNOWN = 3
 def get_csv(args):
     """Polls HAProxy for statistics"""
 
-    connection = httplib.HTTPSConnection(args.host, key_file=args.key,
-                                         cert_file=args.cert)
+    connection = httplib.HTTPSConnection(args.host, args.port, args.key,
+                                         args.cert)
     connection.request('GET', args.url + ';csv')
     response = connection.getresponse()
+    if response.status != 200:
+        print 'UNKNOWN: unable to poll stats api'
+        sys.exit(NAGIOS_UNKNOWN)
 
     return response.read().rstrip().split("\n")
 
@@ -100,10 +103,11 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-p', '--port', default=443)
     parser.add_argument('-u', '--url', default='/')
     parser.add_argument('-c', '--cert', required=True)
     parser.add_argument('-k', '--key', required=True)
-    parser.add_argument('-p', '--perfdata')
+    parser.add_argument('-P', '--perfdata')
     args = parser.parse_args()
 
     csv = get_csv(args)

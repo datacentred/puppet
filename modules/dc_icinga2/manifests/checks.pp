@@ -297,10 +297,11 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-H' => '$haproxy_host$',
+      '-p' => '$haproxy_port$',
       '-u' => '$haproxy_url$',
       '-k' => '$haproxy_privatekey$',
       '-c' => '$haproxy_clientcert$',
-      '-p' => '$haproxy_perfdata$',
+      '-P' => '$haproxy_perfdata$',
     },
   }
 
