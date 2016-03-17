@@ -46,17 +46,16 @@ class dc_profile::openstack::haproxy {
       ':1936' => [
         'ssl',
         'no-sslv3',
-        'crt /etc/ssl/certs/STAR_datacentred_io.pem',
-        'crt /etc/ssl/certs/STAR_sal01_datacentred_co_uk.pem',
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
+        'crt /etc/ssl/private/puppet.crt',
+        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        'verify required',
       ],
     },
     options => {
       'stats'  => [
         'enable',
         'uri /',
-        'hide-version',
-        "auth ${haproxy_stats_user}:${haproxy_stats_password}",
       ],
       'rspadd' => 'Strict-Transport-Security:\ max-age=31536000',
     },

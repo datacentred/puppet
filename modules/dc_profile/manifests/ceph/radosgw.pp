@@ -8,8 +8,8 @@ class dc_profile::ceph::radosgw {
 
   include ::ceph
   include ::dc_ceph::rgw
-  include ::loadbalancer::members
 
-  Class['::ceph'] -> Class['::dc_ceph::rgw']
+  Class['::ceph'] ->
+  Class['::dc_ceph::rgw']
 
 }
