@@ -1,3 +1,8 @@
 ---
 classes:
   - '::dc_profile::perf::telegraf'
+
+# DHCP
+#
+dc_dhcp::params::dhcp_icinga_ip: '10.254.0.27'
+#
