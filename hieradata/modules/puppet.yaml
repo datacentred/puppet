@@ -10,7 +10,3 @@ puppet::conf:
     ssldir: '/var/lib/puppet/ssl'
     rundir: '/var/run/puppet'
     show_diff: 'true'
-    certificate_revocation: false
-  agent:
-    splay: true
-    splaylimit: '1m'
