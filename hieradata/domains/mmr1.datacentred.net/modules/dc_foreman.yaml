@@ -1,0 +1,1 @@
+dc_foreman::update_bmc::bmc_subnet: '10.254.0.0'
