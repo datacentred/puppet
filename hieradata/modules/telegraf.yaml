@@ -9,9 +9,17 @@ telegraf::inputs:
     percpu: true
     totalcpu: true
   mem:
-  io:
   net:
+    namedrop:
+      - 'br*'
+      - 'ovs*'
+      - 'qvo*'
+      - 'qvb*'
+      - 'tap*'
+      - 'qbr*'
   disk:
+    namedrop:
+      - 'dm*'
   swap:
   system:
 telegraf::outputs:
