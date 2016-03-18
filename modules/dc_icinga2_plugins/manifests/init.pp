@@ -98,6 +98,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_tftp',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_interface':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_interface',
+  }
+
   $packages = [
     'python-tftpy',
     'nagios-plugin-check-scsi-smart',

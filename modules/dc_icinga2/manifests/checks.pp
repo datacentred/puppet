@@ -318,4 +318,16 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'interface':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_interface"',
+    ],
+    arguments => {
+      '-i' => '$interface_name$',
+      '-a' => '$interface_address$',
+      '-n' => '$interface_netmask$',
+      '-m' => '$interface_macaddr$',
+    },
+  }
+
 }
