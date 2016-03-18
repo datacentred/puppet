@@ -2,7 +2,6 @@
 classes:
   - '::dc_profile::openstack::neutron::agent_network'
   - '::dc_icinga::hostgroup_neutron_node'
-  - '::collectd::plugin::protocols'
 
 neutron::debug: true
 
