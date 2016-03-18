@@ -1,17 +1,3 @@
 ---
 classes:
   - '::dc_profile::openstack::backups::galera'
-  - '::dc_collectd::agent::mysql'
-dc_collectd::agent::mysql::databases:
-    cinder:
-        masterstats: true
-    glance:
-        masterstats: true
-    heat:
-        masterstats: true
-    keystone:
-        masterstats: true
-    neutron:
-        masterstats: true
-    nova:
-        masterstats: true

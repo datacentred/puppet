@@ -1,4 +1,5 @@
 ---
 classes:
+      - '::dc_profile::perf::collectd'
       - '::dc_collectd::agent::ceph'
 dc_collectd::agent::ceph::ceph_cluster_name: "%{hiera('ceph_cluster_fsid')}"
