@@ -11,6 +11,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::dns
   include ::dc_icinga2::services::haproxy
   include ::dc_icinga2::services::icingaweb2
+  include ::dc_icinga2::services::interface
   include ::dc_icinga2::services::jenkins
   include ::dc_icinga2::services::load
   include ::dc_icinga2::services::log_courier

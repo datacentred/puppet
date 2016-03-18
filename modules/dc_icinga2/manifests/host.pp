@@ -25,6 +25,7 @@ class dc_icinga2::host (
 
   $_vars_blockdevices = icinga2_blockdevices()
   $_vars_interfaces = icinga2_interfaces()
+  $_vars_foreman_interfaces = icinga2_foreman_interfaces()
 
   if $::ipmi_ipaddress {
     $_vars_bmc = {
@@ -32,7 +33,7 @@ class dc_icinga2::host (
     }
   }
 
-  $_vars = merge($_vars_common, $_vars_blockdevices, $_vars_interfaces, $_vars_bmc)
+  $_vars = merge($_vars_common, $_vars_blockdevices, $_vars_interfaces, $_vars_foreman_interfaces, $_vars_bmc)
 
   @@icinga2::object::host { $::fqdn:
     import       => $import,

@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+"""
+Checks an interface has the specified attributes
+"""
+
+import argparse
+import binascii
+import fcntl
+import socket
+import struct
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+SIOCGIFADDR = 0x8915
+SIOCGIFNETMASK = 0x891b
+SIOCGIFHWADDR = 0x8927
+
+
+def netdevice_ioctl(ioctl, ifname):
+    """Returns a netdevice metric for a specific interface"""
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    data = fcntl.ioctl(sock.fileno(), ioctl, struct.pack('256s', ifname[:15]))
+    if ioctl == SIOCGIFADDR:
+        # name[16], family[2], port[2], inaddr[4]
+        return socket.inet_ntoa(data[20:24])
+    if ioctl == SIOCGIFNETMASK:
+        # name[16], family[2], port[2], inaddr[4]
+        return socket.inet_ntoa(data[20:24])
+    if ioctl == SIOCGIFHWADDR:
+        # name[16], family[2], hwaddr[6]
+        mac = binascii.hexlify(data[18:24])
+        return ':'.join([mac[i:i+2] for i in range(0, 12, 2)])
+
+
+def main():
+    """Get all attributes and compare to those specified"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', '--interface', required=True)
+    parser.add_argument('-a', '--address')
+    parser.add_argument('-n', '--netmask')
+    parser.add_argument('-m', '--macaddr')
+    args = parser.parse_args()
+
+    address = netdevice_ioctl(SIOCGIFADDR, args.interface)
+    netmask = netdevice_ioctl(SIOCGIFNETMASK, args.interface)
+    macaddr = netdevice_ioctl(SIOCGIFHWADDR, args.interface)
+
+    code = NAGIOS_OK
+    if args.address and args.address != address:
+        code = NAGIOS_WARNING
+    if args.netmask and args.netmask != netmask:
+        code = NAGIOS_WARNING
+    if args.macaddr and args.macaddr != macaddr:
+        code = NAGIOS_WARNING
+
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{}: address {}, netmask {}, hwaddr {}'.\
+          format(status, address, netmask, macaddr)
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
