@@ -88,12 +88,6 @@ dc_apt_mirror::mirrors:
     components:
       - 'non-free'
     mirror: "%{hiera('hpsupport_mirror_path')}"
-  ceph_mirror:
-    release:
-      - 'trusty'
-    components:
-      - 'main'
-    mirror: "%{hiera('ceph_mirror_path')}"
   ceph_libapache_mod_fastcgi_mirror:
     release:
       - 'trusty'
