@@ -14,3 +14,4 @@ Can\'t create new lease file: Permission denied
 ^.*Couldn\'t obtain IP address ofinstance.*
 \[*\] IPMI message handler: BMC returned incorrect response, expected*
 \[-\] While synchronizing instance power states, found \d+ instances in the database and \d+ instances on the hypervisor
+^.*Recovered model server connection!
