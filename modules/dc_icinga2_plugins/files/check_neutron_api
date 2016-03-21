@@ -20,8 +20,8 @@ NAGIOS_UNKNOWN = 3
 
 KEYSTONE_URI = 'http://localhost:5000/v2.0'
 NEUTRON_URI = 'http://localhost:9696/v2.0'
-WARNING = 10
-CRITICAL = 15
+WARNING = 10.0
+CRITICAL = 15.0
 
 
 def get_authentication_token(args):
@@ -82,17 +82,9 @@ def main():
     parser.add_argument('-t', '--tenant', required=True)
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
-    parser.add_argument('-w', '--warning', default=WARNING)
-    parser.add_argument('-c', '--critical', default=CRITICAL)
+    parser.add_argument('-w', '--warning', type=float, default=WARNING)
+    parser.add_argument('-c', '--critical', type=float, default=CRITICAL)
     args = parser.parse_args()
-
-    # Sanitise possibly tainted input
-    try:
-        critical = float(args.critical)
-        warning = float(args.warning)
-    except ValueError:
-        print 'UNKNOWN: warning/critical syntax error'
-        sys.exit(NAGIOS_UNKNOWN)
 
     token = get_authentication_token(args)
 
@@ -101,22 +93,17 @@ def main():
     end = time.time()
     delta = end - start
 
-    if delta >= critical:
-        print ('CRITICAL: Neutron server responded too slowly in {0:0.3f}s '
-               '| time={0:0.3f}s,{1:0.3f}s,{2:0.3f}s,,')\
-              .format(delta, warning, critical)
-        sys.exit(NAGIOS_CRITICAL)
+    code = NAGIOS_OK
+    if delta >= args.critical:
+        code = NAGIOS_CRITICAL
+    elif delta >= args.warning:
+        code = WARNING
 
-    if delta >= warning:
-        print ('WARNING: Neutron server responded slowly in {0:0.3f}s '
-               '| time={0:0.3f}s,{1:0.3f}s,{2:0.3f}s,,')\
-              .format(delta, warning, critical)
-        sys.exit(WARNING)
-
-    print ('OK: Neutron responsed in {0:0.3f}s '
-           '| time={0:0.3f}s,{1:0.3f}s,{2:0.3f}s,,')\
-          .format(delta, warning, critical)
-    sys.exit(NAGIOS_OK)
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print ('{0}: neutron responsed in {1:0.3f}s '
+           '| time={1:0.3f}s,{2:0.3f}s,{3:0.3f}s,,').\
+          format(status, delta, args.warning, args.critical)
+    sys.exit(code)
 
 
 if __name__ == '__main__':

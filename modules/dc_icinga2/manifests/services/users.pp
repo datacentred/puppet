@@ -17,7 +17,7 @@ class dc_icinga2::services::users {
     check_command => 'active-users',
     vars          => {
       'active_users_no_tty_logins'   => true,
-      'active_users_allowed_users'   => join(keys(hiera('admins')), ','),
+      'active_users_allowed_users'   => keys(hiera('admins')),
       'active_users_allowed_subnets' => '10.253.0.0/16',
     },
     zone          => 'host.name',

@@ -20,8 +20,8 @@ def main():
     """
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-w', '--warn', required=True)
-    parser.add_argument('-c', '--crit', required=True)
+    parser.add_argument('-w', '--warn', type=int, required=True)
+    parser.add_argument('-c', '--crit', type=int, required=True)
     args = parser.parse_args()
 
     try:
@@ -43,19 +43,16 @@ def main():
         pending = int(output['Publisher']['Pending Payloads'])
         speed = float(output['Publisher']['Speed (Lps)'])
 
-        warn = int(args.warn)
-        crit = int(args.crit)
-
         code = NAGIOS_OK
-        if pending >= warn:
+        if pending >= args.warn:
             code = NAGIOS_WARNING
-        if pending >= crit:
+        if pending >= args.crit:
             code = NAGIOS_CRITICAL
 
         status = ['OK', 'WARNING', 'CRITICAL'][code]
         print ('{0}: pending {1}, speed {4:.3f} lps | '
                'pending={1};{2};{3};; speed={4:.3f};;;;').\
-              format(status, pending, warn, crit, speed)
+              format(status, pending, args.warn, args.crit, speed)
 
         sys.exit(code)
 

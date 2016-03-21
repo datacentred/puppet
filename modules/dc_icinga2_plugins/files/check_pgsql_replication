@@ -149,8 +149,8 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--password', required=True)
-    parser.add_argument('-w', '--warning', default=0)
-    parser.add_argument('-c', '--critical', default=0)
+    parser.add_argument('-w', '--warning', type=int, default=0)
+    parser.add_argument('-c', '--critical', type=int, default=0)
     args = parser.parse_args()
 
     recovery_config = '{}/recovery.conf'.format(VARDIR)

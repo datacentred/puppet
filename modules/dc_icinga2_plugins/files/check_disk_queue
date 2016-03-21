@@ -64,9 +64,9 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dev', required=True)
-    parser.add_argument('-a', '--average')
-    parser.add_argument('-w', '--warn', required=True)
-    parser.add_argument('-c', '--crit', required=True)
+    parser.add_argument('-a', '--average', type=int)
+    parser.add_argument('-w', '--warn', type=int, required=True)
+    parser.add_argument('-c', '--crit', type=int, required=True)
     args = parser.parse_args()
 
     # Derive the queue depth from sysfs
@@ -86,11 +86,11 @@ def main():
 
     # Average the queue depth over N iterations to remove spikiness
     if args.average:
-        depth = get_average_depth(dev, int(args.average), depth)
+        depth = get_average_depth(dev, args.average, depth)
 
     # Calculate the thresholds (multiply first to maintain precision)
-    warn = (nr_requests * int(args.warn)) / 100
-    crit = (nr_requests * int(args.crit)) / 100
+    warn = (nr_requests * args.warn) / 100
+    crit = (nr_requests * args.crit) / 100
 
     code = NAGIOS_OK
     if depth > warn:

@@ -42,8 +42,8 @@ class dc_icinga2::services::disk {
     display_name  => '"disk latency " + blockdevice',
     vars          => {
       'disk_latency_device'   => 'blockdevice',
-      'disk_latency_warning'  => '1000,1000,250,250',
-      'disk_latency_critical' => '2000,2000,500,500',
+      'disk_latency_warning'  => [ 1000, 1000, 250, 250 ],
+      'disk_latency_critical' => [ 2000, 2000, 500, 500 ],
     },
     zone          => 'host.name',
     assign_where  => true,

@@ -97,8 +97,10 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--dev', required=True)
-    parser.add_argument('-w', '--warn', required=True)
-    parser.add_argument('-c', '--crit', required=True)
+    parser.add_argument('-w', '--warn', action='append', type=float,
+                        required=True)
+    parser.add_argument('-c', '--crit', action='append', type=float,
+                        required=True)
     args = parser.parse_args()
 
     # Derive the device type from sysfs
@@ -120,18 +122,16 @@ def main():
     read_latency, write_latency = get_latencies(last, curr)
 
     # Select the correct thresholds based on disk type
-    crit_array = args.crit.split(',')
     try:
-        read_crit = float(crit_array[2] if ssd else crit_array[0])
-        write_crit = float(crit_array[3] if ssd else crit_array[1])
+        read_crit = args.crit[2] if ssd else args.crit[0]
+        write_crit = args.crit[3] if ssd else args.crit[1]
     except IndexError:
         print 'UNKNOWN: SSD detected but no critcal latencies provided'
         sys.exit(NAGIOS_UNKNOWN)
 
-    warn_array = args.warn.split(',')
     try:
-        read_warn = float(warn_array[2] if ssd else warn_array[0])
-        write_warn = float(warn_array[3] if ssd else warn_array[1])
+        read_warn = args.warn[2] if ssd else args.warn[0]
+        write_warn = args.warn[3] if ssd else args.warn[1]
     except IndexError:
         print 'UNKNOWN: SSD detected but no warning latencies provided'
         sys.exit(NAGIOS_UNKNOWN)
