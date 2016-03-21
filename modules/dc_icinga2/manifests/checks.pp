@@ -330,4 +330,107 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'rabbitmq-aliveness':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_rabbitmq_aliveness"',
+    ],
+    arguments => {
+      '-H' => '$rabbitmq_aliveness_host$',
+      '-P' => '$rabbitmq_aliveness_port$',
+      '-u' => '$rabbitmq_aliveness_username$',
+      '-p' => '$rabbitmq_aliveness_password$',
+      '-V' => '$rabbitmq_aliveness_vhost$',
+    },
+    vars      => {
+      'rabbitmq_aliveness_host'  => 'localhost',
+      'rabbitmq_aliveness_port'  => 15672,
+      'rabbitmq_aliveness_vhost' => '/',
+    },
+  }
+
+  icinga2::object::checkcommand { 'rabbitmq-objects':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_rabbitmq_objects"',
+    ],
+    arguments => {
+      '-H' => '$rabbitmq_objects_host$',
+      '-P' => '$rabbitmq_objects_port$',
+      '-u' => '$rabbitmq_objects_username$',
+      '-p' => '$rabbitmq_objects_password$',
+    },
+    vars      => {
+      'rabbitmq_objects_host' => 'localhost',
+      'rabbitmq_objects_port' => 15672,
+    },
+  }
+
+  icinga2::object::checkcommand { 'rabbitmq-overview':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_rabbitmq_overview"',
+    ],
+    arguments => {
+      '-H' => '$rabbitmq_overview_host$',
+      '-P' => '$rabbitmq_overview_port$',
+      '-u' => '$rabbitmq_overview_username$',
+      '-p' => '$rabbitmq_overview_password$',
+    },
+    vars      => {
+      'rabbitmq_overview_host' => 'localhost',
+      'rabbitmq_overview_port' => 15672,
+    },
+  }
+
+  icinga2::object::checkcommand { 'rabbitmq-partitions':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_rabbitmq_partitions"',
+    ],
+    arguments => {
+      '-H' => '$rabbitmq_partitions_host$',
+      '-P' => '$rabbitmq_partitions_port$',
+      '-u' => '$rabbitmq_partitions_username$',
+      '-p' => '$rabbitmq_partitions_password$',
+      '-m' => '$rabbitmq_partitions_node$',
+    },
+    vars      => {
+      'rabbitmq_partitions_host' => 'localhost',
+      'rabbitmq_partitions_port' => 15672,
+    },
+  }
+
+  icinga2::object::checkcommand { 'rabbitmq-server':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_rabbitmq_server"',
+    ],
+    arguments => {
+      '-H' => '$rabbitmq_server_host$',
+      '-P' => '$rabbitmq_server_port$',
+      '-u' => '$rabbitmq_server_username$',
+      '-p' => '$rabbitmq_server_password$',
+      '-m' => '$rabbitmq_server_node$',
+      '-w' => '$rabbitmq_server_warning$',
+      '-c' => '$rabbitmq_server_critical$',
+    },
+    vars      => {
+      'rabbitmq_server_host' => 'localhost',
+      'rabbitmq_server_port' => 15672,
+    },
+  }
+
+  icinga2::object::checkcommand { 'rabbitmq-watermark':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_rabbitmq_watermark"',
+    ],
+    arguments => {
+      '-H' => '$rabbitmq_watermark_host$',
+      '-P' => '$rabbitmq_watermark_port$',
+      '-u' => '$rabbitmq_watermark_username$',
+      '-p' => '$rabbitmq_watermark_password$',
+      '-m' => '$rabbitmq_watermark_node$',
+    },
+    vars      => {
+      'rabbitmq_watermark_host' => 'localhost',
+      'rabbitmq_watermark_port' => 15672,
+    },
+  }
+
 }

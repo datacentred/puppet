@@ -1,0 +1,119 @@
+#!/usr/bin/env python
+"""
+Monitors the number of server resource usage
+"""
+
+# pylint: disable=too-many-arguments
+
+import argparse
+import base64
+import httplib
+import json
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def rabbit_request(args, urn):
+    """Performs the API request against the specified URN"""
+
+    auth = 'Basic ' + base64.b64encode(args.username + ':' +args.password)
+
+    connection = httplib.HTTPConnection(args.hostname, args.port)
+    connection.request('GET', urn, headers={'Authorization': auth})
+    response = connection.getresponse()
+    if response.status != 200:
+        print 'UNKNOWN: unable to contact server'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    return json.loads(response.read())
+
+
+def check_threshold(value, **kwargs):
+    """Checks a value against warning and critical thresholds"""
+
+    if 'critical' in kwargs and value > kwargs['critical']:
+        return NAGIOS_CRITICAL
+
+    if 'warning' in kwargs and value > kwargs['warning']:
+        return NAGIOS_WARNING
+
+    return NAGIOS_OK
+
+
+def add_message(messages, code, message):
+    """Adds a message to the queue with the return code"""
+
+    messages[message] = code
+
+
+def add_perfdata(perfdata, label, value, **kwargs):
+    """Adds perfdata to the queue"""
+
+    output = '{}={}{};{};{};{};{}'.\
+             format(label, value,
+                    kwargs['uom'] if 'uom' in kwargs else '',
+                    kwargs['warning'] if 'warning' in kwargs else '',
+                    kwargs['critical'] if 'critical' in kwargs else '',
+                    kwargs['minimum'] if 'minimum' in kwargs else '',
+                    kwargs['maximum'] if 'maximum' in kwargs else '')
+
+    perfdata.append(output.rstrip(';'))
+
+
+def check(messages, perfdata, label, value, maximum, warning, critical):
+    """Performs the necessary checks"""
+
+    warning_threshold = maximum * warning / 100
+    critical_threshold = maximum * critical / 100
+
+    code = check_threshold(value, warning=warning_threshold,
+                           critical=critical_threshold)
+    add_message(messages, code, '{} {}'.format(label, value))
+    add_perfdata(perfdata, label, value, warning=warning_threshold,
+                 critical=critical_threshold, minimum=0, maximum=maximum)
+
+
+def main():
+    """Checks that no partitions exist"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--hostname', required=True)
+    parser.add_argument('-P', '--port', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-n', '--node', required=True)
+    parser.add_argument('-w', '--warning', type=int, required=True)
+    parser.add_argument('-c', '--critical', type=int, required=True)
+    args = parser.parse_args()
+
+    # Grab the results for the requested node
+    result = rabbit_request(args, '/api/nodes/rabbit@' + args.node)
+
+    # Gather the statistics
+    messages = {}
+    perfdata = []
+    check(messages, perfdata, 'memory', result['mem_used'],
+          result['mem_limit'], args.warning, args.critical)
+    check(messages, perfdata, 'process', result['proc_used'],
+          result['proc_total'], args.warning, args.critical)
+    check(messages, perfdata, 'fd', result['fd_used'],
+          result['fd_total'], args.warning, args.critical)
+    check(messages, perfdata, 'sockets', result['sockets_used'],
+          result['sockets_total'], args.warning, args.critical)
+
+    # Perform output
+    code = max(set(messages.values()))
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{}: {} | {}'.format(status, ', '.join(messages), ' '.join(perfdata))
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

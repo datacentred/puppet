@@ -9,3 +9,6 @@ dc_icinga2::services::pgsql::password: "%{hiera('postgresql_icinga_password')}"
 dc_icinga2::services::pgsql_replication::password: "%{hiera('postgres_password')}"
 
 dc_icinga2::services::openstack::password: "%{hiera('keystone_icinga_password')}"
+
+dc_icinga2::services::rabbitmq::username: "%{hiera('rabbitmq_monuser')}"
+dc_icinga2::services::rabbitmq::password: "%{hiera('rabbitmq_monuser_password')}"
