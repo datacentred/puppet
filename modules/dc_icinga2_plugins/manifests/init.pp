@@ -102,6 +102,30 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_interface',
   }
 
+  file { '/usr/local/lib/nagios/plugins/':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_aliveness',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_objects',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_overview',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_partitions',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_server',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_watermark',
+  }
+
   $packages = [
     'python-tftpy',
     'nagios-plugin-check-scsi-smart',

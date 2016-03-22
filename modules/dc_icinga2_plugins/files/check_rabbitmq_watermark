@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+"""
+Monitors if RabbitMQ has raised internal alarms
+"""
+
+import argparse
+import base64
+import httplib
+import json
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def rabbit_request(args, urn):
+    """Performs the API request against the specified URN"""
+
+    auth = 'Basic ' + base64.b64encode(args.username + ':' +args.password)
+
+    connection = httplib.HTTPConnection(args.hostname, args.port)
+    connection.request('GET', urn, headers={'Authorization': auth})
+    response = connection.getresponse()
+    if response.status != 200:
+        print 'UNKNOWN: unable to contact server'
+        sys.exit(NAGIOS_UNKNOWN)
+
+    return json.loads(response.read())
+
+
+def main():
+    """Checks that no alarms are set"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--hostname', required=True)
+    parser.add_argument('-P', '--port', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-n', '--node', required=True)
+    args = parser.parse_args()
+
+    # Grab the results for the requested node
+    result = rabbit_request(args, '/api/nodes/rabbit@' + args.node)
+
+    # Count the number of partitions
+    mem_alarm = result['mem_alarm']
+    disk_free_alarm = result['disk_free_alarm']
+
+    # Calculate the return code
+    code = NAGIOS_OK
+    if mem_alarm or disk_free_alarm:
+        code = NAGIOS_CRITICAL
+
+    # Perform output
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{}: mem_alarm {}, disk_free_alarm {}'.\
+          format(status, mem_alarm, disk_free_alarm)
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
