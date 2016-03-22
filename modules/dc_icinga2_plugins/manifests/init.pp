@@ -102,27 +102,27 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_interface',
   }
 
-  file { '/usr/local/lib/nagios/plugins/':
+  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_aliveness':
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_aliveness',
   }
 
-  file { '/usr/local/lib/nagios/plugins/':
+  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_objects':
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_objects',
   }
 
-  file { '/usr/local/lib/nagios/plugins/':
+  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_overview':
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_overview',
   }
 
-  file { '/usr/local/lib/nagios/plugins/':
+  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_partitions':
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_partitions',
   }
 
-  file { '/usr/local/lib/nagios/plugins/':
+  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_server':
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_server',
   }
 
-  file { '/usr/local/lib/nagios/plugins/':
+  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_watermark':
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_watermark',
   }
 
