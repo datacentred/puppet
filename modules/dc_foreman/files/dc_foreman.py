@@ -147,6 +147,9 @@ class Foreman(object):
         """
         ints = []
         for host in self.get_from_api('hosts'):
+            # exclude unmanaged hosts
+            if host['managed'] == False:
+                continue
 	    # exclude cloud hosts
             if host['provision_method'] == 'image':
                 continue
