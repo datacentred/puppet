@@ -9,7 +9,7 @@ class dc_nrpe::checks::neutron_agent {
 
   dc_nrpe::check { 'check_neutron_metadata_agent':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -a /usr/bin/neutron-ns-metadata-proxy',
+    args => '-c 1: -u neutron -a /usr/bin/neutron-metadata-agent',
   }
 
   dc_nrpe::check { 'check_neutron_vpn_agent':
