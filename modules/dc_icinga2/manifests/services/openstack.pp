@@ -113,7 +113,7 @@ class dc_icinga2::services::openstack (
     vars          => {
       'procs_critical' => '1:',
       'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-ns-metadata-proxy',
+      'procs_argument' => 'neutron-metadata-agent',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
