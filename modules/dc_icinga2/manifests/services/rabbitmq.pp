@@ -46,7 +46,7 @@ class dc_icinga2::services::rabbitmq (
 
   icinga2::object::apply_service { 'rabbitmq partitions':
     import        => 'generic-service',
-    check_command => 'rabbitmq-',
+    check_command => 'rabbitmq-partitions',
     vars          => {
       'rabbitmq_partitions_username' => $username,
       'rabbitmq_partitions_password' => $password,
@@ -58,7 +58,7 @@ class dc_icinga2::services::rabbitmq (
 
   icinga2::object::apply_service { 'rabbitmq server':
     import        => 'generic-service',
-    check_command => 'rabbitmq-',
+    check_command => 'rabbitmq-server',
     vars          => {
       'rabbitmq_server_username' => $username,
       'rabbitmq_server_password' => $password,
@@ -72,7 +72,7 @@ class dc_icinga2::services::rabbitmq (
 
   icinga2::object::apply_service { 'rabbitmq watermark':
     import        => 'generic-service',
-    check_command => 'rabbitmq-',
+    check_command => 'rabbitmq-watermark',
     vars          => {
       'rabbitmq_watermark_username' => $username,
       'rabbitmq_watermark_password' => $password,

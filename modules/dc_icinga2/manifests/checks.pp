@@ -389,7 +389,7 @@ class dc_icinga2::checks {
       '-P' => '$rabbitmq_partitions_port$',
       '-u' => '$rabbitmq_partitions_username$',
       '-p' => '$rabbitmq_partitions_password$',
-      '-m' => '$rabbitmq_partitions_node$',
+      '-n' => '$rabbitmq_partitions_node$',
     },
     vars      => {
       'rabbitmq_partitions_host' => 'localhost',
@@ -406,7 +406,7 @@ class dc_icinga2::checks {
       '-P' => '$rabbitmq_server_port$',
       '-u' => '$rabbitmq_server_username$',
       '-p' => '$rabbitmq_server_password$',
-      '-m' => '$rabbitmq_server_node$',
+      '-n' => '$rabbitmq_server_node$',
       '-w' => '$rabbitmq_server_warning$',
       '-c' => '$rabbitmq_server_critical$',
     },
@@ -425,7 +425,7 @@ class dc_icinga2::checks {
       '-P' => '$rabbitmq_watermark_port$',
       '-u' => '$rabbitmq_watermark_username$',
       '-p' => '$rabbitmq_watermark_password$',
-      '-m' => '$rabbitmq_watermark_node$',
+      '-n' => '$rabbitmq_watermark_node$',
     },
     vars      => {
       'rabbitmq_watermark_host' => 'localhost',
