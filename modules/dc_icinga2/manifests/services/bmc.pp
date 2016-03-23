@@ -19,6 +19,14 @@ class dc_icinga2::services::bmc (
     target => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
+  icinga2::object::apply_service { 'bmc dns':
+    import        => 'generic-service',
+    check_command => 'bmc',
+    zone          => 'host.name',
+    assign_where  => true,
+    ignore_where  => 'host.vars.is_virtual || host.vars.productname == "OpenStack Nova"',
+  }
+
   icinga2::object::apply_service { 'bmc R220':
     import        => 'generic-service',
     check_command => 'bmc',

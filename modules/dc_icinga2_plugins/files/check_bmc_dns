@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+"""
+Checks the local BMC is addressable via DNS.  The standard
+BMC check will test reachability.
+"""
+
+# pylint: disable=import-error
+
+import dns.resolver
+import socket
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def main():
+    """Perform a DNS lookup of the BMC FQDN"""
+
+    # Calculate the BMC name from the fqdn
+    fqdn = socket.getfqdn()
+    hostname, domainname = fqdn.split('.', 1)
+    bmc_fqdn = hostname + '-bmc.' + domainname
+
+    # Try query DNS for the BMC
+    try:
+        answers = dns.resolver.query(bmc_fqdn, 'A')
+    except dns.resolver.NXDOMAIN:
+        print 'CRITICAL: no DNS entry found'
+        sys.exit(NAGIOS_CRITICAL)
+
+    # All good!
+    print 'OK: address {}'.format(answers[0].to_text())
+    sys.exit(NAGIOS_OK)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

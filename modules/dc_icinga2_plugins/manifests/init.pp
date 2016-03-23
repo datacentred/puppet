@@ -134,7 +134,12 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_mongodb',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_bmc_dns':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_bmc_dns',
+  }
+
   $packages = [
+    'python-dnspython',
     'python-tftpy',
     'nagios-plugin-check-scsi-smart',
   ]
