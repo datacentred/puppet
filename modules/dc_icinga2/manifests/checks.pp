@@ -445,4 +445,44 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'mongodb':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_mongodb"',
+    ],
+    arguments => {
+      '-H'              => '$mongodb_host$',
+      '-P'              => '$mongodb_port$',
+      '-u'              => '$mongodb_username$',
+      '-p'              => '$mongodb_password$',
+      '-W'              => '$mongodb_warning$',
+      '-C'              => '$mongodb_critical$',
+      '-A'              => '$mongodb_action$',
+      '--max-lag'       => {
+        'set_if' => '$mongodb_max_lag$',
+      },
+      '--mapped-memory' => {
+        'set_if' => '$mongodb_mapped_memory$',
+      },
+      '-D'              => {
+        'set_if' => '$mongodb_perfdata$',
+      },
+      '-d'              => '$mongodb_database$',
+      '--all-databases' => {
+        'set_if' => '$mongodb_all_databases$',
+      },
+      '-s'              => {
+        'set_if' => '$mongodb_ssl$',
+      },
+      '-r'              => {
+        'set_if' => '$mongodb_replica_set$',
+      },
+      '-q'              => '$mongodb_query_type$',
+      '-c'              => '$mongodb_collection$',
+      '-T'              => '$mongodb_time$',
+    },
+    vars      => {
+      'mongodb_perfdata' => true,
+    },
+  }
+
 }
