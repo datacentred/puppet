@@ -79,14 +79,13 @@ def get_member_errors(rows):
     return member_errors
 
 
-def get_perfdata(args, rows):
+def get_perfdata(labels, rows):
     """Returns the requested performance data"""
 
-    if not args.perfdata:
+    if not labels:
         return []
 
     perfdata = []
-    labels = args.perfdata.split(',')
     for row in rows:
         for label in labels:
             if not label or label not in row:
@@ -107,7 +106,7 @@ def main():
     parser.add_argument('-u', '--url', default='/')
     parser.add_argument('-c', '--cert', required=True)
     parser.add_argument('-k', '--key', required=True)
-    parser.add_argument('-P', '--perfdata')
+    parser.add_argument('-P', '--perfdata', action='append')
     args = parser.parse_args()
 
     csv = get_csv(args)
@@ -116,7 +115,7 @@ def main():
     frontend_errors = get_frontend_errors(rows)
     backend_errors = get_backend_errors(rows)
     member_errors = get_member_errors(rows)
-    perfdata = get_perfdata(args, rows)
+    perfdata = get_perfdata(args.perfdata, rows)
 
     code = NAGIOS_OK
     if member_errors:

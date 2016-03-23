@@ -90,6 +90,8 @@ def get_illegal_source_addresses(sessions, subnets):
     if not subnets:
         return []
 
+    subnets = [netaddr.IPNetwork(x) for x in subnets]
+
     illegal_address = []
 
     for session in sessions:
@@ -121,22 +123,17 @@ def main():
     # Parse the arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--ttylogin', action='store_true')
-    parser.add_argument('-u', '--users')
-    parser.add_argument('-s', '--subnets')
+    parser.add_argument('-u', '--users', action='append')
+    parser.add_argument('-s', '--subnets', action='append')
     args = parser.parse_args()
-
-    # Marshal arguments into a canonical form
-    users = args.users.split(',') if args.users else []
-    subnets = args.subnets.split(',') if args.subnets else []
-    subnets = [netaddr.IPNetwork(x) for x in subnets]
 
     # Grab the sessions from utmp
     sessions = get_active_sessions()
 
     # Gather the metrics
     illegal_logins = get_illegal_tty_logins(sessions, args.ttylogin)
-    illegal_users = get_illegal_users(sessions, users)
-    illegal_address = get_illegal_source_addresses(sessions, subnets)
+    illegal_users = get_illegal_users(sessions, args.users)
+    illegal_address = get_illegal_source_addresses(sessions, args.subnets)
 
     # Set the status codes if requested and we have detected breaches
     code = NAGIOS_OK
