@@ -9,6 +9,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::dhcp
   include ::dc_icinga2::services::disk
   include ::dc_icinga2::services::dns
+  include ::dc_icinga2::services::elasticsearch
   include ::dc_icinga2::services::haproxy
   include ::dc_icinga2::services::icingaweb2
   include ::dc_icinga2::services::interface

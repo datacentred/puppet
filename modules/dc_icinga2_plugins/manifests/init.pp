@@ -126,6 +126,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_watermark',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_elasticsearch':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_elasticsearch',
+  }
+
   $packages = [
     'python-tftpy',
     'nagios-plugin-check-scsi-smart',
