@@ -433,4 +433,16 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'elasticsearch':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_elasticsearch"',
+    ],
+    arguments => {
+      '-H' => '$elasticsearch_host$',
+      '-P' => '$elasticsearch_port$',
+      '-i' => '$elasticsearch_index$',
+      '-s' => '$elasticsearch_seconds$',
+    },
+  }
+
 }

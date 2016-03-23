@@ -1,0 +1,82 @@
+#!/usr/bin/env python
+"""
+Checks we can connect to elasticsearch and that the service is
+acting reasonably.  Exports pertinent performance data to
+InfluxDB for capacity planning.
+"""
+
+import argparse
+import httplib
+import json
+import socket
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def main():
+    """Query the API for any breakage and performance stats"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', default='localhost')
+    parser.add_argument('-P', '--port', type=int, default=9200)
+    parser.add_argument('-i', '--index', default='_all')
+    parser.add_argument('-s', '--seconds', type=int, default=120)
+    args = parser.parse_args()
+
+    # Query the API for matches for the requested index over the requested
+    # time period which allows us to iron out any short periods of inactivity
+    payload = {
+        'query': {
+            'range': {
+                '@timestamp': {
+                    'gte': 'now-{}s'.format(args.seconds),
+                    'lte': 'now'
+                }
+            }
+        }
+    }
+
+    try:
+        connection = httplib.HTTPConnection(args.host, args.port)
+        connection.request('POST', args.index + '/_search',
+                           json.dumps(payload))
+    except socket.error:
+        print 'CRITICAL: connection refused'
+        sys.exit(NAGIOS_CRITICAL)
+
+    # Check that the query succeeded
+    response = connection.getresponse()
+    if response.status != 200:
+        print 'CRITICAL: query failed'
+        sys.exit(NAGIOS_CRITICAL)
+
+    # Process the data
+    data = json.loads(response.read())
+
+    # Perform error checking
+    code = NAGIOS_OK
+    if data['timed_out']:
+        code = NAGIOS_CRITICAL
+    if data['_shards']['failed']:
+        code = NAGIOS_CRITICAL
+
+    # Return useful output, performance data and error code
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print ('{0}: time {1}ms, hits/s {2:.2f}, time out {3}, failed shards {4} '
+           '| time={1}ms hits={2:.2f} failed_shards={4};;1;0;{5}').\
+          format(status, data['took'],
+                 float(data['hits']['total']) / float(args.seconds),
+                 data['timed_out'], data['_shards']['failed'],
+                 data['_shards']['total'])
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
