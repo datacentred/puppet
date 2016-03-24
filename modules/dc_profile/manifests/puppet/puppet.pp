@@ -13,6 +13,13 @@
 #
 class dc_profile::puppet::puppet {
 
+  # Annoyingly foreman installs puppet agent which starts up and causes
+  # 4 runs an hour.  Inhibit this behaviour!
+  service { 'puppet':
+    ensure => stopped,
+    enable => false,
+  }
+
   contain ::puppet::agent::cron
 
 }
