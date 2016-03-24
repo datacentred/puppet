@@ -130,6 +130,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_elasticsearch',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_mongodb':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_mongodb',
+  }
+
   $packages = [
     'python-tftpy',
     'nagios-plugin-check-scsi-smart',
