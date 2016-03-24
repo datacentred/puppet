@@ -126,6 +126,7 @@ class dc_profile::net::core_gateway {
         'ipam if { hdr_beg(host) -i ipam }',
         'kibana if { hdr_beg(host) -i kibana }',
         'stats if { hdr_beg(host) -i stats }',
+        'dms if { hdr_beg(host) -i dms }',
       ],
       'http-request' => [
         'set-header X-Forwarded-Proto https',
@@ -261,6 +262,13 @@ class dc_profile::net::core_gateway {
   }
 
   haproxy::backend { 'icinga':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
+  haproxy::backend { 'dms':
     collect_exported => false,
     options          => {
       'mode' => 'http',
@@ -453,6 +461,18 @@ class dc_profile::net::core_gateway {
     ],
     ipaddresses       => [
       '10.30.192.123',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'dms':
+    listening_service => 'dms',
+    ports             => 80,
+    server_names      => [
+      'dms0.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.170',
     ],
     options           => 'check',
   }
