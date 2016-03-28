@@ -22,6 +22,7 @@ classes:
   - '::dc_profile::util::timezone'
   - '::dc_profile::util::hosts'
   - '::dc_profile::util::kdump'
+  - '::dc_profile::hardware::edac'
 
 # ntp servers
 #
