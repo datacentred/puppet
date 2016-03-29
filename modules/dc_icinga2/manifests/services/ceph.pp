@@ -15,9 +15,6 @@ class dc_icinga2::services::ceph {
   icinga2::object::apply_service { 'ceph health':
     import        => 'generic-service',
     check_command => 'ceph-health',
-    vars          => {
-      'ceph_health_detail' => true,
-    },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "ceph_monitor"',
   }
