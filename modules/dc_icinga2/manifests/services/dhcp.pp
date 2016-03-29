@@ -4,22 +4,20 @@
 # zones (e.g. icinga2 domain master/satellite zone).  Ensures
 # the requested server returns our DHCP record.
 #
-# === Notes
-#
-# Assumes icinga2 servers will only ever use a bonded interface
-# on the services network where the DHCP server resides.
-#
 class dc_icinga2::services::dhcp {
 
-  icinga2::object::apply_service { 'dhcp':
+  icinga2::object::apply_service_for { 'dhcp':
+    key           => 'interface',
+    value         => 'attributes',
+    hash          => 'host.vars.interfaces',
     import        => 'generic-service',
     check_command => 'dhcp_sudo',
     vars          => {
       'dhcp_serverip'  => 'host.address',
-      'dhcp_interface' => 'bond0',
+      'dhcp_interface' => 'interface',
       'dhcp_unicast'   => true,
     },
-    assign_where  => 'match("dns_*", host.vars.role)',
+    assign_where  => 'match("dns_*", host.vars.role) && host.address == attributes.address',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
