@@ -12,6 +12,7 @@ class dc_icinga2::services::dhcp {
     hash          => 'host.vars.interfaces',
     import        => 'generic-service',
     check_command => 'dhcp_sudo',
+    display_name  => '"dhcp " + interface',
     vars          => {
       'dhcp_serverip'  => 'host.address',
       'dhcp_interface' => 'interface',
