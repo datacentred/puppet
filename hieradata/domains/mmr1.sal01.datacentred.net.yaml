@@ -5,5 +5,6 @@ classes:
 # DHCP
 #
 dc_dhcp::params::dhcp_icinga_ip: '10.254.0.27'
-dhcp::interfaces: 'eth0'
+dhcp::interfaces: 
+  - 'eth0'
 #
