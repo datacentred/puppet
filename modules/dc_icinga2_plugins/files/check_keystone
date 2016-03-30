@@ -1,0 +1,95 @@
+#!/usr/bin/env python
+"""
+Keystone monitoring script for Nagios
+
+Copyright 2012 eNovance <licensing@enovance.com>
+
+Author: Julien Danjou <julien@danjou.info>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+import argparse
+from keystoneclient.v2_0 import client
+from keystoneclient import exceptions
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def main():
+    """Checks that a test user is able to authenticate"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-r', '--region')
+    parser.add_argument('-a', '--admin', action='store_true')
+    parser.add_argument('-s', '--service', action='append')
+    args = parser.parse_args()
+
+    try:
+        keystone = client.Client(username=args.username,
+                                 tenant_name=args.project,
+                                 password=args.password,
+                                 auth_url=args.host,
+                                 region_name=args.region)
+    except exceptions.AuthorizationFailure:
+        print 'CRITICAL: unable to establish connection'
+        sys.exit(NAGIOS_CRITICAL)
+
+    # Basic check to see if we can authenticate
+    if not keystone.authenticate():
+        print 'CRITICAL: authentication failure for user {} and project {}'.\
+              format(args.username, args.project)
+        sys.exit(NAGIOS_CRITICAL)
+
+    # Checks that an admin can get a list of all projects
+    if args.admin and not keystone.tenants.list():
+        print 'CRITICAL: project list is empty'
+        sys.exit(NAGIOS_CRITICAL)
+
+    # Checks that endpoints for all requested services exist
+    msgs = []
+    endpoints = keystone.service_catalog.get_endpoints()
+    services = args.service or endpoints.keys()
+    for service in services:
+        if not service in endpoints.keys():
+            msgs.append("`%s' service is missing" % service)
+            continue
+
+        if not len(endpoints[service]):
+            msgs.append("`%s' service is empty" % service)
+            continue
+
+        if not any(["publicURL" in e.keys() for e in endpoints[service]]):
+            msgs.append("`%s' service has no publicURL" % service)
+
+    if msgs:
+        print ", ".join(msgs)
+        sys.exit(NAGIOS_WARNING)
+
+    print "OK: user %s and tenant %s" % (args.username, args.project)
+    sys.exit(NAGIOS_OK)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

@@ -288,4 +288,18 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_control"',
   }
 
+  icinga2::object::apply_service { 'keystone':
+    import        => 'generic-service',
+    check_command => 'keystone',
+    vars          => {
+      'keystone_host'     => 'https://compute.datacentred.io:5000/v2.0',
+      'keystone_project'  => $tenant,
+      'keystone_username' => $username,
+      'keystone_password' => $password,
+      'keystone_admin'    => true,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "monitoring_master"',
+  }
+
 }

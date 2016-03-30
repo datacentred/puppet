@@ -491,4 +491,21 @@ class dc_icinga2::checks {
     ],
   }
 
+  icinga2::object::checkcommand { 'keystone':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_keystone"',
+    ],
+    arguments => {
+      '-H' => '$keystone_host$',
+      '-r' => '$keystone_region$',
+      '-P' => '$keystone_project$',
+      '-u' => '$keystone_username$',
+      '-p' => '$keystone_password$',
+      '-a' => {
+        'set_if' => '$keystone_admin$',
+      },
+      '-s' => '$keystone_service$',
+    },
+  }
+
 }
