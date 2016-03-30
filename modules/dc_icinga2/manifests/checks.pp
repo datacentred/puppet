@@ -508,4 +508,20 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'glance':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_glance"',
+    ],
+    arguments => {
+      '-H' => '$glance_host$',
+      '-r' => '$glance_region$',
+      '-P' => '$glance_project$',
+      '-u' => '$glance_username$',
+      '-p' => '$glance_password$',
+      '-a' => '$glance_authurl$',
+      '-w' => '$glance_warning$',
+      '-c' => '$glance_critical$',
+    },
+  }
+
 }
