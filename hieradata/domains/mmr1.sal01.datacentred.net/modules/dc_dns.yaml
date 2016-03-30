@@ -7,7 +7,14 @@ dc_dns::dns_zones:
   mmr1.sal01.datacentred.net:
     soa:         "%{fqdn}"
     soaip:       "%{ipaddress}"
+  mmr2.sal01.datacentred.net:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
   0.254.10.in-addr.arpa:
+    soa:         "%{fqdn}"
+    soaip:       "%{ipaddress}"
+    reverse:     true
+  1.254.10.in-addr.arpa:
     soa:         "%{fqdn}"
     soaip:       "%{ipaddress}"
     reverse:     true
