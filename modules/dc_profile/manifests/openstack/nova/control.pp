@@ -23,6 +23,7 @@ class dc_profile::openstack::nova::control {
   include ::nova::scheduler::filter
   include ::nova::vncproxy
   include ::dc_icinga::hostgroup_nova_server
+  include ::dc_profile::openstack::nova::logrotate
 
   nova_config { 'DEFAULT/restrict_isolated_hosts_to_isolated_images':
     value => true,
@@ -58,4 +59,8 @@ class dc_profile::openstack::nova::control {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
+  # Fix duplicate logrotate entries
+  file { '/etc/logrotate.d/nova-common':
+    ensure => absent,
+  }
 }
