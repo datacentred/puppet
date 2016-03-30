@@ -138,10 +138,15 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_bmc_dns',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_keystone':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_keystone',
+  }
+
   $packages = [
-    'python-dnspython',
-    'python-tftpy',
     'nagios-plugin-check-scsi-smart',
+    'python-dnspython',
+    'python-keystoneclient',
+    'python-tftpy',
   ]
 
   ensure_packages($packages)
