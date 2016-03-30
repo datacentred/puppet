@@ -485,4 +485,10 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'bmc_dns':
+    command => [
+      '"/usr/local/lib/nagios/plugins/check_bmc_dns"',
+    ],
+  }
+
 }
