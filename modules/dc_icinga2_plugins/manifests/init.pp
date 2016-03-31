@@ -144,10 +144,15 @@ class dc_icinga2_plugins {
 
   file { '/usr/local/lib/nagios/plugins/check_glance':
     source => 'puppet:///modules/dc_icinga2_plugins/check_glance',
+}
+
+  file { '/usr/local/lib/nagios/plugins/check_cinder':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_cinder',
   }
 
   $packages = [
     'nagios-plugin-check-scsi-smart',
+    'python-cinderclient',
     'python-dnspython',
     'python-glanceclient',
     'python-keystoneclient',
