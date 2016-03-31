@@ -1,3 +1,4 @@
+---
 dc_dhcp::pools:
   ark-rack-infrastructure:
     network:     '10.10.129.0'
@@ -73,3 +74,6 @@ dc_dhcp::pools:
     options:
       - 'interface-mtu 9000'
       - "domain-search \"%{domain}\""
+
+# icinga1 - delete me
+dc_dhcp::params::dhcp_icinga_ip: '10.10.192.13'

@@ -1,3 +1,4 @@
+---
 dc_dhcp::pools:
   core-platform-services:
     network:     '10.30.192.0'
@@ -19,3 +20,6 @@ dc_dhcp::pools:
     gateway:     '10.30.128.1'
     options:
       - 'interface-mtu 9000'
+
+# icinga1 - delete me
+dc_dhcp::params::dhcp_icinga_ip: '10.30.192.13'
