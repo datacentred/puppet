@@ -302,4 +302,18 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "monitoring_master"',
   }
 
+  icinga2::object::apply_service { 'glance':
+    import        => 'generic-service',
+    check_command => 'glance',
+    vars          => {
+      'glance_host'     => 'https://compute.datacentred.io:9292',
+      'glance_authurl'  => 'https://compute.datacentred.io:5000',
+      'glance_project'  => $tenant,
+      'glance_username' => $username,
+      'glance_password' => $password,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "monitoring_master"',
+  }
+
 }

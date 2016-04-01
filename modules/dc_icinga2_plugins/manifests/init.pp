@@ -142,9 +142,14 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_keystone',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_glance':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_glance',
+  }
+
   $packages = [
     'nagios-plugin-check-scsi-smart',
     'python-dnspython',
+    'python-glanceclient',
     'python-keystoneclient',
     'python-tftpy',
   ]
