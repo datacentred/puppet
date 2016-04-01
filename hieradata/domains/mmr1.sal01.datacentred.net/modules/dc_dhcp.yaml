@@ -1,3 +1,4 @@
+---
 dc_dhcp::pools:
   mmr1-oob:
     network:     '10.254.0.0'
@@ -11,3 +12,6 @@ dc_dhcp::pools:
     gateway:     '10.254.1.1'
     nextserver:  "%{::ipaddress}"
     pxefile:     '/pxelinux.0'
+
+# icinga1 - delete me
+dc_dhcp::params::dhcp_icinga_ip: '10.254.0.27'
