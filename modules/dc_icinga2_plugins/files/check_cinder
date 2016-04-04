@@ -1,0 +1,111 @@
+#!/usr/bin/env python
+"""Check the glance API"""
+
+# pylint: disable=import-error
+
+import argparse
+from cinderclient import client
+from cinderclient import exceptions
+import sys
+import time
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+class Timer(object):
+    """Wraps up timer/stopwatch functionality"""
+
+    def __init__(self):
+        self._start = 0
+
+    def start(self):
+        """Start the stopwatch"""
+        self._start = time.time()
+
+    def stop(self):
+        """Stop the stopwatch and return the time in seconds"""
+        return time.time() - self._start
+
+
+def main():
+    """Lists all glance images"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-n', '--volume-name', default='test')
+    parser.add_argument('-s', '--volume-size', type=int, default=1)
+    parser.add_argument('-w', '--warning', type=float, action='append',
+                        required=True)
+    parser.add_argument('-c', '--critical', type=float, action='append',
+                        required=True)
+    parser.add_argument('-t', '--timeout', type=int, action='append',
+                        required=True)
+    args = parser.parse_args()
+
+    cinder = client.Client(1, args.username, args.password, args.project,
+                           args.host)
+
+    # Clean up any existing volumes
+    for volume in cinder.volumes.list():
+        if volume.display_name == args.volume_name:
+            volume.delete()
+
+    timer = Timer()
+
+    # Test and profile volume creation
+    count = 0
+    timer.start()
+    volume = cinder.volumes.create(display_name=args.volume_name,
+                                   size=args.volume_size)
+    while volume.status != 'available':
+        count = count + 1
+        if count >= args.timeout[0]:
+            break
+        time.sleep(1)
+        volume.get()
+    create_time = timer.stop()
+
+    # Test and profile volume deletion
+    count = 0
+    timer.start()
+    volume.delete()
+    while True:
+        try:
+            volume.get()
+        except exceptions.NotFound:
+            break
+        count = count + 1
+        if count >= args.timeout[1]:
+            break
+        time.sleep(1)
+    delete_time = timer.stop()
+
+    # Generate the exit code
+    code = NAGIOS_OK
+    if create_time >= args.warning[0] or delete_time >= args.warning[1]:
+        code = NAGIOS_WARNING
+    if create_time >= args.critical[0] or delete_time >= args.critical[1]:
+        code = NAGIOS_CRITICAL
+
+    # Print out status and profiling information
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print ('{0}: creation {1:.3f}s, deletion {2:.3f}s | '
+           'create_time={1:.3f};{3:.3f};{4:.3f};0;{5} '
+           'delete_time={2:.3f};{6:.3f};{7:.3f};0;{8}').\
+          format(status, create_time, delete_time,
+                 args.warning[0], args.critical[0], args.timeout[0],
+                 args.warning[1], args.critical[1], args.timeout[1])
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

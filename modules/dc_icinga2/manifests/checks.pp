@@ -524,4 +524,21 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'cinder':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_cinder"',
+    ],
+    arguments => {
+      '-H' => '$cinder_host$',
+      '-P' => '$cinder_project$',
+      '-u' => '$cinder_username$',
+      '-p' => '$cinder_password$',
+      '-n' => '$cinder_volume_name$',
+      '-s' => '$cinder_volume_size$',
+      '-w' => '$cinder_warning$',
+      '-c' => '$cinder_critical$',
+      '-t' => '$cinder_timeout$',
+    },
+  }
+
 }
