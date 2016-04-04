@@ -19,7 +19,7 @@ apt::sources:
     release: 'trusty'
     repos: 'main restricted universe multiverse'
     key:
-      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      id: 'F2EDC64DC5AEE1F6B9C621F0C8CAB6595FDFF622'
       server: 'keyserver.ubuntu.com'
   ubuntu_updates_ddebs:
     location: 'http://ddebs.ubuntu.com'
