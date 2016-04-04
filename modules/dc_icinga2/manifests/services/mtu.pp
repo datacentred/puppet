@@ -16,8 +16,8 @@ class dc_icinga2::services::mtu {
       'mtu_mtu'       => 9000,
     },
     zone          => 'host.name',
-    assign_where  => 'match("10.*", attributes.address)',
-    ignore_where  => 'host.vars.is_virtual',
+    assign_where  => 'cidr_match("10.0.0.0/8", attributes.address)',
+    ignore_where  => 'cidr_match("10.254.0.0/16", attributes.address) || host.vars.is_virtual',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
