@@ -353,4 +353,17 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "monitoring_master"',
   }
 
+  icinga2::object::apply_service { 'ceilometer':
+    import        => 'openstack-service',
+    check_command => 'ceilometer',
+    vars          => {
+      'ceilometer_host'     => 'https://compute.datacentred.io:9292',
+      'ceilometer_project'  => $tenant,
+      'ceilometer_username' => $username,
+      'ceilometer_password' => $password,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "monitoring_master"',
+  }
+
 }
