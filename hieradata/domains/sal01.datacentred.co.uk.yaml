@@ -5,6 +5,7 @@ classes:
 # Icinga
 #
 icinga_ip: '10.10.192.137'
+dhcp_icinga_ip: '10.10.192.13'
 
 # Graphite
 #
