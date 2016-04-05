@@ -144,10 +144,14 @@ class dc_icinga2_plugins {
 
   file { '/usr/local/lib/nagios/plugins/check_glance':
     source => 'puppet:///modules/dc_icinga2_plugins/check_glance',
-}
+  }
 
   file { '/usr/local/lib/nagios/plugins/check_cinder':
     source => 'puppet:///modules/dc_icinga2_plugins/check_cinder',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_nova':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_nova',
   }
 
   $packages = [
@@ -156,6 +160,7 @@ class dc_icinga2_plugins {
     'python-dnspython',
     'python-glanceclient',
     'python-keystoneclient',
+    'python-novaclient',
     'python-tftpy',
   ]
 

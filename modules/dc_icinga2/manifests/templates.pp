@@ -29,4 +29,11 @@ class dc_icinga2::templates {
     target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
   }
 
+  icinga2::object::template_service { 'openstack-service':
+    max_check_attempts => 3,
+    check_interval     => '5m',
+    retry_interval     => '5m',
+    target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
+  }
+
 }

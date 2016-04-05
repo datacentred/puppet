@@ -541,4 +541,23 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'nova':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_nova"',
+    ],
+    arguments => {
+      '-H' => '$nova_host$',
+      '-P' => '$nova_project$',
+      '-u' => '$nova_username$',
+      '-p' => '$nova_password$',
+      '-f' => '$nova_flavor$',
+      '-i' => '$nova_image$',
+      '-n' => '$nova_network$',
+      '-I' => '$nova_instance_name$',
+      '-w' => '$nova_warning$',
+      '-c' => '$nova_critical$',
+      '-t' => '$nova_timeout$',
+    },
+  }
+
 }

@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+"""
+Check Nova Instance Spawning and Deletion Time
+"""
+
+# pylint: disable=too-many-statements,import-error
+
+import argparse
+from novaclient.client import Client
+from novaclient import exceptions
+import sys
+import time
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+class Timer(object):
+    """Wraps up timer/stopwatch functionality"""
+
+    def __init__(self):
+        self._start = 0
+
+    def start(self):
+        """Start the stopwatch"""
+        self._start = time.time()
+
+    def stop(self):
+        """Stop the stopwatch and return the time in seconds"""
+        return time.time() - self._start
+
+
+def main():
+    """Creates and Deletes a VM Instance"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-i', '--image-name', required=True)
+    parser.add_argument('-f', '--flavor-name', required=True)
+    parser.add_argument('-n', '--network-name', required=True)
+    parser.add_argument('-I', '--instance-name', required=True)
+    parser.add_argument('-w', '--warning', required=True, action='append',
+                        type=float)
+    parser.add_argument('-c', '--critical', required=True, action='append',
+                        type=float)
+    parser.add_argument('-t', '--timeout', required=True, action='append',
+                        type=int)
+    args = parser.parse_args()
+
+    nova = Client(2, username=args.username, project_id=args.project,
+                  api_key=args.password, auth_url=args.host)
+
+    # Clean up any existing servers
+    for server in nova.servers.list():
+        if server.name == args.instance_name:
+            server.delete()
+
+    # Get the required objects for instance creation
+    flavor = nova.flavors.find(name=args.flavor_name)
+    image = nova.images.find(name=args.image_name)
+    net = nova.networks.find(label=args.network_name)
+    nics = [{"net-id": net.id, "v4-fixed-ip": ''}]
+
+    timer = Timer()
+
+    # Spawn the instance and wait for it to become active
+    timer.start()
+    instance = nova.servers.create(name=args.instance_name, image=image,
+                                   flavor=flavor, nics=nics)
+    count = 0
+    while instance.status != "ACTIVE":
+        if count >= args.timeout[0]:
+            break
+        count += 1
+        time.sleep(1)
+        instance.get()
+    create_time = timer.stop()
+
+    # Delete the instance and wait for it to become dead
+    timer.start()
+    instance.delete()
+    count = 0
+    while True:
+        try:
+            instance.get()
+        except exceptions.NotFound:
+            break
+        if count >= args.timeout[1]:
+            break
+        count += 1
+        time.sleep(1)
+    delete_time = timer.stop()
+
+    # Determine the status code
+    code = NAGIOS_OK
+    if create_time >= args.warning[0] or delete_time >= args.warning[0]:
+        code = NAGIOS_WARNING
+    if create_time >= args.critical[0] or delete_time >= args.critical[1]:
+        code = NAGIOS_CRITICAL
+
+    # Return the status and performance information
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print ('{0}: creation time {1:.3f}s, deletion time {2:.3f}s |'
+           ' create_time={1:.3f}s;{3:.3f};{4:.3f};0;{5:.3f} '
+           'delete_time={2:.3f}s;{6:.3f};{7:.3f};0;{8:.3f}').\
+          format(status, create_time, delete_time,
+                 args.warning[0], args.critical[0], args.timeout[0],
+                 args.warning[1], args.critical[1], args.timeout[1])
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
