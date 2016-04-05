@@ -289,7 +289,7 @@ class dc_icinga2::services::openstack (
   }
 
   icinga2::object::apply_service { 'keystone':
-    import        => 'generic-service',
+    import        => 'openstack-service',
     check_command => 'keystone',
     vars          => {
       'keystone_host'     => 'https://compute.datacentred.io:5000/v2.0',
@@ -303,7 +303,7 @@ class dc_icinga2::services::openstack (
   }
 
   icinga2::object::apply_service { 'glance':
-    import        => 'generic-service',
+    import        => 'openstack-service',
     check_command => 'glance',
     vars          => {
       'glance_host'     => 'https://compute.datacentred.io:9292',
@@ -317,7 +317,7 @@ class dc_icinga2::services::openstack (
   }
 
   icinga2::object::apply_service { 'cinder':
-    import        => 'generic-service',
+    import        => 'openstack-service',
     check_command => 'cinder',
     vars          => {
       'cinder_host'        => 'https://compute.datacentred.io:5000',
@@ -328,6 +328,26 @@ class dc_icinga2::services::openstack (
       'cinder_warning'     => [ 10, 20 ],
       'cinder_critical'    => [ 30, 40 ],
       'cinder_timeout'     => [ 60, 60 ],
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "monitoring_master"',
+  }
+
+  icinga2::object::apply_service { 'nova':
+    import        => 'openstack-service',
+    check_command => 'nova',
+    vars          => {
+      'nova_host'          => 'https://compute.datacentred.io:5000',
+      'nova_project'       => $tenant,
+      'nova_username'      => $username,
+      'nova_password'      => $password,
+      'nova_flavor'        => 'dc1.1x0',
+      'nova_image'         => 'CirrOS 0.3.3',
+      'nova_network'       => 'icinga_net',
+      'nova_instance_name' => 'icinga2',
+      'nova_warning'       => [ 10, 20 ],
+      'nova_critical'      => [ 30, 40 ],
+      'nova_timeout'       => [ 60, 60 ],
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
