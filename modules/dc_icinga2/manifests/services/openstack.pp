@@ -327,7 +327,7 @@ class dc_icinga2::services::openstack (
       'cinder_volume_name' => 'icinga2',
       'cinder_warning'     => [ 10, 20 ],
       'cinder_critical'    => [ 30, 40 ],
-      'cinder_threshold'   => [ 60, 60 ],
+      'cinder_timeout'     => [ 60, 60 ],
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
