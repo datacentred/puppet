@@ -1,0 +1,10 @@
+---
+classes:
+  - '::dc_profile::perf::telegraf'
+
+# DHCP
+#
+dhcp::interfaces: 
+  - 'eth0'
+
+dhcp_icinga_ip: '10.254.1.27'
