@@ -13,7 +13,10 @@
 #
 # Sample Usage:
 #
-class dc_icinga::server::nagios_commands {
+class dc_icinga::server::nagios_commands (
+  $dhcp_icinga_mac,
+  $dhcp_icinga_ip,
+) {
 
   $keystone_icinga_password = hiera(keystone_icinga_password)
   $keystone_icinga_user = hiera(keystone_icinga_user)
@@ -35,8 +38,6 @@ class dc_icinga::server::nagios_commands {
   $mongodb_admin_password = hiera(mongodb_admin_password)
   $icinga_instance_net_name = hiera(icinga_instance_net_name)
   $icinga_instance_flavor = hiera(icinga_instance_flavor)
-  $dhcp_icinga_mac = hiera(dc_dhcp::params::dhcp_icinga_mac)
-  $dhcp_icinga_ip = hiera(dc_dhcp::params::dhcp_icinga_ip)
 
 
   ######################################################################

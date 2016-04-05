@@ -4,3 +4,6 @@ dc_dhcp::params::ssh_public_key: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCwZtpmOpnpnmTkye
 dc_dhcp::default_lease_time: '259200'
 dc_dhcp::max_lease_time: '604800'
 dc_dhcp::params::secondary_dhcp_host: "ns1.%{domain}"
+
+dc_dhcp::params::dhcp_icinga_mac: "%{hiera('dhcp_icinga_mac')}"
+dc_dhcp::params::dhcp_icinga_ip: "%{hiera('dhcp_icinga_ip')}"

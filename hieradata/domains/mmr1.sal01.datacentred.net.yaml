@@ -6,3 +6,5 @@ classes:
 #
 dhcp::interfaces: 
   - 'eth0'
+
+dhcp_icinga_ip: '10.254.0.27'

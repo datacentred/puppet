@@ -186,10 +186,6 @@ mongodb_admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQ
 #
 galera::local_ip: "%{::ipaddress}"
 
-# DHCP
-#
-dc_dhcp::params::dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
-
 # InfluxDB
 #
 influxdb_server: 'influxdb.datacentred.services'
