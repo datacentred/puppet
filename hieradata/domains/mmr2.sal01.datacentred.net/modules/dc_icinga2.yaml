@@ -1,0 +1,7 @@
+---
+dc_icinga2::host::zone: 'icinga2.mmr1.sal01.datacentred.net'
+ 
+dc_icinga2::agent::parent_fqdn: 'icinga2.mmr1.sal01.datacentred.net'
+
+dc_icinga2::satellite::parent_fqdn: 'icinga2.core.sal01.datacentred.co.uk'
+dc_icinga2::satellite::parent_host: 'icinga2.datacentred.services'
