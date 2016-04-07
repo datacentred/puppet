@@ -8,7 +8,7 @@ class dc_icinga2::services::sensors {
     import        => 'generic-service',
     check_command => 'sensors',
     zone          => 'host.name',
-    assign_where  => true,
+    assign_where  => 'host.vars.os',
     ignore_where  => 'host.vars.is_virtual || host.vars.productname == "OpenStack Nova"',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }

@@ -11,7 +11,7 @@ class dc_icinga2::services::procs {
       'procs_nokthreads' => true,
     },
     zone          => 'host.name',
-    assign_where  => true,
+    assign_where  => 'host.vars.os',
     ignore_where  => 'host.vars.role == "openstack_network"',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }

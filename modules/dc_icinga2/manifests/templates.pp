@@ -36,4 +36,12 @@ class dc_icinga2::templates {
     target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
   }
 
+  icinga2::object::template_host { 'virtual-host':
+    max_check_attempts => 3,
+    check_interval     => '1m',
+    retry_interval     => '30s',
+    check_command      => 'hostalive',
+    target             => '/etc/icinga2/zones.d/global-templates/templates.conf',
+  }
+
 }

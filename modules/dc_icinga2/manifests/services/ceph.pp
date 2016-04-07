@@ -62,4 +62,23 @@ class dc_icinga2::services::ceph {
     assign_where  => 'host.vars.role == "ceph_osd"',
   }
 
+  icinga2::object::apply_service { 'ceph radosgw http':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 80,
+    },
+    assign_where  => 'host.vars.role == "rados-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'ceph radosgw https':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 443,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "rados-endpoint"',
+  }
+
 }

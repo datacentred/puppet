@@ -11,7 +11,7 @@ class dc_icinga2::services::load {
       'load_percpu' => true,
     },
     zone          => 'host.name',
-    assign_where  => true,
+    assign_where  => 'host.vars.os',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
