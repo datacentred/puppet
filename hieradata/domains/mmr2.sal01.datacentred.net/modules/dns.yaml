@@ -4,3 +4,5 @@ dns::dnsmasters:
 dns::nameservers:
   "ns0.%{::domain}": '10.254.0.27'
   "ns1.%{::domain}": '10.254.0.28'
+dns::recursors:
+  - '10.254.0.0/16'  # oob supernet 
