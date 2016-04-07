@@ -264,9 +264,9 @@ class dc_icinga2::checks {
     ],
   }
 
-  icinga2::object::checkcommand { 'md-raid':
+  icinga2::object::checkcommand { 'raid':
     command => [
-      '"/usr/local/lib/nagios/plugins/check_md_raid"',
+      'PluginDir + "/check_raid"',
     ],
   }
 

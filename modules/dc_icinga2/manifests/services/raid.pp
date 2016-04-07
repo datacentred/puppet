@@ -4,9 +4,9 @@
 #
 class dc_icinga2::services::raid {
 
-  icinga2::object::apply_service { 'md raid':
+  icinga2::object::apply_service { 'raid':
     import        => 'generic-service',
-    check_command => 'md-raid',
+    check_command => 'raid',
     zone          => 'host.name',
     assign_where  => true,
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
