@@ -78,6 +78,10 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_memory_edac',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_raid':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_raid',
+  }
+
   file { '/usr/local/lib/nagios/plugins/check_active_users':
     source => 'puppet:///modules/dc_icinga2_plugins/check_active_users',
   }
