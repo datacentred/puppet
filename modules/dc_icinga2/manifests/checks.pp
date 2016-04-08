@@ -528,6 +528,7 @@ class dc_icinga2::checks {
     command   => [
       '"/usr/local/lib/nagios/plugins/check_cinder"',
     ],
+    timeout   => 240,
     arguments => {
       '-H' => '$cinder_host$',
       '-P' => '$cinder_project$',
@@ -545,6 +546,7 @@ class dc_icinga2::checks {
     command   => [
       '"/usr/local/lib/nagios/plugins/check_nova"',
     ],
+    timeout   => 240,
     arguments => {
       '-H' => '$nova_host$',
       '-P' => '$nova_project$',
