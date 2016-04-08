@@ -12,9 +12,14 @@
 #   IP address or hostname of the parent node.  If using a host name it must
 #   be resolvable via DNS
 #
+# [*parent_domain*]
+#   If an agent exists outside of the DNS zone of the northbound checker, set
+#   this to that of the parent satellite/master
+#
 class dc_icinga2::agent (
   $parent_fqdn,
   $parent_host = undef,
+  $parent_domain = undef,
 ) {
 
   include ::icinga2
@@ -53,7 +58,7 @@ class dc_icinga2::agent (
   # satellites will collect conditionally based on the domain, and this node will
   # collect its own
   @@icinga2::object::endpoint { $::fqdn:
-    tag => [ $::fqdn, $::domain ]
+    tag => [ $::fqdn, $::domain, $parent_domain ]
   }
 
   @@icinga2::object::zone { $::fqdn:
@@ -61,7 +66,7 @@ class dc_icinga2::agent (
       $::fqdn,
     ],
     parent    => $parent_fqdn,
-    tag       => [ $::fqdn, $::domain ]
+    tag       => [ $::fqdn, $::domain, $parent_domain ]
   }
 
   # Collect all zone resources for the fqdn
