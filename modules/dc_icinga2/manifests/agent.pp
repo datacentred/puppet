@@ -54,11 +54,17 @@ class dc_icinga2::agent (
     global => true,
   }
 
+  if $parent_domain {
+    $_tags = [ $::fqdn, $parent_domain ]
+  } else {
+    $_tags = [ $::fqdn, $::domain ]
+  }
+
   # Export the local endpoint and zone.  The master will collect unconditionally
   # satellites will collect conditionally based on the domain, and this node will
   # collect its own
   @@icinga2::object::endpoint { $::fqdn:
-    tag => [ $::fqdn, $::domain, $parent_domain ]
+    tag => $_tags,
   }
 
   @@icinga2::object::zone { $::fqdn:
@@ -66,7 +72,7 @@ class dc_icinga2::agent (
       $::fqdn,
     ],
     parent    => $parent_fqdn,
-    tag       => [ $::fqdn, $::domain, $parent_domain ]
+    tag       => $_tags,
   }
 
   # Collect all zone resources for the fqdn
