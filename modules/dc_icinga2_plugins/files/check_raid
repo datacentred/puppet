@@ -8,6 +8,8 @@ alert if an array is inactive or an array device has failed.  Warnings are
 raised during recovery and resync operations.
 """
 
+# pylint: disable=too-many-locals
+
 import os
 import re
 import subprocess
@@ -84,8 +86,9 @@ def parse_cciss():
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
         output = process.communicate()
+        matches = re.match(r'.*status: (.*)\.', output[0])
         cciss[array] = {
-            'failed': 'status: OK' not in output[0]
+            'status': matches.group(1),
         }
 
     return cciss
@@ -127,13 +130,16 @@ def main():
                    format(array, synchronisation)
 
     cciss_failed = []
+    cciss_recover = []
     for array in cciss:
-        if cciss[array]['failed']:
+        if cciss[array]['status'] == 'Currently recovering':
+            cciss_recover.append(array)
+        elif cciss[array]['status'] != 'OK':
             cciss_failed.append(array)
 
     # Calculate the status code
     code = NAGIOS_OK
-    if recovery or resync:
+    if recovery or resync or cciss_recover:
         code = NAGIOS_WARNING
     if inactive or failed or cciss_failed:
         code = NAGIOS_CRITICAL
@@ -146,8 +152,9 @@ def main():
                         ', '.join(failed) if failed else 'none')\
                  if mdstat else ''
 
-    cciss_out = ' [cciss] failed {}'.\
-                format(', '.join(cciss_failed) if cciss_failed else 'none')\
+    cciss_out = ' [cciss] recovery {}, failed {}'.\
+                format(', '.join(cciss_recover) if cciss_recover else 'none',
+                       ', '.join(cciss_failed) if cciss_failed else 'none')\
                 if cciss else ''
 
     status = ['OK', 'WARNING', 'CRITICAL'][code]
