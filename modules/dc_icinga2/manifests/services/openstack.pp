@@ -357,7 +357,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'ceilometer',
     vars          => {
-      'ceilometer_host'     => 'https://compute.datacentred.io:9292',
+      'ceilometer_host'     => 'https://compute.datacentred.io:5000',
       'ceilometer_project'  => $tenant,
       'ceilometer_username' => $username,
       'ceilometer_password' => $password,
