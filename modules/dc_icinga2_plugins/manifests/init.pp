@@ -154,8 +154,13 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_nova',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_ceilometer':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ceilometer',
+  }
+
   $packages = [
     'nagios-plugin-check-scsi-smart',
+    'python-ceilometerclient',
     'python-cinderclient',
     'python-dnspython',
     'python-glanceclient',

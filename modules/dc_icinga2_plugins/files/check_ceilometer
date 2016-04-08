@@ -1,0 +1,75 @@
+#!/usr/bin/env python
+"""
+Checks the Ceilometer API Endpoint Responds
+"""
+
+# pylint: disable=import-error
+
+import argparse
+from ceilometerclient import client
+import sys
+import time
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+class Timer(object):
+    """Wraps up timer/stopwatch functionality"""
+
+    def __init__(self):
+        self._start = 0
+
+    def start(self):
+        """Start the stopwatch"""
+        self._start = time.time()
+
+    def stop(self):
+        """Stop the stopwatch and return the time in seconds"""
+        return time.time() - self._start
+
+
+def main():
+    """Performs a sample query against the API"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-w', '--warning', type=float, default=20.0)
+    parser.add_argument('-c', '--critical', type=float, default=30.0)
+    args = parser.parse_args()
+
+    ceilometer = client.get_client(2, os_auth_url=args.host,
+                                   os_tenant_name=args.project,
+                                   os_username=args.username,
+                                   os_password=args.password)
+
+    query = [{'field': 'meter', 'op': 'eq', 'value': 'image'}]
+
+    timer = Timer()
+    timer.start()
+    ceilometer.new_samples.list(q=query, limit=10)
+    list_time = timer.stop()
+
+    code = NAGIOS_OK
+    if list_time >= args.warning:
+        code = NAGIOS_WARNING
+    if list_time >= args.critical:
+        code = NAGIOS_CRITICAL
+
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print '{0}: time {1:.3f}s | time={1:.3f}s;{2:.3f};{3:.3f}'.\
+          format(status, list_time, args.warning, args.critical)
+
+    sys.exit(code)
+
+
+if __name__ == '__main__':
+    main()
+
+
+# vi: ts=4 et:

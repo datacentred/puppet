@@ -560,4 +560,18 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'ceilometer':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ceilometer"',
+    ],
+    arguments => {
+      '-H' => '$ceilometer_host$',
+      '-P' => '$ceilometer_project$',
+      '-u' => '$ceilometer_username$',
+      '-p' => '$ceilometer_password$',
+      '-w' => '$ceilometer_warning$',
+      '-c' => '$ceilometer_critical$',
+    },
+  }
+
 }
