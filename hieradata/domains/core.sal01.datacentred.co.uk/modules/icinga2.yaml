@@ -1,0 +1,3 @@
+---
+icinga2::web::aliases:
+  - 'icinga2.datacentred.services'
