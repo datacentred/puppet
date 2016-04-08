@@ -19,7 +19,7 @@ if Facter.value(:kernel) == 'Linux'
   exclude = %w(afs anon_inodefs aufs autofs bdev bind binfmt_.* cgroup cifs
                coda cpuset debugfs devfs devpts ecryptfs fd ftpfs fuse.* gvfs.*
                hugetlbfs inotifyfs iso9660 lustre.* mfs mqueue ncpfs NFS nfs.*
-               none pipefs proc ramfs rootfs rpc_.* securityfs shfs shm smbfs
+               none nsfs pipefs proc ramfs rootfs rpc_.* securityfs shfs shm smbfs
                sockfs sysfs tmpfs udev udf unionfs usbfs)
 
   #
