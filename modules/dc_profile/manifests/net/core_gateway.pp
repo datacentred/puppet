@@ -122,6 +122,7 @@ class dc_profile::net::core_gateway {
         'static unless { ssl_c_used }',
         'static unless { ssl_c_verify 0 }',
         'foreman if { hdr_beg(host) -i foreman }',
+        'icingaweb2 if { hdr_beg(host) -i icinga2 }',
         'icinga if { hdr_beg(host) -i icinga }',
         'ipam if { hdr_beg(host) -i ipam }',
         'kibana if { hdr_beg(host) -i kibana }',
@@ -322,6 +323,13 @@ class dc_profile::net::core_gateway {
     },
   }
 
+  haproxy::backend { 'icingaweb2':
+    collect_exported => false,
+    options          => {
+      'mode' => 'http',
+    },
+  }
+
   haproxy::balancermember { 'puppetca':
     listening_service => 'puppetca',
     ports             => '8140',
@@ -508,6 +516,18 @@ class dc_profile::net::core_gateway {
   haproxy::balancermember { 'icinga2':
     listening_service => 'icinga2',
     ports             => '5665',
+    server_names      => [
+      'icinga2.core.sal01.datacentred.co.uk',
+    ],
+    ipaddresses       => [
+      '10.30.192.114',
+    ],
+    options           => 'check',
+  }
+
+  haproxy::balancermember { 'icingaweb2':
+    listening_service => 'icingaweb2',
+    ports             => '80',
     server_names      => [
       'icinga2.core.sal01.datacentred.co.uk',
     ],
