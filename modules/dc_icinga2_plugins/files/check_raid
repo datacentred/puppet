@@ -83,9 +83,9 @@ def parse_cciss():
         process = subprocess.Popen([binary, dev],
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
-        stdout = process.communicate()
+        output = process.communicate()
         cciss[array] = {
-            'failed': 'status: OK' not in stdout
+            'failed': 'status: OK' not in output[0]
         }
 
     return cciss
