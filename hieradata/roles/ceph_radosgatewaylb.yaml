@@ -2,8 +2,6 @@
 classes:
   - '::dc_profile::ceph::radosgw_lb'
 
-dc_icinga::client::address: "%{::ipaddress_p1p2}"
-
 haproxy::defaults_options:
   log: 'global'
   stats: 'enable'
