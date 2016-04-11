@@ -100,8 +100,18 @@ class dc_profile::openstack::keystone {
     default: {}
   }
 
+  # Remove the package logrotate and install our own
+  file { '/etc/logrotate.d/keystone':
+    ensure => absent,
+  }
+
+  # FIXME Remove once puppet has run everywhere
   logrotate::rule { 'keystone_all':
-    path          => '/var/log/keystone/keystone-*.log',
+    ensure => absent,
+  }
+
+  logrotate::rule { 'dc_keystone':
+    path          => '/var/log/keystone/*.log',
     rotate        => 90,
     rotate_every  => 'day',
     ifempty       => false,

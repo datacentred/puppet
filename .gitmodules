@@ -130,10 +130,6 @@
 [submodule "modules/graphite"]
 	path = modules/graphite
 	url = https://github.com/datacentred/puppet-graphite
-[submodule "modules/logrotate"]
-	path = modules/logrotate
-	url = https://github.com/blkperl/puppet-logrotate.git
-	branch = trusty_fixes
 [submodule "modules/php"]
 	path = modules/php
 	url = https://github.com/jippi/puppet-php.git
@@ -335,3 +331,6 @@
 [submodule "modules/telegraf"]
 	path = modules/telegraf
 	url = https://github.com/datacentred/puppet-telegraf.git
+[submodule "modules/logrotate"]
+	path = modules/logrotate
+	url = https://github.com/yo61/puppet-logrotate
