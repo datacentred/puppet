@@ -76,4 +76,8 @@ class dc_profile::openstack::neutron::server {
     options           => 'check inter 2000 rise 2 fall 5',
   }
 
+  file { '/etc/logrotate.d/neutron-common':
+    ensure => absent,
+  }
+
 }

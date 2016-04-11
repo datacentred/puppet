@@ -100,14 +100,4 @@ class dc_profile::openstack::keystone {
     default: {}
   }
 
-  logrotate::rule { 'keystone_all':
-    path          => '/var/log/keystone/keystone-*.log',
-    rotate        => 90,
-    rotate_every  => 'day',
-    ifempty       => false,
-    delaycompress => true,
-    compress      => true,
-    copytruncate  => true,
-  }
-
 }
