@@ -577,4 +577,30 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'memcached':
+    command   => [
+      'PluginDir + "/check_memcached"',
+    ],
+    arguments => {
+      '-H' => '$memcached_host$',
+      '-p' => '$memcached_port$',
+      '-v' => {
+        'set_if' => '$memcached_verbose$',
+      },
+      '-n' => '$memcached_history$',
+      '-T' => '$memcached_interval$',
+      '-w' => '$memcached_warning_quotient$',
+      '-E' => '$memcached_warning_evictions$',
+      '-t' => '$memcached_timeout$',
+      '-k' => '$memcached_keyname$',
+      '-K' => '$memcached_expiry$',
+      '-r' => {
+        'set_if' => '$memcached_rate_per_minute$',
+      },
+    },
+    vars      => {
+      'memcached_host' => '$address$',
+    },
+  }
+
 }
