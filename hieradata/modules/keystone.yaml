@@ -63,6 +63,7 @@ keystone::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 keystone::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 keystone::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
 keystone::token_driver: 'keystone.token.persistence.backends.memcache.Token'
+keystone::cache_backend: 'keystone.cache.memcache_pool'
 keystone::memcache_servers:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
