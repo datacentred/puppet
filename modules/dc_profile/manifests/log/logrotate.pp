@@ -13,6 +13,14 @@
 #
 class dc_profile::log::logrotate {
 
+  # Set the defaults
+  logrotate::conf { '/etc/logrotate.conf':
+    rotate       => 90,
+    rotate_every => 'day',
+    ifempty      => false,
+    create       => true,
+  }
+
   # Replacement for standard rsyslog rotation
   logrotate::rule { 'dc_rsyslog':
     path          => '/var/log/syslog',
@@ -26,7 +34,7 @@ class dc_profile::log::logrotate {
 
   # Replacement for other logrotate rules in default rsyslog rotation
   logrotate::rule { 'dc_othersyslog':
-    path         => '/var/log/mail.info
+    path          => '/var/log/mail.info
 /var/log/mail.warn
 /var/log/mail.err
 /var/log/mail.log

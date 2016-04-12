@@ -41,13 +41,9 @@ class dc_profile::openstack::heat {
     'DEFAULT/stack_adopt'   : value => true;
   }
 
+  # FIXME remove once puppet has run once
   logrotate::rule { 'heat':
-    path          => '/var/log/heat/heat-*.log',
-    rotate        => 90,
-    rotate_every  => 'day',
-    ifempty       => false,
-    delaycompress => true,
-    compress      => true,
+    ensure => absent,
   }
 
 }
