@@ -41,9 +41,4 @@ class dc_profile::openstack::heat {
     'DEFAULT/stack_adopt'   : value => true;
   }
 
-  # FIXME remove once puppet has run once
-  logrotate::rule { 'heat':
-    ensure => absent,
-  }
-
 }

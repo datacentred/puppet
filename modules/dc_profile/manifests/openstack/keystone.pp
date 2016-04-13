@@ -105,11 +105,6 @@ class dc_profile::openstack::keystone {
     ensure => absent,
   }
 
-  # FIXME Remove once puppet has run everywhere
-  logrotate::rule { 'keystone_all':
-    ensure => absent,
-  }
-
   logrotate::rule { 'dc_keystone':
     path          => '/var/log/keystone/*.log',
     rotate        => 90,
