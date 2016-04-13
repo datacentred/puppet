@@ -9,9 +9,14 @@ Can\'t create new lease file: Permission denied
 ^.*FAILED: Has an address record but no DHCID, not mine.$
 ^.*Found \d+ in the database and \d+ on the hypervisor.$
 ^.*Arguments dropped when creating context.*
-^.*Failed to inspect.*of instance.*domain is in state of SHUTOFF
+^.*Failed to inspect.*of instance.*domain state is SHUTOFF
 ^.*Unknown base file: /var/lib/nova/instances/_base/*
-^.*Couldn\'t obtain IP address ofinstance.*
+^.*Couldn\'t obtain IP address of instance.*
 \[*\] IPMI message handler: BMC returned incorrect response, expected*
-\[-\] While synchronizing instance power states, found \d+ instances in the database and \d+ instances on the hypervisor
+^.*While synchronizing instance power states, found \d+ instances in the database and \d+ instances on the hypervisor.*
 ^.*Recovered model server connection!
+^.*vcpu0 unhandled wrmsr.*
+^.*Authorization failed for token.*
+^.*Unable to find authentication token in headers.*
+^.*audit_printk_skb: \d+ callbacks suppressed
+^*.Support for a endpoint without the type set is deprecated in Liberty. It will be dropped in Mitaka.*
