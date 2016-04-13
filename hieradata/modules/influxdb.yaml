@@ -1,7 +1,19 @@
 ---
 influxdb::server::hostname: '%{::fqdn}'
-influxdb::server::collectd_bind_address: ':8096'
-influxdb::server::collectd_enabled: false
-influxdb::server::graphite_enabled: false
 influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
+
+influxdb::server::graphite_options:
+  enabled: true
+  database: 'icinga2'
+  bind-address: ':2003'
+  protocol: 'tcp'
+  consistency-level: 'one'
+  batch-size: 1000
+  batch-pending: 5
+  batch-timeout: '1s'
+  udp-read-buffer: 0
+  separator: '.'
+  templates:
+    - 'icinga2.*.host.*         .hostname..measurement..metric.type'
+    - 'icinga2.*.services.*     .hostname..service.measurement..metric.type'
