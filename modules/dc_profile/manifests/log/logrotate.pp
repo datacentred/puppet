@@ -19,6 +19,9 @@ class dc_profile::log::logrotate {
     rotate_every => 'day',
     ifempty      => false,
     create       => true,
+    su           => true,
+    su_group     => 'syslog',
+    su_user      => 'root',
   }
 
   # Replacement for standard rsyslog rotation
