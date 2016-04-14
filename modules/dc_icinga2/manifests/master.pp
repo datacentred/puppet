@@ -17,6 +17,7 @@ class dc_icinga2::master {
   include ::icinga2::features::mainlog
   include ::icinga2::features::command
   include ::icinga2::features::ido_mysql
+  include ::icinga2::features::graphitewriter
 
   include ::dc_icinga2::host
   include ::dc_icinga2::services
