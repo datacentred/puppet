@@ -18,19 +18,17 @@ class dc_collectd::agent::proxy (
   $listeners,
 ){
 
-  class { '::collectd::plugin::network':
-    require   => File['/etc/collectd_auth'],
-    forward   => true,
-    servers   => $servers,
-    listeners => $listeners,
-  }
-
   file { '/etc/collectd_auth':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0640',
     content => "${user}: ${password}",
+  }->
+  class { '::collectd::plugin::network':
+    forward   => true,
+    servers   => $servers,
+    listeners => $listeners,
   }
 
 }
