@@ -1,2 +1,4 @@
 ---
 icinga2::features::api::accept_config: true
+
+icinga2::features::graphitewriter::host: 'influxdb0.core.sal01.datacentred.co.uk'
