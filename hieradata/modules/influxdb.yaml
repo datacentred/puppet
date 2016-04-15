@@ -24,5 +24,6 @@ influxdb::server::collectd_options:
   bind-address: ':25827'
   typesdb: '/usr/share/collectd/types.db'
   batch-size: 1000
-  batch-pending: '1s'
+  batch-pending: 5
+  batch-timeout: '1s'
   read-buffer: 0
