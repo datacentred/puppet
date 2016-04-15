@@ -20,9 +20,9 @@ influxdb::server::graphite_options:
 
 influxdb::server::collectd_options:
   enabled: true
-  database: 'collectd_db'
+  database: 'collectd'
   bind-address: ':25827'
   typesdb: '/usr/share/collectd/types.db'
-  batch-size: 5000
-  batch-pending: '10s'
+  batch-size: 1000
+  batch-pending: '1s'
   read-buffer: 0
