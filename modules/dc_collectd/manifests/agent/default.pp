@@ -1,16 +1,7 @@
-# Class: dc_profile::perf::collectd
+# == Class: dc_collectd::agent::default
 #
-# Installs collectd and graphite exporter
-#
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-class dc_profile::perf::collectd {
+# installs the basic collectd plugins
+class dc_collectd::agent::default{
 
   ensure_packages('sysstat')
 

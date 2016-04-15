@@ -1,5 +1,6 @@
 ---
 classes:
  - 'dc_profile::perf::influxdb'
+ - 'dc_collectd::agent::proxy'
 
 telegraf::manage_repo: false
