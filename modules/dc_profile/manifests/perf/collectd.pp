@@ -14,13 +14,6 @@ class dc_profile::perf::collectd {
 
   ensure_packages('sysstat')
 
-  class { '::collectd':
-    # Convert the hostname into Graphite friendly folder structure
-    #   Before: test.box.com
-    #   After:  com.box.test
-    collectd_hostname => join(reverse(split($::fqdn, '[.]')), '.'),
-  }
-
   include ::collectd::plugin::syslog
   include ::collectd::plugin::load
   include ::collectd::plugin::memory

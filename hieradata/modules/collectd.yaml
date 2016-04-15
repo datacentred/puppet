@@ -8,3 +8,4 @@ collectd::plugin::disk::ignoreselected: true
 collectd::plugin::protocols::values:
     - '/^TcpExt:.*/'
 collectd::plugin::sensors::manage_package: false
+collectd::collectd_hostname: "%{::collectd_hostname}"
