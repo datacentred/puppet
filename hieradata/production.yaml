@@ -186,6 +186,10 @@ mongodb_admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQ
 #
 galera::local_ip: "%{::ipaddress}"
 
+# Collectd proxy
+dc_collectd::agent::proxy::user: 'collectd'
+dc_collectd::agent::proxy::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAuuEnCLs8M+DmDtCDa7FkDoLASkG7IGfqOkHFubJHF/wdpsOevv3A58UhjU6KxtVEOKa1Pfn1FwTvaBMAReJijPI1N2CRCVLmzcbO87x3/0RDxMsGLzQXXaFuBoYfgXKbMsq05LUdS3WRLsb7UOZBf05Yu1cVcZe4jyhKAhny2zhCqJsrJzmp1opMrsMGTXMLQshC6XNhNXC7Ao/oxF5EENeTZaOJ369wf1G6mqP+eN5UwDkhbGmWniv5jQnBzfUiXeiYVzDsQ5N13nvwT0a/i03xVjIOKDD34cQThhl8FNqNFYynjJi0Xs2asU/e5OwFFeHzvoExUxmDy7rgnEcB1jA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCWKTaov/QL/iBoVdOJclWqgBA8oO3gZg4tjt9kAeUSZPT7]
+
 # InfluxDB
 #
 influxdb_server: 'influxdb.datacentred.services'

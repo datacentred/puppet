@@ -17,3 +17,12 @@ influxdb::server::graphite_options:
   templates:
     - 'icinga2.*.host.*         .hostname..measurement..metric.type'
     - 'icinga2.*.services.*     .hostname..service.measurement..metric.type'
+
+influxdb::server::collectd_options:
+  enabled: true
+  database: 'collectd_db'
+  bind-address: ':25827'
+  typesdb: '/usr/share/collectd/types.db'
+  batch-size: 5000
+  batch-pending: '10s'
+  read-buffer: 0
