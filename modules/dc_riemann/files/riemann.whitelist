@@ -26,3 +26,4 @@ Can\'t create new lease file: Permission denied
 ^.*Failed to inspect memory usage of instance .* can not get info from libvirt.
 No such interface, q[g|r]-[a-fA-F0-9]{8}-[a-fA-F0-9]{2}
 Interface queue is empty
+ovs\|\d+\|vsctl\|ERR\|no row "q.*" in table Port
