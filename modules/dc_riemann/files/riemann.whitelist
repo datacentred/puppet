@@ -20,4 +20,9 @@ Can\'t create new lease file: Permission denied
 ^.*Authorization failed for token.*
 ^.*Unable to find authentication token in headers.*
 ^.*audit_printk_skb: \d+ callbacks suppressed
-^*.Support for a endpoint without the type set is deprecated in Liberty. It will be dropped in Mitaka.*
+^.*Support for a endpoint without the type set is deprecated in Liberty. It will be dropped in Mitaka.*
+^.*Proxy [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12} stopped.*
+^.*RBAC: Bypassing authorization
+^.*Failed to inspect memory usage of instance .* can not get info from libvirt.
+No such interface, q[g|r]-[a-fA-F0-9]{8}-[a-fA-F0-9]{2}
+Interface queue is empty
