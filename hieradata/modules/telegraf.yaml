@@ -1,5 +1,4 @@
 ---
-telegraf::ensure: '0.11.1-1'
 telegraf::global_tags:
   role: "%{::role}"
   hostgroup: "%{::hostgroup}"
