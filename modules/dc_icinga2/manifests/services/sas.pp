@@ -8,7 +8,7 @@ class dc_icinga2::services::sas {
     import        => 'generic-service',
     check_command => 'sas-phy',
     zone          => 'host.name',
-    assign_where  => true,
+    assign_where  => 'host.vars.os',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 

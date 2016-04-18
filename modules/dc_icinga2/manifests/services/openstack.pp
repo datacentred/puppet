@@ -366,4 +366,134 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "monitoring_master"',
   }
 
+  icinga2::object::apply_service { 'openstack keystone':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 5000,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack keystone admin':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 35357,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack glance':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 9292,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack neutron':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 9696,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack nova':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8774,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack nova metadata':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8775,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack nova ec2':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8773,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack cinder':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8776,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack horizon':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 443,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack novnc proxy':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 6080,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack ceilometer':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8777,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack heat':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8004,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
+  icinga2::object::apply_service { 'openstack cloud formation':
+    import        => 'generic-service',
+    check_command => 'http',
+    vars          => {
+      'http_port' => 8000,
+      'http_ssl'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
 }
+

@@ -18,7 +18,7 @@ class dc_icinga2::services::interface {
       'interface_macaddr' => 'attributes.mac',
     },
     zone          => 'host.name',
-    assign_where  => true,
+    assign_where  => 'host.vars.os',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
