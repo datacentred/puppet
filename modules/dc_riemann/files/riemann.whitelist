@@ -15,7 +15,8 @@ Can\'t create new lease file: Permission denied
 \[*\] IPMI message handler: BMC returned incorrect response, expected*
 ^.*While synchronizing instance power states, found \d+ instances in the database and \d+ instances on the hypervisor.*
 ^.*Recovered model server connection!
-^.*vcpu0 unhandled wrmsr.*
+^.*vcpu/d+ unhandled wrmsr.*
+^.*vcpu/d+ unhandled rdmsr.*
 ^.*Authorization failed for token.*
 ^.*Unable to find authentication token in headers.*
 ^.*audit_printk_skb: \d+ callbacks suppressed
