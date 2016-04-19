@@ -197,7 +197,7 @@ class dc_icinga2::checks {
       '-w' => '$ssl_cert_warning$',
     },
     vars      => {
-      'ssl_cert_host'     => 'localhost',
+      'ssl_cert_host'     => '$address$',
       'ssl_cert_rootcert' => '/etc/ssl/certs',
       'ssl_cert_warning'  => 28,
       'ssl_cert_critical' => 7,
