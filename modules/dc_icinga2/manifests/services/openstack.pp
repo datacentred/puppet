@@ -427,10 +427,10 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'openstack nova ec2':
     import        => 'generic-service',
-    check_command => 'http',
+    check_command => 'tcp',
     vars          => {
-      'http_port' => 8773,
-      'http_ssl'  => true,
+      'tcp_port' => 8773,
+      'tcp_ssl'  => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -467,10 +467,10 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'openstack ceilometer':
     import        => 'generic-service',
-    check_command => 'http',
+    check_command => 'tcp',
     vars          => {
-      'http_port' => 8777,
-      'http_ssl'  => true,
+      'tcp_port' => 8777,
+      'tcp_ssl'  => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
