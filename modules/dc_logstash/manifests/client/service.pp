@@ -6,6 +6,7 @@ class dc_logstash::client::service {
 
   service { 'log-courier':
     ensure => 'running',
+    enable => true,
   }
 
 }
