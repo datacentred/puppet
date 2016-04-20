@@ -4,79 +4,87 @@
 # From oslo.log
 #
 
-# Print debugging output (set logging level to DEBUG instead of
-# default WARNING level). (boolean value)
-debug = False
+# If set to true, the logging level will be set to DEBUG instead of
+# the default INFO level. (boolean value)
+debug = false
 
-# Print more verbose output (set logging level to INFO instead of
-# default WARNING level). (boolean value)
-verbose = False
+# If set to false, the logging level will be set to WARNING instead of
+# the default INFO level. (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+verbose = true
 
 # The name of a logging configuration file. This file is appended to
 # any existing logging configuration files. For details about logging
 # configuration files, see the Python logging module documentation.
-# (string value)
+# Note that when logging configuration files are used then all logging
+# configuration is set in the configuration file and other logging
+# configuration options are ignored (for example,
+# logging_context_format_string). (string value)
 # Deprecated group/name - [DEFAULT]/log_config
 #log_config_append = <None>
 
-# DEPRECATED. A logging.Formatter log message format string which may
-# use any of the available logging.LogRecord attributes. This option
-# is deprecated.  Please use logging_context_format_string and
-# logging_default_format_string instead. (string value)
-#log_format = <None>
-
-# Format string for %%(asctime)s in log records. Default: %(default)s
-# . (string value)
+# Defines the format string for %%(asctime)s in log records. Default:
+# %(default)s . This option is ignored if log_config_append is set.
+# (string value)
 #log_date_format = %Y-%m-%d %H:%M:%S
 
-# (Optional) Name of log file to output to. If no default is set,
-# logging will go to stdout. (string value)
+# (Optional) Name of log file to send logging output to. If no default
+# is set, logging will go to stderr as defined by use_stderr. This
+# option is ignored if log_config_append is set. (string value)
 # Deprecated group/name - [DEFAULT]/logfile
-#log_file = <None>
+log_file = tempest.log
 
-# (Optional) The base directory used for relative --log-file paths.
-# (string value)
+# (Optional) The base directory used for relative log_file  paths.
+# This option is ignored if log_config_append is set. (string value)
 # Deprecated group/name - [DEFAULT]/logdir
 #log_dir = <None>
 
-# Use syslog for logging. Existing syslog format is DEPRECATED during
-# I, and will change in J to honor RFC5424. (boolean value)
+# Uses logging handler designed to watch file system. When log file is
+# moved or removed this handler will open a new log file with
+# specified path instantaneously. It makes sense only if log_file
+# option is specified and Linux platform is used. This option is
+# ignored if log_config_append is set. (boolean value)
+#watch_log_file = false
+
+# Use syslog for logging. Existing syslog format is DEPRECATED and
+# will be changed later to honor RFC5424. This option is ignored if
+# log_config_append is set. (boolean value)
 #use_syslog = false
 
-# (Optional) Enables or disables syslog rfc5424 format for logging. If
-# enabled, prefixes the MSG part of the syslog message with APP-NAME
-# (RFC5424). The format without the APP-NAME is deprecated in I, and
-# will be removed in J. (boolean value)
-#use_syslog_rfc_format = false
-
-# Syslog facility to receive log lines. (string value)
+# Syslog facility to receive log lines. This option is ignored if
+# log_config_append is set. (string value)
 #syslog_log_facility = LOG_USER
 
-# Log output to standard error. (boolean value)
+# Log output to standard error. This option is ignored if
+# log_config_append is set. (boolean value)
 #use_stderr = true
 
 # Format string to use for log messages with context. (string value)
 #logging_context_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [%(request_id)s %(user_identity)s] %(instance)s%(message)s
 
-# Format string to use for log messages without context. (string
-# value)
+# Format string to use for log messages when context is undefined.
+# (string value)
 #logging_default_format_string = %(asctime)s.%(msecs)03d %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s
 
-# Data to append to log format when level is DEBUG. (string value)
+# Additional data to append to log message when logging level for the
+# message is DEBUG. (string value)
 #logging_debug_format_suffix = %(funcName)s %(pathname)s:%(lineno)d
 
 # Prefix each line of exception output with this format. (string
 # value)
-#logging_exception_prefix = %(asctime)s.%(msecs)03d %(process)d TRACE %(name)s %(instance)s
+#logging_exception_prefix = %(asctime)s.%(msecs)03d %(process)d ERROR %(name)s %(instance)s
 
-# List of logger=LEVEL pairs. (list value)
-#default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=WARN,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN
+# Defines the format string for %(user_identity)s that is used in
+# logging_context_format_string. (string value)
+#logging_user_identity_format = %(user)s %(tenant)s %(domain)s %(user_domain)s %(project_domain)s
+
+# List of package logging levels in logger=LEVEL pairs. This option is
+# ignored if log_config_append is set. (list value)
+#default_log_levels = amqp=WARN,amqplib=WARN,boto=WARN,qpid=WARN,sqlalchemy=WARN,suds=INFO,oslo.messaging=INFO,iso8601=WARN,requests.packages.urllib3.connectionpool=WARN,urllib3.connectionpool=WARN,websocket=WARN,requests.packages.urllib3.util.retry=WARN,urllib3.util.retry=WARN,keystonemiddleware=WARN,routes.middleware=WARN,stevedore=WARN,taskflow=WARN,keystoneauth=WARN,oslo.cache=INFO,dogpile.core.dogpile=INFO
 
 # Enables or disables publication of error events. (boolean value)
 #publish_errors = false
-
-# Enables or disables fatal status of deprecations. (boolean value)
-#fatal_deprecations = false
 
 # The format for an instance that is passed with the log message.
 # (string value)
@@ -85,6 +93,32 @@ verbose = False
 # The format for an instance UUID that is passed with the log message.
 # (string value)
 #instance_uuid_format = "[instance: %(uuid)s] "
+
+# Enables or disables fatal status of deprecations. (boolean value)
+#fatal_deprecations = false
+
+#
+# From tempest.config
+#
+
+# Prefix to be added when generating the name for test resources. It
+# can be used to discover all resources associated with a specific
+# test run when running tempest on a real-life cloud (string value)
+#resources_prefix = tempest
+
+
+[alarming]
+
+#
+# From tempest.config
+#
+
+# Catalog type of the Alarming service. (string value)
+#catalog_type = alarming
+
+# The endpoint type to use for the alarming service. (string value)
+# Allowed values: public, admin, internal, publicURL, adminURL, internalURL
+#endpoint_type = publicURL
 
 
 [auth]
@@ -99,26 +133,63 @@ verbose = False
 # example if no tests with roles are being run it requires at least `2
 # * CONC` distinct accounts configured in  the `test_accounts_file`,
 # with CONC == the number of concurrent test processes. (string value)
-# test_accounts_file = /var/lib/refstack-client/.tempest/etc/accounts.yaml
+#test_accounts_file = <None>
 
-# Allows test cases to create/destroy tenants and users. This option
+# Allows test cases to create/destroy projects and users. This option
 # requires that OpenStack Identity API admin credentials are known. If
 # false, isolated test cases and parallel execution, can still be
 # achieved configuring a list of test accounts (boolean value)
+# Deprecated group/name - [auth]/allow_tenant_isolation
 # Deprecated group/name - [compute]/allow_tenant_isolation
 # Deprecated group/name - [orchestration]/allow_tenant_isolation
-allow_tenant_isolation = false
+use_dynamic_credentials = false
 
 # Roles to assign to all users created by tempest (list value)
 #tempest_roles =
 
-# Only applicable when identity.auth_version is v3.Domain within which
-# isolated credentials are provisioned.The default "None" means that
-# the domain from theadmin user is used instead. (string value)
-#tenant_isolation_domain_name = <None>
+# Default domain used when getting v3 credentials. This is the name
+# keystone uses for v2 compatibility. (string value)
+# Deprecated group/name - [auth]/tenant_isolation_domain_name
+#default_credentials_domain_name = Default
+
+# If use_dynamic_credentials is set to True and Neutron is enabled
+# Tempest will try to create a usable network, subnet, and router when
+# needed for each project it creates. However in some neutron
+# configurations, like with VLAN provider networks, this doesn't work.
+# So if set to False the isolated networks will not be created
+# (boolean value)
+#create_isolated_networks = true
+
+# Username for an administrative user. This is needed for
+# authenticating requests made by project isolation to create users
+# and projects (string value)
+# Deprecated group/name - [identity]/admin_username
+#admin_username = <None>
+
+# Project name to use for an  administrative user. This is needed for
+# authenticating requests made by project isolation to create users
+# and projects (string value)
+# Deprecated group/name - [auth]/admin_tenant_name
+# Deprecated group/name - [identity]/admin_tenant_name
+#admin_project_name = <None>
+
+# Password to use for an  administrative user. This is needed for
+# authenticating requests made by project isolation to create users
+# and projects (string value)
+# Deprecated group/name - [identity]/admin_password
+#admin_password = <None>
+
+# Admin domain name for authentication (Keystone V3).The same domain
+# applies to user and project (string value)
+# Deprecated group/name - [identity]/admin_domain_name
+#admin_domain_name = <None>
 
 
 [baremetal]
+# When enabling baremetal tests, Nova must be configured to use the
+# Ironic driver. The following parameters for the [compute] section
+# must be disabled: console_output, interface_attach, live_migration,
+# pause, rescue, resize shelve, snapshot, and suspend
 
 #
 # From tempest.config
@@ -148,78 +219,9 @@ allow_tenant_isolation = false
 # Timeout for Ironic power transitions. (integer value)
 #power_timeout = 60
 
-# Timeout for unprovisioning an Ironic node. (integer value)
-#unprovision_timeout = 60
-
-
-[boto]
-
-#
-# From tempest.config
-#
-
-# EC2 URL (string value)
-#ec2_url = http://localhost:8773/services/Cloud
-
-# S3 URL (string value)
-#s3_url = http://localhost:8080
-
-# AWS Secret Key (string value)
-#aws_secret = <None>
-
-# AWS Access Key (string value)
-#aws_access = <None>
-
-# AWS Zone for EC2 tests (string value)
-#aws_zone = nova
-
-# S3 Materials Path (string value)
-#s3_materials_path = /opt/stack/devstack/files/images/s3-materials/cirros-0.3.0
-
-# ARI Ramdisk Image manifest (string value)
-#ari_manifest = cirros-0.3.0-x86_64-initrd.manifest.xml
-
-# AMI Machine Image manifest (string value)
-#ami_manifest = cirros-0.3.0-x86_64-blank.img.manifest.xml
-
-# AKI Kernel Image manifest (string value)
-#aki_manifest = cirros-0.3.0-x86_64-vmlinuz.manifest.xml
-
-# Instance type (string value)
-#instance_type = m1.tiny
-
-# boto Http socket timeout (integer value)
-#http_socket_timeout = 3
-
-# boto num_retries on error (integer value)
-#num_retries = 1
-
-# Status Change Timeout (integer value)
-#build_timeout = 60
-
-# Status Change Test Interval (integer value)
-#build_interval = 1
-
-
-[cli]
-
-#
-# From tempest.config
-#
-
-# enable cli tests (boolean value)
-#enabled = true
-
-# directory where python client binaries are located (string value)
-#cli_dir = /usr/local/bin
-
-# Whether the tempest run location has access to the *-manage
-# commands. In a pure blackbox environment it will not. (boolean
-# value)
-#has_manage = true
-
-# Number of seconds to wait on a CLI timeout (integer value)
-#timeout = 15
+# Timeout for unprovisioning an Ironic node. Takes longer since Kilo
+# as Ironic performs an extra step in Node cleaning. (integer value)
+#unprovision_timeout = 300
 
 
 [compute]
@@ -230,31 +232,18 @@ allow_tenant_isolation = false
 
 # Valid primary image reference to be used in tests. This is a
 # required option (string value)
-#image_ref = <None>
-image_ref = <%= @image_ref -%>
+image_ref = <%= @image_ref %>
 
 # Valid secondary image reference to be used in tests. This is a
 # required option, but if only one image is available duplicate the
 # value of image_ref above (string value)
-#image_ref_alt = <None>
-image_ref_alt = <%= @image_ref_alt -%>
+image_ref_alt = <%= @image_ref_alt %>
 
 # Valid primary flavor to use in tests. (string value)
-#flavor_ref = 1
-flavor_ref = <%= @flavor_ref -%>
+flavor_ref = <%= @flavor_ref %>
 
 # Valid secondary flavor to be used in tests. (string value)
-flavor_ref_alt = <%= @flavor_ref_alt -%>
-
-# User name used to authenticate to an instance. (string value)
-image_ssh_user = cirros
-
-# Password used to authenticate to an instance. (string value)
-image_ssh_password = cubswin:)
-
-# User name used to authenticate to an instance using the alternate
-# image. (string value)
-image_alt_ssh_user = cirros
+flavor_ref_alt = <%= flavor_ref_alt %>
 
 # Time in seconds between build status checks. (integer value)
 #build_interval = 1
@@ -264,63 +253,16 @@ image_alt_ssh_user = cirros
 # value)
 #build_timeout = 300
 
-# Should the tests ssh to instances? (boolean value)
-run_ssh = False
-
-# Auth method used for authenticate to the instance. Valid choices
-# are: keypair, configured, adminpass and disabled. Keypair: start the
-# servers with a ssh keypair. Configured: use the configured user and
-# password. Adminpass: use the injected adminPass. Disabled: avoid
-# using ssh when it is an option. (string value)
-ssh_auth_method = configured
-
-# How to connect to the instance? fixed: using the first ip belongs
-# the fixed network floating: creating and using a floating ip.
-# (string value)
-ssh_connect_method = floating
-
-# User name used to authenticate to an instance. (string value)
-ssh_user = cirros
-
-# Timeout in seconds to wait for ping to succeed. (integer value)
-ping_timeout = 120
-
-# The packet size for ping packets originating from remote linux hosts
-# (integer value)
-#ping_size = 56
-
-# The number of ping packets originating from remote linux hosts
-# (integer value)
-#ping_count = 1
-
-# Timeout in seconds to wait for authentication to succeed. (integer
-# value)
-ssh_timeout = 300
-
 # Additional wait time for clean state, when there is no OS-EXT-STS
 # extension available (integer value)
 #ready_wait = 0
 
-# Timeout in seconds to wait for output from ssh channel. (integer
-# value)
-#ssh_channel_timeout = 60
-
-# Name of the fixed network that is visible to all test tenants. If
-# multiple networks are available for a tenant this is the network
+# Name of the fixed network that is visible to all test projects. If
+# multiple networks are available for a project, this is the network
 # which will be used for creating servers if tempest does not create a
-# network or a network is not specified elsewhere. It may be used for
+# network or s network is not specified elsewhere. It may be used for
 # ssh validation only if floating IPs are disabled. (string value)
-fixed_network_name = test
-
-# Network used for SSH connections. Ignored if
-# use_floatingip_for_ssh=true or run_ssh=false. (string value)
-network_for_ssh =
-
-# IP version used for SSH connections. (integer value)
-ip_version_for_ssh = 4
-
-# Does SSH use Floating IPs? (boolean value)
-use_floatingip_for_ssh = true
+# fixed_network_name = external
 
 # Catalog type of the Compute service. (string value)
 #catalog_type = compute
@@ -336,7 +278,7 @@ use_floatingip_for_ssh = true
 
 # Expected device name when a volume is attached to an instance
 # (string value)
-volume_device_name = vdb
+#volume_device_name = vdb
 
 # Time in seconds before a shelved instance is eligible for removing
 # from a host.  -1 never offload, 0 offload when shelved. This time
@@ -344,10 +286,28 @@ volume_device_name = vdb
 # for as long as the time. (integer value)
 #shelved_offload_time = 0
 
-# Unallocated floating IP range, which will be used to test the
-# floating IP bulk feature for CRUD operation. This block must not
-# overlap an existing floating IP pool. (string value)
-#floating_ip_range = 10.0.0.0/29
+# The minimum number of compute nodes expected. This will be utilized
+# by some multinode specific tests to ensure that requests match the
+# expected size of the cluster you are testing with. (integer value)
+#min_compute_nodes = 1
+
+# Lower version of the test target microversion range. The format is
+# 'X.Y', where 'X' and 'Y' are int values. Tempest selects tests based
+# on the range between min_microversion and max_microversion. If both
+# values are not specified, Tempest avoids tests which require a
+# microversion. Valid values are string with format 'X.Y' or string
+# 'latest' (string value)
+# Deprecated group/name - [compute-feature-enabled]/min_microversion
+#min_microversion = <None>
+
+# Upper version of the test target microversion range. The format is
+# 'X.Y', where 'X' and 'Y' are int values. Tempest selects tests based
+# on the range between min_microversion and max_microversion. If both
+# values are not specified, Tempest avoids tests which require a
+# microversion. Valid values are string with format 'X.Y' or string
+# 'latest' (string value)
+# Deprecated group/name - [compute-feature-enabled]/max_microversion
+#max_microversion = <None>
 
 
 [compute-feature-enabled]
@@ -374,21 +334,25 @@ change_password = false
 console_output = true
 
 # Does the test environment support resizing? (boolean value)
-resize = false
+resize = true
 
 # Does the test environment support pausing? (boolean value)
-#pause = true
+pause = true
 
 # Does the test environment support shelving/unshelving? (boolean
 # value)
-shelve = false
+shelve = true
 
 # Does the test environment support suspend/resume? (boolean value)
-#suspend = true
+suspend = true
 
 # Does the test environment support live migration available? (boolean
 # value)
 live_migration = true
+
+# Does the test environment support metadata service? Ignored unless
+# validation.run_validation=true. (boolean value)
+metadata_service = true
 
 # Does the test environment use block devices for live migration
 # (boolean value)
@@ -417,7 +381,7 @@ vnc_console = true
 
 # Enables returning of the instance password by the relevant server
 # API calls such as create, rebuild or rescue. (boolean value)
-enable_instance_password = false
+#enable_instance_password = true
 
 # Does the test environment support dynamic network interface
 # attachment? (boolean value)
@@ -425,15 +389,35 @@ enable_instance_password = false
 
 # Does the test environment support creating snapshot images of
 # running instances? (boolean value)
-snapshot = true
+#snapshot = true
 
-# Does the test environment have the ec2 api running? (boolean value)
-ec2_api = true
-
-# Does Nova preserve preexisting ports from Neutron when deleting an
-# instance? This should be set to True if testing Kilo+ Nova. (boolean
+# Does the test environment have the nova cert running? (boolean
 # value)
-#preserve_ports = false
+#nova_cert = true
+
+# Does the test environment support server personality (boolean value)
+#personality = true
+
+# Does the test environment support attaching an encrypted volume to a
+# running server instance? This may depend on the combination of
+# compute_driver in nova and the volume_driver(s) in cinder. (boolean
+# value)
+attach_encrypted_volume = false
+
+# Does the test environment support creating instances with multiple
+# ports on the same network? This is only valid when using Neutron.
+# (boolean value)
+#allow_duplicate_networks = false
+
+# Enable special configuration drive with metadata. (boolean value)
+#config_drive = true
+
+# A list of enabled filters that nova will accept as hints to the
+# scheduler when creating a server. A special entry 'all' indicates
+# all filters are enabled. Empty list indicates all filters are
+# disabled. The full available list of filters is in nova.conf:
+# DEFAULT.scheduler_available_filters (list value)
+#scheduler_available_filters = all
 
 
 [dashboard]
@@ -443,34 +427,40 @@ ec2_api = true
 #
 
 # Where the dashboard can be found (string value)
-dashboard_url = <%= @dashboard_url -%>
+dashboard_url = <%= @dashboard_url %>
 
 # Login page for the dashboard (string value)
-login_url = <%= @dashboard_url -%>/auth/login/
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#login_url = http://localhost/auth/login/
 
-[data_processing]
+
+[data-processing]
 
 #
 # From tempest.config
 #
 
 # Catalog type of the data processing service. (string value)
-#catalog_type = data_processing
+# Deprecated group/name - [data_processing]/catalog_type
+#catalog_type = data-processing
 
 # The endpoint type to use for the data processing service. (string
 # value)
 # Allowed values: public, admin, internal, publicURL, adminURL, internalURL
+# Deprecated group/name - [data_processing]/endpoint_type
 #endpoint_type = publicURL
 
 
-[data_processing-feature-enabled]
+[data-processing-feature-enabled]
 
 #
 # From tempest.config
 #
 
 # List of enabled data processing plugins (list value)
-#plugins = vanilla,hdp
+# Deprecated group/name - [data_processing-feature-enabled]/plugins
+#plugins = vanilla,cdh
 
 
 [database]
@@ -495,18 +485,29 @@ login_url = <%= @dashboard_url -%>/auth/login/
 # From tempest.config
 #
 
-# A regex to determine which requests should be traced.  This is a
-# regex to match the caller for rest client requests to be able to
+# A regex to determine which requests should be traced.
+#
+# This is a regex to match the caller for rest client requests to be
+# able to
 # selectively trace calls out of specific classes and methods. It
-# largely exists for test development, and is not expected to be used
-# in a real deploy of tempest. This will be matched against the
-# discovered ClassName:method in the test environment.  Expected
-# values for this field are:   * ClassName:test_method_name - traces
-# one test_method  * ClassName:setUp(Class) - traces specific setup
-# functions  * ClassName:tearDown(Class) - traces specific teardown
-# functions  * ClassName:_run_cleanups - traces the cleanup functions
+# largely
+# exists for test development, and is not expected to be used in a
+# real deploy
+# of tempest. This will be matched against the discovered
+# ClassName:method
+# in the test environment.
+#
+# Expected values for this field are:
+#
+#  * ClassName:test_method_name - traces one test_method
+#  * ClassName:setUp(Class) - traces specific setup functions
+#  * ClassName:tearDown(Class) - traces specific teardown functions
+#  * ClassName:_run_cleanups - traces the cleanup functions
+#
 # If nothing is specified, this feature is not enabled. To trace
-# everything specify .* as the regex.  (string value)
+# everything
+# specify .* as the regex.
+#  (string value)
 #trace_requests =
 
 
@@ -527,8 +528,7 @@ login_url = <%= @dashboard_url -%>/auth/login/
 #ca_certificates_file = <None>
 
 # Full URI of the OpenStack Identity API (Keystone), v2 (string value)
-#uri = <None>
-uri = <%= @identity_uri -%>
+uri = <%= @identity_uri %>
 
 # Full URI of the OpenStack Identity API (Keystone), v3 (string value)
 #uri_v3 = <None>
@@ -541,60 +541,77 @@ auth_version = v2
 # region name unless they are set explicitly. If no such region is
 # found in the service catalog, the first found one is used. (string
 # value)
-region = <%= @region -%>
+region = <%= @region %>
 
-# The endpoint type to use for the identity service. (string value)
+# The admin endpoint type to use for OpenStack Identity (Keystone) API
+# v2 (string value)
 # Allowed values: public, admin, internal, publicURL, adminURL, internalURL
-#endpoint_type = publicURL
+#v2_admin_endpoint_type = adminURL
+
+# The public endpoint type to use for OpenStack Identity (Keystone)
+# API v2 (string value)
+# Allowed values: public, admin, internal, publicURL, adminURL, internalURL
+# Deprecated group/name - [identity]/endpoint_type
+#v2_public_endpoint_type = publicURL
+
+# The endpoint type to use for OpenStack Identity (Keystone) API v3
+# (string value)
+# Allowed values: public, admin, internal, publicURL, adminURL, internalURL
+#v3_endpoint_type = adminURL
 
 # Username to use for Nova API requests. (string value)
-#username = <None>
-username = <%= @username -%>
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+username = <%= @username %>
 
-# Tenant name to use for Nova API requests. (string value)
-#tenant_name = <None>
-tenant_name = <%= @tenant_name -%>
+# Project name to use for Nova API requests. (string value)
+# Deprecated group/name - [DEFAULT]/tenant_name
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+project_name = <%= @project_name %>
+tenant_name = <%= @project_name %>
 
 # Role required to administrate keystone. (string value)
 #admin_role = admin
 
 # API key to use when authenticating. (string value)
-#password = <None>
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 password = <%= @password %>
 
 # Domain name for authentication (Keystone V3).The same domain applies
 # to user and project (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #domain_name = <None>
 
 # Username of alternate user to use for Nova API requests. (string
 # value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 alt_username = <%= @alt_username %>
- 
-# # Alternate user's Tenant name to use for Nova API requests. (string
-# # value)
-alt_tenant_name = <%= @alt_tenant_name %>
 
-# # API key to use when authenticating as alternate user. (string value)
+# Alternate user's Project name to use for Nova API requests. (string
+# value)
+# Deprecated group/name - [DEFAULT]/alt_tenant_name
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+alt_project_name = <%= @alt_project_name %>
+alt_tenant_name = <%= @alt_project_name %>
+
+# API key to use when authenticating as alternate user. (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 alt_password = <%= @alt_password %>
 
 # Alternate domain name for authentication (Keystone V3).The same
 # domain applies to user and project (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #alt_domain_name = <None>
 
-# Administrative Username to use for Keystone API requests. (string
-# value)
-#admin_username = 
-
-# Administrative Tenant name to use for Keystone API requests. (string
-# value)
-#admin_tenant_name = 
-
-# API key to use when authenticating as admin. (string value)
-#admin_password = 
-
-# Admin domain name for authentication (Keystone V3).The same domain
-# applies to user and project (string value)
-#admin_domain_name = <None>
+# ID of the default domain (string value)
+#default_domain_id = default
 
 
 [identity-feature-enabled]
@@ -605,13 +622,19 @@ alt_password = <%= @alt_password %>
 
 # Does the identity service have delegation and impersonation enabled
 # (boolean value)
-#trust = true
+trust = false
 
 # Is the v2 identity API enabled (boolean value)
 api_v2 = true
 
 # Is the v3 identity API enabled (boolean value)
 api_v3 = false
+
+# A list of enabled identity extensions with a special entry all which
+# indicates every extension is enabled. Empty list indicates all
+# extensions are disabled. To get the list of extensions run:
+# 'keystone discover' (list value)
+#api_extensions = all
 
 
 [image]
@@ -643,6 +666,12 @@ http_image = http://download.cirros-cloud.net/0.3.1/cirros-0.3.1-x86_64-uec.tar.
 # value)
 #build_interval = 1
 
+# A list of image's container formats users can specify. (list value)
+#container_formats = ami,ari,aki,bare,ovf,ova
+
+# A list of image's disk formats users can specify. (list value)
+#disk_formats = ami,ari,aki,vhd,vmdk,raw,qcow2,vdi,iso
+
 
 [image-feature-enabled]
 
@@ -655,6 +684,10 @@ api_v2 = true
 
 # Is the v1 image API enabled (boolean value)
 #api_v1 = true
+
+# Is the deactivate-image feature enabled. The feature has been
+# integrated since Kilo. (boolean value)
+#deactivate_image = false
 
 
 [input-scenario]
@@ -674,43 +707,7 @@ api_v2 = true
 #non_ssh_image_regex = ^.*[Ww]in.*$
 
 # List of user mapped to regex to matching image names. (string value)
-ssh_user_regex = [["^.*[Cc]irros.*$", "cirros"]]
-
-
-[messaging]
-
-#
-# From tempest.config
-#
-
-# Catalog type of the Messaging service. (string value)
-#catalog_type = messaging
-
-# The maximum number of queue records per page when listing queues
-# (integer value)
-#max_queues_per_page = 20
-
-# The maximum metadata size for a queue (integer value)
-#max_queue_metadata = 65536
-
-# The maximum number of queue message per page when listing (or)
-# posting messages (integer value)
-#max_messages_per_page = 20
-
-# The maximum size of a message body (integer value)
-#max_message_size = 262144
-
-# The maximum number of messages per claim (integer value)
-#max_messages_per_claim = 20
-
-# The maximum ttl for a message (integer value)
-#max_message_ttl = 1209600
-
-# The maximum ttl for a claim (integer value)
-#max_claim_ttl = 43200
-
-# The maximum grace period for a claim (integer value)
-#max_claim_grace = 43200
+#ssh_user_regex = [["^.*[Cc]irros.*$", "cirros"]]
 
 
 [negative]
@@ -741,38 +738,41 @@ ssh_user_regex = [["^.*[Cc]irros.*$", "cirros"]]
 # Allowed values: public, admin, internal, publicURL, adminURL, internalURL
 #endpoint_type = publicURL
 
-# The cidr block to allocate tenant ipv4 subnets from (string value)
-#tenant_network_cidr = 10.100.0.0/16
+# The cidr block to allocate project ipv4 subnets from (string value)
+# Deprecated group/name - [DEFAULT]/tenant_network_cidr
+#project_network_cidr = 10.100.0.0/16
 
-# The mask bits for tenant ipv4 subnets (integer value)
-#tenant_network_mask_bits = 28
+# The mask bits for project ipv4 subnets (integer value)
+# Deprecated group/name - [DEFAULT]/tenant_network_mask_bits
+#project_network_mask_bits = 28
 
-# The cidr block to allocate tenant ipv6 subnets from (string value)
-#tenant_network_v6_cidr = 2003::/48
+# The cidr block to allocate project ipv6 subnets from (string value)
+# Deprecated group/name - [DEFAULT]/tenant_network_v6_cidr
+#project_network_v6_cidr = 2003::/48
 
-# The mask bits for tenant ipv6 subnets (integer value)
-#tenant_network_v6_mask_bits = 64
+# The mask bits for project ipv6 subnets (integer value)
+# Deprecated group/name - [DEFAULT]/tenant_network_v6_mask_bits
+#project_network_v6_mask_bits = 64
 
-# Whether tenant networks can be reached directly from the test
+# Whether project networks can be reached directly from the test
 # client. This must be set to True when the 'fixed' ssh_connect_method
 # is selected. (boolean value)
-#tenant_networks_reachable = false
+# Deprecated group/name - [DEFAULT]/tenant_networks_reachable
+#project_networks_reachable = false
 
 # Id of the public network that provides external connectivity (string
 # value)
-# public_network_id =
-public_network_id = 6751cb30-0aef-4d7e-94c3-ee2a09e705eb
+public_network_id = <%= @public_network_id %>
 
 # Default floating network name. Used to allocate floating IPs when
 # neutron is enabled. (string value)
-floating_network_name = external
+floating_network_name = <%= @floating_network_name %>
 
 # Id of the public router that provides external connectivity. This
 # should only be used when Neutron's 'allow_overlapping_ips' is set to
 # 'False' in neutron.conf. usually not needed past 'Grizzly' release
 # (string value)
-#public_router_id =
-public_router_id =
+# public_router_id =
 
 # Timeout in seconds to wait for network operation to complete.
 # (integer value)
@@ -791,6 +791,9 @@ dns_servers = 8.8.8.8,8.8.4.4
 # Allowed values: <None>, normal, direct, macvtap
 #port_vnic_type = <None>
 
+# List of ip pools for subnetpools creation (list value)
+#default_network = 1.0.0.0/16,2.0.0.0/16
+
 
 [network-feature-enabled]
 
@@ -803,7 +806,8 @@ dns_servers = 8.8.8.8,8.8.4.4
 
 # A list of enabled network extensions with a special entry all which
 # indicates every extension is enabled. Empty list indicates all
-# extensions are disabled (list value)
+# extensions are disabled. To get the list of extensions run: 'neutron
+# ext-list' (list value)
 #api_extensions = all
 
 # Allow the execution of IPv6 subnet tests that use the extended IPv6
@@ -827,12 +831,12 @@ catalog_type = object-store
 # The object-storage region name to use. If empty, the value of
 # identity.region is used instead. If no such region is found in the
 # service catalog, the first found one is used. (string value)
-#region = sal01
+#region =
 
 # The endpoint type to use for the object-store service. (string
 # value)
 # Allowed values: public, admin, internal, publicURL, adminURL, internalURL
-endpoint_type = publicURL
+#endpoint_type = publicURL
 
 # Number of seconds to time on waiting for a container to container
 # synchronization complete. (integer value)
@@ -844,10 +848,10 @@ endpoint_type = publicURL
 
 # Role to add to users created for swift tests to enable creating
 # containers (string value)
-operator_role = object-store
+#operator_role = Member
 
 # User role that has reseller admin (string value)
-reseller_admin_role = ResellerAdmin
+#reseller_admin_role = ResellerAdmin
 
 # Name of sync realm. A sync realm is a set of clusters that have
 # agreed to allow container syncing with each other. Set the same
@@ -869,13 +873,13 @@ reseller_admin_role = ResellerAdmin
 # A list of the enabled optional discoverable apis. A single entry,
 # all, indicates that all of these features are expected to be enabled
 # (list value)
-# discoverable_apis = all
+#discoverable_apis = all
 
 # Execute (old style) container-sync tests (boolean value)
-container_sync = false
+#container_sync = true
 
 # Execute object-versioning tests (boolean value)
-object_versioning = true
+#object_versioning = true
 
 # Execute discoverability tests (boolean value)
 #discoverability = true
@@ -914,7 +918,7 @@ object_versioning = true
 #instance_type = m1.micro
 
 # Name of existing keypair to launch servers with. (string value)
-keypair_name =
+keypair_name = 
 
 # Value must match heat configuration of the same name. (integer
 # value)
@@ -940,7 +944,7 @@ keypair_name =
 # that need locking. Defaults to environment variable OSLO_LOCK_PATH.
 # If external locks are used, a lock path must be set. (string value)
 # Deprecated group/name - [DEFAULT]/lock_path
-lock_path = /var/run/tempest
+#lock_path = <None>
 
 
 [scenario]
@@ -950,6 +954,8 @@ lock_path = /var/run/tempest
 #
 
 # Directory containing image files (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #img_dir = /opt/stack/new/devstack/files/images/cirros-0.3.1-x86_64-uec
 
 # Image file name (string value)
@@ -962,26 +968,29 @@ lock_path = /var/run/tempest
 # Image container format (string value)
 #img_container_format = bare
 
+# Glance image properties. Use for custom images which require them
+# (dict value)
+#img_properties = <None>
+
 # AMI image file name (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #ami_img_file = cirros-0.3.1-x86_64-blank.img
 
 # ARI image file name (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #ari_img_file = cirros-0.3.1-x86_64-initrd
 
 # AKI image file name (string value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #aki_img_file = cirros-0.3.1-x86_64-vmlinuz
-
-# ssh username for the image file (string value)
-ssh_user = cirros
-
-# specifies how many resources to request at once. Used for large
-# operations testing. (integer value)
-#large_ops_number = 0
 
 # DHCP client used by images to renew DCHP lease. If left empty,
 # update operation will be skipped. Supported clients: "udhcpc",
 # "dhclient" (string value)
-# Allowed values: udhcpc, dhclient
+# Allowed values: udhcpc, dhclient, ''
 #dhcp_client = udhcpc
 
 
@@ -992,49 +1001,41 @@ ssh_user = cirros
 #
 
 # Whether or not cinder is expected to be available (boolean value)
-#cinder = true
-cinder = True
+cinder = true
 
 # Whether or not neutron is expected to be available (boolean value)
-#neutron = false
-neutron = True
+neutron = true
 
 # Whether or not glance is expected to be available (boolean value)
-#glance = true
-glance = True
+glance = true
 
 # Whether or not swift is expected to be available (boolean value)
-#swift = true
 swift = False
 
 # Whether or not nova is expected to be available (boolean value)
-#nova = true
-nova = True
+nova = true
 
 # Whether or not Heat is expected to be available (boolean value)
-#heat = false
 heat = True
 
 # Whether or not Ceilometer is expected to be available (boolean
 # value)
-#ceilometer = true
-ceilometer = False
+ceilometer = True
+
+# Whether or not Aodh is expected to be available (boolean value)
+aodh = false
 
 # Whether or not Horizon is expected to be available (boolean value)
-#horizon = true
-horizon = True
+horizon = true
 
 # Whether or not Sahara is expected to be available (boolean value)
-#sahara = false
+sahara = false
 
 # Whether or not Ironic is expected to be available (boolean value)
-#ironic = false
+ironic = false
 
 # Whether or not Trove is expected to be available (boolean value)
-#trove = false
-
-# Whether or not Zaqar is expected to be available (boolean value)
-#zaqar = false
+trove = false
 
 
 [stress]
@@ -1075,7 +1076,7 @@ horizon = True
 #leave_dirty_stack = false
 
 # Allows a full cleaning process after a stress test. Caution : this
-# cleanup will remove every objects of every tenant. (boolean value)
+# cleanup will remove every objects of every project. (boolean value)
 #full_clean_stack = false
 
 
@@ -1094,7 +1095,19 @@ horizon = True
 
 # This variable is used as flag to enable notification tests (boolean
 # value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 #too_slow_to_test = true
+
+
+[telemetry-feature-enabled]
+
+#
+# From tempest.config
+#
+
+# Runs Ceilometer event-related tests (boolean value)
+#events = false
 
 
 [validation]
@@ -1103,22 +1116,35 @@ horizon = True
 # From tempest.config
 #
 
+# Enable ssh on created servers and creation of additional validation
+# resources to enable remote access (boolean value)
+run_validation = true
+
+# Enable/disable security groups. (boolean value)
+security_group = true
+
+# Enable/disable security group rules. (boolean value)
+security_group_rules = true
+
 # Default IP type used for validation: -fixed: uses the first IP
 # belonging to the fixed network -floating: creates and uses a
 # floating IP (string value)
 # Allowed values: fixed, floating
+# Deprecated group/name - [compute]/use_floatingip_for_ssh
 connect_method = floating
 
 # Default authentication method to the instance. Only ssh via keypair
 # is supported for now. Additional methods will be handled in a
 # separate spec. (string value)
 # Allowed values: keypair
-auth_method = configured
+# Deprecated group/name - [compute]/ssh_auth_method
+auth_method = keypair
 
 # Default IP version for ssh connections. (integer value)
-#ip_version_for_ssh = 4
+ip_version_for_ssh = 4
 
 # Timeout in seconds to wait for ping to succeed. (integer value)
+# Deprecated group/name - [compute]/ping_timeout
 #ping_timeout = 120
 
 # Timeout in seconds to wait for the TCP connection to be successful.
@@ -1127,6 +1153,42 @@ auth_method = configured
 
 # Timeout in seconds to wait for the ssh banner. (integer value)
 #ssh_timeout = 300
+
+# User name used to authenticate to an instance. (string value)
+# Deprecated group/name - [compute]/image_ssh_user
+# Deprecated group/name - [compute]/ssh_user
+# Deprecated group/name - [scenario]/ssh_user
+image_ssh_user = cirros
+
+# Password used to authenticate to an instance. (string value)
+# Deprecated group/name - [compute]/image_ssh_password
+image_ssh_password = cubswin:)
+
+# Shell fragments to use before executing a command when sshing to a
+# guest. (string value)
+# Deprecated group/name - [compute]/ssh_shell_prologue
+#ssh_shell_prologue = set -eu -o pipefail; PATH=$$PATH:/sbin;
+
+# The packet size for ping packets originating from remote linux hosts
+# (integer value)
+# Deprecated group/name - [compute]/ping_size
+#ping_size = 56
+
+# The number of ping packets originating from remote linux hosts
+# (integer value)
+# Deprecated group/name - [compute]/ping_count
+#ping_count = 1
+
+# Unallocated floating IP range, which will be used to test the
+# floating IP bulk feature for CRUD operation. This block must not
+# overlap an existing floating IP pool. (string value)
+# Deprecated group/name - [compute]/floating_ip_range
+#floating_ip_range = 10.0.0.0/29
+
+# Network used for SSH connections. Ignored if
+# use_floatingip_for_ssh=true or run_validation=false. (string value)
+# Deprecated group/name - [compute]/network_for_ssh
+#network_for_ssh = public
 
 
 [volume]
@@ -1143,24 +1205,34 @@ auth_method = configured
 #build_timeout = 300
 
 # Catalog type of the Volume Service (string value)
-catalog_type = volume
+#catalog_type = volume
 
 # The volume region name to use. If empty, the value of
 # identity.region is used instead. If no such region is found in the
 # service catalog, the first found one is used. (string value)
-region = sal01
+region = <%= @region %>
 
 # The endpoint type to use for the volume service. (string value)
 # Allowed values: public, admin, internal, publicURL, adminURL, internalURL
-endpoint_type = publicURL
+#endpoint_type = publicURL
 
 # Name of the backend1 (must be declared in cinder.conf) (string
 # value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
 backend1_name = Ceph
 
 # Name of the backend2 (must be declared in cinder.conf) (string
 # value)
-#backend2_name = BACKEND_2
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#backend2_name =
+
+# A list of backend names separated by comma. The backend name must be
+# declared in cinder.conf (list value)
+# Deprecated group/name - [volume]/BACKEND_1
+# Deprecated group/name - [volume]/BACKEND_2
+#backend_names = BACKEND_1,BACKEND_2
 
 # Backend protocol to target when creating volume types (string value)
 storage_protocol = Ceph
@@ -1186,18 +1258,30 @@ volume_size = 1
 #multi_backend = false
 
 # Runs Cinder volumes backup test (boolean value)
-#backup = true
+backup = false
 
 # Runs Cinder volume snapshot test (boolean value)
 snapshot = true
 
+# Runs Cinder volume clone test (boolean value)
+clone = true
+
 # A list of enabled volume extensions with a special entry all which
 # indicates every extension is enabled. Empty list indicates all
 # extensions are disabled (list value)
-api_extensions = all
+#api_extensions = all
 
 # Is the v1 volume API enabled (boolean value)
-api_v1 = true
+#api_v1 = true
 
 # Is the v2 volume API enabled (boolean value)
-api_v2 = true
+#api_v2 = true
+
+# Update bootable status of a volume Not implemented on icehouse
+# (boolean value)
+# This option is deprecated for removal.
+# Its value may be silently ignored in the future.
+#bootable = true
+
+# Extract correct host info from host@backend (boolean value)
+#volume_services = false

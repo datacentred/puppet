@@ -31,10 +31,10 @@
 #
 class dc_interop (
   $username,
-  $tenant_name,
+  $project_name,
   $password,
   $alt_username,
-  $alt_tenant_name,
+  $alt_project_name,
   $alt_password,
   $image_ref,
   $image_ref_alt,
@@ -44,6 +44,8 @@ class dc_interop (
   $identity_uri,
   $refcore_tests,
   $region = sal01,
+  $public_network_id,
+  $floating_network_name,
   $client_home = '/var/lib/refstack-client'
 ) {
   $packages = [ 'python-keystoneclient', 'python-novaclient',

@@ -1,15 +1,17 @@
 ---
 dc_interop::username: tempest
-dc_interop::tenant_name: tempest
+dc_interop::project_name: tempest
 dc_interop::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAmnZcDnZVPnSM7hlo4/3zxRHVd96Hh0N+uYetJTJbdH+Ig0vGcCi7U1qJ/luoQ/iENLBnSQ2rG9UYmf9SHqPmWuhKVdsS4M1tajBkjobkcZ4aA+jdzI4GdTcauxNlzphc5nHVnysJZs+J/K7V8MYfPBlzOrHabM734zx4Okooy6KEsZ/05ReXPPmy5A3dWgRBbQBimfnMF7lcUamlYOQ9UkHcT6XM8EOHe1+nr/DW9Y89bKBR7PHTq7VJ1AyqYLThzyf78P1+ooqE3MLin94DVwtxQzyG0TMKBbT+X5A14KHvaq8uHOtJvRgkjs65kFEZ7CUIZIGrFIngGrcjs1VbCTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAbYjGzsbpLlWZg+fVcuITVgBBZG57WWH1/LXLc+JwdJBd7]
 dc_interop::alt_username: tempest_alt
-dc_interop::alt_tenant_name: tempest_alt
+dc_interop::alt_project_name: tempest_alt
 dc_interop::alt_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAPa3xZXYMbJoRF6SfAPSShB4szevEEzYjEQH1+K8WDisIYTwtW8e6oUSP25Z20bNFysuugQyJBnF2Zeumwf6jUIZSTrum+/M6IR+la/QO4vuOHHBS+l8pblRPwDqcAxEEJuF3AOQJOZihfoPtMu4uRkjXvC6hlnLnSdK9f9rYiZ97TVhMjDlp7C69dYbpu1duSBz5GSs1Ku54OJcg9dlEtQSj4jDn+1NFxsW6HtOKKIqRunqhU8z3JIk0WraJsmcHMeUgQhUIwgO9RYETxlHX1tccS/86P6o4bRseGPizca4CHX8dGqbbuL1pDZBT+c4hP44zS/LybcTkraTu2wUjDDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDAOlTIAEfGcn8f6xc/t7FWgBCXzyHAZvPvFpqL6c6T2WKN]
 dc_interop::region: sal01
-dc_interop::image_ref: 1ca797949ba8-53f4-479f-bf05-df350d50d921
-dc_interop::image_ref_alt: 9d8d2945-e699-469a-ac24-c63885f621ca
-dc_interop::flavor_ref: 5615f35f-cff0-4664-bbff-62e0778daa6e
-dc_interop::flavor_ref_alt: 5615f35f-cff0-4664-bbff-62e0778daa6e
+dc_interop::image_ref: 1ca753e4-beee-4fbb-a341-ef36cf31c27c
+dc_interop::image_ref_alt: 676965bc-e973-4b8b-a77d-eba6daa9225c
+dc_interop::flavor_ref: fc973be4-3cfb-4f65-8be5-4f96daad1c6e
+dc_interop::flavor_ref_alt: 6d1ed6da-f94b-496f-95d9-e2501bb46532
 dc_interop::dashboard_url: "https://%{hiera('os_api_host')}"
 dc_interop::identity_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
-dc_interop::refcore_tests: 'https://raw.githubusercontent.com/openstack/defcore/master/2015.04/2015.04.required.txt'
+dc_interop::refcore_tests: 'https://raw.githubusercontent.com/openstack/defcore/master/2015.05/2015.05.required.txt'
+dc_interop::public_network_id: 5615f35f-cff0-4664-bbff-62e0778daa6e
+dc_interop::floating_network_name: external
