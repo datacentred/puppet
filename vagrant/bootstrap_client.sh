@@ -21,6 +21,8 @@ if [ -f /etc/redhat-release ]; then
     yum install -y ${package} > /dev/null
   done
   sed -i '/Defaults    requiretty/d' /etc/sudoers
+  nmcli connection reload
+  systemctl restart network.service
 else
   apt-get update &> /dev/null
   for package in ${DEBIAN_PACKAGES}; do

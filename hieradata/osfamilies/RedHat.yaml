@@ -1,6 +1,9 @@
 ---
 classes:
-  - '::dc_yum'
+  - '::dc_profile::rpm::yum'
+
+excludes:
+  - '::dc_profile::util::kdump'
 
 puppet::provider: 'yum'
 puppet::package: 'puppet'
@@ -9,7 +12,7 @@ dc_yum::repo:
   rdo:
    name: 'rdo-kilo'
    baseurl: 'http://repos.fedorapeople.org/repos/openstack/openstack-kilo/el7/'
-   gpgkey: 'https://raw.githubusercontent.com/redhat-openstack/rdo-release/master/RPM-GPG-KEY-RDO-kilo'
+   gpgkey: 'https://raw.githubusercontent.com/willshersystems/willshersystems.repositories/master/files/RPM-GPG-KEY-rdo-kilo'
   ceph:
     name: 'ceph-release'
     baseurl: 'http://ceph.com/rpm-hammer/rhel7/$basearch'
