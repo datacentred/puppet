@@ -60,6 +60,11 @@ apply:
     cache: puppetdb_apply
 EOF
 
+# Auto-recompile kernel modules on VMware guests
+if [ -d /etc/vmware-tools ]; then
+  echo "answer AUTO_KMODS_ENABLED yes" >> /etc/vmware-tools/locations
+fi
+
 # Run against the puppet server to generate certificates
 puppet agent --test
 
