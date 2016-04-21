@@ -16,5 +16,8 @@ for i in puppetmaster puppetdb; do
   dpkg -s ${i} >/dev/null 2>&1 || apt-get -y install ${i}
 done
 
+# Ensure the PuppetDB service starts on (re)boot
+update-rc.d puppetdb defaults
+
 # Done provisioning
 touch /root/.provisioned
