@@ -5,7 +5,7 @@
 test -f /root/.provisioned && exit 0
 
 DEBIAN_PACKAGES='puppetdb-terminus bundler'
-RHEL_PACKAGES='puppetdb-terminus rubygem-bundler'
+RHEL_PACKAGES='puppet puppetdb-terminus rubygem-bundler'
 
 # By default the puppet VMs have vagrant at 1000:1000 which interferes with
 # our hard coded IDs.  Removing this hurdle allows testing of user account
@@ -14,6 +14,7 @@ userdel -rf vagrant
 
 # Distribution-specific package considerations
 if [ -f /etc/redhat-release ]; then
+  rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
   yum update -y >/dev/null
   yum makecache fast >/dev/null
   for package in ${RHEL_PACKAGES}; do
