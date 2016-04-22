@@ -31,14 +31,14 @@ class dc_profile::openstack::heat {
 
   file { 'heat_keystone_v2_client.py':
     source  => 'puppet:///modules/dc_openstack/heat_client.py',
-    target  => '/usr/lib/heat/heat_keystoneclient_v2/client.py',
+    path    => '/usr/lib/heat/heat_keystoneclient_v2/client.py',
     mode    => '0644',
     require => File['/usr/lib/heat/heat_keystoneclient_v2'],
   }
 
   file { 'heat_keystone_v2_client_init.py':
     source  => 'puppet:///modules/dc_openstack/heat_init.py',
-    target  => '/usr/lib/heat/heat_keystoneclient_v2/__init__.py',
+    path    => '/usr/lib/heat/heat_keystoneclient_v2/__init__.py',
     mode    => '0644',
     require => File['/usr/lib/heat/heat_keystoneclient_v2'],
     notify  => Service['heat-engine'],
@@ -67,7 +67,5 @@ class dc_profile::openstack::heat {
     ports             => '8000',
     options           => 'check inter 2000 rise 2 fall 5',
   }
-
-
 
 }
