@@ -44,3 +44,4 @@ heat::engine::heat_waitcondition_server_url: "https://%{hiera('os_api_host')}:80
 heat::engine::heat_watch_server_url: "https://%{hiera('os_api_host')}:8003"
 heat::engine::auth_encryption_key: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAL1UrPA+kOTYc0Vc0bF40nVBCCzNfDtjg0HkKOcNkhfdYeNu4BgUx7iI7/W1Sl8unzJ2oqV8R3VPtDeR+rZjp2PicbukS4iwr/U6e23lcbUdXXvqAHcES8DCT7hpXO7WfosTYufzQmiVvqeSoSwzDUBGOeSIxSODSYIKLkZuRCv8844J7cxVUVMlmI7bGpVGdhfHIY2kaD/5uwci+VFZxrKqZcY9mPwqwOV/l7o6I1YPvO3KFlF+kmd7t9P5eGq4HGOksU1u9ujV+8ScAdOdYa6NWOAp1YBaCrX+C3/TLt64DfM/d3qAxoCs/PbTmOJKadRo66CBFDrZ+96CLJrXETDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAUjmzGMzRUbGreThM7SUcFgDA9yYasx3OoNOZ8h6KvY2sKeSCMg4f5B35GCOZV05pnZ1c4ExswZp8X42VOt0KmY+c=]
 heat::engine::configure_delegated_roles: false
+heat::engine::deferred_auth_method: 'password'
