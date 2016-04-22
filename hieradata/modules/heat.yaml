@@ -27,12 +27,11 @@ heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
 
-heat::auth_uri: "https://%{hiera('os_api_host')}:5000/"
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
 heat::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 
 heat::keystone_user: 'heat'
 heat::keystone_password: "%{hiera('keystone_heat_password')}"
-heat::keystone_ec2_uri: "https://%{hiera('os_api_host')}:5000/"
 
 heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
 
