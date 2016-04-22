@@ -32,6 +32,8 @@ class dc_profile::openstack::heat {
   file { 'heat_keystone_v2_client.py':
     source  => 'puppet:///modules/dc_openstack/heat_client.py',
     path    => '/usr/lib/heat/heat_keystoneclient_v2/client.py',
+    owner   => 'root',
+    group   => 'root',
     mode    => '0644',
     require => File['/usr/lib/heat/heat_keystoneclient_v2'],
   }
@@ -39,6 +41,8 @@ class dc_profile::openstack::heat {
   file { 'heat_keystone_v2_client_init.py':
     source  => 'puppet:///modules/dc_openstack/heat_init.py',
     path    => '/usr/lib/heat/heat_keystoneclient_v2/__init__.py',
+    owner   => 'root',
+    group   => 'root',
     mode    => '0644',
     require => File['/usr/lib/heat/heat_keystoneclient_v2'],
     notify  => Service['heat-engine'],
