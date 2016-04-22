@@ -22,8 +22,15 @@ Can\'t create new lease file: Permission denied
 ^.*audit_printk_skb: \d+ callbacks suppressed
 ^.*Support for a endpoint without the type set is deprecated in Liberty. It will be dropped in Mitaka.*
 ^.*Proxy [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12} stopped.*
+^.*Server [a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12} is DOWN.*
 ^.*RBAC: Bypassing authorization
 ^.*Failed to inspect memory usage of instance .* can not get info from libvirt.
 No such interface, q[g|r]-[a-fA-F0-9]{8}-[a-fA-F0-9]{2}
 Interface queue is empty
 ovs\|\d+\|vsctl\|ERR\|no row "q.*" in table Port
+ovs\|\d+\|vsctl\|ERR\|no interface named .*
+^.*Identity response: {"error": {"message": "Could not find token: .*", "code": 404, "title": "Not Found"}}
+Could not find token: .*
+Nova returned NotFound for event: \[{'status': 'completed', 'tag': .*, 'name': 'network-vif-plugged'.*
+No endpoints found for service energy
+Client-side error: Invalid input for field/attribute severity. Value: 'None'. Value should be one of: moderate, critical, low
