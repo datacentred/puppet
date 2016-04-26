@@ -8,7 +8,7 @@ class dc_icinga2::services::users {
     import        => 'generic-service',
     check_command => 'users',
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
@@ -25,7 +25,7 @@ class dc_icinga2::services::users {
       ],
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 

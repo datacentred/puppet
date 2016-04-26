@@ -20,7 +20,7 @@ class dc_icinga2::services::mailq {
       'mailq_servertype' => 'postfix',
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 

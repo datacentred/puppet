@@ -11,7 +11,7 @@ class dc_icinga2::services::disk {
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
@@ -29,7 +29,7 @@ class dc_icinga2::services::disk {
       'disk_queue_critical' => '80',
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
@@ -46,7 +46,7 @@ class dc_icinga2::services::disk {
       'disk_latency_critical' => [ 2000, 2000, 500, 500 ],
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
