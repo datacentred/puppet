@@ -84,6 +84,7 @@ nova::network::neutron::vif_plugging_timeout: '0'
 nova::scheduler::filter::scheduler_default_filters:
  - AggregateInstanceExtraSpecsFilter
  - AggregateImagePropertiesIsolation
+ - AggregateMultiTenancyIsolation
  - RetryFilter
  - AvailabilityZoneFilter
  - RamFilter
