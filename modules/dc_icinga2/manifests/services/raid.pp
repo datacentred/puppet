@@ -8,7 +8,7 @@ class dc_icinga2::services::raid {
     import        => 'generic-service',
     check_command => 'raid',
     zone          => 'host.name',
-    assign_where  => 'host.vars.os',
+    assign_where  => 'host.vars.operatingsystem',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
