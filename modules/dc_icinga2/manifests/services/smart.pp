@@ -21,7 +21,8 @@ class dc_icinga2::services::smart {
     check_command => 'smart',
     display_name  => '"smart " + blockdevice',
     vars          => {
-      'smart_device' => 'attributes.path',
+      'smart_device'  => 'attributes.path',
+      'smart_warning' => '5:1',
     },
     zone          => 'host.name',
     assign_where  => 'match("sd*", blockdevice)',

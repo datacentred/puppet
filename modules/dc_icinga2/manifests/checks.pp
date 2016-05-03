@@ -119,6 +119,8 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-d' => '$smart_device$',
+      '-w' => '$smart_warning$',
+      '-c' => '$smart_critical$',
     },
   }
 
