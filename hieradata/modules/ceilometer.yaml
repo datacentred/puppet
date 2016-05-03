@@ -38,3 +38,4 @@ ceilometer::agent::notification::enabled: true
 ceilometer::agent::notification::store_events: true
 
 ceilometer::wsgi::apache::workers: 4
+ceilometer::wsgi::apache::ssl: false
