@@ -17,9 +17,4 @@ class dc_nrpe::checks::ceilometer_oscontrol {
     args => '-c 1: -u ceilometer -a ceilometer-collector',
   }
 
-  dc_nrpe::check { 'check_ceilometer_api_proc':
-    path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -u ceilometer -a ceilometer-api',
-  }
-
 }
