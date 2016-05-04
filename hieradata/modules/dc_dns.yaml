@@ -4,4 +4,7 @@ dc_dns::static::records:
     rdata: "ns0.%{::domain}"
   "ntp1.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
+  "mx.%{::domain}/MX":
+    rdata: "mail.datacentred.services"
+
 

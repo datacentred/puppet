@@ -67,6 +67,16 @@ Puppet::Type.newtype(:dns_resource) do
     end
   end
 
+  newproperty(:preference) do
+    desc 'Preference - only used for MX records'
+    defaultto '10'
+    validate do |value|
+      unless value =~ /^\d+$/
+        raise ArgumentError, "dns_resource::preference invalid"
+      end
+    end
+  end
+
   # nsupdate provider requires bind to be listening for
   # zone updates
   autorequire(:service) do
