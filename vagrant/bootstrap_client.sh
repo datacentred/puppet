@@ -4,7 +4,7 @@
 # Exit if the following file exists
 test -f /root/.provisioned && exit 0
 
-DEBIAN_PACKAGES='puppetdb-terminus bundler'
+DEBIAN_PACKAGES='puppet puppetdb-terminus bundler'
 RHEL_PACKAGES='puppet puppetdb-terminus rubygem-bundler'
 
 # By default the puppet VMs have vagrant at 1000:1000 which interferes with
@@ -24,6 +24,8 @@ if [ -f /etc/redhat-release ]; then
   nmcli connection reload
   systemctl restart network.service
 else
+  wget -q https://apt.puppetlabs.com/puppetlabs-release-trusty.deb -O /tmp/puppetlabs.deb
+  dpkg -i /tmp/puppetlabs.deb
   apt-get update &> /dev/null
   for package in ${DEBIAN_PACKAGES}; do
     dpkg -s ${i} >/dev/null 2>&1 || apt-get -y install ${package} > /dev/null
