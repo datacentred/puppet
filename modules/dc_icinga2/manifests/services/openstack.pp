@@ -221,18 +221,6 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_control"',
   }
 
-  icinga2::object::apply_service { 'ceilometer api':
-    import        => 'generic-service',
-    check_command => 'procs',
-    vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'ceilometer',
-      'procs_argument' => 'ceilometer-api',
-    },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "openstack_control"',
-  }
-
   icinga2::object::apply_service { 'cinder api':
     import        => 'generic-service',
     check_command => 'openstack-service',
