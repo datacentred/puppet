@@ -192,7 +192,6 @@ ldap_groups:
         - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
   # Developers able to view and run jobs
   'cn=jenkins-development,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
