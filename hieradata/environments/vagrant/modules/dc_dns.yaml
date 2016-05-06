@@ -9,11 +9,11 @@ dc_dns::nameservers:
 dc_dns::static::records:
   "testcname.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
-  "ns0.%{::domain}/MX":
-    rdata: '20' 
+  "testmx.%{::domain}/MX":
+    rdata: 'mail.vagrant.dev'
   "blah.%{::domain}/A":
     rdata: '172.22.5.246' 
   "_foreman._tcp.%{::domain}/SRV":
     port: '8444'
     weight: '10'
-    rdata: 'foreman.datacentred.services'
+    rdata: 'foreman.vagrant.dev'

@@ -79,9 +79,10 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     ttl = resource[:ttl]
     case type
     when 'MX'
+        preference = resource[:preference]
         domain = name.split('.', 2)[-1]
         nsupdate("server 127.0.0.1
-                  update add #{domain} #{ttl} #{type} #{rdata} #{name}
+                  update add #{domain} #{ttl} #{type} #{preference} #{rdata}
                   send")
     # We make an assumption that we only ever have 1 SRV record for a service
     # so priority is set to 0 as per the docs
@@ -105,9 +106,10 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     case type
     when 'MX'
         domain = name.split('.', 2)[-1]
-        preference = resource[:rdata]
+        preference = resource[:preference]
+        target = resource[:rdata]
         nsupdate("server 127.0.0.1
-                update delete #{domain} #{type} #{preference } #{name}.
+                update delete #{domain} #{type} #{preference} #{target}.
                 send")
     # We make an assumption that we only ever have 1 SRV record for a service
     # so priority is set to 0 as per the docs
@@ -188,6 +190,19 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   end
 
   def port=(value)
+    destroy
+    create
+  end
+  
+  def preference
+    if @dnsres.respond_to?(:preference)
+        @dnsres.preference.to_s
+    else
+        '0'
+    end
+  end
+
+  def preference=(value)
     destroy
     create
   end
