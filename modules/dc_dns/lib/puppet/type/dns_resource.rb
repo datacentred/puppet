@@ -69,7 +69,7 @@ Puppet::Type.newtype(:dns_resource) do
 
   newproperty(:preference) do
     desc 'Preference - only used for MX records'
-    defaultto '10'
+    defaultto '0'
     validate do |value|
       unless value =~ /^\d+$/
         raise ArgumentError, "dns_resource::preference invalid"
