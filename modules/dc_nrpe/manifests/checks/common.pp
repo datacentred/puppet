@@ -2,7 +2,6 @@
 #
 class dc_nrpe::checks::common (
   $check_users = { warn => '5', crit   => '10' },
-  $check_procs = { warn => '500', crit => '600' },
   $check_disks = { warn => '10%', crit => '5%' },
 ) {
 
@@ -28,11 +27,6 @@ class dc_nrpe::checks::common (
   dc_nrpe::check { 'check_load':
     path => '/usr/lib/nagios/plugins/check_load',
     args => "-w ${lw1},${lw5},${lw15} -c ${lc1},${lc5},${lc15}",
-  }
-
-  dc_nrpe::check { 'check_total_procs':
-    path => '/usr/lib/nagios/plugins/check_procs',
-    args => "-w ${check_procs[warn]} -c ${check_procs[crit]} -k",
   }
 
   dc_nrpe::check { 'check_all_disks':
