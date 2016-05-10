@@ -6,5 +6,4 @@ dc_dns::static::records:
     rdata: "ns1.%{::domain}"
   "mx.%{::domain}/MX":
     rdata: "mail.datacentred.services"
-
-
+    preference: 10
