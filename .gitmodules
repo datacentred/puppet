@@ -270,7 +270,7 @@
 	url = https://github.com/datacentred/puppet-knot.git
 [submodule "modules/icinga2"]
 	path = modules/icinga2
-	url = https://github.com/spjmurray/puppet-icinga2
+	url = https://github.com/datacentred/puppet-icinga2
 [submodule "modules/collectd"]
 	path = modules/collectd
 	url = https://github.com/puppet-community/puppet-collectd.git
@@ -282,7 +282,7 @@
 	url = git@github.com:datacentred/puppet-confluence.git
 [submodule "modules/ceph"]
 	path = modules/ceph
-	url = https://github.com/spjmurray/puppet-ceph
+	url = https://github.com/datacentred/puppet-ceph
 [submodule "modules/augeasproviders_ssh"]
 	path = modules/augeasproviders_ssh
 	url = https://github.com/hercules-team/augeasproviders_ssh
