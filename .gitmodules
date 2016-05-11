@@ -334,3 +334,6 @@
 [submodule "modules/lsyncd"]
 	path = modules/lsyncd
 	url = https://github.com/datacentred/puppet-lsyncd.git
+[submodule "modules/puppetcrl_sync"]
+	path = modules/puppetcrl_sync
+	url = https://github.com/datacentred/puppet-puppetcrl_sync.git
