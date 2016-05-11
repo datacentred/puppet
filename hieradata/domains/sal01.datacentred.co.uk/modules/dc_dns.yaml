@@ -7,9 +7,9 @@ dc_dns::static::records:
   'helpdesk.datacentred.io/A':
     rdata: '178.62.37.236'
   'storage.datacentred.io/A':
-    rdata: '10.10.9.2'
+    rdata: '185.43.218.55'
   '*.storage.datacentred.io/A':
-    rdata: '10.10.9.2'
+    rdata: '185.43.218.55'
   'uk-sal01.storage.datacentred.io/A':
     rdata: '185.43.218.18'
   'uk-sal01-0.storage.datacentred.io/A':
