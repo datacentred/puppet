@@ -247,9 +247,6 @@
 [submodule "modules/ca_certificate"]
 	path = modules/ca_certificate
 	url = https://github.com/datacentred/puppet-ca_certificate
-[submodule "modules/lsyncd"]
-	path = modules/lsyncd
-	url = https://github.com/datacentred/puppet-lsyncd-1
 [submodule "modules/puppetdeploy"]
 	path = modules/puppetdeploy
 	url = https://github.com/datacentred/puppet-puppetdeploy
@@ -334,3 +331,6 @@
 [submodule "modules/logrotate"]
 	path = modules/logrotate
 	url = https://github.com/yo61/puppet-logrotate
+[submodule "modules/lsyncd"]
+	path = modules/lsyncd
+	url = https://github.com/datacentred/puppet-lsyncd.git
