@@ -2,7 +2,6 @@
 classes:
   - '::dc_profile::openstack::galera'
   - '::dc_profile::openstack::memcached'
-  - '::dc_profile::openstack::neutron::db_check'
   - '::dc_profile::openstack::rabbitmq'
   - '::sysctls'
 
