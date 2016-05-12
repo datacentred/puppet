@@ -1,9 +1,5 @@
 ---
 dc_dns::static::records:
-  "mx0.%{::domain}/MX":
-    rdata: '10'
-  "mx1.%{::domain}/MX":
-    rdata: '10'
   "puppet.%{::domain}/A":
     rdata: '10.30.192.2'
   "puppetdb.%{::domain}/A":
