@@ -22,7 +22,7 @@ for i in puppetmaster puppetdb; do
 done
 
 # Allow autosigning
-echo '*.vagrant.dev' > /etc/puppet/autosign.conf
+echo '*.vagrant.test' > /etc/puppet/autosign.conf
 
 # Ensure the PuppetDB service starts on (re)boot
 update-rc.d puppetdb defaults
