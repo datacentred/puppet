@@ -8,10 +8,17 @@
 #   Array of hosts to synchronise to
 #
 class puppet_sync (
-  $targets = [],
+  $targets  = [],
+  $excludes = [],
 ) {
 
   include ::lsyncd
+
+  lsyncd::process { 'puppetcrl':
+    content => template('puppet_sync/puppetcrl.lua.erb'),
+    owner   => 'puppet',
+    group   => 'puppet',
+  }
 
   lsyncd::process { 'puppet':
     content => template('puppet_sync/puppet.lua.erb'),

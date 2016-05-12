@@ -1,0 +1,7 @@
+---
+puppet_sync::targets:
+  - 'puppet0'
+puppet_sync::excludes:
+  - 'cert*'
+  - 'private*'
+  - 'public*'

@@ -1,0 +1,22 @@
+settings {
+  logfile = '/var/log/lsyncd/puppet.log',
+  statusFile = '/var/lib/lsyncd/puppetcrl.status',
+}
+
+<% @targets.each do |target| -%>
+sync {
+  default.rsyncssh,
+  source = "/var/lib/puppet/ssl",
+  host = "<%= target %>",
+  targetdir = "/var/lib/puppet/ssl",
+  delete = false,
+  <% if @excludes -%>
+  exclude = { <%= Array(@excludes).map{|x| %Q/"#{x}"/}.join(', ') %> },
+  <% end -%>
+  rsync = {
+    archive = true,
+    checksum = true,
+    compress = true,
+  }
+}
+<% end -%>
