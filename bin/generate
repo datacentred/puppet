@@ -86,8 +86,8 @@ def set_stock_template(template)
   header_config = YAML.load_file(USER_CONFIG)
   stock_temp = YAML.load_file("#{WORKING_DIR}/#{TEMPLATES_PATH}/#{template}.yaml")
   facts = Hash.new
-  facts[:facts] = Hash.new 
-  facts[:facts][:is_vagrant] = true
+  facts['facts'] = Hash.new 
+  facts['facts']['is_vagrant'] = true
   config = header_config.merge(facts)
   config = config.merge(stock_temp)
   vagrantuser = File.open(WORKING_DIR + '/.vagrantuser','w')
@@ -113,10 +113,10 @@ def write_custom_template
     # bit icky, but it's pure ruby I guess
     header_config = YAML.load_file(USER_CONFIG)
     facts = Hash.new
-    facts[:facts] = Hash.new 
-    facts[:facts][:is_vagrant] = true
+    facts['facts'] = Hash.new 
+    facts['facts']['is_vagrant'] = true
     boxes = Hash.new
-    boxes[:boxes] = @nodes
+    boxes['boxes'] = @nodes
     config = header_config.merge(facts)
     config = config.merge(boxes)
     vagrantuser = File.open(WORKING_DIR + '/.vagrantuser','w')
@@ -154,17 +154,17 @@ def add_node_to_template
 
   puts "\nWhich role sould the node have?"
   roles = enumerate_and_map(WORKING_DIR + ROLES_PATH)
-  node[:facts] = Hash.new
-  node[:facts][:role] = roles[list_and_select(roles)]
-  set_message('role', node[:facts][:role])
+  node['facts'] = Hash.new
+  node['facts']['role'] = roles[list_and_select(roles)]
+  set_message('role', node['facts']['role'])
 
   puts "\nPlease select the number of vCPUs"
-  node[:cpu] = CPUS[list_and_select(CPUS)]
-  set_message('cpus', node[:cpu])
+  node['cpus'] = CPUS[list_and_select(CPUS)]
+  set_message('cpus', node['cpus'])
 
   puts "\nPlease select the amount of memory"
-  node[:mem] = MEM[list_and_select(MEM)]
-  set_message('memory', node[:mem])
+  node['memory'] = MEM[list_and_select(MEM)]
+  set_message('memory', node['memory'])
 
   @nodes[@hostname] =  node
   puts "\nNodes defined:"
