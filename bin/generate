@@ -93,7 +93,6 @@ def set_stock_template(template)
   vagrantuser = File.open(WORKING_DIR + '/.vagrantuser','w')
   vagrantuser.puts(config.to_yaml)
   vagrantuser.close
-  generate_footer
 end
 
 def select_template
