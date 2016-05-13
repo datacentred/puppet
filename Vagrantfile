@@ -22,7 +22,7 @@ Vagrant.configure('2') do |config|
   # Setup a dedicated PuppetDB for storedconfigs
   config.vm.define 'puppet' do |box|
     box.vm.network :private_network, type: :dhcp
-    box.vm.hostname = 'puppet.vagrant.dev'
+    box.vm.hostname = 'puppet.vagrant.test'
     box.vm.synced_folder '.', '/vagrant', :disabled => true
     box.vm.provision 'shell', path: 'vagrant/bootstrap_puppet.sh'
   end
@@ -31,7 +31,7 @@ Vagrant.configure('2') do |config|
   # vagrant-nugrant is required for this to work
   config.user.boxes.each do |name, options|
     config.vm.define name.to_s do |box|
-      box.vm.hostname = "#{name.to_s}.vagrant.dev"
+      box.vm.hostname = "#{name.to_s}.vagrant.test"
 
       # Copy the eyaml keys
       config.vm.provision 'file', source: config.user.eyaml.private_key, destination: 'private_key.pkcs7.pem'
