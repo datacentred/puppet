@@ -1,0 +1,61 @@
+boxes:
+  # Define our first server. You can define as many as you want.
+  #
+  # WARNING: At least one key must be defined per host lest
+  #          vagrant falls over in a heap with errors.  A
+  #          null string will suffice for role for example
+  #
+  elasticsearch0:
+    # Define any number of additional facts that will be passed to puppet
+    # when provisioning a node.  Specifying the role is a good start.
+    facts:
+      role: platform_elasticsearch 
+      condition: true
+
+    # You can override the default CPU cores & memory
+    cpus: 2
+    memory: 2048 
+
+    # You can manually specify IP addresses instead of relying on DHCP
+    # Default: DHCP
+    # ip: 192.168.1.50
+
+    # You can also provision a CentOS instance instead of the default
+    # Ubuntu one
+    # rhel: true
+  elasticsearch1:
+    # Define any number of additional facts that will be passed to puppet
+    # when provisioning a node.  Specifying the role is a good start.
+    facts:
+      role: platform_elasticsearch 
+      condition: true
+
+    # You can override the default CPU cores & memory
+    cpus: 2 
+    memory: 2048
+
+    # You can manually specify IP addresses instead of relying on DHCP
+    # Default: DHCP
+    # ip: 192.168.1.50
+
+    # You can also provision a CentOS instance instead of the default
+    # Ubuntu one
+    # rhel: true
+  elasticsearch2:
+    # Define any number of additional facts that will be passed to puppet
+    # when provisioning a node.  Specifying the role is a good start.
+    facts:
+      role: platform_elasticsearch 
+      condition: true
+
+    # You can override the default CPU cores & memory
+    cpus: 2 
+    memory: 2048
+
+    # You can manually specify IP addresses instead of relying on DHCP
+    # Default: DHCP
+    # ip: 192.168.1.50
+
+    # You can also provision a CentOS instance instead of the default
+    # Ubuntu one
+    # rhel: true

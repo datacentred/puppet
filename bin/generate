@@ -1,0 +1,209 @@
+#!/usr/bin/env ruby
+
+# 
+# A very simple menu for creating vagrant configuration for use in
+# development work. Allows the user to automagcially select an off-the-shelf
+# template or roll a custom infrastructure (requires ruby 2.0 and above)
+# - Joel Merrick <joel.merrick@datacentred.co.uk> (12/05/16)
+#
+
+VERSION = "2016-05-12-01"
+USER_CONFIG = ENV['HOME'] + "/.vagrant.d/dc_config.yaml"
+WORKING_DIR = Dir.getwd.to_s + '/'
+ROLES_PATH = 'hieradata/roles' # relative to the WORKING_DIR
+TEMPLATES_PATH = 'vagrant/templates' # relative to the WORKING_DIR 
+
+CPUS = [1 ,2, 4, 8]
+MEM = [512, 1024, 2048, 4096, 8192]
+@nodes = Hash.new
+
+# These are in stdlib - requires > ruby 2.0
+require 'io/console'
+require 'fileutils'
+require 'yaml'
+require 'pp'
+
+# Utility functions
+trap("INT") { puts "Exiting..."; exit} # to handle ctrl+c a bit cleaner
+
+class String
+  def red;            "\e[31m#{self}\e[0m" end
+  def green;          "\e[32m#{self}\e[0m" end
+  def blue;           "\e[34m#{self}\e[0m" end
+  def bold;           "\e[1m#{self}\e[22m" end
+  def underline;      "\e[4m#{self}\e[24m" end
+end
+
+def detect_existing_config
+  if File.exist?(WORKING_DIR + '/.vagrantuser') then
+    puts "Found an existing config " + ".vagrantuser".red 
+    puts "backup/remove this file if you wish to use this tool".bold
+    exit 1
+  end
+  unless File.exist?(USER_CONFIG) 
+    puts "Didn't find any local user config in #{USER_CONFIG}".red
+    puts "This is required to set local config, like keys etc".bold
+    exit 1
+  end
+end
+
+def generate_header
+  puts "================================="
+  puts " DataCentred Vagrant Provisioner".bold
+  puts "================================="
+  puts 
+end
+
+def generate_footer
+  puts "\nPlease run 'vagrant status' to check the topology looks correct" 
+  puts "then just run 'vagrant up' when happy! Huzzah!! \n "
+end
+
+def set_message(property, value)
+  puts "\nSetting #{property} to ".green + "#{value.to_s}"
+end
+
+def enumerate_and_map(path)
+  Dir.chdir(path)
+  Dir.glob('*.yaml').map { |f| File.basename(f, ".yaml") }
+end
+
+def list_and_select(array)
+  loop do
+    array.each_with_index { |v,i|
+      puts "#{i.to_s.bold}\t#{v}"
+    }
+    @id = gets.to_i
+    break if @id.between?(0, array.length)
+    puts "Incorrect selection"
+  end
+  @id
+end
+
+
+# Stock template functions
+def set_stock_template(template)
+  header_config = YAML.load_file(USER_CONFIG)
+  stock_temp = YAML.load_file("#{WORKING_DIR}/#{TEMPLATES_PATH}/#{template}.yaml")
+  facts = Hash.new
+  facts[:facts] = Hash.new 
+  facts[:facts][:is_vagrant] = true
+  config = header_config.merge(facts)
+  config = config.merge(stock_temp)
+  vagrantuser = File.open(WORKING_DIR + '/.vagrantuser','w')
+  vagrantuser.puts(config.to_yaml)
+  vagrantuser.close
+  generate_footer
+end
+
+def select_template
+  puts "\nPlease select from a template (by numerical index) \n"
+  templates = enumerate_and_map(WORKING_DIR + TEMPLATES_PATH)
+  template = templates[list_and_select(templates)]
+  set_stock_template(template)
+  puts "\nNow using template - ".green + "#{template.to_s.bold}"
+  generate_footer
+  exit 0
+end
+
+
+# Custom template functions
+def write_custom_template
+  begin
+    # Packing to reflect datastructure expected
+    # bit icky, but it's pure ruby I guess
+    header_config = YAML.load_file(USER_CONFIG)
+    facts = Hash.new
+    facts[:facts] = Hash.new 
+    facts[:facts][:is_vagrant] = true
+    boxes = Hash.new
+    boxes[:boxes] = @nodes
+    config = header_config.merge(facts)
+    config = config.merge(boxes)
+    vagrantuser = File.open(WORKING_DIR + '/.vagrantuser','w')
+    vagrantuser.puts(config.to_yaml)
+    vagrantuser.close
+    generate_footer
+  rescue 
+    puts "Failed to write template".red
+    exit 1
+  end
+end
+
+def add_or_write 
+  puts "Add (a)nother node or (w)rite template?"
+  input = STDIN.getch
+  case input
+  when 'a'
+    add_node_to_template
+  when 'w'
+    write_custom_template
+  else
+    puts "Unable to get input, try again"
+    add_or_write
+  end
+end
+
+def add_node_to_template
+  node = Hash.new
+  loop do 
+    puts "\nEnter the hostname:"
+    @hostname = gets.chomp.to_s
+    break unless @hostname.empty? or @hostname.match(/\s/) 
+    puts "Incomplete or corrupt hostname"
+  end
+
+  puts "\nWhich role sould the node have?"
+  roles = enumerate_and_map(WORKING_DIR + ROLES_PATH)
+  node[:facts] = Hash.new
+  node[:facts][:role] = roles[list_and_select(roles)]
+  set_message('role', node[:facts][:role])
+
+  puts "\nPlease select the number of vCPUs"
+  node[:cpu] = CPUS[list_and_select(CPUS)]
+  set_message('cpus', node[:cpu])
+
+  puts "\nPlease select the amount of memory"
+  node[:mem] = MEM[list_and_select(MEM)]
+  set_message('memory', node[:mem])
+
+  @nodes[@hostname] =  node
+  puts "\nNodes defined:"
+  pp @nodes
+  add_or_write
+end
+
+def list_nodes
+  unless @nodes.empty? then 
+    puts @nodes.inspect 
+  end
+end
+
+def generate_template
+  list_nodes
+  add_node_to_template
+  generate_footer
+  exit 0
+end
+
+
+# Start 'em up! 
+def mode_select
+  puts "Select from a stock (t)emplate or (g)enerate new?" 
+  mode = STDIN.getch
+  case mode
+  when 't'
+    select_template
+  when 'g' 
+    generate_template
+  else
+    puts "Unable to get input, bailing out"
+    exit 1 
+  end
+end
+
+generate_header
+detect_existing_config
+mode_select
+
+
