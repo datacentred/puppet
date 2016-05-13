@@ -7,6 +7,17 @@ class dc_profile::net::core_gateway {
   include ::puppet
   include ::haproxy
   include ::keepalived
+  include ::puppetcrl_sync
+
+  File['/var/lib/puppet/ssl/crl.pem'] ~> Service['haproxy']
+
+  # Manage the haproxy user and add it to the puppet group
+  # so that haproxy can use the puppet CRL
+  user { 'haproxy':
+    ensure  => present,
+    groups  => [ 'puppet' ],
+    require => Package['haproxy'],
+  }
 
   # Terminate SSL for puppet, setting the correct verify variables.
   # Certificate requests are routed to the CA back-end, all others
@@ -47,6 +58,7 @@ class dc_profile::net::core_gateway {
         'no-sslv3',
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
         'verify required',
       ],
@@ -144,6 +156,7 @@ class dc_profile::net::core_gateway {
         'no-sslv3',
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
         'verify required',
       ],
@@ -160,6 +173,7 @@ class dc_profile::net::core_gateway {
         'no-sslv3',
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
         'verify none',
       ],
@@ -176,6 +190,7 @@ class dc_profile::net::core_gateway {
         'no-sslv3',
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
         'verify required',
       ],
@@ -192,6 +207,7 @@ class dc_profile::net::core_gateway {
         'no-sslv3',
         'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
         'crt /etc/ssl/private/puppet.crt',
+        'crl-file /var/lib/puppet/ssl/crl.pem',
         'ca-file /var/lib/puppet/ssl/certs/ca.pem',
         'verify required',
       ],
