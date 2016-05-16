@@ -67,6 +67,19 @@ class dc_profile::openstack::neutron::server {
     require => Package['neutron-server'],
   }
 
+  # TODO: Delete once resource has been cleaned up
+  file { '/usr/local/bin/check_neutron_db.py':
+    ensure => absent,
+  }
+
+  cron { 'check_neutron_db':
+    ensure  => absent,
+    command => '/usr/local/bin/check_neutron_db.py',
+    user    => 'root',
+    hour    => '2',
+    minute  => '0',
+  }
+
   # Add this node's API services into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-neutron":
     listening_service => 'neutron',
