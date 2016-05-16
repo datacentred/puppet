@@ -1,0 +1,24 @@
+boxes:
+  osapi0:
+    cpu: 1
+    memory: 512
+    facts:
+      role: openstack_proxies
+  oscontrol0:
+    cpu: 1
+    memory: 2048
+    facts:
+      role: openstack_control
+  oscompute0:
+    cpu: 1
+    memory: 2048
+    facts:
+      role: openstack_compute
+  osdbmq0:
+    memory: 1024
+    facts:
+      role: openstack_data
+  osnet0:
+    memory: 1024
+    facts:
+      role: openstack_network
