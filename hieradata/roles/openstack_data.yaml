@@ -5,7 +5,6 @@ classes:
   - '::dc_profile::openstack::rabbitmq'
   - '::sysctls'
 
-rabbitmq::wipe_db_on_cookie_change: false
 rabbitmq::config_cluster: true
 rabbitmq::admin_enable: true
 rabbitmq::delete_guest_user: true

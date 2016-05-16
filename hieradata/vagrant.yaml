@@ -7,6 +7,7 @@ excludes:
   - '::dc_profile::net::nscd'
   - '::dc_profile::mon::icinga2'
   - '::dc_profile::openstack::nova::ceph'
+  - '::dc_profile::util::hosts'
   - '::cinder::volume::rbd'
   - '::collectd::plugin::protocols'
   - '::dc_icinga::hostgroup_neutron_node'
@@ -33,14 +34,14 @@ ceilometer_mongodb_keyfile: |
 
 # Galera/Rabbitmq Cluster
 # See .vagrantuser.galera for hostname and IP address mappings
-
-galera::galera_master: 'osdbmq0.vagrant.dev'
+galera::galera_master: 'osdbmq0.vagrant.test'
 galera::galera_servers:
   - '10.0.32.2'
   - '10.0.32.3'
   - '10.0.32.4'
-galera::local_ip: "%{ipaddress_eth1}"
-galera::bind_address: "%{ipaddress_eth1}"
+galera::local_ip: "%{ipaddress_eth0}"
+galera::bind_address: "%{ipaddress_eth0}"
+rabbitmq::wipe_db_on_cookie_change: true
 
 # HAProxy
 #
