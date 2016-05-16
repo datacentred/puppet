@@ -167,7 +167,8 @@ class Foreman(object):
                                                  str(host['id']) +
                                                  '/interfaces'):
                 # Filter out bonds which are the main interface
-                if foreman_int['managed'] == True and not \
+                if foreman_int['managed'] == True and \
+                        foreman_int['ip'] != None and not \
                         any(d['mac'] == foreman_int['mac'] for d in ints):
                     ints.append({
                         'name':foreman_int['name'].encode("ascii"),
