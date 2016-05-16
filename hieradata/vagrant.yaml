@@ -10,6 +10,7 @@ excludes:
   - '::cinder::volume::rbd'
   - '::collectd::plugin::protocols'
   - '::dc_icinga::hostgroup_neutron_node'
+  - '::dc_elasticsearch::elasticsearch_backup_destination'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
