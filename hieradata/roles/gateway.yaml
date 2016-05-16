@@ -1,7 +1,6 @@
 ---
 classes:
   - '::dc_profile::net::core_gateway'
-  - '::puppetcrl_sync'
 
 puppet::conf:
   main:
