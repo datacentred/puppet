@@ -5,6 +5,10 @@ class dc_ssl::haproxy (
   $star_datacentred_io_pem,
 ) {
 
+  $combined_crt = '/etc/ssl/private/puppet.crt'
+  $ssl_crt = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+  $ssl_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+
   File {
     owner => 'root',
     group => 'root',
@@ -17,6 +21,11 @@ class dc_ssl::haproxy (
 
   file { '/etc/ssl/certs/STAR_datacentred_io.pem':
     content => $star_datacentred_io_pem,
+  }
+
+  exec { "cat ${ssl_crt} ${ssl_key} > ${combined_crt}; chmod 0400 ${combined_crt}":
+    user    => 'root',
+    creates => $combined_crt,
   }
 
 }
