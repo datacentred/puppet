@@ -39,27 +39,9 @@ class dc_profile::openstack::haproxy {
     }
   }
 
-  # HAProxy Statistics
-  haproxy::listen { 'haproxy-stats':
-    mode    => 'http',
-    bind    => {
-      ':1936' => [
-        'ssl',
-        'no-sslv3',
-        'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
-        'crt /etc/ssl/private/puppet.crt',
-        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
-        'verify required',
-      ],
-    },
-    options => {
-      'stats'  => [
-        'enable',
-        'uri /',
-      ],
-      'rspadd' => 'Strict-Transport-Security:\ max-age=31536000',
-    },
-  }
+  # haproxy listeners scoped to the environment-specific role class 
+  # For now this is just Galera and the stats interface
+  create_resources(haproxy::listen, hiera_hash('listeners'))
 
   # Keystone Auth
   haproxy::listen { 'keystone-auth':
@@ -252,19 +234,6 @@ class dc_profile::openstack::haproxy {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
-    },
-  }
-
-  # Galera
-  haproxy::listen { 'galera':
-    ipaddress => $internal_vip,
-    mode      => 'tcp',
-    ports     => '3306',
-    options   => {
-      'option'         => ['httpchk'],
-      'balance'        => 'source',
-      'timeout client' => '8h',
-      'timeout server' => '8h',
     },
   }
 
