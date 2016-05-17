@@ -1,0 +1,18 @@
+---
+listeners:
+  haproxy-stats:
+    mode: 'http'
+    bind:
+      ':1936':
+    options:
+      stats:
+        - 'enable'
+        - 'uri /'
+  galera:
+    ipaddress: '*'
+    mode: 'tcp'
+    ports: '3306'
+    options:
+      balance: 'source'
+      'timeout client': '8h'
+      'timeout server': '8h'
