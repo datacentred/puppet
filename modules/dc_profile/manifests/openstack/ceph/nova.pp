@@ -1,9 +1,9 @@
 #
-# Class: dc_profile::openstack::nova::ceph
+# Class: dc_profile::openstack::ceph::nova
 #
 # Configure the Ceph RBD backend for compute nodes
 #
-class dc_profile::openstack::nova::ceph {
+class dc_profile::openstack::ceph::nova {
 
   include ::ceph
   include ::nova::compute::rbd

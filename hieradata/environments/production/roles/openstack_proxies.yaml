@@ -1,5 +1,5 @@
 ---
-listeners:
+dc_profile::openstack::haproxy::listeners:
   haproxy-stats:
     mode: 'http'
     bind:
