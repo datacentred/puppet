@@ -1,4 +1,3 @@
 ---
 memcached::max_memory: '2048'
 memcached::item_size: '10m'
-memcached::listen_ip: "%{::ipaddress}"
