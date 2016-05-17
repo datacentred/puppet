@@ -1,21 +1,14 @@
-# Class: dc_profile::openstack::glance
+# == Class: dc_profile::openstack::glance
 #
-# Openstack image API and registry server
+# OpenStack image service
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
+# NB: Ceph client configuration lives in a seperate profile class
 #
 class dc_profile::openstack::glance {
 
   include ::glance::keystone::auth
   include ::glance::api
   include ::glance::registry
-  include ::glance::backend::rbd
   include ::glance::notify::rabbitmq
   include ::glance::cache::pruner
   include ::glance::cache::cleaner

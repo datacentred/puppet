@@ -41,7 +41,7 @@ class dc_profile::openstack::haproxy {
 
   # haproxy listeners scoped to the environment-specific role class 
   # For now this is just Galera and the stats interface
-  create_resources(haproxy::listen, hiera_hash('listeners'))
+  create_resources(haproxy::listen, hiera_hash('dc_profile::openstack::haproxy::listeners'))
 
   # Keystone Auth
   haproxy::listen { 'keystone-auth':
