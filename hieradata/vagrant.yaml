@@ -8,7 +8,7 @@ excludes:
   - '::dc_profile::mon::icinga2'
   - '::dc_profile::openstack::nova::ceph'
   - '::dc_profile::util::hosts'
-  - '::cinder::volume::rbd'
+  - '::dc_profile::openstack::keepalived'
   - '::collectd::plugin::protocols'
   - '::dc_icinga::hostgroup_neutron_node'
   - '::dc_elasticsearch::elasticsearch_backup_destination'

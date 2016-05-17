@@ -15,12 +15,16 @@ class dc_profile::openstack::glance {
   include ::glance::keystone::auth
   include ::glance::api
   include ::glance::registry
-  include ::glance::backend::rbd
   include ::glance::notify::rabbitmq
   include ::glance::cache::pruner
   include ::glance::cache::cleaner
   include ::glance::policy
   include ::dc_icinga::hostgroup_glance
+
+  # 💩
+  unless $::is_vagrant {
+    include ::glance::backend::rbd
+  }
 
   # TODO: Remove post-upgrade
   file_line { 'glance_api_auth_version':
