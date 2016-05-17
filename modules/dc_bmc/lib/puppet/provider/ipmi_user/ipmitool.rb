@@ -13,6 +13,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
       :user          => 2,
       :operator      => 3,
       :administrator => 4,
+      :no_access     => 15,
     }
     map[value]
   end
@@ -26,6 +27,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
       'USER'          => :user,
       'OPERATOR'      => :operator,
       'ADMINISTRATOR' => :administrator,
+      'NO ACCESS'     => :no_access,
     }
     # Protect against weird output from ipmitool
     map[value] || :unknown
@@ -48,19 +50,28 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # Get the maximum number of users an IPMI channel supports
   # @return [Integer] maximum number of supported users
   def get_channel_max_users
-    Integer(/Maximum User IDs\s*:\s*(\d+)/.match(%x{ipmitool channel getaccess #{@channel}})[1])
+    # Suppress stderr as Quanta kit barfs after the first undefined user
+    Integer(/Maximum User IDs\s*:\s*(\d+)/.match(%x{ipmitool channel getaccess #{@channel} 2> /dev/null})[1])
   end
 
   # Allocate a free user ID
+  # @name [String] name of the resource
   # @raise [RuntimeError] if no free ID is found
   # @return [Integer] first free user ID
-  def allocate_id
+  def allocate_id(name)
     max_users = get_channel_max_users()
     # Even though 1 is free it seems not to work on a supermicro X9??
     available_userids = (2..max_users).to_a()
     output = %x{ipmitool user list #{@channel}}.split("\n")[1..-1]
     output.each do |line|
-      available_userids.delete(Integer(/^\s*(\d+)/.match(line)[1]))
+      fields = line.split()
+      id = fields[0].to_i
+      # The user name may already exist but have no access, so try reuse
+      # that slot ID
+      if fields[1] == name
+        return id
+      end
+      available_userids.delete(id)
     end
     raise RuntimeError, 'ipmi::ipmitool::allocate_id: No free user ID found' if available_userids.size == 0
     available_userids.first
@@ -95,6 +106,12 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
     lines = %x{ipmitool user list #{channel}}.split("\n")[1..-1]
     lines.collect do |line|
       fields = line.split()
+      # Hack, some BMCs have anonymous users with a blank name field
+      if [ 'true', 'false' ].include? fields[1]
+        fields.insert(1, 'anonymous')
+      end
+      # Hack, collapse permissions as they may contain white space
+      fields = fields[0..4].push(fields[5..-1].join(' '))
       new(
         :ensure    => :present,
         :userid    => fields[0],
@@ -105,7 +122,8 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
         :ipmi      => from_enable(fields[4]),
         :privilege => from_privilege(fields[5]),
       )
-    end
+    # Treat NO ACCESS as absent
+    end.select { |x| x.privilege != :no_access }
   end
 
   # For each resource defined set the provider with one of our prefeteched
@@ -139,7 +157,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # password and configures access privileges on the LAN channel
   def create
     # Allocate a new user slot
-    userid = allocate_id()
+    userid = allocate_id(resource[:name])
 
     # Munge any data from internal to provider format
     callin = to_enable(resource[:callin])
@@ -170,7 +188,6 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   def destroy
     # Delete the user
     execute("ipmitool channel setaccess #{@channel} #{@property_hash[:userid]} callin=off ipmi=off link=off privilege=15")
-    execute("ipmitool user set name #{@property_hash[:userid]} ''")
     execute("ipmitool user disable #{@property_hash[:userid]}")
 
     # Update the property hash
