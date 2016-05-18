@@ -1,0 +1,4 @@
+---
+classes:
+  - '::dc_profile::openstack::ceph::cinder.pp'
+  - '::dc_profile::openstack::ceph::glance.pp'
