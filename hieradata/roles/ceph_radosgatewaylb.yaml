@@ -15,3 +15,5 @@ haproxy::defaults_options:
     - 'server 30m'
     - 'check 10s'
   maxconn: '8000'
+
+dc_nrpe::checks::net_interfaces::exclude: 'p1p2'
