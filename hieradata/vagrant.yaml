@@ -83,6 +83,7 @@ nova_db:             'nova'
 nova_admin_tenant:   'services'
 nova_admin_user:     'nova'
 nova_osapi_port :    '8774'
+nova::glance_api_servers: 'https://compute.datacentred.io:9292'
 
 # glance
 #
@@ -117,6 +118,7 @@ neutron::agents::ml2::ovs::bridge_mappings:
  - 'default:br-ex'
 neutron::agents::l3::external_network_bridge: 'br-ex'
 neutron::agents::l3::gateway_external_network_id: ''
+neutron::server::l3_ha: false
 
 # heat
 #

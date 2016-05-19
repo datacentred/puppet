@@ -51,7 +51,7 @@ Vagrant.configure('2') do |config|
       end
 
       if options.has_key?(:network_node)
-        box.vm.network "public_network", auto_config: false
+        box.vm.network :public_network, auto_config: false
       end
 
       # Virtualbox Provider
