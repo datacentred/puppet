@@ -1,0 +1,431 @@
+---
+classes:
+  - '::dc_profile::net::core_gateway'
+
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+    show_diff: 'true'
+    dns_alt_names: '*,*.core.sal01.datacentred.co.uk,*.datacentred.services'
+
+# WAN interface runs at internet MTU of 1500
+dc_nrpe::checks::net_interfaces::exclude: '^em2$'
+
+# Timeouts are important here
+# - Server time out: log running things like foreman/puppet
+# - Client time out: persistent connections such as log shippers
+haproxy::defaults_options:
+  log: 'global'
+  stats: 'enable'
+  option: 'redispatch'
+  retries: '3'
+  timeout:
+    - 'http-request 10s'
+    - 'queue 1m'
+    - 'connect 10s'
+    - 'client 5m'
+    - 'server 5m'
+    - 'check 10s'
+  maxconn: '8000'
+
+# Define frontends
+
+# HTTPS Rules:
+# 1: Unattended foreman traffic is allowed regardless to enable provisioning
+#    foreman handles authentication during this period
+# 2: All other traffic must have a valid certificate otherwise it is
+#    redirected to static error pages
+# 3: Other traffic is routed to the correct hostgroup via the HTTP host much
+#    like an apache virtual host
+
+dc_profile::net::core_gateway::frontends:
+    puppet:
+        mode: 'http'
+        bind:
+            ':8140':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify optional'
+        options:
+            option: 'http-server-close'
+            default_backend: 'puppet'
+            use_backend:
+                - 'puppetca if { path -m sub certificate }'
+            http-request:
+                - 'set-header X-SSL-Subject %%{}{+Q}[ssl_c_s_dn]'
+                - 'set-header X-Client-DN %%{}{+Q}[ssl_c_s_dn]'
+                - 'set-header X-Client-Verify SUCCESS if { ssl_c_verify 0 }'
+                - 'set-header X-Client-Verify NONE unless { ssl_c_verify 0 }'
+    http-alt:
+        mode: 'http'
+        bind:
+            ':8080':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/STAR_datacentred_services.crt'
+        options:
+            option: 'http-server-close'
+            use_backend:
+                - 'jenkins if { hdr_beg(host) -i jenkins }'
+            http-request:
+                - 'set-header X-Forwarded-Proto https'
+    https:
+        mode: 'http'
+        bind:
+            ':443':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify optional'
+                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'crt-ignore-err all'
+        options:
+            option:
+                - 'http-server-close'
+                - 'httplog'
+            use_backend:
+                - 'foreman if { hdr_beg(host) -i foreman } { path_beg /unattended }'
+                - 'foreman if { hdr_beg(host) -i foreman } { path /api/v2/discovered_hosts/facts }'
+                - 'static unless { ssl_c_used }'
+                - 'static unless { ssl_c_verify 0 }'
+                - 'foreman if { hdr_beg(host) -i foreman }'
+                - 'icingaweb2 if { hdr_beg(host) -i icinga2 }'
+                - 'icinga if { hdr_beg(host) -i icinga }'
+                - 'ipam if { hdr_beg(host) -i ipam }'
+                - 'kibana if { hdr_beg(host) -i kibana }'
+                - 'stats if { hdr_beg(host) -i stats }'
+                - 'dms if { hdr_beg(host) -i dms }'
+            http-request:
+                - 'set-header X-Forwarded-Proto https'
+
+# Backend configuration
+
+# To explain the redirect rules a little bit:
+#
+# * If the client has no certificate and the path isn't /nocert.html
+#   redirect the client to that location.  When the redirected request
+#   comes back with the path of /nocert.html it doesn't get redirected.
+#   In this case with no certificate ssl_c_verify is zero so doesn't
+#   trigger the final catch all error case
+dc_profile::net::core_gateway::backends:
+    puppet:
+        collect_exported: false
+        options:
+            mode: 'http'
+    puppetca:
+        collect_exported: false
+        options:
+            mode: 'http'
+    foreman:
+        collect_exported: false
+        options:
+            mode: 'http'
+            balance: 'source'
+    jenkins:
+        collect_exported: false
+        options:
+            mode: 'http'
+    icinga:
+        collect_exported: false
+        options:
+            mode: 'http'
+    dms:
+        collect_exported: false
+        options:
+            mode: 'http'
+    ipam:
+        collect_exported: false
+        options:
+            mode: 'http'
+    kibana:
+        collect_exported: false
+        options:
+            mode: 'http'
+    stats:
+        collect_exported: false
+        options:
+            mode: 'http'
+            stats:
+                - 'enable'
+                - 'uri /'
+    static:
+        collect_exported: false
+        options:
+            mode: 'http'
+            redirect:
+                - 'location /nocert.html if ! { ssl_c_used } ! { path /nocert.html }'
+                - 'location /certexpired.html if { ssl_c_verify 10 } ! { path /certexpired.html }'
+                - 'location /certrevoked.html if { ssl_c_verify 23 } ! { path /certrevoked.html }'
+                - 'location /default.html if ! { ssl_c_verify 0 } ! { path /default.html }'
+    icingaweb2:
+        collect_exported: false
+        options:
+            mode: 'http'
+
+# Listen blocks
+
+dc_profile::net::core_gateway::listeners:
+    http:
+        mode: 'http'
+        bind:
+            ':80': {}
+        options:
+            redirect: 'scheme https'
+    foreman-puppet-proxy:
+        collect_exported: false
+        mode: 'http'
+        bind:
+            ':8443':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
+    ldaps:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':636':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify none'
+        options: {}
+    puppetdb:
+        collect_exported: false
+        mode: 'http'
+        bind:
+            ':8081':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
+    log-courier:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':55516':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
+    influxdb:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':8086':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
+    elasticsearch:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':9200': []
+        options: {}
+    icinga2:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':5665': []
+        options: {}
+    smtp_auth:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':587': []
+        options:
+            option: "smtpchk EHLO %{::hostname}"
+            default-server: 'inter 60s'
+
+dc_profile::net::core_gateway::balancermembers:
+    puppetca:
+        listening_service: 'puppetca'
+        ports: '8140'
+        server_names:
+            - 'puppetca.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.5'
+        options: 'check'
+    puppet:
+        listening_service: 'puppet'
+        ports: '8140'
+        server_names:
+            - 'puppetca.core.sal01.datacentred.co.uk'
+            - 'puppet0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.5'
+            - '10.30.192.6'
+        options: 'check'
+    puppetdb:
+        listening_service: 'puppetdb'
+        ports: '8081'
+        server_names:
+            - 'puppetdb0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.9'
+        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+    jenkins:
+        listening_service: 'jenkins'
+        ports: '8080'
+        server_names:
+            - 'jenkins0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.7'
+        options: 'check'
+    foreman:
+        listening_service: 'foreman'
+        ports: '443'
+        server_names:
+            - 'foreman0.core.sal01.datacentred.co.uk'
+            - 'foreman1.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.10'
+            - '10.30.192.205'
+        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+    foreman-puppet-proxy:
+        listening_service: 'foreman-puppet-proxy'
+        ports: '8443'
+        server_names:
+            - 'puppetca.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.5'
+        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+    ldap:
+        listening_service: 'ldaps'
+        ports: '389'
+        server_names:
+            - 'bonjour.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.100'
+        options: 'check'
+    smtp_auth:
+        listening_service: 'smtp_auth'
+        ports: '587'
+        server_names:
+            - 'mx0.core.sal01.datacentred.co.uk'
+            - 'mx1.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.119'
+            - '10.30.192.121'
+        options: 'send-proxy check'
+    log-courier:
+        listening_service: 'log-courier'
+        ports: '55516'
+        server_names:
+            - 'logstash0.core.sal01.datacentred.co.uk'
+            - 'logstash1.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.137'
+            - '10.30.192.140'
+        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+    kibana:
+        listening_service: 'kibana'
+        ports: '80'
+        server_names:
+            - 'logstash0.core.sal01.datacentred.co.uk'
+            - 'logstash1.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.137'
+            - '10.30.192.140'
+        options: 'check'
+    ipam:
+        listening_service: 'ipam'
+        ports: '80'
+        server_names:
+            - 'ipam0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.184'
+        options: 'check'
+    icinga:
+        listening_service: 'icinga'
+        ports: '80'
+        server_names:
+            - 'icinga0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.123'
+        options: 'check'
+    dms:
+        listening_service: 'dms'
+        ports: '80'
+        server_names:
+            - 'dms0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.170'
+        options: 'check'
+    elasticsearch:
+        listening_service: 'elasticsearch'
+        ports: '9200'
+        server_names:
+            - 'elasticsearch0.core.sal01.datacentred.co.uk'
+            - 'elasticsearch1.core.sal01.datacentred.co.uk'
+            - 'elasticsearch2.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.208'
+            - '10.30.192.206'
+            - '10.30.192.203'
+        options: 'check'
+    influxdb:
+        listening_service: 'influxdb'
+        ports: '8086'
+        server_names:
+            - 'influxdb0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.207'
+        options: 'check'
+    icinga2:
+        listening_service: 'icinga2'
+        ports: '5665'
+        server_names:
+            - 'icinga2.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.114'
+        options: 'check'
+    icingaweb2:
+        listening_service: 'icingaweb2'
+        ports: '80'
+        server_names:
+            - 'icinga2.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.114'
+        options: 'check'
+    static:
+        listening_service: 'static'
+        ports: '80'
+        server_names:
+            - 'jenkins0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.7'
+        options: 'check'
+
+# Remove services that clash with ports the gateway is listening on
+excludes:
+  - '::dc_profile::mon::icinga2'
