@@ -9,14 +9,31 @@ class dc_profile::net::core_gateway {
   include ::keepalived
   include ::puppetcrl_sync
 
-  File['/var/lib/puppet/ssl/crl.pem'] ~> Service['haproxy']
+  # Create the key/cert pair for haproxy
+  concat { '/etc/ssl/private/puppet.crt':
+    ensure => present,
+    owner  => 'haproxy',
+    group  => 'haproxy',
+    mode   => '0440',
+  }
+
+  concat::fragment { 'haproxy puppet key':
+    target => '/etc/ssl/private/puppet.crt',
+    source => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
+    order  => '1',
+  }
+
+  concat::fragment { 'haproxy puppet cert':
+    target => '/etc/ssl/private/puppet.crt',
+    source => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
+    order  => '2',
+  }
 
   # Manage the haproxy user and add it to the puppet group
   # so that haproxy can use the puppet CRL
   user { 'haproxy':
-    ensure  => present,
-    groups  => [ 'puppet' ],
-    require => Package['haproxy'],
+    ensure => present,
+    groups => [ 'puppet' ],
   }
 
   create_resources('haproxy::frontend', hiera_hash('dc_profile::net::core_gateway::frontends'))
@@ -39,5 +56,16 @@ class dc_profile::net::core_gateway {
     priority          => '100',
     virtual_ipaddress => '185.43.217.42/29',
   }
+
+  # Ensure the puppet certificate is available before starting the SSL service
+  Concat['/etc/ssl/private/puppet.crt'] -> Class['::haproxy']
+
+  # Ensure the CRL is accessible before starting the SSL service
+  Class['::haproxy::install'] -> User['haproxy'] -> Class['::haproxy::service']
+
+  # Notify haproxy if the CRL changes.
+  # WARNING: won't actually kill off ports with persistent connections due to
+  #          graceful switch over!!!
+  Class['::puppetcrl_sync'] ~> Class['::haproxy::service']
 
 }
