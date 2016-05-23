@@ -58,7 +58,7 @@ class dc_profile::net::core_gateway {
   }
 
   # Ensure the puppet certificate is available before starting the SSL service
-  Concat['/etc/ssl/private/puppet.crt'] -> Class['::haproxy']
+  Concat['/etc/ssl/private/puppet.crt'] -> Class['::haproxy::service']
 
   # Ensure the CRL is accessible before starting the SSL service
   Class['::haproxy::install'] -> User['haproxy'] -> Class['::haproxy::service']
