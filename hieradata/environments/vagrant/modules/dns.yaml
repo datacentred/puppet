@@ -1,0 +1,10 @@
+---
+dns::controls:
+  '*':
+    port: 953
+    allowed_addresses:
+      - '127.0.0.1'
+      - '172.22.5.249'
+      - '172.22.5.251'
+    keys:
+      - 'rndc-key'

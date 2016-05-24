@@ -1,9 +1,14 @@
 ---
-dns::dnsmasters:
-  - '10.10.192.250'
-dns::nameservers:
-  "ns0.%{::domain}": '10.10.192.250'
-  "ns1.%{::domain}": '10.10.192.251'
+dns::controls:
+  '*':
+    port: 953
+    allowed_addresses:
+      - '127.0.0.1'
+      - '10.10.192.250'
+      - '10.10.192.251'
+    keys:
+      - 'rndc-key'
+
 dns::recursors:
   - '10.10.192.0/24'  # ark-platform-services
   - '10.10.128.0/24'  # ark-bmc

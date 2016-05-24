@@ -1,10 +1,15 @@
 ---
-dns::dnsmasters:
-  - '10.30.192.250'
-dns::nameservers:
-  "ns0.%{::domain}": '10.30.192.250'
-  "ns1.%{::domain}": '10.30.192.251'
-dns::recursors:
+dns::controls:
+  '*':
+    port: 953
+    allowed_addresses:
+      - '127.0.0.1'
+      - '10.30.192.250'
+      - '10.30.192.251'
+    keys:
+      - 'rndc-key'
+
+dns::allow_recursion:
   - '10.30.192.0/24'  # core-platform-services
   - '10.30.128.0/24'  # core-bmc
   - '10.253.5.0/24'   # vpn clients
