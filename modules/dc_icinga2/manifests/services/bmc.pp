@@ -22,6 +22,9 @@ class dc_icinga2::services::bmc (
   icinga2::object::apply_service { 'bmc dns':
     import        => 'generic-service',
     check_command => 'bmc_dns',
+    vars          => {
+      'enable_pagerduty' => true,
+    },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',
     ignore_where  => 'host.vars.is_virtual || host.vars.productname == "OpenStack Nova"',

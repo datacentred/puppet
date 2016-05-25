@@ -12,9 +12,8 @@ class dc_icinga2::services::lsyncd {
       'procs_argument' => 'lsyncd',
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.role == "puppet_ca"',
+    assign_where  => 'host.vars.role == "puppet_ca" || host.vars.role == "dns_master"',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
-
 
 }
