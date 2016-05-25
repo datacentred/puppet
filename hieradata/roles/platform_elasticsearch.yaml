@@ -19,3 +19,9 @@ dc_elasticsearch::es_hash:
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'
   http.cors.allow-origin: '"*"'
   http.cors.enabled: 'true'
+
+telegraf::inputs:
+  elasticsearch:
+    servers: "http://localhost:9200" 
+    local: true
+    cluster_health: true

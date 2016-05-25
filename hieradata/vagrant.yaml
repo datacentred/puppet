@@ -3,7 +3,6 @@ excludes:
   - '::dc_profile::auth::rootpw'
   - '::dc_profile::log::log_shipper'
   - '::dc_profile::perf::collectd_stunnel'
-  - '::dc_profile::perf::telegraf'
   - '::dc_profile::net::nscd'
   - '::dc_profile::mon::icinga2'
   - '::dc_profile::openstack::ceph::nova'
