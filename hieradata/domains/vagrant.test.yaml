@@ -6,3 +6,8 @@ classes:
 #
 foreman_url: "foreman.%{domain}"
 
+# Override the module/telgraf config 
+telegraf::outputs:
+  influxdb:
+    urls:
+      - 'https://influxdb.vagrant.test:8086'
