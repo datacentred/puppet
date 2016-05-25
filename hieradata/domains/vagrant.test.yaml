@@ -1,0 +1,8 @@
+---
+classes:
+  - '::dc_profile::perf::telegraf'
+
+# Foreman
+#
+foreman_url: "foreman.%{domain}"
+
