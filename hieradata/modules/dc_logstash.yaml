@@ -307,3 +307,8 @@ dc_logstash::client::config:
       fields:
         shipper: 'log-courier'
         type: 'syslog'
+    - paths:
+      - '/var/log/kern.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'kernel_log'
