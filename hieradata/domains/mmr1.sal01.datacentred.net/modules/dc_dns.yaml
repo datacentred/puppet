@@ -1,20 +1,8 @@
 ---
-dc_dns::nameservers:
-  "ns0.%{::domain}": '10.254.0.27'
-  "ns1.%{::domain}": '10.254.0.28'
-
-dc_dns::dns_zones:
-  mmr1.sal01.datacentred.net:
-    soa:         "%{fqdn}"
-    soaip:       "%{ipaddress}"
-  mmr2.sal01.datacentred.net:
-    soa:         "%{fqdn}"
-    soaip:       "%{ipaddress}"
+dc_dns::zones:
+  mmr1.sal01.datacentred.net: {}
+  mmr2.sal01.datacentred.net: {}
   0.254.10.in-addr.arpa:
-    soa:         "%{fqdn}"
-    soaip:       "%{ipaddress}"
     reverse:     true
   1.254.10.in-addr.arpa:
-    soa:         "%{fqdn}"
-    soaip:       "%{ipaddress}"
     reverse:     true

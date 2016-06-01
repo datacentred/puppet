@@ -22,9 +22,6 @@
 [submodule "modules/pupmod-concat"]
 	path = modules/pupmod-concat
 	url = https://github.com/onyxpoint/pupmod-concat
-[submodule "modules/dns"]
-	path = modules/dns
-	url = https://github.com/datacentred/puppet-dns.git
 [submodule "modules/dhcp"]
 	path = modules/dhcp
 	url = https://github.com/datacentred/puppetlabs-dhcp
@@ -337,3 +334,6 @@
 [submodule "modules/puppetcrl_sync"]
 	path = modules/puppetcrl_sync
 	url = https://github.com/datacentred/puppet-puppetcrl_sync.git
+[submodule "modules/dns"]
+	path = modules/dns
+	url = https://github.com/theforeman/puppet-dns

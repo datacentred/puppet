@@ -5,8 +5,6 @@ classes:
   - 'dc_profile::net::duplicity_dns'
   - 'dc_profile::net::foreman_checks'
 
-dc_dns::isslave: true
-
 ntp::servers:
   - '0.uk.pool.ntp.org'
   - '1.uk.pool.ntp.org'

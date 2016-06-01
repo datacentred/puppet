@@ -1,30 +1,25 @@
-# Class: dc_dns
+# == Class: dc_dns
 #
 # DNS zone definitions
 #
-# Parameters:
+# === Parameters
 #
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
+# [*masters*]
+#   If masters is set then this node is a DNS slave and will pull
+#   IXFR records from the DNS master.
 #
 class dc_dns (
-  $isslave = false,
-  $nameservers = {},
-  $masters = '',
+  $masters = [],
 ) {
 
   include ::dns
 
-  $dns_zones = hiera_hash('dc_dns::dns_zones')
+  $zones = hiera_hash('dc_dns::zones')
 
   $defaults = {
-    'nameservers' => $nameservers,
-    'isslave'     => $isslave,
-    'masters'     => $masters,
+    'masters' => $masters,
   }
-  create_resources(dc_dns::dnszone, $dns_zones, $defaults)
+
+  create_resources('dc_dns::zone', $zones, $defaults)
 
 }

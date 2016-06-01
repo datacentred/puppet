@@ -13,7 +13,7 @@
 module Puppet::Parser::Functions
   newfunction(:icinga2_foreman_interfaces, :type => :rvalue) do |args|
 
-    interfaces = lookupvar('foreman_interfaces')
+    interfaces = lookupvar('foreman_interfaces') || []
 
     output = {}
     interfaces.each do |interface|

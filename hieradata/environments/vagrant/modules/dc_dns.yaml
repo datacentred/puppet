@@ -1,11 +1,7 @@
 ---
-dc_dns::dns_zones:
-  vagrant.dev:
-    soa:         "%{fqdn}"
-    soaip:       "%{ipaddress}"
-dc_dns::nameservers:
-  "ns0.%{::domain}": '172.22.5.249'
-  "ns1.%{::domain}": '172.22.5.251'
+dc_dns::zones:
+  vagrant.dev: {}
+
 dc_dns::static::records:
   "testcname.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
