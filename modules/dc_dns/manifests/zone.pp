@@ -8,9 +8,9 @@ define dc_dns::zone (
 ) {
 
   if empty($masters) {
-    $_zonetype = 'slave'
-  } else {
     $_zonetype = 'master'
+  } else {
+    $_zonetype = 'slave'
   }
 
   dns::zone { $title:
