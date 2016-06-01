@@ -7,9 +7,16 @@ define dc_dns::zone (
   $masters = [],
 ) {
 
+  if $masters {
+    $_zonetype = 'slave'
+  } else {
+    $_zonetype = 'master'
+  }
+
   dns::zone { $title:
-    reverse => $reverse,
-    masters => $masters,
+    zonetype => $_zonetype,
+    reverse  => $reverse,
+    masters  => $masters,
   }
 
   # Create a backup definition
