@@ -7,7 +7,7 @@ define dc_dns::zone (
   $masters = [],
 ) {
 
-  if $masters {
+  if empty($masters) {
     $_zonetype = 'slave'
   } else {
     $_zonetype = 'master'
