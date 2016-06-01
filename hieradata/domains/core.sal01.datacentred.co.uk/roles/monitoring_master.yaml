@@ -1,0 +1,3 @@
+---
+classes:
+  - '::dc_icinga2::core_hosts'
