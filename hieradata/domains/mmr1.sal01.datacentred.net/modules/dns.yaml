@@ -11,5 +11,5 @@ dns::controls:
     keys:
       - 'rndc-key'
 
-dns::recursors:
+dns::allow_recursion:
   - '10.254.0.0/16'  # oob supernet 
