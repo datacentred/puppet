@@ -4,7 +4,7 @@
 #
 class dc_icinga2::services::pdu {
 
-  Icinga2::Object::Apply_services {
+  Icinga2::Object::Apply_service {
     target => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
