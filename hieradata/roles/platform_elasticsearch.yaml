@@ -22,6 +22,7 @@ dc_elasticsearch::es_hash:
 
 telegraf::inputs:
   elasticsearch:
-    servers: "http://localhost:9200" 
+    servers:
+      - 'http://localhost:9200' 
     local: true
     cluster_health: true
