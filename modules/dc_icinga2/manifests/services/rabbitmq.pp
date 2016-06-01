@@ -17,6 +17,7 @@ class dc_icinga2::services::rabbitmq (
     vars          => {
       'rabbitmq_aliveness_username' => $username,
       'rabbitmq_aliveness_password' => $password,
+      'enable_pagerduty'            => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',
@@ -28,6 +29,7 @@ class dc_icinga2::services::rabbitmq (
     vars          => {
       'rabbitmq_objects_username' => $username,
       'rabbitmq_objects_password' => $password,
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',
@@ -39,6 +41,7 @@ class dc_icinga2::services::rabbitmq (
     vars          => {
       'rabbitmq_overview_username' => $username,
       'rabbitmq_overview_password' => $password,
+      'enable_pagerduty'           => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',
@@ -50,7 +53,8 @@ class dc_icinga2::services::rabbitmq (
     vars          => {
       'rabbitmq_partitions_username' => $username,
       'rabbitmq_partitions_password' => $password,
-      'rabbitmq_partitions_node'     => 'host.name.split(".").get(0)'
+      'rabbitmq_partitions_node'     => 'host.name.split(".").get(0)',
+      'enable_pagerduty'             => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',
@@ -65,6 +69,7 @@ class dc_icinga2::services::rabbitmq (
       'rabbitmq_server_node'     => 'host.name.split(".").get(0)',
       'rabbitmq_server_warning'  => 80,
       'rabbitmq_server_critical' => 90,
+      'enable_pagerduty'         => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',
@@ -76,7 +81,8 @@ class dc_icinga2::services::rabbitmq (
     vars          => {
       'rabbitmq_watermark_username' => $username,
       'rabbitmq_watermark_password' => $password,
-      'rabbitmq_watermark_node'     => 'host.name.split(".").get(0)'
+      'rabbitmq_watermark_node'     => 'host.name.split(".").get(0)',
+      'enable_pagerduty'            => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',

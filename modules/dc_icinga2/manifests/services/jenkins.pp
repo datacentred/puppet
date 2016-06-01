@@ -8,9 +8,8 @@ class dc_icinga2::services::jenkins {
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port'        => 8080,
-      'http_uri'         => '/login',
-      'enable_pagerduty' => true,
+      'http_port' => 8080,
+      'http_uri'  => '/login',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "jenkins"',

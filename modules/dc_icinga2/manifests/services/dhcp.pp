@@ -14,9 +14,10 @@ class dc_icinga2::services::dhcp {
     check_command => 'dhcp_sudo',
     display_name  => '"dhcp " + interface',
     vars          => {
-      'dhcp_serverip'  => 'host.address',
-      'dhcp_interface' => 'interface',
-      'dhcp_unicast'   => true,
+      'dhcp_serverip'    => 'host.address',
+      'dhcp_interface'   => 'interface',
+      'dhcp_unicast'     => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'match("dns_*", host.vars.role) && host.address == attributes.address',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',

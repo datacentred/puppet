@@ -17,6 +17,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'nova-cert',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -27,6 +28,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'nova-compute',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute"',
@@ -38,6 +40,7 @@ class dc_icinga2::services::openstack (
     vars          => {
       'openstack_service_process' => 'nova-conductor',
       'openstack_service_child'   => true,
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -48,6 +51,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'nova-consoleauth',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -58,6 +62,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'nova-scheduler',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -67,9 +72,10 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'procs',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'nova',
-      'procs_argument' => 'nova-novncproxy',
+      'procs_critical'   => '1:',
+      'procs_user'       => 'nova',
+      'procs_argument'   => 'nova-novncproxy',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -80,6 +86,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'neutron-server',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -92,6 +99,7 @@ class dc_icinga2::services::openstack (
       'neutron_api_tenant'   => $tenant,
       'neutron_api_username' => $username,
       'neutron_api_password' => $password,
+      'enable_pagerduty'     => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -102,6 +110,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'neutron-dhcp-agent',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -111,9 +120,10 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'procs',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_user'     => 'neutron',
-      'procs_argument' => 'neutron-metadata-agent',
+      'procs_critical'   => '1:',
+      'procs_user'       => 'neutron',
+      'procs_argument'   => 'neutron-metadata-agent',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -124,6 +134,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'neutron-vpn-agent',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -134,6 +145,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'neutron-lbaas-agent',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -144,6 +156,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'neutron-metering-agent',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_network"',
@@ -154,6 +167,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'neutron-openvswitch-agent',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
@@ -163,8 +177,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'procs',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_command'  => 'ovs-vswitchd',
+      'procs_critical'   => '1:',
+      'procs_command'    => 'ovs-vswitchd',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
@@ -174,8 +189,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'procs',
     vars          => {
-      'procs_critical' => '1:',
-      'procs_command'  => 'ovsdb-server',
+      'procs_critical'   => '1:',
+      'procs_command'    => 'ovsdb-server',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
@@ -186,6 +202,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'ceilometer-agent-compute',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute"',
@@ -196,6 +213,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'ceilometer-agent-notification',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -206,6 +224,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'ceilometer-agent-central',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -216,6 +235,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'ceilometer-collector',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -227,6 +247,7 @@ class dc_icinga2::services::openstack (
     vars          => {
       'openstack_service_process' => 'cinder-api',
       'openstack_service_child'   => true,
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -237,6 +258,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'cinder-scheduler',
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -248,6 +270,7 @@ class dc_icinga2::services::openstack (
     vars          => {
       'openstack_service_process' => 'cinder-volume',
       'openstack_service_child'   => true,
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -259,6 +282,7 @@ class dc_icinga2::services::openstack (
     vars          => {
       'openstack_service_process' => 'glance-api',
       'openstack_service_child'   => true,
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -268,9 +292,10 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'procs',
     vars          => {
-      'procs_critical' => '2:',
-      'procs_user'     => 'glance',
-      'procs_argument' => 'glance-registry',
+      'procs_critical'   => '2:',
+      'procs_user'       => 'glance',
+      'procs_argument'   => 'glance-registry',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
@@ -285,6 +310,7 @@ class dc_icinga2::services::openstack (
       'keystone_username' => $username,
       'keystone_password' => $password,
       'keystone_admin'    => true,
+      'enable_pagerduty'  => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
@@ -294,11 +320,12 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'glance',
     vars          => {
-      'glance_host'     => 'https://compute.datacentred.io:9292',
-      'glance_authurl'  => 'https://compute.datacentred.io:5000',
-      'glance_project'  => $tenant,
-      'glance_username' => $username,
-      'glance_password' => $password,
+      'glance_host'      => 'https://compute.datacentred.io:9292',
+      'glance_authurl'   => 'https://compute.datacentred.io:5000',
+      'glance_project'   => $tenant,
+      'glance_username'  => $username,
+      'glance_password'  => $password,
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
@@ -316,6 +343,7 @@ class dc_icinga2::services::openstack (
       'cinder_warning'     => [ 30, 45 ],
       'cinder_critical'    => [ 45, 60 ],
       'cinder_timeout'     => [ 90, 90 ],
+      'enable_pagerduty'   => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
@@ -336,6 +364,7 @@ class dc_icinga2::services::openstack (
       'nova_warning'       => [ 30, 45 ],
       'nova_critical'      => [ 45, 60 ],
       'nova_timeout'       => [ 90, 90 ],
+      'enable_pagerduty'   => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
@@ -349,6 +378,7 @@ class dc_icinga2::services::openstack (
       'ceilometer_project'  => $tenant,
       'ceilometer_username' => $username,
       'ceilometer_password' => $password,
+      'enable_pagerduty'    => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "monitoring_master"',
@@ -358,8 +388,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 5000,
-      'http_ssl'  => true,
+      'http_port'        => 5000,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -368,8 +399,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 35357,
-      'http_ssl'  => true,
+      'http_port'        => 35357,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -378,8 +410,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 9292,
-      'http_ssl'  => true,
+      'http_port'        => 9292,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -388,8 +421,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 9696,
-      'http_ssl'  => true,
+      'http_port'        => 9696,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -398,8 +432,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 8774,
-      'http_ssl'  => true,
+      'http_port'        => 8774,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -408,7 +443,8 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 8775,
+      'http_port'        => 8775,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -417,8 +453,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'tcp',
     vars          => {
-      'tcp_port' => 8773,
-      'tcp_ssl'  => true,
+      'tcp_port'         => 8773,
+      'tcp_ssl'          => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -427,8 +464,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 8776,
-      'http_ssl'  => true,
+      'http_port'        => 8776,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -437,8 +475,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 443,
-      'http_ssl'  => true,
+      'http_port'        => 443,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -447,8 +486,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 6080,
-      'http_ssl'  => true,
+      'http_port'        => 6080,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -457,8 +497,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'tcp',
     vars          => {
-      'tcp_port' => 8777,
-      'tcp_ssl'  => true,
+      'tcp_port'         => 8777,
+      'tcp_ssl'          => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -467,8 +508,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 8004,
-      'http_ssl'  => true,
+      'http_port'        => 8004,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
@@ -477,8 +519,9 @@ class dc_icinga2::services::openstack (
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 8000,
-      'http_ssl'  => true,
+      'http_port'        => 8000,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }

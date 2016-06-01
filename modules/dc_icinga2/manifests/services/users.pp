@@ -23,6 +23,7 @@ class dc_icinga2::services::users {
         '10.254.0.128/25',
         '10.254.1.128/25',
       ],
+      'enable_pagerduty'             => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',

@@ -9,6 +9,7 @@ class dc_icinga2::services::memcached {
     check_command => 'memcached',
     vars          => {
       'memcached_rate_per_minute' => true,
+      'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_data"',

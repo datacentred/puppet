@@ -10,6 +10,7 @@ class dc_icinga2::services::log_courier {
     vars          => {
       'log_courier_backlog_warning'  => 20,
       'log_courier_backlog_critical' => 50,
+      'enable_pagerduty'             => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',

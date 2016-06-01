@@ -15,10 +15,14 @@ class dc_icinga2::services::ceph {
   icinga2::object::apply_service { 'ceph health':
     import        => 'generic-service',
     check_command => 'ceph-health',
+    vars          => {
+      'enable_pagerduty' => true,
+    },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "ceph_monitor"',
   }
 
+  # Should only warn if == N/2+1 and crit if <= N/2
   icinga2::object::apply_service_for { 'ceph monitor':
     key           => 'interface',
     value         => 'attributes',
@@ -29,6 +33,7 @@ class dc_icinga2::services::ceph {
     vars          => {
       'ceph_mon_monid'   => 'host.name.split(".").get(0)',
       'ceph_mon_monhost' => 'attributes.address',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "ceph_monitor" && attributes.cidr == "10.10.104.0/24"',
@@ -42,7 +47,8 @@ class dc_icinga2::services::ceph {
     check_command => 'ceph-osd',
     display_name  => 'ceph osd',
     vars          => {
-      'ceph_osd_host' => 'attributes.address',
+      'ceph_osd_host'    => 'attributes.address',
+      'enable_pagerduty' => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "ceph_osd" && attributes.cidr == "10.10.104.0/24"',
@@ -58,6 +64,9 @@ class dc_icinga2::services::ceph {
   icinga2::object::apply_service { 'ceph osd memory':
     import        => 'generic-service',
     check_command => 'ceph-memory',
+    vars          => {
+      'enable_pagerduty' => true,
+    },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "ceph_osd"',
   }
@@ -66,7 +75,8 @@ class dc_icinga2::services::ceph {
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 80,
+      'http_port'        => 80,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "rados-endpoint"',
   }
@@ -75,8 +85,9 @@ class dc_icinga2::services::ceph {
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_port' => 443,
-      'http_ssl'  => true,
+      'http_port'        => 443,
+      'http_ssl'         => true,
+      'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "rados-endpoint"',
   }
