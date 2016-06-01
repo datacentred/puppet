@@ -15,7 +15,7 @@ class dc_icinga2::core_hosts {
     icon_image => 'http://incubator.storage.datacentred.io/openstack-logo-16x16.png',
   }
 
-  icinga2::virtual_host { 'storage.datacentred.io':
+  dc_icinga2::virtual_host { 'storage.datacentred.io':
     address    => '185.43.218.55',
     vars       => {
       'role'                                     => 'rados-endpoint',
@@ -26,7 +26,7 @@ class dc_icinga2::core_hosts {
     icon_image => 'http://incubator.storage.datacentred.io/ceph-logo-16x16.png',
   }
 
-  icinga2::virtual_host { 'jenkins.datacentred.services':
+  dc_icinga2::virtual_host { 'jenkins.datacentred.services':
     address    => '185.43.217.42',
     vars       => {
       'role'                                   => 'jenkins-endpoint',
