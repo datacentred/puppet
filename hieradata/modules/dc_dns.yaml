@@ -4,6 +4,6 @@ dc_dns::static::records:
     rdata: "ns0.%{::domain}"
   "ntp1.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
-  "mx.%{::domain}/MX":
+  "%{::domain}/MX":
     rdata: "mail.datacentred.services"
     preference: '10'
