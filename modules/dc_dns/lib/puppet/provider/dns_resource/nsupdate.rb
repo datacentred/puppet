@@ -32,17 +32,17 @@ class Resolv::DNS::Resource::IN::CNAME
   end
 end
 
-# SRV check
+# SRV records return the target
 class Resolv::DNS::Resource::IN::SRV
   def to_rdata
     @target.to_s
   end
 end
 
-# MX check
+# MX records return the exchange
 class Resolv::DNS::Resource::IN::MX
   def to_rdata
-    @preference.to_s
+    @exchange.to_s
   end
 end
 
@@ -60,13 +60,31 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     end
   end
 
+  # Translate the record type to the correct class
+  def typeclass(type)
+    tcmap = {
+      'A'     => Resolv::DNS::Resource::IN::A,
+      'PTR'   => Resolv::DNS::Resource::IN::PTR,
+      'CNAME' => Resolv::DNS::Resource::IN::CNAME,
+      'MX'    => Resolv::DNS::Resource::IN::MX,
+      'SRV'   => Resolv::DNS::Resource::IN::SRV,
+    }
+    raise ArgumentError, 'dns_resource::nsupdate.typeclass invalid type' unless tcmap.keys.include?(type)
+    tcmap[type]
+  end
+
+  # Get the server to connect to
+  def server
+    '127.0.0.1'
+  end
+
   public
 
   # Initial setup stuff
   def initialize(value={})
     super(value)
-    @property_flush = {}
   end
+
   # Probe the local system for all DNS resources
   def self.instances
     []
@@ -79,24 +97,25 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     ttl = resource[:ttl]
     case type
     when 'MX'
-        preference = resource[:preference]
-        domain = name.split('.', 2)[-1]
-        nsupdate("server 127.0.0.1
-                  update add #{domain} #{ttl} #{type} #{preference} #{rdata}
+      Array(rdata).each_with_index do |exchange, index|
+        preference = Array(resource[:preference])[index]
+        nsupdate("server #{server}
+                  update add #{name} #{ttl} MX #{preference} #{exchange}
                   send")
-    # We make an assumption that we only ever have 1 SRV record for a service
-    # so priority is set to 0 as per the docs
-    # this will need to change if that's no longer the case
+      end
     when 'SRV'
-        port = resource[:port]
-        weight = resource[:weight]
-        nsupdate("server 127.0.0.1
-                  update add #{name}. #{ttl} #{type} 0 #{weight} #{port} #{rdata}
+      Array(rdata).each_with_index do |target, index|
+        port = Array(resource[:port])[index]
+        weight = Array(resource[:weight])[index]
+        priority = Array(resouce[:priority])[index]
+        nsupdate("server #{server}
+                  update add #{name} #{ttl} SRV #{priority} #{weight} #{port} #{target}
                   send")
+      end
     else
-        nsupdate("server 127.0.0.1
-                  update add #{name}. #{ttl} #{type} #{rdata}
-                  send")
+      nsupdate("server #{server}
+                update add #{name} #{ttl} #{type} #{rdata}
+                send")
     end
   end
 
@@ -105,26 +124,26 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     name, type = resource[:name].split('/')
     case type
     when 'MX'
-        domain = name.split('.', 2)[-1]
-        preference = resource[:preference]
-        target = resource[:rdata]
-        nsupdate("server 127.0.0.1
-                update delete #{domain} #{type} #{preference} #{target}.
-                send")
-    # We make an assumption that we only ever have 1 SRV record for a service
-    # so priority is set to 0 as per the docs
-    # this will need to change if that's no longer the case
+      @dnsres.each do |res|
+        preference = res.preference
+        target = res.to_rdata
+        nsupdate("server #{server}
+                  update delete #{name} MX #{preference} #{target}.
+                  send")
+      end
     when 'SRV'
-        port = resource[:port]
-        target = resource[:rdata]
-        weight = resource[:weight]
-        nsupdate("server 127.0.0.1
-                update delete #{name}. #{type} 0 #{weight} #{port} #{target}
-                send")
+      @dnsres.each do |res|
+        priority = res.priority
+        weight = res.weight
+        port = res.port
+        target = res.to_rdata
+        nsupdate("server #{server}
+                  update delete #{name} SRV #{priority} #{weight} #{port} #{target}
+                  send")
+      end
     else
-        domain = name.split('.', 2)[-1]
-        rdata = resource[:rdata]
-        nsupdate("server 127.0.0.1
+      rdata = @dnsres.to_rdata
+      nsupdate("server #{server}
                 update delete #{name} #{type} #{rdata}
                 send")
     end
@@ -133,47 +152,24 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
   # Determine whether a DNS resource exists
   def exists?
     name, type = resource[:name].split('/')
-    typeclass = nil
     # Create the resolver, pointing to the nameserver
-    r = Resolv::DNS.new(:nameserver => '127.0.0.1')
+    r = Resolv::DNS.new(:nameserver => server)
+    # Do the look-up
     begin
-        # Set the typeclass and attempt the lookup via DNS
-        # for SRV records arbitrarily force different weights for records
-        case type
-        when 'A'
-            typeclass = Resolv::DNS::Resource::IN::A
-            @dnsres = r.getresource(name, typeclass)
-        when 'PTR'
-            typeclass = Resolv::DNS::Resource::IN::PTR
-            @dnsres = r.getresource(name, typeclass)
-        when 'CNAME'
-            typeclass = Resolv::DNS::Resource::IN::CNAME
-            @dnsres = r.getresource(name, typeclass)
-        when 'MX'
-            typeclass = Resolv::DNS::Resource::IN::MX
-            domain = name.split('.', 2)[-1]
-            mxrecords = r.getresources(domain, typeclass)
-            @dnsres = mxrecords.select { |v| v.exchange.to_s == resource[:rdata] }.first
-            return false unless @dnsres
-        when 'SRV'
-            weight = resource[:weight]
-            port = resource[:port] 
-            typeclass = Resolv::DNS::Resource::IN::SRV
-            srvrecords = r.getresources(name, typeclass)
-            @dnsres = srvrecords.select { |v| v.weight.to_s == weight && v.port.to_s == port }.first
-            return false unless @dnsres
-        else
-            raise ArgumentError, 'dns_resource::nsupdate.exists? invalid type'
-        end
+      @dnsres = r.getresources(name, typeclass(type))
     rescue Resolv::ResolvError
-        return false
+      return false
+    end
+    # MX and SRV lookups will return empty arrays
+    if @dnsres.is_a? Array
+      return false if @dnsres.empty?
     end
     # The record exists!
     return true
   end
 
   def rdata
-    @dnsres.to_rdata
+    Array(@dnsres).map(&:to_rdata)
   end
 
   def rdata=(value)
@@ -181,38 +177,35 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     create
   end
 
+  def ttl
+    Array(@dnsres).first.ttl.to_s
+  end
+
+  def ttl=(value)
+    destroy
+    create
+  end
+
   def port
-    if @dnsres.respond_to?(:port)
-        @dnsres.port.to_s
-    else 
-        '0'
-    end
+    Array(@dnsres).map(&:port).map{|x| x ? x.to_s : '0' }
   end
 
   def port=(value)
     destroy
     create
   end
-  
-  def preference
-    if @dnsres.respond_to?(:preference)
-        @dnsres.preference.to_s
-    else
-        '0'
-    end
+
+  def priority
+    Array(@dnsres).map(&:priority).map{|x| x ? x.to_s : '0' }
   end
 
-  def preference=(value)
+  def priority=(value)
     destroy
     create
   end
 
   def weight
-    if @dnsres.respond_to?(:weight)
-        @dnsres.weight.to_s
-    else
-        '0'
-    end
+    Array(@dnsres).map(&:weight).map{|x| x ? x.to_s : '0' }
   end
 
   def weight=(value)
@@ -220,11 +213,12 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
     create
   end
 
-  def ttl
-    @dnsres.ttl.to_s
+  def preference
+    Array(@dnsres).map(&:preference).map{|x| x ? x.to_s : '0' }
   end
 
-  def ttl=(value)
+  def preference=(value)
+    destroy
     create
   end
 

@@ -8,7 +8,18 @@
 # }
 #
 # dns_resource { '1.2.168.192.in-addr.arpa/PTR':
-#   rdata      => 'melody.angel.net',
+#   rdata => 'melody.angel.net',
+# }
+#
+# dns_resource { 'angel.net/MX':
+#   rdata      => [
+#     'mail0.angel.net',
+#     'mail1.angel.net',
+#   ],
+#   preference => [
+#     10,
+#     20,
+#   ],
 # }
 #
 Puppet::Type.newtype(:dns_resource) do
@@ -33,7 +44,7 @@ Puppet::Type.newtype(:dns_resource) do
     end
   end
 
-  newproperty(:rdata) do
+  newproperty(:rdata, :array_matching => :all) do
     desc 'Relevant data e.g. IP address for an A record etc'
   end
 
@@ -47,31 +58,37 @@ Puppet::Type.newtype(:dns_resource) do
     end
   end
 
-  newproperty(:port) do
+  newproperty(:port, :array_matching => :all) do
     desc 'Port - only used for SRV records'
-    defaultto '0'
     validate do |value|
-      unless value =~ /^\d+$/
+      unless Array(value).all? { |v| v.to_s =~ /^\d+$/ }
         raise ArgumentError, "dns_resource::port invalid"
       end
     end
   end
 
-  newproperty(:weight) do
+  newproperty(:weight, :array_matching => :all) do
     desc 'Weight - only used for SRV records'
-    defaultto '0'
     validate do |value|
-      unless value =~ /^\d+$/
+      unless Array(value).all? { |v| v.to_s =~ /^\d+$/ }
         raise ArgumentError, "dns_resource::weight invalid"
       end
     end
   end
 
-  newproperty(:preference) do
-    desc 'Preference - only used for MX records'
-    defaultto '0'
+  newproperty(:priority, :array_matching => :all) do
+    desc 'Priority - only used for SRV records'
     validate do |value|
-      unless value =~ /^\d+$/
+      unless Array(value).all? { |v| v.to_s =~ /^\d+$/ }
+        raise ArgumentError, "dns_resource::priority invalid"
+      end
+    end
+  end
+
+  newproperty(:preference, :array_matching => :all) do
+    desc 'Preference - only used for MX records'
+    validate do |value|
+      unless Array(value).all? { |v| v.to_s =~ /^\d+$/ }
         raise ArgumentError, "dns_resource::preference invalid"
       end
     end
@@ -89,3 +106,4 @@ Puppet::Type.newtype(:dns_resource) do
   end
 
 end
+

@@ -5,11 +5,12 @@ dc_dns::zones:
 dc_dns::static::records:
   "testcname.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
-  "testmx.%{::domain}/MX":
+  "%{::domain}/MX":
     rdata: 'mail.vagrant.dev'
   "blah.%{::domain}/A":
     rdata: '172.22.5.246' 
   "_foreman._tcp.%{::domain}/SRV":
-    port: '8444'
-    weight: '10'
     rdata: 'foreman.vagrant.dev'
+    port: '8444'
+    priority: 0
+    weight: '10'

@@ -37,6 +37,8 @@ dc_dns::static::records:
   "_x-foreman._tcp.%{::domain}/SRV":
     rdata: "ns0.%{::domain}"
     port: '8000'
+    priority: 0
+    weight: 0
 
 dc_dns::zones:
   datacentred.io: {}
