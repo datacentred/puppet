@@ -1,0 +1,52 @@
+classes: 
+  - '::dc_profile::util::wordpress'
+
+nginx_locations:
+  'datacentred':
+    vhost: 'datacentred'
+    location: '~* \.php$'
+    fastcgi: 'unix:/var/run/php7-fpm.sock'
+    www_root: '/srv/www/datacentred.co.uk'
+
+nginx_vhost:
+  'datacentred':
+    server_name: 
+      - 'datacentred.co.uk'
+      - 'datacentred.io'
+      - 'datacentred.net'
+      - 'datacentred.com'
+      - 'datacentred.org'
+      - 'datacentred.org.uk'
+      - 'www.datacentred.co.uk'
+      - 'www.datacentred.io'
+      - 'www.datacentred.net'
+      - 'www.datacentred.com'
+      - 'www.datacentred.org'
+      - 'www.datacentred.org.uk'
+    try_files: 
+      - '$uri'
+      - '$uri/'
+      - 'index.php'
+      - 'index.php?$args'
+    index_files: 
+      - 'index.php'
+      - 'index.html'
+      - 'index.htm'
+    www_root: '/srv/www/datacentred.co.uk'
+
+wordpress::install_dir: '/srv/www/datacentred.co.uk'
+wordpress::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAf53IZCpL4GFcmpIdOi2MGPtsrWZyJjd3iRd7lhrIeC7XcCHSEDBgxHZhorYU9FTmSSYxLpvkzc9NmDlMwqvoQnkL/bgSTH1Ui6k09PQawSp1CnK8SlfzkTdSqTCv5hzcGhQXiixoF2K6OltBdJnpFmKhGKxoKInwDIK18Ifw0VsY+5gjun4rqq4PEChdR3+o5cvhrjVtCeTGdFk2X96RTIODx65N+JDOd/oUvJ9s2Gs+naYAtgBnX5p1soby2jT7YM2ybXf1H4EratjG1Me31/Bgtbn/wvnB8xhaNYRONnSKE6oFLXQFLf7HBYVDCXiVuzdpME8f/ugpvrOhy3ThXDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAsIbaPVcPB2SqkDPLXLffqgBCCrXU1E5KwMfd3wUbMJ1m3]
+wordpress::db_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAhDTuHVyhhCcRSZUzriDR33aoN3mHFOylPrFm5qa8w+Y8Iiv8WIvm8v+S8R/H4LAZoxfxZ/FflBezw0LO2y4hub1X1iAm/q/0wyu8S61QX0VtTTfFYMao+5k1LRR5SjHas6oM7/n10fOt1/waDqtaG3tgPvw2+kEF3QuWNTHnRIp8SaG1nxDn/FilLnim9QXI/+PM/LHzpg4bQugAivy8j9srywlw1m5qdFpS+UVZWNx+BAd3oV2wrNEroUKyTsBZ3LcsZ1Ec/plPpIDJTdtY0ENyRmrNAn8BN/zoRYnf4FuWfSfu6UBHeasx6f6y+xmQmlm9NalnCLNCR5w2shcxbzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCQ8DRF5W7iuTNxlSK2hCnMgBB4xJOylFhehJBD/X2OrFv/]
+
+php::globals::php_version: '7.0'
+php::manage_repos: true
+php::fpm: true
+php::fpm::pools:
+  www:
+    listen: '/var/run/php7-fpm.sock'
+    listen_owner: 'www-data'
+    listen_group: 'www-data'
+    listen_mode: '0660'
+    listen_allowed_clients: 'any'
+php::extensions:
+  mysql: {}

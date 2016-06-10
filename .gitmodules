@@ -319,3 +319,6 @@
 [submodule "modules/php"]
 	path = modules/php
 	url = https://github.com/voxpupuli/puppet-php
+[submodule "wordpress"]
+	path = modules/wordpress
+	url = https://github.com/datacentred/puppet-wordpress.git
