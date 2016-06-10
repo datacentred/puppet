@@ -115,6 +115,7 @@ admins:
     pass: '$6$ap/a01lq$0ItREGLUsIgv21sUUSXU8oweA2yWIIEQxEqPaRphabAi81i49a19GE3mQrO3W4UUiMLkR6LC4tZONWF.FW2vU1'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDRrmLUkoBaj6o1o8sjhK8Iz6s7mXBY3AvgTizm0yiXnZOoFEbQwIp+Hbi034oZnxF27jkUSz4zfTkCfbPC5QOL7J+18xeuc/5cwc5ID1o3Hmrbh5dhEkO2PkRIPr275vTI4Lyw1kCdHJmGy4MZ+GqIJgEtgIOAiwVAhR8qEAX16c4YCPXW/xZR+uNQ0auu/uCs0tDGZ388HsJwKn/2G8WNRdAm7la9vCWgByfX4WF1tYPCLJPNnB5gaU/wRzRjzeVTwKcRDc4G/CZtMZBLymxNqSFhtLFyoer3yy1P/F9bjS5tcTjmHBSaepk8HTKh2/SYgsUW0oFAv7+Ykp0saCiB'
     email: 'tristan.watson@datacentred.co.uk'
+    ensure: absent
   matti:
     uid: '1007'
     gid: 'sysadmin'
@@ -176,7 +177,6 @@ ldap_groups:
         - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=tristan,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matti,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
@@ -205,7 +205,6 @@ ldap_groups:
         - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=tristan,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matti,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
@@ -283,22 +282,6 @@ ldap_users:
       sn: Handley
       mail: "sean.handley@datacentred.co.uk"
       userPassword: "{CRYPT}$6$xhD4S6w0$zHS.B/.r5cVLlfkt47D2PtV.ITRNzZf9OlevuFUEBXyIp0JTB3ZFtSyjhsIWcuNW8RPWkRCSncZePqL0e/uEb1"
-      radiusReplyItem: APC-Service-Type = 1
-      objectClass:
-        - person
-        - inetOrgPerson
-        - user
-        - radiusprofile
-      ou:
-        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
-  'cn=tristan,ou=People,dc=datacentred,dc=co,dc=uk':
-    tag: user
-    attributes:
-      uid: tristan
-      givenName: Tristan
-      sn: Watson
-      mail: "tristan.watson@datacentred.co.uk"
-      userPassword: "{CRYPT}$6$ap/a01lq$0ItREGLUsIgv21sUUSXU8oweA2yWIIEQxEqPaRphabAi81i49a19GE3mQrO3W4UUiMLkR6LC4tZONWF.FW2vU1"
       radiusReplyItem: APC-Service-Type = 1
       objectClass:
         - person
