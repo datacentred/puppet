@@ -335,3 +335,6 @@
 [submodule "modules/telegraf"]
 	path = modules/telegraf
 	url = https://github.com/datacentred/puppet-telegraf.git
+[submodule "modules/wordpress"]
+	path = modules/wordpress
+	url = git@github.com:datacentred/puppet-wordpress.git
