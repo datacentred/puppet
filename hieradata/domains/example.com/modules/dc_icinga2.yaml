@@ -1,0 +1,4 @@
+---
+dc_icinga2::host::zone: 'icinga2.example.com'
+
+dc_icinga2::agent::parent_fqdn: 'icinga2.example.com'

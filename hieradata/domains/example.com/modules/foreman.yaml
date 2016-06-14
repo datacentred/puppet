@@ -1,0 +1,5 @@
+---
+# 1.11.x switches to ruby 2.x.x by default
+# As such passenger needs to point to /usr/bin/foreman-ruby in order for
+# bundler to work and install the packaged gems
+foreman::config::passenger::ruby: '/usr/bin/foreman-ruby'

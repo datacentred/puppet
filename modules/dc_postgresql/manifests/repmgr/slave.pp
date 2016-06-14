@@ -2,17 +2,10 @@
 #
 class dc_postgresql::repmgr::slave {
 
-  # floating postgres configuration
-  include ::dc_postgresql::repmgr::slave::local_connection
-  include ::dc_postgresql::repmgr::cluster_connections
+  contain ::dc_postgresql::repmgr::slave::configure
 
-  # repmgr configuration
-  include ::dc_postgresql::repmgr::install
-  include ::dc_postgresql::repmgr::config
-  include ::dc_postgresql::repmgr::slave::sync
-
-  Class['::dc_postgresql::repmgr::install'] ->
-  Class['::dc_postgresql::repmgr::config'] ->
-  Class['::dc_postgresql::repmgr::slave::sync']
+  # Ensure the database is up and running before configuring repmgr further
+  Class['::dc_postgresql::repmgr::configure'] ->
+  Class['::dc_postgresql::repmgr::slave']
 
 }
