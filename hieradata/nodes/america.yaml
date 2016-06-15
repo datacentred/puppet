@@ -1,0 +1,2 @@
+---
+neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_enp6s0f0}"

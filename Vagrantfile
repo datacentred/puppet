@@ -47,7 +47,7 @@ Vagrant.configure('2') do |config|
       # Optionally provision CentOS
       if options.has_key?(:rhel)
         box.vm.box = 'puppetlabs/centos-7.2-64-nocm'
-        box.vm.box_version = '1.0.1'
+        box.vm.box_version = '1.0.0'
       end
 
       if options.has_key?(:network_node)

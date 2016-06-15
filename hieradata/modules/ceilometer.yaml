@@ -1,5 +1,4 @@
 ---
-ceilometer::package_ensure: '2015.1.2-0ubuntu1.1~cloud0'
 ceilometer::keystone::auth::auth_name: 'ceilometer'
 ceilometer::keystone::auth::password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
@@ -31,7 +30,6 @@ ceilometer::api::keystone_user: 'ceilometer'
 ceilometer::api::keystone_password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::api::manage_service: false
 
-ceilometer::agent::package_ensure: '2015.1.2-0ubuntu1.1~cloud0'
 ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/"
 ceilometer::agent::auth::auth_user: 'ceilometer'
 ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
