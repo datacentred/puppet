@@ -1,9 +1,4 @@
-wordpress::user: 'wordpress'
-wordpress::owner: 'wordpress'
-wordpress::group: 'wordpress'
-wordpress::password: 'Kryclyicdiv1'
-wordpress::createdb: 'true'
-wordpress::db_user: 'wordpress'
-wordpress::db_password: 'DucsOnRepAv8'
-wordpress::version: '4.3'
-wordpress::install_dir: '/var/www/datacentred.co.uk'
+---
+wordpress::wp_owner: 'www-data'
+wordpress::wp_group: 'www-data'
+wordpress::version: '4.5.2'
