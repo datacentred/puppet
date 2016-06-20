@@ -337,3 +337,6 @@
 [submodule "modules/dns"]
 	path = modules/dns
 	url = https://github.com/theforeman/puppet-dns
+[submodule "modules/wordpress"]
+	path = modules/wordpress
+	url = git@github.com:datacentred/puppet-wordpress.git
