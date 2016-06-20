@@ -337,3 +337,6 @@
 [submodule "modules/dns"]
 	path = modules/dns
 	url = https://github.com/theforeman/puppet-dns
+[submodule "modules/libvirt"]
+	path = modules/libvirt
+	url = https://github.com/thias/puppet-libvirt
