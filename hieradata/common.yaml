@@ -434,3 +434,8 @@ bmc_admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBAD
 # Icinga
 #
 dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
+
+# Swappiness Factor (PD-2225)
+sysctls::values:
+  vm.swappiness:
+    value: '1'
