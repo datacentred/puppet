@@ -103,7 +103,7 @@ dc_logstash::client::config:
         shipper: 'log-courier'
         type: 'foreman_proxy'
     - paths:
-      - '/var/log/glance/api.log'
+      - '/var/log/glance/glance-api.log'
       fields:
         shipper: 'log-courier'
         type: 'glance_api'
