@@ -238,5 +238,9 @@ class dc_icinga::server::nagios_commands (
     command_line => '/usr/lib/nagios/plugins/check_nrpe -u -H \$HOSTADDRESS$ -c \$ARG1$ -t \$ARG2$',
   }
 
+  icinga::command { 'check_ip_pool':
+    command_line => "/usr/lib/nagios/plugins/check_ip_pool.py -u ${keystone_icinga_user} -p ${keystone_icinga_password} -t ${keystone_icinga_tenant} -a https://\$HOSTALIAS\$:${keystone_port}}/v2.0/ -w \$ARG1 -c \$ARG2",
+  }
+
 }
 

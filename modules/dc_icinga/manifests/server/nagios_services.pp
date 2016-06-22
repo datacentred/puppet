@@ -459,6 +459,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Cinder API Connection',
   }
 
+  icinga::service { 'check_ip_pool':
+    use                 => 'dc_service_slowcheck',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_ip_pool!70!90',
+    service_description => 'Neutron IP Pool',
+  }
+
   icinga::service { 'check_ceph_health':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_ceph_mon',
