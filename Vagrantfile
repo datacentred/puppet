@@ -6,7 +6,6 @@ Vagrant.require_version '~> 1.8.0'
 
 Vagrant.configure('2') do |config|
   config.vm.box              = 'puppetlabs/ubuntu-14.04-64-nocm'
-  config.vm.box_version      = '1.0.3'
   config.vm.box_check_update = true
 
   # Provision using the root account.  This allows us to modify
@@ -44,10 +43,14 @@ Vagrant.configure('2') do |config|
         box.vm.network :private_network, type: :dhcp
       end
 
-      # Optionally provision CentOS
+      # Optionally provision RedHat
       if options.has_key?(:rhel)
-        box.vm.box = 'puppetlabs/centos-7.2-64-nocm'
-        box.vm.box_version = '1.0.0'
+        box.vm.box = 'datacentred/rhel-7.2'
+		box.vm.box_url = 'https://dischord.storage.datacentred.io/vagrant/rhel-7.2.vmware.box'
+		box.vm.box_download_checksum = 'f725042e3452963b9e17acb448140233b1227f13f42010433790528148497e70'
+		box.vm.box_download_checksum_type = 'sha256'
+		config.registration.username = ENV['RHEL_USERNAME']
+		config.registration.password = ENV['RHEL_PASSWORD']
       end
 
       if options.has_key?(:network_node)
