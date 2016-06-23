@@ -12,15 +12,6 @@ import sys
 def smart_capable(device):
     """Returns true if a device is smart capable. False otherwise"""
 
-    # check_ide_smart doesn't work on SAS devices behind an LSI expander
-    # so filter these out here.
-    #
-    # You can get the giblets out of sg_io however so I'll need to
-    # write this properly at some point getting the data directly with raw
-    # SCSI commands... *sigh*
-    if os.path.exists('/sys/block/{}/device/sas_address'.format(device)):
-        return False
-
     # Filter out HP Raid and devices which do not support the smart check
     if "c0d0" in device:
         return False
@@ -48,7 +39,7 @@ def run_checks(devices):
     for device in devices:
         sys.stdout.write('{}: '.format(device))
         sys.stdout.flush()
-        code = subprocess.call(['/usr/local/bin/check_ide_smart',
+        code = subprocess.call(['/usr/lib/nagios/plugins/check_scsi_smart',
                                 '-d', '/dev/' + device])
         statuses[device] = code
     return statuses
