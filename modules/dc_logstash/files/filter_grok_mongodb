@@ -2,6 +2,21 @@ filter {
   if [type] == "mongodb" {
     grok {
       match => [ "message", "%{TIMESTAMP_ISO8601:timestamp} \[%{WORD:originator}\] %{GREEDYDATA:message_tail}" ]
+      match => [ "message", "(?m)%{GREEDYDATA} \[conn%{NUMBER:mongoConnection}\] %{WORD:mongoCommand} %{NOTSPACE:mongoDatabase} %{WORD}: \{ %{GREEDYDATA:mongoStatement} \} %{GREEDYDATA} %{NUMBER:mongoElapsedTime:int}ms" ]
+      match => [ "message", " cursorid:%{NUMBER:mongoCursorId}" ]
+      match => [ "message", " ntoreturn:%{NUMBER:mongoNumberToReturn:int}" ]
+      match => [ "message", " ntoskip:%{NUMBER:mongoNumberToSkip:int}" ]
+      match => [ "message", " nscanned:%{NUMBER:mongoNumberScanned:int}" ]
+      match => [ "message", " scanAndOrder:%{NUMBER:mongoScanAndOrder:int}" ]
+      match => [ "message", " idhack:%{NUMBER:mongoIdHack:int}" ]
+      match => [ "message", " nmoved:%{NUMBER:mongoNumberMoved:int}" ]
+      match => [ "message", " nupdated:%{NUMBER:mongoNumberUpdated:int}" ]
+      match => [ "message", " keyUpdates:%{NUMBER:mongoKeyUpdates:int}" ]
+      match => [ "message", " numYields: %{NUMBER:mongoNumYields:int}" ]
+      match => [ "message", " locks\(micros\) r:%{NUMBER:mongoReadLocks:int}" ]
+      match => [ "message", " locks\(micros\) w:%{NUMBER:mongoWriteLocks:int}" ]
+      match => [ "message", " nreturned:%{NUMBER:mongoNumberReturned:int}" ]
+      match => [ "message", " reslen:%{NUMBER:mongoResultLength:int}" ]
     }
     date {
       match => [ "timestamp", "ISO8601" ]
