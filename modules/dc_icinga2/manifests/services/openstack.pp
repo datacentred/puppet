@@ -521,5 +521,19 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
+  icinga2::object::apply_service { 'openstack ip pool':
+    import        => 'openstack-service',
+    check_command => 'ip_pool',
+    vars          => {
+      'ip_pool_auth_url'     => 'https://compute.datacentred.io:5000',
+      'ip_pool_tenant_name'  => $tenant,
+      'ip_pool_user'         => $username,
+      'ip_pool_password'     => $password,
+      'ip_pool_percent_warn' => 70,
+      'ip_pool_percent_crit' => 90,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
 }
 

@@ -24,6 +24,20 @@ class dc_icinga2::checks {
     ],
   }
 
+  icinga2::object::checkcommand { 'ip_pool':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ip_pool"',
+    ],
+    arguments => {
+      '-u' => '$ip_pool_user$',
+      '-p' => '$ip_pool_password$',
+      '-t' => '$ip_pool_tenant_name$',
+      '-a' => '$ip_pool_auth_url$',
+      '-w' => '$ip_pool_percent_warn',
+      '-c' => '$ip_pool_percent_crit$',
+    },
+  }
+
   icinga2::object::checkcommand { 'bmc':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_bmc"',

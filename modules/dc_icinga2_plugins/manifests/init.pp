@@ -18,6 +18,10 @@ class dc_icinga2_plugins {
     ensure => directory,
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_ip_pool':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_ip_pool',
+  }
+
   file { '/usr/local/lib/nagios/plugins/check_bmc':
     source => 'puppet:///modules/dc_icinga2_plugins/check_bmc',
   }
