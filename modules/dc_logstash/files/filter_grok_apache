@@ -2,7 +2,7 @@ filter {
     if [type] == "apache" {
         grok {
             match => [ "message", "%{COMBINEDAPACHELOG}" ]
-            match => [ "message", ""%{IP:request_ip}"%{SPACE}-%{SPACE}-%{SPACE}\[%{HAPROXYDATE}\]%{SPACE}%{QS:request}%{SPACE}%{NUMBER:http_resp_code:integer}%{DATA}%{QS}%{SPACE}%{QS:request_client}%{SPACE}%{GREEDYDATA:called_by}" ]
+            match => [ "message", '"%{IP:request_ip}"%{SPACE}-%{SPACE}-%{SPACE}\[%{HAPROXYDATE}\]%{SPACE}%{QS:request}%{SPACE}%{NUMBER:http_resp_code:integer}%{DATA}%{QS}%{SPACE}%{QS:request_client}%{SPACE}%{GREEDYDATA:called_by}' ]
         }
         date {
             match => [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
