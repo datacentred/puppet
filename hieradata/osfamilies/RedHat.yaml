@@ -9,27 +9,14 @@ puppet::provider: 'yum'
 puppet::package: 'puppet'
 
 dc_yum::repo:
-  rdo:
-   name: 'rdo-kilo'
-   baseurl: 'http://mirror.centos.org/centos/7/cloud/x86_64/openstack-kilo/'
-   gpgkey: 'https://raw.githubusercontent.com/openstack/puppet-openstack_extras/master/files/RPM-GPG-KEY-CentOS-SIG-Cloud'
-  ceph:
-    name: 'ceph-release'
-    baseurl: 'http://ceph.com/rpm-hammer/rhel7/$basearch'
-    gpgkey: 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
-  ceph-noarch:
-    name: 'ceph-noarch'
-    baseurl: 'http://ceph.com/rpm-hammer/rhel7/noarch'
-    gpgkey: 'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc'
-  epel:
-    name: 'epel'
-    baseurl: 'http://download.fedoraproject.org/pub/epel/7/$basearch'
-    gpgkey: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
-  epel-testing:
-    name: 'epel-testing'
-    baseurl: 'http://download.fedoraproject.org/pub/epel/testing/7/$basearch'
-    gpgkey: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
-  # lldpd
+  rhel-7-server:
+    name: 'rhel-7-server'
+    baseurl: 'https://mirror0.datacentred.co.uk/rhel-7-server-rpms'
+    gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release'
+  rhosp-7:
+    name: 'redhat-openstack-7'
+    baseurl: 'https://mirror0.datacentred.co.uk/rhel-7-server-openstack-7.0-rpms'
+    gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release'
   vbernat:
     name: 'vbernat'
     baseurl: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/'
