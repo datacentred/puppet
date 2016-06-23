@@ -13,14 +13,15 @@ class dc_icinga2::host (
 ) {
 
   $_vars_common = {
-    'architecture'     => $::architecture,
-    'is_virtual'       => str2bool($::is_virtual),
-    'lsbdistcodename'  => $::lsbdistcodename,
-    'operatingsystem'  => $::operatingsystem,
-    'kernel'           => $::kernel,
-    'productname'      => $::productname,
-    'role'             => $::role,
-    'enable_pagerduty' => true,
+    'architecture'      => $::architecture,
+    'is_virtual'        => str2bool($::is_virtual),
+    'lsbdistcodename'   => $::lsbdistcodename,
+    'operatingsystem'   => $::operatingsystem,
+    'kernel'            => $::kernel,
+    'productname'       => $::productname,
+    'role'              => $::role,
+    'enable_pagerduty'  => true,
+    'primary_interface' => icinga2_foreman_primary_interface()
   }
 
   $_vars_blockdevices = icinga2_blockdevices()

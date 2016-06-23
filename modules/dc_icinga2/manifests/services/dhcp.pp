@@ -6,20 +6,16 @@
 #
 class dc_icinga2::services::dhcp {
 
-  icinga2::object::apply_service_for { 'dhcp':
-    key           => 'interface',
-    value         => 'attributes',
-    hash          => 'host.vars.interfaces',
+  icinga2::object::apply_service { 'dhcp':
     import        => 'generic-service',
     check_command => 'dhcp_sudo',
-    display_name  => '"dhcp " + interface',
     vars          => {
       'dhcp_serverip'    => 'host.address',
-      'dhcp_interface'   => 'interface',
+      'dhcp_interface'   => 'get_host(NodeName).vars.primary_interface',
       'dhcp_unicast'     => true,
       'enable_pagerduty' => true,
     },
-    assign_where  => 'match("dns_*", host.vars.role) && host.address == attributes.address',
+    assign_where  => 'match("dns_*", host.vars.role)',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
