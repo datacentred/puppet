@@ -17,6 +17,18 @@ dc_yum::repo:
     name: 'redhat-openstack-7'
     baseurl: 'https://mirror0.datacentred.co.uk/rhel-7-server-openstack-7.0-rpms'
     gpgkey: 'file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release'
+  ceph:
+    name: 'ceph-packages'
+    baseurl: 'http://download.ceph.com/rpm-hammer/el7/$basearch'
+    gpgkey: 'https://download.ceph.com/keys/release.asc'
+  ceph-noarch:
+    name: 'ceph-noarch-packages'
+    baseurl: 'http://download.ceph.com/rpm-hammer/el7/noarch'
+    gpgkey: 'https://download.ceph.com/keys/release.asc'
+  epel:
+    name: 'epel-7'
+    mirrorlist: 'https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch'
+    gpgkey: 'https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7'
   vbernat:
     name: 'vbernat'
     baseurl: 'http://download.opensuse.org/repositories/home:/vbernat/RHEL_7/'
