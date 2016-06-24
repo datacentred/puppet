@@ -299,7 +299,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_rabbitmq_objects':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_slowcheck',
     hostgroup_name      => 'dc_hostgroup_rabbitmq',
     check_command       => 'check_rabbitmq_objects',
     service_description => 'RabbitMQ Objects',
