@@ -4,3 +4,7 @@ dc_apt::pins:
     packages: '*'
     release: 'trusty-proposed'
     priority: '400'
+  ceph:
+    packages: '*'
+    origin: 'apt.datacentred.services'
+    priority: '700'
