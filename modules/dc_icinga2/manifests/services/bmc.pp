@@ -102,7 +102,7 @@ class dc_icinga2::services::bmc (
       'bmc_host'     => 'host.vars.address_bmc',
       'bmc_username' => $username,
       'bmc_password' => $password,
-      'bmc_revision' => '3.40',
+      'bmc_revision' => '3.47',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.productname == "X9DRT"',
