@@ -31,21 +31,21 @@ class dc_elasticsearch (
   $config_hdd_tag = {'node.storage_type' => 'hdd'}
   $config_hash_for_hdds = merge($config_hdd_tag, $es_hash)
 
-  #work out what 1/4th of the host RAM is so it can be reserved for each elasticsearch instance
-  $quarter_RAM = floor($::memorysize_mb/4)
+  #work out what 1/3rd of the host RAM is so it can be reserved for each elasticsearch instance
+  $third_RAM = floor($::memorysize_mb/3)
   $RAM_unit = 'M'
-  $quarter_RAM_bytes = ($quarter_RAM * 1024 * 1024)
+  $third_RAM_bytes = ($third_RAM * 1024 * 1024)
 
   $config_hash = {
-    'ES_HEAP_SIZE'      => "${quarter_RAM}${RAM_unit}",
-    'MAX_LOCKED_MEMORY' => $quarter_RAM_bytes,
+    'ES_HEAP_SIZE'      => "${third_RAM}${RAM_unit}",
+    'MAX_LOCKED_MEMORY' => $third_RAM_bytes,
   }
 
   ulimit::rule { 'elasticsearch':
       ulimit_domain => 'elasticsearch',
       ulimit_type   => '-',
       ulimit_item   => 'memlock',
-      ulimit_value  => $quarter_RAM_bytes,
+      ulimit_value  => $third_RAM_bytes,
   }
 
   class { '::elasticsearch':
