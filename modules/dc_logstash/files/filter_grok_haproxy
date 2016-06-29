@@ -1,0 +1,20 @@
+filter {
+    if [type] == "haproxy" {
+        grok {
+            match => [
+                "message", "%{IP:client_ip}:%{NUMBER:client_port:int} \[%{NOTSPACE:haproxy_timestamp}] %{NOTSPACE:frontend_name} %{NOTSPACE:backend_name}/%{NOTSPACE:server_name} %{NUMBER:time_queue:int}/%{NUMBER:time_backend_connect:int}/%{NUMBER:time_duration:int} %{NUMBER:bytes_read:int} %{NOTSPACE:termination_state} %{NUMBER:actconn:int}/%{NUMBER:feconn:int}/%{NUMBER:beconn:int}/%{NUMBER:srvconn:int}/%{NUMBER:retries:int} %{NUMBER:srv_queue:int}/%{NUMBER:backend_queue:int}" ,
+                "message" , "%{IP:client_ip}:%{NUMBER:client_port:int} \[%{NOTSPACE:haproxy_timestamp}\] %{NOTSPACE:frontend_name} %{NOTSPACE:backend_name}/%{NOTSPACE:server_name} %{NUMBER:time_client_req:int}/%{NUMBER:time_queue:int}/%{NUMBER:time_backend_connect:int}/%{NUMBER:time_server_response:int}/%{NUMBER:time_duration:int} %{NUMBER:status_code:int} %{NUMBER:bytes_read:int} %{NOTSPACE:captured_request_cookie} %{NOTSPACE:captured_response_cookie} %{NOTSPACE:termination_state_with_cookie_status} %{NUMBER:actconn:int}/%{NUMBER:feconn:int}/%{NUMBER:beconn:int}/%{NUMBER:srvconn:int}/%{NUMBER:retries:int} %{NUMBER:srv_queue:int}/%{NUMBER:backend_queue:int}?( \"%{GREEDYDATA:full_http_request}\")?( %{NOTSPACE:captured_response_headers})?"
+]
+            }
+        date {
+            match => [ "haproxy_timestamp", "dd/MMM/yyyy:HH:mm:ss.SSS" ]
+        }
+        grok {
+            match => [
+                "full_http_request", "%{WORD:http_verb} %{URIPATHPARAM:http_request}?( HTTP/%{NUMBER:http_version})" ,
+                "full_http_request", "<%{WORD:http_request}>"
+                     ]
+            remove_field => [ "full_http_request" ]
+        }
+    }
+}
