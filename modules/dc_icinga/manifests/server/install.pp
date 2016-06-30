@@ -42,7 +42,6 @@ class dc_icinga::server::install {
                     'python-cinderclient',
                     'python-novaclient',
                     'python-keystoneclient',
-                    'pyopenssl',
                     'ndg-httpsclient',
                     'pyasn1' ]
 
