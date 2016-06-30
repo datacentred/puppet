@@ -61,14 +61,14 @@ apt::sources:
     release: 'trusty'
     repos: '1.9'
     key:
-      id: '7059542D5AEA367F78732D02B3484CB71AA043B8'
+      id: 'AE0AF310E2EA96B6B6F4BD726F8600B9563278F6'
       source: 'http://deb.theforeman.org/foreman.asc'
   foreman_plugins_mirror:
     location: "http://%{hiera('foreman_mirror_path')}"
     release: 'plugins'
     repos: '1.9'
     key:
-      id: '7059542D5AEA367F78732D02B3484CB71AA043B8'
+      id: 'AE0AF310E2EA96B6B6F4BD726F8600B9563278F6'
       source: 'http://deb.theforeman.org/foreman.asc'
   galera:
     location: 'http://mirror.aarnet.edu.au/pub/MariaDB/repo/5.5/ubuntu'
