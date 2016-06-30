@@ -19,17 +19,4 @@ class dc_icinga::server::custom_plugins {
     content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_haproxy.rb',
   }
 
-  package { 'nagios-plugin-elasticsearch':
-    ensure   => present,
-    provider => 'pip',
-  }
-
-  # Need latest openstack api clients for some checks
-  $openstack_packages = [ 'python-novaclient', 'python-keystoneclient', 'pyopenssl', 'ndg-httpsclient', 'pyasn1' ]
-
-  package { $openstack_packages:
-    ensure   => latest,
-    provider => pip,
-  }
-
 }

@@ -18,11 +18,6 @@ class dc_icinga::server::install {
     'libwww-perl',
     'libjson-perl',
     'libnagios-plugin-perl',
-    'python-keystoneclient',
-    'python-neutronclient',
-    'python-ceilometerclient',
-    'python-cinderclient',
-    'python-novaclient',
     'curl',
     'bc',
     'postgresql-client',
@@ -39,5 +34,18 @@ class dc_icinga::server::install {
     target  => '/usr/sbin/rpcinfo',
     require => Package['nfs-common'],
   }
+
+  # Need latest pip packages for some checks
+  $pip_packages = [ 'nagios-plugin-elasticsearch',
+                    'python-neutronclient',
+                    'python-ceilometerclient',
+                    'python-cinderclient',
+                    'python-novaclient',
+                    'python-keystoneclient',
+                    'pyopenssl',
+                    'ndg-httpsclient',
+                    'pyasn1' ]
+
+  ensure_packages($pip_packages, {'ensure' => 'latest', 'provider' => 'pip'})
 
 }
