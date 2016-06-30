@@ -466,6 +466,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Neutron IP Pool',
   }
 
+  icinga::service { 'check_anti_affinity':
+    use                 => 'dc_service_slowcheck',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_anti_affinity',
+    service_description => 'Nova Anti Affinity',
+  }
+
   icinga::service { 'check_ceph_health':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_ceph_mon',
