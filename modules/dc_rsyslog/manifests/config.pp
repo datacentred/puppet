@@ -20,12 +20,17 @@ class dc_rsyslog::config {
     source => 'puppet:///modules/dc_rsyslog/10-udp.conf',
   }
 
+  file { '/etc/rsyslog.d/20-ufw.conf':
+    source => 'puppet:///modules/dc_rsyslog/20-ufw.conf',
+  }
+
+  file { '/etc/rsyslog.d/40-haproxy.conf':
+    source => 'puppet:///modules/dc_rsyslog/40-haproxy.conf',
+  }
+
   file { '/etc/rsyslog.d/50-default.conf':
     source => 'puppet:///modules/dc_rsyslog/50-default.conf',
   }
 
-  file { '/etc/rsyslog.d/20-ufw.conf':
-    source => 'puppet:///modules/dc_rsyslog/20-ufw.conf',
-  }
 
 }

@@ -346,6 +346,12 @@ dc_logstash::client::config:
         shipper: 'log-courier'
         type: 'kernel_log'
     - paths:
+      - '/var/log/haproxy.log'
+      fields:
+        shipper: 'log-courier'
+        tags: ['haproxy']
+        type: 'haproxy'
+    - paths:
       - '/var/log/nova/nova-api-metadata.log'
       fields:
         shipper: 'log-courier'

@@ -48,6 +48,7 @@ class dc_profile::log::logrotate {
 /var/log/cron.log
 /var/log/rsyslog.log
 /var/log/debug
+/var/log/haproxy.log
 /var/log/messages',
     rotate        => 13,
     rotate_every  => 'week',
