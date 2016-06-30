@@ -4,8 +4,6 @@ classes:
   - '::dc_profile::hardware::x9drt'
   - '::dc_collectd::agent::ipmi'
 
-neutron::agents::ml2::ovs::local_ip: "%{::ipaddress_p3p1}"
-
 dc_nrpe::checks::bmc::std_fw_version: '3.47'
 dc_nrpe::checks::check_hw::nova_cpu: '24'
 dc_nrpe::checks::check_hw::nova_mem: '132'

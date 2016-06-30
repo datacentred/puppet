@@ -1,9 +1,10 @@
+# == Class: ::dc_profile::openstack::neutron::agent_network
+#
 # Neutron agent configuration specific to network nodes
 #
 class dc_profile::openstack::neutron::agent_network {
   include ::neutron
   include ::neutron::plugins::ml2
-  include ::neutron::agents::ml2::ovs
   include ::neutron::agents::l3
   include ::neutron::agents::dhcp
   include ::neutron::agents::vpnaas
@@ -16,6 +17,15 @@ class dc_profile::openstack::neutron::agent_network {
 
   $uplink_if = hiera(network_node_extif)
 
+  class { '::neutron::agents::ml2::ovs':
+    bridge_mappings      => [ 'default:br-ex' ],
+    enable_tunneling     => true,
+    prevent_arp_spoofing => false,
+    arp_responder        => true,
+    tunnel_types         => [ 'gre' ],
+    local_ip             => values(netip('ark-compute-integration', hiera(networks))),
+  }
+    
   # We want to disable GRO on the external interface
   # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
   include ::ethtool
