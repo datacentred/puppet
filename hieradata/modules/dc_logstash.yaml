@@ -150,16 +150,19 @@ dc_logstash::client::config:
       - '/var/log/apache2/horizon_access.log'
       fields:
         shipper: 'log-courier'
+        tags: ['horizon']
         type: 'horizon'
     - paths:
       - '/var/log/apache2/horizon_error.log'
       fields:
         shipper: 'log-courier'
+        tags: ['horizon']
         type: 'horizon'
     - paths:
       - '/var/log/horizon/horizon.log'
       fields:
         shipper: 'log-courier'
+        tags: ['horizon']
         type: 'horizon'
     - paths:
         - '/var/log/keystone/*.log'
@@ -176,6 +179,7 @@ dc_logstash::client::config:
       - '/var/log/libvirt/libvirtd.log'
       fields:
         shipper: 'log-courier'
+        tags: ['libvirt']
         type: 'libvirt'
     - paths:
       - '/var/log/mail.err'
