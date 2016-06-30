@@ -312,8 +312,7 @@ class dc_icinga2::services::openstack (
       'keystone_admin'    => true,
       'enable_pagerduty'  => true,
     },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "monitoring_master"',
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
   icinga2::object::apply_service { 'glance':
@@ -327,8 +326,7 @@ class dc_icinga2::services::openstack (
       'glance_password'  => $password,
       'enable_pagerduty' => true,
     },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "monitoring_master"',
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
   icinga2::object::apply_service { 'cinder':
@@ -345,8 +343,7 @@ class dc_icinga2::services::openstack (
       'cinder_timeout'     => [ 90, 90 ],
       'enable_pagerduty'   => true,
     },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "monitoring_master"',
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
   icinga2::object::apply_service { 'nova':
@@ -366,8 +363,7 @@ class dc_icinga2::services::openstack (
       'nova_timeout'       => [ 90, 90 ],
       'enable_pagerduty'   => true,
     },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "monitoring_master"',
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
   icinga2::object::apply_service { 'ceilometer':
@@ -380,8 +376,7 @@ class dc_icinga2::services::openstack (
       'ceilometer_password' => $password,
       'enable_pagerduty'    => true,
     },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "monitoring_master"',
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
   icinga2::object::apply_service { 'openstack keystone':
