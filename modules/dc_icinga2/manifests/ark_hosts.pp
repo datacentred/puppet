@@ -91,7 +91,8 @@ class dc_icinga2::ark_hosts {
   dc_icinga2::virtual_host { 'ark-pdu-b3-a.sal01.datacentred.co.uk':
     address    => '10.10.129.33',
     vars       => {
-      'role' => 'apc-pdu',
+      'role'                     => 'apc-pdu',
+      'environmental_monitoring' => true,
     },
     icon_image => 'http://incubator.storage.datacentred.io/apc-logo-16x16.png',
   }
