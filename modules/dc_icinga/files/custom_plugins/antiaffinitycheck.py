@@ -119,7 +119,7 @@ class NovaConnect(object):
                 print "Anti-affinity rules violated in Server Group:",\
                             group.id
                 print_table(output)
-        if self.json:
+        if self.json and merged_output:
             print json.dumps(merged_output)
 
 def create_table(fields):

@@ -24,4 +24,12 @@ class dc_icinga::server::custom_plugins {
     provider => 'pip',
   }
 
+  # Need latest openstack api clients for some checks
+  $openstack_packages = [ 'python-novaclient', 'python-keystoneclient', 'pyopenssl', 'ndg-httpsclient', 'pyasn1' ]
+
+  package { $openstack_packages:
+    ensure   => latest,
+    provider => pip,
+  }
+
 }
