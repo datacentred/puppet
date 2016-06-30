@@ -35,16 +35,9 @@ class dc_icinga::server::install {
     require => Package['nfs-common'],
   }
 
-  # Need latest pip packages for some checks
-  $pip_packages = [ 'nagios-plugin-elasticsearch',
-                    'python-neutronclient',
-                    'python-ceilometerclient',
-                    'python-cinderclient',
-                    'python-novaclient',
-                    'python-keystoneclient',
-                    'ndg-httpsclient',
-                    'pyasn1' ]
+  # Need pip packages for some checks
+  $pip_packages = 'nagios-plugin-elasticsearch'
 
-  ensure_packages($pip_packages, {'ensure' => 'latest', 'provider' => 'pip'})
+  ensure_packages($pip_packages, {'provider' => 'pip'})
 
 }
