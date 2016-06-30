@@ -138,7 +138,7 @@
 	url = https://github.com/puppetlabs/puppetlabs-ruby.git
 [submodule "modules/haproxy"]
 	path = modules/haproxy
-	url = https://github.com/puppetlabs/puppetlabs-haproxy
+	url = https://github.com/datacentred/puppetlabs-haproxy.git
 [submodule "modules/keepalived"]
 	path = modules/keepalived
 	url = https://github.com/arioch/puppet-keepalived
