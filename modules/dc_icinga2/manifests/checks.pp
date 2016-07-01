@@ -33,7 +33,7 @@ class dc_icinga2::checks {
       '-p' => '$ip_pool_password$',
       '-t' => '$ip_pool_tenant_name$',
       '-a' => '$ip_pool_auth_url$',
-      '-w' => '$ip_pool_percent_warn',
+      '-w' => '$ip_pool_percent_warn$',
       '-c' => '$ip_pool_percent_crit$',
     },
   }
