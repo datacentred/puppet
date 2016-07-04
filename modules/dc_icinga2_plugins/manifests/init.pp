@@ -164,23 +164,15 @@ class dc_icinga2_plugins {
 
   $packages = [
     'nagios-plugin-check-scsi-smart',
+    'python-ceilometerclient',
+    'python-cinderclient',
     'python-dnspython',
+    'python-glanceclient',
+    'python-keystoneclient',
+    'python-novaclient',
     'python-tftpy',
   ]
 
   ensure_packages($packages)
-
-  $pip_packages = [
-    'python-neutronclient',
-    'python-cinderclient',
-    'python-novaclient',
-    'python-ceilometerclient',
-    'python-glanceclient',
-    'python-keystoneclient',
-    'ndg-httpsclient',
-    'pyasn1',
-  ]
-
-  ensure_packages($pip_packages, {'ensure' => 'latest', 'provider' => 'pip'})
 
 }
