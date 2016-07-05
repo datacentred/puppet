@@ -4,6 +4,9 @@
 #
 class dc_icinga2_plugins {
 
+  # Add python lib for checking antiaffinity
+  include dc_profile::openstack::nova_antiaffinity
+
   File {
     ensure => file,
     owner  => 'root',
@@ -20,6 +23,14 @@ class dc_icinga2_plugins {
 
   file { '/usr/local/lib/nagios/plugins/check_ip_pool':
     source => 'puppet:///modules/dc_icinga2_plugins/check_ip_pool',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_anti_affinity':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_anti_affinity',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/antiaffinitycheck.py':
+    ensure => absent
   }
 
   file { '/usr/local/lib/nagios/plugins/check_bmc':
