@@ -9,6 +9,7 @@ import sys
 import argparse
 import subprocess
 import json
+import antiaffinity
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -31,17 +32,12 @@ def main():
     os.environ['OS_PASSWORD'] = args.password
     os.environ['OS_TENANT_NAME'] = args.tenant_name
 
-    check = subprocess.Popen('/usr/lib/nagios/plugins/antiaffinitycheck.py --all --json',
-                             shell=True,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE)
-    (stdoutdata, stderrdata) = check.communicate()
-
-    if stderrdata:
-        print "UNKNOWN: Error running check %s" % stderrdata
-        sys.exit(NAGIOS_UNKNOWN)
-    elif stdoutdata:
-        json_data = json.loads(stdoutdata)
+    args.json = True
+    nova_connect = antiaffinity.NovaConnect(args)
+    results = nova_connect.check_all()
+    
+    if results:
+        json_data = json.loads(results)
         group_ids = []
         for instance in json_data:
             if instance['server_group_id'] not in group_ids:

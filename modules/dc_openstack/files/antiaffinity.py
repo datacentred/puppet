@@ -55,7 +55,17 @@ class NovaConnect(object):
         if 'anti-affinity' in server_group.policies:
             return server_group.members
         else:
-            return False
+            rlass dc_foreman::python_lib
+            # Deploys our foreman python libraries
+            class dc_foreman::python_lib {
+
+                      file { '/usr/local/lib/python2.7/dist-packages/dc_foreman.py':
+                          ensure => file,
+                              source => 'puppet:///modules/dc_foreman/dc_foreman.py'
+                                }
+
+            }
+
 
     def get_hypervisors(self, uid_list):
         """

@@ -38,6 +38,18 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'anti_affinity':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_anti_affinity"',
+    ],
+    arguments => {
+      '-u' => '$anti_affinity_user$',
+      '-p' => '$anti_affinity_password$',
+      '-t' => '$anti_affinity_tenant_name$',
+      '-a' => '$anti_affinity_auth_url$',
+    },
+  }
+
   icinga2::object::checkcommand { 'bmc':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_bmc"',

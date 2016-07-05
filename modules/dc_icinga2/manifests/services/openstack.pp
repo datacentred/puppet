@@ -535,5 +535,17 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
+  icinga2::object::apply_service { 'openstack anti affinity':
+    import        => 'openstack-service',
+    check_command => 'anti_affinity',
+    vars          => {
+      'anti_affinity_auth_url'    => 'https://compute.datacentred.io:5000',
+      'anti_affinity_tenant_name' => $tenant,
+      'anti_affinity_user'        => $username,
+      'anti_affinity_password'    => $password,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
 }
 
