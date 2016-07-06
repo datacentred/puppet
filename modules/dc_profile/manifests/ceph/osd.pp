@@ -31,4 +31,11 @@ class dc_profile::ceph::osd {
     content => 'SUBSYSTEM=="block", ATTR{queue/rotational}=="1", ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/read_ahead_kb}="1024", ATTR{queue/nr_requests}="1024"',
   }
 
+  $packages = [
+    'sg3-utils',
+    'lsscsi',
+  ]
+
+  ensure_packages($packages)
+
 }
