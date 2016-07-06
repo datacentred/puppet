@@ -7,8 +7,10 @@ class dc_profile::openstack::neutron::agent_compute {
   include ::neutron::plugins::ml2
 
   class { '::neutron::agents::ml2::ovs':
-    enable_tunneling => true,
-    local_ip         => values(netip('ark-compute-integration', hiera(networks))),
+    enable_tunneling     => true,
+    local_ip             => values(netip('ark-compute-integration', hiera(networks))),
+    arp_responder        => true,
+    prevent_arp_spoofing => false,
   }
 
   # This doesn't need to run on compute nodes where we don't use

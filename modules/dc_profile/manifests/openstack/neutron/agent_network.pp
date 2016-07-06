@@ -18,12 +18,13 @@ class dc_profile::openstack::neutron::agent_network {
   $uplink_if = hiera(network_node_extif)
 
   class { '::neutron::agents::ml2::ovs':
-    bridge_mappings      => [ 'default:br-ex' ],
     enable_tunneling     => true,
-    prevent_arp_spoofing => false,
-    arp_responder        => true,
+    bridge_mappings      => [ 'default:br-ex', "as201541:br-${uplink_if}" ],
+    bridge_uplinks       => [ 'br-ex:em2', "br-${uplink_if}:${uplink_if}" ],
     tunnel_types         => [ 'gre' ],
     local_ip             => values(netip('ark-compute-integration', hiera(networks))),
+    arp_responder        => true,
+    prevent_arp_spoofing => false,
   }
     
   # We want to disable GRO on the external interface
@@ -76,5 +77,4 @@ class dc_profile::openstack::neutron::agent_network {
     }
     default: {}
   }
-
 }
