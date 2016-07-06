@@ -52,6 +52,25 @@ timeservers:
 #
 tftp_dir: '/var/tftpboot'
 
+# networks
+#
+networks:
+  ark-compute-management: '160'
+  ark-compute-integration: '170'
+  ark-bmc: '128'
+  ark-compute-api: '514'
+  ark-compute-integration: '170'
+  ark-compute-management: '160'
+  ark-compute-public: '513'
+  ark-hw-onboarding: '130'
+  ark-platform-services: '192'
+  ark-rack-infrastructure: '129'
+  ark-storage-api: '515'
+  ark-storage-backend: '96'
+  ark-storage-frontend: '104'
+  ark-storage-lb: '9'
+  ark-storage-management: '112'
+
 # repos and mirrors
 #
 mirror_server: 'http://mirror.datacentred.co.uk'
@@ -390,21 +409,26 @@ osdbmq_rabbitmq_port: '5672'
 osdbmq_rabbitmq_vhost: '/'
 
 # RabbitMQ
+#
 rabbitmq_monuser:     'monitor'
 rabbitmq_monuser_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAPpLtJnRKkBBakOIPtzD+4MzEIzaApuKvI3r3WH2O5PLioRLY2sL/QQsK/e2facIAVyogW9Vt5eoJSxxEythsvfZM8mtWo8O30sZov55dCA9+xz6QxyQdcC3puzxETleEzQ4vWd/3B6lyM5d0P4AeInCYHqoZHYeAbAb7PF4BcF7RftwxvHlN8E9tjA1pZq6y6b92YJZqCP5kTPk5ewMhyl2NseCtf0A9XsYjnxjsMTx5FPGkZlgnIPK4kOWfMUjT12XGGobqGVL6i3UcNthU2JmhCLVxFPVWbIZZTZvU1D8thsAtAh9dJHwX2b6bbfUwndDh3/WyNiqNf5lEjJ/F0DA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD3i+0j/KyHkrwhymMm5tSugBAhFNFXgCbn+QUiaaIp6Tnv]
 
 # Neutron checking
 # WARNING: the DB source is defined in the openstack_data role
+# 
 neutron_db: 'neutron'
 neutron_db_user: 'neutron'
 neutron_db_pass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAhSlU4t8n27l+9Y7apkOoFk2Nfo3Rg02ChM/mtesprk+zFiis2kZ6w+C+d21pDy8XMjNx+0l31OhHTxMpnxQ6U70yHihSWLdZtWnx+L7SEF83e0Mwclu2bJCSZTcYgNsI8FrvGzygIxav4cL+ictLNCzHH6msBhm1LRLzK78R+0fSKKDM/EBvIsnLJDJGKIa/4wkCxg7Pq2xbHJbWhQP0kpPK0wVoWaPGQ+MMOIipBkAN+MGLxRHIEjq6xFZagDye3yPSndvLH6ZqFSnMIR8t511i1blwGzwJgNb9w9qTy6H0RN+Z03eFFMhOqUvMz547mYkdO8HZIpQBBXRlhixzbjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBB1CyOmTZ2Gux9o2csSwrDgBALfp4crt+RxnGTjoYWWg3k]
 
 # IPAM
 # Shared with role based database and phpipam configuration
+#
 phpipam::db_name: 'phpipam'
 phpipam::db_user: 'phpipam'
 phpipam::db_pass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEATcy8Oxcqw4V1Hdg5p4i5MFLCMx3yd5x9JyaqVq92uzYLxyh1W5DHlEDoJvsi45aZZLLoeGFGOuKm/XDfqtzr7xCSh2VstOHudgZjKDjd25KxH4BB8qXpj3TfA6faOxaGXfwTj/H/c2YN2Fk4oYdtpiHRxHnTqUJZDuHFsRXEssDJOoaBd/qNvCvBITyLQi2bThC9MmDsWLpPD0xRV8mLRvrNTTf7bbwL6F04hDlSD9b5w9FvG88sleNsj/JbmCAOICvN0RhimMYOSQT+gNhId4VCAt093PmARuCE5Vw+01uPv/FXjI2XE4jBq5SXkyW/2ryBjTri+E49axE9EYugZjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCnguwHTuDFr7dmd8XK0emtgBCwdoy0uLhek6r3teMbRwvF]
+
 # Foreman related
+#
 foreman_database: 'foreman'
 foreman_user:     'foreman'
 foreman_pass:     ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAP+AojshzxuLrczcW8U0BenWOyhmkyxSO2cej+UwbOfsS7JEPZZNuEhhXs8BruHG1JChFPKO7FjFH7UepbfhGMZWBQ+QAfK9CWOEw2WNoEFKdVB4ClecOn9KShrIUyioE1+8IEOqCURTHXbaAXxYcYGwk0+sTcVYgYkqyFE113+KuOsiAtjM/dX4wPh2+ao9ka44MnsfrsOTStPXVo1klY7ye60yhLQGsoKA2M3B99rEwQnsfG3zSCLnUl6bBoAKEXkiEUzAxcj4qrb7x4J5W/sKpCcoKa5nPZoiqD3JYsg2yxHCdLJjQtN+XYNmJ9muuDn2J8eZpEDN4WqwrDZ52aTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBRlnzlMKWdkru0Pfc/EYkNgBBQN4+QMUVEq0fggIrPRkc1]
@@ -418,7 +442,9 @@ foreman_view_api_user: 'view_api_user'
 foreman_view_api_pw: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAbiSr0uv52cP7E3apneSaO+rOxoWD5aSJCC6boOmvHeRicF7MfjEhdXvjLgK4rdq2ejQQxlzVfMNW77tpO42AsrW580AsEb1KXW0n9FWYMaN+UfSY+YaDZfbFJA8zIHHt0MVrD7R7gorbtxf4i1HlvujeZCM7i9EDKPkFpQg+JqBay2L8eQnmk2bGm24uVoZgvp0MGjQxxCj008SK9PVImqjymayGh4XYVmbIqJI8fkrMPk8yNMDELmKCRcXJLSuAS+QybkBMIbK/y4UBeewc1vFLvK9Y60J8NxrWpUOLx77wXq4zPXQLf83slAbRvAS8TNpCwiwaNd8ElH07Br9ggzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCp//inLaPdoqjFWtc/KZJvgBCCHg2sh3KnAmhiLrWo+Srd]
 foreman_update_bmc_user: 'update_bmc_interface'
 foreman_update_bmc_pw: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAktfNnBQX0qb9t7te4hsj0ST4BQ/+DUBDu5qGmfD3fPQh7Xra1MCrB444NwFwgsC1JrgzfXhG2tXzWSCRONZ9csQRN8z30k3xRSZELTjJj9448xQFaVK5+AAg1zKT8A6CaEbhw9R6W3u/Nr+JfoX522xsys8SmPIUb/uWVuLx3bxO2N3Ed3gNCTdG8FUX/PkpLyKTAdPPZTm01bnwzMQXEIvowfxco+t5R6C+taS1I3cu1af3dpqhMPklnthXWXt8MWlQFuSgYxCr4itBkgmAyV5EdN1x+dW9gFKa0D3KeowthAhTderbwKDa90DrgvwP4R2cphMDesv9way4FoeOMDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAH6knYEQOVi2t4MRYO5w9AgBAstCgSg3GnMD1/orYEqs62]
+
 # BMC
+#
 ipmi_monitor_user: 'icinga'
 ipmi_monitor_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEADBPqA1M23wDklcEn1RnMxj756KUeKxp4xgXDYApeDyJwO/AX82OAJ9lK4tpg0noz8+pmOpXKEzSZrmCgZlIj0A+QTeiqCKSbpzb/3i1GCLTsq6Ah9YxTsrQ5hNjCIG6l+4jUGkv0cbm6RLBFoTiovnJr0YyM9pFCVpwnfR6VXcV34/++5C2PYxMjd4lR+jzW/SOft+e9Fzw2erXqtZKVhuurZn/Qn7y3eaNzuCqe1RskiugBhcMk5ruvpdVOj+GSbNn6HTAPUkzwhIFwQNeuKV2zpuqSa40igfB8SkWDaJP4o5JcgpQsrHrgirjPm95dq0lICd7xoLMuTRYEGV0wLzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBClrloJmolBZFsTDKw/ZHkxgBDKpOgPjw1hohkhLQzkon3B]
 bmc_admin_name: 'enoch'
@@ -429,6 +455,7 @@ bmc_admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBAD
 dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
 
 # Swappiness Factor (PD-2225)
+#
 sysctls::values:
   vm.swappiness:
     value: '1'
