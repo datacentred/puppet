@@ -1,5 +1,6 @@
 :hierarchy:
     - "nodes/%{::hostname}"
+    - "skus/%{sku}"
     - "platforms/%{productname}"
     - "%{virtual}/architectures/%{architecture}"
     - "environments/%{::environment}/roles/%{::role}"
