@@ -146,8 +146,8 @@ apt::sources:
     release: 'testing'
     repos: 'main'
     key:
-      id: 'F78372A06FF50C80464FC1B4F7B8CEA6056E8E56'
-      source: 'http://www.rabbitmq.com/rabbitmq-signing-key-public.asc'
+      id: '0A9AF2115F4687BD29803A206B73A36E6026DFCA'
+      source: 'https://www.rabbitmq.com/rabbitmq-release-signing-key.asc'
   sysdig:
     location: 'http://download.draios.com/stable/deb'
     release: 'stable-$(ARCH)/'
