@@ -82,7 +82,11 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   def self.get_lan_channel
     # 0 = IPMB, 1-11 = Application Specific, 12-13 = Reserved, 14 = Current, 15 = System
     (1..11).to_a.each do |channel|
-      output = %x{ipmitool channel info #{channel} 2> /dev/null}
+      begin
+        output = %x{ipmitool channel info #{channel} 2> /dev/null}
+      rescue Errno::ENOENT
+        return nil
+      end
       next unless $? == 0
       return channel if /LAN/.match(output)
     end
@@ -103,7 +107,11 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   # @return [Array] array of providers for all instances found on the system
   def self.instances
     channel = get_lan_channel
-    lines = %x{ipmitool user list #{channel}}.split("\n")[1..-1]
+    begin
+      lines = %x{ipmitool user list #{channel}}.split("\n")[1..-1]
+    rescue Errno::ENOENT
+      lines = []
+    end
     lines.collect do |line|
       fields = line.split()
       # Hack, some BMCs have anonymous users with a blank name field
