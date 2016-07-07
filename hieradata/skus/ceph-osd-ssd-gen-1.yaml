@@ -1,0 +1,33 @@
+---
+# X9DRD-7LN4F(-JBOD)/X9DRD-EF
+# - 12x 960GB or 1TB HDD Slots 1-12
+ceph::disks:
+  Slot 01/Slot 01:
+    fstype: 'xfs'
+  Slot 02/Slot 02:
+    fstype: 'xfs'
+  Slot 03/Slot 03:
+    fstype: 'xfs'
+  Slot 04/Slot 04:
+    fstype: 'xfs'
+  Slot 05/Slot 05:
+    fstype: 'xfs'
+  Slot 06/Slot 06:
+    fstype: 'xfs'
+  Slot 07/Slot 07:
+    fstype: 'xfs'
+  Slot 08/Slot 08:
+    fstype: 'xfs'
+  Slot 09/Slot 09:
+    fstype: 'xfs'
+  Slot 10/Slot 10:
+    fstype: 'xfs'
+  Slot 11/Slot 11:
+    fstype: 'xfs'
+  Slot 12/Slot 12:
+    fstype: 'xfs'
+
+ceph::conf:
+  osd:
+    osd op threads: '5'
+    filestore op threads: '4'
