@@ -1,38 +1,4 @@
 ---
-# Temporary - Modules needs to us a predictable hardware addressing mode
-# e.g. port ID on the SXP
-# TODO: This is only for SSD class nodes
-ceph::disks:
-  Slot 01/Slot 01:
-    fstype: 'xfs'
-  Slot 02/Slot 02:
-    fstype: 'xfs'
-  Slot 03/Slot 03:
-    fstype: 'xfs'
-  Slot 04/Slot 04:
-    fstype: 'xfs'
-  Slot 05/Slot 05:
-    fstype: 'xfs'
-  Slot 06/Slot 06:
-    fstype: 'xfs'
-  Slot 07/Slot 07:
-    fstype: 'xfs'
-  Slot 08/Slot 08:
-    fstype: 'xfs'
-  Slot 09/Slot 09:
-    fstype: 'xfs'
-  Slot 10/Slot 10:
-    fstype: 'xfs'
-  Slot 11/Slot 11:
-    fstype: 'xfs'
-  Slot 12/Slot 12:
-    fstype: 'xfs'
-
-ceph::conf:
-  osd:
-    osd op threads: '5'
-    filestore op threads: '4'
-
 dc_icinga::client::address: "%{::ipaddress_em1}"
 dc_nrpe::checks::ceph::public_ip: "%{::ipaddress_p2p1}"
 dc_nrpe::checks::bmc::std_fw_version: '3.40'
