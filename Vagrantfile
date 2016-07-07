@@ -18,6 +18,17 @@ Vagrant.configure('2') do |config|
     config.landrush.upstream '8.8.8.8'
   end
 
+  # Clean up old certificates from PuppetDB when a VM is destroyed
+  if Vagrant.has_plugin?("vagrant-triggers")
+    config.trigger.after :destroy do
+        options = [ '-f', 'destroy' ]
+        hosts = ARGV.reject!{|host| host.start_with?(*options)}
+        if hosts
+            run "vagrant ssh puppet -c 'puppet cert clean \{#{hosts.join(",")}\}.vagrant.test'"
+        end
+    end
+  end
+
   # Setup a dedicated PuppetDB for storedconfigs
   config.vm.define 'puppet' do |box|
     box.vm.network :private_network, type: :dhcp
@@ -46,11 +57,11 @@ Vagrant.configure('2') do |config|
       # Optionally provision RedHat
       if options.has_key?(:rhel)
         box.vm.box = 'datacentred/rhel-7.2'
-		box.vm.box_url = 'https://dischord.storage.datacentred.io/vagrant/rhel-7.2.vmware.box'
-		box.vm.box_download_checksum = 'f725042e3452963b9e17acb448140233b1227f13f42010433790528148497e70'
-		box.vm.box_download_checksum_type = 'sha256'
-		config.registration.username = ENV['RHEL_USERNAME']
-		config.registration.password = ENV['RHEL_PASSWORD']
+        box.vm.box_url = 'https://dischord.storage.datacentred.io/vagrant/rhel-7.2.vmware.box'
+        box.vm.box_download_checksum = 'f725042e3452963b9e17acb448140233b1227f13f42010433790528148497e70'
+        box.vm.box_download_checksum_type = 'sha256'
+        config.registration.username = ENV['RHN_USERNAME']
+        config.registration.password = ENV['RHN_PASSWORD']
       end
 
       if options.has_key?(:network_node)
