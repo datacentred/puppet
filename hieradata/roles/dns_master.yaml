@@ -17,6 +17,8 @@ ntp::restrict:
   - '-6 default kod nomodify notrap nopeer noquery'
   - '127.0.0.1'
   - '-6 ::1'
+ntp::interfaces:
+  - "%{::ipaddress}"
 
 dc_dhcp::zonemaster: '127.0.0.1'
 
