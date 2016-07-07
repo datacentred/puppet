@@ -29,15 +29,16 @@ class dc_profile::util::docs_ext {
     server_name => [ $::fqdn, 'docs.datacentred.io', 'http://confluence' ],
   }
 
-  postgresql::server::role { 'confluenceadmin':
+  postgresql::server::role { 'confluenceuser':
     login    => true,
     createdb => true,
+    password_hash => postgresql_password('confluenceuser', "$database_password"),
   }
 
   postgresql::server::db { 'confluencedb':
     owner    => 'confluenceuser',
     user     => 'confluenceuser',
-    password => $database_password,
+    password => postgresql_password('confluenceuser', '$database_password'),
   }
 
   dc_backup::dc_duplicity_job { "${::fqdn}_confluencexml" :
