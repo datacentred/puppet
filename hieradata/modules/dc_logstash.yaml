@@ -21,7 +21,6 @@ dc_logstash::client::config:
       - '/var/log/auth.log'
       fields:
         shipper: 'log-courier'
-        tags: ['auth']
         type: 'auth'
     - paths:
       - '/var/log/apache2/*access.log'
@@ -42,68 +41,57 @@ dc_logstash::client::config:
       - '/var/log/ceilometer/ceilometer-agent-central.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
         type: 'ceilometer'
     - paths:
       - '/var/log/ceilometer/ceilometer-agent-compute.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
         type: 'ceilometer'
     - paths:
       - '/var/log/ceilometer/ceilometer-agent-notification.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
         type: 'ceilometer'
     - paths:
       - '/var/log/ceilometer/ceilometer-api.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt','ceilometerapi']
         type: 'ceilometer'
     - paths:
       - '/var/log/ceilometer/ceilometer-collector.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
         type: 'ceilometer'
     - paths:
       - '/var/log/ceilometer/ceilometer-dbsync.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
         type: 'ceilometer'
     - paths:
       - '/var/log/ceilometer/ceilometer-expirer.log'
       fields:
         shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
         type: 'ceilometer'
     - paths:
       - '/var/log/cinder/cinder-api.log'
       fields:
         shipper: 'log-courier'
-        tags: ['cinder', 'oslofmt', 'cinderapi']
-        type: 'cinder'
+        type: 'cinder_api'
     - paths:
       - '/var/log/cinder/cinder-manage.log'
       fields:
         shipper: 'log-courier'
-        tags: ['cinder', 'oslofmt']
-        type: 'cinder'
+        type: 'cinder_manage'
     - paths:
       - '/var/log/cinder/cinder-scheduler.log'
       fields:
         shipper: 'log-courier'
-        tags: ['cinder', 'oslofmt']
-        type: 'cinder'
+        type: 'cinder_scheduler'
     - paths:
       - '/var/log/cinder/cinder-volume.log'
       fields:
         shipper: 'log-courier'
-        tags: ['cinder', 'oslofmt']
-        type: 'cinder'
+        type: 'cinder_volume'
     - paths:
       - '/var/log/foreman/production.log'
       fields:
@@ -118,8 +106,7 @@ dc_logstash::client::config:
       - '/var/log/glance/glance-api.log'
       fields:
         shipper: 'log-courier'
-        tags: ['glance', 'oslofmt', 'glanceapi']
-        type: 'glance'
+        type: 'glance_api'
     - paths:
       - '/var/log/glance/scheduler.log'
       fields:
@@ -134,7 +121,6 @@ dc_logstash::client::config:
       - '/var/log/heat/heat-api.log'
       fields:
         shipper: 'log-courier'
-        tags: ['heat', 'oslofmt', 'heatapi']
         type: 'heat'
     - paths:
       - '/var/log/heat/heat-engine.log'
@@ -150,25 +136,21 @@ dc_logstash::client::config:
       - '/var/log/apache2/horizon_access.log'
       fields:
         shipper: 'log-courier'
-        tags: ['horizon']
         type: 'horizon'
     - paths:
       - '/var/log/apache2/horizon_error.log'
       fields:
         shipper: 'log-courier'
-        tags: ['horizon']
         type: 'horizon'
     - paths:
       - '/var/log/horizon/horizon.log'
       fields:
         shipper: 'log-courier'
-        tags: ['horizon']
         type: 'horizon'
     - paths:
         - '/var/log/keystone/*.log'
       fields:
         shipper: 'log-courier'
-        tags: ['keystone', 'oslofmt']
         type: 'keystone'
     - paths:
         - '/var/log/apache2/keystone*.log'
@@ -179,7 +161,6 @@ dc_logstash::client::config:
       - '/var/log/libvirt/libvirtd.log'
       fields:
         shipper: 'log-courier'
-        tags: ['libvirt']
         type: 'libvirt'
     - paths:
       - '/var/log/mail.err'
@@ -200,8 +181,7 @@ dc_logstash::client::config:
       - '/var/log/neutron/dhcp-agent.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'neutron'
+        type: 'neutron_dhcp'
     - paths:
       - '/var/log/neutron/vpn_agent.log'
       fields:
@@ -231,44 +211,37 @@ dc_logstash::client::config:
       - '/var/log/neutron/openvswitch-agent.log'
       fields:
         shipper: 'log-courier'
-        tags: ['neutron', 'oslofmt'] 
-        type: 'neutron'
+        type: 'neutron_openvswitch'
     - paths:
       - '/var/log/neutron/server.log'
       fields:
         shipper: 'log-courier'
-        tags: ['neutron', 'oslofmt', 'neutronapi' ] 
-        type: 'neutron'
+        type: 'neutron_server'
     - paths:
         - '/var/log/neutron/neutron-server.log'
       fields:
         shipper: 'log-courier'
-        tags: ['neutron', 'oslofmt', 'neutronapi' ] 
-        type: 'neutron'
+        type: 'neutron_server'
     - paths:
       - '/var/log/nova/nova-api.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt', 'novaapi']
-        type: 'nova'
+        type: 'nova-api'
     - paths:
       - '/var/log/nova/nova-cert.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'novacert'
+        type: 'nova-cert'
     - paths:
       - '/var/log/nova/nova-compute.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'nova'
+        type: 'nova-compute'
     - paths:
       - '/var/log/nova/nova-conductor.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'nova'
+        type: 'nova-conductor'
     - paths:
       - '/var/log/nova/nova-consoleauth.log'
       fields:
@@ -278,32 +251,27 @@ dc_logstash::client::config:
       - '/var/log/nova/nova-manage.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'nova'
+        type: 'nova-manage'
     - paths:
       - '/var/log/nova/nova-scheduler.log'
       fields:
         shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'nova'
+        type: 'nova-scheduler'
     - paths:
       - '/var/log/openvswitch/ovs-ctl.log'
       fields:
         shipper: 'log-courier'
-        tags: ['openvswitch']
-        type: 'openvswitch'
+        type: 'openvswitch_ovsvctl'
     - paths:
       - '/var/log/openvswitch/ovsdb-server.log'
       fields:
         shipper: 'log-courier'
-        tags: ['openvswitch']
-        type: 'openvswitch'
+        type: 'openvswitch_ovsdbserver'
     - paths:
       - '/var/log/openvswitch/ovs-vswitchd.log'
       fields:
         shipper: 'log-courier'
-        tags: ['openvswitch']
-        type: 'openvswitch'
+        type: 'openvswitch_ovsvswitchd'
     - paths:
       - '/var/log/rabbitmq/rabbit@puppetca.log'
       fields:
@@ -338,58 +306,9 @@ dc_logstash::client::config:
       - '/var/log/syslog'
       fields:
         shipper: 'log-courier'
-        tags: ['syslog']
         type: 'syslog'
     - paths:
       - '/var/log/kern.log'
       fields:
         shipper: 'log-courier'
         type: 'kernel_log'
-    - paths:
-      - '/var/log/haproxy.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['haproxy']
-        type: 'haproxy'
-    - paths:
-      - '/var/log/nova/nova-api-metadata.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['nova', 'oslofmt', 'novametaapi']
-        type: 'nova'
-    - paths:
-      - '/var/log/neutron/neutron-dhcp-agent.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'nova'
-    - paths:
-      - '/var/log/glance/glance-registry.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'glance'
-    - paths:
-      - '/var/log/nova/nova-novncproxy.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['nova', 'oslofmt']
-        type: 'nova'
-    - paths:
-      - '/var/log/ceilometer/ceilometer-alarm-evaluator.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
-        type: 'ceilometer'
-    - paths:
-      - '/var/log/ceilometer/ceilometer-collector.log'
-      fields:
-        shipper: 'log-courier'
-        tags: ['ceilometer', 'oslofmt']
-        type: 'ceilometer'
-    - paths:
-      - '/var/log/dmesg'
-      fields:
-        shipper: 'log-courier'
-        tags: ['dmesg', 'kernel']
-        type: 'dmesg'
