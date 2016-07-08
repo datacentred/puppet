@@ -1,116 +1,73 @@
 filter {
-  if "oslofmt" in [tags] {
-    multiline {
-      negate => true
-      pattern => "^%{TIMESTAMP_ISO8601} "
-      what => "previous"
-    }
-    multiline {
-      negate => false
-      pattern => "^%{TIMESTAMP_ISO8601}%{SPACE}%{NUMBER}?%{SPACE}?TRACE"
-      what => "previous"
-    }
-    grok {
-      # Do multiline matching as the above mutliline filter may add newlines
-      # to the log messages.
-      # TODO move the LOGLEVELs into a proper grok pattern.
-      match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:logdate}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
-      add_field => { "received_at" => "%{@timestamp}" }
-    }
-    if [module] == "iso8601.iso8601" {
-      drop {}
-    }
-
-    if "keystoneapi" in [tags] {
-       mutate {
-            gsub => ['logmessage',"\"",""]
-       }
-       grok {
-          match => { "logmessage" => "\[\-\] %{NOTSPACE:requesterip} \- \- \[%{NOTSPACE:req_date} %{NOTSPACE:req_time}\] %{NOTSPACE:method} %{NOTSPACE:url_path} %{NOTSPACE:http_ver} %{NUMBER:response} %{NUMBER:bytes} %{NUMBER:seconds}" }
-          add_field => ["api", "keystone"]
-          add_tag => ["apimetrics"]
-       }
-    } else if "novaapi" in [tags] {
-       if [module] == "nova.osapi_compute.wsgi.server" {
-         mutate {
-              gsub => ['logmessage',"\"",""]
-         }
-         grok {
-            match => { "logmessage" => "\[req\-%{NOTSPACE:requestid} %{NOTSPACE:user_id} %{NOTSPACE:tenant}\] %{NOTSPACE:requesterip} %{NOTSPACE:method} %{NOTSPACE:url_path} %{NOTSPACE:http_ver} status\: %{NUMBER:response} len\: %{NUMBER:bytes} time\: %{NUMBER:seconds}" }
-            add_field => ["api", "nova"]
-            add_tag => ["apimetrics"]
-         }
-       }
-    } else if "neutronapi" in [tags] {
-       if [module] == "neutron.wsgi" {
-         if "accepted" not in [logmessage] {
-           mutate {
-                gsub => ['logmessage',"\"",""]
-           }
-           grok {
-              match => { "logmessage" => "\[req\-%{NOTSPACE:requestid} None\] %{NOTSPACE:requesterip} \- \- \[%{NOTSPACE:req_date} %{NOTSPACE:req_time}\] %{NOTSPACE:method} %{NOTSPACE:url_path} %{NOTSPACE:http_ver} %{NUMBER:response} %{NUMBER:bytes} %{NUMBER:seconds}" }
-              add_field => ["api", "neutron"]
-              add_tag => ["apimetrics"]
-           }
-         }
-       }
-    } else if "glanceapi" in [tags] {
-       if [module] == "glance.wsgi.server" {
-         mutate {
-              gsub => ['logmessage',"\"",""]
-         }
-         grok {
-            match => { "logmessage" => "\[%{NOTSPACE:requestid} %{NOTSPACE:user_id} %{NOTSPACE:tenant} \- \- \-\] %{NOTSPACE:requesterip} \- \- \[%{NOTSPACE:req_date} %{NOTSPACE:req_time}\] %{NOTSPACE:method} %{NOTSPACE:url_path} %{NOTSPACE:http_ver} %{NUMBER:response} %{NUMBER:bytes} %{NUMBER:seconds}" }
-            add_field => ["api", "glance"]
-            add_tag => ["apimetrics"]
-         }
-       }
-    } else if "novametaapi" in [tags] {
-       mutate {
-            gsub => ['logmessage',"\"",""]
-       }
-       if [module] == "nova.api.ec2" {
-         grok {
-            match => { "logmessage" => "\[%{GREEDYDATA:requestid}\] %{NUMBER:seconds}s %{NOTSPACE:requesterip} %{NOTSPACE:method} %{NOTSPACE:url_path} None\:None %{NUMBER:response} %{GREEDYDATA:user_agent}" }
-            add_field => ["api", "metadata-ec2"]
-            add_tag => ["apimetrics"]
-         }
-       } else if [module] == "nova.metadata.wsgi.server" {
-         grok {
-            match => { "logmessage" => "\[%{GREEDYDATA:requestid}\] %{NOTSPACE:requesterip} %{NOTSPACE:method} %{NOTSPACE:url_path} %{NOTSPACE:http_ver} status\: %{NUMBER:response} len\: %{NUMBER:bytes} time\: %{NUMBER:seconds}" }
-            add_field => ["api", "metadata"]
-            add_tag => ["apimetrics"]
-         }
-       }
-    }
-  } else if "libvirt" in [tags] {
-    grok {
-       match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:logdate}:%{SPACE}%{NUMBER:code}:?%{SPACE}\[?\b%{NOTSPACE:loglevel}\b\]?%{SPACE}?:?%{SPACE}\[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
-       add_field => { "received_at" => "%{@timestamp}"}
-    }
-    mutate {
-       uppercase => [ "loglevel" ]
-    }
-  } else if [type] == "syslog" {
-     grok {
-        match => { "message" => "%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:logmessage}" }
-        add_field => [ "received_at", "%{@timestamp}" ]
-     }
-     syslog_pri {
-        severity_labels => ["ERROR", "ERROR", "ERROR", "ERROR", "WARNING", "INFO", "INFO", "DEBUG" ]
-     }
-     date {
-        match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
-     }
-     if !("_grokparsefailure" in [tags]) {
+# Add in group tags we didn't add in forwarder due to bug
+# https://github.com/elasticsearch/logstash-forwarder/issues/65
+# By grouping the logs using tags we can then search all the related logs in kibana
+    if [type] =~ /cinder.*/ {
         mutate {
-           replace => [ "@source_host", "%{syslog_hostname}" ]
+            add_tag => [ "cinder", "oslofmt" ]
         }
-     }
-     mutate {
-        remove_field => [ "syslog_hostname", "syslog_timestamp" ]
-        add_field => [ "loglevel", "%{syslog_severity}" ]
-        add_field => [ "module", "%{syslog_program}" ]
-     }
-  }
+    }
+    else if [type] =~ /neutron.*/ or [type] =~ /openvswitch.*/ {
+        mutate {
+            add_tag => [ "neutron", "oslofmt" ]
+        }
+    }
+    else if [type] =~ /glance.*/ {
+        mutate {
+            add_tag => [ "glance", "oslofmt" ]
+        }
+    }
+    else if [type] =~ /nova.*/ {
+        mutate {
+            add_tag => [ "nova", "oslofmt" ]
+        }
+    }
+    else if [type] =~ /keystone.*/ {
+        mutate {
+            add_tag => [ "keystone", "keystonefmt" ]
+        }
+    }
+    else if [type] =~ /ceilometer.*/ {
+        mutate {
+            add_tag => [ "ceilometer", "oslofmt" ]
+        }
+    }
+    else if [type] =~ /heat.*/ {
+        mutate {
+            add_tag => [ "heat", "oslofmt" ]
+        }
+    }
+    if "oslofmt" in [tags] {
+        multiline {
+            negate => true
+            pattern => "^%{TIMESTAMP_ISO8601} "
+            what => "previous"
+        }
+        multiline {
+            negate => false
+            pattern => "^%{TIMESTAMP_ISO8601}%{SPACE}%{NUMBER}?%{SPACE}?TRACE"
+            what => "previous"
+        }
+        grok {
+            # Do multiline matching as the above mutliline filter may add newlines
+            # to the log messages.
+            # TODO move the LOGLEVELs into a proper grok pattern.
+           match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
+            add_field => { "received_at" => "%{@timestamp}" }
+        }
+        date {
+            match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS", "ISO8601" ]
+        }
+    } else if "keystonefmt" in [tags] {
+        grok {
+            # Do multiline matching as the above mutliline filter may add newlines
+            # to the log messages.
+            # TODO move the LOGLEVELs into a proper grok pattern.
+            match => { "message" => "(?m)^%{TIMESTAMP_ISO8601:timestamp}%{SPACE}%{NUMBER:pid}?%{SPACE}?(?<loglevel>AUDIT|CRITICAL|DEBUG|INFO|TRACE|WARNING|ERROR) \[?\b%{NOTSPACE:module}\b\]?%{SPACE}?%{GREEDYDATA:logmessage}?" }
+            add_field => { "received_at" => "%{@timestamp}" }
+        }
+        date {
+            match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS", "ISO8601" ]
+        }
+    }
 }
