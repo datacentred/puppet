@@ -698,13 +698,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Foreman Interfaces Check',
   }
 
-  icinga::service { 'check_journal_disk_latency':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_ceph_osd',
-    check_command       => 'check_nrpe_1arg!check_journal_disk_latency',
-    service_description => 'Journal Disk Latency',
-  }
-
   icinga::service { 'check_memcached':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_memcached',
