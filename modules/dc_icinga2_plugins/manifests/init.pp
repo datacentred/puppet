@@ -182,8 +182,17 @@ class dc_icinga2_plugins {
     'python-keystoneclient',
     'python-novaclient',
     'python-tftpy',
+    'python-pip',
   ]
 
   ensure_packages($packages)
+
+  $pip_packages = [
+    'python-ipaddress',
+  ]
+
+  ensure_packages($pip_packages, { 'provider' => 'pip' })
+
+  Package['python-pip'] -> Package[$pip_packages]
 
 }
