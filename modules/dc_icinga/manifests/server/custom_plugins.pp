@@ -22,4 +22,18 @@ class dc_icinga::server::custom_plugins {
     content  => 'nagios ALL=NOPASSWD:/usr/lib/nagios/plugins/check_haproxy.rb',
   }
 
+  $packages = [
+    'python-pip'
+  ]
+
+  ensure_packages($packages)
+
+  $pip_packages = [
+    'python-ipaddress'
+  ]
+
+  ensure_packages($pip_packages, { 'provider' => 'pip' })
+
+  Package['python-pip'] -> Package[$pip_packages]
+
 }
