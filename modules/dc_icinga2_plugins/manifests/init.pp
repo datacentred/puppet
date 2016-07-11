@@ -188,7 +188,7 @@ class dc_icinga2_plugins {
   ensure_packages($packages)
 
   $pip_packages = [
-    'python-ipaddress',
+    'ipaddress',
   ]
 
   ensure_packages($pip_packages, { 'provider' => 'pip' })

@@ -29,7 +29,7 @@ class dc_icinga::server::custom_plugins {
   ensure_packages($packages)
 
   $pip_packages = [
-    'python-ipaddress'
+    'ipaddress'
   ]
 
   ensure_packages($pip_packages, { 'provider' => 'pip' })
