@@ -72,7 +72,7 @@ then
 fi
 
 
-if ! KEY=$(ceilometer -k sample-list -l 10 -m image 2>/dev/null)
+if ! KEY=$(ceilometer sample-list -l 10 -m image 2>/dev/null)
 then
     echo "Unable to list samples"
     exit $STATE_CRITICAL
