@@ -21,10 +21,12 @@ Vagrant.configure('2') do |config|
   # Clean up old certificates from PuppetDB when a VM is destroyed
   if Vagrant.has_plugin?("vagrant-triggers")
     config.trigger.after :destroy do
-        options = [ '-f', 'destroy' ]
+        options = [ '-f', 'destroy', 'puppet' ]
         hosts = ARGV.reject!{|host| host.start_with?(*options)}
         if hosts
-            run "vagrant ssh puppet -c 'puppet cert clean \{#{hosts.join(",")}\}.vagrant.test'"
+            hosts.each do |host|
+                run "vagrant ssh puppet -c 'puppet cert clean #{host}.vagrant.test'"
+            end
         end
     end
   end
