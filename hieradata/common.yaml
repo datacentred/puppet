@@ -116,6 +116,7 @@ admins:
     pass: '$6$vjFryMvL$mMzJE/HUK2vVm.HatVURv8GUatgjxsodqfTTiKE5qNTums5acj5.OVIf1lOkD3Qe.BMATFkz1fDqjDm9w5qLX.'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQD1meqfHE5kqTp00XAqCFD3vqgRmYWTUK8FQ4Yt+VCKrtoUcjABsuk7tF3oqHdZaRCZAZaudW2bbqX3V3Sg45yoPgkBsC2StMSM8ZpsSdgBz9yqwCFctJCqqAjLJK9gSDT/iYAXzKgv5WTWtBb9b0sCfEgwPQBCGBh6ZJr6eqZF+cnADIVo7a6xJiOXV4uN8UozPLHNzrM4hnolfmVLAFHyTngfjicEQAXRP6z7S3c0wDmtqnvMg1lU+Gv+7Tit7jHE5yj0n3EJ1Z7dt4Nuj0i9Hv2SAVTvS8yMBMBKPb0EA/Ddj9tWY1ImEBZLILJPYAJusOUetR/NHDkLums405fZ'
     email: 'dariush.marsh@datacentred.co.uk'
+    ensure: 'absent'
   simon:
     uid: '1004'
     gid: 'sysadmin'
@@ -256,6 +257,7 @@ ldap_users:
         - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
   'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk':
     tag: user
+    ensure: 'absent'
     attributes:
       uid: dariush
       givenName: Dariush
