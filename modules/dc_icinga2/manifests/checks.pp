@@ -38,6 +38,20 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'ceilometer_update':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_ceilometer_update"',
+    ],
+    arguments => {
+      '-u' => '$ceilometer_update_user$',
+      '-p' => '$ceilometer_update_password$',
+      '-t' => '$ceilometer_update_tenant_name$',
+      '-a' => '$ceilometer_update_auth_url$',
+      '-w' => '$ceilometer_update_minutes_warn$',
+      '-c' => '$ceilometer_update_minutes_crit$',
+    },
+  }
+
   icinga2::object::checkcommand { 'anti_affinity':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_anti_affinity"',
