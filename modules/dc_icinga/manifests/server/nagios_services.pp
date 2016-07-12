@@ -564,6 +564,13 @@ class dc_icinga::server::nagios_services {
     service_description => 'Ceilometer API',
   }
 
+  icinga::service { 'check_ceilometer_update':
+    use                 => 'dc_service_slowcheck',
+    hostgroup_name      => 'dc_hostgroup_osapiendpoint',
+    check_command       => 'check_ceilometer_update!10!20',
+    service_description => 'Ceilometer Update Check',
+  }
+
   icinga::service { 'check_lsyncd':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_lsyncd',

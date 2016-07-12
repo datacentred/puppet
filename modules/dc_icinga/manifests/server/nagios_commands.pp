@@ -246,5 +246,9 @@ class dc_icinga::server::nagios_commands (
     command_line => "/usr/lib/nagios/plugins/check_anti_affinity.py -u ${keystone_icinga_user} -p ${keystone_icinga_password} -t ${keystone_icinga_tenant} -a https://\$HOSTALIAS\$:${keystone_port}/v2.0/",
   }
 
+  icinga::command { 'check_ceilometer_update':
+    command_line => "/usr/lib/nagios/plugins/check_ceilometer_update.py -u ${keystone_icinga_user} -p ${keystone_icinga_password} -t ${keystone_icinga_tenant} -a https://\$HOSTALIAS\$:${keystone_port}/v2.0/ -w \$ARG1$ -c \$ARG2$",
+  }
+
 }
 

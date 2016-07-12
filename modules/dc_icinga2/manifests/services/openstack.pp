@@ -535,6 +535,20 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
+  icinga2::object::apply_service { 'openstack ceilometer update':
+    import        => 'openstack-service',
+    check_command => 'ceilometer_update',
+    vars          => {
+      'ceilometer_update_auth_url'     => 'https://compute.datacentred.io:5000',
+      'ceilometer_update_tenant_name'  => $tenant,
+      'ceilometer_update_user'         => $username,
+      'ceilometer_update_password'     => $password,
+      'ceilometer_update_minutes_warn' => 10,
+      'ceilometer_update_minutes_crit' => 20,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
   icinga2::object::apply_service { 'openstack anti affinity':
     import        => 'openstack-service',
     check_command => 'anti_affinity',
