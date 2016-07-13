@@ -21,6 +21,9 @@ telegraf::inputs:
   disk:
     namedrop:
       - 'dm*'
+  diskio:
+    namedrop:
+      - 'dm*'
   swap:
   system:
 telegraf::outputs:
