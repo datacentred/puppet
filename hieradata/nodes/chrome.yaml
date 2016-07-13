@@ -1,5 +1,5 @@
 classes:
-  - '::dc_profile::perf::collectd'
+  - '::dc_collectd::agent::default'
 
 dc_graphite::graphite_manage_cname: true
 dc_graphite::graphite_link_path: '/srv/graphite'
