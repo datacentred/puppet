@@ -1,9 +1,10 @@
 ---
+telegraf:
+  ensure: '0.13.1-1'
 telegraf::global_tags:
   role: "%{::role}"
   hostgroup: "%{::hostgroup}"
   domain: "%{::domain}"
-  ensure: '0.13.1-1'
 telegraf::inputs:
   cpu:
     percpu: true

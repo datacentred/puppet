@@ -17,10 +17,11 @@ class dc_profile::perf::grafana {
   include ::grafana
 
   package { 'toml':
-    ensure   => installed,
+    ensure   => present,
     provider => 'gem',
-    before   => Class['::grafana'],
   }
+
+  Package['toml'] -> Class['::grafana']
 
   apache::vhost { "grafana.${::domain}":
     port          => '80',

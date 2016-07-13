@@ -1,9 +1,10 @@
 ---
+grafana::version: '3.1.0'
 grafana::cfg:
   app_mode: production
   server:
     http_port: 8080
-    root_url: '/'
+    root_url: "http://grafana.%{::domain}/"
   security:
     admin_user: admin
     admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAbtqqozmYs7Y5nooyEvEW/aV7L8rh93XCJ54nj/SGbpAng0fmu60JGtzZKWd74U4zvolZCRueNNK8XsjykqiqR771Mkepup2IM5eOhhjftn+fsZGEckjUbBlnAkiHsaUlaOegR8GhC7b2hqWxEHZH+JL8B+tDpvM6oROTXPMHw7Glxj84ZzUkPiJU1g3PvGskEy9B4mq14BZTby2mcpBAxLIAECWCd0t15TfEgM/sd7VUZ8cle3w2osjzqaf6cewOxKDGq1luZCu0cwrFM/KGmDbxejl6kgekXOTdqcJvjlRffeCBaecxcftBkp82iffX1hN/wynH7hL4gWP+DN3SpDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD8SmL47wcojub+XRC3y9VagBC+8BqK0vnAOPp2KDeH1t/H]
