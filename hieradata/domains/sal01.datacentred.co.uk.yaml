@@ -1,6 +1,6 @@
 ---
 classes:
-  - '::dc_collectd::agent::default'
+  - '::dc_profile::perf::telegraf'
 
 # Icinga
 #

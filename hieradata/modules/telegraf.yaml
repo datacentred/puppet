@@ -3,14 +3,23 @@ telegraf::global_tags:
   role: "%{::role}"
   hostgroup: "%{::hostgroup}"
   domain: "%{::domain}"
+  ensure: '0.13.1-1'
 telegraf::inputs:
   cpu:
     percpu: true
     totalcpu: true
   mem:
-  io:
   net:
+    namedrop:
+      - 'br*'
+      - 'ovs*'
+      - 'qvo*'
+      - 'qvb*'
+      - 'tap*'
+      - 'qbr*'
   disk:
+    namedrop:
+      - 'dm*'
   swap:
   system:
 telegraf::outputs:

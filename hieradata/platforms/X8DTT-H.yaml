@@ -1,7 +1,6 @@
 ---
 classes:
   - '::dc_profile::util::firmware'
-  - '::dc_collectd::agent::ipmi'
 
 dc_nrpe::checks::bmc::std_fw_version: '2.20'
 dc_nrpe::checks::check_hw::nova_cpu: '16'
