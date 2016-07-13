@@ -70,3 +70,6 @@ sysctls::values:
         value: '262144'
     vm.swappiness:
         value: '10'
+
+telegraf::inputs:
+  nstat:
