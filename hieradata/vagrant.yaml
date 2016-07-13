@@ -12,7 +12,6 @@ excludes:
   - '::dc_profile::util::hosts'
   - '::collectd::plugin::protocols'
   - '::dc_icinga::hostgroup_neutron_node'
-  - '::dc_profile::perf::telegraf'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 ceilometer_mongodb_keyfile: |
