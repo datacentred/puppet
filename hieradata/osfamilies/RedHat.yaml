@@ -1,9 +1,11 @@
 ---
 classes:
   - '::dc_profile::rpm::yum'
+  - '::dc_profile::util::rhel_pip_fix'
 
 excludes:
   - '::dc_profile::util::kdump'
+  - '::dc_profile::util::firmware'
 
 puppet::provider: 'yum'
 puppet::package: 'puppet'
