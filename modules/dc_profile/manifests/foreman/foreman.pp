@@ -29,5 +29,6 @@ class dc_profile::foreman::foreman {
   include ::dc_foreman::memcache
   include ::dc_icinga::hostgroup_https
   include ::dc_icinga::hostgroup_foreman
+  include ::apache::mod::status
 
 }
