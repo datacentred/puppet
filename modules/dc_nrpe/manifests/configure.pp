@@ -52,5 +52,6 @@ class dc_nrpe::configure {
   include ::dc_nrpe::checks::journal_disk_latency
   include ::dc_nrpe::checks::configured_users
   include ::dc_nrpe::checks::md_raid
+  include ::dc_nrpe::checks::conntrack
 
 }
