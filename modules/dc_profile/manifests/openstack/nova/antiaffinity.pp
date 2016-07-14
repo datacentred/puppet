@@ -1,4 +1,4 @@
-# Class: dc_profile::openstack::nova_antiaffinity
+# Class: dc_profile::openstack::nova::antiaffinity
 #
 # Deploys python lib to check anti-affinity rules
 #
@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class dc_profile::openstack::nova_antiaffinity {
+class dc_profile::openstack::nova::antiaffinity {
 
   file { '/usr/local/lib/python2.7/dist-packages/antiaffinity.py':
     ensure => file,
