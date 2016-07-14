@@ -1,4 +1,7 @@
 ---
+classes:
+  - '::dc_profile::openstack::nova::antiaffinity'
+
 dc_icinga2::role: 'satellite'
 
 dc_icinga2::host::zone: 'icinga2.core.sal01.datacentred.co.uk'

@@ -2,10 +2,10 @@
 #
 # Installs and manages bespoke icinga/nagios plugins
 #
-class dc_icinga2_plugins {
-
-  # Add python lib for checking antiaffinity
-  include dc_profile::openstack::nova_antiaffinity
+class dc_icinga2_plugins (
+  $packages     = $::dc_icinga2_plugins::params::packages,
+  $pip_packages = $::dc_icinga2_plugins::params::pip_packages,
+) inherits ::dc_icinga2_plugins::params {
 
   File {
     ensure => file,
@@ -177,23 +177,7 @@ class dc_icinga2_plugins {
     source => 'puppet:///modules/dc_icinga2_plugins/check_ceilometer',
   }
 
-  $packages = [
-    'nagios-plugin-check-scsi-smart',
-    'python-ceilometerclient',
-    'python-cinderclient',
-    'python-dnspython',
-    'python-glanceclient',
-    'python-keystoneclient',
-    'python-novaclient',
-    'python-tftpy',
-    'python-pip',
-  ]
-
   ensure_packages($packages)
-
-  $pip_packages = [
-    'ipaddress',
-  ]
 
   ensure_packages($pip_packages, { 'provider' => 'pip' })
 
