@@ -9,7 +9,3 @@ apache::mod::passenger::passenger_high_performance: 'on'
 sysctls::values:
     vm.swappiness:
         value: '1'
-
-telegraf::inputs:
-    apache:
-        urls: 'http://localhost/mod_status?auto'
