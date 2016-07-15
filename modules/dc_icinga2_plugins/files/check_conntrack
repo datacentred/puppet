@@ -27,13 +27,16 @@ STATE_DEPENDENT=4
 
 PROGNAME=`basename $0`
 PROGPATH=`echo $0 | sed -e 's,[\\/][^\\/][^\\/]*$,,'`
-REVISION="0.1"
+REVISION="0.2"
+VERBOSE=false
+WARNING=""
+CRITICAL=""
 
 print_usage() {
   echo "Usage:"
-  echo "  $PROGNAME WARNING% CRITICAL%"
-  echo "  $PROGNAME --help"
-  echo "  $PROGNAME --version"
+  echo "  $PROGNAME -w WARNING% -c CRITICAL%"
+  echo "  $PROGNAME -h"
+  echo "  $PROGNAME -v"
 }
 
 print_help() {
@@ -45,19 +48,30 @@ print_help() {
   echo ""
   echo "The percs are based in net.netfilter.nf_conntrack_max and net.netfilter.nf_conntrack_count"
   echo ""
-  echo "--help"
-  echo "   Print this help screen"
-  echo "--version"
-  echo "   Print version and license information"
+  echo "-w Warning percent level" 
+  echo "-c Critical percent level"
+  echo "-h Print this help screen"
+  echo "-v Print version and license information"
 }
 
-if [ $# -eq 2 ]
+while getopts 'w:c:vh' opt; do
+  case $opt in
+    w) WARNING=${OPTARG};;
+    c) CRITICAL=${OPTARG};;
+    v) echo $PROGNAME $REVISION;;
+    h) print_help;;
+    ?/) print_usage;;
+  esac
+done
+
+if [ -z $WARNING ] || [ -z $CRITICAL ]
 then
+    echo "Both warning and critical values must be provided"
+    print_usage
+    exit
+else
         USED=$(sysctl -n net.netfilter.nf_conntrack_count)
         MAX=$(sysctl -n net.netfilter.nf_conntrack_max)
-
-        WARNING=$(echo $1 | sed s/%//)
-        CRITICAL=$(echo $2 | sed s/%//)
 
         if [ ${MAX} -gt 0 ]; then
                 AUX=$(expr ${USED} \* 100 / ${MAX} )
@@ -79,23 +93,7 @@ then
                 fi
         else 
                 echo "Can't check net.netfilter.nf_conntrack_max"
-                exit $STATE_WARNING
+                exit $STATE_UNKNOWN
         fi
-
-
-else
-        case $1 in
-                --help)
-                        print_help
-                            exit $STATE_OK
-                            ;;
-                --version)
-                        print_revision $PROGNAME $REVISION
-                            exit $STATE_OK
-                            ;;
-                *)
-                            print_usage
-                            exit $STATE_OK
-                        ;;
-        esac
 fi
+

@@ -39,5 +39,6 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::ssl
   include ::dc_icinga2::services::tftp
   include ::dc_icinga2::services::users
+  include ::dc_icinga2::services::conntrack
 
 }
