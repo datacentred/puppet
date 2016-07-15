@@ -340,3 +340,6 @@
 [submodule "modules/libvirt"]
 	path = modules/libvirt
 	url = https://github.com/thias/puppet-libvirt
+[submodule "modules/extlib"]
+	path = modules/extlib
+	url = https://github.com/voxpupuli/puppet-extlib
