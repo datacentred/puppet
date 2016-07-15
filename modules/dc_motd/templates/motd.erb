@@ -18,3 +18,12 @@ Memory:    <%= @memorysize %>
 Role: <%= @role %>
 -------------------------------------------------
 <% end -%>
+<% if @role == 'ceph_osd' -%>
+SKU: <%= @sku %>
+Root: <%= @root %>
+Datacenter: <%= @datacenter %>
+Room: <%= @room %>
+Rack: <%= @rack %>
+Chassis: <%= @chassis %>
+-------------------------------------------------
+<% end -%>
