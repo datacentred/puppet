@@ -3,7 +3,7 @@
 class dc_icinga::server::custom_plugins {
 
   # Deploy python lib for anti affinity checks
-  include dc_profile::openstack::nova_antiaffinity
+  include dc_profile::openstack::nova::antiaffinity
 
   # Custom nagios plugins directory
   file { '/usr/lib/nagios/plugins':
