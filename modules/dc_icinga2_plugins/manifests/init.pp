@@ -177,6 +177,10 @@ class dc_icinga2_plugins (
     source => 'puppet:///modules/dc_icinga2_plugins/check_ceilometer',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_conntrack':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_conntrack',
+  }
+
   ensure_packages($packages)
 
   ensure_packages($pip_packages, { 'provider' => 'pip' })
