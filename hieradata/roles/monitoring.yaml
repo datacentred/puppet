@@ -1,4 +1,5 @@
 ---
 classes:
   - '::dc_profile::mon::icinga_server'
+  - '::dc_profile::openstack::nova::antiaffinity'
 apache::manage_user: false
