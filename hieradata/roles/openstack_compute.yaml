@@ -11,11 +11,12 @@ sudo::configs:
   nova:
     content: |
       Defaults: nova !requiretty
-      nova ALL=(root) NOPASSWD: /usr/bin/nova-rootwrap
+      nova ALL = (root) NOPASSWD: /usr/bin/nova-rootwrap /etc/nova/rootwrap.conf * 
   neutron:
     content: |
       Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
-      neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap
+      neutron ALL = (root) NOPASSWD: /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf *
+      neutron ALL = (root) NOPASSWD: /usr/bin/neutron-rootwrap-daemon /etc/neutron/rootwrap.conf
 
 sysctls::values:
     fs.file-max:
