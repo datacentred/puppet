@@ -619,6 +619,16 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'conntrack':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_conntrack"',
+    ],
+    arguments => {
+      '-w' => '$conntrack_warning$',
+      '-c' => '$conntrack_critical$',
+    },
+  }
+
   icinga2::object::checkcommand { 'memcached':
     command   => [
       'PluginDir + "/check_memcached"',
