@@ -3,6 +3,7 @@ classes:
   - '::dc_profile::apt::apt'
   - '::dc_profile::apt::ppa'
   - '::dc_profile::util::apparmor'
+  - '::dc_profile::util::mdadm'
 
 # These values should only be picked up at this point when we're in a Vagrant VM
 network_node_extif: 'eth1'

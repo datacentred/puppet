@@ -17,7 +17,6 @@ classes:
   - '::dc_profile::util::dnsclient'
   - '::dc_profile::util::external_facts'
   - '::dc_profile::util::locale'
-  - '::dc_profile::util::mdadm'
   - '::dc_profile::util::motd'
   - '::dc_profile::util::timezone'
   - '::dc_profile::util::hosts'
