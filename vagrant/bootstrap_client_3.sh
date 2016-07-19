@@ -4,8 +4,8 @@
 # Exit if the following file exists
 test -f /root/.provisioned && exit 0
 
-DEBIAN_PACKAGES='puppet puppetdb-terminus bundler'
-RHEL_PACKAGES='puppet puppetdb-terminus rubygem-bundler'
+DEBIAN_PACKAGES='puppet puppetdb-terminus bundler git'
+RHEL_PACKAGES='puppet puppetdb-terminus rubygem-bundler git'
 
 # By default the puppet VMs have vagrant at 1000:1000 which interferes with
 # our hard coded IDs.  Removing this hurdle allows testing of user account

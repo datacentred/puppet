@@ -1,11 +1,33 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+PUPPET_VERSION = ENV['PUPPET_VERSION'] || '3'
+
+UBUNTU_RELEASE = ENV['UBUNTU_RELEASE'] || 'trusty'
+
+PUPPET_BINARY = PUPPET_VERSION.to_i < 4 ? '/usr/bin' : '/opt/puppetlabs/bin'
+
+PROVISIONERS = {
+  '3' => {
+    'server' => 'vagrant/bootstrap_server_3.sh',
+    'client' => 'vagrant/bootstrap_client_3.sh',
+  },
+  '4' => {
+    'server' => 'vagrant/bootstrap_server_4.sh',
+    'client' => 'vagrant/bootstrap_client_4.sh',
+  },
+}
+
+UBUNTU_VBOXES = {
+  'trusty' => 'puppetlabs/ubuntu-14.04-64-nocm',
+  'xenial' => 'puppetlabs/ubuntu-16.04-64-nocm',
+}
+
 # Ensure everyone is running a consistent vagrant version
 Vagrant.require_version '~> 1.8.0'
 
 Vagrant.configure('2') do |config|
-  config.vm.box              = 'puppetlabs/ubuntu-14.04-64-nocm'
+  config.vm.box              = UBUNTU_VBOXES[UBUNTU_RELEASE]
   config.vm.box_check_update = true
 
   # Provision using the root account.  This allows us to modify
@@ -36,7 +58,16 @@ Vagrant.configure('2') do |config|
     box.vm.network :private_network, type: :dhcp
     box.vm.hostname = 'puppet.vagrant.test'
     box.vm.synced_folder '.', '/vagrant', :disabled => true
-    box.vm.provision 'shell', path: 'vagrant/bootstrap_puppet.sh'
+
+    # Pupppet server (java) uses a fuck ton of memory
+    box.vm.provider 'virtualbox' do |virtualbox, override|
+      virtualbox.memory = 4096
+    end
+    box.vm.provider 'vmware_fusion' do |vmware, override|
+      vmware.vmx['memsize'] = 4096
+    end
+
+    box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['server']
   end
 
   # Environment specific boxes (defined in .vagrantuser)
@@ -88,10 +119,11 @@ Vagrant.configure('2') do |config|
       end
 
       # Provision the box
-      box.vm.provision 'shell', path: 'vagrant/bootstrap_client.sh'
+      box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['client']
       box.vm.provision 'puppet' do |puppet|
-        puppet.manifests_path    = 'vagrant'
-        puppet.module_path       = 'modules'
+        puppet.binary_path       = PUPPET_BINARY
+        puppet.environment       = 'vagrant'
+        puppet.environment_path  = '..'
         puppet.hiera_config_path = 'vagrant/hiera.yaml'
         if options.has_key?(:facts)
           puppet.facter = config.user.facts.merge(options.facts)
@@ -102,7 +134,6 @@ Vagrant.configure('2') do |config|
           '--verbose',
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
-          '--environment vagrant',
         ]
       end
     end
