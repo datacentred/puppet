@@ -502,7 +502,7 @@ class dc_icinga::server::nagios_services {
   }
 
   icinga::service { 'check_elasticsearch':
-    use                 => 'dc_service_generic',
+    use                 => 'dc_service_slowcheck',
     hostgroup_name      => 'dc_hostgroup_elasticsearch',
     check_command       => 'check_es_updating',
     service_description => 'Elasticsearch',
@@ -709,7 +709,7 @@ class dc_icinga::server::nagios_services {
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_memcached',
     check_command       => 'check_memcached_dc',
-    service_description => 'memcached Availability Check'
+    service_description => 'memcached Availability Check',
   }
 
   icinga::service { 'check_disk_stats':
