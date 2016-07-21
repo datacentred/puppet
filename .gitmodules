@@ -343,3 +343,6 @@
 [submodule "modules/extlib"]
 	path = modules/extlib
 	url = https://github.com/voxpupuli/puppet-extlib
+[submodule "modules/rundeck"]
+	path = modules/rundeck
+	url = https://github.com/voxpupuli/puppet-rundeck
