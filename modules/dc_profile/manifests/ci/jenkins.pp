@@ -10,4 +10,8 @@ class dc_profile::ci::jenkins {
     java   => true,
   }
 
+  package { 'jenkins':
+    ensure  => '2.7.1',
+  }
+
 }
