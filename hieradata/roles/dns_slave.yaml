@@ -21,15 +21,40 @@ ntp::restrict:
 ntp::interfaces:
   - "%{::ipaddress}"
 
-dc_foreman_proxy::use_dns: true
-dc_foreman_proxy::use_dhcp: true
-dc_foreman_proxy::use_tftp: true
-dc_foreman_proxy::use_bmc: true
-dc_foreman_proxy::use_discovery: true
-dc_foreman_proxy::use_templates: true
-
 dc_ssh::config:
   AllowGroups:
     value:
       - 'dhcp_sync_agent'
       - 'tftpsync'
+
+foreman_proxy::http: true
+foreman_proxy::http_port: '8000'
+foreman_proxy::puppet: false
+foreman_proxy::puppetca: false
+foreman_proxy::puppet_group: 'puppet'
+foreman_proxy::groups:
+  - 'tftp'
+  - 'bind'
+foreman_proxy::templates: true
+foreman_proxy::templates_listen_on: 'http'
+foreman_proxy::templates_url: "http://%{::fqdn}:8000"
+foreman_proxy::tftp: true
+foreman_proxy::tftp_listen_on: 'https'
+foreman_proxy::tftp_managed: false
+foreman_proxy::tftp_root: '/var/tftpboot'
+foreman_proxy::dhcp: true
+foreman_proxy::dhcp_managed: false
+foreman_proxy::dhcp_listen_on: 'https'
+foreman_proxy::dhcp_provider: 'isc'
+foreman_proxy::dhcp_config: '/etc/dhcp/dhcpd.conf'
+foreman_proxy::dhcp_leases: '/var/lib/dhcp/dhcpd.leases'
+foreman_proxy::dhcp_key_name: "%{hiera('omapi_key')}"
+foreman_proxy::dhcp_key_secret: "%{hiera('omapi_secret')}"
+foreman_proxy::dns: true
+foreman_proxy::dns_managed: false
+foreman_proxy::dns_listen_on: 'https'
+foreman_proxy::dns_provider: 'nsupdate'
+foreman_proxy::dns_key: '/etc/bind/rndc.key'
+foreman_proxy::bmc: true
+foreman_proxy::bmc_listen_on: 'https'
+foreman_proxy::bmc_default_provider: 'ipmitool'

@@ -107,14 +107,14 @@ Puppet::Type.type(:dns_resource).provide(:nsupdate) do
       Array(rdata).each_with_index do |target, index|
         port = Array(resource[:port])[index]
         weight = Array(resource[:weight])[index]
-        priority = Array(resouce[:priority])[index]
+        priority = Array(resource[:priority])[index]
         nsupdate("server #{server}
                   update add #{name} #{ttl} SRV #{priority} #{weight} #{port} #{target}
                   send")
       end
     else
       nsupdate("server #{server}
-                update add #{name} #{ttl} #{type} #{rdata}
+                update add #{name} #{ttl} #{type} #{Array(rdata).first}
                 send")
     end
   end

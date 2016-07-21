@@ -42,8 +42,16 @@ puppet::hiera: |
     - "modules/%%{}{calling_module}"
     - common
 
-dc_foreman_proxy::use_puppetca: true
-dc_foreman_proxy::use_puppet: true
+foreman_proxy::http: false
+foreman_proxy::puppet: true
+foreman_proxy::puppetca: true
+foreman_proxy::puppetca_cmd: '/usr/bin/puppet cert'
+foreman_proxy::puppet_group: 'puppet'
+foreman_proxy::templates: false
+foreman_proxy::tftp: false
+foreman_proxy::dhcp: false
+foreman_proxy::dns: false
+foreman_proxy::bmc: false
 
 sysctls::values:
   fs.inotify.max_user_watches:
