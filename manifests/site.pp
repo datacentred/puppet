@@ -8,12 +8,9 @@ Exec {
   ],
 }
 
-# Hack for Ubuntu while puppetlabs get their shit together for 16.04
-if ($::operatingsystem == 'Ubuntu') and ($::operatingsystemrelease == '15.04') {
-  Service {
-    provider => 'systemd',
-  }
-}
+# Extract the puppet major version and set a global variable for hiera class lookups
+$puppet_versions = split($::puppetversion, '\.')
+$puppet_major_version = $puppet_versions[0]
 
 # Probe hiera for our class list (e.g. classy version of hiera_include)
 #

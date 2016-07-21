@@ -13,6 +13,7 @@
     - "domains/%{domain}"
     - "domains/%{domain}/modules/%{calling_module}"
     - "modules/%{calling_module}"
+    - "puppetversion/%{puppet_major_version}"
     - common
 :backends:
     - eyaml

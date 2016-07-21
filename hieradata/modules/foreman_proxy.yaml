@@ -16,3 +16,4 @@ foreman_proxy::trusted_hosts:
   - 'gateway1.core.sal01.datacentred.co.uk'
 foreman_proxy::register_in_foreman: false
 foreman_proxy::foreman_base_url: 'https://foreman.datacentred.services'
+foreman_proxy::manage_puppet_group: false
