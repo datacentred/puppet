@@ -1,16 +1,18 @@
 ---
 dc_dns::zones:
-  vagrant.dev: {}
+    "%{::domain}": {}
 
 dc_dns::static::records:
   "testcname.%{::domain}/CNAME":
     rdata: "ns1.%{::domain}"
-  "%{::domain}/MX":
-    rdata: 'mail.vagrant.dev'
-  "blah.%{::domain}/A":
+  "mail.%{::domain}/A":
     rdata: '172.22.5.246' 
+  "%{::domain}/MX":
+    rdata: "mail.%{::domain}"
+    preference: '10'
+    require: Dns_resource[mail.vagrant.test/A]
   "_foreman._tcp.%{::domain}/SRV":
-    rdata: 'foreman.vagrant.dev'
+    rdata: "foreman.%{::domain}"
     port: '8444'
     priority: 0
     weight: '10'
