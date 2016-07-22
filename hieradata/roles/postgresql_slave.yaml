@@ -6,7 +6,7 @@ dc_postgresql::params::config_entries:
   hot_standby:
     value: 'on'
   ssl_renegotiation_limit:
-    value: 0
+    value: '0'
   default_statistics_target:
     value: '50'
   maintenance_work_mem:
@@ -29,6 +29,8 @@ dc_postgresql::params::config_entries:
     value: '80'
   shared_preload_libraries:
     value: 'repmgr_funcs'
+
+dc_postgresql::repmgr::role: 'slave'
 
 dc_ssh::config:
   AllowGroups:

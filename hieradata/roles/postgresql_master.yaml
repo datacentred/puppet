@@ -38,6 +38,8 @@ dc_postgresql::params::config_entries:
   shared_preload_libraries:
     value: 'repmgr_funcs'
 
+dc_postgresql::repmgr::role: 'master'
+
 dc_ssh::config:
   AllowGroups:
     value:

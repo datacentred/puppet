@@ -2,15 +2,15 @@
 #
 class dc_postgresql::repmgr::master {
 
-  # floating postgres configuration
-  include ::dc_postgresql::repmgr::master::db
-  include ::dc_postgresql::repmgr::cluster_connections
+  contain ::dc_postgresql::repmgr::master::db
+  contain ::dc_postgresql::repmgr::master::configure
 
-  # repmgr configuration
-  include ::dc_postgresql::repmgr::install
-  include ::dc_postgresql::repmgr::config
+  # Ensure the database is up and running before configuring repmgr further
+  Class['::dc_postgresql::repmgr'] ->
+  Class['::dc_postgresql::repmgr::master']
 
-  Class['::dc_postgresql::repmgr::install'] ->
-  Class['::dc_postgresql::repmgr::config']
+  # Install the control database before adding to the cluster
+  Class['::dc_postgresql::repmgr::master::db'] ->
+  Class['::dc_postgresql::repmgr::master::configure']
 
 }

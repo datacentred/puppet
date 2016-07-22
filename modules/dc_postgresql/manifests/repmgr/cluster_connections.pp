@@ -4,13 +4,9 @@
 #
 class dc_postgresql::repmgr::cluster_connections {
 
-  include ::dc_postgresql::config
-
-  # Get all cluster members
-  $cluster_nodes = keys($dc_postgresql::params::nodemap)
+  $_nodes = keys($::dc_postgresql::repmgr::nodemap)
 
   # And allow replication and repmgr database access
-  dc_postgresql::repmgr::cluster_connection { $cluster_nodes:
-  }
+  dc_postgresql::repmgr::cluster_connection { $_nodes: }
 
 }

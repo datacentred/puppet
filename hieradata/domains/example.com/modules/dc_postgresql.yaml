@@ -1,0 +1,7 @@
+---
+dc_postgresql::params::ip_mask_allow_all_users: '10.20.192.0/24'
+
+# ID's must be >0
+dc_postgresql::repmgr::nodemap:
+  "postgres0.%{::domain}": 1
+  "postgres1.%{::domain}": 2

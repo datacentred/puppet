@@ -1,6 +1,0 @@
----
-dc_postgresql::params::cluster_name: 'sal01'
-dc_postgresql::params::ip_mask_allow_all_users: '10.10.192.0/24'
-dc_postgresql::params::nodemap:
-      postgres0.sal01.datacentred.co.uk: 0
-      postgres1.sal01.datacentred.co.uk: 1

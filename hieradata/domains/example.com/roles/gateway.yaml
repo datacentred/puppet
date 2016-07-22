@@ -1,0 +1,31 @@
+---
+puppet::conf:
+  main:
+    logdir: '/var/lib/puppet'
+    vardir: '/var/lib/puppet'
+    ssldir: '/var/lib/puppet/ssl'
+    rundir: '/var/run/puppet'
+    show_diff: 'true'
+    dns_alt_names: '*,*.example.com,*.staging.datacentred.services'
+
+# Timeouts are important here
+# - Server time out: log running things like foreman/puppet
+# - Client time out: persistent connections such as log shippers
+haproxy::defaults_options:
+  log: 'global'
+  stats: 'enable'
+  option: 'redispatch'
+  retries: '3'
+  timeout:
+    - 'http-request 10s'
+    - 'queue 1m'
+    - 'connect 10s'
+    - 'client 5m'
+    - 'server 5m'
+    - 'check 10s'
+  maxconn: '8000'
+
+dc_profile::net::core_gateway::frontends: {}
+dc_profile::net::core_gateway::backends: {}
+dc_profile::net::core_gateway::listeners: {}
+dc_profile::net::core_gateway::balancermembers: {}
