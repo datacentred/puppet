@@ -26,7 +26,7 @@ if ($::operatingsystem == 'Ubuntu') and ($::operatingsystemrelease == '15.04') {
 # provision cleanly cannot be run until puppetdb is bootstrapped.
 $classes = hiera_array('classes')
 $hiera_excludes = hiera_array('excludes', [])
-if $::excludes {
+if $excludes {
   $facter_excludes = split($::excludes, ',')
 } else {
   $facter_excludes = []
