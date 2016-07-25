@@ -13,9 +13,7 @@
 # [Remember: No empty lines between comments and class definition]
 class dc_apparmor {
 
-  package { 'apparmor':
-    ensure => installed,
-  } ->
+  ensure_packages('apparmor')
 
   # Note: there is a bug in the dpkg puppet provider whereby you need
   #       to use another provider type to override the default status
@@ -26,6 +24,7 @@ class dc_apparmor {
     start    => 'service apparmor start',
     stop     => 'service apparmor stop',
     status   => 'apparmor_status',
+    require  => Package['apparmor'],
   }
 
 }

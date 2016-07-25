@@ -346,3 +346,6 @@
 [submodule "modules/rundeck"]
 	path = modules/rundeck
 	url = https://github.com/voxpupuli/puppet-rundeck
+[submodule "modules/docker"]
+	path = modules/docker
+	url = https://github.com/garethr/garethr-docker.git
