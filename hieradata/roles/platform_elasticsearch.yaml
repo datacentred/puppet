@@ -19,6 +19,12 @@ dc_elasticsearch::es_hash:
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'
   http.cors.allow-origin: '"*"'
   http.cors.enabled: 'true'
+  network.host: "%{::ipaddress}" 
+  discovery.zen.ping.multicast.enabled: false
+  discovery.zen.ping.unicast.host:
+    - 'elasticsearch0.core.sal01.datacentred.co.uk'
+    - 'elasticsearch1.core.sal01.datacentred.co.uk'
+    - 'elasticsearch2.core.sal01.datacentred.co.uk'
 
 telegraf::inputs:
   elasticsearch:
