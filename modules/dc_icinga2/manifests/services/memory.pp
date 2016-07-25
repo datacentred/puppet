@@ -11,7 +11,7 @@ class dc_icinga2::services::memory {
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
-    assign_where  => 'host.vars.operatingsystem',
+    assign_where  => 'host.vars.operatingsystem == "Ubuntu"',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
