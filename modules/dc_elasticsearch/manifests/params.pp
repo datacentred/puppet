@@ -12,6 +12,5 @@ class dc_elasticsearch::params (
   $elasticsearch_data_dir,
   $total_retention,
   $ssd_tier_retention,
-  $es_aws_plugin_version,
   $backup_node = false,
 ) {}
