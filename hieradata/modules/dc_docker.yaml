@@ -1,0 +1,7 @@
+---
+dc_docker::registry::username: 'devops@datacentred.co.uk'
+dc_docker::registry::password: 'ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAB5+9SzrxA6M3byXzqKZtyV5qyJ1FnDMK7xfFYDLTOrQ9+8XIp9tgCeBVKn2myPIdiEpxgyiPKPFSKglTMv2Qr4BFScwX6tYemk4pAR2CakqqTliwrW2JJTde70IArSBUogHqkODL1oLcdHa1NBKU5hkOihmVyQmmT7Uk7+f27gX8h9UwYxQt0fy94Nwz5Ub2f4EJdclIx8hFnZRQWFiNBo7swaZO7C8tMAUkQ/ppyN+PueaLFtGEGl1p9BUD9jFD9efEPsxdGyu1yzFAUhDaldAXqcyzewCu9qvPC+aRGIlIdA6Gn6tlmGJaQrD7UkrjsqFiuvZjSzCTxHGRFfA65DA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCZjv5lfbUrIuVEDuY8opoKgBDlbUm3nf36KaeNen3GCyrv]'
+dc_docker::registry::tenant: 'devops'
+dc_docker::registry::tenantid: '1d2ea4460b514f459a9d9ed4a155fab3'
+dc_docker::registry::container: 'registry'
+dc_docker::registry::rootdirectory: '/registry'

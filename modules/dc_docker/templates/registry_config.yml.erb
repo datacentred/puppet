@@ -1,0 +1,17 @@
+version: 0.1
+log:
+  level: debug
+  formatter: text
+storage:
+  swift:
+    username: <%= @username %>
+    password: <%= @password %>
+    authurl: <%= @authurl %>
+    tenant: <%= @tenant %>
+    tenantid: <%= @tenantid %>
+    insecureskipverify: true
+    region: <%= @region %>
+    container: <%= @container %>
+    rootdirectory: <%= @rootdirectory %>
+http:
+  addr: <%= @httpaddr %>
