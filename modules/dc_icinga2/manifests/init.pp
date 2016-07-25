@@ -6,6 +6,7 @@ class dc_icinga2 (
   $role = undef,
   $pagerduty_deps = $::dc_icinga2::params::pagerduty_deps,
   $user = $::dc_icinga2::params::user,
+  $sudo_paths = $::dc_icinga2::params::sudo_paths,
 ) inherits dc_icinga2::params {
 
   case $role {

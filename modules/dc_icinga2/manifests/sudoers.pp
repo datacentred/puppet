@@ -6,7 +6,7 @@
 class dc_icinga2::sudoers {
 
   sudo::conf { $::dc_icinga2::user:
-    content => "${::dc_icinga2::user} ALL=(root) NOPASSWD: /usr/lib/nagios/plugins/*, /usr/local/lib/nagios/plugins/*, /usr/bin/cciss_vol_status",
+    content => "${::dc_icinga2::user} ALL=(root) NOPASSWD: ${::dc_icinga2::sudo_paths}",
   }
 
 }
