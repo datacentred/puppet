@@ -32,20 +32,20 @@ class dc_elasticsearch (
   $config_hash_for_hdds = merge($config_hdd_tag, $es_hash)
 
   #work out what 1/3rd of the host RAM is so it can be reserved for each elasticsearch instance
-  $third_RAM = floor($::memorysize_mb/3)
-  $RAM_unit = 'M'
-  $third_RAM_bytes = ($third_RAM * 1024 * 1024)
+  $third_ram = floor($::memorysize_mb/3)
+  $ram_unit = 'M'
+  $third_ram_bytes = ($third_ram * 1024 * 1024)
 
   $config_hash = {
-    'ES_HEAP_SIZE'      => "${third_RAM}${RAM_unit}",
-    'MAX_LOCKED_MEMORY' => $third_RAM_bytes,
+    'ES_HEAP_SIZE'      => "${third_ram}${ram_unit}",
+    'MAX_LOCKED_MEMORY' => $third_ram_bytes,
   }
 
   ulimit::rule { 'elasticsearch':
       ulimit_domain => 'elasticsearch',
       ulimit_type   => '-',
       ulimit_item   => 'memlock',
-      ulimit_value  => $third_RAM_bytes,
+      ulimit_value  => $third_ram_bytes,
   }
 
   class { '::elasticsearch':
@@ -69,9 +69,15 @@ class dc_elasticsearch (
 
   # $::backup_node is set via foreman
   if $::backup_node {
-    include dc_elasticsearch::elasticsearch_pruning
-    include dc_elasticsearch::elasticsearch_snapshot
-    include dc_elasticsearch::template_install
+    include ::dc_elasticsearch::elasticsearch_pruning
+    include ::dc_elasticsearch::elasticsearch_snapshot
+    include ::dc_elasticsearch::template_install
+  }
+
+  tidy { '/var/log/elasticsearch':
+    age     => '90d',
+    recurse => true,
+    matches => [ 'logstash*' ],
   }
 
 }
