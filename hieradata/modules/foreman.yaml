@@ -26,5 +26,5 @@ foreman::puppetmaster::timeout: '300'
 
 # Set these explicitly or else they will get overidden by $fqdn and foreman will
 # repopulate the database with the last server that loaded!!
-foreman::ssl_certificate: '/var/lib/puppet/ssl/certs/foreman_comms.pem'
-foreman::ssl_priv_key: '/var/lib/puppet/ssl/private_keys/foreman_comms.pem'
+foreman::client_ssl_cert: '/var/lib/puppet/ssl/certs/foreman_comms.pem'
+foreman::client_ssl_key: '/var/lib/puppet/ssl/private_keys/foreman_comms.pem'
