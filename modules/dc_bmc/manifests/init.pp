@@ -29,7 +29,15 @@ class dc_bmc (
   $bmc_admin_name = undef,
 ) {
 
-  include ::dc_bmc::base
+  case $::osfamily {
+    'Debian': {
+      include ::dc_bmc::debian
+    }
+    default: {
+      # Stop compiler warnings
+    }
+  }
+
   include ::dc_bmc::users
   include ::dc_bmc::housekeeper
 

@@ -1,8 +1,8 @@
-# == Class: dc_bmc::configure
+# == Class: dc_bmc::debian::configure
 #
 # Configures IPMI services
 #
-class dc_bmc::configure {
+class dc_bmc::debian::configure {
 
   file { '/etc/default/ipmievd':
     ensure => file,
