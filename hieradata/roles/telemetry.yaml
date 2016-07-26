@@ -1,3 +1,4 @@
 ---
 classes:
   - '::dc_profile::perf::grafana'
+  - '::dc_profile::docker::registry'
