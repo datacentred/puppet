@@ -1,4 +1,5 @@
 ---
+# Debian Specific
 classes:
   - '::dc_profile::hardware::bmc' # Note: should be platform specific
   - '::dc_profile::hardware::board_support'

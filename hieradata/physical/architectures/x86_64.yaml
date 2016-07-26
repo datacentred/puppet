@@ -1,0 +1,4 @@
+---
+# RedHat Specific
+classes:
+  - '::dc_profile::hardware::bmc'
