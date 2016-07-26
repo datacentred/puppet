@@ -4,27 +4,31 @@ classes:
   - '::dc_elasticsearch::elasticsearch_backup_destination'
 
 dc_elasticsearch::es_hash:
-  cluster.name: 'logstash_platform_services'
-  indices.memory.index_buffer_size: '50%'
-  index.translog.flush_threshold_ops: '50000'
-  threadpool.search.type: 'fixed'
-  threadpool.search.size: '20'
-  threadpool.search.queue_size: '100'
-  threadpool.index.type: 'fixed'
-  threadpool.index.size: '60'
-  threadpool.index.queue_size: '200'
   bootstrap.mlockall: 'true'
-  discovery.zen.minimum_master_nodes: '4'
-  cloud.aws.s3.endpoint: 'storage.datacentred.io'
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'
-  http.cors.allow-origin: '"*"'
-  http.cors.enabled: 'true'
-  network.host: "%{::ipaddress}" 
+  cloud.aws.s3.endpoint: 'storage.datacentred.io'
+  cluster.name: 'logstash_platform_services'
+  discovery.zen.minimum_master_nodes: '2'
   discovery.zen.ping.multicast.enabled: false
   discovery.zen.ping.unicast.host:
     - 'elasticsearch0.core.sal01.datacentred.co.uk'
     - 'elasticsearch1.core.sal01.datacentred.co.uk'
     - 'elasticsearch2.core.sal01.datacentred.co.uk'
+  http.cors.allow-origin: '"*"'
+  http.cors.enabled: 'true'
+  index.translog.flush_threshold_ops: '50000'
+  indices.memory.index_buffer_size: '50%'
+  network.host: 
+    - "_local_"
+    - "%{::ipaddress}" 
+  node.master: true
+  node.data: true
+  threadpool.index.queue_size: '200'
+  threadpool.index.size: '4'
+  threadpool.index.type: 'fixed'
+  threadpool.search.queue_size: '100'
+  threadpool.search.size: '20'
+  threadpool.search.type: 'fixed'
 
 telegraf::inputs:
   elasticsearch:
