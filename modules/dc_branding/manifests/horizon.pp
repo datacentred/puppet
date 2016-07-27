@@ -50,7 +50,7 @@ class dc_branding::horizon {
 
   # Perform the collection and compression only after the configuration file
   # is generated
-  File['/etc/openstack-dashboard/local_settings.py'] -> Exec['dc_branding::horizon collect']
+  Concat['/etc/openstack-dashboard/local_settings.py'] -> Exec['dc_branding::horizon collect']
 
   # Ensure we collect and compress only on changes to the branding resources
   File[$theme_dir] ~> Exec['dc_branding::horizon collect']
