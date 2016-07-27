@@ -14,6 +14,7 @@ class dc_icinga2::services::conntrack {
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',
+    target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
 }
