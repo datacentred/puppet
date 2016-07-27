@@ -19,7 +19,7 @@ class dc_logstash::server (
   class { '::logstash':
     ensure            => 'present',
     restart_on_change => false,
-    version           => '1:1.5.4-1',
+    version           => '1:2.3.4-1',
   }
 
   # Patch the module's init script in order for us to be able to read Puppet's
