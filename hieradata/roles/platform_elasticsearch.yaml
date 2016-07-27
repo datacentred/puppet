@@ -10,12 +10,10 @@ dc_elasticsearch::es_hash:
   cluster.name: 'logstash_platform_services'
   discovery.zen.minimum_master_nodes: '2'
   discovery.zen.ping.multicast.enabled: false
-  discovery.zen.ping.unicast.host:
+  discovery.zen.ping.unicast.hosts:
     - 'elasticsearch0.core.sal01.datacentred.co.uk'
     - 'elasticsearch1.core.sal01.datacentred.co.uk'
     - 'elasticsearch2.core.sal01.datacentred.co.uk'
-  http.cors.allow-origin: '"*"'
-  http.cors.enabled: 'true'
   index.translog.flush_threshold_ops: '50000'
   indices.memory.index_buffer_size: '50%'
   network.host: 

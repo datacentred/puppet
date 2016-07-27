@@ -13,7 +13,7 @@ class dc_elasticsearch::template_install {
   }
 
   exec { 'install_logstash_template':
-    command     => 'curl -XPUT \'http://localhost:9200/_template/logstash\' -d@/usr/local/etc/logstash.template',
+    command     => 'curl -XPUT \'http://localhost:9200/_template/logstash\' -d@/usr/local/etc/elasticsearch_logstash_template',
     subscribe   => File['logstash_template'],
     require     => Package['curl'],
     refreshonly => true,
