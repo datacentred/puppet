@@ -11,8 +11,7 @@
 # Sample Usage:
 #
 class dc_profile::log::kibana {
-  include apache
-  include kibana4
+  include ::apache
 
   class { 'kibana4':
     plugins => {
