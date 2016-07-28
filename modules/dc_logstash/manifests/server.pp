@@ -4,16 +4,14 @@
 #
 class dc_logstash::server (
   $grok_patterns_dir = $dc_logstash::params::grok_patterns_dir,
-  $logcourier_version = $dc_logstash::params::logcourier_version_server,
+  $logcourier_plugin_version = $dc_logstash::params::logcourier_plugin_version,
   $logcourier_port = $dc_logstash::params::logcourier_port,
   $logcourier_key = $dc_logstash::params::logcourier_key,
   $logcourier_cert = $dc_logstash::params::logcourier_cert,
   $logcourier_cacert = $dc_logstash::params::logcourier_cacert,
   $syslog_port = $dc_logstash::params::syslog_port,
-  $elasticsearch_host = $dc_logstash::params::elasticsearch_host,
-  $elasticsearch_embedded = $dc_logstash::params::elasticsearch_embedded,
-  $elasticsearch_protocol = $dc_logstash::params::elasticsearch_protocol,
-  $riemann_version = $dc_logstash::params::riemann_version,
+  $elasticsearch_hosts = $dc_logstash::params::elasticsearch_hosts,
+  $riemann_plugin_version = $dc_logstash::params::riemann_plugin_version,
 ) inherits dc_logstash::params {
 
   class { '::logstash':
