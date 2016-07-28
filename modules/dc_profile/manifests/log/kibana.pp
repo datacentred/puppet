@@ -31,11 +31,6 @@ class dc_profile::log::kibana {
         'plugin_dest_dir' => 'marvel',
         'ensure'          => 'present',
         'url'             => 'https://github.com/Oxalide/kibana_metric_vis_colors/archive/master.zip'
-      },
-      'stormpython/vectormap'            => {
-        'plugin_dest_dir' => 'vectormap',
-        'ensure'          => 'present',
-        'url'             => 'https://github.com/stormpython/vectormap/archive/master.zip'
       }
     }
   }
