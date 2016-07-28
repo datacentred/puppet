@@ -245,6 +245,24 @@ dc_profile::net::core_gateway::listeners:
         options:
             option: "smtpchk EHLO %{::hostname}"
             default-server: 'inter 60s'
+    docker-registry:
+        collect_exported: false
+        mode: 'http'
+        bind:
+          ':5000':
+              - 'ssl'
+              - 'no-sslv3'
+              - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+              - 'crt /etc/ssl/private/puppet.crt'
+              - 'crl-file /var/lib/puppet/ssl/crl.pem'
+              - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+              - 'verify required'
+        options:
+          option: 'forwardfor'
+          http-request:
+            - 'set-header X-Forwarded-Proto https'
+          reqadd:
+            - 'Distribution-API-Version:\ registry/2.0'
 
 dc_profile::net::core_gateway::balancermembers:
     puppetca:
@@ -404,4 +422,12 @@ dc_profile::net::core_gateway::balancermembers:
             - 'jenkins0.core.sal01.datacentred.co.uk'
         ipaddresses:
             - '10.30.192.7'
+        options: 'check'
+    docker-registry:
+        listening_service: 'docker-registry'
+        ports: '5000'
+        server_names:
+          - 'graph.core.sal01.datacentred.co.uk'
+        ipaddresses:
+          - '10.30.192.213'
         options: 'check'
