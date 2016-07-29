@@ -9,9 +9,6 @@ class dc_bmc::foreman (
   $bmc_expected_subnet,
   $bmc_username,
   $bmc_password,
-  $foreman_ssl_ca = "${::ssldir}/certs/ca.pem",
-  $foreman_ssl_cert = "${::ssldir}/certs/${::fqdn}.pem",
-  $foreman_ssl_key = "${::ssldir}/private_keys/${::fqdn}.pem",
 ) {
 
   case $::osfamily {
@@ -26,15 +23,25 @@ class dc_bmc::foreman (
     }
   }
 
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_foreman_ssl_ca = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+    $_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+    $_foreman_ssl_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
+  } else {
+    $_foreman_ssl_ca = '/var/lib/puppet/ssl/certs/ca.pem'
+    $_foreman_ssl_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+    $_foreman_ssl_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+  }
+
   ensure_packages($_packages)
 
   ipmi_foreman { $::fqdn:
     foreman_username    => $foreman_username,
     foreman_password    => $foreman_password,
     foreman_url         => $foreman_url,
-    foreman_ssl_ca      => $foreman_ssl_ca,
-    foreman_ssl_cert    => $foreman_ssl_cert,
-    foreman_ssl_key     => $foreman_ssl_key,
+    foreman_ssl_ca      => $_foreman_ssl_ca,
+    foreman_ssl_cert    => $_foreman_ssl_cert,
+    foreman_ssl_key     => $_foreman_ssl_key,
     bmc_expected_subnet => $bmc_expected_subnet,
     bmc_username        => $bmc_username,
     bmc_password        => $bmc_password,
