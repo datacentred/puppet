@@ -1,0 +1,2 @@
+---
+dc_bmc::foreman::bmc_expected_subnet: '10.254.1.0/24'
