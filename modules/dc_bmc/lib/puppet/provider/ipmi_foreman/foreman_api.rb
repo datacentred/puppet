@@ -130,13 +130,13 @@ Puppet::Type.type(:ipmi_foreman).provide(:foreman_api) do
   def get_ipmi_address(channel)
     # Extra space differentiates from 'IP Address Source'
     address = get_ipmi_field(channel, 'IP Address  ')
-    address || raise Puppet::Error.new("Unable to get IPMI IP address")
+    address or raise Puppet::Error.new("Unable to get IPMI IP address")
   end
 
   # Extract the MAC address from the LAN channel
   def get_ipmi_mac_address(channel)
     mac = get_ipmi_field(channel, 'MAC Address')
-    mac || raise Puppet::Error.new("Unable to get IPMI MAC address")
+    mac or raise Puppet::Error.new("Unable to get IPMI MAC address")
   end
 
   # Given the IP address determine the subnet from the server
@@ -144,14 +144,14 @@ Puppet::Type.type(:ipmi_foreman).provide(:foreman_api) do
     addr = IPAddr.new(address)
     subnets = foreman('GET', '/api/subnets')
     subnet = subnets && subnets['results'] && subnets['results'].detect{ |x| IPAddr.new(x['network_address']).include?(addr) }
-    subnet || raise Puppet::Error.new("Unable to locate subnet for address \"#{address}\"")
+    subnet or raise Puppet::Error.new("Unable to locate subnet for address \"#{address}\"")
   end
 
   # Given the subnet determine the domain it belongs to
   def get_domain(subnet)
     domains = foreman('GET', "/api/subnets/#{subnet['id']}/domains")
     domain = domains && domains['results'] && domains['results'].first
-    domain || raise Puppet::Error.new("Unable to locate domain for subnet \"#{subnet['name']}\"")
+    domain or raise Puppet::Error.new("Unable to locate domain for subnet \"#{subnet['name']}\"")
   end
 
   # Given the FQDN get the hostname
