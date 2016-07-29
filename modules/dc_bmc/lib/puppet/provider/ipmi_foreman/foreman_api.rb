@@ -57,13 +57,13 @@ Puppet::Type.type(:ipmi_foreman).provide(:foreman_api) do
     # Create the correct request method
     case method
     when 'GET'
-      req = Net::HTTP::Get.new(uri)
+      req = Net::HTTP::Get.new(uri.path)
     when 'POST'
-      req = Net::HTTP::Post.new(uri)
+      req = Net::HTTP::Post.new(uri.path)
       req.body = JSON.generate(payload)
       req['Content-Type'] = 'application/json'
     when 'PUT'
-      req = Net::HTTP::Put.new(uri)
+      req = Net::HTTP::Put.new(uri.path)
       req.body = JSON.generate(payload)
       req['Content-Type'] = 'application/json'
     end
