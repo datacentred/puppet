@@ -20,3 +20,5 @@ horizon::cache_server_port: '11211'
 horizon::custom_theme_path: 'static/themes/datacentred'
 horizon::session_timeout: '3600'
 horizon::password_autocomplete: 'on'
+horizon::api_versions:
+  identity: 2.0
