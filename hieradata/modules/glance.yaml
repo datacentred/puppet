@@ -25,6 +25,7 @@ glance::api::known_stores:
     - glance.store.http.Store
 glance::api::debug: true
 glance::api::verbose: true
+glance::api::logging::log_file: '/var/log/glance/glance-api.log'
 
 glance::registry::auth_type: 'keystone'
 glance::registry::auth_uri: "https://%{hiera('os_api_host')}:5000/"
@@ -37,6 +38,7 @@ glance::registry::use_syslog: false
 glance::registry::enabled: true
 glance::registry::debug: 'true'
 glance::registry::verbose: 'true'
+glance::registry::logging::log_file: '/var/log/glance/glance-registry.log'
 
 glance::backend::rbd::rbd_store_ceph_conf: '/etc/ceph/ceph.conf'
 glance::backend::rbd::rbd_store_user: 'glance'
