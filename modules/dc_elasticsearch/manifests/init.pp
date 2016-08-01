@@ -81,7 +81,7 @@ class dc_elasticsearch (
   }
 
   # Needs to be installed on all nodes
-  elasticsearch::plugin { 'elasticsearch/cloud-aws':
+  elasticsearch::plugin { 'cloud-aws':
     instances => ['ssd-01','hdd-01']
   }
 
