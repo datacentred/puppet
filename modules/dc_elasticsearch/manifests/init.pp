@@ -80,4 +80,7 @@ class dc_elasticsearch (
     matches => [ 'logstash*' ],
   }
 
+  # Needs to be installed on all nodes
+  elasticsearch::plugin { 'elasticsearch/cloud-aws': }
+
 }
