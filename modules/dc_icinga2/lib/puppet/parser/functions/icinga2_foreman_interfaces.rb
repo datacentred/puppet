@@ -27,7 +27,7 @@ module Puppet::Parser::Functions
 
       output[key] = {
         'address' => interface['ip'],
-        'netmask' => interface['attrs']['netmask'],
+        'netmask' => interface['subnet']['mask'],
         'mac' => interface['mac'],
       }
 
