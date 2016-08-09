@@ -62,6 +62,7 @@ class dc_icinga2::checks {
       '-t' => '$anti_affinity_tenant_name$',
       '-a' => '$anti_affinity_auth_url$',
     },
+    timeout   => '240',
   }
 
   icinga2::object::checkcommand { 'bmc':
