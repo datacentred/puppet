@@ -55,8 +55,9 @@ class dc_profile::openstack::haproxy {
       ],
     },
     options => {
-      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'option'  => ['tcpka', 'httpchk', 'tcplog', 'forwardfor'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -73,8 +74,9 @@ class dc_profile::openstack::haproxy {
       ],
     },
     options => {
-      'option'  => ['tcpka', 'httpchk', 'tcplog'],
+      'option'  => ['tcpka', 'httpchk', 'tcplog', 'forwardfor'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
