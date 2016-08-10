@@ -1,3 +1,9 @@
 ---
 classes:
   - '::dc_profile::openstack::backups::galera'
+
+telegraf::inputs:
+  rabbitmq:
+    url: "http://localhost:15672"
+    username: "%{hiera('rabbitmq_monuser')}"
+    password: "%{hiera('rabbitmq_monuser_password')}"
