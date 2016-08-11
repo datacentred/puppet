@@ -1,41 +1,50 @@
-# Class: dc_tftp::sync_master
+# == Class: dc_tftp::sync_master
 #
-# Parameters:
+# Installs an lsyncd process to synchronise the TFTP directory
 #
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
 class dc_tftp::sync_master {
 
-  include ::dc_tftp
-  include ::dc_tftp::sync_user
-  include ::lsyncd
+  assert_private()
 
-  sshkeys::create_key { $dc_tftp::tftp_sync_user :
-    home        => $dc_tftp::tftp_sync_home,
-    manage_home => true,
-    ssh_keytype => 'rsa',
-    require     => Class['dc_tftp::sync_user'],
-  } ->
+  if $::dc_tftp::master {
 
-  file { "${dc_tftp::tftp_sync_home}/.ssh/config" :
-    ensure  => present,
-    owner   => $dc_tftp::tftp_sync_user,
-    group   => $dc_tftp::tftp_sync_group,
-    mode    => '0600',
-    content => template('dc_tftp/ssh_config.erb'),
-  } ->
+    include ::lsyncd
 
-  lsyncd::process { 'tftp':
-    content => template($dc_tftp::conf_template),
-    owner   => 'root',
-    group   => 'root',
+    $_tftp_dir = $::dc_tftp::tftp_dir
+    $_tftp_sync_user = $::dc_tftp::tftp_sync_user
+    $_tftp_sync_group = $::dc_tftp::tftp_sync_group
+    $_tftp_sync_home = $::dc_tftp::tftp_sync_home
+    $_sync_slave = $::dc_tftp::sync_slave
+
+    file { "${_tftp_sync_home}/.ssh":
+      ensure => directory,
+      owner  => $_tftp_sync_user,
+      group  => $_tftp_sync_group,
+      mode   => '0700',
+    } ->
+
+    file { "${_tftp_sync_home}/.ssh/id_rsa":
+      ensure  => file,
+      owner   => $_tftp_sync_user,
+      group   => $_tftp_sync_group,
+      mode    => '0600',
+      content => $::dc_tftp::ssh_private_key,
+    } ->
+
+    file { "${dc_tftp::tftp_sync_home}/.ssh/config" :
+      ensure  => present,
+      owner   => $_tftp_sync_user,
+      group   => $_tftp_sync_group,
+      mode    => '0600',
+      content => template('dc_tftp/ssh_config.erb'),
+    } ->
+
+    lsyncd::process { 'tftp':
+      content => template($::dc_tftp::conf_template),
+      owner   => 'root',
+      group   => 'root',
+    }
+
   }
-
-  include ::dc_icinga::hostgroup_lsyncd
 
 }

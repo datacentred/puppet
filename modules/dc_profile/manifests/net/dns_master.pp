@@ -15,7 +15,7 @@ class dc_profile::net::dns_master {
   include ::dc_icinga::hostgroup_dhcp
 
   include ::dc_tftp
-  include ::dc_tftp::sync_master
+  include ::dc_icinga::hostgroup_lsyncd
 
   include ::foreman_proxy
   include ::foreman_proxy::plugin::discovery
