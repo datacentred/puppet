@@ -11,10 +11,16 @@ class dc_profile::puppet::puppet4_setup {
     system => true,
   } ->
 
+  user { 'puppet':
+    ensure => present,
+    group  => 'puppet',
+    system => true,
+  } ->
+
   # Update the private key from root:root 640 to something accessible by the puppet group
   file { "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem":
     ensure => file,
-    owner  => 'root',
+    owner  => 'puppet',
     group  => 'puppet',
     mode   => '0640',
   }
