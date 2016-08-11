@@ -1,17 +1,15 @@
-# Class: dc_tftp::sync_user
+# == Class: dc_tftp::sync_user
 #
-# Parameters:
+# Installs the user account which will do synchronisation
 #
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
 class dc_tftp::sync_user {
 
-  include dc_tftp
+  assert_private()
+
+  group { $dc_tftp::tftp_sync_group :
+    ensure => present,
+    system => true,
+  }
 
   user { $dc_tftp::tftp_sync_user :
     ensure     => present,
@@ -21,12 +19,6 @@ class dc_tftp::sync_user {
     groups     => $dc_tftp::tftp_group,
     system     => true,
     shell      => '/bin/bash',
-    require    => [ Class['::tftp'], Group[$dc_tftp::tftp_sync_group] ],
-  }
-
-  group { $dc_tftp::tftp_sync_group :
-    ensure => present,
-    system => true,
   }
 
 }

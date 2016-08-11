@@ -190,9 +190,6 @@
 [submodule "modules/nova"]
 	path = modules/nova
 	url = https://github.com/datacentred/puppet-nova
-[submodule "modules/sshkeys"]
-	path = modules/sshkeys
-	url = https://github.com/jtopjian/puppet-sshkeys.git
 [submodule "modules/ceilometer"]
 	path = modules/ceilometer
 	url = https://github.com/stackforge/puppet-ceilometer.git

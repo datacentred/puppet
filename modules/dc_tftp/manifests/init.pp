@@ -1,31 +1,34 @@
-# Class: dc_tftp
+# == Class: dc_tftp
 #
-# Parameters:
+# Installs TFTP, basic configuration and HA synchronisation
 #
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
 class dc_tftp (
-  $tftp_dir        = $dc_tftp::params::tftp_dir,
-  $address         = $dc_tftp::params::address,
-  $ha_sync         = $dc_tftp::params::ha_sync,
-  $sync_master     = $dc_tftp::params::sync_master,
-  $sync_slave      = $dc_tftp::params::sync_slave,
-  $sync_interface  = $dc_tftp::params::sync_interface,
-  $use_inetd       = $dc_tftp::params::use_inetd,
-  $tftp_sync_user  = $dc_tftp::params::tftp_sync_user,
-  $tftp_sync_group = $dc_tftp::params::tftp_sync_group,
-  $tftp_sync_home  = $dc_tftp::params::tftp_sync_home,
-  $tftp_user       = $dc_tftp::params::tftp_user,
-  $tftp_group      = $dc_tftp::params::tftp_group,
-  $dir_mode        = $dc_tftp::params::dir_mode,
-  $conf_template   = $dc_tftp::params::conf_template,
-) inherits dc_tftp::params {
+  $sync_slave,
+  $ssh_private_key,
+  $ssh_public_key,
+  $tftp_dir = '/var/tftpboot',
+  $use_inetd = false,
+  $tftp_sync_user = 'tftpsync',
+  $tftp_sync_group = 'tftpsync',
+  $tftp_sync_home = '/var/lib/tftpsync',
+  $tftp_user = 'tftp',
+  $tftp_group = 'tftp',
+  $dir_mode = '2775',
+  $conf_template = 'dc_tftp/lsyncd.conf.lua.trusty.erb',
+  $master = true,
+  $address = $::ipaddress,
+) {
 
-  contain dc_tftp::install
+  include ::dc_tftp::install
+  include ::dc_tftp::configure
+  include ::dc_tftp::sync_user
+  include ::dc_tftp::sync_master
+  include ::dc_tftp::sync_slave
+
+  Class['::dc_tftp::install'] ->
+  Class['::dc_tftp::configure'] ->
+  Class['::dc_tftp::sync_user'] ->
+  Class['::dc_tftp::sync_master'] ->
+  Class['::dc_tftp::sync_slave']
 
 }

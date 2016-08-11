@@ -58,3 +58,5 @@ foreman_proxy::dns_key: '/etc/bind/rndc.key'
 foreman_proxy::bmc: true
 foreman_proxy::bmc_listen_on: 'https'
 foreman_proxy::bmc_default_provider: 'ipmitool'
+
+dc_tftp::master: false

@@ -14,7 +14,6 @@ class dc_profile::net::dns_slave {
   include ::dc_apparmor::dhcpd
 
   include ::dc_tftp
-  include ::dc_tftp::sync_slave
 
   include ::foreman_proxy
   include ::dc_foreman::service_checks
