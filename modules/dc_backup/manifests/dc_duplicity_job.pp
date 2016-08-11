@@ -23,7 +23,6 @@ define dc_backup::dc_duplicity_job (
   $script_owner = undef,
   $script_group_owner = undef,
   $script_permissions = undef,
-  $create_cron = true,
   $cloud = 'all',
   $pre_command_hour = '0',
   $ceph_backup_hour = '2',
