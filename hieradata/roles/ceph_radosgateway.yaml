@@ -6,13 +6,14 @@ ceph::rgw: true
 ceph::rgw_id: "radosgw.%{hostname}"
 
 ceph::conf:
-  client.radosgw.%{hostname}:
-    host: "%{hostname}"
-    keyring: "/etc/ceph/ceph.client.radosgw.%{hostname}.keyring"
+  global:
     rgw region: 'uk'
     rgw region root pool: '.uk.rgw.root'
     rgw zone: 'uk-sal01'
     rgw zone root pool: '.uk-sal01.rgw.root'
+  client.radosgw.%{hostname}:
+    host: "%{hostname}"
+    keyring: "/etc/ceph/ceph.client.radosgw.%{hostname}.keyring"
     rgw enable ops log: 'true'
     rgw enable usage log: 'true'
     rgw thread pool size: '4096'
