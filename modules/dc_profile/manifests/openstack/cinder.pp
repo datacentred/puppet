@@ -21,7 +21,7 @@ class dc_profile::openstack::cinder {
   @@haproxy::balancermember { "${::fqdn}-cinder":
     listening_service => 'cinder',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '8776',
     options           => 'check inter 2000 rise 2 fall 5',
   }

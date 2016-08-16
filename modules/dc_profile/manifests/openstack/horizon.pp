@@ -22,7 +22,7 @@ class dc_profile::openstack::horizon {
   @@haproxy::balancermember { "${::fqdn}-horizon":
     listening_service => 'horizon',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '80',
     options           => 'check inter 2000 rise 2 fall 5',
   }

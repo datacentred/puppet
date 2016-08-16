@@ -34,14 +34,14 @@ class dc_profile::openstack::glance {
   @@haproxy::balancermember { "${::fqdn}-glance-registry":
     listening_service => 'glance-registry',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '9191',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-glance-api":
     listening_service => 'glance-api',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '9292',
     options           => 'check inter 2000 rise 2 fall 5',
   }
