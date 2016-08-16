@@ -59,7 +59,7 @@ class dc_profile::openstack::heat {
   @@haproxy::balancermember { "${::fqdn}-heat":
     listening_service => 'heat',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '8004',
     options           => 'check inter 2000 rise 2 fall 5',
   }
@@ -67,7 +67,7 @@ class dc_profile::openstack::heat {
   @@haproxy::balancermember { "${::fqdn}-heat-cfn":
     listening_service => 'heat-cfn',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '8000',
     options           => 'check inter 2000 rise 2 fall 5',
   }

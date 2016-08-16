@@ -84,7 +84,7 @@ class dc_profile::openstack::neutron::server {
   @@haproxy::balancermember { "${::fqdn}-neutron":
     listening_service => 'neutron',
     server_names      => $::hostname,
-    ipaddresses       => $::ipaddress,
+    ipaddresses       => foreman_primary_ipaddress(),
     ports             => '9696',
     options           => 'check inter 2000 rise 2 fall 5',
   }
