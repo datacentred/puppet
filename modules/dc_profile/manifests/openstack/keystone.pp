@@ -57,10 +57,12 @@ class dc_profile::openstack::keystone {
     notify  => Service['keystone'],
   }
 
+  $_ipaddress = foreman_primary_ipaddress()
+
   @@haproxy::balancermember { "${::fqdn}-keystone-auth":
     listening_service => 'keystone-auth',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '5000',
     options           => 'check inter 2000 rise 2 fall 5'
   }
