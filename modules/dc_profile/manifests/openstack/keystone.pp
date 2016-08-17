@@ -69,7 +69,7 @@ class dc_profile::openstack::keystone {
   @@haproxy::balancermember { "${::fqdn}-keystone-admin":
     listening_service => 'keystone-admin',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '35357',
     options           => 'check inter 2000 rise 2 fall 5'
   }

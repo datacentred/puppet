@@ -6,7 +6,7 @@ module Puppet::Parser::Functions
     interfaces = lookupvar('foreman_interfaces') || []
 
     interfaces.each do |interface|
-      return interface['ipaddress'] if interface['primary']
+      return interface['ip'] if interface['primary']
     end
 
     lookupvar('::ipaddress')
