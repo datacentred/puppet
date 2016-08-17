@@ -18,11 +18,13 @@ class dc_profile::openstack::horizon {
   Class['::horizon'] ->
   Class['::dc_branding::horizon']
 
+  $_ipaddress = foreman_primary_ipaddress()
+
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-horizon":
     listening_service => 'horizon',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '80',
     options           => 'check inter 2000 rise 2 fall 5',
   }

@@ -28,32 +28,34 @@ class dc_profile::openstack::nova::control {
     value => true,
   }
 
+  $_ipaddress = foreman_primary_ipaddress()
+
   # Add the various services from this node into our loadbalancers
   @@haproxy::balancermember { "${::fqdn}-compute":
     listening_service => 'nova-compute',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '8774',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-metadata":
     listening_service => 'nova-metadata',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '8775',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-novnc":
     listening_service => 'novncproxy',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '6080',
     options           => 'check inter 2000 rise 2 fall 5',
   }
   @@haproxy::balancermember { "${::fqdn}-ec2":
     listening_service => 'nova-ec2',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '8773',
     options           => 'check inter 2000 rise 2 fall 5',
   }

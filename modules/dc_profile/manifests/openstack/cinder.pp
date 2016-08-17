@@ -17,11 +17,13 @@ class dc_profile::openstack::cinder {
   include ::cinder::ceilometer
   include ::dc_icinga::hostgroup_cinder
 
+  $_ipaddress = foreman_primary_ipaddress()
+
   # Add this node into our loadbalancer
   @@haproxy::balancermember { "${::fqdn}-cinder":
     listening_service => 'cinder',
     server_names      => $::hostname,
-    ipaddresses       => foreman_primary_ipaddress(),
+    ipaddresses       => $_ipaddress,
     ports             => '8776',
     options           => 'check inter 2000 rise 2 fall 5',
   }
