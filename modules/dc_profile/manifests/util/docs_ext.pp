@@ -19,20 +19,12 @@ class dc_profile::util::docs_ext {
 
   $database_password = hiera('confluence_database_password')
 
-  nginx::resource::upstream { 'confluence':
-    ensure  => present,
-    members => [ 'localhost:8080' ],
-    #members => [ 'localhost:8443' ],
-  }
-
   nginx::resource::vhost { $::fqdn:
     ssl => true,
     ssl_port => 443,
     listen_port => 443,
-    proxy       => 'http://confluence',
-    #proxy       => 'https://confluence',
-    server_name => [ $::fqdn, 'docs.datacentred.io', 'http://confluence' ],
-    #server_name => [ $::fqdn, 'docs.datacentred.io', 'https://confluence' ],
+    proxy       => 'http://localhost:8080',
+    server_name => [ $::fqdn, 'docs.datacentred.io' ],
     ssl_cert             => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
     ssl_key              => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
   }
