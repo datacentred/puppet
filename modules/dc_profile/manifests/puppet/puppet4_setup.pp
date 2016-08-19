@@ -13,7 +13,7 @@ class dc_profile::puppet::puppet4_setup {
 
   user { 'puppet':
     ensure => present,
-    group  => 'puppet',
+    gid    => 'puppet',
     system => true,
   } ->
 
