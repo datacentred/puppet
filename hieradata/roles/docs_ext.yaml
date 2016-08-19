@@ -19,3 +19,15 @@ confluence::tomcat_proxy:
   scheme:    'https'
   proxyName: "%{hiera('confluence_tomcat_proxyname')}"
   proxyPort: '443'
+
+nginx::nginx_vhosts:
+  "%{hiera('confluence_nginx_vhost')}":
+    ssl: true
+    ssl_port: 443
+    listen_port: 443
+    proxy: 'http://localhost:8080'
+    server_name:
+      - "%{::fqdn}"
+      - 'docs.datacentred.io'
+    ssl_cert: "%{hiera('confluence_nginx_ssl_cert')}"
+    ssl_key: "%{hiera('confluence_nginx_ssl_key')}"
