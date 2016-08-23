@@ -21,8 +21,6 @@ dc_postgresql::params::config_entries:
     value: '96MB'
   wal_buffers:
     value: '8MB'
-  checkpoint_segments:
-    value: '16' 
   shared_buffers:
     value: '3840MB'
   max_connections:
