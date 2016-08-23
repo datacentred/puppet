@@ -21,10 +21,6 @@ class dc_postgresql::install {
     ip_mask_deny_postgres_user => $dc_postgresql::params::ip_mask_deny_postgres_user,
     listen_addresses           => $dc_postgresql::params::listen_addresses,
     postgres_password          => $dc_postgresql::params::postgres_password,
-  } ->
-
-  package { 'postgresql-contrib-9.3':
-    ensure => installed,
   }
 
 }

@@ -18,7 +18,7 @@ NAGIOS_WARNING = 1
 NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
 
-VARDIR = '/var/lib/postgresql/9.3/main'
+VARDIR = '/var/lib/postgresql/9.5/main'
 
 
 def psql_exec(command):

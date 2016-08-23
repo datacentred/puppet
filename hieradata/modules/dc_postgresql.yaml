@@ -1,7 +1,7 @@
 ---
 dc_postgresql::params::postgres_password: "%{hiera('postgres_password')}"
-dc_postgresql::params::pgdata: '/var/lib/postgresql/9.3/main'
-dc_postgresql::params::pg_bindir: '/usr/lib/postgresql/9.3/bin'
+dc_postgresql::params::pgdata: '/var/lib/postgresql/9.5/main'
+dc_postgresql::params::pg_bindir: '/usr/lib/postgresql/9.5/bin'
 dc_postgresql::params::listen_addresses: '*'
 dc_postgresql::params::ip_mask_deny_postgres_user: '0.0.0.0/32'
 
