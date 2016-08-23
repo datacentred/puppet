@@ -35,7 +35,7 @@ class dc_postgresql::repmgr (
   $ssh_private_key,
   $cluster_master,
   $cluster_name = 'test',
-  $version = '9.3',
+  $version = '9.5',
   $home = '/var/lib/postgresql',
 ) {
 

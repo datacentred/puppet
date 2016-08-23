@@ -1,2 +1,2 @@
 ---
-postgresql::globals::version: '9.3'
+postgresql::globals::version: '9.5'
