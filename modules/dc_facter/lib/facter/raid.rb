@@ -1,16 +1,9 @@
-Facter.add('software_raid') do
-  confine :kernel => :linux
-  setcode do
-    devices = []
-    if FileTest.exists?('/proc/mdstat')
-      File.open('/proc/mdstat', 'r') do |f|
-        while line = f.gets
-          if line =~ /^(md\d+)/
-            devices.push($1)
-          end
-        end
-      end
+devices = Dir.entries('/sys/class/block').select{ |x| x.start_with?('md') }
+unless devices.empty?
+  Facter.add('software_raid') do
+    confine :kernel => :linux
+    setcode do
+      devices
     end
-    devices.sort.join(',')
   end
 end
