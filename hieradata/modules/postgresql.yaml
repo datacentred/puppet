@@ -1,2 +1,7 @@
 ---
 postgresql::globals::version: '9.5'
+
+postgresql::server::postgres_password: "%{hiera('postgres_password')}"
+postgresql::server::listen_addresses: '*'
+# WARNING THIS IS UNSAFE - needed for the streaming replication checks at present
+postgresql::server::ip_mask_deny_postgres_user: '0.0.0.0/32'
