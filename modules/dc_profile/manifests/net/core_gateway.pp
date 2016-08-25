@@ -4,10 +4,17 @@
 #
 class dc_profile::net::core_gateway {
 
-  include ::puppet
   include ::haproxy
   include ::keepalived
   include ::puppetcrl_sync
+
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
+    $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+  } else {
+    $_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+    $_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+  }
 
   # Create the key/cert pair for haproxy
   concat { '/etc/ssl/private/puppet.crt':
@@ -19,13 +26,13 @@ class dc_profile::net::core_gateway {
 
   concat::fragment { 'haproxy puppet key':
     target => '/etc/ssl/private/puppet.crt',
-    source => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
+    source => $_key,
     order  => '1',
   }
 
   concat::fragment { 'haproxy puppet cert':
     target => '/etc/ssl/private/puppet.crt',
-    source => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
+    source => $_cert,
     order  => '2',
   }
 
