@@ -7,7 +7,12 @@ class dc_docker::client {
   include ::docker
 
   $_dcertpath = '/etc/docker/certs.d/registry.datacentred.services:5000'
-  $_pcertpath = '/var/lib/puppet/ssl'
+
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_pcertpath = '/etc/puppetlabs/puppet/ssl'
+  } else {
+    $_pcertpath = '/var/lib/puppet/ssl'
+  }
 
   File {
     owner => 'root',

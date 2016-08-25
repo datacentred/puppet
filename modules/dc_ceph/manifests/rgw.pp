@@ -14,6 +14,14 @@ class dc_ceph::rgw {
   include ::apache
   include ::apache::mod::fastcgi
 
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+    $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
+  } else {
+    $_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+    $_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+  }
+
   Class['::apache'] ->
 
   file { '/var/www/s3gw.fcgi':
@@ -54,8 +62,8 @@ class dc_ceph::rgw {
       docroot            => '/var/www',
       port               => 443,
       ssl                => true,
-      ssl_cert           => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
-      ssl_key            => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
+      ssl_cert           => $_cert,
+      ssl_key            => $_key,
       serveraliases      => [
         "*.${::fqdn}",
       ],

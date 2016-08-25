@@ -2,6 +2,6 @@
 foreman_api_user = <%= @foreman_view_api_user %>
 foreman_api_pw = <%= @foreman_view_api_pw %>
 foreman_api_baseurl = https://<%= @foreman_url %>/api/
-cert_path = /var/lib/puppet/ssl/certs/<%= @fqdn %>.pem
-cacert_path = /var/lib/puppet/ssl/certs/ca.pem
-key_path = /var/lib/puppet/ssl/private_keys/<%= @fqdn %>.pem
+cert_path = <%= @_cert %>
+cacert_path = <%= @_cacert %>
+key_path = <%= @_key %>
