@@ -71,6 +71,12 @@ class dc_profile::ceph::radosgw_lb {
     options           => 'check',
   }
 
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+  } else {
+    $_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+  }
+
   # The statistics interface listens on port 1936 over SSL
   # The port is protected with puppet X.509 certificates so only trusted users
   # and servers (e.g. Icinga) are able to connect
@@ -82,7 +88,7 @@ class dc_profile::ceph::radosgw_lb {
         'no-sslv3',
         'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5',
         'crt /etc/ssl/private/puppet.crt',
-        'ca-file /var/lib/puppet/ssl/certs/ca.pem',
+        "ca-file ${_cacert}",
         'verify required',
       ],
     },

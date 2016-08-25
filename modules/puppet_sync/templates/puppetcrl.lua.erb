@@ -6,9 +6,9 @@ settings {
 <% @targets.each do |target| -%>
 sync {
   default.rsyncssh,
-  source = "/var/lib/puppet/ssl",
+  source = "<%= @_ssldir %>",
   host = "<%= target %>",
-  targetdir = "/var/lib/puppet/ssl",
+  targetdir = "<%= @_ssldir %>",
   delete = false,
   <% if @excludes -%>
   exclude = { <%= Array(@excludes).map{|x| %Q/"#{x}"/}.join(', ') %> },

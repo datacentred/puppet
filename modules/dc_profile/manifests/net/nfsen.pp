@@ -18,6 +18,18 @@ class dc_profile::net::nfsen {
   include ::apache::mod::php
   include ::apache::mod::ssl
     
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
+    $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+    $_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+    $_crl = '/etc/puppetlabs/puppet/ssl/crl.pem'
+  } else {
+    $_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+    $_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
+    $_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
+    $_crl = '/var/lib/puppet/ssl/crl.pem'
+  }
+
   apache::vhost { "${::fqdn} non-ssl":
     servername      => $::fqdn,
     port            => 80,
@@ -32,10 +44,10 @@ class dc_profile::net::nfsen {
     port              => 443,
     docroot           => '/var/www/html/',
     ssl               => true,
-    ssl_cert          => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
-    ssl_key           => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
-    ssl_ca            => '/var/lib/puppet/ssl/certs/ca.pem',
-    ssl_crl           => '/var/lib/puppet/ssl/crl.pem',
+    ssl_cert          => $_cert,
+    ssl_key           => $_key,
+    ssl_ca            => $_cacert,
+    ssl_crl           => $_crl,
     ssl_verify_client => 'require',
     ssl_verify_depth  => 1,
     before            => Class['::nfsen'],

@@ -14,6 +14,12 @@ class puppet_sync (
 
   include ::lsyncd
 
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_ssldir = '/etc/puppetlabs/puppet/ssl'
+  } else {
+    $_ssldir = '/var/lib/puppet/ssl'
+  }
+
   lsyncd::process { 'puppetcrl':
     content => template('puppet_sync/puppetcrl.lua.erb'),
     owner   => 'puppet',

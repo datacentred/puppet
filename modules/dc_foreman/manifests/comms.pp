@@ -10,14 +10,20 @@
 #
 class dc_foreman::comms {
 
-  file { '/var/lib/puppet/ssl/certs/foreman_comms.pem':
-    ensure => 'link',
-    target => "/var/lib/puppet/ssl/certs/${::fqdn}.pem",
+  if versioncmp($::puppetversion, '4.0.0') >= 0 {
+    $_ssldir = '/etc/puppetlabs/puppet/ssl'
+  } else {
+    $_ssldir = '/var/lib/puppet/ssl'
   }
 
-  file { '/var/lib/puppet/ssl/private_keys/foreman_comms.pem':
+  file { "${_ssldir}/certs/foreman_comms.pem":
     ensure => 'link',
-    target => "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem",
+    target => "${_ssldir}/certs/${::fqdn}.pem",
+  }
+
+  file { "${_ssldir}/private_keys/foreman_comms.pem":
+    ensure => 'link',
+    target => "${_ssldir}/private_keys/${::fqdn}.pem",
   }
 
 }
