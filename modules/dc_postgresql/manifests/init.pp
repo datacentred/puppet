@@ -1,8 +1,16 @@
 # == Class: dc_postgresql
 #
-class dc_postgresql {
+# Simple wrappers around postgres resources and backups
+#
+class dc_postgresql (
+  $postgres_password = undef,
+  $databases = {},
+  $config_entries = {},
+) {
 
-  include ::dc_postgresql::install
-  include ::dc_postgresql::config
+  include ::postgresql::server
+
+  create_resources('postgresql::server::config_entry', $config_entries)
+  create_resources('postgresql::server::db', $databases)
 
 }

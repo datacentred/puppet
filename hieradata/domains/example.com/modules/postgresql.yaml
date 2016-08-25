@@ -1,0 +1,2 @@
+---
+postgresql::server::ip_mask_allow_all_users: '10.20.192.0/24'

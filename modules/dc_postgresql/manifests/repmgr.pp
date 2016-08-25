@@ -57,8 +57,8 @@ class dc_postgresql::repmgr (
   }
 
   # Ensure the repmgr preload libraries are installed before configuring postgres
-  Class['::dc_postgresql::repmgr::install'] -> Class['::dc_postgresql::install']
+  Class['::dc_postgresql::repmgr::install'] -> Class['::postgresql::server']
 
   # Ensure /var/lib/postgresql is created before configuring common repmgr configs/ssh
-  Class['::dc_postgresql::install'] -> Class['::dc_postgresql::repmgr::configure']
+  Class['::postgresql::server'] -> Class['::dc_postgresql::repmgr::configure']
 }

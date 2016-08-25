@@ -2,7 +2,7 @@
 classes:
   - '::dc_profile::db::postgresql_master'
 
-dc_postgresql::params::config_entries:
+dc_postgresql::config_entries:
   wal_level:
     value: 'hot_standby'
   archive_mode:
