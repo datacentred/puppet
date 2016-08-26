@@ -44,6 +44,7 @@ glance::backend::rbd::rbd_store_ceph_conf: '/etc/ceph/ceph.conf'
 glance::backend::rbd::rbd_store_user: 'glance'
 glance::backend::rbd::rbd_store_pool: 'glance'
 glance::backend::rbd::package_ensure: 'present'
+
 glance::notify::rabbitmq::rabbit_hosts:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
@@ -66,3 +67,7 @@ glance::policy::policies:
   glance-manage_image_cache:
     key: 'manage_image_cache'
     value: 'role:admin'
+
+glance::config::api_config:
+  DEFAULT/public_endpoint:
+    value: "https://%{hiera('os_api_host')}:9292"

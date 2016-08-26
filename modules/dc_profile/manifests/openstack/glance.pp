@@ -13,6 +13,7 @@ class dc_profile::openstack::glance {
   include ::glance::cache::pruner
   include ::glance::cache::cleaner
   include ::glance::policy
+  include ::glance::config
   include ::dc_icinga::hostgroup_glance
 
   # TODO: Remove post-upgrade
