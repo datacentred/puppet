@@ -13,7 +13,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb connect':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -28,7 +28,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb connections':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -43,7 +43,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb replication lag':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_host'     => 'host.name',
       'mongodb_username' => $username,
@@ -59,7 +59,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb replication lag percent':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_host'     => 'host.name',
       'mongodb_username' => $username,
@@ -75,7 +75,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb memory':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -90,7 +90,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb lock time percentage':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -105,7 +105,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb flush average':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -120,7 +120,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb last flush':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -135,7 +135,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb replica state':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -150,7 +150,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb index miss':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,
@@ -165,7 +165,7 @@ class dc_icinga2::services::mongodb (
 
   icinga2::object::apply_service { 'mongodb primary connection':
     import        => 'generic-service',
-    check_command => 'mongodb',
+    check_command => 'dc_mongodb',
     vars          => {
       'mongodb_username' => $username,
       'mongodb_password' => $password,

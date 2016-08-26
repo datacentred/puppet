@@ -153,7 +153,7 @@ class dc_icinga2::checks {
     },
   }
 
-  icinga2::object::checkcommand { 'smart':
+  icinga2::object::checkcommand { 'dc_smart':
     command   => [
       '"sudo"',
       'PluginDir + "/check_scsi_smart"',
@@ -477,7 +477,7 @@ class dc_icinga2::checks {
     },
   }
 
-  icinga2::object::checkcommand { 'elasticsearch':
+  icinga2::object::checkcommand { 'dc_elasticsearch':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_elasticsearch"',
     ],
@@ -489,7 +489,7 @@ class dc_icinga2::checks {
     },
   }
 
-  icinga2::object::checkcommand { 'mongodb':
+  icinga2::object::checkcommand { 'dc_mongodb':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_mongodb"',
     ],

@@ -6,7 +6,7 @@ class dc_icinga2::services::elasticsearch {
 
   icinga2::object::apply_service { 'elasticsearch':
     import        => 'generic-service',
-    check_command => 'elasticsearch',
+    check_command => 'dc_elasticsearch',
     vars          => {
       'enable_pagerduty' => true,
     },
