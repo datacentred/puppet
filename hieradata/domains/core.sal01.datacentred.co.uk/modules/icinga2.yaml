@@ -1,3 +1,5 @@
 ---
+icinga2::constants:
+  EventEngine: 'poll'
 icinga2::web::aliases:
   - 'icinga2.datacentred.services'
