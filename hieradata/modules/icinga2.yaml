@@ -1,4 +1,18 @@
 ---
 icinga2::features::api::accept_config: true
 
-icinga2::features::graphitewriter::host: 'influxdb0.core.sal01.datacentred.co.uk'
+icinga2::features::influxdbwriter::host: 'influxdb0.core.sal01.datacentred.co.uk'
+icinga2::features::influxdbwriter::host_template:
+  measurement: '$host.check_command$'
+  tags:
+    fqdn: '$host.name$'
+    hostname: '$host.vars.hostname$'
+    domain: '$host.vars.domain$'
+icinga2::features::influxdbwriter::service_template:
+  measurement: '$service.check_command$'
+  tags:
+    fqdn: '$host.name$'
+    hostname: '$host.vars.hostname$'
+    domain: '$host.vars.domain$'
+    instance: '$service.vars.instance$'
+icinga2::features::influxdbwriter::enable_send_thresholds: true
