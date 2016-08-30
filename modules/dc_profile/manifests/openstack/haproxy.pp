@@ -95,6 +95,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -113,6 +114,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -131,6 +133,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -149,6 +152,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'         => ['tcpka', 'httpchk', 'tcplog'],
       'balance'        => 'source',
+      'reqadd'         => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'         => 'Strict-Transport-Security:\ max-age=31536000',
       'timeout client' => '180s',
       'timeout server' => '180s',
@@ -181,6 +185,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -199,6 +204,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'httpchk', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -235,6 +241,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }
@@ -292,6 +299,7 @@ class dc_profile::openstack::haproxy {
     options => {
       'option'  => ['tcpka', 'tcplog'],
       'balance' => 'source',
+      'reqadd'  => 'X-Forwarded-Proto:\ https if { ssl_fc }',
       'rspadd'  => 'Strict-Transport-Security:\ max-age=31536000',
     },
   }

@@ -28,6 +28,11 @@ class dc_profile::openstack::nova::control {
     value => true,
   }
 
+  # TODO: Use the actual ::nova::api parameter once we've upgraded puppet-nova
+  nova_config { 'DEFAULT/secure_proxy_ssl_header':
+    value => 'X-Forwarded-Proto',
+  }
+
   $_ipaddress = foreman_primary_ipaddress()
 
   # Add the various services from this node into our loadbalancers

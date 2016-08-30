@@ -54,3 +54,7 @@ cinder::quota::quota_gigabytes: '200'
 cinder::backends::enabled_backends:
   - 'cinder.volumes'
   - 'cinder.volumes.flash'
+
+cinder::config::cinder_config:
+  DEFAULT/public_endpoint:
+    value: "https://%{hiera('os_api_host')}:8776/v2/%(tenant_id)s"

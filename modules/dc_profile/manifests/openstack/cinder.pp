@@ -15,6 +15,7 @@ class dc_profile::openstack::cinder {
   include ::cinder::volume
   include ::cinder::backends
   include ::cinder::ceilometer
+  include ::cinder::config
   include ::dc_icinga::hostgroup_cinder
 
   $_ipaddress = foreman_primary_ipaddress()
