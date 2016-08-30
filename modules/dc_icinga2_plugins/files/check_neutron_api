@@ -97,11 +97,11 @@ def main():
     if delta >= args.critical:
         code = NAGIOS_CRITICAL
     elif delta >= args.warning:
-        code = WARNING
+        code = NAGIOS_WARNING
 
     status = ['OK', 'WARNING', 'CRITICAL'][code]
     print ('{0}: neutron responsed in {1:0.3f}s '
-           '| time={1:0.3f}s,{2:0.3f}s,{3:0.3f}s,,').\
+           '| time={1:0.3f}s;{2:0.3f};{3:0.3f}').\
           format(status, delta, args.warning, args.critical)
     sys.exit(code)
 
