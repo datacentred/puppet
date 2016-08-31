@@ -11,9 +11,6 @@ class dc_branding::horizon {
   $horizon_dir = '/usr/share/openstack-dashboard'
   $theme_dir = '/usr/share/openstack-dashboard-datacentred-theme'
 
-  package { 'openstack-dashboard-ubuntu-theme':
-    ensure => absent,
-  } ->
 
   file { $theme_dir:
     ensure  => directory,
@@ -29,6 +26,10 @@ class dc_branding::horizon {
   file { "${horizon_dir}/openstack_dashboard/static/themes/datacentred":
     ensure => link,
     target => $theme_dir,
+  } ->
+
+  package { 'openstack-dashboard-ubuntu-theme':
+    ensure => absent,
   } ->
 
   exec { 'dc_branding::horizon collect':
