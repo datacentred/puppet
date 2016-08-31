@@ -6,9 +6,7 @@ class dc_logstash::server::config::output_elasticsearch {
 
   include ::dc_logstash::server
 
-  $elasticsearch_host = $dc_logstash::server::elasticsearch_host
-  $elasticsearch_embedded = $dc_logstash::server::elasticsearch_embedded
-  $elasticsearch_protocol = $dc_logstash::server::elasticsearch_protocol
+  $elasticsearch_hosts = $::dc_logstash::server::elasticsearch_hosts
 
   logstash::configfile { 'output_elasticsearch':
     content => template('dc_logstash/server/output_elasticsearch.erb'),
