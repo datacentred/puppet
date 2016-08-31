@@ -4,6 +4,8 @@ class dc_postfix::restrictions {
 
   include ::dc_postfix::gateway
 
+  $alias_domains = $::dc_postfix::gateway::alias_domains
+
   postfix::hash { '/etc/postfix/relaydomains':
     ensure    => present,
     map_owner => 'postfix',
