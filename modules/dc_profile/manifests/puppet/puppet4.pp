@@ -10,4 +10,10 @@ class dc_profile::puppet::puppet4 {
     stage => 'setup',
   }
 
+  cron { 'puppet-agent':
+    command => '/opt/puppetlabs/bin/puppet agent --onetime --no-daemonize --server puppet4.incubator.datacentred.io',
+    user    => 'root',
+    minute  => interval_to_minute(30),
+  }
+
 }
