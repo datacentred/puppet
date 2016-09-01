@@ -4,6 +4,9 @@ class dc_postfix::virtual {
 
   include ::dc_postfix::gateway
 
+  $alias_domains = $::dc_postfix::gateway::alias_domains
+  $external_sysmail_address = $::dc_postfix::gateway::external_sysmail_address
+
   postfix::hash { '/etc/postfix/valias':
     ensure    => present,
     map_owner => 'postfix',
