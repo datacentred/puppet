@@ -19,16 +19,12 @@ class dc_profile::util::docs_ext {
 
   $database_password = hiera('confluence_database_password')
 
-  postgresql::server::role { 'confluenceuser':
-    login    => true,
-    createdb => true,
-    password_hash => postgresql_password('confluenceuser', "$database_password"),
-  }
-
   postgresql::server::db { 'confluencedb':
-    owner    => 'confluenceuser',
-    user     => 'confluenceuser',
-    password => postgresql_password('confluenceuser', '$database_password'),
+    owner     => 'confluenceuser',
+    user      => 'confluenceuser',
+    password  => postgresql_password('confluenceuser', "$database_password"),
+    grant     => CREATE,
+    # login for the role is set to true by default
   }
 
   dc_backup::dc_duplicity_job { "${::fqdn}_confluencexml" :
