@@ -2,17 +2,19 @@
 #
 # Changes to hostnames and IP addresses will need to be reflected
 # in vagrant.yaml
-
+eyaml:
+  public_key: /path/to/eyaml/public_key.pkcs7.pem
+  private_key: /path/to/eyaml/private_key.pkcs7.pem
 boxes:
   osdbmq0:
-    puppet_role: 'dc_role::osdbmq'
-    hiera_role: 'openstack_data'
+    facts:
+      role: 'openstack_data'
     ip: 10.0.32.2
   osdbmq1:
-    puppet_role: 'dc_role::osdbmq'
-    hiera_role: 'openstack_data'
+    facts:
+      role: 'openstack_data'
     ip: 10.0.32.3
   osdbmq2:
-    puppet_role: 'dc_role::osdbmq'
-    hiera_role: 'openstack_data'
+    facts:
+      role: 'openstack_data'
     ip: 10.0.32.4
