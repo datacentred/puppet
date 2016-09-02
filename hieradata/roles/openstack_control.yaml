@@ -60,3 +60,5 @@ tidyup:
   '/var/log/neutron': {}
   '/var/log/ceilometer': {}
   '/var/log/upstart': {}
+
+dc_icinga::client::address: "%{::ipaddress_em1}"
