@@ -2,16 +2,23 @@ classes:
   - 'dc_profile::util::docs_ext'
 
 postgresql::globals::encoding: 'UTF-8'
-postgresql::global::locale: 'en_US.UTF-8'
+postgresql::globals::locale: 'en_US.UTF-8'
 postgresql::server::postgres_password: "%{hiera('confluence_postgresql_password')}"
 postgresql::server::listen_addresses: 'localhost'
+postgresql::server_dbs:
+  'confluencedb':
+    owner: 'confluenceuser'
+    user: 'confluenceuser'
+    password: "%{hiera('confluence_dbuser_password')}"
+    grant: 'CREATE'
+    # login for the role is set to true by default
 
 confluence::deploy_module: 'staging'
 #confluence::manage_service: false
 
 confluence::enable_post_install: true
 confluence::dbuser: 'confluenceuser'
-confluence::dbpassword: "%{hiera('confluence_database_password')}"
+confluence::dbpassword: "%{hiera('confluence_dbuser_password')}"
 confluence::dbname: 'confluencedb'
 confluence::serverid: "%{hiera('confluence_serverid')}"
 confluence::licensemessage: "%{hiera('confluence_licensemessage')}"
