@@ -18,11 +18,6 @@ class dc_profile::util::docs_ext {
   include ::dc_backup
 
   create_resources('postgresql::server::db', hiera_hash('postgresql::server_dbs'))
-
-  dc_backup::dc_duplicity_job { "${::fqdn}_confluencexml" :
-    cloud          => 's3',
-    backup_content => 'homedir',
-    source_dir     => '/home/confluence/backups/',
-  }
+  create_resources('dc_backup::dc_duplicity_job', hiera_hash('dc_backup::confluence_db_backup'))
 
 }

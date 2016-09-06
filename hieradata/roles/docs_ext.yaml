@@ -41,3 +41,10 @@ nginx::nginx_vhosts:
       - 'docs.datacentred.io'
     ssl_cert: "%{hiera('confluence_nginx_ssl_cert')}"
     ssl_key: "%{hiera('confluence_nginx_ssl_key')}"
+
+confluence_db_backup_dir: '/var/backups'
+dc_backup::confluence_db_backup:
+  "%{::fqdn}_%{hiera('confluence_db_name')}":
+    backup_content: "%{hiera('confluence_db_name')}"
+    source_dir: "%{hiera('confluence_db_backup_dir')}"
+    pre_command: "/usr/bin/sudo -u postgres /usr/bin/pg_dump %{hiera('confluence_db_name')} | bzcat -zc > %{hiera('confluence_db_backup_dir')}/%{hiera('confluence_db_name')}-`date +%Y%m%d-%H%M%S`.sql.bz2"
