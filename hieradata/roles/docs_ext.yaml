@@ -1,0 +1,50 @@
+classes:
+  - 'dc_profile::util::docs_ext'
+
+confluence_dbuser_name: 'confluenceuser'
+confluence_db_name: 'confluencedb'
+
+postgresql::globals::encoding: 'UTF-8'
+postgresql::globals::locale: 'en_US.UTF-8'
+postgresql::server::postgres_password: "%{hiera('confluence_postgresql_password')}"
+postgresql::server::listen_addresses: 'localhost'
+postgresql::server_dbs:
+  "%{hiera('confluence_db_name')}":
+    owner: "%{hiera('confluence_dbuser_name')}"
+    user: "%{hiera('confluence_dbuser_name')}"
+    password: "%{hiera('confluence_dbuser_password')}"
+    grant: 'CREATE'
+    # login for the role is set to true by default
+
+confluence::deploy_module: 'staging'
+#confluence::manage_service: false
+
+confluence::enable_post_install: true
+confluence::dbuser: "%{hiera('confluence_dbuser_name')}"
+confluence::dbpassword: "%{hiera('confluence_dbuser_password')}"
+confluence::dbname: "%{hiera('confluence_db_name')}"
+confluence::serverid: "%{hiera('confluence_serverid')}"
+confluence::licensemessage: "%{hiera('confluence_licensemessage')}"
+confluence::tomcat_proxy:
+  scheme:    'https'
+  proxyName: "%{hiera('confluence_tomcat_proxyname')}"
+  proxyPort: '443'
+
+nginx::nginx_vhosts:
+  "%{hiera('confluence_nginx_vhost')}":
+    ssl: true
+    ssl_port: 443
+    listen_port: 443
+    proxy: 'http://localhost:8080'
+    server_name:
+      - "%{::fqdn}"
+      - 'docs.datacentred.io'
+    ssl_cert: "%{hiera('confluence_nginx_ssl_cert')}"
+    ssl_key: "%{hiera('confluence_nginx_ssl_key')}"
+
+confluence_db_backup_dir: '/var/backups'
+dc_backup::confluence_db_backup:
+  "%{::fqdn}_%{hiera('confluence_db_name')}":
+    backup_content: "%{hiera('confluence_db_name')}"
+    source_dir: "%{hiera('confluence_db_backup_dir')}"
+    pre_command: "/usr/bin/sudo -u postgres /usr/bin/pg_dump %{hiera('confluence_db_name')} | bzcat -zc > %{hiera('confluence_db_backup_dir')}/%{hiera('confluence_db_name')}-`date +%Y%m%d-%H%M%S`.sql.bz2"
