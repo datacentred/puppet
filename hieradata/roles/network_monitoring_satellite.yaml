@@ -2,4 +2,4 @@
 classes:
   -  '::dc_profile::net::zabbix_proxy'
 zabbix::proxy::zabbix_server_host: 'zabbix-server.vagrant.test'
-zabbix::proxy::database_type: 'mysql'
+zabbix::proxy::database_type: 'postgresql'

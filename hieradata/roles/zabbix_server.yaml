@@ -2,4 +2,4 @@
 classes:
   -  '::dc_profile::net::zabbix_server'
 zabbix::zabbix_url: 'zabbix-server.vagrant.test'
-zabbix::database_type: 'mysql'
+zabbix::database_type: 'postgresql'
