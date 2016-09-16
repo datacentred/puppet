@@ -340,3 +340,6 @@
 [submodule "modules/archive"]
 	path = modules/archive
 	url = https://github.com/voxpupuli/puppet-archive
+[submodule "modules/zabbix"]
+	path = modules/zabbix
+	url = https://github.com/voxpupuli/puppet-zabbix
