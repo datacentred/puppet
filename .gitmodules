@@ -91,9 +91,6 @@
 [submodule "modules/radius"]
 	path = modules/radius
 	url = https://github.com/datacentred/datacentred-radius.git
-[submodule "modules/nginx"]
-	path = modules/nginx
-	url = https://github.com/jfryman/puppet-nginx.git
 [submodule "modules/rbenv"]
 	path = modules/rbenv
 	url = https://github.com/alup/puppet-rbenv.git
@@ -343,3 +340,6 @@
 [submodule "modules/foreman_proxy"]
 	path = modules/foreman_proxy
 	url = https://github.com/theforeman/puppet-foreman_proxy.git
+[submodule "modules/nginx"]
+	path = modules/nginx
+	url = https://github.com/voxpupuli/puppet-nginx.git
