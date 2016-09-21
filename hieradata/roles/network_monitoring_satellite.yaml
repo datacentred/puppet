@@ -1,5 +1,8 @@
 ---
 classes:
-  -  '::dc_profile::net::zabbix_proxy'
+  -  '::dc_profile::net::network_monitoring_satellite'
 zabbix::proxy::zabbix_server_host: 'zabbix-server.vagrant.test'
 zabbix::proxy::database_type: 'postgresql'
+zabbix::proxy::manage_firewall: true
+zabbix::agent::server: '127.0.0.1'
+zabbix::agent::listenip: '127.0.0.1'
