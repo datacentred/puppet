@@ -5,22 +5,23 @@ classes:
   - '::dc_profile::auth::sudoers'
   - '::dc_profile::auth::tally'
   - '::dc_profile::editors::vim'
+  - '::dc_profile::hardware::edac'
+  - '::dc_profile::hardware::serial'
   - '::dc_profile::log::logrotate'
   - '::dc_profile::mon::icinga2'
   - '::dc_profile::mon::icinga_client'
   - '::dc_profile::net::lldp'
+  - '::dc_profile::net::nscd'
   - '::dc_profile::net::ntp'
   - '::dc_profile::net::ssh'
-  - '::dc_profile::net::nscd'
   - '::dc_profile::util::augeas'
   - '::dc_profile::util::dnsclient'
   - '::dc_profile::util::external_facts'
+  - '::dc_profile::util::hosts'
+  - '::dc_profile::util::kdump'
   - '::dc_profile::util::locale'
   - '::dc_profile::util::motd'
   - '::dc_profile::util::timezone'
-  - '::dc_profile::util::hosts'
-  - '::dc_profile::util::kdump'
-  - '::dc_profile::hardware::edac'
 
 # ntp servers
 #
@@ -460,3 +461,11 @@ dhcp_icinga_mac: '06:49:a6:2a:b4:a8'
 sysctls::values:
   vm.swappiness:
     value: '1'
+
+# Serial Console Support (PD-2501)
+serial_console::serial_port:               "ttyS1"
+serial_console::baud_rate:                 "115200"
+serial_console::no_rhgb_quiet:             true
+serial_console::root_login_console:        true
+serial_console::regular_console_enabled:   true
+serial_console::serial_primary_console:    false 
