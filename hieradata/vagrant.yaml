@@ -180,3 +180,7 @@ confluence_nginx_ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
 # Postfix
 internal_sysmail_address: "sysmail@%{domain}"
 
+# Serial Console Support (via ttys0 in virtual systems)
+
+serial_console::serial_port:               "ttyS0"
+serial_console::baud_rate:                 "115200"
