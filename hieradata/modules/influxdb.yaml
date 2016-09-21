@@ -2,6 +2,8 @@
 influxdb::server::hostname: '%{::fqdn}'
 influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
+influxdb::server::wal_logging_enabled: false
+influxdb::server::trace_logging_enabled: false
 
 influxdb::server::graphite_options:
   enabled: true
@@ -27,3 +29,8 @@ influxdb::server::collectd_options:
   batch-pending: 5
   batch-timeout: '1s'
   read-buffer: 0
+
+telegraf::inputs:
+  influxdb:
+    urls:
+      - http://localhost:8086/debug/vars
