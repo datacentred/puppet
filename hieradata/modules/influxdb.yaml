@@ -30,7 +30,3 @@ influxdb::server::collectd_options:
   batch-timeout: '1s'
   read-buffer: 0
 
-telegraf::inputs:
-  influxdb:
-    urls:
-      - http://localhost:8086/debug/vars
