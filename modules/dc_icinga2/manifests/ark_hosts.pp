@@ -54,6 +54,23 @@ class dc_icinga2::ark_hosts {
     icon_image => 'http://incubator.storage.datacentred.io/apc-logo-16x16.png',
   }
 
+  dc_icinga2::virtual_host { 'ark-pdu-a6-a.sal01.datacentred.co.uk':
+    address    => '10.10.129.49',
+    vars       => {
+      'role'                     => 'apc-pdu',
+      'environmental_monitoring' => true,
+    },
+    icon_image => 'http://incubator.storage.datacentred.io/apc-logo-16x16.png',
+  }
+
+  dc_icinga2::virtual_host { 'ark-pdu-a6-b.sal01.datacentred.co.uk':
+    address    => '10.10.129.50',
+    vars       => {
+      'role' => 'apc-pdu',
+    },
+    icon_image => 'http://incubator.storage.datacentred.io/apc-logo-16x16.png',
+  }
+
   dc_icinga2::virtual_host { 'ark-pdu-b1-a.sal01.datacentred.co.uk':
     address    => '10.10.129.37',
     vars       => {
