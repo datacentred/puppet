@@ -1,6 +1,7 @@
 # Class: dc_profile::openstack::horizon
 #
-# Class to deploy the OpenStack dashboard
+# Class to deploy the OpenStack dashboard in a
+# Docker container
 #
 # Parameters:
 #
@@ -12,11 +13,12 @@
 #
 class dc_profile::openstack::horizon {
 
-  include ::horizon
-  include ::dc_branding::horizon
-
-  Class['::horizon'] ->
-  Class['::dc_branding::horizon']
+  docker::run { 'horizon':
+    image            => 'registry.datacentred.services:5000/horizon:mitaka',
+    ports            => '80:80',
+    extra_parameters => [ '--log-driver=syslog', '--log-opt syslog-address=udp://127.0.0.1:514',
+                          '--log-opt syslog-facility=daemon', '--log-opt tag=horizon' ]
+  }
 
   $_ipaddress = foreman_primary_ipaddress()
 
@@ -27,16 +29,6 @@ class dc_profile::openstack::horizon {
     ipaddresses       => $_ipaddress,
     ports             => '80',
     options           => 'check inter 2000 rise 2 fall 5',
-  }
-
-  logrotate::rule { 'horizon':
-    path          => '/var/log/horizon/*.log',
-    rotate        => 90,
-    rotate_every  => 'day',
-    ifempty       => false,
-    delaycompress => true,
-    compress      => true,
-    postrotate    => '/usr/sbin/service apache2 reload >/dev/null 2>/dev/null || true',
   }
 
 }
