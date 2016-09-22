@@ -64,3 +64,7 @@ tidyup:
   '/var/log/upstart': {}
 
 dc_icinga::client::address: "%{::ipaddress_em1}"
+
+# Stop Apache claiming ownership of port 80
+#
+apache::default_vhost: false
