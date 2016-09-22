@@ -8,3 +8,5 @@ zabbix::manage_firewall: true
 zabbix::zabbix_timezone: 'Europe/London'
 zabbix::agent::server: '127.0.0.1'
 zabbix::agent::listenip: '127.0.0.1'
+zabbix::agent::manage_resources: true
+zabbix::manage_resources: true

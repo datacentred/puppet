@@ -4,5 +4,8 @@ classes:
 zabbix::proxy::zabbix_server_host: 'zabbix-server.vagrant.test'
 zabbix::proxy::database_type: 'postgresql'
 zabbix::proxy::manage_firewall: true
+zabbix::proxy::manage_resources: true
 zabbix::agent::server: '127.0.0.1'
 zabbix::agent::listenip: '127.0.0.1'
+zabbix::agent::manage_resources: true
+zabbix::manage_resources: true
