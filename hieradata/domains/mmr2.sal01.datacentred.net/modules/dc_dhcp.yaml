@@ -4,11 +4,7 @@ dc_dhcp::pools:
     network:     '10.254.0.0'
     mask:        '255.255.255.128'
     gateway:     '10.254.0.1'
-    nextserver:  "%{::ipaddress}"
-    pxefile:     '/pxelinux.0'
   mmr2-oob:
     network:     '10.254.1.0'
     mask:        '255.255.255.128'
     gateway:     '10.254.1.1'
-    nextserver:  "%{::ipaddress}"
-    pxefile:     '/pxelinux.0'

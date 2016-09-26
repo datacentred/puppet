@@ -1,0 +1,11 @@
+next-server <%= @pxeserver %>;
+class "pxeclients" {
+  match if substring (option vendor-class-identifier, 0, 9) = "PXEClient";
+  if option architecture-type = 00:00 {
+    filename "/bios/lpxelinux.0";
+  } elsif option architecture-type = 00:07 {
+    filename "/efi64/syslinux.efi";
+  } elsif option architecture-type = 00:09 {
+    filename "/efi64/syslinux.efi";
+  }
+}
