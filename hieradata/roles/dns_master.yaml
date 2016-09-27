@@ -37,7 +37,7 @@ foreman_proxy::groups:
   - 'tftp'
   - 'bind'
 foreman_proxy::templates: true
-foreman_proxy::templates_listen_on: 'true'
+foreman_proxy::templates_listen_on: 'both'
 foreman_proxy::templates_url: "http://%{::fqdn}:8000"
 foreman_proxy::tftp: true
 foreman_proxy::tftp_listen_on: 'https'
