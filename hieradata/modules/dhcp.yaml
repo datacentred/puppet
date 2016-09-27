@@ -1,4 +1,5 @@
 ---
+dhcp::dhcp_conf_pxe: 'dc_dhcp/dhcpd.conf.pxe.erb'
 dhcp::dnsdomain:
   - "%{domain}"
   - '0.0.10.in-addr.arpa'

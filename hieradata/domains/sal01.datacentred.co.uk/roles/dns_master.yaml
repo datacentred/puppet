@@ -3,8 +3,6 @@ dc_dhcp::pools:
     range:       '10.10.129.16 10.10.129.100'
   ark-storage-management:
     range:        '10.10.112.16 10.10.112.100'
-  ark-storage-lb:
-    range:        '10.10.9.16 10.10.9.31'
   ark-compute-management:
     range:       '10.10.160.16 10.10.160.100'
   ark-platform-services:

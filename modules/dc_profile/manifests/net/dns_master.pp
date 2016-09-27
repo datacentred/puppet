@@ -24,6 +24,24 @@ class dc_profile::net::dns_master {
 
   include ::dc_icinga::hostgroup_ntp
 
+  include ::apache
+
+  apache::vhost { $::fqdn:
+    docroot        => '/var/tftpboot',
+    manage_docroot => false,
+    port           => 80,
+    directories    => {
+      'path'           => '/var/tftpboot',
+      'options'        => [
+        'Indexes',
+        'FollowSymlinks',
+      ],
+      'allow_override' => [
+        'None',
+      ],
+    },
+  }
+
   # The proxy requires the users to bin installed by the
   # requisite classes
   Class['dc_dns'] -> Class['foreman_proxy']

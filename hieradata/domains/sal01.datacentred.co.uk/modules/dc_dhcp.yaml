@@ -23,8 +23,6 @@ dc_dhcp::pools:
     network:      '10.10.112.0'
     mask:         '255.255.255.0'
     gateway:      '10.10.112.254'
-    nextserver:   "%{::ipaddress}"
-    pxefile:      '/pxelinux.0'
     options:
       - 'interface-mtu 9000'
       - "domain-search \"%{domain}\""
@@ -37,8 +35,6 @@ dc_dhcp::pools:
     network:     '10.10.160.0'
     mask:        '255.255.255.0'
     gateway:     '10.10.160.254'
-    nextserver:  "%{::ipaddress}"
-    pxefile:     '/pxelinux.0'
     options:
       - 'interface-mtu 9000'
       - "domain-search \"%{domain}\""
@@ -52,8 +48,6 @@ dc_dhcp::pools:
     network:     '10.10.192.0'
     mask:        '255.255.255.0'
     gateway:     '10.10.192.254'
-    nextserver:  "%{::ipaddress}"
-    pxefile:     '/pxelinux.0'
     options:
       - 'interface-mtu 9000'
       - "domain-search \"%{domain}\""
@@ -69,8 +63,6 @@ dc_dhcp::pools:
     network:     '10.10.130.0'
     mask:        '255.255.255.0'
     gateway:     '10.10.130.1'
-    nextserver:  "%{::ipaddress}"
-    pxefile:     '/pxelinux.0'
     options:
       - 'interface-mtu 9000'
       - "domain-search \"%{domain}\""
