@@ -103,9 +103,6 @@
 [submodule "modules/postfix"]
 	path = modules/postfix
 	url = https://github.com/datacentred/puppet-postfix
-[submodule "modules/augeas"]
-	path = modules/augeas
-	url = https://github.com/datacentred/puppet-augeas
 [submodule "modules/unicorn"]
 	path = modules/unicorn
 	url = https://github.com/datacentred/puppet-unicorn.git
@@ -346,3 +343,6 @@
 [submodule "modules/serial_console"]
 	path = modules/serial_console
 	url = https://github.com/stivesso/serial_console
+[submodule "modules/augeas"]
+	path = modules/augeas
+	url = https://github.com/camptocamp/puppet-augeas
