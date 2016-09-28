@@ -47,6 +47,26 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
     value == 'true' ? :true : :false
   end
 
+  # Parse a line from 'ipmitool user list'.  The only reliable way of doing this
+  # is to split based on output formatting and some vendors echo out empty strings
+  # for unallocated users
+  # @param line [String] ipmitool user line
+  # @return [Hash] hash of symbolic fields and their values
+  def self.parse_user_line(line)
+    begin
+      {
+        :userid    => line[0..3].to_i,
+        :name      => line[4..20].rstrip,
+        :callin    => from_enable(line[21..28].rstrip),
+        :link      => from_enable(line[29..39].rstrip),
+        :ipmi      => from_enable(line[40..50].rstrip),
+        :privilege => from_privilege(line[51..-1].rstrip),
+      }
+    rescue NoMethodError
+      raise RuntimeError, 'ipmi::ipmitool::parse_user_line: unexpected input'
+    end
+  end
+
   # Get the maximum number of users an IPMI channel supports
   # @return [Integer] maximum number of supported users
   def get_channel_max_users
@@ -61,20 +81,17 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
   def allocate_id(name)
     max_users = get_channel_max_users()
     # Even though 1 is free it seems not to work on a supermicro X9??
-    available_userids = (2..max_users).to_a()
+    available_user_ids = (2..max_users).to_a
     output = %x{ipmitool user list #{@channel}}.split("\n")[1..-1]
     output.each do |line|
-      fields = line.split()
-      id = fields[0].to_i
-      # The user name may already exist but have no access, so try reuse
-      # that slot ID
-      if fields[1] == name
-        return id
-      end
-      available_userids.delete(id)
+      fields = parse_user_line(line)
+      # The user name may already exist but have no access, so try reuse that slot ID
+      return fields[:userid] if fields[:name] == name
+      # Remove users from the available list if they are active
+      available_user_ids.delete(fields[:userid]) if fields[:privilege] != :no_access
     end
-    raise RuntimeError, 'ipmi::ipmitool::allocate_id: No free user ID found' if available_userids.size == 0
-    available_userids.first
+    raise RuntimeError, 'ipmi::ipmitool::allocate_id: No free user ID found' if available_user_ids.size == 0
+    available_user_ids.first
   end
 
   # Find the LAN channel to apply permissions to
@@ -113,22 +130,16 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
       lines = []
     end
     lines.collect do |line|
-      fields = line.split()
-      # Hack, some BMCs have anonymous users with a blank name field
-      if [ 'true', 'false' ].include? fields[1]
-        fields.insert(1, 'anonymous')
-      end
-      # Hack, collapse permissions as they may contain white space
-      fields = fields[0..4].push(fields[5..-1].join(' '))
+      fields = parse_user_line(line)
       new(
         :ensure    => :present,
-        :userid    => fields[0],
-        :name      => fields[1],
+        :userid    => fields[:userid],
+        :name      => fields[:name],
         :password  => 'unknown',
-        :callin    => from_enable(fields[2]),
-        :link      => from_enable(fields[3]),
-        :ipmi      => from_enable(fields[4]),
-        :privilege => from_privilege(fields[5]),
+        :callin    => fields[:callin],
+        :link      => fields[:link],
+        :ipmi      => fields[:ipmi],
+        :privilege => fields[:privilege],
       )
     # Treat NO ACCESS as absent
     end.select { |x| x.privilege != :no_access }
