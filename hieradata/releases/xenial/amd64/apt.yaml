@@ -1,0 +1,18 @@
+---
+apt::sources:
+  ubuntu:
+    location: 'http://gb.archive.ubuntu.com/ubuntu/'
+    release: 'xenial'
+    repos: 'main restricted universe multiverse'
+  ubuntu_updates:
+    location: 'http://gb.archive.ubuntu.com/ubuntu/'
+    release: 'xenial-updates'
+    repos: 'main restricted universe multiverse'
+  ubuntu_backports:
+    location: 'http://gb.archive.ubuntu.com/ubuntu/'
+    release: 'xenial-backports'
+    repos: 'main restricted universe multiverse'
+  ubuntu_security:
+    location: 'http://security.ubuntu.com/ubuntu/'
+    release: 'xenial-security'
+    repos: 'main restricted universe multiverse'
