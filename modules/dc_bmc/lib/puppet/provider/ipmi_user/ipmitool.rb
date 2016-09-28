@@ -84,7 +84,7 @@ Puppet::Type.type(:ipmi_user).provide(:ipmitool) do
     available_user_ids = (2..max_users).to_a
     output = %x{ipmitool user list #{@channel}}.split("\n")[1..-1]
     output.each do |line|
-      fields = parse_user_line(line)
+      fields = self.parse_user_line(line)
       # The user name may already exist but have no access, so try reuse that slot ID
       return fields[:userid] if fields[:name] == name
       # Remove users from the available list if they are active
