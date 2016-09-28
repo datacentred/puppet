@@ -42,7 +42,7 @@ neutron::plugins::ml2::tenant_network_types:
 neutron::plugins::ml2::mechanism_drivers:
  - 'openvswitch'
 neutron::plugins::ml2::tunnel_id_ranges:
- - '1:1000'
+ - '1:65536'
 
 neutron::server::notifications::nova_url: "https://%{hiera('os_api_host')}:8774/v2"
 neutron::server::notifications::nova_admin_auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
