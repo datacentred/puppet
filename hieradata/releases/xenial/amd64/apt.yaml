@@ -1,5 +1,6 @@
 ---
 apt::sources:
+  # Canonical maintained packages
   ubuntu:
     location: 'http://gb.archive.ubuntu.com/ubuntu/'
     release: 'xenial'
@@ -16,3 +17,15 @@ apt::sources:
     location: 'http://security.ubuntu.com/ubuntu/'
     release: 'xenial-security'
     repos: 'main restricted universe multiverse'
+  # Datacentred maintained packages
+  datacentred:
+    location: 'http://apt.datacentred.services/ubuntu'
+    release: 'xenial'
+    repos: 'main'
+    key:
+      id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
+      source: 'http://apt.datacentred.services/pubkey.gpg'
+
+apt::ppas:
+  ppa:devel-k/log-courier:
+    ensure: 'present'
