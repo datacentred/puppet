@@ -87,8 +87,7 @@ Puppet::Type.type(:ipmi_foreman).provide(:foreman_api) do
 
     # Finally check for errors on the server side
     if response.code != '200'
-      msg = body['error'] && body['error']['message'] || 'Unable to grok response'
-      raise Puppet::Error.new("Request to \"#{uri}\" failed: #{msg}")
+      raise Puppet::Error.new("Request to \"#{uri}\" failed: #{body}")
     end
 
     body
