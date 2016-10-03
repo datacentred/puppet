@@ -145,14 +145,14 @@ apt::sources:
     release: 'trusty'
     repos: 'main dependencies'
     key:
-      id: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
+      id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
       source: 'https://apt.puppetlabs.com/keyring.gpg'
   puppetlabs_mirror_pc1:
     location: "http://%{hiera('puppet_mirror_path')}"
     release: 'trusty'
     repos: 'PC1'
     key:
-      id: '47B320EB4C7C375AA9DAE1A01054B7A24BD6EC30'
+      id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
       source: 'https://apt.puppetlabs.com/keyring.gpg'
   # Packaged on utopic and higher \o/
   rabbitmq_mirror:
