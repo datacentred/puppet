@@ -1,7 +1,4 @@
 ---
-classes:
-  - '::dc_profile::perf::telegraf'
-
 # DHCP
 #
 dhcp::interfaces: 

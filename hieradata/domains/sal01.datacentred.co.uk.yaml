@@ -1,7 +1,4 @@
 ---
-classes:
-  - '::dc_profile::perf::telegraf'
-
 # Icinga
 #
 icinga_ip: '10.10.192.137'
