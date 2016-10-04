@@ -1,0 +1,33 @@
+---
+# D51B-2U (dual 1G LoM)
+# - 12x 960GB or 1TB HDD Slots 1-12
+ceph::disks:
+  DISK00/DISK00:
+    fstype: 'xfs'
+  DISK01/DISK01:
+    fstype: 'xfs'
+  DISK02/DISK02:
+    fstype: 'xfs'
+  DISK03/DISK03:
+    fstype: 'xfs'
+  DISK04/DISK04:
+    fstype: 'xfs'
+  DISK05/DISK05:
+    fstype: 'xfs'
+  DISK06/DISK06:
+    fstype: 'xfs'
+  DISK07/DISK07:
+    fstype: 'xfs'
+  DISK08/DISK08:
+    fstype: 'xfs'
+  DISK09/DISK09:
+    fstype: 'xfs'
+  DISK10/DISK10:
+    fstype: 'xfs'
+  DISK11/DISK11:
+    fstype: 'xfs'
+
+ceph::conf:
+  osd:
+    osd op threads: '5'
+    filestore op threads: '4'
