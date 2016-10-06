@@ -339,4 +339,4 @@
 	url = https://github.com/puppetlabs/puppetlabs-mongodb
 [submodule "modules/rabbitmq"]
 	path = modules/rabbitmq
-	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
+	url = https://github.com/datacentred/puppetlabs-rabbitmq
