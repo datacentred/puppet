@@ -14,6 +14,7 @@ rabbitmq::ssl_cert: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
 rabbitmq::ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
 rabbitmq::ssl_verify: 'verify_peer'
 rabbitmq::ssl_fail_if_no_peer_cert: true
+rabbitmq::management_ssl: false
 rabbitmq::environment_variables:
     RABBITMQ_NODE_IP_ADDRESS: "%{::ipaddress}"
     RABBITMQ_MNESIA_BASE: '/srv/rabbitmq'
