@@ -21,17 +21,6 @@ class dc_profile::openstack::mongodb {
   Class['::mongodb::server'] ->
   Class['::mongodb::client']
 
-  # Deploy our keyfile before we attempt to configure
-  # the replicaset
-  file { '/etc/mongodb.keyfile':
-    content => hiera(ceilometer_mongodb_keyfile),
-    mode    => '0600',
-    owner   => 'mongodb',
-    group   => 'mongodb',
-    require => Package['mongodb-org-server'],
-  } ->
-  Mongodb_replset['ceilometer']
-
   # MongoDB rotates its logs on receipt of SIGUSR1
   cron { 'mongodb_logrotate':
     user    => root,
