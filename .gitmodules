@@ -181,9 +181,6 @@
 [submodule "modules/ceilometer"]
 	path = modules/ceilometer
 	url = https://github.com/stackforge/puppet-ceilometer.git
-[submodule "modules/mongodb"]
-	path = modules/mongodb
-	url = https://github.com/datacentred/puppetlabs-mongodb
 [submodule "modules/heat"]
 	path = modules/heat
 	url = https://github.com/stackforge/puppet-heat.git
@@ -346,3 +343,6 @@
 [submodule "modules/git"]
 	path = modules/git
 	url = https://github.com/nesi/puppet-git
+[submodule "modules/mongodb"]
+	path = modules/mongodb
+	url = https://github.com/puppetlabs/puppetlabs-mongodb
