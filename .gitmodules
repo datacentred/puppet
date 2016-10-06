@@ -58,9 +58,6 @@
 [submodule "modules/staging"]
 	path = modules/staging
 	url = https://github.com/nanliu/puppet-staging
-[submodule "modules/exported_vars"]
-	path = modules/exported_vars
-	url = https://github.com/example42/puppet-exported_vars
 [submodule "modules/bundler"]
 	path = modules/bundler
 	url = https://github.com/puppetlabs-operations/puppet-bundler.git
@@ -205,9 +202,6 @@
 [submodule "modules/corosync"]
 	path = modules/corosync
 	url = https://github.com/datacentred/puppetlabs-corosync.git
-[submodule "modules/drbd"]
-	path = modules/drbd
-	url = https://github.com/datacentred/puppetlabs-drbd
 [submodule "modules/gnupg"]
 	path = modules/gnupg
 	url = https://github.com/datacentred/golja-gnupg.git
