@@ -2,7 +2,7 @@
 classes:
   - '::dc_profile::openstack::mongodb'
 
-mongodb::server::bind_ip: ''
+mongodb::server::bind_ip: '0.0.0.0'
 mongodb::server::dbpath: '/srv/mongodb'
 mongodb::server::smallfiles: true
 mongodb::server::replset: 'ceilometer'
