@@ -3,6 +3,8 @@ classes:
   - '::dc_elasticsearch'
   - '::dc_elasticsearch::elasticsearch_backup_destination'
 
+elasticsearch::version: '2.4.0'
+
 dc_elasticsearch::es_hash:
   bootstrap.mlockall: 'true'
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'
