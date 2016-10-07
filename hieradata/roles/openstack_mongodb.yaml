@@ -11,6 +11,7 @@ mongodb::server::store_creds: true
 mongodb::server::admin_username: "%{hiera('mongodb_admin_user')}"
 mongodb::server::admin_password: "%{hiera('mongodb_admin_password')}"
 mongodb::server::keyfile: '/etc/mongodb.keyfile'
+mongodb::server::restart: false
 mongodb::replset::sets:
     ceilometer:
         members:
