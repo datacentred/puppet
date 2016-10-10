@@ -30,7 +30,6 @@ class dc_icinga::server::nagios_commands (
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap_suffix)
-  $haproxy_stats_user = hiera(haproxy_stats_user)
   $haproxy_stats_password = hiera(haproxy_stats_password)
   $mongodb_monitor_user = hiera(mongodb_monitor_user)
   $mongodb_monitor_password = hiera(mongodb_monitor_password)
@@ -228,10 +227,6 @@ class dc_icinga::server::nagios_commands (
 
   icinga::command { 'check_dhcp_by_mac':
     command_line => "/usr/lib/nagios/plugins/check_dhcp -s \$HOSTADDRESS$ -u -i \$ARG1 -m ${dhcp_icinga_mac} -r ${dhcp_icinga_ip}",
-  }
-
-  icinga::command { 'check_haproxy_dc':
-    command_line => "sudo /usr/lib/nagios/plugins/check_haproxy.rb -u \"https://\$HOSTALIAS\$:1936/\" -U ${haproxy_stats_user} -P ${haproxy_stats_password}"
   }
 
   icinga::command { 'check_nrpe_1arg_with_timeout':
