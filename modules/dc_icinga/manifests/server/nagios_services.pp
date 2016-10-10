@@ -747,13 +747,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Software Raid Health',
   }
 
-  icinga::service { 'check_haproxy':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_haproxy',
-    check_command       => 'check_haproxy_dc',
-    service_description => 'HAProxy Status',
-  }
-
   icinga::service { 'check_configured_users':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_generic',

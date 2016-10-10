@@ -1,0 +1,427 @@
+---
+dc_profile::openstack::haproxy::listeners:
+  haproxy-stats:
+    mode: 'http'
+    bind:
+      ':1936':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+        - 'crt /etc/ssl/private/puppet.crt'
+        - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+        - 'verify required'
+    options:
+      stats:
+        - 'enable'
+        - 'uri /'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  galera:
+    mode: 'tcp'
+    bind:
+      "%{hiera('os_api_vip')}:3306": []
+    options:
+      option:
+        - 'httpchk'
+      balance: 'source'
+      timeout client: '8h'
+      timeout server: '8h'
+    collect_exported: false
+  http-to-https-redirect:
+    mode: 'http'
+    bind:
+      '*:80': []
+    options:
+      redirect: 'scheme https if !{ ssl_fc }'
+    collect_exported: false
+  keystone-auth:
+    mode: 'http'
+    bind:
+      ':5000':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+        - 'forwardfor'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  keystone-admin:
+    mode: 'http'
+    bind:
+      ':35357':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+        - 'forwardfor'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  glance-api:
+    mode: 'http'
+    bind:
+      ':9292':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  glance-registry:
+    mode: 'http'
+    bind:
+      ':9191':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  neutron:
+    mode: 'http'
+    bind:
+      ':9696':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  nova-compute:
+    mode: 'http'
+    bind:
+      ':8774':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+      timeout client: '180s'
+      timeout server: '180s'
+    collect_exported: false
+  nova-metadata:
+    mode: 'http'
+    bind:
+      '*:8775': []
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+      balance: 'source'
+    collect_exported: false
+  nova-ec2:
+    mode: 'http'
+    bind:
+      ':8773':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  cinder:
+    mode: 'http'
+    bind:
+      ':8776':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  horizon:
+    mode: 'http'
+    bind:
+      ':443':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'httpchk'
+        - 'tcplog'
+      balance: 'source'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  novncproxy:
+    mode: 'http'
+    bind:
+      ':6080':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+  ceilometer:
+    mode: 'http'
+    bind:
+      ':8777':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'tcplog'
+      balance: 'source'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+      timeout client: '180s'
+      timeout server: '180s'
+    collect_exported: false
+  heat:
+    mode: 'http'
+    bind:
+      ':8004':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'tcplog'
+        - 'forwardfor'
+      balance: 'source'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+    collect_exported: false
+  heat-cfn:
+    mode: 'http'
+    bind:
+      ':8000':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+        - 'tcplog'
+      balance: 'source'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+    collect_exported: false
+
+dc_profile::openstack::haproxy::balancermembers:
+  nova-compute:
+    listening_service: 'nova-compute'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8774'
+    options: 'check inter 2000 rise 2 fall 5'
+  nova-metadata:
+    listening_service: 'nova-metadata'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8775'
+    options: 'check inter 2000 rise 2 fall 5'
+  novncproxy:
+    listening_service: 'novncproxy'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '6080'
+    options: 'check inter 2000 rise 2 fall 5'
+  nova-ec2:
+    listening_service: 'nova-ec2'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8773'
+    options: 'check inter 2000 rise 2 fall 5'
+  keystone-auth:
+    listening_service: 'keystone-auth'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '5000'
+    options: 'check inter 2000 rise 2 fall 5'
+  keystone-admin:
+    listening_service: 'keystone-admin'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '35357'
+    options: 'check inter 2000 rise 2 fall 5'
+  galera-0-master:
+    listening_service: 'galera'
+    server_names:
+      - 'osdbmq0'
+    ipaddresses:
+      - '10.10.160.101'
+    ports: '3306'
+    options: 'check port 9200 inter 2000 rise 2 fall 5'
+  galera-1-backup:
+    listening_service: 'galera'
+    server_names:
+      - 'osdbmq1'
+      - 'osdbmq2'
+    ipaddresses:
+      - '10.10.160.103'
+      - '10.10.160.106'
+    ports: '3306'
+    options: 'check port 9200 inter 2000 rise 2 fall 5 backup'
+  ceilometer:
+    listening_service: 'ceilometer'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8777'
+    options: 'check inter 2000 rise 2 fall 5'
+  glance-registry:
+    listening_service: 'glance-registry'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '9191'
+    options: 'check inter 2000 rise 2 fall 5'
+  glance-api:
+    listening_service: 'glance-api'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '9292'
+    options: 'check inter 2000 rise 2 fall 5'
+  heat:
+    listening_service: 'heat'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8004'
+    options: 'check inter 2000 rise 2 fall 5'
+  heat-cfn:
+    listening_service: 'heat-cfn'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8000'
+    options: 'check inter 2000 rise 2 fall 5'
+  horizon:
+    listening_service: 'horizon'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '80'
+    options: 'check inter 2000 rise 2 fall 5'
+  neutron:
+    listening_service: 'neutron'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '9696'
+    options: 'check inter 2000 rise 2 fall 5'
+  cinder:
+    listening_service: 'cinder'
+    server_names:
+      - 'oscontrol0'
+      - 'oscontrol1'
+    ipaddresses:
+      - '10.10.160.113'
+      - '10.10.160.117'
+    ports: '8776'
+    options: 'check inter 2000 rise 2 fall 5'

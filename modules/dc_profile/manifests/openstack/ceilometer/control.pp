@@ -45,15 +45,4 @@ class dc_profile::openstack::ceilometer::control {
     notify  => Service['ceilometer-collector', 'ceilometer-agent-notification', 'ceilometer-api'],
   }
 
-  $_ipaddress = foreman_primary_ipaddress()
-
-  # Add this node into our loadbalancer
-  @@haproxy::balancermember { "${::fqdn}-ceilometer":
-    listening_service => 'ceilometer',
-    server_names      => $::hostname,
-    ipaddresses       => $_ipaddress,
-    ports             => '8777',
-    options           => 'check inter 2000 rise 2 fall 5',
-  }
-
 }

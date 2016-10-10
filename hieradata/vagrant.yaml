@@ -26,11 +26,6 @@ galera::local_ip: "%{ipaddress_eth0}"
 galera::bind_address: "%{ipaddress_eth0}"
 rabbitmq::wipe_db_on_cookie_change: true
 
-# HAProxy
-#
-haproxy_stats_user: 'haproxy'
-haproxy_stats_password: 'FeOweurtias3'
-
 # OpenStack
 #
 os_service_tenant:   'services'

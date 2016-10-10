@@ -57,23 +57,6 @@ class dc_profile::openstack::keystone {
     notify  => Service['keystone'],
   }
 
-  $_ipaddress = foreman_primary_ipaddress()
-
-  @@haproxy::balancermember { "${::fqdn}-keystone-auth":
-    listening_service => 'keystone-auth',
-    server_names      => $::hostname,
-    ipaddresses       => $_ipaddress,
-    ports             => '5000',
-    options           => 'check inter 2000 rise 2 fall 5'
-  }
-  @@haproxy::balancermember { "${::fqdn}-keystone-admin":
-    listening_service => 'keystone-admin',
-    server_names      => $::hostname,
-    ipaddresses       => $_ipaddress,
-    ports             => '35357',
-    options           => 'check inter 2000 rise 2 fall 5'
-  }
-
   # Distribution-specific considerations
   case $::osfamily {
     'Debian': {
