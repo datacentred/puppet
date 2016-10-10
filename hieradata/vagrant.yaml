@@ -1,17 +1,18 @@
 ---
 excludes:
+  - '::collectd::plugin::protocols'
+  - '::dc_elasticsearch::elasticsearch_backup_destination'
+  - '::dc_icinga::hostgroup_neutron_node'
   - '::dc_profile::auth::rootpw'
   - '::dc_profile::log::log_shipper'
-  - '::dc_profile::net::nscd'
   - '::dc_profile::mon::icinga2'
-  - '::dc_profile::openstack::ceph::nova'
-  - '::dc_profile::openstack::ceph::glance'
+  - '::dc_profile::net::nscd'
   - '::dc_profile::openstack::ceph::cinder'
+  - '::dc_profile::openstack::ceph::glance'
+  - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::keepalived'
-  - '::dc_profile::util::hosts'
-  - '::collectd::plugin::protocols'
-  - '::dc_icinga::hostgroup_neutron_node'
   - '::dc_profile::perf::telegraf'
+  - '::dc_profile::util::hosts'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 
