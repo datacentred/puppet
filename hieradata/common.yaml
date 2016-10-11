@@ -100,50 +100,42 @@ tftpdir: '/var/tftpboot'
 #
 admins:
   matt:
-    uid: '1001'
     gid: 'sysadmin'
     pass: '$6$qplx30n1$UyzxF3zIRuAm8cNtHtFL5V59HuezXzE3FStG8ermMrTsrowW5ACk6lGsn4GU2y0qTCcq0m13CYPltAY9X8v3i1'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCqHgq7htvOfOyNkZ8i505A6bEib9FiMNZGejce63jwo3SboRc1v25KQiXdRkuMIhLNZCgKM7aSErIZoPQoNxxHO1qvGsuOT3yld0jqXZHYp7L8To75y5gDp911N8enKVC3GMduPeXA8HH7RhNlPd6fUWmgmp4tBbd1iKnIZZDJ74P0mhKY47jbLV0SyvBli62WcqjKLH6DIgYPx73w31zti+HJCpPpUhzx19saJM2LbwGZ6HUL8FegXhIgcsV9vsB67tGZO/c2KFl+fRQgpYUTi6/17A19KbQP1GvYSiKb2uNhvYxwnU4D7zSZtlN7oXXiZ0xeI9MEExT24xd+sMmV'
     email: 'matt.jarvis@datacentred.co.uk'
   nick:
-    uid: '1002'
     gid: 'sysadmin'
     pass: '$6$NPL/Pnap$nq67l3XdANH8HHY.z7C6CvJqTccDAE99yV2oxEx78gCdA1ofmTMIRvzfDG5FUZw80xz6eVMCoytzXO5L7Y/Ie/'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ6MGX3NlmNNaLpTne6n9ZOxzpRJlT0pcBEXVl/S8iHvFdAyaoKsCRI+U5dAV6ONlpDBMqkUBalGf2LfssVIiFlGi7U2iOBG6q9T2XjwP7YCBlqguRkbTFXU4qDix/wBcGsgOG+wWq9OJhRdJRWG1mt7kZDBoBGrGrSjdmOlfP/CVfSUBCJTAhpneQ1gYjHLujS5Ee+sIBU8k7pgAzUYaGpmOYbqW80+hmYB7EwsBiI+wfz21ki1UfWI5gjB0No2BKVgiXWPj0+zcFiNjVguTj/KrrsVXpKsJDqc/8tEgHIU1qBSdKFVjEu93QlxLinLg7zWyujlt/q+i5Gt+FlJal'
     email: 'nick.jones@datacentred.co.uk'
   dariush:
-    uid: '1003'
     gid: 'sysadmin'
     pass: '$6$vjFryMvL$mMzJE/HUK2vVm.HatVURv8GUatgjxsodqfTTiKE5qNTums5acj5.OVIf1lOkD3Qe.BMATFkz1fDqjDm9w5qLX.'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQD1meqfHE5kqTp00XAqCFD3vqgRmYWTUK8FQ4Yt+VCKrtoUcjABsuk7tF3oqHdZaRCZAZaudW2bbqX3V3Sg45yoPgkBsC2StMSM8ZpsSdgBz9yqwCFctJCqqAjLJK9gSDT/iYAXzKgv5WTWtBb9b0sCfEgwPQBCGBh6ZJr6eqZF+cnADIVo7a6xJiOXV4uN8UozPLHNzrM4hnolfmVLAFHyTngfjicEQAXRP6z7S3c0wDmtqnvMg1lU+Gv+7Tit7jHE5yj0n3EJ1Z7dt4Nuj0i9Hv2SAVTvS8yMBMBKPb0EA/Ddj9tWY1ImEBZLILJPYAJusOUetR/NHDkLums405fZ'
     email: 'dariush.marsh@datacentred.co.uk'
     ensure: 'absent'
   simon:
-    uid: '1004'
     gid: 'sysadmin'
     pass: '$6$YhlSwKk4$BOaVDCkNXhLZvTSMbtsnoWtL5hK6cm/z0YBeFtc8TMLDqX1.Vlz/eYueN2gMdW03wE0xkcb4g1mRL/roFQUWi0'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDm3VdSIH5hhCvxW9JmipkubC3QV9HCTxALNL3BpS/Th4rYuMao5BxoEpXR6ITY6R1kfT/g03I4dSjmw+i+GDVydjCspxSMQR7ws4cfX+xFxs3CBszmfdGmwPO/ZN0vhPTJkPPrQKSg5Sb3r8xAzsQVW5IjnjD8LE+3cGwYANanrPgQSkYOdjVaw4K6zZfVVTOdT86FHDx0c8vez9J2AVd4YCqbMLgxSNKOjZ+2bEebYV8o5G9phUopZ7Rb8UfTwk+X2uCdH6p/LVBglTEFXAU6eYaZcAEzco+UcJ1nIhkPvUkzlx2u/maH1pp3pm4WuwZtWW60vY8A2Z6kpGZs3KPP'
     email: 'simon.murray@datacentred.co.uk'
   sean:
-    uid: '1005'
     gid: 'sysadmin'
     pass: '$6$xhD4S6w0$zHS.B/.r5cVLlfkt47D2PtV.ITRNzZf9OlevuFUEBXyIp0JTB3ZFtSyjhsIWcuNW8RPWkRCSncZePqL0e/uEb1'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC9wUebrBAw2xuaeLIs9JkKp0sAPtACzXWgbNHrr4+4+5u0cjQ2P4bM6eLzj//DSFLAgezvMgOVprcGKWk2ezqZrMhmOgsSqfZiqjkUQKasa5pc6fgvAjYFIXn8P63w+ApLM0h5U4tWkZSOJp8zTyNFt3PFg7BU7Dxs6J8QdPYGbv3zCbruPFHx/UP+ihM2X7BEFwRST/LCdzuxCLMw7gfII7882ao//6usX7Gcslj/MU7crgASGiqlzpVdxv+PuloaM/6uUsAUS+bZ+RLDXqsDebO2Yc0pBKPCDcsJT23JgQn6XSMa3AUsnwvQ3jJwTwU0D/n1Cb/GzSSgPb2MkWox'
     email: 'sean.handley@datacentred.co.uk'
   matti:
-    uid: '1007'
     gid: 'sysadmin'
     pass: '$6$x0wqQF8y$k53PpDt0AKq0iHTJETmz4o2HlA4aSc/4dTuBthYjip0OHc8SO3TOAFio3Ejm3fdVAgJl.611ksgur4rrXLtnR/'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZIV98YFCbCTwB5VKahUsT0pmWuhp/posTRWaX98DNXRgdeLb0LoaINmZK1EtVWZFj9I7TRif3KOiZ2yvLmCiHaGYT5bQTfbaUbZ0fHEyNWymLHJ2tyjVyS9iTFqUBNieOs0WPmI+IIdEYpGIgUOF6xTfzh7fHGgSjfol5uwfWpG1VoWK11MtWQeYkQj4dSpnGJkeFrRZlIWrWZtOKxusr87Khxi7Vs8O4C+lOuFhjG8cTwpQ4OlWtVTPKnQ3zysrFYJhidqWskNrl7jnFr0LByhS2pI3Q6pVzLgVWHqqlVP+fJf+PTkR62jYnrwSeKMBZR1CaVodtokKk82ir8+Ot'
     email: 'matt.illingworth@datacentred.co.uk'
   joel:
-    uid: '1008'
     gid: 'sysadmin'
     pass: '$6$ABCDhb6Q$5o558.B0iN41j3plVON6W/g/6ZuJ.KCAMG3U7IhOm2PwMLrz1G2UMtw2cmKIu4RKi4GhCsVJ4iADr/BfaRi250'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAACAQC7TgX6jkY8De1sH8OrMvLwjtZLQvBKDStwZ90+7UfGXQJyJhbDb+XhVIdEIhqIG3T7BdImtAabsH2HON+AuZZ+tTxHknvywAhwKjCtu7Rg+lXnQsSUmlq/6O5YlbOc4NZKRgUIIgWlS20lSm4ceaqMKtF2EpB7YV+0NzAvkIoj5Rbrhxe5mVby8X3rwF1mOVg4SK57J/jk49KMRJ8DBG5OapQV1tK0RhrC06dNlcBjCarHjQoFhvKYO+2O3uINgbOGeV6z1dFJm1HyC/a9kcgi4iFaC9esc9QsXwGNGD/J/v5bkLdlzGG5vMfX17EkDPi7gjeMJueOLQiZbfrxtE5yUO4r4h7YpvIxjtBHxRqfViJtvNMmPE/oVn5K61LqXgiT28O1stueyf1H0GGFTkSta0+QFYgD/tOb1JaO3pwziX+QIJfCVboMcUAX35s4lf15Mt/KeJgZCeaL0O+CgEUSEZhisUZjWit9LCmFUShPK80Xndxf/S8A0DTebi6XwaYDowsJeyyPDSE5bv1Gp7Vqwb2+1+WKRMODOI7ysaP386SusHDcLKPmeJxDC5Cxfn8HEEsG68aYtzDCfxZQlsbM8j4oOixRTrkoBlcHslboLvK42dROCX1AzszC3sMvAlDk/F+gNRPbGi0+4HBKCNXgXu6oPvL1og3yrQJDWZClZw=='
     email: 'joel.merrick@datacentred.co.uk'
   mariusz:
-    uid: '1009'
     gid: 'sysadmin'
     pass: '$6$EnDXPd3Juy$ms1iVfGyeoKgnsUpQvm9hkWHn9zP1oaPVOwRQK1SzPFE02wqQgqz1D7kNd1U.91gvjZdS6EMC.E1kRGMN0w7h0'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAACAQC/sfeZk3bWaO0OVKfUI3513Hofyt7SyaucbawGFLsco0Y6Tq+a/i6eUm3ZU+XVPEveIuzjF3XqDSLz++m9YRwl0imhIxrWhNpy9LI3uaKEN+ayxIogZj0wSlIWekjlHrJ0Ik99PIRe2OpQymrHOBJ1LUbf6L5ArmnwLz0cJZL9NHlXOve3K2khhdNW8tEVNkRZNFuXMkL/wxkUOUiqOWCDZiDuOxsKs1nSOrgbfr71LTPvn34k4cGi29JDR5W0n3W32XrOcxTF7aEv/GLPxWuPAwpSWw4HODb3dSBIHpe/IAIhm5UgVC3vnvdEpnaER5OjgNqZ/Kwo33MfF0XDJhPDeUfExbJocB5aPkulYFYKoE84KsvYw4pPIMtNWbznM5NiMiM6d+zy30CLCLmFYOaZVnw5FsyBRiiDmTskmC3d5XniaUxDoitDPOE2TnAeT1Tv5ofobOLfG+Qqd78DppbMIejCA/8AxijqEhXsgM+vg0HqlFyKCPZGbUrXmj1WDW96JowLDcnbf1/mXVR0pbZ0ThVWrD2Ad73TrNnU1dt2bcWAYls5Z0COz0AxuhHfXEDo6ShWZQXAG+NHk19Y8bp8c+VboPTSE+8lfbWXZy2YyvlRYw25XIO9WGMtIT6m0qe+nlAe/l0fCG0uySrWNBFtKGwDYv/aeSeV6aIN4BAvkQ=='
