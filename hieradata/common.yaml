@@ -89,7 +89,7 @@ mariadb_mirror_path: 'mirrors.coreix.net/mariadb/repo/5.5/ubuntu'
 apt_source_logstash: 'packages.elastic.co/logstash/2.3/debian'
 rabbitmq_mirror_path: 'www.rabbitmq.com/debian'
 apt_source_elasticsearch: 'packages.elastic.co/elasticsearch/2.x/debian'
-apt_source_logstash: 'packages.elastic.co/kibana/4.5/debian'
+apt_source_kibana: 'packages.elastic.co/kibana/4.5/debian'
 dell_openmanage_mirror_path: 'linux.dell.com/repo/community/ubuntu'
 
 # TFTP
