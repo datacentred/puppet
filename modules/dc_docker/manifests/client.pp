@@ -4,6 +4,7 @@
 # DataCentred's private registry
 #
 class dc_docker::client {
+
   include ::docker
 
   $_dcertpath = '/etc/docker/certs.d/registry.datacentred.services:5000'
@@ -22,7 +23,6 @@ class dc_docker::client {
 
   file { '/etc/docker/certs.d':
     ensure  => directory,
-    require => Package['docker-engine'],
   }
 
   file { $_dcertpath:
@@ -31,17 +31,20 @@ class dc_docker::client {
 
   file { "${_dcertpath}/client.key":
     source => "file:///${_pcertpath}/private_keys/${::fqdn}.pem",
-    notify => Service['docker'],
   }
 
   file { "${_dcertpath}/client.cert":
     source => "file:///${_pcertpath}/certs/${::fqdn}.pem",
-    notify => Service['docker'],
   }
 
   file { "${_dcertpath}/ca.crt":
     source => "file:///${_pcertpath}/certs/ca.pem",
-    notify => Service['docker'],
   }
+
+  # Ensure /etc/docker is created before we create the child directory
+  Class['::docker::install'] -> File['/etc/docker/certs.d']
+
+  # Restart the docker service when client configuration changes
+  Class['::dc_docker::client'] ~> Class['::docker::service']
 
 }
