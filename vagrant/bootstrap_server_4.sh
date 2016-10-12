@@ -8,10 +8,11 @@ source /etc/lsb-release
 
 # Distribution service abstraction
 function start_service {
-  update-rc.d $1 defaults
   if [[ ${DISTRIB_CODENAME} == 'trusty' ]]; then
+    update-rc.d $1 defaults
     service $1 start
   else
+    systemctl enable $1
     systemctl start $1
   fi
 }
