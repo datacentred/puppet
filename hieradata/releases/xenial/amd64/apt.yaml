@@ -25,6 +25,27 @@ apt::sources:
     key:
       id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
       source: 'http://apt.datacentred.services/pubkey.gpg'
+  elasticsearch:
+    location: "https://%{hiera('apt_source_elasticsearch')}"
+    release: 'stable'
+    repos: 'main'
+    key:
+      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+      source: 'https://packages.elastic.co/GPG-KEY-elasticsearch' 
+  logstash:
+    location: "https://%{hiera('apt_source_logstash')}" 
+    release: 'stable'
+    repos: 'main'
+    key:
+      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+      source: 'https://packages.elastic.co/GPG-KEY-elasticsearch' 
+  kibana:
+    location: "https://%{hiera('apt_source_kibana')}" 
+    release: 'stable'
+    repos: 'main'
+    key:
+      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+      source: 'https://packages.elastic.co/GPG-KEY-elasticsearch' 
 
 apt::ppas:
   ppa:devel-k/log-courier:
