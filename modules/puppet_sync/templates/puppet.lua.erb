@@ -1,14 +1,14 @@
 settings {
   logfile = '/var/log/lsyncd/puppet.log',
-  statusFile = '/var/lib/lsyncd/puppet.status',
+  statusFile = '/var/run/lsyncd/puppet.status',
 }
 
 <% @targets.each do |target| -%>
 sync {
   default.rsyncssh,
-  source = "/etc/puppet/environments",
+  source = "/etc/puppetlabs/code",
   host = "<%= target %>",
-  targetdir = "/etc/puppet/environments",
+  targetdir = "/etc/puppetlabs/code",
   rsync = {
     archive = true,
     checksum = true,
