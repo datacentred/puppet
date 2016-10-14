@@ -216,3 +216,5 @@ apt::ppas:
     ensure: 'present'
   ppa:mrazavi/openvas:
     ensure: 'present'
+  ppa:cz.nic-labs/knot-dns:
+    ensure: 'present'
