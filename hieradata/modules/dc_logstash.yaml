@@ -7,9 +7,9 @@ dc_logstash::client::config:
     transport: 'tls'
     servers:
       - "%{hiera('logstash_server')}:55516"
-    'ssl certificate': "/var/lib/puppet/ssl/certs/%{fqdn}.pem"
-    'ssl key': "/var/lib/puppet/ssl/private_keys/%{fqdn}.pem"
-    'ssl ca': '/var/lib/puppet/ssl/certs/ca.pem'
+    'ssl certificate': "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
+    'ssl key': "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
+    'ssl ca': '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
     timeout: 40
   files:
     - paths:
