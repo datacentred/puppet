@@ -45,7 +45,7 @@ apt::sources:
     repos: 'non-free'
     key:
       id: '882F7199B20F94BD7E3E690EFADD8D64B1275EA3'
-      source: 'http://downloads.linux.hpe.com/SDR/downloads/MCP/GPG-KEY-mcp'
+      source: 'https://downloads.linux.hpe.com/SDR/hpePublicKey2048_key1.pub'
   logstash:
     location: "https://%{hiera('apt_source_logstash')}" 
     release: 'stable'
