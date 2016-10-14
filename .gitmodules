@@ -229,9 +229,6 @@
 [submodule "modules/foreman"]
 	path = modules/foreman
 	url = https://github.com/theforeman/puppet-foreman.git
-[submodule "modules/knot"]
-	path = modules/knot
-	url = https://github.com/datacentred/puppet-knot.git
 [submodule "modules/icinga2"]
 	path = modules/icinga2
 	url = https://github.com/datacentred/puppet-icinga2
@@ -340,3 +337,6 @@
 [submodule "modules/rabbitmq"]
 	path = modules/rabbitmq
 	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
+[submodule "modules/knot"]
+	path = modules/knot
+	url = https://github.com/tobru/puppet-knot
