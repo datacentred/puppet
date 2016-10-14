@@ -6,16 +6,22 @@
 class dc_profile::puppet::puppet4_setup {
 
   # Create the puppet user/group (puppetserver does this implicitly)
-  group { 'puppet':
-    ensure => present,
-    system => true,
-  } ->
+  if ! $::role in ['puppet_ca', 'puppet_master'] {
 
-  user { 'puppet':
-    ensure => present,
-    gid    => 'puppet',
-    system => true,
-  } ->
+    group { 'puppet':
+      ensure => present,
+      system => true,
+    } ->
+
+    user { 'puppet':
+      ensure => present,
+      gid    => 'puppet',
+      system => true,
+    } ->
+
+    File["/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"]
+
+  }
 
   # Update the private key from root:root 640 to something accessible by the puppet group
   file { "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem":
