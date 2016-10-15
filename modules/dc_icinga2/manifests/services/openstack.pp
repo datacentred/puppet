@@ -6,6 +6,7 @@ class dc_icinga2::services::openstack (
   $tenant = 'icinga',
   $username = 'icinga',
   $password = 'password',
+  $keystone_auth_url = 'https://compute.datacentred.io:5000/v2.0'
 ) {
 
   Icinga2::Object::Apply_service {
@@ -320,7 +321,7 @@ class dc_icinga2::services::openstack (
     check_command => 'glance',
     vars          => {
       'glance_host'      => 'https://compute.datacentred.io:9292',
-      'glance_authurl'   => 'https://compute.datacentred.io:5000',
+      'glance_authurl'   => $keystone_auth_url,
       'glance_project'   => $tenant,
       'glance_username'  => $username,
       'glance_password'  => $password,
@@ -333,7 +334,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'cinder',
     vars          => {
-      'cinder_host'        => 'https://compute.datacentred.io:5000',
+      'cinder_host'        => $keystone_auth_url,
       'cinder_project'     => $tenant,
       'cinder_username'    => $username,
       'cinder_password'    => $password,
@@ -350,7 +351,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'nova',
     vars          => {
-      'nova_host'          => 'https://compute.datacentred.io:5000',
+      'nova_host'          => $keystone_auth_url,
       'nova_project'       => $tenant,
       'nova_username'      => $username,
       'nova_password'      => $password,
@@ -370,7 +371,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'ceilometer',
     vars          => {
-      'ceilometer_host'     => 'https://compute.datacentred.io:5000',
+      'ceilometer_host'     => $keystone_auth_url,
       'ceilometer_project'  => $tenant,
       'ceilometer_username' => $username,
       'ceilometer_password' => $password,
@@ -525,7 +526,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'ip_pool',
     vars          => {
-      'ip_pool_auth_url'     => 'https://compute.datacentred.io:5000',
+      'ip_pool_auth_url'     => $keystone_auth_url,
       'ip_pool_tenant_name'  => $tenant,
       'ip_pool_user'         => $username,
       'ip_pool_password'     => $password,
@@ -539,7 +540,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'ceilometer_update',
     vars          => {
-      'ceilometer_update_auth_url'     => 'https://compute.datacentred.io:5000',
+      'ceilometer_update_auth_url'     => $keystone_auth_url,
       'ceilometer_update_tenant_name'  => $tenant,
       'ceilometer_update_user'         => $username,
       'ceilometer_update_password'     => $password,
@@ -553,7 +554,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'anti_affinity',
     vars          => {
-      'anti_affinity_auth_url'    => 'https://compute.datacentred.io:5000',
+      'anti_affinity_auth_url'    => $keystone_auth_url,
       'anti_affinity_tenant_name' => $tenant,
       'anti_affinity_user'        => $username,
       'anti_affinity_password'    => $password,
