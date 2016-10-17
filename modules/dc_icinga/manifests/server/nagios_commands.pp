@@ -30,7 +30,6 @@ class dc_icinga::server::nagios_commands (
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
   $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap_suffix)
-  $haproxy_stats_password = hiera(haproxy_stats_password)
   $mongodb_monitor_user = hiera(mongodb_monitor_user)
   $mongodb_monitor_password = hiera(mongodb_monitor_password)
   $mongodb_admin_user = hiera(mongodb_admin_user)
