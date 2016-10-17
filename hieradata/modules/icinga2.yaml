@@ -1,9 +1,4 @@
 ---
-icinga2::plugins:
-  - 'nagios-plugins'
-  - 'nagios-plugins-extra'
-  - 'nagios-plugins-contrib'
-
 icinga2::features::api::accept_config: true
 
 icinga2::features::influxdbwriter::host: 'influxdb0.core.sal01.datacentred.co.uk'
