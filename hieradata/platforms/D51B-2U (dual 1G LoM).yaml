@@ -4,3 +4,5 @@ excludes:
   # and not 'service serial-getty@ttyS1.service.service start'.  This is a problem affecting
   # all Ubuntu 16.04 servers (which for now happen to be of this platform type...)
   - '::dc_profile::hardware::serial'
+
+dc_nrpe::checks::ceph::public_ip: "%{::ipaddress_p3p1}"
