@@ -13,7 +13,6 @@
 # class { icinga::client: }
 #
 class dc_icinga::client (
-  $address = $::ipaddress,
   $host_tag = $::environment,
 ) {
 
@@ -30,7 +29,7 @@ class dc_icinga::client (
   @@icinga::host { $::hostname:
     ensure          => present,
     description     => $::fqdn,
-    address         => $address,
+    address         => foreman_primary_ipaddress(),
     use             => 'dc_host_generic',
     hostgroups      => template('dc_icinga/hostgroups.erb'),
     icon_image      => 'base/ubuntu.png',
