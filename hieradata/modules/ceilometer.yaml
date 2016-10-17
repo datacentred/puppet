@@ -24,13 +24,13 @@ ceilometer::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
 
 ceilometer::db::database_connection: "mongodb://ceilometer:%{hiera('ceilometer_db_password')}@osmongodb0.%{::domain},osmongodb1.%{::domain},osmongodb2.%{::domain}/ceilometer?replicaSet=ceilometer"
 
-ceilometer::api::keystone_auth_uri: "https://%{hiera('os_api_host')}:5000/"
+ceilometer::api::keystone_auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
 ceilometer::api::keystone_identity_uri: "https://%{hiera('os_api_host')}:35357/"
 ceilometer::api::keystone_user: 'ceilometer'
 ceilometer::api::keystone_password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::api::manage_service: false
 
-ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/"
+ceilometer::agent::auth::auth_url: "https://%{hiera('os_api_host')}:5000/v2.0"
 ceilometer::agent::auth::auth_user: 'ceilometer'
 ceilometer::agent::auth::auth_password: "%{hiera('keystone_ceilometer_password')}"
 ceilometer::agent::auth::auth_region: "%{hiera('os_region')}"
