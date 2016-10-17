@@ -37,13 +37,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Users',
   }
 
-  icinga::service { 'check_puppetagent':
-    use                 => 'dc_service_secondary',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_puppetagent',
-    service_description => 'Puppet Agent',
-  }
-
   # Logstash
 
   icinga::service { 'check_logstashes':
