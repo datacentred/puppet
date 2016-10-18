@@ -8,7 +8,6 @@ excludes:
   - '::dc_profile::mon::icinga2'
   - '::dc_profile::net::nscd'
   - '::dc_profile::openstack::ceph::cinder'
-  - '::dc_profile::openstack::ceph::glance'
   - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::keepalived'
   - '::dc_profile::perf::telegraf'
@@ -50,7 +49,7 @@ keystone_heat_password: 'Frethyuvtop6'
 #
 keystone_db:          'keystone'
 keystone_db_user:     'keystone'
-keystone_db_pass:     ']DiJottAnhig7'
+keystone_db_pass:     'AmjemejHuph8'
 
 # nova
 #
