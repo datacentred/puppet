@@ -1,6 +1,3 @@
-dc_foreman::memcache::memcache_servers:
-    - 'foreman0.core.sal01.datacentred.co.uk'
-    - 'foreman1.core.sal01.datacentred.co.uk'
-dc_foreman::memcache::memcache_namespace: 'foreman'
-dc_foreman::memcache::memcache_compress: true
-dc_foreman::memcache::memcache_expiry: '86400'
+dc_foreman::memcache_servers:
+  - 'foreman0.core.sal01.datacentred.co.uk'
+  - 'foreman1.core.sal01.datacentred.co.uk'

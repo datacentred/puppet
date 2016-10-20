@@ -1,4 +1,6 @@
 ---
+dc_foreman::encryption_key: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEASd9zfvwtcw4cfPJo2ZW6M4QF6u+kxJDujTDgdIHLOakVE/9t6VKMutuxjXk4volPQ6feDgGysoZ+G3EbH4obImvTliRuyhUREsBWPoyK0+Jw4KjHPEYlroCYpPktp+9WyMFyidwZE/cFj6Do6ySFeEeU0D/brDQGlv+xtvKyJiEMCSkbIWMvBcf86iPbs5LjWyLDhMowK93su2dgMcxMBbxnjLy42TjUqaUC97v5Hm6Kr7/da8BUjCDOHC3B9QQC9MepkKZhtY8/W9DSYuMh4ptLEtU0SIKnOea48KXwclriebcuhG0oZMyXncM4oFq32BbWu5s2FH1ApNxbGCWNJDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCYMeD80OwLrnVs5iEtd8DugDDYBNfMmrfDPB28WjbourK4HU0w5oBj/+P3G3d2tTYjyjv++0Eb+JBS7ib9EGRWz3I=]
+
 dc_foreman::service_checks::omapi_secret: "%{hiera('omapi_secret')}"
 dc_foreman::service_checks::omapi_key: "%{hiera('omapi_key')}"
 dc_foreman::service_checks::omapi_port: "%{hiera('omapi_port')}"

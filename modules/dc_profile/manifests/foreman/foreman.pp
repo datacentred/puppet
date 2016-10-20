@@ -21,8 +21,7 @@ class dc_profile::foreman::foreman {
   include ::foreman::plugin::digitalocean
   include ::foreman::plugin::hooks
   include ::foreman::plugin::puppetdb
-  include ::dc_foreman::comms
-  include ::dc_foreman::memcache
+  include ::dc_foreman
   include ::dc_icinga::hostgroup_https
   include ::dc_icinga::hostgroup_foreman
 
