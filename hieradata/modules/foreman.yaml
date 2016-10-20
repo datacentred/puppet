@@ -17,8 +17,8 @@ foreman::oauth_consumer_secret: "%{hiera('foreman_oauth_consumer_secret')}"
 foreman::logging_level:         'info'
 foreman::loggers:
     app: true
-foreman::plugin::puppetdb::puppetdb_address: 'https://puppetdb.core.sal01.datacentred.co.uk:8081/v2/commands'
-foreman::plugin::puppetdb::puppetdb_dashboard_address: 'http://puppetdb0.core.sal01.datacentred.co.uk/dashboard'
+foreman::plugin::puppetdb::address: 'https://puppetdb.core.sal01.datacentred.co.uk:8081/v2/commands'
+foreman::plugin::puppetdb::dashboard_address: 'http://puppetdb0.core.sal01.datacentred.co.uk/dashboard'
 foreman::plugin::discovery::tftp_root: "%{hiera('tftp_dir')}"
 foreman::plugin::discovery::install_images: false
 foreman::puppetmaster::foreman_url: "https://%{hiera('foreman_url')}"
