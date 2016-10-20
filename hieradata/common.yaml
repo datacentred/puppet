@@ -92,6 +92,9 @@ apt_source_elasticsearch: 'packages.elastic.co/elasticsearch/2.x/debian'
 apt_source_kibana: 'packages.elastic.co/kibana/4.5/debian'
 dell_openmanage_mirror_path: 'linux.dell.com/repo/community/ubuntu'
 
+# Apt PPA options
+apt::ppa_options: '-f --keyserver hkps.pool.sks-keyservers.net'
+
 # TFTP
 #
 tftpdir: '/var/tftpboot'
