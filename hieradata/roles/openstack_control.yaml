@@ -34,10 +34,6 @@ sudo::configs:
     content: |
       Defaults:neutron !requiretty, syslog_badpri=err, syslog_goodpri=info
       neutron ALL=(root) NOPASSWD: /usr/bin/neutron-rootwrap
-  cinder:
-    content: |
-      Defaults: cinder !requiretty
-      cinder ALL = (root) NOPASSWD: /usr/bin/cinder-rootwrap /etc/cinder/rootwrap.conf *
 
 dc_ssh::config:
   AllowGroups:
