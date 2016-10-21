@@ -4,8 +4,6 @@
 #
 class dc_profile::openstack::glance {
 
-  include ::dc_icinga::hostgroup_glance
-
   docker::run { 'glance':
     image            => 'registry.datacentred.services:5000/glance:mitaka',
     ports            => [ '9191:9191', '9292:9292' ],
@@ -17,5 +15,7 @@ class dc_profile::openstack::glance {
       '--log-opt tag=glance'
     ],
   }
+
+  include ::dc_icinga::hostgroup_glance
 
 }
