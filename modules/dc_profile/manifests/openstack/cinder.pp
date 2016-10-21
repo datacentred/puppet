@@ -1,21 +1,20 @@
 # == Class: dc_profile::openstack::cinder
 #
-# Configure OpenStack's block storage service
-#
-# NB: Ceph client configuration lives in a seperate profile class
+# The OpenStack block storage service in a Docker container
 #
 class dc_profile::openstack::cinder {
 
-  include ::cinder
-  include ::cinder::keystone::auth
-  include ::cinder::api
-  include ::cinder::scheduler
-  include ::cinder::glance
-  include ::cinder::quota
-  include ::cinder::volume
-  include ::cinder::backends
-  include ::cinder::ceilometer
-  include ::cinder::config
+  docker::run { 'cinder':
+    image            => 'registry.datacentred.services:5000/cinder:mitaka',
+    ports            => [ '8776:8776'],
+    extra_parameters => [
+      '--log-driver=syslog',
+      '--log-opt syslog-address=udp://127.0.0.1:514',
+      '--log-opt syslog-facility=daemon',
+      '--log-opt tag=cinder'
+    ],
+  }
+
   include ::dc_icinga::hostgroup_cinder
 
 }
