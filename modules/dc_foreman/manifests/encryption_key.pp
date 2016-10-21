@@ -14,6 +14,8 @@ class dc_foreman::encryption_key {
     group   => 'foreman',
     mode    => '0640',
     content => template('dc_foreman/encryption_key.rb.erb'),
-  }
+  } ~>
+
+  Class['::foreman::service']
 
 }
