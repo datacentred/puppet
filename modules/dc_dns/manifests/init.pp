@@ -10,6 +10,7 @@
 #
 class dc_dns (
   $masters = [],
+  $forwarder_zones = {},
 ) {
 
   include ::dns
@@ -21,5 +22,6 @@ class dc_dns (
   }
 
   create_resources('dc_dns::zone', $zones, $defaults)
+  create_resources('dc_dns::forwarder_zone', $forwarder_zones)
 
 }

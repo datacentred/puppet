@@ -1,5 +1,5 @@
 ---
 dc_dns::masters:
-  - '10.254.0.27'
+  - '10.254.1.27'
 
-dc_dhcp::zonemaster: '10.254.0.27'
+dc_dhcp::zonemaster: '10.254.1.27'

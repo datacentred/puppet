@@ -1,9 +1,5 @@
 ---
 dc_dhcp::pools:
-  mmr1-oob:
-    network:     '10.254.0.0'
-    mask:        '255.255.255.128'
-    gateway:     '10.254.0.1'
   mmr2-oob:
     network:     '10.254.1.0'
     mask:        '255.255.255.128'
