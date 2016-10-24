@@ -23,6 +23,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::memory
   include ::dc_icinga2::services::mongodb
   include ::dc_icinga2::services::mtu
+  include ::dc_icinga2::services::ntp
   include ::dc_icinga2::services::openstack
   include ::dc_icinga2::services::pdu
   include ::dc_icinga2::services::pgsql
