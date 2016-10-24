@@ -1,0 +1,7 @@
+<% @alias_interfaces.each do |int,ip| -%>
+auto <%= int %> 
+iface <%= int %> inet static
+    address <%= ip %> 
+    netmask 255.255.255.0
+    vlan-raw-device <%= @trunked_interface %>
+<% end -%>

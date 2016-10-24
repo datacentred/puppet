@@ -1,0 +1,18 @@
+---
+classes:
+  - '::dc_staging::master'
+dc_staging::master::staging_packages: 
+  - 'vlan'
+  - 'default-jre-headless'
+  - 'unicorn'
+  - 'ruby-sinatra'
+dc_profile::ci::rundeck::project: 'undercloud'
+supervisord::programs:
+  'undercloud-control-plane':
+    user: 'undercloud'
+    command: 'unicorn'
+    autostart: yes
+    autorestart: 'true'
+    program_environment:
+      HOME: '/opt/undercloud'
+      PATH: '/bin:/sbin:/usr/bin:/usr/sbin'

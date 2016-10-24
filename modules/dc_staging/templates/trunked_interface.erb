@@ -1,0 +1,5 @@
+auto <%= @trunked_interface %> 
+iface <%= @trunked_interface %> inet static
+    address <%= @trunked_interface_ip %> 
+    netmask <%= @trunked_interface_netmask %> 
+    dns-nameservers 8.8.8.8, 8.8.4.4 

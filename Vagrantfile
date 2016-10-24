@@ -87,6 +87,13 @@ Vagrant.configure('2') do |config|
         box.vm.network :private_network, type: :dhcp
       end
 
+      # Allow unmanaged private networks
+      if options.has_key?(:unmanaged_networks)
+        options.unmanaged_networks.each { |ip| 
+          box.vm.network :private_network, ip: ip, auto_config: false 
+      }
+      end 
+
       # Optionally provision RedHat
       if options.has_key?(:rhel)
         box.vm.box = 'datacentred/rhel-7.2'
@@ -122,7 +129,7 @@ Vagrant.configure('2') do |config|
       box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['client']
       box.vm.provision 'puppet' do |puppet|
         puppet.binary_path       = PUPPET_BINARY
-        puppet.environment       = 'vagrant'
+        puppet.environment       = options.has_key?(:environment) ? options.environment : 'vagrant' 
         puppet.environment_path  = '..'
         puppet.hiera_config_path = 'vagrant/hiera.yaml'
         if options.has_key?(:facts)

@@ -1,0 +1,15 @@
+---
+dc_staging::master::trunked_interface: 'enp0s9'
+dc_staging::master::trunked_interface_ip: '10.20.254.10'
+dc_staging::master::trunked_interface_netmask: '10.20.254.10'
+dc_staging::master::alias_interfaces:
+  enp0s9.9: '10.20.9.10'
+  enp0s9.96: '10.20.96.10'
+  enp0s9.104: '10.20.104.10'
+  enp0s9.112: '10.20.112.10'
+  enp0s9.128: '10.20.128.10'
+  enp0s9.129: '10.20.129.10'
+  enp0s9.130: '10.20.130.10'
+  enp0s9.160: '10.20.160.10'
+  enp0s9.170: '10.20.170.10'
+  enp0s9.192: '10.20.192.10'

@@ -340,3 +340,6 @@
 [submodule "modules/rabbitmq"]
 	path = modules/rabbitmq
 	url = https://github.com/puppetlabs/puppetlabs-rabbitmq
+[submodule "modules/supervisord"]
+	path = modules/supervisord
+	url = https://github.com/ajcrowe/puppet-supervisord
