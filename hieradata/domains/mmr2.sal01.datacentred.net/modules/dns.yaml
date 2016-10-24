@@ -13,3 +13,8 @@ dns::controls:
 
 dns::allow_recursion:
   - '10.254.0.0/16'  # oob supernet 
+
+dns::localzonepath: '/etc/bind/named.conf.default-zones'
+
+dns::additional_options:
+  disable-empty-zone: '10.IN-ADDR.ARPA'
