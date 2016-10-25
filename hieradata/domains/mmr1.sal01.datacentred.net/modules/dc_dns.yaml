@@ -1,7 +1,7 @@
 ---
 dc_dns::zones:
   mmr1.sal01.datacentred.net: {}
-  1.254.10.in-addr.arpa:
+  0.254.10.in-addr.arpa:
     reverse:     true
 dc_dns::forwarder_zones:
   mmr2.sal01.datacentred.net:
