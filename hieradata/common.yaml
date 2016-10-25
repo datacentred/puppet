@@ -467,8 +467,6 @@ sysctls::values:
     value: '1'
 
 # Serial Console Support (PD-2501)
-serial_console::serial_port:               "ttyS1"
-serial_console::baud_rate:                 "115200"
 serial_console::no_rhgb_quiet:             true
 serial_console::root_login_console:        true
 serial_console::regular_console_enabled:   true
