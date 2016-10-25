@@ -6,4 +6,4 @@ ntp::autoupdate: false
 ntp::restrict:
   - '127.0.0.1'
 ntp::interfaces:
-  - 'lo'
+  - '10.0.0.0/8'
