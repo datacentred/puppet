@@ -14,13 +14,16 @@ class dc_ceph::rgw {
   include ::apache
   include ::apache::mod::fastcgi
 
-  if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
-    $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
-  } else {
-    $_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
-    $_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+  # Infernalis onwards the sockets are owned by ceph:ceph
+  Class['::ceph'] ->
+
+  exec { 'dc_ceph::rgw: usermod www-data':
+    command => 'usermod -a -G ceph www-data',
+    unless  => 'id www-data | grep ceph',
   }
+
+  $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+  $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
 
   Class['::apache'] ->
 

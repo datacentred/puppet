@@ -9,6 +9,7 @@ ceph::conf:
   global:
     rgw region: 'uk'
     rgw region root pool: '.uk.rgw.root'
+    rgw zonegroup root pool: '.uk.rgw.root'
     rgw zone: 'uk-sal01'
     rgw zone root pool: '.uk-sal01.rgw.root'
   client.radosgw.%{hostname}:
