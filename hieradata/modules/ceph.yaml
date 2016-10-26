@@ -14,6 +14,3 @@ ceph::conf:
     osd crush chooseleaf type: '2'
 
 ceph::keys_merge: true
-
-ceph::user: 'root'
-ceph::group: 'root'
