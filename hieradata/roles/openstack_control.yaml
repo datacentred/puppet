@@ -52,6 +52,9 @@ ceph::keys:
     user: 'client.glance'
     key: "%{hiera('ceph_key_client_glance')}"
 
+ceph::user: 'root'
+ceph::group: 'root'
+
 tidyup:
   '/var/log/apache2': {}
   '/var/log/keystone': {}

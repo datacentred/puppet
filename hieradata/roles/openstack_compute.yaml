@@ -110,3 +110,6 @@ ceph::keys:
   /etc/ceph/ceph.client.cinder.keyring:
     user: 'client.cinder'
     key: "%{hiera('ceph_key_client_cinder')}"
+
+ceph::user: 'root'
+ceph::group: 'root'
