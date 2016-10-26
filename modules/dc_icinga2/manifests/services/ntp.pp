@@ -6,7 +6,7 @@ class dc_icinga2::services::ntp {
 
   icinga2::object::apply_service { 'ntp time':
     import        => 'generic-service',
-    check_command => 'ntp-time',
+    check_command => 'ntp_time',
     vars          => {
       'ntp_address'  => "ntp0.${::domain}",
       'ntp_warning'  => 0.1,
