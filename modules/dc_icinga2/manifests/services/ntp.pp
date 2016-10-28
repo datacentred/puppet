@@ -8,7 +8,7 @@ class dc_icinga2::services::ntp {
     import        => 'generic-service',
     check_command => 'ntp_time',
     vars          => {
-      'ntp_address'  => "ntp0.${::domain}",
+      'ntp_address'  => '"ntp0." + host.vars.domain',
       'ntp_warning'  => 0.1,
       'ntp_critical' => 0.5,
     },
