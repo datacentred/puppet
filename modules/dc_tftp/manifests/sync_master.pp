@@ -10,6 +10,9 @@ class dc_tftp::sync_master {
 
     include ::lsyncd
 
+    $_tftp_dir = $::dc_tftp::tftp_dir
+    $_sync_slave = $::dc_tftp::sync_slave
+
     lsyncd::process { 'tftp':
       content => template($::dc_tftp::conf_template),
       owner   => $::dc_tftp::tftp_sync_user,
