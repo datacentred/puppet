@@ -23,12 +23,10 @@ class dc_tftp (
   include ::dc_tftp::configure
   include ::dc_tftp::sync_user
   include ::dc_tftp::sync_master
-  include ::dc_tftp::sync_slave
 
   Class['::dc_tftp::install'] ->
   Class['::dc_tftp::configure'] ->
   Class['::dc_tftp::sync_user'] ->
-  Class['::dc_tftp::sync_master'] ->
-  Class['::dc_tftp::sync_slave']
+  Class['::dc_tftp::sync_master']
 
 }
