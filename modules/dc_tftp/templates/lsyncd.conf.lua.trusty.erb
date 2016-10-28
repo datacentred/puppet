@@ -9,10 +9,8 @@ sync {
    source="<%= @_tftp_dir %>",
    target="<%= @_sync_slave %>.<%= @domain %>:<%= @_tftp_dir %>",
    rsync = {
-       compress = true,
-       acls = true,
-       verbose = true,
-       rsh = "/usr/bin/ssh -p 22 -o StrictHostKeyChecking=no -l <%= @_tftp_sync_user %> -i <%= @_tftp_sync_home %>/.ssh/id_rsa",
-       _extra = { "--omit-dir-times" }
+       archive = true,
+       checksum = true,
+       compress = true
    }
 }

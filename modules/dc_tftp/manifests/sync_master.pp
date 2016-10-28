@@ -41,8 +41,8 @@ class dc_tftp::sync_master {
 
     lsyncd::process { 'tftp':
       content => template($::dc_tftp::conf_template),
-      owner   => 'root',
-      group   => 'root',
+      owner   => 'tftp',
+      group   => 'tftp',
     }
 
   }
