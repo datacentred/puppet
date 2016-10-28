@@ -8,7 +8,7 @@ class dc_icinga2::services::tftp {
     import        => 'generic-service',
     check_command => 'tftp',
     vars          => {
-      'tftp_url' => 'pxelinux.0',
+      'tftp_url' => 'bios/lpxelinux.0',
     },
     zone          => 'host.name',
     assign_where  => 'match("dns_*", host.vars.role)',
