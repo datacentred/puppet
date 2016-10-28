@@ -44,3 +44,5 @@ dc_yum::repo:
 network_node_extif: 'ens33'
 
 dc_icinga2::host::icon_image: 'http://incubator.storage.datacentred.io/redhat-logo-16x16.png'
+
+ceph::manage_repo: false
