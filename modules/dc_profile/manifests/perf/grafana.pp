@@ -16,12 +16,7 @@ class dc_profile::perf::grafana {
   include ::apache
   include ::grafana
 
-  package { 'toml':
-    ensure   => present,
-    provider => 'gem',
-  }
-
-  Package['toml'] -> Class['::grafana']
+  Class['::grafana'] ->
 
   apache::vhost { "grafana.${::domain}":
     port          => '80',
@@ -35,18 +30,14 @@ class dc_profile::perf::grafana {
         'url'  => 'http://localhost:8080/'
       },
     ],
-    require       => Class['::grafana'],
+    serveraliases => [
+      'grafana.datacentred.services',
+    ],
   }
 
-  # Required for Grafana to trust the server certificate
-  if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
-  } else {
-    $_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
-  }
-
+  # For LDAP authentication
   ca_certificate { 'puppet-ca':
-    source => $_cacert,
+    source => '/etc/puppetlabs/puppet/ssl/certs/ca.pem',
   }
 
   @@dns_resource { "grafana.${::domain}/CNAME":
