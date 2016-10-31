@@ -6,7 +6,7 @@ class dc_icinga2::master {
 
   # TODO: Move me when this gets refactored properly
   ca_certificate { 'puppet-ca':
-    source => '/var/lib/puppet/ssl/certs/ca.pem',
+    source => '/etc/puppetlabs/puppet/ssl/certs/ca.pem',
   }
 
   include ::icinga2

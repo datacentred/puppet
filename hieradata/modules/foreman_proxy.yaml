@@ -5,9 +5,9 @@ foreman_proxy::log: '/var/log/foreman-proxy/foreman-proxy.log'
 foreman_proxy::log_level: 'INFO'
 foreman_proxy::manage_sudoersd: false
 foreman_proxy::use_sudoers.d: true
-foreman_proxy::ssl_ca: '/var/lib/puppet/ssl/certs/ca.pem'
-foreman_proxy::ssl_cert: '/var/lib/puppet/ssl/certs/%{::fqdn}.pem'
-foreman_proxy::ssl_key: '/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem'
+foreman_proxy::ssl_ca: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+foreman_proxy::ssl_cert: '/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem'
+foreman_proxy::ssl_key: '/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem'
 foreman_proxy::trusted_hosts:
   - 'foreman.datacentred.services'
   - 'foreman0.core.sal01.datacentred.co.uk'

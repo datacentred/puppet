@@ -10,11 +10,7 @@
 #
 class dc_foreman::comms {
 
-  if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $_ssldir = '/etc/puppetlabs/puppet/ssl'
-  } else {
-    $_ssldir = '/var/lib/puppet/ssl'
-  }
+  $_ssldir = '/etc/puppetlabs/puppet/ssl'
 
   file { "${_ssldir}/certs/foreman_comms.pem":
     ensure => 'link',
