@@ -84,6 +84,7 @@ dc_profile::net::core_gateway::frontends:
                 - 'kibana if { hdr_beg(host) -i kibana }'
                 - 'stats if { hdr_beg(host) -i stats }'
                 - 'dms if { hdr_beg(host) -i dms }'
+                - 'grafana if { hdr_beg(host) -i grafana }'
             http-request:
                 - 'set-header X-Forwarded-Proto https'
 
@@ -147,6 +148,10 @@ dc_profile::net::core_gateway::backends:
                 - 'location /certrevoked.html if { ssl_c_verify 23 } ! { path /certrevoked.html }'
                 - 'location /default.html if ! { ssl_c_verify 0 } ! { path /default.html }'
     icingaweb2:
+        collect_exported: false
+        options:
+            mode: 'http'
+    grafana:
         collect_exported: false
         options:
             mode: 'http'
@@ -426,6 +431,14 @@ dc_profile::net::core_gateway::balancermembers:
     docker-registry:
         listening_service: 'docker-registry'
         ports: '5000'
+        server_names:
+          - 'graph.core.sal01.datacentred.co.uk'
+        ipaddresses:
+          - '10.30.192.213'
+        options: 'check'
+    grafana:
+        listening_service: 'grafana'
+        ports: '80'
         server_names:
           - 'graph.core.sal01.datacentred.co.uk'
         ipaddresses:
