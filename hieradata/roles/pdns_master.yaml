@@ -1,4 +1,5 @@
 ---
 classes:
   - 'dc_profile::net::knot_dns'
-
+excludes:
+  - '::dc_profile::hardware::serial'
