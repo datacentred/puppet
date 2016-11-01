@@ -20,7 +20,12 @@ class dc_elasticsearch (
   $ceph_private_key   = $dc_elasticsearch::params::ceph_private_key,
   $ssd_tier_retention = $dc_elasticsearch::params::ssd_tier_retention,
   $total_retention    = $dc_elasticsearch::params::total_retention,
+  $ssd_drives,
+  $hdd_drives,
 ) inherits dc_elasticsearch::params {
+
+  validate_array($ssd_drives)
+  validate_array($hdd_drives)
 
   include ::ulimit
 
@@ -56,13 +61,13 @@ class dc_elasticsearch (
 
   include ::dc_icinga::hostgroup_elasticsearch
 
-  elasticsearch::instance { 'ssd-01':
-    datadir => [ '/var/storage/ssd_sdb', '/var/storage/ssd_sdc' ],
+  elasticsearch::instance { 'ssd':
+    datadir => $ssd_drives,
     config  => $config_hash_for_ssds,
   }
 
-  elasticsearch::instance { 'hdd-01':
-    datadir => [ '/var/storage/hdd_sdd', '/var/storage/hdd_sde', '/var/storage/hdd_sdf', '/var/storage/hdd_sdg' ],
+  elasticsearch::instance { 'hdd':
+    datadir => $hdd_drives,
     config  => $config_hash_for_hdds,
   }
 
@@ -81,7 +86,7 @@ class dc_elasticsearch (
 
   # Needs to be installed on all nodes
   elasticsearch::plugin { 'cloud-aws':
-    instances => ['ssd-01','hdd-01']
+    instances => ['ssd','hdd']
   }
 
 }
