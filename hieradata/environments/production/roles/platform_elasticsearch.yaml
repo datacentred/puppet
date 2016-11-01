@@ -1,4 +1,12 @@
 ---
+dc_elasticsearch::ssd_drives:
+  - '/var/storage/ssd_01'
+  - '/var/storage/ssd_02'
+dc_elasticsearch::hdd_drives:
+  - '/var/storage/hdd_01'
+  - '/var/storage/hdd_02'
+  - '/var/storage/hdd_03'
+  - '/var/storage/hdd_04'
 dc_elasticsearch::es_hash:
   bootstrap.mlockall: true
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'

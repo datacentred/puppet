@@ -163,26 +163,3 @@ serial_console::serial_port:               "ttyS0"
 serial_console::baud_rate:                 "115200"
 
 
-# Elasticsearch
-dc_elasticsearch::es_hash:
-  bootstrap.mlockall: true
-  cloud.aws.ec2.endpoint: ''
-  cloud.aws.s3.endpoint: ''
-  cluster.name: 'logstash_platform_services'
-  discovery.zen.minimum_master_nodes: 1
-  discovery.zen.ping.multicast.enabled: false
-  discovery.zen.ping.unicast.hosts:
-    - "elasticsearch0.%{::domain}"
-  index.translog.flush_threshold_ops: 50000
-  indices.memory.index_buffer_size: '50%'
-  network.host:
-    - '_local_'
-    - "%{::ipaddress}"
-  node.master: true
-  node.data: true
-  threadpool.index.queue_size: 200
-  threadpool.index.size: 4
-  threadpool.index.type: 'fixed'
-  threadpool.search.queue_size: 100
-  threadpool.search.size: 20
-  threadpool.search.type: 'fixed'
