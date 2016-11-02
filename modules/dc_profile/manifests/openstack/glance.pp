@@ -4,18 +4,11 @@
 #
 class dc_profile::openstack::glance {
 
-  docker::run { 'glance':
-    image            => 'registry.datacentred.services:5000/glance:mitaka',
-    ports            => [ '9191:9191', '9292:9292' ],
-    volumes          => [ '/var/lib/glance' ],
-    extra_parameters => [
-      '--log-driver=syslog',
-      '--log-opt syslog-address=udp://127.0.0.1:514',
-      '--log-opt syslog-facility=daemon',
-      '--log-opt tag=glance'
-    ],
-  }
-
   include ::dc_icinga::hostgroup_glance
+
+  dc_docker::run { 'glance':
+    image   => 'registry.datacentred.services:5000/glance:mitaka',
+    volumes => [ '/var/lib/glance' ],
+  }
 
 }
