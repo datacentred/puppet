@@ -294,7 +294,7 @@ class dc_icinga2::services::openstack (
     check_command => 'procs',
     vars          => {
       'procs_critical'   => '2:',
-      'procs_user'       => 'glance',
+      'procs_user'       => 'root',
       'procs_argument'   => 'glance-registry',
       'enable_pagerduty' => true,
     },
