@@ -1,17 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-PUPPET_VERSION = ENV['PUPPET_VERSION'] || '3'
+PUPPET_VERSION = ENV['PUPPET_VERSION'] || '4'
 
 UBUNTU_RELEASE = ENV['UBUNTU_RELEASE'] || 'trusty'
 
-PUPPET_BINARY = PUPPET_VERSION.to_i < 4 ? '/usr/bin' : '/opt/puppetlabs/bin'
-
 PROVISIONERS = {
-  '3' => {
-    'server' => 'vagrant/bootstrap_server_3.sh',
-    'client' => 'vagrant/bootstrap_client_3.sh',
-  },
   '4' => {
     'server' => 'vagrant/bootstrap_server_4.sh',
     'client' => 'vagrant/bootstrap_client_4.sh',
@@ -121,7 +115,7 @@ Vagrant.configure('2') do |config|
       # Provision the box
       box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['client']
       box.vm.provision 'puppet' do |puppet|
-        puppet.binary_path       = PUPPET_BINARY
+        puppet.binary_path       = '/opt/puppetlabs/bin'
         puppet.environment       = 'vagrant'
         puppet.environment_path  = '..'
         puppet.hiera_config_path = 'vagrant/hiera.yaml'

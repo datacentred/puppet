@@ -3,7 +3,7 @@ puppet::conf:
   main:
     logdir: '/var/lib/puppet'
     vardir: '/var/lib/puppet'
-    ssldir: '/var/lib/puppet/ssl'
+    ssldir: '/etc/puppetlabs/puppet/ssl'
     rundir: '/var/run/puppet'
     show_diff: 'true'
     dns_alt_names: '*,*.core.sal01.datacentred.co.uk,*.datacentred.services'
@@ -30,7 +30,7 @@ dc_profile::net::core_gateway::frontends:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify optional'
         options:
             option: 'http-server-close'
@@ -64,9 +64,9 @@ dc_profile::net::core_gateway::frontends:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify optional'
-                - 'crl-file /var/lib/puppet/ssl/crl.pem'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
                 - 'crt-ignore-err all'
         options:
             option:
@@ -174,8 +174,8 @@ dc_profile::net::core_gateway::listeners:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'crl-file /var/lib/puppet/ssl/crl.pem'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify required'
         options: {}
     ldaps:
@@ -187,8 +187,8 @@ dc_profile::net::core_gateway::listeners:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'crl-file /var/lib/puppet/ssl/crl.pem'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify none'
         options: {}
     puppetdb:
@@ -200,8 +200,8 @@ dc_profile::net::core_gateway::listeners:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'crl-file /var/lib/puppet/ssl/crl.pem'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify required'
         options: {}
     log-courier:
@@ -213,8 +213,8 @@ dc_profile::net::core_gateway::listeners:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'crl-file /var/lib/puppet/ssl/crl.pem'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify required'
         options: {}
     influxdb:
@@ -226,8 +226,8 @@ dc_profile::net::core_gateway::listeners:
                 - 'no-sslv3'
                 - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
                 - 'crt /etc/ssl/private/puppet.crt'
-                - 'crl-file /var/lib/puppet/ssl/crl.pem'
-                - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify required'
         options: {}
     elasticsearch:
@@ -259,8 +259,8 @@ dc_profile::net::core_gateway::listeners:
               - 'no-sslv3'
               - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
               - 'crt /etc/ssl/private/puppet.crt'
-              - 'crl-file /var/lib/puppet/ssl/crl.pem'
-              - 'ca-file /var/lib/puppet/ssl/certs/ca.pem'
+              - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+              - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
               - 'verify required'
         options:
           option: 'forwardfor'
@@ -295,7 +295,7 @@ dc_profile::net::core_gateway::balancermembers:
             - 'puppetdb0.core.sal01.datacentred.co.uk'
         ipaddresses:
             - '10.30.192.9'
-        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
     jenkins:
         listening_service: 'jenkins'
         ports: '8080'
@@ -313,7 +313,7 @@ dc_profile::net::core_gateway::balancermembers:
         ipaddresses:
             - '10.30.192.10'
             - '10.30.192.205'
-        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
     foreman-puppet-proxy:
         listening_service: 'foreman-puppet-proxy'
         ports: '8443'
@@ -321,7 +321,7 @@ dc_profile::net::core_gateway::balancermembers:
             - 'puppetca.core.sal01.datacentred.co.uk'
         ipaddresses:
             - '10.30.192.5'
-        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
     ldap:
         listening_service: 'ldaps'
         ports: '389'
@@ -349,7 +349,7 @@ dc_profile::net::core_gateway::balancermembers:
         ipaddresses:
             - '10.30.192.137'
             - '10.30.192.140'
-        options: 'ssl ca-file /var/lib/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
     kibana:
         listening_service: 'kibana'
         ports: '80'
