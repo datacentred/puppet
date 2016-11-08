@@ -26,8 +26,6 @@ class dc_profile::mon::icinga_server {
 
   contain dc_nsca::server
 
-  contain pagerduty
-
   # Requires the nagios user to be installed first
   Class['::dc_icinga::server'] ->
   Class['::dc_nsca::server']
