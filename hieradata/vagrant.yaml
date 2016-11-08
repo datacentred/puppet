@@ -14,6 +14,10 @@ excludes:
 
 ceilometer_db_password: 'mowdasUsDyp5'
 
+# Dnsclient tail
+# This works around a problem with landrush being flakey with DNS
+dc_resolvconf::dnsclient_tail: 'options timeout:2 attempts:20 rotate'
+
 # Galera/Rabbitmq Cluster
 # See .vagrantuser.galera for hostname and IP address mappings
 galera::galera_master: "osdbmq0.%{::domain}"
