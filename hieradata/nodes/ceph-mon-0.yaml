@@ -1,6 +1,0 @@
----
-classes:
-      - '::dc_collectd::agent::default'
-      - '::dc_collectd::agent::ceph'
-
-dc_collectd::agent::ceph::ceph_cluster_name: "%{hiera('ceph_cluster_fsid')}"

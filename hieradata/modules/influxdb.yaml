@@ -4,29 +4,3 @@ influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
 influxdb::server::wal_logging_enabled: false
 influxdb::server::trace_logging_enabled: false
-
-influxdb::server::graphite_options:
-  enabled: true
-  database: 'icinga2'
-  bind-address: ':2003'
-  protocol: 'tcp'
-  consistency-level: 'one'
-  batch-size: 1000
-  batch-pending: 5
-  batch-timeout: '1s'
-  udp-read-buffer: 0
-  separator: '.'
-  templates:
-    - 'icinga2.*.host.*         .hostname..measurement..metric.type'
-    - 'icinga2.*.services.*     .hostname..service.measurement..metric.type'
-
-influxdb::server::collectd_options:
-  enabled: true
-  database: 'collectd'
-  bind-address: ':25827'
-  typesdb: '/usr/share/collectd/types.db'
-  batch-size: 1000
-  batch-pending: 5
-  batch-timeout: '1s'
-  read-buffer: 0
-

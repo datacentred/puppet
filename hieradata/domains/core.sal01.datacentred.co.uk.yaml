@@ -7,7 +7,3 @@ foreman_url: "foreman.%{domain}"
 #
 icinga_ip: '10.30.192.123'
 dhcp_icinga_ip: '10.30.192.13'
-
-# Graphite / InfluxDB
-#
-graphite_server: 'influxdb.datacentred.services'
