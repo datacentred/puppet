@@ -85,9 +85,6 @@
 [submodule "modules/radius"]
 	path = modules/radius
 	url = https://github.com/datacentred/datacentred-radius.git
-[submodule "modules/rbenv"]
-	path = modules/rbenv
-	url = https://github.com/alup/puppet-rbenv.git
 [submodule "modules/redis"]
 	path = modules/redis
 	url = https://github.com/thomasvandoren/puppet-redis.git
@@ -97,9 +94,6 @@
 [submodule "modules/postfix"]
 	path = modules/postfix
 	url = https://github.com/datacentred/puppet-postfix
-[submodule "modules/unicorn"]
-	path = modules/unicorn
-	url = https://github.com/datacentred/puppet-unicorn.git
 [submodule "modules/mysql"]
 	path = modules/mysql
 	url = https://github.com/puppetlabs/puppetlabs-mysql.git
@@ -187,15 +181,9 @@
 [submodule "modules/lldp"]
 	path = modules/lldp
 	url = https://github.com/mfournier/puppet-lldp.git
-[submodule "modules/gerrit"]
-	path = modules/gerrit
-	url = https://github.com/datacentred/datacentred-gerrit
 [submodule "modules/grafana"]
 	path = modules/grafana
 	url = https://github.com/bfraser/puppet-grafana.git
-[submodule "modules/corosync"]
-	path = modules/corosync
-	url = https://github.com/datacentred/puppetlabs-corosync.git
 [submodule "modules/gnupg"]
 	path = modules/gnupg
 	url = https://github.com/datacentred/golja-gnupg.git
