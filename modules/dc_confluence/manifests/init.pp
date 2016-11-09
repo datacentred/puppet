@@ -3,28 +3,22 @@
 # Extensions to the community module to configure confluence
 #
 class dc_confluence (
-  $dbname,
-  $dbuser,
-  $dbpassword,
-  $dbtype = 'postgresql',
-  $dbhost = 'localhost',
-  $dbport = 5781,
-  $setupstep = 'complete',
-  $licensemessage = undef,
-  $buildnumber = 5781,
-  $serverid = undef,
-  $homedir = '/home/confluence',
-  $user = 'confluence',
-  $group = 'confluence'
+  String $dbname,
+  String $dbuser,
+  String $dbpassword,
+  Dc_confluence::Dbtype $dbtype = 'postgresql',
+  String $dbhost = 'localhost',
+  Integer $dbport = 5781,
+  Dc_confluence::Setupstep $setupstep = 'complete',
+  Optional[String] $licensemessage = undef,
+  Integer $buildnumber = 5781,
+  Dc_confluence::Serverid $serverid = undef,
+  String $homedir = '/home/confluence',
+  String $user = 'confluence',
+  String $group = 'confluence'
 ) {
 
   include ::confluence
-
-  validate_re($setupstep, ['^complete$', '^setupdata-start$'])
-  validate_re($serverid, '^([0-9A-Z]{4}\-){3}[0-9A-Z]{4}$')
-  validate_re($licensemessage, '^[a-zA-Z0-9\/+=-]{501}$')
-  validate_integer($buildnumber)
-  validate_integer($dbport)
 
   # Explicitly control the user and group until
   # https://github.com/voxpupuli/puppet-confluence/pull/93
