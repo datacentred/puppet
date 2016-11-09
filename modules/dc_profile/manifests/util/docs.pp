@@ -12,7 +12,7 @@
 class dc_profile::util::docs {
 
   include ::java
-  include ::confluence
+  include ::dc_confluence
   include ::nginx
   include ::postgresql::server
   include ::dc_backup
@@ -45,5 +45,7 @@ class dc_profile::util::docs {
     backup_content => 'homedir',
     source_dir     => '/home/confluence/backups/',
   }
+
+  Class['::java'] -> Class['::confluence']
 
 }

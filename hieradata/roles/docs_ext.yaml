@@ -17,18 +17,17 @@ postgresql::server_dbs:
     # login for the role is set to true by default
 
 confluence::deploy_module: 'staging'
-#confluence::manage_service: false
-
-confluence::enable_post_install: true
-confluence::dbuser: "%{hiera('confluence_dbuser_name')}"
-confluence::dbpassword: "%{hiera('confluence_dbuser_password')}"
-confluence::dbname: "%{hiera('confluence_db_name')}"
-confluence::serverid: "%{hiera('confluence_serverid')}"
-confluence::licensemessage: "%{hiera('confluence_licensemessage')}"
+confluence::enable_post_install: false
 confluence::tomcat_proxy:
   scheme:    'https'
   proxyName: "%{hiera('confluence_tomcat_proxyname')}"
   proxyPort: '443'
+
+dc_confluence::dbuser: "%{hiera('confluence_dbuser_name')}"
+dc_confluence::dbpassword: "%{hiera('confluence_dbuser_password')}"
+dc_confluence::dbname: "%{hiera('confluence_db_name')}"
+dc_confluence::serverid: "%{hiera('confluence_serverid')}"
+dc_confluence::licensemessage: "%{hiera('confluence_licensemessage')}"
 
 nginx::nginx_vhosts:
   "%{hiera('confluence_nginx_vhost')}":
