@@ -1,11 +1,12 @@
 ---
 classes:
-  - '::dc_profile::openstack::nova::compute'
+  - '::dc_icinga::hostgroup_nova_compute'
+  - '::dc_profile::openstack::ceilometer::agent'
   - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::neutron::agent_compute'
-  - '::dc_profile::openstack::ceilometer::agent'
-  - '::dc_icinga::hostgroup_nova_compute'
+  - '::dc_profile::openstack::nova::compute'
   - '::dc_profile::util::blacklist_modules'
+  - '::dc_profile::util::conntrack'
 
 sudo::configs:
   nova:
