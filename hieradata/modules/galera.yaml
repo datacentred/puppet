@@ -1,5 +1,5 @@
 ---
-galera::status_password: 'statuscheck!'
+galera::status_check: false
 galera::vendor_type: 'mariadb'
 galera::root_password: "%{hiera('osdbmq_galera_pw')}"
 galera::configure_firewall: false
