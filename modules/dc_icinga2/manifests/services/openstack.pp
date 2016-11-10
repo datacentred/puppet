@@ -6,7 +6,7 @@ class dc_icinga2::services::openstack (
   $tenant = 'icinga',
   $username = 'icinga',
   $password = 'password',
-  $keystone_auth_url = 'https://compute.datacentred.io:5000/v2.0'
+  $keystone_auth_url = 'https://compute.datacentred.io:5000/v3'
 ) {
 
   Icinga2::Object::Apply_service {
