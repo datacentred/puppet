@@ -8,7 +8,7 @@ class dc_confluence (
   String $dbpassword,
   Dc_confluence::Dbtype $dbtype = 'postgresql',
   String $dbhost = 'localhost',
-  Integer $dbport = 5781,
+  Integer $dbport = 5432,
   Dc_confluence::Setupstep $setupstep = 'complete',
   Optional[String] $licensemessage = undef,
   Integer $buildnumber = 5781,
