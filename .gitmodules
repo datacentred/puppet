@@ -151,9 +151,6 @@
 [submodule "modules/elasticsearch"]
 	path = modules/elasticsearch
 	url = https://github.com/elasticsearch/puppet-elasticsearch.git
-[submodule "modules/galera"]
-	path = modules/galera
-	url = https://github.com/datacentred/puppet-galera
 [submodule "modules/openstacklib"]
 	path = modules/openstacklib
 	url = https://github.com/stackforge/puppet-openstacklib.git
@@ -322,3 +319,6 @@
 [submodule "modules/tftp"]
 	path = modules/tftp
 	url = https://github.com/puppetlabs/puppetlabs-tftp
+[submodule "modules/galera"]
+	path = modules/galera
+	url = https://github.com/michaeltchapman/puppet-galera
