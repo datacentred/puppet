@@ -21,6 +21,8 @@ class dc_profile::net::dns_slave {
 
   include ::dc_icinga::hostgroup_ntp
 
+  ensure_packages('ruby-rubyipmi')
+
   # The proxy requires the users to bin installed by the
   # requisite classes
   Class['dc_dns'] -> Class['foreman_proxy']

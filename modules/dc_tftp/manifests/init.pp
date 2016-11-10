@@ -7,7 +7,6 @@ class dc_tftp (
   $ssh_private_key,
   $ssh_public_key,
   $tftp_dir = '/var/tftpboot',
-  $use_inetd = false,
   $tftp_sync_user = 'tftpsync',
   $tftp_sync_group = 'tftpsync',
   $tftp_sync_home = '/var/lib/tftpsync',

@@ -95,10 +95,6 @@ dell_openmanage_mirror_path: 'linux.dell.com/repo/community/ubuntu'
 # Apt PPA options
 apt::ppa_options: '-f --keyserver hkps.pool.sks-keyservers.net'
 
-# TFTP
-#
-tftpdir: '/var/tftpboot'
-
 # Users
 #
 admins:

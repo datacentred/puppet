@@ -26,6 +26,8 @@ class dc_profile::net::dns_master {
 
   include ::apache
 
+  ensure_packages('ruby-rubyipmi')
+
   apache::vhost { $::fqdn:
     docroot        => '/var/tftpboot',
     manage_docroot => false,
