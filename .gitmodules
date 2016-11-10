@@ -70,9 +70,6 @@
 [submodule "modules/riemann"]
 	path = modules/riemann
 	url = https://github.com/datacentred/garethr-riemann
-[submodule "modules/tftp"]
-	path = modules/tftp
-	url = https://github.com/datacentred/puppetlabs-tftp
 [submodule "modules/file_concat"]
 	path = modules/file_concat
 	url = https://github.com/electrical/puppet-lib-file_concat
@@ -322,3 +319,6 @@
 [submodule "modules/archive"]
 	path = modules/archive
 	url = https://github.com/voxpupuli/puppet-archive
+[submodule "modules/tftp"]
+	path = modules/tftp
+	url = https://github.com/puppetlabs/puppetlabs-tftp
