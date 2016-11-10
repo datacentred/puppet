@@ -1,6 +1,5 @@
 ---
 excludes:
-  - '::collectd::plugin::protocols'
   - '::dc_elasticsearch::elasticsearch_backup_destination'
   - '::dc_icinga::hostgroup_neutron_node'
   - '::dc_profile::auth::rootpw'
@@ -121,13 +120,6 @@ virtual_routers:
     vlanid:  514
 
 dc_tftp::sync_interface: 'eth1'
-
-
-# influxdb
-#
-graphite_server: "influxdb0.%{::domain}"
-influxdb_server: "influxdb0.%{::domain}"
-influxdb_port: 8086
 
 # Internal LDAP
 #

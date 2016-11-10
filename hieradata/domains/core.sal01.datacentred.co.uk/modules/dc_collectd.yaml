@@ -1,9 +1,0 @@
----
-dc_collectd::agent::proxy::servers:
-    localhost:
-        port: '25827'
-dc_collectd::agent::proxy::listeners:
-    "%{::ipaddress}":
-        port: '25826'
-        securitylevel: 'Encrypt'
-        authfile: '/etc/collectd_auth'

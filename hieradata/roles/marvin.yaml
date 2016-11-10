@@ -1,7 +1,6 @@
 ---
 classes:
   - '::dc_profile::hubot::marvin'
-  - '::dc_profile::log::dashing'
 
 nodejs::repo_url_suffix: 'node_0.12'
 hubot::git_source: 'git@github.com:datacentred/marvin.git'
