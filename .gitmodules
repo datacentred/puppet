@@ -324,4 +324,4 @@
 	url = https://github.com/voxpupuli/puppet-archive
 [submodule "modules/zabbix"]
 	path = modules/zabbix
-	url = https://github.com/voxpupuli/puppet-zabbix
+	url = https://github.com/datacentred/puppet-zabbix
