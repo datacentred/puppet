@@ -21,9 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import argparse
-from keystoneclient.v2_0 import client
-from keystoneclient import exceptions
 import sys
+from keystoneauth1 import session
+from keystoneauth1.identity import v3
+from keystoneclient import exceptions
+from keystoneclient.v3 import client
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -39,47 +41,54 @@ def main():
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
     parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
     parser.add_argument('-r', '--region')
     parser.add_argument('-a', '--admin', action='store_true')
     parser.add_argument('-s', '--service', action='append')
     args = parser.parse_args()
 
     try:
-        keystone = client.Client(username=args.username,
-                                 tenant_name=args.project,
-                                 password=args.password,
-                                 auth_url=args.host,
-                                 region_name=args.region)
+        auth = v3.Password(user_domain_name=args.domain,
+                           username=args.username,
+                           password=args.password,
+                           project_domain_name=args.domain,
+                           project_name=args.project,
+                           auth_url=args.host)
+        sess = session.Session(auth=auth)
+        keystone = client.Client(session=sess)
     except exceptions.AuthorizationFailure:
         print 'CRITICAL: unable to establish connection'
         sys.exit(NAGIOS_CRITICAL)
 
-    # Basic check to see if we can authenticate
-    if not keystone.authenticate():
-        print 'CRITICAL: authentication failure for user {} and project {}'.\
-              format(args.username, args.project)
-        sys.exit(NAGIOS_CRITICAL)
-
     # Checks that an admin can get a list of all projects
-    if args.admin and not keystone.tenants.list():
+    if args.admin and not keystone.projects.list():
         print 'CRITICAL: project list is empty'
         sys.exit(NAGIOS_CRITICAL)
 
     # Checks that endpoints for all requested services exist
     msgs = []
-    endpoints = keystone.service_catalog.get_endpoints()
-    services = args.service or endpoints.keys()
+
+    services = keystone.services.list()
+    service_type_map = {}
     for service in services:
-        if not service in endpoints.keys():
-            msgs.append("`%s' service is missing" % service)
+        service_type_map[service.type] = service.id
+
+    if args.service:
+        service_type_map = {k: service_type_map[k] for k in service_type_map if k in args.service}
+        for service in args.service:
+            if service not in service_type_map.keys():
+                msgs.append("'{}' service is missing".format(service))
+
+    endpoints = keystone.endpoints.list()
+
+    for service_type in service_type_map:
+        service_endpoints = [x for x in endpoints if x.service_id == service_type_map[service_type]]
+        if not service_endpoints:
+            msgs.append("'{}' has no endpoints".format(service_type))
             continue
 
-        if not len(endpoints[service]):
-            msgs.append("`%s' service is empty" % service)
-            continue
-
-        if not any(["publicURL" in e.keys() for e in endpoints[service]]):
-            msgs.append("`%s' service has no publicURL" % service)
+        if not [x for x in service_endpoints if x.interface == u'public']:
+            msgs.append("'{}' has no public interface".format(service_type))
 
     if msgs:
         print ", ".join(msgs)
