@@ -4,14 +4,8 @@
 #
 class dc_profile::puppet::duplicity_puppetcerts {
 
-  if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $_ssldir = '/etc/puppetlabs/puppet/ssl'
-  } else {
-    $_ssldir = '/var/lib/puppet/ssl'
-  }
-
   dc_backup::dc_duplicity_job { "${::fqdn}_puppetcerts" :
-    source_dir     => $_ssldir,
+    source_dir     => '/etc/puppetlabs/puppet/ssl',
     backup_content => 'puppetcerts',
   }
 

@@ -14,6 +14,10 @@ excludes:
 
 ceilometer_db_password: 'mowdasUsDyp5'
 
+# Dnsclient tail
+# This works around a problem with landrush being flakey with DNS
+dc_resolvconf::dnsclient_tail: 'options timeout:2 attempts:20 rotate'
+
 # Galera/Rabbitmq Cluster
 # See .vagrantuser.galera for hostname and IP address mappings
 galera::galera_master: "osdbmq0.%{::domain}"
@@ -151,8 +155,8 @@ confluence_serverid: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBA
 confluence_licensemessage: ENC[PKCS7,MIIDbQYJKoZIhvcNAQcDoIIDXjCCA1oCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEApjZGm6Cb0qMqh2+KIF52xsVEgwImBBcPZCu+KXOsGhC0/ZswktKPJexLq83cyZ3fjBjXTUdOTijk8YNDDM8Lw/IEOLzHq+FMJUzLUIRZuBBl38PFJPsEIodGTy9deAv66NYE20li9dogjTHvLkM9TWK7JT5zyjuYVqT3wfarZKeoyiCNH5AX1wquv583s36GQ4xVMlHfLfvO7911MzB/Ic/1X0X7zXk4/qh6GvkpRkwddGovt5eOPRdjMm1kapAIxOE7BzmLUMP6/yaM5yKgqqRnZSbTqa6fI2uURRKe0bB1NcfJTl6pQk8Qfq2+nfb0vTV4k7C+d1VwlNhm9QJOlTCCAi4GCSqGSIb3DQEHATAdBglghkgBZQMEASoEENKX6YkoQbLqSay8HfMtF0aAggIA+OV9HVQlVjFnnnURllmf0M+529UJKRvp1xyDtVf2UvSCL1OimHTJXWbo2PYGJSF4KUioPZUJLHWPOcv56S90MTpGHemrsavR+GbQgVDmMQlunpL/ZziSrLoxtHEUPg1WDuS1C3stER2JPS1/Jw81MQ3OKfHHekdIKD8tsjUCpckLfYBNzZQIq3q5+5UZc05GbkawMlZv/TG8Ki8UgVQbXbzpEEB+Rk4JyyQr9Y11Mp/aGS/YAoEpr54FIsA3nNUxQhsm45IkX3+VY1Dl1v6MD3NIioNzfZkDl0GmHX4PDEp61aJmW3u5imA5MN8svflnKmibQdsiYyuMxmhB1Fyg8uQ6e99kUeITmieMIWN82dtrDkENMeGXS5/Kkho7eB1Lxw4/5mICVNp0isPyv72IymFlWzy+iWhLlFzpvR4G+dnsrO2SeZjvnW/eZ6PGe6oKRurtO/pu8eO8aA5OCs5VPtXwux1KCSDRPyQm7T7prugSe3J10kXTNkWDKe9HNzvpHKm7M6LN4pNXQGfxJwrWY2dMSxP31LgzW+E7Fogw7NhEml3YYlKp3op0ozqXiPJ42WPwlWWLeZQu3PBf364GykhiqGYmTPYhbiTMyEgbkeq7RdJRQ0o49+QKbwSaWUB7zsQImLe3hu7Q8HZOsCsixTYWcKSjfVz4gdGN4NCiGjk=]
 confluence_tomcat_proxyname: "%{::fqdn}"
 confluence_nginx_vhost: "%{::fqdn}"
-confluence_nginx_ssl_cert: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
-confluence_nginx_ssl_key: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+confluence_nginx_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
+confluence_nginx_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
 
 # Postfix
 internal_sysmail_address: "sysmail@%{domain}"

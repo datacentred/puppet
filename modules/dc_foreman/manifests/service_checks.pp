@@ -15,15 +15,9 @@ class dc_foreman::service_checks (
 
   include ::dc_foreman::python_lib
 
-  if versioncmp($::puppetversion, '4.0.0') >= 0 {
-    $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
-    $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
-    $_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
-  } else {
-    $_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
-    $_cert = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
-    $_cacert = '/var/lib/puppet/ssl/certs/ca.pem'
-  }
+  $_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
+  $_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+  $_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
 
   ensure_packages(['python-pip', 'git'])
 

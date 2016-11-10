@@ -62,11 +62,11 @@ dc_postfix::gateway::networks_config_hash:
         value: 'ipv4'
 dc_postfix::gateway::sasl_config_hash:
     'smtpd_tls_cert_file':
-        value: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+        value: "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
     'smtpd_tls_CAfile':
-        value: '/var/lib/puppet/ssl/certs/ca.pem'
+        value: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
     'smtpd_tls_key_file':
-        value: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+        value: "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
     'smtpd_tls_protocols':
         value: '!SSLv2, !SSLv3, !TLSv1.1'
     'smtpd_use_tls':
@@ -91,10 +91,10 @@ dc_postfix::client_sec::client_sec_config_hash:
     'smtp_sasl_security_options':
         value: 'noanonymous'
     'smtp_tls_cert_file':
-        value: "/var/lib/puppet/ssl/certs/%{::fqdn}.pem"
+        value: "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
     'smtp_tls_key_file':
-        value: "/var/lib/puppet/ssl/private_keys/%{::fqdn}.pem"
+        value: "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
     'smtp_tls_CAfile':
-        value: '/var/lib/puppet/ssl/certs/ca.pem'
+        value: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
     'smtp_use_tls':
         value: 'yes'

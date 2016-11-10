@@ -6,8 +6,8 @@ class dc_ssl::haproxy (
 ) {
 
   $combined_crt = '/etc/ssl/private/puppet.crt'
-  $ssl_crt = "/var/lib/puppet/ssl/certs/${::fqdn}.pem"
-  $ssl_key = "/var/lib/puppet/ssl/private_keys/${::fqdn}.pem"
+  $ssl_crt = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+  $ssl_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
 
   File {
     owner => 'root',

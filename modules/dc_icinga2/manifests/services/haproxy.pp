@@ -14,8 +14,8 @@ class dc_icinga2::services::haproxy {
     display_name  => 'haproxy',
     vars          => {
       'haproxy_host'       => 'stats.datacentred.services',
-      'haproxy_privatekey' => '/var/lib/puppet/ssl/private_keys/$host.name$.pem',
-      'haproxy_clientcert' => '/var/lib/puppet/ssl/certs/$host.name$.pem',
+      'haproxy_privatekey' => '/etc/puppetlabs/puppet/ssl/private_keys/$host.name$.pem',
+      'haproxy_clientcert' => '/etc/puppetlabs/puppet/ssl/certs/$host.name$.pem',
       'haproxy_perfdata'   => 'scur',
     },
     zone          => 'host.name',
@@ -29,8 +29,8 @@ class dc_icinga2::services::haproxy {
     vars          => {
       'haproxy_host'       => 'host.name',
       'haproxy_port'       => 1936,
-      'haproxy_privatekey' => '/var/lib/puppet/ssl/private_keys/$host.name$.pem',
-      'haproxy_clientcert' => '/var/lib/puppet/ssl/certs/$host.name$.pem',
+      'haproxy_privatekey' => '/etc/puppetlabs/puppet/ssl/private_keys/$host.name$.pem',
+      'haproxy_clientcert' => '/etc/puppetlabs/puppet/ssl/certs/$host.name$.pem',
       'haproxy_perfdata'   => 'scur',
     },
     zone          => 'host.name',
