@@ -121,9 +121,6 @@
 [submodule "modules/filemapper"]
 	path = modules/filemapper
 	url = https://github.com/adrienthebo/puppet-filemapper
-[submodule "modules/vcsrepo"]
-	path = modules/vcsrepo
-	url = https://github.com/datacentred/puppetlabs-vcsrepo.git
 [submodule "modules/httpauth"]
 	path = modules/httpauth
 	url = https://github.com/jamtur01/puppet-httpauth.git
@@ -322,3 +319,6 @@
 [submodule "modules/confluence"]
 	path = modules/confluence
 	url = https://github.com/voxpupuli/puppet-confluence
+[submodule "modules/vcsrepo"]
+	path = modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo
