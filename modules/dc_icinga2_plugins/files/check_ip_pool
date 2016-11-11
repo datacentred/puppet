@@ -4,32 +4,67 @@ Check for remaining IP addresses
 """
 # pylint: disable=import-error
 
+import argparse
+import sys
+from keystoneauth1 import session
+from keystoneauth1.identity import v3
 from neutronclient.v2_0 import client
 from ipaddress import ip_network
-import sys
-import argparse
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
 NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
 
+def get_num_addresses(neutron, subnet):
+    """Return the number of addresses in a subnet"""
+
+    cidr = neutron.show_subnet(subnet)['subnet']['cidr']
+    return ip_network(cidr).num_addresses
+
+
+def get_total_ips(neutron):
+    """Return the total number of IPs available"""
+
+    networks = neutron.list_networks()
+    ext_net = [net for net in networks['networks'] if net['router:external']]
+    # Assume a single external network for the minute
+    subnets = neutron.show_network(ext_net[0]['id'])['network']['subnets']
+    return reduce(lambda x, y: x + get_num_addresses(neutron, y), subnets, 0)
+
+
+def get_ips(neutron):
+    """Get floating and router IPs"""
+    floating_ips = len(neutron.list_floatingips()['floatingips'])
+
+    routers = neutron.list_routers()['routers']
+    router_ips = len([r for r in routers if r['external_gateway_info']])
+
+    return floating_ips, router_ips
+
+
 def main():
-    """
-    Main script body
-    """
+    """Main script body"""
+
     parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
-    parser.add_argument('-t', '--tenant_name', required=True)
-    parser.add_argument('-a', '--auth_url', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
     parser.add_argument('-w', '--warn', type=int, required=True)
     parser.add_argument('-c', '--critical', type=int, required=True)
     args = parser.parse_args()
 
-    neutron = client.Client(username=args.username, password=args.password,
-                            tenant_name=args.tenant_name,
-                            auth_url=args.auth_url)
+    auth = v3.Password(user_domain_name=args.domain,
+                       username=args.username,
+                       password=args.password,
+                       project_domain_name=args.domain,
+                       project_name=args.project,
+                       auth_url=args.host)
+    sess = session.Session(auth=auth)
+
+    neutron = client.Client(session=sess)
     neutron.format = 'json'
 
     for arg in [args.warn, args.critical]:
@@ -37,33 +72,20 @@ def main():
             print "Alert parameters must be valid percentages"
             sys.exit(NAGIOS_UNKNOWN)
 
-    # Get external network
-    # Assume a single external network for the minute
-    ext_net = [net for net in neutron.list_networks()['networks']
-               if net['router:external']]
-
-    total_addresses = 0
-    for subnet in neutron.show_network(ext_net[0]['id'])['network']['subnets']:
-        total_addresses += ip_network(neutron.show_subnet(subnet)
-                                      ['subnet']['cidr']).num_addresses
-
-    floating_ips = len(neutron.list_floatingips()['floatingips'])
-    router_ips = len([router for router in neutron.list_routers()['routers']
-                      if router['external_gateway_info']])
+    total_addresses = get_total_ips(neutron)
+    floating_ips, router_ips = get_ips(neutron)
 
     total_used = floating_ips + router_ips
 
     percentage_used = 100 * total_used/total_addresses
 
+    code = NAGIOS_OK
     if percentage_used >= args.warn:
         code = NAGIOS_WARNING
-        msg = 'WARNING'
     elif percentage_used >= args.critical:
         code = NAGIOS_CRITICAL
-        msg = 'CRITICAL'
     else:
         code = NAGIOS_OK
-        msg = 'OK'
 
     print '{0}: {1}% of IP pool used, '\
             '{2} out of {5} addresses in use | '\
@@ -71,7 +93,8 @@ def main():
             'total_available={5} '\
             'floating_ips_used={6} '\
             'ext_routers_used={7}'\
-            .format(msg, percentage_used, total_used,
+            .format(['OK', 'WARNING', 'CRITICAL'][code],
+                    percentage_used, total_used,
                     (total_addresses * args.warn)/100,
                     (total_addresses * args.critical)/100,
                     total_addresses, floating_ips, router_ips)

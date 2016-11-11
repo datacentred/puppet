@@ -4,12 +4,12 @@
 Check ceilometer has recent data
 """
 
-from ceilometerclient import client
-import datetime
 import argparse
+import datetime
 import sys
 import iso8601
 import pytz
+from ceilometerclient import client
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -25,8 +25,10 @@ class CeilometerConnect(object):
         self.ceilo_connect = client.get_client(version,
                                                os_username=args.username,
                                                os_password=args.password,
-                                               os_tenant_name=args.tenant_name,
-                                               os_auth_url=args.auth_url)
+                                               os_tenant_name=args.project,
+                                               os_auth_url=args.host,
+                                               os_user_domain_name=args.domain,
+                                               os_project_domain_name=args.domain)
 
     def check_samples(self):
         """
@@ -50,10 +52,11 @@ def get_args():
     Parse CLI arguments
     """
     parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
-    parser.add_argument('-t', '--tenant_name', required=True)
-    parser.add_argument('-a', '--auth_url', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
     parser.add_argument('-w', '--warn', type=int, required=True)
     parser.add_argument('-c', '--crit', type=int, required=True)
     args = parser.parse_args()
