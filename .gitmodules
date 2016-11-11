@@ -211,9 +211,6 @@
 [submodule "modules/horizon"]
 	path = modules/horizon
 	url = https://github.com/datacentred/puppet-horizon
-[submodule "modules/confluence"]
-	path = modules/confluence
-	url = https://github.com/datacentred/puppet-confluence.git
 [submodule "modules/ceph"]
 	path = modules/ceph
 	url = https://github.com/datacentred/puppet-ceph
@@ -322,3 +319,6 @@
 [submodule "modules/galera"]
 	path = modules/galera
 	url = https://github.com/michaeltchapman/puppet-galera
+[submodule "modules/confluence"]
+	path = modules/confluence
+	url = https://github.com/voxpupuli/puppet-confluence

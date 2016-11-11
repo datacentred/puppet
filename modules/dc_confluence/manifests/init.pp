@@ -20,22 +20,6 @@ class dc_confluence (
 
   include ::confluence
 
-  # Explicitly control the user and group until
-  # https://github.com/voxpupuli/puppet-confluence/pull/93
-  group { $group:
-    ensure => present,
-    system => true,
-  }
-
-  user { $user:
-    ensure     => present,
-    system     => true,
-    gid        => $group,
-    managehome => true,
-    home       => $homedir,
-    shell      => '/bin/true',
-  }
-
   case $dbtype {
     'postgresql': {
       $dbdriver = 'org.postgresql.Driver'
