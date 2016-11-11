@@ -6,9 +6,9 @@ Checks the Ceilometer API Endpoint Responds
 # pylint: disable=import-error
 
 import argparse
-from ceilometerclient import client
 import sys
 import time
+from ceilometerclient import client
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -39,6 +39,7 @@ def main():
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
     parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
     parser.add_argument('-w', '--warning', type=float, default=20.0)
     parser.add_argument('-c', '--critical', type=float, default=30.0)
     args = parser.parse_args()
@@ -46,7 +47,9 @@ def main():
     ceilometer = client.get_client(2, os_auth_url=args.host,
                                    os_tenant_name=args.project,
                                    os_username=args.username,
-                                   os_password=args.password)
+                                   os_password=args.password,
+                                   os_user_domain_name=args.domain,
+                                   os_project_domain_name=args.domain)
 
     query = [{'field': 'meter', 'op': 'eq', 'value': 'image'}]
 

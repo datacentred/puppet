@@ -4,10 +4,12 @@
 # pylint: disable=import-error
 
 import argparse
-from cinderclient import client
-from cinderclient import exceptions
 import sys
 import time
+from keystoneauth1 import session
+from keystoneauth1 import exceptions
+from keystoneauth1.identity import v3
+from cinderclient import client
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -38,6 +40,7 @@ def main():
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
     parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
     parser.add_argument('-n', '--volume-name', default='test')
     parser.add_argument('-s', '--volume-size', type=int, default=1)
     parser.add_argument('-w', '--warning', type=float, action='append',
@@ -48,8 +51,15 @@ def main():
                         required=True)
     args = parser.parse_args()
 
-    cinder = client.Client(1, args.username, args.password, args.project,
-                           args.host)
+    auth = v3.Password(user_domain_name=args.domain,
+                       username=args.username,
+                       password=args.password,
+                       project_domain_name=args.domain,
+                       project_name=args.project,
+                       auth_url=args.host)
+    sess = session.Session(auth=auth)
+
+    cinder = client.Client(2, session=sess)
 
     # Clean up any existing volumes
     for volume in cinder.volumes.list():
@@ -61,7 +71,7 @@ def main():
     # Test and profile volume creation
     count = 0
     timer.start()
-    volume = cinder.volumes.create(display_name=args.volume_name,
+    volume = cinder.volumes.create(name=args.volume_name,
                                    size=args.volume_size)
     while volume.status != 'available':
         count = count + 1
@@ -78,7 +88,7 @@ def main():
     while True:
         try:
             volume.get()
-        except exceptions.NotFound:
+        except exceptions.http.NotFound:
             break
         count = count + 1
         if count >= args.timeout[1]:

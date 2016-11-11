@@ -526,8 +526,8 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'ip_pool',
     vars          => {
-      'ip_pool_auth_url'     => $keystone_auth_url,
-      'ip_pool_tenant_name'  => $tenant,
+      'ip_pool_host'         => $keystone_auth_url,
+      'ip_pool_project'      => $tenant,
       'ip_pool_user'         => $username,
       'ip_pool_password'     => $password,
       'ip_pool_percent_warn' => 70,
@@ -540,8 +540,8 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'ceilometer_update',
     vars          => {
-      'ceilometer_update_auth_url'     => $keystone_auth_url,
-      'ceilometer_update_tenant_name'  => $tenant,
+      'ceilometer_update_host'         => $keystone_auth_url,
+      'ceilometer_update_project'      => $tenant,
       'ceilometer_update_user'         => $username,
       'ceilometer_update_password'     => $password,
       'ceilometer_update_minutes_warn' => 10,

@@ -3,13 +3,15 @@
 Check Nova Instance Spawning and Deletion Time
 """
 
-# pylint: disable=too-many-statements,import-error
+# pylint: disable=import-error
 
 import argparse
-from novaclient.client import Client
-from novaclient import exceptions
 import sys
 import time
+from keystoneauth1 import session
+from keystoneauth1.identity import v3
+from novaclient import exceptions
+from novaclient.client import Client
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -32,33 +34,8 @@ class Timer(object):
         return time.time() - self._start
 
 
-def main():
-    """Creates and Deletes a VM Instance"""
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-H', '--host', required=True)
-    parser.add_argument('-u', '--username', required=True)
-    parser.add_argument('-p', '--password', required=True)
-    parser.add_argument('-P', '--project', required=True)
-    parser.add_argument('-i', '--image-name', required=True)
-    parser.add_argument('-f', '--flavor-name', required=True)
-    parser.add_argument('-n', '--network-name', required=True)
-    parser.add_argument('-I', '--instance-name', required=True)
-    parser.add_argument('-w', '--warning', required=True, action='append',
-                        type=float)
-    parser.add_argument('-c', '--critical', required=True, action='append',
-                        type=float)
-    parser.add_argument('-t', '--timeout', required=True, action='append',
-                        type=int)
-    args = parser.parse_args()
-
-    nova = Client(2, username=args.username, project_id=args.project,
-                  api_key=args.password, auth_url=args.host)
-
-    # Clean up any existing servers
-    for server in nova.servers.list():
-        if server.name == args.instance_name:
-            server.delete()
+def create_instance(args, nova):
+    """Create an instance and return the instance time taken"""
 
     # Get the required objects for instance creation
     flavor = nova.flavors.find(name=args.flavor_name)
@@ -79,9 +56,15 @@ def main():
         count += 1
         time.sleep(1)
         instance.get()
-    create_time = timer.stop()
 
-    # Delete the instance and wait for it to become dead
+    return instance, timer.stop()
+
+
+def destroy_instance(args, instance):
+    """Destroy an instance and return the time taken"""
+
+    timer = Timer()
+
     timer.start()
     instance.delete()
     count = 0
@@ -94,7 +77,48 @@ def main():
             break
         count += 1
         time.sleep(1)
-    delete_time = timer.stop()
+
+    return timer.stop()
+
+
+def main():
+    """Creates and Deletes a VM Instance"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
+    parser.add_argument('-i', '--image-name', required=True)
+    parser.add_argument('-f', '--flavor-name', required=True)
+    parser.add_argument('-n', '--network-name', required=True)
+    parser.add_argument('-I', '--instance-name', required=True)
+    parser.add_argument('-w', '--warning', required=True, action='append',
+                        type=float)
+    parser.add_argument('-c', '--critical', required=True, action='append',
+                        type=float)
+    parser.add_argument('-t', '--timeout', required=True, action='append',
+                        type=int)
+    args = parser.parse_args()
+
+    auth = v3.Password(user_domain_name=args.domain,
+                       username=args.username,
+                       password=args.password,
+                       project_domain_name=args.domain,
+                       project_name=args.project,
+                       auth_url=args.host)
+    sess = session.Session(auth=auth)
+
+    nova = Client(2, session=sess)
+
+    # Clean up any existing servers
+    for server in nova.servers.list():
+        if server.name == args.instance_name:
+            server.delete()
+
+    instance, create_time = create_instance(args, nova)
+    delete_time = destroy_instance(args, instance)
 
     # Determine the status code
     code = NAGIOS_OK
