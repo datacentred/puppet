@@ -11,7 +11,7 @@ class dc_profile::ci::jenkins {
   }
 
   package { 'jenkins':
-    ensure  => '2.7.1',
+    ensure  => installed,
   }
 
 }
