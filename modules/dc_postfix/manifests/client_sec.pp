@@ -12,9 +12,8 @@ class dc_postfix::client_sec (
   $_relayhost     = $::dc_postfix::relayhost
 
   postfix::hash { '/etc/postfix/sasl_passwd':
-    ensure    => present,
-    map_owner => 'postfix',
-    content   => template('dc_postfix/sasl_passwd.erb')
+    ensure  => present,
+    content => template('dc_postfix/sasl_passwd.erb')
   }
 
   postfix::config { 'smtp_sasl_password_maps':
