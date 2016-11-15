@@ -7,9 +7,8 @@ class dc_postfix::restrictions {
   $alias_domains = $::dc_postfix::gateway::alias_domains
 
   postfix::hash { '/etc/postfix/relaydomains':
-    ensure    => present,
-    map_owner => 'postfix',
-    content   => template('dc_postfix/relaydomains.erb'),
+    ensure  => present,
+    content => template('dc_postfix/relaydomains.erb'),
   }
 
   create_resources ( postfix::config, $dc_postfix::gateway::restrictions_config_hash )
