@@ -113,3 +113,11 @@ ceph::keys:
 
 ceph::user: 'root'
 ceph::group: 'root'
+
+telegraf::inputs:
+  conntrack:
+    files:
+      - 'nf_conntrack_count'
+      - 'nf_conntrack_max'
+    dirs:
+      - '/proc/sys/net/netfilter'
