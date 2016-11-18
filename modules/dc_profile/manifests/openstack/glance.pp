@@ -6,9 +6,10 @@ class dc_profile::openstack::glance {
 
   include ::dc_icinga::hostgroup_glance
 
+  $containers = hiera('containers')
+
   dc_docker::run { 'glance':
-    image   => 'registry.datacentred.services:5000/glance:mitaka-8f2bc1b',
-    volumes => [ '/var/lib/glance' ],
+    * => $containers['glance']
   }
 
 }

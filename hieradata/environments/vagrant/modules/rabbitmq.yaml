@@ -1,0 +1,7 @@
+---
+rabbitmq::environment_variables:
+    RABBITMQ_NODE_PORT: 5672
+    RABBITMQ_NODE_IP_ADDRESS: '0.0.0.0'
+    RABBITMQ_MNESIA_BASE: '/srv/rabbitmq'
+    RABBITMQ_MNESIA_DIR: "/srv/rabbitmq/%{::hostname}"
+rabbitmq::server::node_ip_address: '0.0.0.0'

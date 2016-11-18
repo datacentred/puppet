@@ -1,0 +1,20 @@
+---
+containers:
+  keystone:
+    image: 'keystone:mitaka-f194060'
+    extra_params:
+      - '--network=host'
+      - '--add-host=compute.datacentred.io:172.16.165.153'
+  glance:
+    image: 'glance:mitaka-f194060'
+    volumes:
+      - '/var/lib/glance'
+    extra_params:
+      - '--network=host'
+      - '--add-host=compute.datacentred.io:172.16.165.153'
+  cinder:
+    image: 'cinder:mitaka-f194060'
+    extra_params:
+      - '--network=host'
+      - '--add-host=compute.datacentred.io:172.16.165.153'
+

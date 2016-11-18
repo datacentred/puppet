@@ -6,8 +6,10 @@ class dc_profile::openstack::keystone {
 
   include ::dc_icinga::hostgroup_keystone
 
+  $containers = hiera('containers')
+
   dc_docker::run { 'keystone':
-    image => 'registry.datacentred.services:5000/keystone:mitaka-8f2bc1b',
+    * => $containers['keystone']
   }
 
 }
