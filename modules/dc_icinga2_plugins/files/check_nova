@@ -6,12 +6,14 @@ Check Nova Instance Spawning and Deletion Time
 # pylint: disable=import-error
 
 import argparse
+import socket
 import sys
 import time
 from keystoneauth1 import session
 from keystoneauth1.identity import v3
+import neutronclient.v2_0.client as network
+import novaclient.client as compute
 from novaclient import exceptions
-from novaclient.client import Client
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -81,6 +83,43 @@ def destroy_instance(args, instance):
     return timer.stop()
 
 
+def test_connectivity(neutron, instance):
+    """Allocate a floating IP and try connect to the instance"""
+
+    nets = neutron.list_networks()['networks']
+    ext_nets = [net for net in nets if net['router:external']]
+    ext_net_id = ext_nets[0]['id']
+
+    body = {
+        'floatingip': {
+            'floating_network_id': ext_net_id,
+        },
+    }
+
+    floatingip = neutron.create_floatingip(body=body)
+    floatingip_id = floatingip['floatingip']['id']
+    floatingip_address = floatingip['floatingip']['floating_ip_address']
+
+    instance.add_floating_ip(floatingip_address)
+
+    success = False
+    for _ in range(1, 60):
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            sock.connect((floatingip_address, 22))
+        except socket.error:
+            time.sleep(1)
+        else:
+            sock.close()
+            success = True
+            break
+
+    instance.remove_floating_ip(floatingip_address)
+    neutron.delete_floatingip(floatingip_id)
+
+    return success
+
+
 def main():
     """Creates and Deletes a VM Instance"""
 
@@ -110,7 +149,8 @@ def main():
                        auth_url=args.host)
     sess = session.Session(auth=auth)
 
-    nova = Client(2, session=sess)
+    nova = compute.Client(2, session=sess)
+    neutron = network.Client(session=sess)
 
     # Clean up any existing servers
     for server in nova.servers.list():
@@ -118,6 +158,7 @@ def main():
             server.delete()
 
     instance, create_time = create_instance(args, nova)
+    success = test_connectivity(neutron, instance)
     delete_time = destroy_instance(args, instance)
 
     # Determine the status code
@@ -126,15 +167,18 @@ def main():
         code = NAGIOS_WARNING
     if create_time >= args.critical[0] or delete_time >= args.critical[1]:
         code = NAGIOS_CRITICAL
+    if not success:
+        code = NAGIOS_CRITICAL
 
     # Return the status and performance information
     status = ['OK', 'WARNING', 'CRITICAL'][code]
-    print ('{0}: creation time {1:.3f}s, deletion time {2:.3f}s |'
+    print ('{0}: creation time {1:.3f}s, deletion time {2:.3f}s connect={9} |'
            ' create_time={1:.3f}s;{3:.3f};{4:.3f};0;{5:.3f} '
            'delete_time={2:.3f}s;{6:.3f};{7:.3f};0;{8:.3f}').\
           format(status, create_time, delete_time,
                  args.warning[0], args.critical[0], args.timeout[0],
-                 args.warning[1], args.critical[1], args.timeout[1])
+                 args.warning[1], args.critical[1], args.timeout[1],
+                 success)
 
     sys.exit(code)
 
