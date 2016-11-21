@@ -12,7 +12,7 @@ class dc_icinga2::services::puppetdb {
     import        => 'generic-service',
     check_command => 'http',
     vars          => {
-      'http_uri'         => '/v3/version',
+      'http_uri'         => '/pdb/meta/v1/version',
       'http_port'        => 8081,
       'http_ssl'         => true,
       'http_clientcert'  => '/etc/puppetlabs/puppet/ssl/certs/$host.name$.pem',
