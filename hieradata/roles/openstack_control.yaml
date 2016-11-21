@@ -10,7 +10,6 @@ classes:
   - '::dc_profile::openstack::horizon'
   - '::dc_profile::log::rsyslog_client'
   - '::dc_profile::log::rsyslog_remote'
-  - '::dc_profile::util::tidyup'
   - '::dc_docker::client'
   - '::sysctls'
 
