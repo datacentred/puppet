@@ -8,7 +8,6 @@ excludes:
   - '::dc_profile::net::nscd'
   - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::keepalived'
-  - '::dc_profile::perf::telegraf'
   - '::dc_profile::util::hosts'
 
 ceilometer_db_password: 'mowdasUsDyp5'

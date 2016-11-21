@@ -52,7 +52,7 @@ ceph::group: 'root'
 #
 apache::default_vhost: false
 
-# 🐳
+# Docker container definitions
 #
 containers:
   keystone:
