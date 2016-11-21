@@ -193,9 +193,6 @@
 [submodule "modules/influxdb"]
 	path = modules/influxdb
 	url = https://github.com/n1tr0g/golja-influxdb
-[submodule "modules/stunnel"]
-	path = modules/stunnel
-	url = https://github.com/arusso/puppet-stunnel.git
 [submodule "modules/foreman"]
 	path = modules/foreman
 	url = https://github.com/theforeman/puppet-foreman.git
