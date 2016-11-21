@@ -306,7 +306,7 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'keystone',
     vars          => {
-      'keystone_host'     => 'https://compute.datacentred.io:5000/v2.0',
+      'keystone_host'     => $keystone_auth_url,
       'keystone_project'  => $tenant,
       'keystone_username' => $username,
       'keystone_password' => $password,
