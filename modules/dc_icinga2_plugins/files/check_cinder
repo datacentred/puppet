@@ -63,7 +63,7 @@ def main():
 
     # Clean up any existing volumes
     for volume in cinder.volumes.list():
-        if volume.display_name == args.volume_name:
+        if volume.name == args.volume_name:
             volume.delete()
 
     timer = Timer()
