@@ -6,8 +6,10 @@ class dc_profile::openstack::cinder {
 
   include ::dc_icinga::hostgroup_cinder
 
+  $containers = hiera('containers')
+
   dc_docker::run { 'cinder':
-    image => 'registry.datacentred.services:5000/cinder:mitaka-8f2bc1b',
+    * => $containers['cinder']
   }
 
 }

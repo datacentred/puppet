@@ -13,8 +13,10 @@
 #
 class dc_profile::openstack::horizon {
 
+  $containers = hiera('containers')
+
   dc_docker::run { 'horizon':
-    image => 'registry.datacentred.services:5000/horizon:mitaka',
+    * => $containers['horizon']
   }
 
 }
