@@ -12,7 +12,7 @@ source /etc/lsb-release
 
 PACKAGES='puppet-agent puppetdb-termini git software-properties-common'
 
-PUPPET_GEMS='deep_merge hiera-eyaml toml'
+PUPPET_GEMS='deep_merge hiera-eyaml ruby-puppetdb toml'
 
 ################################################################################
 # Configure users
