@@ -622,6 +622,7 @@ class dc_icinga2::checks {
 
   icinga2::object::checkcommand { 'conntrack':
     command   => [
+      '"sudo"',
       '"/usr/local/lib/nagios/plugins/check_conntrack"',
     ],
     arguments => {
