@@ -5,12 +5,10 @@
 class dc_icinga2::services::conntrack {
 
   icinga2::object::apply_service { 'connection tracking':
-    import        => 'generic-service',
+    import        => 'openstack-service',
     check_command => 'conntrack',
     vars          => {
-      'conntrack_critical' => '90',
-      'conntrack_warning'  => '80',
-      'enable_pagerduty'   => false,
+      'enable_pagerduty'   => true,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_compute" || host.vars.role == "openstack_network"',

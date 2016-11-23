@@ -628,6 +628,10 @@ class dc_icinga2::checks {
       '-w' => '$conntrack_warning$',
       '-c' => '$conntrack_critical$',
     },
+    vars      => {
+      'conntrack_warning'  => '80%',
+      'conntrack_critical' => '90%',
+    },
   }
 
   icinga2::object::checkcommand { 'memcached':
