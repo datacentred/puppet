@@ -179,7 +179,7 @@ def parse_threshold(threshold, conntrack_max):
     """Parses a threshold and returns the integral value for checking"""
 
     if threshold[-1] == '%':
-        return (conntrack_max * 100) / int(threshold[:-1])
+        return (conntrack_max * int(threshold[:-1])) / 100
 
     return int(threshold)
 
