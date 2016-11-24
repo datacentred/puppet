@@ -1,0 +1,6 @@
+---
+telegraf::inputs:
+  ceph:
+    interval: '1m'
+    gather_cluster_stats: true
+    gather_admin_socket_stats: false
