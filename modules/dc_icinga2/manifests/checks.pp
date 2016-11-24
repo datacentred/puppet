@@ -633,6 +633,7 @@ class dc_icinga2::checks {
       'conntrack_warning'  => '80%',
       'conntrack_critical' => '90%',
     },
+    timeout   => 300,
   }
 
   icinga2::object::checkcommand { 'memcached':
