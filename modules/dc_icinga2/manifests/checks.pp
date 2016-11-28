@@ -16,6 +16,10 @@ class dc_icinga2::checks {
       '-u' => '$memory_unit$',
       '-t' => '$memory_timeout$',
     },
+    vars      => {
+      'memory_warn_bytes'     => '10%',
+      'memory_critical_bytes' => '5%',
+    }
   }
 
   icinga2::object::checkcommand { 'sensors':
