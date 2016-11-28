@@ -67,7 +67,7 @@ sysctls::values:
     net.ipv4.ip_local_port_range:
         value: '16384 65000'
     net.nf_conntrack_max:
-        value: '524288'
+        value: '1048576'
     vm.swappiness:
         value: '10'
 
