@@ -54,7 +54,7 @@ neutron::server::notifications::nova_admin_tenant_id: ENC[PKCS7,MIIBmQYJKoZIhvcN
 neutron::server::notifications::nova_admin_tenant_name: 'services'
 neutron::server::allow_automatic_l3agent_failover: true
 neutron::server::max_l3_agents_per_router: '2'
-neutron::server::min_l3_agents_per_router: '1'
+neutron::server::min_l3_agents_per_router: '2'
 neutron::server::l3_ha: true
 
 neutron::agents::metadata::shared_secret: "%{hiera('neutron_metadata_secret')}"
