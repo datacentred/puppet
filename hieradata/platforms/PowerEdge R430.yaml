@@ -1,0 +1,4 @@
+---
+dc_nrpe::checks::bmc::std_fw_version: '2.20'
+
+network_node_extif: 'p2p2'
