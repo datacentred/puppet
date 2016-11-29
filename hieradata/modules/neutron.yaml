@@ -53,6 +53,8 @@ neutron::server::notifications::nova_region_name: "%{hiera('os_region')}"
 neutron::server::notifications::nova_admin_tenant_id: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAu/s+xqeB+Ij9nX//2kcCA78vtA+ABaknfVCn1Vy3fHoNkGSuveQW6UFGadOEd4xr4nwkg0cUrtHfAjlQMxNQ+4n0xKk1hRDtKPyjLv8Z3ApPNPd7Sa/HnOJNW671KAZIpBIyvr+fsoHVlul7ltii2txG+SzB6VwatN9k2Vtlptz1+N/j7Sc1Jo0IQihOqAYThbkNyof7MqOwWU8Q+Sht8KO6E1xtLZezfvP1LO5giFKPzyT91L5Ssu6xzC7bn6+j8QPhbX4EljMqb8lrOnuQsrtkXG7X/rGEY7pX2PDOKgl/3YvE4WLfqJtfLYPkqKIpcI7tI8D3m2WxLlc9O7+zWDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDVJOf0UA0FD4I+rT398D5ggDAenHlqBUwb2bCApH0zWvqmTjQXzcpllMvj1G5SL8zRW/ezTaseP5Ij2Oy9v0Xpcy4=]
 neutron::server::notifications::nova_admin_tenant_name: 'services'
 neutron::server::allow_automatic_l3agent_failover: true
+neutron::server::max_l3_agents_per_router: '2'
+neutron::server::min_l3_agents_per_router: '1'
 neutron::server::l3_ha: true
 
 neutron::agents::metadata::shared_secret: "%{hiera('neutron_metadata_secret')}"
