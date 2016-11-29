@@ -12,6 +12,9 @@
 #
 class dc_elasticsearch (
   $es_hash,
+  $ssd_drives,
+  $hdd_drives,
+  $version            = $dc_elasticsearch::params::elasticsearch_version,
   $backup_node        = $dc_elasticsearch::params::backup_node,
   $backup_name        = $dc_elasticsearch::params::backup_name,
   $backup_bucket      = $dc_elasticsearch::params::backup_bucket,
@@ -20,8 +23,6 @@ class dc_elasticsearch (
   $ceph_private_key   = $dc_elasticsearch::params::ceph_private_key,
   $ssd_tier_retention = $dc_elasticsearch::params::ssd_tier_retention,
   $total_retention    = $dc_elasticsearch::params::total_retention,
-  $ssd_drives,
-  $hdd_drives,
 ) inherits dc_elasticsearch::params {
 
   validate_array($ssd_drives)
@@ -42,20 +43,30 @@ class dc_elasticsearch (
   $third_ram_bytes = ($third_ram * 1024 * 1024)
 
   $config_hash = {
-    'ES_HEAP_SIZE'      => "${third_ram}${ram_unit}",
     'MAX_LOCKED_MEMORY' => $third_ram_bytes,
   }
 
-  ulimit::rule { 'elasticsearch':
+  ulimit::rule { 'elasticsearch_memory':
       ulimit_domain => 'elasticsearch',
       ulimit_type   => '-',
       ulimit_item   => 'memlock',
       ulimit_value  => $third_ram_bytes,
   }
 
+  ulimit::rule { 'elasticsearch_files':
+      ulimit_domain => 'elasticsearch',
+      ulimit_type   => 'soft',
+      ulimit_item   => 'nofile',
+      ulimit_value  => '65536',
+  }
+
   class { '::elasticsearch':
     restart_on_change => false,
     java_install      => true,
+    manage_repo       => true,
+    repo_version      => '5.x',
+    package_pin       => true,
+    version           => $version,
     init_defaults     => $config_hash,
   }
 
@@ -85,7 +96,7 @@ class dc_elasticsearch (
   }
 
   # Needs to be installed on all nodes
-  elasticsearch::plugin { 'cloud-aws':
+  elasticsearch::plugin { 'repository-s3':
     instances => ['ssd','hdd']
   }
 

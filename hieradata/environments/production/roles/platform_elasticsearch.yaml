@@ -8,7 +8,7 @@ dc_elasticsearch::hdd_drives:
   - '/var/storage/hdd_03'
   - '/var/storage/hdd_04'
 dc_elasticsearch::es_hash:
-  bootstrap.mlockall: true
+  bootstrap.memory_lock: true
   cloud.aws.ec2.endpoint: 'storage.datacentred.io'
   cloud.aws.s3.endpoint: 'storage.datacentred.io'
   cluster.name: 'logstash_platform_services'
@@ -18,16 +18,15 @@ dc_elasticsearch::es_hash:
     - "elasticsearch0.%{::domain}"
     - "elasticsearch1.%{::domain}"
     - "elasticsearch2.%{::domain}"
-  index.translog.flush_threshold_ops: 50000
   indices.memory.index_buffer_size: '50%'
   network.host:
     - '_local_'
     - "%{::ipaddress}"
   node.master: true
   node.data: true
-  threadpool.index.queue_size: 200
-  threadpool.index.size: 4
-  threadpool.index.type: 'fixed'
-  threadpool.search.queue_size: '100'
-  threadpool.search.size: 20
-  threadpool.search.type: 'fixed'
+  thread_pool.index.queue_size: 200
+  thread_pool.index.size: 4
+  thread_pool.index.type: 'fixed'
+  thread_pool.search.queue_size: '100'
+  thread_pool.search.size: 20
+  thread_pool.search.type: 'fixed'

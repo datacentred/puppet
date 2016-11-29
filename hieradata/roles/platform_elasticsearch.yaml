@@ -3,7 +3,9 @@ classes:
   - '::dc_elasticsearch'
   - '::dc_elasticsearch::elasticsearch_backup_destination'
 
-elasticsearch::version: '2.4.0'
+sysctls::values:
+    vm.swappiness:
+        value: '10'
 
 telegraf::inputs:
   elasticsearch:
