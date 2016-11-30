@@ -26,6 +26,7 @@ telegraf::inputs:
       - 'dm*'
   swap:
   system:
+  linux:
 telegraf::outputs:
   influxdb:
     urls:
