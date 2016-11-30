@@ -70,6 +70,12 @@ sysctls::values:
         value: '1048576'
     vm.swappiness:
         value: '10'
+    net.ipv4.neigh.default.gc_thresh1:
+        value: '1024'
+    net.ipv4.neigh.default.gc_thresh2:
+        value: '2048'
+    net.ipv4.neigh.default.gc_thresh3:
+        value: '4096'
 
 telegraf::inputs:
   nstat:
