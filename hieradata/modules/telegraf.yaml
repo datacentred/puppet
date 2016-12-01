@@ -24,6 +24,7 @@ telegraf::inputs:
   diskio:
     namedrop:
       - 'dm*'
+  sensors:
   swap:
   system:
 telegraf::outputs:
