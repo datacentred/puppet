@@ -83,22 +83,38 @@ def destroy_instance(args, instance):
     return timer.stop()
 
 
+def get_floating_ip(neutron):
+    """Get an existing or unallocated floating IP"""
+
+    project = neutron.httpclient.session.get_project_id()
+
+    fips = neutron.list_floatingips()['floatingips']
+
+    free = [x for x in fips \
+            if x['tenant_id'] == project and x['status'] == 'DOWN']
+
+    if len(free):
+        floatingip = free[0]
+    else:
+        nets = neutron.list_networks()['networks']
+        ext_nets = [net for net in nets if net['router:external']]
+        ext_net_id = ext_nets[0]['id']
+
+        body = {
+            'floatingip': {
+                'floating_network_id': ext_net_id,
+            },
+        }
+
+        floatingip = neutron.create_floatingip(body=body)['floatingip']
+
+    return floatingip['id'], floatingip['floating_ip_address']
+
+
 def test_connectivity(neutron, instance):
     """Allocate a floating IP and try connect to the instance"""
 
-    nets = neutron.list_networks()['networks']
-    ext_nets = [net for net in nets if net['router:external']]
-    ext_net_id = ext_nets[0]['id']
-
-    body = {
-        'floatingip': {
-            'floating_network_id': ext_net_id,
-        },
-    }
-
-    floatingip = neutron.create_floatingip(body=body)
-    floatingip_id = floatingip['floatingip']['id']
-    floatingip_address = floatingip['floatingip']['floating_ip_address']
+    floatingip_id, floatingip_address = get_floating_ip(neutron)
 
     instance.add_floating_ip(floatingip_address)
 
