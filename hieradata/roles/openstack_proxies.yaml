@@ -13,3 +13,8 @@ haproxy::global_options:
         group: 'haproxy'
         stats: 'socket /var/lib/haproxy/stats'
         daemon: ''
+
+telegraf::inputs:
+  haproxy:
+    servers:
+      - '/var/lib/haproxy/stats'
