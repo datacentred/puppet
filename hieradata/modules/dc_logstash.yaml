@@ -312,3 +312,8 @@ dc_logstash::client::config:
       fields:
         shipper: 'log-courier'
         type: 'kernel_log'
+    - paths:
+      - '/var/log/haproxy.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'haproxy'
