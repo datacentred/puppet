@@ -1,0 +1,5 @@
+---
+telegraf::inputs:
+  mysql:
+    servers:
+      - "icinga:%{hiera('mariadb_icinga_pw')}@tcp(127.0.0.1:3306/?tls=false"
