@@ -118,12 +118,6 @@ dc_apt_mirror::mirrors:
     components:
       - 'main'
     mirror: "%{hiera('rabbitmq_mirror_path')}"
-  elasticsearch_mirror:
-    release:
-      - 'stable'
-    components:
-      - 'main'
-    mirror: "%{hiera('apt_source_elasticsearch')}"
   dell_openmanage_mirror:
     release:
       - 'trusty'

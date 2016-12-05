@@ -49,13 +49,6 @@ apt::sources:
     key:
       id: '42550ABD1E80D7C1BC0BAD851285491434D8786F'
       source: 'http://pool.sks-keyservers.net:11371/pks/lookup?op=get&search=0x1285491434D8786F'
-  elasticsearch_mirror:
-    location: "https://%{hiera('apt_source_elasticsearch')}"
-    release: 'stable'
-    repos: 'main'
-    key:
-      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
-      source: 'https://packages.elastic.co/GPG-KEY-elasticsearch'
   foreman_mirror:
     location: "http://%{hiera('foreman_mirror_path')}"
     release: 'trusty'
