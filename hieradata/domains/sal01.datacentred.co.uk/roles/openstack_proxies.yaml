@@ -229,8 +229,8 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcplog'
       balance: 'source'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
-      timeout client: '180s'
-      timeout server: '180s'
+      timeout client: '360s'
+      timeout server: '360s'
     collect_exported: false
   heat:
     mode: 'http'
