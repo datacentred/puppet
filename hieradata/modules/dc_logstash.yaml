@@ -73,25 +73,15 @@ dc_logstash::client::config:
         shipper: 'log-courier'
         type: 'ceilometer'
     - paths:
-      - '/var/log/cinder/cinder-api.log'
+      - '/var/log/apache2/ceilometer_wsgi_access.log'
       fields:
         shipper: 'log-courier'
-        type: 'cinder_api'
+        type: 'ceilometer'
     - paths:
-      - '/var/log/cinder/cinder-manage.log'
+      - '/var/log/apache2/ceilometer_wsgi_error.log'
       fields:
         shipper: 'log-courier'
-        type: 'cinder_manage'
-    - paths:
-      - '/var/log/cinder/cinder-scheduler.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'cinder_scheduler'
-    - paths:
-      - '/var/log/cinder/cinder-volume.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'cinder_volume'
+        type: 'ceilometer'
     - paths:
       - '/var/log/foreman/production.log'
       fields:
@@ -102,16 +92,6 @@ dc_logstash::client::config:
       fields:
         shipper: 'log-courier'
         type: 'foreman_proxy'
-    - paths:
-      - '/var/log/glance/glance-api.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'glance_api'
-    - paths:
-      - '/var/log/glance/scheduler.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'glance_scheduler'
     - paths:
       - '/var/log/heat/heat-api-cfn.log'
       fields:
@@ -132,31 +112,6 @@ dc_logstash::client::config:
       fields:
         shipper: 'log-courier'
         type: 'heat'
-    - paths:
-      - '/var/log/apache2/horizon_access.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'horizon'
-    - paths:
-      - '/var/log/apache2/horizon_error.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'horizon'
-    - paths:
-      - '/var/log/horizon/horizon.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'horizon'
-    - paths:
-        - '/var/log/keystone/*.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'keystone'
-    - paths:
-        - '/var/log/apache2/keystone*.log'
-      fields:
-        shipper: 'log-courier'
-        type: 'apache'
     - paths:
       - '/var/log/libvirt/libvirtd.log'
       fields:
