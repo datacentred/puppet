@@ -11,5 +11,10 @@ haproxy::global_options:
         maxconn: '8000'
         user: 'haproxy'
         group: 'haproxy'
-        stats: 'socket /var/lib/haproxy/stats'
+        stats: 'socket /var/lib/haproxy/stats mode 660 level user group telegraf'
         daemon: ''
+
+telegraf::inputs:
+  haproxy:
+    servers:
+      - "/var/lib/haproxy/stats"
