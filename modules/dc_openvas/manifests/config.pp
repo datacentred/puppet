@@ -15,6 +15,9 @@ class dc_openvas::config {
 
   include dc_openvas
 
+  $_gsa_listen_address = hiera('dc_openvas::params::gsa_listen_address')
+  $_gsa_listen_port = hiera('dc_openvas::params::gsa_listen_port')
+
   file { '/etc/default/openvas-gsa':
     ensure  => file,
     owner   => 'root',
@@ -86,6 +89,7 @@ class dc_openvas::config {
 
   create_resources(dc_openvas::load_target, $dc_openvas::scan_targets)
 
+  # lint:ignore:140chars
   exec { 'openvas_weekly_schedule':
     command => "omp -u ${::dc_openvas::gsa_user} \
     -w ${::dc_openvas::gsa_password} -X \
@@ -93,6 +97,7 @@ class dc_openvas::config {
     unless  => "omp -u ${::dc_openvas::gsa_user} -w ${::dc_openvas::gsa_password} -X \'<get_schedules filter=\"Weekly\"/>\' | grep \'schedule id=\'",
     require => Runonce['delete_admin'],
   }
+  # lint:endignore
 
 }
 
