@@ -4,9 +4,8 @@ mysql::server::override_options:
   mysqld:
     bind_address: '0.0.0.0'
 
-mysql::server::monitor::mysql_monitor_username: 'icinga'
-mysql::server::monitor::mysql_monitor_password: "%{hiera('mariadb_icinga_pw')}"
-mysql::server::monitor::mysql_monitor_hostname: "%{hiera('icinga_ip')}"
+mysql::server::monitor::mysql_monitor_username: 'monitor'
+mysql::server::monitor::mysql_monitor_password: "%{hiera('mysql_monitor_pw')}"
 
 mysql::server::backup::backupuser: 'backup'
 mysql::server::backup::backuppassword: "%{hiera('backup_mysql_pw')}"
