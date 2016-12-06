@@ -14,6 +14,7 @@
 class dc_profile::openstack::galera {
 
   include ::galera
+  include ::mysql::server::monitor
 
   file { '/srv/mysql':
     ensure  => directory,

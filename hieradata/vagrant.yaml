@@ -8,7 +8,6 @@ excludes:
   - '::dc_profile::net::nscd'
   - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::keepalived'
-  - '::dc_profile::perf::telegraf'
   - '::dc_profile::util::hosts'
 
 ceilometer_db_password: 'mowdasUsDyp5'
@@ -27,6 +26,8 @@ galera::galera_servers:
 galera::local_ip: "%{ipaddress_eth0}"
 galera::bind_address: "%{ipaddress_eth0}"
 rabbitmq::wipe_db_on_cookie_change: true
+mariadb_icinga_pw: 'ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAEg5XSlA1+a0NSvVSm9dJXierZLBGmy5kMIURDqtK71NRFVNvQ82qdcxXJdfeaLhAgwX9Wso6WC/+sYSTCuMs7Tw/yuJyBG3nutYOfoeOrcy57sgx/WN2NSNqbufa8sUrK5Ap/6CuInHBQGSd5OkykGWIvHVf5UzGhBv0oSiUb4+1SLSg17HKxAEiZh+3xGUZseVEsSJSfyozZyAf84w12+od1/gAa3cpuuP2ThoKpsbrq+kh4zEVtG4RnfXC4qNbEsJ6Qmgu5d60V8BuP51Jr/nAIrdvGVzxJX9mb0EYbdo7R923cmI4UWBDsd9Op6mb3FREnloFM6q0t66YwODfLTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDbZGsjJJaHiJCirmltOksdgBB3etAq5YauxMREetPkxVn9]'
+icinga_ip: '127.0.0.1'
 
 # OpenStack
 #
@@ -90,10 +91,6 @@ neutron_db_user:     'neutron'
 neutron_db_pass:     'alNanJetOcs6'
 neutron_api_port:    '9696'
 
-neutron::agents::ml2::ovs::bridge_uplinks:
- - "br-ex:eth2"
-neutron::agents::ml2::ovs::bridge_mappings:
- - 'default:br-ex'
 neutron::agents::l3::external_network_bridge: 'br-ex'
 neutron::agents::l3::gateway_external_network_id: ''
 neutron::server::l3_ha: false
@@ -157,5 +154,3 @@ internal_sysmail_address: "sysmail@%{domain}"
 
 serial_console::serial_port:               "ttyS0"
 serial_console::baud_rate:                 "115200"
-
-
