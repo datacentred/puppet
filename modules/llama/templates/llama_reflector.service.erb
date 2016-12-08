@@ -1,0 +1,10 @@
+[Unit]
+Description=Llama Reflector Service
+
+[Service]
+ExecStart=<%= @_llama_basedir %>/bin/llama_reflector --loglevel=<%= @_llama_reflector_loglevel %> --logfile=<%= @_llama_reflector_logfile %> --port=<%= @_llama_reflector_bindport %>
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
+Alias=llama_reflector.service

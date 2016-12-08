@@ -1,0 +1,9 @@
+---
+classes:
+ - '::llama'
+llama::llama_is_collector: true
+llama::llama_collector_use_udp: true
+llama::llama_collector_config:
+  llama-collector.vagrant.test:
+    rack: 01
+    datacenter: sal01
