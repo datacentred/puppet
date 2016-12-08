@@ -1,4 +1,5 @@
 ---
+dc_openvas::params::gsa_listen_address: "%{facts.networking.ip}"
 dc_openvas::params::gsa_listen_port: '4000'
 dc_openvas::params::gsa_user: 'devops'
 dc_openvas::params::gsa_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAZ0/SEJQicu/Mjus1ewrzG0Yr7g51ui+QGZIqx0NeM2uj6vdNQfo90Wl+vGR1nLClT0B3y1hn1YbIE4QvK9l4eNLGSdL5GqI/2OaUf6wDw+hTC9YNzec+GrlmsupUxaU6BdF0fbPurzZ4WvyRdO67G4XBWUEBIp/irLRRMhQqWoyguRBdu1Ybc7FO7Vp4etgNZqPPbEyuwF7+DnBMOvixGtQNl2fgPbNhLsdDTfLUapACwBlOOtd1c0XZ2EPmeb230jAAUHgVlnP1BQtBW9u50Z3wPSb1bu3ugMngGEv6+JjNlfeTlDDTCe7Oh+ldua8ESeCdgSQDMF0fL3BxkrpTLjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBjtgSab5pDgF0tAJMkP6kggBCB3jgyLRewx+zj8S6FU5Kg]
