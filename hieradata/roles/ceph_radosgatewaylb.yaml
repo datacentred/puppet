@@ -2,6 +2,7 @@
 classes:
   - '::dc_profile::ceph::radosgw_lb'
 
+haproxy::package_ensure: '1.5.14-1ubuntu0.15.10.1~ubuntu14.04.1'
 haproxy::defaults_options:
   log: 'global'
   stats: 'enable'
