@@ -11,7 +11,6 @@ class dc_profile::net::phpipam {
   include apache::mod::rewrite
 
   include ::mysql::server
-  include ::mysql::server::monitor
   include ::mysql::server::backup
 
   include ::phpipam
