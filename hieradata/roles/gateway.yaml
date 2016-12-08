@@ -22,3 +22,4 @@ haproxy::defaults_options:
     - 'server 5m'
     - 'check 10s'
   maxconn: '8000'
+  tune.ssl.default-dh-param: '2048'
