@@ -30,6 +30,7 @@ ceph::keys:
 apache::default_vhost: false
 apache::log_formats:
     radosgw: '\"%%{}{X-Forwarded-For}i\" %l %u %t \"%r\" %>s %b \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
+apache::trace_enable: 'Off'
 
 dc_nrpe::checks::net_interface::excluded_ints:
   - 'p1p1'
