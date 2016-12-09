@@ -28,7 +28,6 @@ class dc_icinga::server::nagios_commands (
   $foreman_icinga_pw = hiera(foreman_icinga_pw)
   $rabbitmq_monuser = hiera(rabbitmq_monuser)
   $rabbitmq_monuser_password = hiera(rabbitmq_monuser_password)
-  $mariadb_icinga_pw = hiera(mariadb_icinga_pw)
   $ldap_server_suffix = hiera(ldap_suffix)
   $mongodb_monitor_user = hiera(mongodb_monitor_user)
   $mongodb_monitor_password = hiera(mongodb_monitor_password)
@@ -44,6 +43,7 @@ class dc_icinga::server::nagios_commands (
   # Define custom commands not provided by nagios-plugins
   ######################################################################
 
+  # lint:ignore:140chars
   icinga::command { 'notify-service-by-pagerduty':
     command_line => '/usr/share/pdagent-integrations/bin/pd-nagios -n service -k $CONTACTPAGER$ -t "$NOTIFICATIONTYPE$" -f SERVICEDESC="$SERVICEDESC$" -f SERVICESTATE="$SERVICESTATE$" -f HOSTNAME="$HOSTNAME$" -f SERVICEOUTPUT="$SERVICEOUTPUT$"',
   }
@@ -74,10 +74,6 @@ class dc_icinga::server::nagios_commands (
 
   icinga::command { 'check_tftp_dc':
     command_line => '/usr/lib/nagios/plugins/check_tftp -H $HOSTADDRESS$ -p nagios_test_file',
-  }
-
-  icinga::command { 'check_mysql_dc':
-    command_line => "/usr/lib/nagios/plugins/check_mysql -H \$HOSTADDRESS$ -u icinga -p ${mariadb_icinga_pw}",
   }
 
   icinga::command { 'check_keystone_dc':
@@ -243,6 +239,7 @@ class dc_icinga::server::nagios_commands (
   icinga::command { 'check_ceilometer_update':
     command_line => "/usr/lib/nagios/plugins/check_ceilometer_update.py -u ${keystone_icinga_user} -p ${keystone_icinga_password} -t ${keystone_icinga_tenant} -a https://\$HOSTALIAS\$:${keystone_port}/v2.0/ -w \$ARG1$ -c \$ARG2$",
   }
+  # lint:endignore
 
 }
 
