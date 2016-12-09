@@ -1,4 +1,7 @@
 ---
+classes:
+  '::mysql::server::monitor'
+
 mysql::server::monitor::mysql_monitor_hostname: '127.0.0.1'
 
 telegraf::inputs:
