@@ -189,7 +189,11 @@ dc_profile::openstack::haproxy::listeners:
         - 'httpchk'
         - 'tcplog'
       balance: 'source'
-      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+      rspadd:
+        - 'Strict-Transport-Security:\ max-age=31536000'
+        - 'X-Frame-Options:\ SAMEORIGIN'
+        - 'X-XSS-Protection:\ 1'
+        - 'Content-Security-Policy:\ upgrade-insecure-requests'
     collect_exported: false
   novncproxy:
     mode: 'http'
