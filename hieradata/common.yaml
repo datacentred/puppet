@@ -102,19 +102,13 @@ admins:
     pass: '$6$qplx30n1$UyzxF3zIRuAm8cNtHtFL5V59HuezXzE3FStG8ermMrTsrowW5ACk6lGsn4GU2y0qTCcq0m13CYPltAY9X8v3i1'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCqHgq7htvOfOyNkZ8i505A6bEib9FiMNZGejce63jwo3SboRc1v25KQiXdRkuMIhLNZCgKM7aSErIZoPQoNxxHO1qvGsuOT3yld0jqXZHYp7L8To75y5gDp911N8enKVC3GMduPeXA8HH7RhNlPd6fUWmgmp4tBbd1iKnIZZDJ74P0mhKY47jbLV0SyvBli62WcqjKLH6DIgYPx73w31zti+HJCpPpUhzx19saJM2LbwGZ6HUL8FegXhIgcsV9vsB67tGZO/c2KFl+fRQgpYUTi6/17A19KbQP1GvYSiKb2uNhvYxwnU4D7zSZtlN7oXXiZ0xeI9MEExT24xd+sMmV'
     email: 'matt.jarvis@datacentred.co.uk'
+    ensure: 'absent'
   nick:
     uid: '1002'
     gid: 'sysadmin'
     pass: '$6$NPL/Pnap$nq67l3XdANH8HHY.z7C6CvJqTccDAE99yV2oxEx78gCdA1ofmTMIRvzfDG5FUZw80xz6eVMCoytzXO5L7Y/Ie/'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZ6MGX3NlmNNaLpTne6n9ZOxzpRJlT0pcBEXVl/S8iHvFdAyaoKsCRI+U5dAV6ONlpDBMqkUBalGf2LfssVIiFlGi7U2iOBG6q9T2XjwP7YCBlqguRkbTFXU4qDix/wBcGsgOG+wWq9OJhRdJRWG1mt7kZDBoBGrGrSjdmOlfP/CVfSUBCJTAhpneQ1gYjHLujS5Ee+sIBU8k7pgAzUYaGpmOYbqW80+hmYB7EwsBiI+wfz21ki1UfWI5gjB0No2BKVgiXWPj0+zcFiNjVguTj/KrrsVXpKsJDqc/8tEgHIU1qBSdKFVjEu93QlxLinLg7zWyujlt/q+i5Gt+FlJal'
     email: 'nick.jones@datacentred.co.uk'
-  dariush:
-    uid: '1003'
-    gid: 'sysadmin'
-    pass: '$6$vjFryMvL$mMzJE/HUK2vVm.HatVURv8GUatgjxsodqfTTiKE5qNTums5acj5.OVIf1lOkD3Qe.BMATFkz1fDqjDm9w5qLX.'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQD1meqfHE5kqTp00XAqCFD3vqgRmYWTUK8FQ4Yt+VCKrtoUcjABsuk7tF3oqHdZaRCZAZaudW2bbqX3V3Sg45yoPgkBsC2StMSM8ZpsSdgBz9yqwCFctJCqqAjLJK9gSDT/iYAXzKgv5WTWtBb9b0sCfEgwPQBCGBh6ZJr6eqZF+cnADIVo7a6xJiOXV4uN8UozPLHNzrM4hnolfmVLAFHyTngfjicEQAXRP6z7S3c0wDmtqnvMg1lU+Gv+7Tit7jHE5yj0n3EJ1Z7dt4Nuj0i9Hv2SAVTvS8yMBMBKPb0EA/Ddj9tWY1ImEBZLILJPYAJusOUetR/NHDkLums405fZ'
-    email: 'dariush.marsh@datacentred.co.uk'
-    ensure: 'absent'
   simon:
     uid: '1004'
     gid: 'sysadmin'
@@ -183,9 +177,7 @@ ldap_groups:
       objectClass:
        - groupOfNames
       member:
-        - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matti,ou=People,dc=datacentred,dc=co,dc=uk'
@@ -201,7 +193,6 @@ ldap_groups:
       member:
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
   # Developers able to view and run jobs
   'cn=jenkins-development,ou=Groups,dc=datacentred,dc=co,dc=uk':
@@ -211,9 +202,7 @@ ldap_groups:
       objectClass:
         - 'groupOfNames'
       member:
-        - 'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matti,ou=People,dc=datacentred,dc=co,dc=uk'
@@ -223,6 +212,7 @@ ldap_groups:
 ldap_users:
   'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk':
     tag: user
+    ensure: 'absent'
     attributes:
       uid: matt
       givenName: Matt
@@ -245,23 +235,6 @@ ldap_users:
       sn: Jones
       mail: "nick.jones@datacentred.co.uk"
       userPassword: "{CRYPT}$6$NPL/Pnap$nq67l3XdANH8HHY.z7C6CvJqTccDAE99yV2oxEx78gCdA1ofmTMIRvzfDG5FUZw80xz6eVMCoytzXO5L7Y/Ie/"
-      radiusReplyItem: APC-Service-Type = 1
-      objectClass:
-        - person
-        - inetOrgPerson
-        - user
-        - radiusprofile
-      ou:
-        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
-  'cn=dariush,ou=People,dc=datacentred,dc=co,dc=uk':
-    tag: user
-    ensure: 'absent'
-    attributes:
-      uid: dariush
-      givenName: Dariush
-      sn: Marsh
-      mail: "dariush.marsh@datacentred.co.uk"
-      userPassword: "{CRYPT}$6$vjFryMvL$mMzJE/HUK2vVm.HatVURv8GUatgjxsodqfTTiKE5qNTums5acj5.OVIf1lOkD3Qe.BMATFkz1fDqjDm9w5qLX."
       radiusReplyItem: APC-Service-Type = 1
       objectClass:
         - person
