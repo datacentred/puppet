@@ -16,7 +16,6 @@ puppet::hiera: |
   :backends:
     - eyaml
     - yaml
-    - puppetdb
   :yaml:
     :datadir: "/etc/puppet/environments/%%{}{environment}/hieradata"
   :eyaml:
