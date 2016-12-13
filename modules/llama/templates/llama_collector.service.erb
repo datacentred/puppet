@@ -1,0 +1,10 @@
+[Unit]
+Description=Llama Collector Service
+
+[Service]
+ExecStart=<%= @_llama_basedir %>/bin/llama_collector --loglevel=<%= @_llama_collector_loglevel %> --logfile=<%= @_llama_collector_logfile %> --count=<%= @_llama_collector_count %> --interval=<%= @_llama_collector_interval %> --ip=<%= @_llama_collector_http_bindip %> --port=<%= @_llama_collector_http_bindport %> <% if @_llama_collector_use_udp %>--udp <% end %> <%= @_llama_collector_confdir %>/llama_collector.conf
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
+Alias=llama_collector.service
