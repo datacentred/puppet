@@ -53,6 +53,14 @@ apt::sources:
     key:
       id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
       source: 'https://packages.elastic.co/GPG-KEY-elasticsearch' 
+  postgres_mirror:
+    location: "http://%{hiera('postgres_mirror_path')}"
+    release: 'xenial-pgdg'
+    repos: 'main'
+    key:
+      id: 'B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8'
+      source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
+
 
 apt::ppas:
   ppa:devel-k/log-courier:
