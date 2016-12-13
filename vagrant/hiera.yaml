@@ -18,7 +18,6 @@
 :backends:
     - eyaml
     - yaml
-    - puppetdb
 :merge_behavior: deeper
 :yaml:
     :datadir: '/vagrant/hieradata'
