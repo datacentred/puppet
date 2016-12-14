@@ -15,6 +15,7 @@ classes:
   - '::dc_profile::net::ntp'
   - '::dc_profile::net::ssh'
   - '::dc_profile::perf::telegraf'
+  - '::dc_profile::puppet::puppet4'
   - '::dc_profile::util::augeas'
   - '::dc_profile::util::external_facts'
   - '::dc_profile::util::hosts'

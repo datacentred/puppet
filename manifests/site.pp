@@ -8,10 +8,6 @@ Exec {
   ],
 }
 
-# Extract the puppet major version and set a global variable for hiera class lookups
-$puppet_versions = split($::puppetversion, '\.')
-$puppet_major_version = $puppet_versions[0]
-
 # Probe hiera for our class list (e.g. classy version of hiera_include)
 #
 # Apply an exclusion filter so that common classes can be removed from certain
