@@ -7,7 +7,7 @@ define dc_users::user_account (
 
     # Full on deletion of everything to do with them
     exec { "userdel -r ${title}":
-      onlyif => "grep ${title} /etc/passwd",
+      onlyif => "grep -w ${title} /etc/passwd",
     }
 
   } else {
