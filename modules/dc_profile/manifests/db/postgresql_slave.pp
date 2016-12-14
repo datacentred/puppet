@@ -2,6 +2,7 @@
 #
 class dc_profile::db::postgresql_slave {
 
+  include ::dc_ssh
   include ::dc_postgresql
   include ::dc_postgresql::repmgr
 
