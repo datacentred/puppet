@@ -51,6 +51,9 @@ ceph::group: 'root'
 #
 apache::default_vhost: false
 
+# Set MPM worker to 'Event'
+apache::mpm_module: 'event'
+
 # Docker container definitions
 #
 containers:
