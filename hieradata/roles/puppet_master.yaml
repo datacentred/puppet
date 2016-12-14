@@ -39,7 +39,6 @@ puppet::hiera: |
     - "domains/%%{}{domain}"
     - "domains/%%{}{domain}/modules/%%{}{calling_module}"
     - "modules/%%{}{calling_module}"
-    - "puppetversion/%%{}{puppet_major_version}"
     - common
 
 foreman_proxy::http: false
