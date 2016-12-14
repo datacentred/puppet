@@ -8,6 +8,6 @@ galera::bind_address: '*'
 galera::override_options:
   mysqld:
     datadir: '/srv/mysql'
-    max_connections: '2000'
+    max_connections: '6000'
     log_slow_queries: '/var/log/mysql/mysql-slow.log'
     long_query_time: '10'
