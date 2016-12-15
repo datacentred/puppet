@@ -5,6 +5,7 @@
 class dc_postgresql (
   $postgres_password = undef,
   $databases = {},
+  $extensions = {},
   $config_entries = {},
 ) {
 
@@ -12,5 +13,6 @@ class dc_postgresql (
 
   create_resources('postgresql::server::config_entry', $config_entries)
   create_resources('postgresql::server::db', $databases)
+  create_resources('postgresql::server::extension', $extensions)
 
 }
