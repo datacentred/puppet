@@ -9,7 +9,12 @@ dc_postgresql::databases:
     user:     'puppetdb'
     password: "%{hiera('puppetdb_pass')}"
     grant:    'all'
+    encoding: 'UTF8'
   foreman:
     user:     'foreman'
     password: "%{hiera('foreman_pass')}"
     grant:    'all'
+
+dc_postgresql::extensions:
+  pg_trim:
+    database: 'puppetdb'
