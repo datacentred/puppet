@@ -27,6 +27,11 @@ class dc_profile::puppet::puppet4 {
       external_nodes = /etc/puppetlabs/puppet/node.rb
       reports = foreman
       | EOF
+  } else $::domain =~ /^*.example.com$/ {
+    $_config = @("EOF")
+      [agent]
+      server = puppet.example.com
+      | EOF
   } else {
     $_config = @("EOF")
       [agent]
