@@ -60,7 +60,13 @@ apt::sources:
     key:
       id: 'B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8'
       source: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
-
+  puppet_mirror_pc1:
+    location: 'http://apt.puppet.com'
+    release: 'xenial'
+    repos: 'PC1'
+    key:
+      id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
+      source: 'https://apt.puppet.com/pubkey.gpg'
 
 apt::ppas:
   ppa:devel-k/log-courier:
