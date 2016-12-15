@@ -16,5 +16,5 @@ dc_postgresql::databases:
     grant:    'all'
 
 dc_postgresql::extensions:
-  pg_trim:
+  pg_trgm:
     database: 'puppetdb'
