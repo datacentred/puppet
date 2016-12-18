@@ -7,4 +7,4 @@ mysql::server::monitor::mysql_monitor_hostname: '127.0.0.1'
 telegraf::inputs:
   mysql:
     servers:
-      - "icinga:%{hiera('mariadb_icinga_pw')}@tcp(127.0.0.1:3306)/?tls=false"
+      - "monitor:%{hiera('mysql_monitor_pw')}@tcp(127.0.0.1:3306)/?tls=false"
