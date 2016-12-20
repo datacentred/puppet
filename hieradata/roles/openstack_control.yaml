@@ -66,4 +66,4 @@ containers:
   cinder:
     image: 'registry.datacentred.services:5000/cinder:mitaka-8f2bc1b'
   horizon:
-    image: 'registry.datacentred.services:5000/horizon:mitaka-8f2bc1b'
+    image: 'registry.datacentred.services:5000/horizon:mitaka-d332a40'
