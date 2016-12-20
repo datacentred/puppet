@@ -31,7 +31,7 @@ class dc_nrpe::checks::common (
 
   dc_nrpe::check { 'check_all_disks':
     path => '/usr/lib/nagios/plugins/check_disk',
-    args => "-w ${check_disks[warn]} -c ${check_disks[crit]}",
+    args => "-w ${check_disks[warn]} -c ${check_disks[crit]} --exclude-type=tracefs",
     sudo => true,
   }
 
