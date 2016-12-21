@@ -33,4 +33,8 @@ class dc_profile::openstack::nova::control {
     value => 'X-Forwarded-Proto',
   }
 
+  nova_config { 'DEFAULT/osapi_compute_link_prefix':
+    value => 'https://compute.datacentred.io:8774/',
+  }
+
 }
