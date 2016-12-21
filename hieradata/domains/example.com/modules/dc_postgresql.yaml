@@ -3,3 +3,18 @@
 dc_postgresql::repmgr::nodemap:
   "postgres0.%{::domain}": 1
   "postgres1.%{::domain}": 2
+
+dc_postgresql::databases:
+  puppetdb:
+    user:     'puppetdb'
+    password: "%{hiera('puppetdb_pass')}"
+    grant:    'all'
+    encoding: 'UTF8'
+  foreman:
+    user:     'foreman'
+    password: "%{hiera('foreman_pass')}"
+    grant:    'all'
+
+dc_postgresql::extensions:
+  pg_trgm:
+    database: 'puppetdb'
