@@ -20,7 +20,7 @@ class dc_profile::util::cpu_performance {
 
   service { 'cpufrequtils':
     ensure  => running,
-    require => File['/etc/default/cpufrequtils'],
+    require => [File['/etc/default/cpufrequtils'],Package['cpufrequtils']],
   }
 
   service { 'ondemand':
