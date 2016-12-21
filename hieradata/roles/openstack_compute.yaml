@@ -5,6 +5,7 @@ classes:
   - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::neutron::agent_compute'
   - '::dc_profile::openstack::nova::compute'
+  - '::dc_profile::util::cpu_performance'
   - '::dc_profile::util::blacklist_modules'
   - '::dc_profile::util::conntrack'
 
