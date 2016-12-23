@@ -1,6 +1,6 @@
 # Class: dc_profile::util::cpu_performance
 #
-# Sets the cpu governor to 'performance' 
+# Sets the CPU governor to 'performance'
 #
 # Parameters:
 #
@@ -18,15 +18,13 @@ class dc_profile::util::cpu_performance {
     content => 'GOVERNOR="performance"',
   }
 
-  service { 'cpufrequtils':
-    ensure  => running,
-    require => [File['/etc/default/cpufrequtils'],Package['cpufrequtils']],
+  runonce { 'cpufrequtils':
+    command =>  'service cpufrequtils start',
+    require => [ File['/etc/default/cpufrequtils'], Package['cpufrequtils'] ],
   }
 
   service { 'ondemand':
     ensure => stopped,
   }
-
-  File['/etc/default/cpufrequtils'] ~> Service['cpufrequtils']
 
 }
