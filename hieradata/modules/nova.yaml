@@ -49,6 +49,9 @@ nova::api::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 nova::api::neutron_metadata_proxy_shared_secret: "%{hiera('neutron_metadata_secret')}"
 nova::api::keystone_ec2_url: "https://%{hiera('os_api_host')}:5000/v2.0/tokens"
 nova::api::default_floating_pool: 'external'
+nova::api::osapi_compute_workers: '4'
+nova::api::metadata_workers: '2'
+nova::api::ec2_workers: '1'
 
 nova::cert::enabled: true
 nova::conductor::enabled: true
@@ -74,6 +77,9 @@ nova::compute::libvirt::libvirt_disk_cachemodes:
  - '"network=writeback"'
 nova::compute::instance_usage_audit: true
 nova::compute::instance_usage_audit_period: 'hour'
+
+nova::conductor::workers: '4'
+
 nova::network::neutron::neutron_url: "https://%{hiera('os_api_host')}:9696"
 nova::network::neutron::neutron_admin_username: 'neutron'
 nova::network::neutron::neutron_admin_password: "%{hiera('keystone_neutron_password')}"
@@ -81,6 +87,7 @@ nova::network::neutron::neutron_admin_auth_url: "https://%{hiera('os_api_host')}
 nova::network::neutron::neutron_region_name: "%{hiera('os_region')}"
 nova::network::neutron::vif_plugging_is_fatal: false
 nova::network::neutron::vif_plugging_timeout: '0'
+
 nova::scheduler::filter::scheduler_default_filters:
  - AggregateInstanceExtraSpecsFilter
  - AggregateImagePropertiesIsolation
