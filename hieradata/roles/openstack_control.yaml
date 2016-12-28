@@ -60,7 +60,7 @@ containers:
   keystone:
     image: 'registry.datacentred.services:5000/keystone:mitaka-d332a40'
   glance:
-    image: 'registry.datacentred.services:5000/glance:mitaka-8f2bc1b'
+    image: 'registry.datacentred.services:5000/glance:mitaka-72ee9ec'
     volumes:
       - '/var/lib/glance'
   cinder:
