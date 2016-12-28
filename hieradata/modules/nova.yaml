@@ -102,6 +102,7 @@ nova::scheduler::filter::scheduler_default_filters:
  - IsolatedHostsFilter
 nova::scheduler::filter::ram_allocation_ratio: 0.9
 nova::scheduler::filter::cpu_allocation_ratio: 8.0
+nova::scheduler::filter::scheduler_host_subset_size: '10'
 
 nova::scheduler::filter::isolated_hosts:
   - 'absorb'
