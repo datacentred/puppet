@@ -4,17 +4,17 @@ class dc_nrpe::checks::cinder {
 
   dc_nrpe::check { 'check_cinder_scheduler_proc':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -u cinder -a cinder-scheduler',
+    args => '-c 1: -a cinder-scheduler',
   }
 
   dc_nrpe::check { 'check_cinder_volume_proc':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -u cinder -a cinder-volume',
+    args => '-c 1: -a cinder-volume',
   }
 
   dc_nrpe::check { 'check_cinder_api_proc':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -u cinder -a cinder-api',
+    args => '-c 1: -a cinder-api',
   }
 
   dc_nrpe::check { 'check_cinder_scheduler_netstat':

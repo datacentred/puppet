@@ -10,12 +10,12 @@ class dc_nrpe::checks::glance {
 
   dc_nrpe::check { 'check_glance_api_proc':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-w 2: -u glance -a glance-api',
+    args => '-w 2: -a glance-api',
   }
 
   dc_nrpe::check { 'check_glance_registry_proc':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-w 2: -u glance -a glance-registry',
+    args => '-w 2: -a glance-registry',
   }
 
 }
