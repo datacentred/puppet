@@ -11,7 +11,6 @@
 class dc_profile::openstack::neutron::server {
 
   include ::neutron
-  include ::neutron::keystone::auth
   include ::neutron::server
   include ::neutron::server::notifications
   include ::neutron::plugins::ml2
