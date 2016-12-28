@@ -86,7 +86,6 @@ neutron::agents::metering::enabled: true
 
 neutron::services::fwaas::enabled: true
 neutron::services::fwaas::driver: 'neutron_fwaas.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver'
-neutron::services::fwaas::vpnaas_agent_package: true
 
 neutron::quota::quota_floatingip: '1'
 
