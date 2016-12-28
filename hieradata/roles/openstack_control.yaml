@@ -64,6 +64,6 @@ containers:
     volumes:
       - '/var/lib/glance'
   cinder:
-    image: 'registry.datacentred.services:5000/cinder:mitaka-8f2bc1b'
+    image: 'registry.datacentred.services:5000/cinder:mitaka-02dfe89'
   horizon:
     image: 'registry.datacentred.services:5000/horizon:mitaka-d332a40'
