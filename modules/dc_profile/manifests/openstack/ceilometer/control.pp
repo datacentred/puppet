@@ -13,7 +13,6 @@
 class dc_profile::openstack::ceilometer::control {
 
   include ::ceilometer
-  include ::ceilometer::keystone::auth
   include ::ceilometer::api
   include ::ceilometer::wsgi::apache
   include ::ceilometer::agent::auth

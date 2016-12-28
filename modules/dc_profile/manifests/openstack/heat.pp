@@ -13,8 +13,6 @@
 class dc_profile::openstack::heat {
 
   include ::heat
-  include ::heat::keystone::auth
-  include ::heat::keystone::auth_cfn
   include ::heat::engine
   include ::heat::api
   include ::heat::api_cfn
