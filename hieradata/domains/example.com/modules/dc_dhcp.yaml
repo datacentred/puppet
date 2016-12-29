@@ -1,0 +1,7 @@
+---
+dc_dhcp::pools:
+  platform-services:
+    network:     '10.25.192.0'
+    mask:        '255.255.255.0'
+    gateway:     '10.25.192.1'
+    range:       '10.30.192.64 10.30.192.127'
