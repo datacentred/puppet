@@ -1,0 +1,5 @@
+---
+dc_dns::zones:
+  example.com: {}
+  192.25.10.in-addr.arpa:
+    reverse:     true

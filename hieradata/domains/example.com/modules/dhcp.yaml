@@ -1,0 +1,6 @@
+---
+dhcp::pxeserver: '10.25.192.250'
+dhcp::nameservers:
+  - '10.25.192.250'
+  - '10.25.192.251'
+dhcp::ddns::zonemaster: '10.25.192.250'

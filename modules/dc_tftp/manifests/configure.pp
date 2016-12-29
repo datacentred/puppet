@@ -15,6 +15,11 @@ class dc_tftp::configure {
     mode   => $dc_tftp::dir_mode,
   }
 
+  user { $dc_tftp::tftp_user:
+    ensure => present,
+    system => true,
+  } ->
+
   file { $dc_tftp::tftp_dir: } ->
 
   file { "${dc_tftp::tftp_dir}/boot": } ->
