@@ -106,6 +106,20 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_control"',
   }
 
+  icinga2::object::apply_service { 'neutron agents aliveness':
+    import        => 'generic-service',
+    check_command => 'neutron-agents',
+    vars          => {
+      'neutron_api_auth_url' => $keystone_auth_url,
+      'neutron_api_tenant'   => $tenant,
+      'neutron_api_username' => $username,
+      'neutron_api_password' => $password,
+      'enable_pagerduty'     => true,
+    },
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_control"',
+  }
+
   icinga2::object::apply_service { 'neutron dhcp agent':
     import        => 'generic-service',
     check_command => 'openstack-service',

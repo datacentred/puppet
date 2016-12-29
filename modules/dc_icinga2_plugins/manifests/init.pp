@@ -61,6 +61,10 @@ class dc_icinga2_plugins (
     source => 'puppet:///modules/dc_icinga2_plugins/check_neutron_api',
   }
 
+  file { '/usr/local/lib/nagios/plugins/check_neutron_agents':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_neutron_agents',
+  }
+
   file { '/usr/local/lib/nagios/plugins/check_openstack_service':
     source => 'puppet:///modules/dc_icinga2_plugins/check_openstack_service',
   }

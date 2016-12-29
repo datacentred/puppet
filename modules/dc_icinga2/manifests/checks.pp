@@ -266,6 +266,18 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'neutron-agents':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_neutron_agents"',
+    ],
+    arguments => {
+      '-H' => '$neutron_api_auth_url$',
+      '-t' => '$neutron_api_tenant$',
+      '-u' => '$neutron_api_username$',
+      '-p' => '$neutron_api_password$',
+    },
+  }
+
   icinga2::object::checkcommand { 'ceph-memory':
     command => [
       '"/usr/local/lib/nagios/plugins/check_ceph_memory"',
