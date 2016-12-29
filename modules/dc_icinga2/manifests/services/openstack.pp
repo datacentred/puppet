@@ -116,8 +116,7 @@ class dc_icinga2::services::openstack (
       'neutron_api_password' => $password,
       'enable_pagerduty'     => true,
     },
-    zone          => 'host.name',
-    assign_where  => 'host.vars.role == "openstack_control"',
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
   icinga2::object::apply_service { 'neutron dhcp agent':
