@@ -272,7 +272,7 @@ class dc_icinga2::checks {
     ],
     arguments => {
       '-H' => '$neutron_api_auth_url$',
-      '-t' => '$neutron_api_tenant$',
+      '-P' => '$neutron_api_tenant$',
       '-u' => '$neutron_api_username$',
       '-p' => '$neutron_api_password$',
     },
