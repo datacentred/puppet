@@ -29,6 +29,9 @@ class dc_backup (
     rmdirs  => true,
   }
 
-  Class['::dc_backup'] -> Dc_backup::Dc_duplicity_job <||>
+  # Install the keys before any duplicity jobs, the duplicity::job class
+  # will attempt to download them from gpg.net if not already installed
+  # and, obviously, fail
+  Class['::dc_backup::gpg_keys'] -> Dc_backup::Dc_duplicity_job <||>
 
 }

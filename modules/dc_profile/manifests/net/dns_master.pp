@@ -19,7 +19,6 @@ class dc_profile::net::dns_master {
 
   include ::foreman_proxy
   include ::foreman_proxy::plugin::discovery
-  include ::dc_foreman::service_checks
   include ::dc_icinga::hostgroup_foreman_proxy
 
   include ::dc_icinga::hostgroup_ntp

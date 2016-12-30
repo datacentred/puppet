@@ -1,0 +1,2 @@
+---
+dc_dhcp::zonemaster: '10.25.192.250'
