@@ -16,7 +16,6 @@ class dc_profile::net::dns_slave {
   include ::dc_tftp
 
   include ::foreman_proxy
-  include ::dc_foreman::service_checks
   include ::dc_icinga::hostgroup_foreman_proxy
 
   include ::dc_icinga::hostgroup_ntp
