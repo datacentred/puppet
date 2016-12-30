@@ -97,13 +97,6 @@ apt::ppa_options: '-f --keyserver hkps.pool.sks-keyservers.net'
 # Users
 #
 admins:
-  matt:
-    uid: '1001'
-    gid: 'sysadmin'
-    pass: '$6$qplx30n1$UyzxF3zIRuAm8cNtHtFL5V59HuezXzE3FStG8ermMrTsrowW5ACk6lGsn4GU2y0qTCcq0m13CYPltAY9X8v3i1'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCqHgq7htvOfOyNkZ8i505A6bEib9FiMNZGejce63jwo3SboRc1v25KQiXdRkuMIhLNZCgKM7aSErIZoPQoNxxHO1qvGsuOT3yld0jqXZHYp7L8To75y5gDp911N8enKVC3GMduPeXA8HH7RhNlPd6fUWmgmp4tBbd1iKnIZZDJ74P0mhKY47jbLV0SyvBli62WcqjKLH6DIgYPx73w31zti+HJCpPpUhzx19saJM2LbwGZ6HUL8FegXhIgcsV9vsB67tGZO/c2KFl+fRQgpYUTi6/17A19KbQP1GvYSiKb2uNhvYxwnU4D7zSZtlN7oXXiZ0xeI9MEExT24xd+sMmV'
-    email: 'matt.jarvis@datacentred.co.uk'
-    ensure: 'absent'
   nick:
     uid: '1002'
     gid: 'sysadmin'
@@ -211,23 +204,6 @@ ldap_groups:
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
 
 ldap_users:
-  'cn=matt,ou=People,dc=datacentred,dc=co,dc=uk':
-    tag: user
-    ensure: 'absent'
-    attributes:
-      uid: matt
-      givenName: Matt
-      sn: Jarvis
-      mail: "matt.jarvis@datacentred.co.uk"
-      userPassword: "{CRYPT}$6$qplx30n1$UyzxF3zIRuAm8cNtHtFL5V59HuezXzE3FStG8ermMrTsrowW5ACk6lGsn4GU2y0qTCcq0m13CYPltAY9X8v3i1"
-      radiusReplyItem: APC-Service-Type = 1
-      objectClass:
-        - person
-        - inetOrgPerson
-        - user
-        - radiusprofile
-      ou:
-        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
   'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk':
     tag: user
     attributes:
@@ -389,7 +365,7 @@ rabbitmq_monuser_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMII
 
 # Neutron checking
 # WARNING: the DB source is defined in the openstack_data role
-# 
+#
 neutron_db: 'neutron'
 neutron_db_user: 'neutron'
 neutron_db_pass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAhSlU4t8n27l+9Y7apkOoFk2Nfo3Rg02ChM/mtesprk+zFiis2kZ6w+C+d21pDy8XMjNx+0l31OhHTxMpnxQ6U70yHihSWLdZtWnx+L7SEF83e0Mwclu2bJCSZTcYgNsI8FrvGzygIxav4cL+ictLNCzHH6msBhm1LRLzK78R+0fSKKDM/EBvIsnLJDJGKIa/4wkCxg7Pq2xbHJbWhQP0kpPK0wVoWaPGQ+MMOIipBkAN+MGLxRHIEjq6xFZagDye3yPSndvLH6ZqFSnMIR8t511i1blwGzwJgNb9w9qTy6H0RN+Z03eFFMhOqUvMz547mYkdO8HZIpQBBXRlhixzbjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBB1CyOmTZ2Gux9o2csSwrDgBALfp4crt+RxnGTjoYWWg3k]
@@ -438,4 +414,4 @@ sysctls::values:
 serial_console::no_rhgb_quiet:             true
 serial_console::root_login_console:        true
 serial_console::regular_console_enabled:   true
-serial_console::serial_primary_console:    false 
+serial_console::serial_primary_console:    false
