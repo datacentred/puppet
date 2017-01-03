@@ -120,7 +120,7 @@ dc_profile::openstack::haproxy::listeners:
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
-  nova-compute:
+  nova-api:
     mode: 'http'
     bind:
       ':8774':
@@ -271,14 +271,16 @@ dc_profile::openstack::haproxy::listeners:
     collect_exported: false
 
 dc_profile::openstack::haproxy::balancermembers:
-  nova-compute:
-    listening_service: 'nova-compute'
+  nova-api:
+    listening_service: 'nova-api'
     server_names:
       - 'oscontrol0'
       - 'oscontrol1'
+      - 'oscontrol2'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
+      - '10.10.160.162'
     ports: '8774'
     options: 'check inter 2000 rise 2 fall 5'
   nova-metadata:
