@@ -26,18 +26,6 @@ class dc_dhcp (
     sudo            => false,
   }
 
-  file { '/usr/local/lib/python2.7/dist-packages/dc_dhcp_parser.py':
-    ensure => file,
-    source => 'puppet:///modules/dc_dhcp/dc_dhcp_parser.py',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-  }
-
-  package { 'python-pyparsing':
-    ensure => installed,
-  }
-
   $pool_dfl = {
     'zonemaster' => $zonemaster,
     'parameters' => [ "default-lease-time ${default_lease_time}", "max-lease-time ${max_lease_time}" ]
