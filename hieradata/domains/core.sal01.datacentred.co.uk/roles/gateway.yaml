@@ -444,3 +444,18 @@ dc_profile::net::core_gateway::balancermembers:
         ipaddresses:
           - '10.30.192.213'
         options: 'check'
+
+# VIPs
+dc_profile::net::core_gateway::vips:
+  VI_1:
+    interface: 'em1'
+    state: 'SLAVE'
+    virtual_router_id: '1'
+    priority: '100'
+    virtual_ipaddress: '10.30.192.2/24'
+  VI_2:
+    interface: 'em2'
+    state: 'SLAVE'
+    virtual_router_id: '2'
+    priority: '100'
+    virtual_ipaddress: '185.43.217.42/29'

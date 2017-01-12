@@ -40,21 +40,7 @@ class dc_profile::net::core_gateway {
   create_resources('haproxy::listen', hiera_hash('dc_profile::net::core_gateway::listeners'))
   create_resources('haproxy::balancermember', hiera_hash('dc_profile::net::core_gateway::balancermembers'))
 
-  keepalived::vrrp::instance { 'VI_1':
-    interface         => 'em1',
-    state             => 'SLAVE',
-    virtual_router_id => '1',
-    priority          => '100',
-    virtual_ipaddress => '10.30.192.2/24',
-  }
-
-  keepalived::vrrp::instance { 'VI_2':
-    interface         => 'em2',
-    state             => 'SLAVE',
-    virtual_router_id => '2',
-    priority          => '100',
-    virtual_ipaddress => '185.43.217.42/29',
-  }
+  create_resources('keepalived::vrrp::instance', hiera_hash('dc_profile::net::core_gateway::vips'))
 
   # Ensure the puppet certificate is available before starting the SSL service
   Concat['/etc/ssl/private/puppet.crt'] -> Class['::haproxy::service']

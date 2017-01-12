@@ -6,7 +6,6 @@ classes:
 excludes:
   - '::dc_profile::mon::icinga2'
 
-haproxy::package_ensure: '1.5.14-1ubuntu0.15.10.1~ubuntu14.04.1'
 # Timeouts are important here
 # - Server time out: log running things like foreman/puppet
 # - Client time out: persistent connections such as log shippers
