@@ -19,6 +19,7 @@ class dc_profile::openstack::nova::compute {
   include ::nova::network::neutron
   include ::nova::scheduler::filter
   include ::nova::config
+  include ::dc_profile::openstack::nova::apparmor
 
   include ::sysctls
 
@@ -58,23 +59,6 @@ class dc_profile::openstack::nova::compute {
     require => File['/var/lib/nova/.ssh/config'],
   }
 
-  package { 'sysfsutils':
-    ensure => installed,
-  }
-
-  case $::osfamily {
-    'Debian': {
-      include ::dc_profile::openstack::nova::apparmor
-    }
-    'RedHat': {
-      service { 'firewalld':
-        ensure => 'stopped',
-      }
-      service { 'NetworkManager':
-        ensure => 'stopped',
-      }
-    }
-    default: {}
-  }
+  ensure_packages(['sysfsutils', 'qemu-kvm'])
 
 }
