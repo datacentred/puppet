@@ -1,14 +1,186 @@
 ---
-puppet::conf:
-  main:
-    logdir: '/var/lib/puppet'
-    vardir: '/var/lib/puppet'
-    ssldir: '/var/lib/puppet/ssl'
-    rundir: '/var/run/puppet'
-    show_diff: 'true'
-    dns_alt_names: '*,*.example.com,*.staging.datacentred.services'
+# TODO: Frontend and listeners should be the same across environments and
+# should be role specific (when in sync).  Backends are domain specific
+# due to different addresses
 
-dc_profile::net::core_gateway::frontends: {}
-dc_profile::net::core_gateway::backends: {}
-dc_profile::net::core_gateway::listeners: {}
-dc_profile::net::core_gateway::balancermembers: {}
+
+# Define frontends
+
+# HTTPS Rules:
+# 1: Unattended foreman traffic is allowed regardless to enable provisioning
+#    foreman handles authentication during this period
+# 2: All other traffic must have a valid certificate otherwise it is
+#    redirected to static error pages
+# 3: Other traffic is routed to the correct hostgroup via the HTTP host much
+#    like an apache virtual host
+
+dc_profile::net::core_gateway::frontends:
+    puppet:
+        mode: 'http'
+        bind:
+            ':8140':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
+                - 'verify optional'
+        options:
+            option: 'http-server-close'
+            default_backend: 'puppet'
+            use_backend:
+                - 'puppetca if { path -m sub certificate }'
+            http-request:
+                - 'set-header X-SSL-Subject %%{}{+Q}[ssl_c_s_dn]'
+                - 'set-header X-Client-DN %%{}{+Q}[ssl_c_s_dn]'
+                - 'set-header X-Client-Verify SUCCESS if { ssl_c_verify 0 }'
+                - 'set-header X-Client-Verify NONE unless { ssl_c_verify 0 }'
+    https:
+        mode: 'http'
+        bind:
+            ':443':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
+                - 'verify optional'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'crt-ignore-err all'
+        options:
+            option:
+                - 'http-server-close'
+                - 'httplog'
+            use_backend:
+                - 'foreman if { hdr_beg(host) -i foreman } { path_beg /unattended }'
+                - 'foreman if { hdr_beg(host) -i foreman } { path /api/v2/discovered_hosts/facts }'
+                - 'foreman if { hdr_beg(host) -i foreman }'
+                - 'stats if { hdr_beg(host) -i stats }'
+            http-request:
+                - 'set-header X-Forwarded-Proto https'
+
+# Backend configuration
+
+# To explain the redirect rules a little bit:
+#
+# * If the client has no certificate and the path isn't /nocert.html
+#   redirect the client to that location.  When the redirected request
+#   comes back with the path of /nocert.html it doesn't get redirected.
+#   In this case with no certificate ssl_c_verify is zero so doesn't
+#   trigger the final catch all error case
+dc_profile::net::core_gateway::backends:
+    puppet:
+        collect_exported: false
+        options:
+            mode: 'http'
+    puppetca:
+        collect_exported: false
+        options:
+            mode: 'http'
+    foreman:
+        collect_exported: false
+        options:
+            mode: 'http'
+            balance: 'source'
+    stats:
+        collect_exported: false
+        options:
+            mode: 'http'
+            stats:
+                - 'enable'
+                - 'uri /'
+
+# Listen blocks
+
+dc_profile::net::core_gateway::listeners:
+    http:
+        mode: 'http'
+        bind:
+            ':80': {}
+        options:
+            redirect: 'scheme https'
+    foreman-puppet-proxy:
+        collect_exported: false
+        mode: 'http'
+        bind:
+            ':8443':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
+    puppetdb:
+        collect_exported: false
+        mode: 'http'
+        bind:
+            ':8081':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
+
+dc_profile::net::core_gateway::balancermembers:
+    puppetca:
+        listening_service: 'puppetca'
+        ports: '8140'
+        server_names:
+            - 'puppetca.example.com'
+        ipaddresses:
+            - '10.25.192.3'
+        options: 'check'
+    puppet:
+        listening_service: 'puppet'
+        ports: '8140'
+        server_names:
+            - 'puppetca.example.com'
+            - 'puppet0.example.com'
+        ipaddresses:
+            - '10.25.192.3'
+            - '10.25.192.4'
+        options: 'check'
+    puppetdb:
+        listening_service: 'puppetdb'
+        ports: '8081'
+        server_names:
+            - 'puppetdb0.example.com'
+        ipaddresses:
+            - '10.25.192.9'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+    foreman:
+        listening_service: 'foreman'
+        ports: '443'
+        server_names:
+            - 'foreman0.example.com'
+        ipaddresses:
+            - '10.25.192.10'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+    foreman-puppet-proxy:
+        listening_service: 'foreman-puppet-proxy'
+        ports: '8443'
+        server_names:
+            - 'puppetca.example.com'
+        ipaddresses:
+            - '10.25.192.3'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
+
+# VIPs
+dc_profile::net::core_gateway::vips:
+  VI_1:
+    interface: 'ens3'
+    state: 'SLAVE'
+    virtual_router_id: '1'
+    priority: '100'
+    virtual_ipaddress: '10.25.192.2/24'
+  VI_2:
+    interface: 'ens4'
+    state: 'SLAVE'
+    virtual_router_id: '2'
+    priority: '100'
+    virtual_ipaddress: '185.43.217.138/29'
