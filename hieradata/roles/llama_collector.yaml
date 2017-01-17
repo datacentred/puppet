@@ -5,5 +5,38 @@ llama::llama_is_collector: true
 llama::llama_collector_use_udp: true
 llama::llama_collector_config:
   127.0.0.1:
-    rack: 01
+    rack: localhost
+    datacenter: sal01
+  dc-mt-i-cr0.datacentred.io:
+    rack: osnet0-ext
+    datacenter: sal01
+  dc-mt-i-cr1.datacentred.io:
+    rack: osnet1-ext
+    datacenter: sal01
+  dc-mt-i-cr2.datacentred.io:
+    rack: osnet2-ext
+    datacenter: sal01
+  dc-mt-i-cr3.datacentred.io:
+    rack: osnet3-ext
+    datacenter: sal01
+  192.168.100.10:
+    rack: osnet0-int
+    datacenter: sal01
+  192.168.100.11:
+    rack: osnet1-int
+    datacenter: sal01
+  192.168.100.12:
+    rack: osnet2-int
+    datacenter: sal01
+  192.168.100.13:
+    rack: osnet3-int
+    datacenter: sal01
+  192.168.100.14:
+    rack: compute0
+    datacenter: sal01
+  192.168.100.15:
+    rack: compute1
+    datacenter: sal01
+  192.168.100.16:
+    rack: compute2
     datacenter: sal01
