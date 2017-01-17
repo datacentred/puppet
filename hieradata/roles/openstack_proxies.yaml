@@ -8,7 +8,7 @@ haproxy::global_options:
         log: '127.0.0.1 local0'
         chroot: '/var/lib/haproxy'
         pidfile: '/var/run/haproxy.pid'
-        maxconn: '8000'
+        maxconn: '16000'
         user: 'haproxy'
         group: 'haproxy'
         stats: 'socket /var/lib/haproxy/stats mode 660 level user group telegraf'
