@@ -148,7 +148,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'source'
+      balance: 'leastconn'
     collect_exported: false
   nova-ec2:
     mode: 'http'
