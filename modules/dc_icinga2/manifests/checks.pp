@@ -19,7 +19,7 @@ class dc_icinga2::checks {
     vars      => {
       'memory_warn_bytes'     => '10%',
       'memory_critical_bytes' => '5%',
-    }
+    },
   }
 
   icinga2::object::checkcommand { 'sensors':
@@ -109,7 +109,7 @@ class dc_icinga2::checks {
     },
     vars      => {
       'ceph_health_detail' => false,
-    }
+    },
   }
 
   icinga2::object::checkcommand { 'ceph-mon':
@@ -198,7 +198,7 @@ class dc_icinga2::checks {
       '-p' => '$pgsql_replication_password$',
       '-w' => '$pgsql_replication_warning$',
       '-c' => '$pgsql_replication_critical$',
-    }
+    },
   }
 
   icinga2::object::checkcommand { 'openstack-service':
@@ -210,7 +210,7 @@ class dc_icinga2::checks {
       '-p' => '$openstack_service_process$',
       '-c' => {
         'set_if' => '$openstack_service_child$',
-      }
+      },
     },
   }
 
@@ -275,6 +275,18 @@ class dc_icinga2::checks {
       '-P' => '$neutron_api_tenant$',
       '-u' => '$neutron_api_username$',
       '-p' => '$neutron_api_password$',
+    },
+  }
+
+  icinga2::object::checkcommand { 'nova-agents':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_nova_agents"',
+    ],
+    arguments => {
+      '-H' => '$nova_api_auth_url$',
+      '-P' => '$nova_api_tenant$',
+      '-u' => '$nova_api_username$',
+      '-p' => '$nova_api_password$',
     },
   }
 

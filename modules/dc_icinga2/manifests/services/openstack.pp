@@ -119,6 +119,19 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
+  icinga2::object::apply_service { 'nova agents aliveness':
+    import        => 'generic-service',
+    check_command => 'nova-agents',
+    vars          => {
+      'nova_api_auth_url' => $keystone_auth_url,
+      'nova_api_tenant'   => $tenant,
+      'nova_api_username' => $username,
+      'nova_api_password' => $password,
+      'enable_pagerduty'  => true,
+    },
+    assign_where  => 'host.vars.role == "openstack-endpoint"',
+  }
+
   icinga2::object::apply_service { 'neutron dhcp agent':
     import        => 'generic-service',
     check_command => 'openstack-service',

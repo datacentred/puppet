@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+"""
+Check for Nova Agents' status
+"""
+# pylint: disable=import-error
+
+import argparse
+import sys
+import novaclient.client as client
+from keystoneauth1 import session
+from keystoneauth1.identity import v3
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """Main script body"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-P', '--project', required=True)
+    parser.add_argument('-d', '--domain', default='Default')
+    args = parser.parse_args()
+
+    auth = v3.Password(user_domain_name=args.domain,
+                       username=args.username,
+                       password=args.password,
+                       project_domain_name=args.domain,
+                       project_name=args.project,
+                       auth_url=args.host)
+    sess = session.Session(auth=auth)
+
+    nova = client.Client(2, session=sess)
+    nova.format = 'json'
+
+    agents_down = []
+
+    for agent in nova.services.list():
+        if agent.status == 'enabled' and agent.state == 'down':
+            agents_down.append(agent.host)
+
+    if agents_down:
+        print "CRITICAL: Nova agents found dead on:"
+        print '\n'.join(agents_down)
+        sys.exit(NAGIOS_CRITICAL)
+    else:
+        print "OK: All Nova agents alive."
+        sys.exit(NAGIOS_OK)
+
+if __name__ == "__main__":
+    main()
