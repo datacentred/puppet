@@ -2,8 +2,8 @@ settings {
   logfile = '/var/log/lsyncd/puppet.log',
   statusFile = '/var/run/lsyncd/puppet.status',
 }
-
 <% @targets.each do |target| -%>
+
 sync {
   default.rsyncssh,
   source = "/etc/puppetlabs/code",

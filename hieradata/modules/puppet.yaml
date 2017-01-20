@@ -1,12 +1,11 @@
 ---
-puppet::ssl: false
-puppet::autosign_manage: false
+puppet::server::ssl: false
+puppet::server::gems:
+  - 'hiera-eyaml'
+  - 'deep_merge'
+  - 'toml'
 
 puppet::conf_merge: true
 puppet::conf:
   main:
-    logdir: '/var/lib/puppet'
-    vardir: '/var/lib/puppet'
-    ssldir: '/var/lib/puppet/ssl'
-    rundir: '/var/run/puppet'
     show_diff: 'true'
