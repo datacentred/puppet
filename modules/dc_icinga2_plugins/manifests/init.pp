@@ -34,7 +34,7 @@ class dc_icinga2_plugins (
   }
 
   file { '/usr/local/lib/nagios/plugins/antiaffinitycheck.py':
-    ensure => absent
+    ensure => absent,
   }
 
   file { '/usr/local/lib/nagios/plugins/check_bmc':
@@ -63,6 +63,10 @@ class dc_icinga2_plugins (
 
   file { '/usr/local/lib/nagios/plugins/check_neutron_agents':
     source => 'puppet:///modules/dc_icinga2_plugins/check_neutron_agents',
+  }
+
+  file { '/usr/local/lib/nagios/plugins/check_nova_agents':
+    source => 'puppet:///modules/dc_icinga2_plugins/check_nova_agents',
   }
 
   file { '/usr/local/lib/nagios/plugins/check_openstack_service':
