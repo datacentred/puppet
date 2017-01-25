@@ -11,6 +11,12 @@ class dc_profile::puppet::puppet_ca {
   # doesn't commit suicide constantly
   include ::sysctls
   include ::puppet_sync
+  include ::puppetdeploy
   include ::dc_icinga::hostgroup_lsyncd
+
+  # Ensure our inotify nodes are bumped and the user accounts added
+  # before attempting to synchronise data to a peer
+  Class['::sysctls'] -> Class['::puppet_sync']
+  Class['::puppetdeploy'] -> Class['::puppet_sync']
 
 }

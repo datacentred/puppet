@@ -11,7 +11,7 @@ puppetdb::server::conn_lifetime:  '5'
 puppetdb::server::conn_keep_alive: '1'
 puppetdb::server::conn_max_age: '5'
 
-puppetdb::master::config::puppetdb_server: "puppetdb"
+puppetdb::master::config::puppetdb_server: "puppetdb.%{domain}"
 puppetdb::master::config::strict_validation: false
 puppetdb::master::config::manage_routes: true
 puppetdb::master::config::manage_storeconfigs: false

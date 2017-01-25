@@ -10,41 +10,26 @@ class dc_profile::puppet::puppet4 {
     stage => 'setup',
   }
 
-  if $::role in ['puppet_ca', 'puppet_master'] {
-    $_config = @("EOF")
-      [agent]
-      server = puppet.datacentred.services
+  if ! $::role in ['puppet_ca', 'puppet_master'] {
+    if $::domain =~ /^.*example.com$/ {
+      $_config = @("EOF")
+        [agent]
+        server = puppet.example.com
+        | EOF
+    } else {
+      $_config = @("EOF")
+        [agent]
+        server = puppet.datacentred.services
+        | EOF
+    }
 
-      [master]
-      vardir = /opt/puppetlabs/server/data/puppetserver
-      logdir = /var/log/puppetlabs/puppetserver
-      rundir = /var/run/puppetlabs/puppetserver
-      pidfile = /var/run/puppetlabs/puppetserver/puppetserver.pid
-      codedir = /etc/puppetlabs/code
-      storeconfigs = true
-      storeconfigs_backend = puppetdb
-      node_terminus = exec
-      external_nodes = /etc/puppetlabs/puppet/node.rb
-      reports = foreman
-      | EOF
-  } elsif $::domain =~ /^.*example.com$/ {
-    $_config = @("EOF")
-      [agent]
-      server = puppet.example.com
-      | EOF
-  } else {
-    $_config = @("EOF")
-      [agent]
-      server = puppet.datacentred.services
-      | EOF
-  }
-
-  file { '/etc/puppetlabs/puppet/puppet.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => $_config,
+    file { '/etc/puppetlabs/puppet/puppet.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => $_config,
+    }
   }
 
   cron { 'puppet-agent':

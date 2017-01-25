@@ -1,6 +1,6 @@
 ---
 puppet_sync::targets:
-  - 'puppet0'
+  - "puppet0.%{domain}"
 puppet_sync::excludes:
   - 'cert*'
   - 'private*'
