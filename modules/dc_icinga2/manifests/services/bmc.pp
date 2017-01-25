@@ -89,7 +89,7 @@ class dc_icinga2::services::bmc (
       'bmc_host'     => 'host.vars.address_bmc',
       'bmc_username' => $username,
       'bmc_password' => $password,
-      'bmc_revision' => '2.20',
+      'bmc_revision' => '3.03',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.productname == "X8DTT-H"',
