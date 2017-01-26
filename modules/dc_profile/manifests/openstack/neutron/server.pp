@@ -21,6 +21,10 @@ class dc_profile::openstack::neutron::server {
   # https://bugs.launchpad.net/ubuntu/+source/neutron-lbaas/+bug/1460228
   ensure_packages(['python-neutron-vpnaas', 'python-neutron-lbaas'])
 
+  neutron_config {
+    'DEFAULT/allow_automatic_dhcp_failover': value => false;
+  }
+
   # TODO: Remove post-upgrade
   file_line { 'neutron_auth_version':
     ensure  => absent,
