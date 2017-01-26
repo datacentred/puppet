@@ -9,6 +9,13 @@ telegraf::inputs:
   cpu:
     percpu: true
     totalcpu: true
+  disk:
+    namedrop:
+      - 'dm*'
+  diskio:
+    namedrop:
+      - 'dm*'
+  kernel:
   mem:
   net:
     namedrop:
@@ -18,15 +25,9 @@ telegraf::inputs:
       - 'qvb*'
       - 'tap*'
       - 'qbr*'
-  disk:
-    namedrop:
-      - 'dm*'
-  diskio:
-    namedrop:
-      - 'dm*'
+  processes:
   swap:
   system:
-  kernel:
 telegraf::outputs:
   influxdb:
     urls:
