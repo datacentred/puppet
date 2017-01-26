@@ -8,12 +8,5 @@ foreman_proxy::use_sudoers.d: true
 foreman_proxy::ssl_ca: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
 foreman_proxy::ssl_cert: '/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem'
 foreman_proxy::ssl_key: '/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem'
-foreman_proxy::trusted_hosts:
-  - 'foreman.datacentred.services'
-  - 'foreman0.core.sal01.datacentred.co.uk'
-  - 'foreman1.core.sal01.datacentred.co.uk'
-  - 'gateway0.core.sal01.datacentred.co.uk'
-  - 'gateway1.core.sal01.datacentred.co.uk'
 foreman_proxy::register_in_foreman: false
-foreman_proxy::foreman_base_url: 'https://foreman.datacentred.services'
 foreman_proxy::manage_puppet_group: false
