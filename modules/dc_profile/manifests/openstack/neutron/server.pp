@@ -23,6 +23,7 @@ class dc_profile::openstack::neutron::server {
 
   neutron_config {
     'DEFAULT/allow_automatic_dhcp_failover': value => false;
+    'DEFAULT/enable_services_on_agents_with_admin_state_down': value => true;
   }
 
   # TODO: Remove post-upgrade
