@@ -1,0 +1,2 @@
+---
+puppet::server::max_active_instances: 8
