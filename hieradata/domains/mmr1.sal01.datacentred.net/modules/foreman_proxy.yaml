@@ -1,0 +1,8 @@
+---
+foreman_proxy::trusted_hosts:
+  - 'foreman.datacentred.services'
+  - 'foreman0.core.sal01.datacentred.co.uk'
+  - 'foreman1.core.sal01.datacentred.co.uk'
+  - 'gateway0.core.sal01.datacentred.co.uk'
+  - 'gateway1.core.sal01.datacentred.co.uk'
+foreman_proxy::foreman_base_url: 'https://foreman.datacentred.services'
