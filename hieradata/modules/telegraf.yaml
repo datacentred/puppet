@@ -1,6 +1,6 @@
 ---
 telegraf:
-  ensure: '1.1.1-1'
+  ensure: '1.2.0-1'
 telegraf::global_tags:
   role: "%{::role}"
   hostgroup: "%{::hostgroup}"
