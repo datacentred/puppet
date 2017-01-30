@@ -1,5 +1,5 @@
 ---
-grafana::version: '4.0.2-1481203731'
+grafana::version: '4.1.1-1484211277'
 grafana::cfg:
   app_mode: production
   server:
