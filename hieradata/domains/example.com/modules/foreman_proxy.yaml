@@ -1,0 +1,8 @@
+---
+foreman_proxy::trusted_hosts:
+  - 'foreman.staging.datacentred.services'
+  - 'foreman0.example.com'
+  - 'foreman1.example.com'
+  - 'gateway0.example.com'
+  - 'gateway1.example.com'
+foreman_proxy::foreman_base_url: 'https://foreman.staging.datacentred.services'
