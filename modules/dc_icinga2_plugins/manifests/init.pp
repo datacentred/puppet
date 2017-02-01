@@ -33,10 +33,6 @@ class dc_icinga2_plugins (
     source => 'puppet:///modules/dc_icinga2_plugins/check_anti_affinity',
   }
 
-  file { '/usr/local/lib/nagios/plugins/antiaffinitycheck.py':
-    ensure => absent,
-  }
-
   file { '/usr/local/lib/nagios/plugins/check_bmc':
     source => 'puppet:///modules/dc_icinga2_plugins/check_bmc',
   }

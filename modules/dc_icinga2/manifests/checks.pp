@@ -63,8 +63,8 @@ class dc_icinga2::checks {
     arguments => {
       '-u' => '$anti_affinity_user$',
       '-p' => '$anti_affinity_password$',
-      '-t' => '$anti_affinity_tenant_name$',
-      '-a' => '$anti_affinity_auth_url$',
+      '-P' => '$anti_affinity_project$',
+      '-H' => '$anti_affinity_auth_url$',
     },
     timeout   => '240',
   }

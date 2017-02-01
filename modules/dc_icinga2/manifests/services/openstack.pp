@@ -580,10 +580,10 @@ class dc_icinga2::services::openstack (
     import        => 'openstack-service',
     check_command => 'anti_affinity',
     vars          => {
-      'anti_affinity_auth_url'    => $keystone_auth_url,
-      'anti_affinity_tenant_name' => $tenant,
-      'anti_affinity_user'        => $username,
-      'anti_affinity_password'    => $password,
+      'anti_affinity_auth_url' => $keystone_auth_url,
+      'anti_affinity_project'  => $tenant,
+      'anti_affinity_user'     => $username,
+      'anti_affinity_password' => $password,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
