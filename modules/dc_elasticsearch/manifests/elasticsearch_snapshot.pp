@@ -43,7 +43,7 @@ class dc_elasticsearch::elasticsearch_snapshot (
   cron { 'elasticsearch_snapshot_pruning':
     command => '/usr/local/bin/elasticsearch_snapshot_pruning.py',
     user    => root,
-    hour    => 3,
+    hour    => 1,
     minute  => 0
   }
 

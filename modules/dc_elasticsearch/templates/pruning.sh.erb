@@ -1,2 +1,0 @@
-#!/bin/bash
-/usr/local/bin/curator --host localhost --port 9200 delete indices --older-than <%= @total_retention %> --time-unit days --timestring %Y.%m.%d

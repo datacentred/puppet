@@ -31,10 +31,10 @@ class dc_elasticsearch (
   include ::ulimit
 
   #allows for index tagging to control index storage location within the cluster
-  $config_ssd_tag = {'node.storage_type' => 'ssd'}
+  $config_ssd_tag = {'node.attr.storage_type' => 'ssd'}
   $config_hash_for_ssds = merge($config_ssd_tag, $es_hash)
 
-  $config_hdd_tag = {'node.storage_type' => 'hdd'}
+  $config_hdd_tag = {'node.attr.storage_type' => 'hdd'}
   $config_hash_for_hdds = merge($config_hdd_tag, $es_hash)
 
   #work out what 1/3rd of the host RAM is so it can be reserved for each elasticsearch instance

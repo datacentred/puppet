@@ -9,7 +9,6 @@ dc_elasticsearch::hdd_drives:
   - '/var/storage/hdd_04'
 dc_elasticsearch::es_hash:
   bootstrap.memory_lock: true
-  cloud.aws.ec2.endpoint: 'storage.datacentred.io'
   cloud.aws.s3.endpoint: 'storage.datacentred.io'
   cluster.name: 'logstash_platform_services'
   discovery.zen.minimum_master_nodes: 2
@@ -26,7 +25,5 @@ dc_elasticsearch::es_hash:
   node.data: true
   thread_pool.index.queue_size: 200
   thread_pool.index.size: 4
-  thread_pool.index.type: 'fixed'
   thread_pool.search.queue_size: '100'
   thread_pool.search.size: 20
-  thread_pool.search.type: 'fixed'
