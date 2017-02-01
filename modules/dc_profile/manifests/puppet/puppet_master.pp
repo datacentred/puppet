@@ -5,7 +5,6 @@
 #
 class dc_profile::puppet::puppet_master {
 
-  include ::puppet
   include ::puppet::server
   include ::puppetdb::master::config
   include ::foreman::puppetmaster

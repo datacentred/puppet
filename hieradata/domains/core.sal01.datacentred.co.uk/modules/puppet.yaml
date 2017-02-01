@@ -1,2 +1,6 @@
 ---
+puppet::conf:
+  agent:
+    server: "puppet.%{domain}"
+
 puppet::server::max_active_instances: 8
