@@ -233,7 +233,7 @@ class dc_icinga::server::nagios_commands (
   }
 
   icinga::command { 'check_anti_affinity':
-    command_line => "/usr/lib/nagios/plugins/check_anti_affinity.py -u ${keystone_icinga_user} -p ${keystone_icinga_password} -t ${keystone_icinga_tenant} -a https://\$HOSTALIAS\$:${keystone_port}/v2.0/",
+    command_line => "/usr/lib/nagios/plugins/check_anti_affinity -u ${keystone_icinga_user} -p ${keystone_icinga_password} -P ${keystone_icinga_tenant} -H https://\$HOSTALIAS\$:${keystone_port}/v3",
   }
 
   icinga::command { 'check_ceilometer_update':
