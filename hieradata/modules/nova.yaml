@@ -119,3 +119,6 @@ nova::config::nova_config:
 nova::config::nova_config:
   DEFAULT/resume_guests_state_on_host_boot:
     value: true
+nova::config::nova_config:
+  DEFAULT/config_drive_format:
+    value: vfat
