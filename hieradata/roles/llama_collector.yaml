@@ -42,6 +42,7 @@ llama::llama_collector_config:
     datacenter: sal01
 telegraf::inputs:
   exec:
-   commands: '/usr/local/bin/llama_telegraf.py'
+   commands: 
+     - '/usr/local/bin/llama_telegraf.py'
    timeout: '5s'
    data_format: 'influx'
