@@ -20,24 +20,22 @@ NAGIOS_UNKNOWN = 3
 
 EDAC_DIR = '/sys/devices/system/edac/mc'
 
-def format_output(controller, channel, select):
+def format_label(controller, channel, select):
     """Translates the raw sysfs parameters into a human readable form"""
 
     # Translate controller and channel to indexed from 1 and translate the
     # channel select to be indexed from A.  This is SuperMicro formatting
-    controller = controller + 1
-    channel = channel + 1
+    controller += 1
+    channel += 1
     select = chr(select + ord('A'))
 
     return 'CPU{} DIMM-{}{}'.format(controller, channel, select)
 
 
-def get_errors(args):
-    """Returns any warnings, errors and a hash of per dimm counts"""
+def edac_errors():
+    """A hash of per DIMM EDAC error counts"""
 
-    warn = 0
-    crit = 0
-    dimms = {}
+    errors = {}
 
     # Get a list of all relevant files
     ce_files = glob.glob(EDAC_DIR + '/mc*/csrow*/ch*_ce_count')
@@ -45,21 +43,14 @@ def get_errors(args):
 
         # Read the correctable errors
         with open(ce_file) as ce_file_fd:
-            errors = int(ce_file_fd.read())
+            count = int(ce_file_fd.read())
 
             # Buffer the ouput
             matches = re.search(r'mc(\d+)/csrow(\d+)/ch(\d+)_ce_count', ce_file)
-            controller = int(matches.group(1))
-            select = int(matches.group(2))
-            channel = int(matches.group(3))
-            dimms[format_output(controller, select, channel)] = errors
+            label = format_label(*[int(x) for x in matches.group(1, 2, 3)])
+            errors[label] = count
 
-            if errors > args.critical:
-                crit += 1
-            elif errors > args.warning:
-                warn += 1
-
-    return warn, crit, dimms
+    return errors
 
 
 def main():
@@ -75,23 +66,25 @@ def main():
         print 'OK: no edac support detected'
         sys.exit(NAGIOS_OK)
 
+    errors = edac_errors()
 
-    warn, crit, dimms = get_errors(args)
+    crit = [x for x, y in errors.items() if y >= args.critical]
+    warn = [x for x, y in errors.items() if y >= args.warning and y < args.critical]
 
     code = NAGIOS_OK
-    if crit > 0:
+    if crit:
         code = NAGIOS_CRITICAL
-    elif warn > 0:
+    elif warn:
         code = NAGIOS_WARNING
 
     perfdata = []
-    for dimm, count in dimms.items():
+    for label, count in errors.items():
         perfdata.append('\'{}\'={};{};{}'.\
-                        format(dimm, count, args.warning, args.critical))
+                        format(label, count, args.warning, args.critical))
 
     status = ['OK', 'WARNING', 'CRITICAL'][code]
     print '{}: warning={} critical={} | {}'.\
-          format(status, warn, crit, ' '.join(perfdata))
+          format(status, len(warn), len(crit), ' '.join(perfdata))
     sys.exit(code)
 
 
