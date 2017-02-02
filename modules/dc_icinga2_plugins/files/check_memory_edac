@@ -7,6 +7,7 @@ memory controller, chip-select row and channel.  Initially it only looks
 for correctable errors and triggers a warning.
 """
 
+import argparse
 import glob
 import os
 import re
@@ -19,7 +20,7 @@ NAGIOS_UNKNOWN = 3
 
 EDAC_DIR = '/sys/devices/system/edac/mc'
 
-def format_output(controller, channel, select, errors):
+def format_output(controller, channel, select):
     """Translates the raw sysfs parameters into a human readable form"""
 
     # Translate controller and channel to indexed from 1 and translate the
@@ -28,19 +29,15 @@ def format_output(controller, channel, select, errors):
     channel = channel + 1
     select = chr(select + ord('A'))
 
-    return 'CPU{} DIMM-{}{}={}'.format(controller, channel, select, errors)
+    return 'CPU{} DIMM-{}{}'.format(controller, channel, select)
 
 
-def main():
-    """Probes sysfs for EDAC errors and reports them"""
+def get_errors(args):
+    """Returns any warnings, errors and a hash of per dimm counts"""
 
-    # Check for edac support and ignore the check if not supported
-    if not os.access(EDAC_DIR, os.F_OK):
-        print 'OK: no edac support detected'
-        sys.exit(NAGIOS_OK)
-
-    code = NAGIOS_OK
-    dimms = []
+    warn = 0
+    crit = 0
+    dimms = {}
 
     # Get a list of all relevant files
     ce_files = glob.glob(EDAC_DIR + '/mc*/csrow*/ch*_ce_count')
@@ -55,14 +52,46 @@ def main():
             controller = int(matches.group(1))
             select = int(matches.group(2))
             channel = int(matches.group(3))
-            dimms.append(format_output(controller, select, channel, errors))
+            dimms[format_output(controller, select, channel)] = errors
 
-            # Error detected, mark this DIMM may fail
-            if errors:
-                code = NAGIOS_WARNING
+            if errors > args.critical:
+                crit += 1
+            elif errors > args.warning:
+                warn += 1
+
+    return warn, crit, dimms
+
+
+def main():
+    """Probes sysfs for EDAC errors and reports them"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--warning', type=int, default=100)
+    parser.add_argument('-c', '--critical', type=int, default=1000)
+    args = parser.parse_args()
+
+    # Check for edac support and ignore the check if not supported
+    if not os.access(EDAC_DIR, os.F_OK):
+        print 'OK: no edac support detected'
+        sys.exit(NAGIOS_OK)
+
+
+    warn, crit, dimms = get_errors(args)
+
+    code = NAGIOS_OK
+    if crit > 0:
+        code = NAGIOS_CRITICAL
+    elif warn > 0:
+        code = NAGIOS_WARNING
+
+    perfdata = []
+    for dimm, count in dimms.items():
+        perfdata.append('\'{}\'={};{};{}'.\
+                        format(dimm, count, args.warning, args.critical))
 
     status = ['OK', 'WARNING', 'CRITICAL'][code]
-    print status + ': ' + ', '.join(dimms)
+    print '{}: warning={} critical={} | {}'.\
+          format(status, warn, crit, ' '.join(perfdata))
     sys.exit(code)
 
 
