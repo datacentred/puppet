@@ -40,3 +40,8 @@ llama::llama_collector_config:
   192.168.100.16:
     rack: compute2
     datacenter: sal01
+telegraf::inputs:
+  exec:
+   commands: '/usr/local/bin/llama_telegraf.py'
+   timeout: '5s'
+   data_format: 'influx'
