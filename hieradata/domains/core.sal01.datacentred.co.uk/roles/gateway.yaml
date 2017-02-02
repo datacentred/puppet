@@ -1,12 +1,7 @@
 ---
 puppet::conf:
   main:
-    logdir: '/var/lib/puppet'
-    vardir: '/var/lib/puppet'
-    ssldir: '/etc/puppetlabs/puppet/ssl'
-    rundir: '/var/run/puppet'
-    show_diff: 'true'
-    dns_alt_names: '*,*.core.sal01.datacentred.co.uk,*.datacentred.services'
+    dns_alt_names: '*.core.sal01.datacentred.co.uk,*.datacentred.services'
 
 # WAN interface runs at internet MTU of 1500
 dc_nrpe::checks::net_interfaces::exclude: '^em2$'
