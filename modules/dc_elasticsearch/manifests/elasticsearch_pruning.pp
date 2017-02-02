@@ -13,46 +13,34 @@ class dc_elasticsearch::elasticsearch_pruning (
     provider => pip,
     require  => Package['python-pip'],
   }
-
-  file { 'elasticsearch_pruning.sh':
-    ensure => absent,
-    path   => '/usr/local/bin/elasticsearch_pruning.sh',
-  }
-
-  file { '/usr/local/bin/es_pruning.sh':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => template('dc_elasticsearch/pruning.sh.erb')
-  }
-
-  file { '/usr/local/bin/es_tier_pruning.sh':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => template('dc_elasticsearch/tier_pruning.sh.erb')
-  }
-
+  # SSD tier cleanup
   cron { 'elasticsearch_tier_pruning':
-    command => '/usr/local/bin/es_tier_pruning.sh >/dev/null',
+    command => '/usr/local/bin/curator /usr/local/etc/es_tier_pruning.yaml',
     user    => 'root',
     hour    => 3,
     minute  => 0,
   }
+  file { '/usr/local/etc/es_tier_pruning.yaml':
+    ensure  => file,
+    content => template('dc_elasticsearch/es_tier_pruning.yaml.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+  }
 
-  cron { 'elasticsearch_pruning':
-    command => '/usr/local/bin/es_pruning.sh >/dev/null',
+  # Cleanup old indices
+  cron { 'elasticsearch_cleanup':
+    command => '/usr/local/bin/curator /usr/local/etc/es_cleanup.yaml.erb',
     user    => 'root',
-    hour    => 5,
+    hour    => 4,
     minute  => 0,
   }
 
-  cron { 'elasticsearch_optimise':
-    command => "/usr/local/bin/curator --host localhost --port 9200 optimize indices --older-than ${ssd_tier_retention} >/dev/null",
-    user    => 'root',
-    hour    => 20,
-    minute  => 0,
+  file { '/usr/local/etc/es_cleanup.yaml':
+    ensure  => file,
+    content => template('dc_elasticsearch/es_cleanup.yaml.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
   }
 }
