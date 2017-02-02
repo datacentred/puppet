@@ -330,9 +330,13 @@ class dc_icinga2::checks {
   }
 
   icinga2::object::checkcommand { 'memory-edac':
-    command => [
+    command   => [
       '"/usr/local/lib/nagios/plugins/check_memory_edac"',
     ],
+    arguments => {
+      '-w' => '$memory_edac_warning$',
+      '-c' => '$memory_edac_critical$',
+    },
   }
 
   icinga2::object::checkcommand { 'raid':
