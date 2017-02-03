@@ -10,7 +10,9 @@ source /etc/lsb-release
 # Configuration
 ################################################################################
 
-PACKAGES='puppet-agent puppetdb-termini git software-properties-common'
+PUPPET_VERSION='1.7.0-1trusty'
+
+PACKAGES="puppet-agent=$PUPPET_VERSION puppetdb-termini git software-properties-common"
 
 PUPPET_GEMS='deep_merge hiera-eyaml toml'
 
