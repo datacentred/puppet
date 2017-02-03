@@ -22,7 +22,8 @@ module Puppet::Parser::Functions
     mountpoints = lookupvar('mountpoints')
 
     # Select white-listed mounts and stash away the useful parameters
-    mountpoints.inject({}) do |res, mountpoint, attributes|
+    mountpoints.inject({}) do |res, temp|
+      mountpoint, attributes = temp
       if INCLUDES.include?(attributes['filesystem'])
         key = "mountpoints[\"#{mountpoint}\"]"
         res[key] = {
