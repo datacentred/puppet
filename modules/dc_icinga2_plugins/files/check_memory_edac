@@ -33,6 +33,24 @@ def format_label(controller, channel, select):
 
 
 def edac_errors():
+    """Get global correctable and uncorrectable errors"""
+
+    correctable_errors = 0
+    ce_files = glob.glob(EDAC_DIR + '/mc*/ce_count')
+    for ce_file in ce_files:
+        with open(ce_file) as ce_file_fd:
+            correctable_errors += int(ce_file_fd.read())
+
+    uncorrectable_errors = 0
+    ue_files = glob.glob(EDAC_DIR + '/mc*/ue_count')
+    for ue_file in ue_files:
+        with open(ue_file) as ue_file_fd:
+            uncorrectable_errors += int(ue_file_fd.read())
+
+    return correctable_errors, uncorrectable_errors
+
+
+def edac_dimm_errors():
     """A hash of per DIMM EDAC error counts"""
 
     errors = {}
@@ -66,10 +84,18 @@ def main():
         print 'OK: no edac support detected'
         sys.exit(NAGIOS_OK)
 
-    errors = edac_errors()
+    correctable_errors, uncorrectable_errors = edac_errors()
+    dimm_errors = edac_dimm_errors()
 
-    crit = [x for x, y in errors.items() if y >= args.critical]
-    warn = [x for x, y in errors.items() if y >= args.warning and y < args.critical]
+    crit = [x for x, y in dimm_errors.items() if y >= args.critical]
+    if correctable_errors >= args.critical:
+        crit += ['global ce']
+    if uncorrectable_errors:
+        crit += ['global ue']
+
+    warn = [x for x, y in dimm_errors.items() if y >= args.warning and y < args.critical]
+    if correctable_errors >= args.warning and correctable_errors < args.critical:
+        warn += ['global ce']
 
     code = NAGIOS_OK
     if crit:
@@ -78,7 +104,11 @@ def main():
         code = NAGIOS_WARNING
 
     perfdata = []
-    for label, count in errors.items():
+    perfdata.append('\'global ce\'={};{};{}'.\
+                    format(correctable_errors, args.warning, args.critical))
+    perfdata.append('\'global ue\'={};{};{}'.\
+                    format(uncorrectable_errors, args.warning, args.critical))
+    for label, count in dimm_errors.items():
         perfdata.append('\'{}\'={};{};{}'.\
                         format(label, count, args.warning, args.critical))
 
