@@ -12,6 +12,7 @@
 #
 class dc_profile::log::kibana {
   include ::apache
+  include ::apache::mod::status
 
   class { 'kibana4':
     plugins => {

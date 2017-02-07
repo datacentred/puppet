@@ -9,6 +9,7 @@ class dc_profile::net::phpipam {
   include apache
   include apache::mod::php
   include apache::mod::rewrite
+  include ::apache::mod::status
 
   include ::mysql::server
   include ::mysql::server::backup

@@ -5,6 +5,7 @@
 class dc_apt_mirror::configure {
 
   include ::apache
+  include ::apache::mod::status
 
   $mirror_defaults = {
     os => '',

@@ -24,6 +24,7 @@ class dc_profile::net::dns_master {
   include ::dc_icinga::hostgroup_ntp
 
   include ::apache
+  include ::apache::mod::status
 
   ensure_packages('ruby-rubyipmi')
 
