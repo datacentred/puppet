@@ -4,14 +4,21 @@
 #
 class dc_icinga2::services::disk {
 
-  icinga2::object::apply_service { 'disk':
+  icinga2::object::apply_service_for { 'file system':
+    key           => 'mountpoint',
+    value         => 'attributes',
+    hash          => 'host.vars.mountpoints',
     import        => 'generic-service',
     check_command => 'disk',
+    display_name  => '"file system " + mountpoint',
     vars          => {
+      'disk_partitions'  => 'mountpoint',
       'enable_pagerduty' => true,
+      'instance'         => 'mountpoint',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',
+    reject_where  => 'host.vars.role == "netflow_monitoring" && mountpoint.contains("flowdata")',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
