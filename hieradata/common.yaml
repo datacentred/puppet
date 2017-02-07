@@ -24,6 +24,7 @@ classes:
   - '::dc_profile::util::motd'
   - '::dc_profile::util::timezone'
   - '::dc_resolvconf'
+  - '::sysfs'
 
 # ntp servers
 #
