@@ -31,7 +31,7 @@ class dc_profile::log::logrotate {
     ifempty       => false,
     delaycompress => true,
     compress      => true,
-    postrotate    => 'reload rsyslog >/dev/null 2>&1 || true',
+    postrotate    => 'invoke-rc.d rsyslog rotate > /dev/null',
   }
 
   # Replacement for other logrotate rules in default rsyslog rotation
@@ -57,7 +57,7 @@ class dc_profile::log::logrotate {
     compress      => true,
     delaycompress => true,
     sharedscripts => true,
-    postrotate    => 'reload rsyslog >/dev/null 2>&1 || true',
+    postrotate    => 'invoke-rc.d rsyslog rotate > /dev/null',
   }
 
   # Remove installed logrotate config for above
