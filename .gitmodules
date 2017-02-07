@@ -316,3 +316,6 @@
 [submodule "modules/postfix"]
 	path = modules/postfix
 	url = https://github.com/camptocamp/puppet-postfix
+[submodule "modules/sysfs"]
+	path = modules/sysfs
+	url = https://github.com/danfoster/puppet-sysfs

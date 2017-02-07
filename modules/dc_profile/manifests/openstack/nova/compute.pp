@@ -59,6 +59,6 @@ class dc_profile::openstack::nova::compute {
     require => File['/var/lib/nova/.ssh/config'],
   }
 
-  ensure_packages(['sysfsutils', 'qemu-kvm'])
+  ensure_packages(['qemu-kvm'])
 
 }

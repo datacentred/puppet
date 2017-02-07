@@ -129,3 +129,7 @@ telegraf::inputs:
       - '/usr/local/bin/libvirt_telegraf.py'
     timeout: '5s'
     data_format: 'influx'
+
+sysfs::settings:
+  'module/nf_conntrack/parameters/hashsize':
+    value: 1048576
