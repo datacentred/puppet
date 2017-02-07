@@ -1,6 +1,7 @@
 ---
 classes:
   - '::dc_icinga::hostgroup_nova_compute'
+  - '::dc_profile::mon::libvirt'
   - '::dc_profile::openstack::ceilometer::agent'
   - '::dc_profile::openstack::ceph::nova'
   - '::dc_profile::openstack::neutron::agent_compute'
@@ -124,6 +125,7 @@ telegraf::inputs:
     dirs:
       - '/proc/sys/net/netfilter'
   exec:
-    commands: '/usr/local/bin/libvirt_telegraf.py'
+    commands:
+      - '/usr/local/bin/libvirt_telegraf.py'
     timeout: '5s'
     data_format: 'influx'
