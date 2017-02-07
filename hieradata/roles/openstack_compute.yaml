@@ -123,3 +123,7 @@ telegraf::inputs:
       - 'nf_conntrack_max'
     dirs:
       - '/proc/sys/net/netfilter'
+  exec:
+    commands: '/usr/local/bin/libvirt_telegraf.py'
+    timeout: '5s'
+    data_format: 'influx'
