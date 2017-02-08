@@ -7,3 +7,5 @@ databases:
   "%{hiera('phpipam::db_name')}":
     user:     "%{hiera('phpipam::db_user')}"
     password: "%{hiera('phpipam::db_pass')}"
+
+apache::mpm_module: 'prefork'
