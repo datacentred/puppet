@@ -14,6 +14,7 @@
 class dc_profile::perf::grafana {
 
   include ::apache
+  include ::apache::mod::status
   include ::grafana
 
   Class['::grafana'] ->

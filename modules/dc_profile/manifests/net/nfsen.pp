@@ -17,7 +17,8 @@ class dc_profile::net::nfsen {
   include ::apache
   include ::apache::mod::php
   include ::apache::mod::ssl
-    
+  include ::apache::mod::status
+
   apache::vhost { "${::fqdn} non-ssl":
     servername      => $::fqdn,
     port            => 80,

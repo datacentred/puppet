@@ -13,6 +13,7 @@ class dc_ceph::rgw {
 
   include ::apache
   include ::apache::mod::fastcgi
+  include ::apache::mod::status
 
   # Infernalis onwards the sockets are owned by ceph:ceph
   Class['::ceph'] ->

@@ -17,6 +17,7 @@ class dc_profile::puppet::puppetdb {
   include ::apache::mod::proxy
   include ::apache::mod::proxy_connect
   include ::apache::mod::proxy_http
+  include ::apache::mod::status
 
   apache::vhost { 'puppetdb-dashboard':
     docroot             => '/var/www/html',
