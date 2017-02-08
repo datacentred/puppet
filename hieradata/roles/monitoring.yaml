@@ -3,3 +3,4 @@ classes:
   - '::dc_profile::mon::icinga_server'
 
 apache::manage_user: false
+apache::mpm_module: 'prefork'
