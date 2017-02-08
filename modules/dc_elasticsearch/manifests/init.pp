@@ -46,6 +46,11 @@ class dc_elasticsearch (
     'MAX_LOCKED_MEMORY' => $third_ram_bytes,
   }
 
+  $jvm_options = [
+    "-Xms${third_ram_bytes}",
+    "-Xmx${third_ram_bytes}",
+  ]
+
   ulimit::rule { 'elasticsearch_memory':
       ulimit_domain => 'elasticsearch',
       ulimit_type   => '-',
@@ -68,6 +73,7 @@ class dc_elasticsearch (
     package_pin       => true,
     version           => $version,
     init_defaults     => $config_hash,
+    jvm_options       => $jvm_options,
   }
 
   include ::dc_icinga::hostgroup_elasticsearch
@@ -97,6 +103,10 @@ class dc_elasticsearch (
 
   # Needs to be installed on all nodes
   elasticsearch::plugin { 'repository-s3':
+    instances => ['ssd','hdd']
+  }
+
+  elasticsearch::plugin { 'x-pack':
     instances => ['ssd','hdd']
   }
 
