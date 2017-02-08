@@ -5,3 +5,4 @@ influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
 influxdb::server::wal_logging_enabled: false
 influxdb::server::trace_logging_enabled: false
+influxdb::server::http_max_row_limit: 0
