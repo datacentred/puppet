@@ -12,7 +12,6 @@ dc_elasticsearch::es_hash:
   cloud.aws.s3.endpoint: 'storage.datacentred.io'
   cluster.name: 'logstash_platform_services'
   discovery.zen.minimum_master_nodes: 2
-  discovery.zen.ping.multicast.enabled: false
   discovery.zen.ping.unicast.hosts:
     - "elasticsearch0.%{::domain}"
     - "elasticsearch1.%{::domain}"
@@ -27,3 +26,5 @@ dc_elasticsearch::es_hash:
   thread_pool.index.size: 4
   thread_pool.search.queue_size: '100'
   thread_pool.search.size: 20
+  xpack.security.enabled: false
+  xpack.watcher.enabled: false
