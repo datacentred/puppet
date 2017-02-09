@@ -21,168 +21,54 @@ class dc_icinga2_plugins (
     ensure => directory,
   }
 
-  file { '/usr/local/lib/nagios/plugins/check_ceilometer_update':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceilometer_update',
-  }
+  $plugins = [
+    'check_active_users',
+    'check_anti_affinity',
+    'check_bmc',
+    'check_bmc_dns',
+    'check_ceilometer',
+    'check_ceilometer_update',
+    'check_ceph_health',
+    'check_ceph_memory',
+    'check_ceph_mon',
+    'check_ceph_osd',
+    'check_ceph_rgw',
+    'check_cinder',
+    'check_conntrack',
+    'check_disk_latency',
+    'check_disk_queue',
+    'check_elasticsearch',
+    'check_glance',
+    'check_haproxy',
+    'check_interface',
+    'check_ip_pool',
+    'check_keystone',
+    'check_log_courier',
+    'check_memory_edac',
+    'check_mongodb',
+    'check_mtu',
+    'check_neutron_api',
+    'check_neutron_agents',
+    'check_nova',
+    'check_nova_agents',
+    'check_openstack_service',
+    'check_pgsql_replication',
+    'check_psu',
+    'check_rabbitmq_aliveness',
+    'check_rabbitmq_objects',
+    'check_rabbitmq_overview',
+    'check_rabbitmq_partitions',
+    'check_rabbitmq_server',
+    'check_rabbitmq_watermark',
+    'check_raid',
+    'check_sas_phy',
+    'check_tftp',
+  ]
 
-  file { '/usr/local/lib/nagios/plugins/check_ip_pool':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ip_pool',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_anti_affinity':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_anti_affinity',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_bmc':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_bmc',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_ceph_health':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_health',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_ceph_mon':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_mon',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_ceph_osd':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_osd',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_ceph_rgw':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_rgw',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_neutron_api':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_neutron_api',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_neutron_agents':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_neutron_agents',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_nova_agents':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_nova_agents',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_openstack_service':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_openstack_service',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_pgsql_replication':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_pgsql_replication',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_psu':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_psu',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_sas_phy':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_sas_phy',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_ceph_memory':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceph_memory',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_disk_queue':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_disk_queue',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_disk_latency':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_disk_latency',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_log_courier':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_log_courier',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_memory_edac':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_memory_edac',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_raid':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_raid',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_active_users':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_active_users',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_mtu':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_mtu',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_haproxy':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_haproxy',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_tftp':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_tftp',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_interface':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_interface',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_aliveness':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_aliveness',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_objects':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_objects',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_overview':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_overview',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_partitions':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_partitions',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_server':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_server',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_rabbitmq_watermark':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_rabbitmq_watermark',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_elasticsearch':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_elasticsearch',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_mongodb':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_mongodb',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_bmc_dns':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_bmc_dns',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_keystone':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_keystone',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_glance':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_glance',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_cinder':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_cinder',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_nova':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_nova',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_ceilometer':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_ceilometer',
-  }
-
-  file { '/usr/local/lib/nagios/plugins/check_conntrack':
-    source => 'puppet:///modules/dc_icinga2_plugins/check_conntrack',
+  $plugins.each |$plugin| {
+    file { "/usr/local/lib/nagios/plugins/${plugin}":
+      content => file("dc_icinga2_plugins/${plugin}"),
+    }
   }
 
   ensure_packages($packages)
