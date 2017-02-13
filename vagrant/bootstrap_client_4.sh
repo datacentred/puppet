@@ -10,7 +10,7 @@ source /etc/lsb-release
 # Configuration
 ################################################################################
 
-PUPPET_VERSION='1.7.0-1trusty'
+PUPPET_VERSION="1.7.0-1$(lsb_release -c -s)"
 
 PACKAGES="puppet-agent=$PUPPET_VERSION puppetdb-termini git software-properties-common"
 
