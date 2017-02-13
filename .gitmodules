@@ -319,3 +319,6 @@
 [submodule "modules/sysfs"]
 	path = modules/sysfs
 	url = https://github.com/danfoster/puppet-sysfs
+[submodule "modules/salt"]
+	path = modules/salt
+	url = https://github.com/aboe76/puppet-salt
