@@ -67,6 +67,12 @@ glance::policy::policies:
   glance-manage_image_cache:
     key: 'manage_image_cache'
     value: 'role:admin'
+  glance-restricted:
+    key: 'restricted'
+    value: "not ('os':(windowstest)s and role:_member_)"
+  glance-download_image:
+    key: 'download_image'
+    value: 'role:admin or rule:restricted'
 
 glance::config::api_config:
   DEFAULT/public_endpoint:

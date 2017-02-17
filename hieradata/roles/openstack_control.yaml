@@ -2,6 +2,7 @@
 classes:
   - '::dc_profile::openstack::keystone'
   - '::dc_profile::openstack::glance'
+  - '::dc_profile::openstack::glance_meta'
   - '::dc_profile::openstack::cinder'
   - '::dc_profile::openstack::neutron::server'
   - '::dc_profile::openstack::nova::control'

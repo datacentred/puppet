@@ -1,0 +1,5 @@
+[os=windows]
+create = admin
+read = admin
+update = admin
+delete = admin
