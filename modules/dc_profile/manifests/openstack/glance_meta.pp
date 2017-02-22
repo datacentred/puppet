@@ -16,6 +16,9 @@ class dc_profile::openstack::glance_meta {
   file { '/usr/lib/python2.7/dist-packages/nova/scheduler/filters/aggregate_property_fixed.py':
     ensure  => present,
     content => file('dc_profile/aggregate_property_fixed.py'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => 0644,
   }
 
 }
