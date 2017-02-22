@@ -104,14 +104,19 @@ nova::scheduler::filter::scheduler_default_filters:
  - ServerGroupAntiAffinityFilter
  - ServerGroupAffinityFilter
  - IsolatedHostsFilter
+ - AggregatePropertyFixed
 nova::scheduler::filter::ram_allocation_ratio: 0.9
 nova::scheduler::filter::cpu_allocation_ratio: 8.0
 nova::scheduler::filter::scheduler_host_subset_size: '10'
 
-nova::scheduler::filter::isolated_hosts:
-  - 'absorb'
-nova::scheduler::filter::isolated_images:
-  - '07a93cc5-b3f1-499b-a7f2-ab420526ae1f'
+#nova::scheduler::filter::isolated_hosts:
+#  - 'absorb'
+#nova::scheduler::filter::isolated_images:
+#  - '07a93cc5-b3f1-499b-a7f2-ab420526ae1f'
+
+nova::scheduler::filter::scheduler_available_filters:
+ - nova.scheduler.filters.all_filters
+ - nova.scheduler.filters.aggregate_property_fixed.AggregatePropertyFixed
 
 nova::config::nova_config:
   serial_console/enabled:
