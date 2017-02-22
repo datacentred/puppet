@@ -1,0 +1,5 @@
+---
+classes:
+  - '::dc_profile::salt::minion'
+
+salt::minion::minion_master: "salt-master.%{::domain}"
