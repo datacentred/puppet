@@ -1,6 +1,7 @@
 ---
 classes:
   - '::dc_icinga::hostgroup_nova_compute'
+  - '::dc_profile::hardware::cstates'
   - '::dc_profile::mon::libvirt'
   - '::dc_profile::openstack::ceilometer::agent'
   - '::dc_profile::openstack::ceph::nova'
