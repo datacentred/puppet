@@ -15,3 +15,5 @@ dc_icinga2::services::rabbitmq::password: "%{hiera('rabbitmq_monuser_password')}
 
 dc_icinga2::services::mongodb::username: "%{hiera('mongodb_admin_user')}"
 dc_icinga2::services::mongodb::password: "%{hiera('mongodb_admin_password')}"
+
+apache::mpm_module: 'prefork'
