@@ -94,7 +94,7 @@ nova::network::neutron::vif_plugging_timeout: '0'
 
 nova::scheduler::filter::scheduler_default_filters:
  - AggregateInstanceExtraSpecsFilter
- - AggregateImagePropertiesIsolation
+# - AggregateImagePropertiesIsolation
  - AggregateMultiTenancyIsolation
  - RetryFilter
  - AvailabilityZoneFilter
@@ -104,7 +104,7 @@ nova::scheduler::filter::scheduler_default_filters:
  - ServerGroupAntiAffinityFilter
  - ServerGroupAffinityFilter
  - IsolatedHostsFilter
- - AggregatePropertyFixed
+ - dc_AggregateImagePropertiesIsolation
 nova::scheduler::filter::ram_allocation_ratio: 0.9
 nova::scheduler::filter::cpu_allocation_ratio: 8.0
 nova::scheduler::filter::scheduler_host_subset_size: '10'
@@ -116,7 +116,7 @@ nova::scheduler::filter::scheduler_host_subset_size: '10'
 
 nova::scheduler::filter::scheduler_available_filters:
  - nova.scheduler.filters.all_filters
- - nova.scheduler.filters.aggregate_property_fixed.AggregatePropertyFixed
+ - nova.scheduler.filters.aggregate_property_fixed.dc_AggregateImagePropertiesIsolation
 
 nova::config::nova_config:
   serial_console/enabled:
