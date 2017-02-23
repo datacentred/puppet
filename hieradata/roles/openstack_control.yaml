@@ -6,6 +6,7 @@ classes:
   - '::dc_profile::openstack::cinder'
   - '::dc_profile::openstack::neutron::server'
   - '::dc_profile::openstack::nova::control'
+  - '::dc_profile::openstack::nova::filter'
   - '::dc_profile::openstack::ceilometer::control'
   - '::dc_profile::openstack::heat'
   - '::dc_profile::openstack::horizon'
