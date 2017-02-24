@@ -17,17 +17,30 @@ UBUNTU_VBOXES = {
   'xenial' => 'puppetlabs/ubuntu-16.04-64-nocm',
 }
 
+UBUNTU_LBOXES = {
+  'xenial' => 'ceph/ubuntu-xenial',
+}
+
 # Ensure everyone is running a consistent vagrant version
 Vagrant.require_version '~> 1.8.0'
 
 Vagrant.configure('2') do |config|
-  config.vm.box              = UBUNTU_VBOXES[UBUNTU_RELEASE]
   config.vm.box_check_update = true
+  # If libvirt env var in use, use the libvirt boxen
+  if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt'
+      config.vm.box              = UBUNTU_LBOXES[UBUNTU_RELEASE]
+  else
+      config.vm.box              = UBUNTU_VBOXES[UBUNTU_RELEASE]
+  end
+       
 
   # Provision using the root account.  This allows us to modify
   # the uid/gid namespaces before provisioning with puppet
-  config.ssh.username = 'root'
-  config.ssh.password = 'puppet'
+  # Unsupported on libvirt images currently
+  if ENV['VAGRANT_DEFAULT_PROVIDER'] != 'libvirt'
+    config.ssh.username = 'root'
+    config.ssh.password = 'puppet'
+  end
 
   if Vagrant.has_plugin?("landrush")
     config.landrush.enabled = true
@@ -59,6 +72,9 @@ Vagrant.configure('2') do |config|
     end
     box.vm.provider 'vmware_fusion' do |vmware, override|
       vmware.vmx['memsize'] = 4096
+    end
+    box.vm.provider :libvirt do |libvirt, override|
+      libvirt.memory = 4096
     end
 
     box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['server']
@@ -112,6 +128,13 @@ Vagrant.configure('2') do |config|
         vmware.linked_clone = true
       end
 
+      # Libvirt provider
+      box.vm.provider :libvirt do |libvirt, override|
+        libvirt.cpus   = options.has_key?(:cpus) ? options.cpus.to_i : 2
+        libvirt.memory = options.has_key?(:memory) ? options.memory.to_i : 1024
+        libvirt.nested = true
+      end
+
       # Provision the box
       box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['client']
       box.vm.provision 'puppet' do |puppet|
@@ -129,6 +152,9 @@ Vagrant.configure('2') do |config|
           '--storeconfigs',
           '--storeconfigs_backend puppetdb',
         ]
+        if ENV['DEBUG'] == 'true' || ENV['DEBUG'] == 'yes'
+          puppet.options << '--debug'
+        end
       end
     end
   end
