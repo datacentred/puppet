@@ -91,9 +91,6 @@
 [submodule "modules/ethtool"]
 	path = modules/ethtool
 	url = https://github.com/bobtfish/puppet-ethtool
-[submodule "modules/php"]
-	path = modules/php
-	url = https://github.com/jippi/puppet-php.git
 [submodule "modules/external_facts"]
 	path = modules/external_facts
 	url = https://github.com/datacentred/datacentred-external_facts
@@ -319,3 +316,6 @@
 [submodule "modules/sysfs"]
 	path = modules/sysfs
 	url = https://github.com/danfoster/puppet-sysfs
+[submodule "modules/php"]
+	path = modules/php
+	url = https://github.com/voxpupuli/puppet-php
