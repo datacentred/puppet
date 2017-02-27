@@ -19,14 +19,22 @@ dc_resolvconf::dnsclient_tail: 'options timeout:2 attempts:20 rotate'
 
 # Galera/Rabbitmq Cluster
 # See .vagrantuser.galera for hostname and IP address mappings
+galera::bind_address: '0.0.0.0'
+galera::local_ip: "%{::ipaddress_eth1}"
 galera::galera_master: "osdbmq0.%{::domain}"
 galera::galera_servers:
   - '10.0.32.2'
   - '10.0.32.3'
   - '10.0.32.4'
-galera::local_ip: "%{ipaddress_eth0}"
-galera::bind_address: "%{ipaddress_eth0}"
+osdbmq_rabbitmq_pw: 'OjCurgIjurr4'
+rabbitmq::environment_variables:
+    RABBITMQ_NODE_PORT: 5672
+    RABBITMQ_NODE_IP_ADDRESS: "%{::ipaddress_eth1}"
+    RABBITMQ_MNESIA_BASE: '/srv/rabbitmq'
+    RABBITMQ_MNESIA_DIR: "/srv/rabbitmq/%{::hostname}"
 rabbitmq::wipe_db_on_cookie_change: true
+rabbitmq::node_ip_address: "%{::ipaddress_eth1}"
+
 mysql::server::monitor::mysql_monitor_hostname: '127.0.0.1'
 mysql_monitor_pw: 'ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAEg5XSlA1+a0NSvVSm9dJXierZLBGmy5kMIURDqtK71NRFVNvQ82qdcxXJdfeaLhAgwX9Wso6WC/+sYSTCuMs7Tw/yuJyBG3nutYOfoeOrcy57sgx/WN2NSNqbufa8sUrK5Ap/6CuInHBQGSd5OkykGWIvHVf5UzGhBv0oSiUb4+1SLSg17HKxAEiZh+3xGUZseVEsSJSfyozZyAf84w12+od1/gAa3cpuuP2ThoKpsbrq+kh4zEVtG4RnfXC4qNbEsJ6Qmgu5d60V8BuP51Jr/nAIrdvGVzxJX9mb0EYbdo7R923cmI4UWBDsd9Op6mb3FREnloFM6q0t66YwODfLTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDbZGsjJJaHiJCirmltOksdgBB3etAq5YauxMREetPkxVn9]'
 
