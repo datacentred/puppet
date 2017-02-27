@@ -3,3 +3,9 @@ create = admin
 read = admin
 update = admin
 delete = admin
+
+[.*]
+create = admin
+read = admin
+update = admin
+delete = admin
