@@ -2,7 +2,6 @@
 #
 # Basic class for installing logrotate and subsequent configuration
 #
-#
 # Parameters:
 #
 # Actions:
@@ -31,7 +30,7 @@ class dc_profile::log::logrotate {
     ifempty       => false,
     delaycompress => true,
     compress      => true,
-    postrotate    => 'invoke-rc.d rsyslog rotate > /dev/null',
+    postrotate    => 'service rsyslog rotate > /dev/null',
   }
 
   # Replacement for other logrotate rules in default rsyslog rotation
@@ -57,7 +56,7 @@ class dc_profile::log::logrotate {
     compress      => true,
     delaycompress => true,
     sharedscripts => true,
-    postrotate    => 'invoke-rc.d rsyslog rotate > /dev/null',
+    postrotate    => 'service rsyslog rotate > /dev/null',
   }
 
   # Remove installed logrotate config for above
