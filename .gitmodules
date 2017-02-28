@@ -322,3 +322,6 @@
 [submodule "wordpress"]
 	path = modules/wordpress
 	url = https://github.com/datacentred/puppet-wordpress.git
+[submodule "modules/locales"]
+	path = modules/locales
+	url = https://github.com/saz/puppet-locales
