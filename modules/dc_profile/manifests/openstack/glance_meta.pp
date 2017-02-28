@@ -12,4 +12,8 @@ class dc_profile::openstack::glance_meta {
   value => '/usr/local/property_pr_rules',
   }
 
+  glance_api_config { 'DEFAULT/property_protection_rule_format' :
+  value => 'roles',
+  }
+
 }
