@@ -25,9 +25,11 @@ module Puppet::Parser::Functions
       # Generate a key to be inserted into icinga2::object::host::vars
       key = "foreman_interfaces[\"#{interface['identifier']}\"]"
 
+      netmask = interface['subnet'] && interface['subnet']['mask'] || '255.255.255.255'
+
       output[key] = {
         'address' => interface['ip'],
-        'netmask' => interface['subnet']['mask'],
+        'netmask' => netmask,
         'mac' => interface['mac'],
       }
 
