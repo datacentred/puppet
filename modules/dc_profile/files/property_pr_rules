@@ -1,4 +1,4 @@
-[os=windows]
+[oswindows]
 create = admin
 read = admin
 update = admin

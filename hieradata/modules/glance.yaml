@@ -69,7 +69,7 @@ glance::policy::policies:
     value: 'role:admin'
   glance-restricted:
     key: 'restricted'
-    value: "not ('os':(windows)s and role:_member_)"
+    value: "not ('true':%(oswindows)s and role:_member_)"
   glance-download_image:
     key: 'download_image'
     value: 'role:admin or rule:restricted'
