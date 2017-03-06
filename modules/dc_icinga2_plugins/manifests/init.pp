@@ -61,6 +61,7 @@ class dc_icinga2_plugins (
     'check_rabbitmq_server',
     'check_rabbitmq_watermark',
     'check_raid',
+    'check_routes',
     'check_sas_phy',
     'check_tftp',
   ]

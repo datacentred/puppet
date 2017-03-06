@@ -1,0 +1,53 @@
+#!/usr/bin/python
+"""Checks if certain routes are present on certain virtual routers."""
+from __future__ import print_function
+from subprocess import check_output
+import sys
+import re
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """Main"""
+    routerone = 'qrouter-03269516-c774-4717-97af-ac96d86be035'
+    routertwo = 'qrouter-4ba9f6d1-86e5-40e6-9dbb-63e823e08ee7'
+
+    checkcommand1 = ['ip', 'netns', 'exec', routerone, 'ip', 'route']
+    checkcommand2 = ['ip', 'netns', 'exec', routertwo, 'ip', 'route']
+
+    firstroutes = check_output(checkcommand1)
+    secondroutes = check_output(checkcommand2)
+
+    missinglist = []
+
+    lista = [
+        '185.43.218.128/25 dev qg-4f820813-87  scope link',
+        '185.98.150.0/23 dev qg-4f820813-87  scope link',
+    ]
+    listb = [
+        '185.43.218.128/25 dev qg-fa1846fb-d0  scope link',
+        '185.98.148.0/23 dev qg-fa1846fb-d0  scope link',
+    ]
+
+    uts = [x for x in lista if re.search(x, firstroutes) is None]
+    for route in uts:
+        missinglist.append(route + ' is missing from ' + routerone)
+
+    uts = [x for x in listb if re.search(x, secondroutes) is None]
+    for route in uts:
+        missinglist.append(route + ' is missing from ' + routertwo)
+
+    if not missinglist:
+        print('Everything is fine')
+        sys.exit(NAGIOS_OK)
+    else:
+        print('Some rules are missing')
+        for line in missinglist:
+            print(line)
+        sys.exit(NAGIOS_WARNING)
+
+if __name__ == "__main__":
+    main()
