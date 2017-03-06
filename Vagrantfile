@@ -18,29 +18,36 @@ UBUNTU_VBOXES = {
 }
 
 UBUNTU_LBOXES = {
-  'xenial' => 'ceph/ubuntu-xenial',
+  'trusty' => {
+                :box      => 'dc_ubuntu_14.04_64',
+                :box_url  => 'https://storage.datacentred.io/swift/v1/public-images/vagrant/ubuntu-14.04-amd64-libvirt.box',
+                :checksum => 'ebcb8744172ceb486b27937ca85664e1f18bd5c777a4484dbbc96da4b63eb42f',
+              },
+  'xenial' => {
+                :box      => 'dc_ubuntu_16.04_64',
+                :box_url  => 'https://storage.datacentred.io/swift/v1/public-images/vagrant/ubuntu-16.04-amd64-libvirt.box',
+                :checksum => '5bef88bc23b3e966f3b82f15238ea84186f9173da672675701220a2671d8bc67',
+              }
 }
 
 # Ensure everyone is running a consistent vagrant version
 Vagrant.require_version '~> 1.8.0'
 
 Vagrant.configure('2') do |config|
-  config.vm.box_check_update = true
-  # If libvirt env var in use, use the libvirt boxen
   if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt'
-      config.vm.box              = UBUNTU_LBOXES[UBUNTU_RELEASE]
+    config.vm.box_download_checksum_type = 'sha256'
+    config.vm.box                   = UBUNTU_LBOXES[UBUNTU_RELEASE][:box]
+    config.vm.box_url               = UBUNTU_LBOXES[UBUNTU_RELEASE][:box_url]
+    config.vm.box_download_checksum = UBUNTU_LBOXES[UBUNTU_RELEASE][:checksum]
   else
-      config.vm.box              = UBUNTU_VBOXES[UBUNTU_RELEASE]
+    config.vm.box              = UBUNTU_VBOXES[UBUNTU_RELEASE]
   end
-       
+  config.vm.box_check_update = true
 
   # Provision using the root account.  This allows us to modify
   # the uid/gid namespaces before provisioning with puppet
-  # Unsupported on libvirt images currently
-  if ENV['VAGRANT_DEFAULT_PROVIDER'] != 'libvirt'
-    config.ssh.username = 'root'
-    config.ssh.password = 'puppet'
-  end
+  config.ssh.username = 'root'
+  config.ssh.password = 'puppet'
 
   if Vagrant.has_plugin?("landrush")
     config.landrush.enabled = true
@@ -75,6 +82,11 @@ Vagrant.configure('2') do |config|
     end
     box.vm.provider :libvirt do |libvirt, override|
       libvirt.memory = 4096
+      libvirt.cpus = 2
+      libvirt.nested = true
+      libvirt.driver = 'kvm'
+      libvirt.nic_model_type = 'virtio'
+      libvirt.cpu_mode = 'host-passthrough'
     end
 
     box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['server']
@@ -85,6 +97,11 @@ Vagrant.configure('2') do |config|
   config.user.boxes.each do |name, options|
     config.vm.define name.to_s do |box|
       box.vm.hostname = "#{name.to_s}.vagrant.test"
+      if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt'
+        box.vm.synced_folder './', '/vagrant', type: 'nfs'
+      else
+        box.vm.synced_folder './', '/vagrant', type: 'rsync'
+      end
 
       # Copy the eyaml keys
       config.vm.provision 'file', source: config.user.eyaml.private_key, destination: 'private_key.pkcs7.pem'
@@ -133,11 +150,17 @@ Vagrant.configure('2') do |config|
         libvirt.cpus   = options.has_key?(:cpus) ? options.cpus.to_i : 2
         libvirt.memory = options.has_key?(:memory) ? options.memory.to_i : 1024
         libvirt.nested = true
+        libvirt.driver = 'kvm'
+        libvirt.nic_model_type = 'virtio'
+        libvirt.cpu_mode = 'host-passthrough'
       end
 
       # Provision the box
       box.vm.provision 'shell', path: PROVISIONERS[PUPPET_VERSION]['client']
       box.vm.provision 'puppet' do |puppet|
+        if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt'
+          puppet.synced_folder_type = 'nfs'
+        end
         puppet.binary_path       = '/opt/puppetlabs/bin'
         puppet.environment       = 'vagrant'
         puppet.environment_path  = '..'
