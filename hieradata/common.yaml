@@ -140,6 +140,13 @@ admins:
     pass: '$6$QyQCaBzT$IbP3OhTZ9H9DXclxZQTcZPBPVvvw1kNVa38E3F/rxBBftGHgNkloFOCexK1cmnM.YpqR217LyOfv/GBaL0H451'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDA0zHgmhRWu09mtQ55jDT5BqNGSd83mPUAgui9YG66qfHHYl4Bp4Chy7W10/mTz+ev8dqxBTdp08EWJwUqKOLuGGX657t1wVHYDY05rqTAs7epoq6J5Ya300jRuVIzZXZi/l9FkVPJtSx5taRW76EIWPsnHzAKj+KD0KxegcZCQ9wq8JPzQauvVugvv00wS3ECVq4jwF9EMl5MSeXX++hB0ctpiaHqBkKnwBVGJGV4wR8cpoanAG7TpEzQYtw/tRfPUz3aIKUZlwt4xrXiTOAYxHWtAzzBkDQpqwPAx6wbkFQK9+P2W/vqmdAU6Gm6yAlqgk8VFQ7gHOYbKT8xIdML'
     email: 'peter.tar@datacentred.co.uk'
+  bart:
+    uid: '1011'
+    gid: 'sysadmin'
+    pass: '$6$5xg6ZDTW$n.4jueWG515lhoFsNa3b.q8hdJhUeZZxaK3D1C3tLxO2e9GXIE60XA2hle5kvZ8biKOyB2AwqUdIZGoM4/7Ce1'
+    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCazpEMrUH/tmliXAH1xduBbiodcGEHv7j/C1gmJLPL1w1KiPhCoymqA/PUEERZDZ2Lpl02i0wL7ynP7s7uQ/2T5fmNWhjTY9/X+KuQ8vxUGSAWMKeD4/Hy5mJ+OeutsChbtztSGjKBJbogXHhO7xYXkGOylKVW3UuRUC2Wl0Brke0kw1ZRpgUBz6UjlXEncwYtVh0XcTaKG3KcOzEEoG1a3AE2DcFyLPJyXYuFqCERdAAqQR0vGUaQhZvash1CxBsUoCdi+xCfZ9cXH6v3VYg59Nrl1NGKfdRrQ1Il/uiBPfQ12XJo7oreciLAN2DMsytOXdxuy9y2xd/YugKGW3q/'
+    email: 'bartosz.miklaszewski@datacentred.co.uk'
+
 
 # storage server directory location
 #
@@ -185,6 +192,7 @@ ldap_groups:
         - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=peter,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=bart,ou=People,dc=datacentred,dc=co,dc=uk'
   # Super users able to perform all operations
   'cn=jenkins-admin,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
@@ -211,6 +219,7 @@ ldap_groups:
         - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=peter,ou=People,dc=datacentred,dc=co,dc=uk'
+        - 'cn=bart,ou=People,dc=datacentred,dc=co,dc=uk'
 
 ldap_users:
   'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk':
@@ -325,6 +334,23 @@ ldap_users:
         - radiusprofile
       ou:
         - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
+  'cn=bart,ou=People,dc=datacentred,dc=co,dc=uk':
+    tag: user
+    attributes:
+      uid: bart 
+      givenName: Bartosz
+      sn: Miklaszewski 
+      mail: "bartosz.miklaszewski@datacentred.co.uk"
+      userPassword: "{CRYPT}$6$5xg6ZDTW$n.4jueWG515lhoFsNa3b.q8hdJhUeZZxaK3D1C3tLxO2e9GXIE60XA2hle5kvZ8biKOyB2AwqUdIZGoM4/7Ce1"
+      radiusReplyItem: APC-Service-Type = 1
+      objectClass:
+        - person
+        - inetOrgPerson
+        - user
+        - radiusprofile
+      ou:
+        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
+
 
 # Add APC PDU default user password
 #
