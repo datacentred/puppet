@@ -1,3 +1,5 @@
 ---
 dc_icinga2::role: 'master'
 dc_icinga2::host::import: 'master-host'
+
+apache::mpm_module: 'prefork'
