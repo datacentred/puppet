@@ -232,18 +232,18 @@ use_dynamic_credentials = false
 
 # Valid primary image reference to be used in tests. This is a
 # required option (string value)
-image_ref = <%= @image_ref %>
+image_ref = <%= $image_ref %>
 
 # Valid secondary image reference to be used in tests. This is a
 # required option, but if only one image is available duplicate the
 # value of image_ref above (string value)
-image_ref_alt = <%= @image_ref_alt %>
+image_ref_alt = <%= $image_ref_alt %>
 
 # Valid primary flavor to use in tests. (string value)
-flavor_ref = <%= @flavor_ref %>
+flavor_ref = <%= $flavor_ref %>
 
 # Valid secondary flavor to be used in tests. (string value)
-flavor_ref_alt = <%= flavor_ref_alt %>
+flavor_ref_alt = <%= $flavor_ref_alt %>
 
 # Time in seconds between build status checks. (integer value)
 #build_interval = 1
@@ -427,7 +427,7 @@ attach_encrypted_volume = false
 #
 
 # Where the dashboard can be found (string value)
-dashboard_url = <%= @dashboard_url %>
+dashboard_url = <%= $dashboard_url %>
 
 # Login page for the dashboard (string value)
 # This option is deprecated for removal.
@@ -528,7 +528,7 @@ dashboard_url = <%= @dashboard_url %>
 #ca_certificates_file = <None>
 
 # Full URI of the OpenStack Identity API (Keystone), v2 (string value)
-uri = <%= @identity_uri %>
+uri = <%= $identity_uri %>
 
 # Full URI of the OpenStack Identity API (Keystone), v3 (string value)
 #uri_v3 = <None>
@@ -541,7 +541,7 @@ auth_version = v2
 # region name unless they are set explicitly. If no such region is
 # found in the service catalog, the first found one is used. (string
 # value)
-region = <%= @region %>
+region = <%= $region %>
 
 # The admin endpoint type to use for OpenStack Identity (Keystone) API
 # v2 (string value)
@@ -562,14 +562,14 @@ region = <%= @region %>
 # Username to use for Nova API requests. (string value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
-username = <%= @username %>
+username = <%= $username %>
 
 # Project name to use for Nova API requests. (string value)
 # Deprecated group/name - [DEFAULT]/tenant_name
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
-project_name = <%= @project_name %>
-tenant_name = <%= @project_name %>
+project_name = <%= $project_name %>
+tenant_name = <%= $project_name %>
 
 # Role required to administrate keystone. (string value)
 #admin_role = admin
@@ -577,7 +577,7 @@ tenant_name = <%= @project_name %>
 # API key to use when authenticating. (string value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
-password = <%= @password %>
+password = <%= $password %>
 
 # Domain name for authentication (Keystone V3).The same domain applies
 # to user and project (string value)
@@ -589,20 +589,20 @@ password = <%= @password %>
 # value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
-alt_username = <%= @alt_username %>
+alt_username = <%= $alt_username %>
 
 # Alternate user's Project name to use for Nova API requests. (string
 # value)
 # Deprecated group/name - [DEFAULT]/alt_tenant_name
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
-alt_project_name = <%= @alt_project_name %>
-alt_tenant_name = <%= @alt_project_name %>
+alt_project_name = <%= $alt_project_name %>
+alt_tenant_name = <%= $alt_project_name %>
 
 # API key to use when authenticating as alternate user. (string value)
 # This option is deprecated for removal.
 # Its value may be silently ignored in the future.
-alt_password = <%= @alt_password %>
+alt_password = <%= $alt_password %>
 
 # Alternate domain name for authentication (Keystone V3).The same
 # domain applies to user and project (string value)
@@ -762,11 +762,11 @@ api_v2 = true
 
 # Id of the public network that provides external connectivity (string
 # value)
-public_network_id = <%= @public_network_id %>
+public_network_id = <%= $public_network_id %>
 
 # Default floating network name. Used to allocate floating IPs when
 # neutron is enabled. (string value)
-floating_network_name = <%= @floating_network_name %>
+floating_network_name = <%= $floating_network_name %>
 
 # Id of the public router that provides external connectivity. This
 # should only be used when Neutron's 'allow_overlapping_ips' is set to
@@ -1210,7 +1210,7 @@ image_ssh_password = cubswin:)
 # The volume region name to use. If empty, the value of
 # identity.region is used instead. If no such region is found in the
 # service catalog, the first found one is used. (string value)
-region = <%= @region %>
+region = <%= $region %>
 
 # The endpoint type to use for the volume service. (string value)
 # Allowed values: public, admin, internal, publicURL, adminURL, internalURL
