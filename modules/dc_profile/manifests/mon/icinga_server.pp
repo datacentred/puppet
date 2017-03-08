@@ -19,7 +19,6 @@ class dc_profile::mon::icinga_server {
   contain apache::mod::rewrite
 
   contain php
-  contain php::apache
 
   contain dc_icinga::server
   contain dc_icinga::hostgroup_http
