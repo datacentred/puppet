@@ -1,3 +1,4 @@
+# pylint: disable=F0401
 """
 AggregateImagePropertiesIsolation filter module.
 """
@@ -25,11 +26,13 @@ class AggregateImagePropertiesIsolationDC(filters.BaseHostFilter):
     """AggregateImagePropertiesIsolation works with image properties.
     This version introduces a new implementation of the filter.
     """
+    # pylint: disable=too-few-public-methods
 
     # Aggregate data and instance type does not change within a request
     run_filter_once_per_request = True
 
-    def host_passes(self, host_state, filter_properties):
+    @classmethod
+    def host_passes(cls, host_state, filter_properties):
         """Checks a host in an aggregate that metadata key/value match
         with image properties.
         """
