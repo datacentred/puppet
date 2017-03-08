@@ -694,4 +694,11 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'checkroutes':
+    command => [
+      '"sudo"',
+      '"/usr/local/lib/nagios/plugins/check_routes"',
+    ],
+  }
+
 }
