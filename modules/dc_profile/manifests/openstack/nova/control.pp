@@ -41,7 +41,7 @@ class dc_profile::openstack::nova::control {
     content => file('dc_profile/aggregate_image_properties_isolation_dc.py'),
     owner   => 'root',
     group   => 'root',
-    mode    => 0644,
+    mode    => '0644',
   }
 
 }
