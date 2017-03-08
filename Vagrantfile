@@ -99,8 +99,6 @@ Vagrant.configure('2') do |config|
       box.vm.hostname = "#{name.to_s}.vagrant.test"
       if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt'
         box.vm.synced_folder './', '/vagrant', type: 'nfs'
-      else
-        box.vm.synced_folder './', '/vagrant', type: 'rsync'
       end
 
       # Copy the eyaml keys
