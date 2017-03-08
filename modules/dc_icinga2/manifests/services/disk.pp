@@ -18,7 +18,7 @@ class dc_icinga2::services::disk {
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',
-    reject_where  => 'host.vars.role == "netflow_monitoring" && mountpoint.contains("flowdata")',
+    ignore_where  => 'host.vars.role == "netflow_monitoring" && mountpoint.contains("flowdata")',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
