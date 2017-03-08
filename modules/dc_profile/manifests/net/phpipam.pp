@@ -3,8 +3,6 @@
 class dc_profile::net::phpipam {
   include php
   include php::pear
-  include php::extension::mysql
-  include php::extension::ldap
 
   include apache
   include apache::mod::php

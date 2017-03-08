@@ -9,3 +9,7 @@ databases:
     password: "%{hiera('phpipam::db_pass')}"
 
 apache::mpm_module: 'prefork'
+
+php::extensions:
+  mysql:
+  ldap:
