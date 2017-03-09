@@ -20,6 +20,22 @@ class dc_elasticsearch::elasticsearch_pruning (
     hour    => 3,
     minute  => 0,
   }
+
+  file { '/root/.curator/':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
+  file { '/root/.curator/curator.yml':
+    ensure  => file,
+    content => file('dc_elasticsearch/curator.yml'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0640',
+  }
+
   file { '/usr/local/etc/es_tier_pruning.yaml':
     ensure  => file,
     content => template('dc_elasticsearch/es_tier_pruning.yaml.erb'),
@@ -30,7 +46,7 @@ class dc_elasticsearch::elasticsearch_pruning (
 
   # Cleanup old indices
   cron { 'elasticsearch_cleanup':
-    command => '/usr/local/bin/curator /usr/local/etc/es_cleanup.yaml.erb',
+    command => '/usr/local/bin/curator /usr/local/etc/es_cleanup.yaml',
     user    => 'root',
     hour    => 4,
     minute  => 0,
