@@ -11,5 +11,5 @@ databases:
 apache::mpm_module: 'prefork'
 
 php::extensions:
-  mysql:
-  ldap:
+  mysql: {}
+  ldap: {}
