@@ -54,4 +54,17 @@ class dc_profile::stronghold::node::db {
     table      => '*.*',
     user       => "${db_user}@${web_fqdn}",
   }
+
+  mysql_user { "${db_user}@localhost":
+    ensure        => 'present',
+    password_hash => mysql_password($db_password),
+  } ->
+
+  mysql_grant { "${db_user}@localhost/*.*":
+    ensure     => 'present',
+    options    => ['GRANT'],
+    privileges => ['ALL'],
+    table      => '*.*',
+    user       => "${db_user}@localhost",
+  }
 }
