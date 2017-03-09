@@ -54,7 +54,7 @@ nova::api::neutron_metadata_proxy_shared_secret: "%{hiera('neutron_metadata_secr
 nova::api::keystone_ec2_url: "https://%{hiera('os_api_host')}:5000/v2.0/tokens"
 nova::api::default_floating_pool: 'external'
 nova::api::osapi_compute_workers: '4'
-nova::api::metadata_workers: '2'
+nova::api::metadata_workers: '4'
 nova::api::ec2_workers: '1'
 
 nova::cert::enabled: true
