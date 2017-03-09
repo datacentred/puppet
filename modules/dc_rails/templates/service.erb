@@ -1,0 +1,19 @@
+[Unit]
+Description=<%= @description %>
+
+[Service]
+Type=<%= @type %>
+SyslogIdentifier=<%= @name %>
+EnvironmentFile=<%= @environment_file %>
+WorkingDirectory=<%= @working_directory %>
+ExecStart=<%= @command %>
+<% if @pid_file -%>
+PIDFile=<%= @pid_file %>
+<% end -%>
+<% if @unicorn -%>
+ExecStop=/bin/kill -QUIT $MAINPID
+ExecReload=/bin/kill -USR2 $MAINPID
+<% end -%>
+
+[Install]
+WantedBy=multi-user.target
