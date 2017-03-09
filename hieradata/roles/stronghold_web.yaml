@@ -9,7 +9,7 @@ ruby:
 
 assets_fqdn: "assets-cdn.%{::domain}"
 
-rsync_destination: "assets-cdn.%{::domain}:/var/www/html"
+rsync_destination: "assets-upload.%{::domain}:/var/www/html"
 
 sirportly_htpasswd: sirportly:$apr1$lyo.kgNr$C5T6ReaSQqkROYViquAsp.
 

@@ -1,0 +1,2 @@
+---
+rsync_destination: "assets-cdn.%{::domain}:/var/www/html"
