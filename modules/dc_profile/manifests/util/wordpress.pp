@@ -16,7 +16,4 @@ class dc_profile::util::wordpress {
     require => Package['nginx'],
   }
 
-  create_resources(nginx::resource::vhost, hiera_hash(nginx_vhost))
-  create_resources(nginx::resource::location, hiera_hash(nginx_locations))
-
 }
