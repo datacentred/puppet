@@ -6,8 +6,8 @@ classes:
 queue_fqdn: "queue.%{::domain}"
 web_fqdn: "my.%{::domain}"
 
-queue_ip: '67.207.70.2'
-web_ip: '67.207.70.0'
+queue_ip: '138.68.164.172'
+web_ip: '138.68.164.200'
 
 db_user: stronghold
 db_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAeKt1WM78J2PpH61WzMjHzxaf8jH+xfbK75o8Ald3ShcCkOy4xO6ZfYbvTaRNu6i8OqYkyKRjrCdpvpzcNgwsOGcexNcAo/jWiI6050TKTV6/Ianok2v8wp44jFvR8GyNflxn+ThUguLKzXkpO7TBsbTqfQ4tMLK1szd4uIwoU6+VpW1X09FU8ec0L16bmLehByYizCsKsyn6XVvIWbPZUPHEEW/2sl6grABtTD/tprFe4/cYPLhSDMMaBgl3IpbI6E5/YVdLWJifuroaAcQmdRVnoZ0zpdkNyuiGtxbjVACAPcZ3qH4T7Lbdoc4dCP6LpjndqPrl4s9WXj94IpxAFzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBC7op23KPBt38+vOyY6LGmQgBBj+C1+FCDFNvMBc2Kk9j5K]
