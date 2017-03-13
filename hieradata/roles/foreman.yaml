@@ -8,3 +8,5 @@ apache::mod::passenger::passenger_high_performance: 'on'
 sysctls::values:
     vm.swappiness:
         value: '1'
+
+memcached::listen_ip: "%{::ipaddress}"

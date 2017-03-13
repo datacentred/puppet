@@ -67,3 +67,5 @@ containers:
     image: 'registry.datacentred.services:5000/cinder:mitaka-02dfe89'
   horizon:
     image: 'registry.datacentred.services:5000/horizon:mitaka-d332a40'
+
+memcached::listen_ip: "%{::ipaddress}"
