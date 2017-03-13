@@ -97,6 +97,7 @@ class dc_profile::stronghold::node::web {
   }
 
   firewall { '040 allow HTTP':
+    ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 80,
@@ -104,6 +105,7 @@ class dc_profile::stronghold::node::web {
   }
 
   firewall { '050 allow HTTPS':
+    ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 443,
