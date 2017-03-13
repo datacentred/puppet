@@ -7,10 +7,9 @@ ruby:
   gems_version: 2.5.1
   rubygems_update: false
 
-memcached:
-  max_memory: '2048'
-  item_size: '25m'
-  listen_ip: '0.0.0.0'
+memcached::max_memory: '2048'
+memcached::item_size: '25m'
+memcached::listen_ip: '0.0.0.0'
 
 web_ip: '138.68.164.200'
 
