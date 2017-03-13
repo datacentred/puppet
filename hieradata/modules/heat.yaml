@@ -7,6 +7,8 @@ heat::keystone::auth::region: "%{hiera('os_region')}"
 heat::keystone::auth::public_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
 heat::keystone::auth::admin_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
 heat::keystone::auth::internal_url: "https://%{hiera('os_api_host')}:8004/v1/%(tenant_id)s"
+heat::keystone::auth::trusts_delegated_roles: "['heat_stack_owner']"
+heat::keystone::auth::configure_delegated_roles: false
 
 heat::keystone::auth_cfn::configure_user: false
 heat::keystone::auth_cfn::configure_user_role: false
@@ -27,7 +29,7 @@ heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
 
-heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/"
 heat::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 
 heat::keystone_user: 'heat'
@@ -36,12 +38,18 @@ heat::keystone_password: "%{hiera('keystone_heat_password')}"
 heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
 
 heat::api::enabled: true
-heat::api::api_cfn::enabled: true
+heat::api::api_cfn::enabled: false
 
 heat::engine::enabled: true
 heat::engine::heat_metadata_server_url: "https://%{hiera('os_api_host')}:8000"
 heat::engine::heat_waitcondition_server_url: "https://%{hiera('os_api_host')}:8000/v1/waitcondition"
 heat::engine::heat_watch_server_url: "https://%{hiera('os_api_host')}:8003"
 heat::engine::auth_encryption_key: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAL1UrPA+kOTYc0Vc0bF40nVBCCzNfDtjg0HkKOcNkhfdYeNu4BgUx7iI7/W1Sl8unzJ2oqV8R3VPtDeR+rZjp2PicbukS4iwr/U6e23lcbUdXXvqAHcES8DCT7hpXO7WfosTYufzQmiVvqeSoSwzDUBGOeSIxSODSYIKLkZuRCv8844J7cxVUVMlmI7bGpVGdhfHIY2kaD/5uwci+VFZxrKqZcY9mPwqwOV/l7o6I1YPvO3KFlF+kmd7t9P5eGq4HGOksU1u9ujV+8ScAdOdYa6NWOAp1YBaCrX+C3/TLt64DfM/d3qAxoCs/PbTmOJKadRo66CBFDrZ+96CLJrXETDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAUjmzGMzRUbGreThM7SUcFgDA9yYasx3OoNOZ8h6KvY2sKeSCMg4f5B35GCOZV05pnZ1c4ExswZp8X42VOt0KmY+c=]
-heat::engine::configure_delegated_roles: false
-heat::engine::deferred_auth_method: 'password'
+heat::engine::deferred_auth_method: 'trusts'
+
+heat::keystone::domain::domain_name: 'heat'
+heat::keystone::domain::domain_admin: "%{hiera('heat_domain_admin')}"
+heat::keystone::domain::domain_password: "%{hiera('heat_domain_password')}"
+heat::keystone::domain::manage_domain: true
+heat::keystone::domain::manage_user: true
+heat::keystone::domain::manage_role: true

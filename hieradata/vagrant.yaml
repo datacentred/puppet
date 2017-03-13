@@ -110,6 +110,9 @@ heat_db: 'heat'
 heat_db_user: 'heat'
 heat_db_pass: 'yeOv7wrixVer'
 
+heat_domain_admin: 'heat_domain_admin'
+heat_domain_password: '5QUIWduOZv1u'
+
 # ceph
 ceph_admin_key: 'a5e4c417-a30f-44a1-bf07-d0356ca58968'
 
