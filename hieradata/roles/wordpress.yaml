@@ -1,14 +1,15 @@
 classes: 
   - '::dc_profile::util::wordpress'
+  - '::dc_profile::util::wordpress_memcache'
 
-nginx_locations:
+nginx::nginx_locations:
   'datacentred':
-    vhost: 'datacentred'
+    server: 'datacentred'
     location: '~* \.php$'
     fastcgi: 'unix:/var/run/php7-fpm.sock'
     www_root: '/srv/www/datacentred.co.uk'
 
-nginx_vhost:
+nginx::nginx_servers:
   'datacentred':
     server_name: 
       - 'datacentred.co.uk'
