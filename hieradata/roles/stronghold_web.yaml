@@ -100,7 +100,7 @@ nginx::nginx_servers:
     ssl: true
     ssl_cert: /etc/ssl/certs/STAR_datacentred_io.pem
     ssl_key: /etc/ssl/certs/STAR_datacentred_io.pem
-    ssl_client_certificate: /etc/ssl/certs/admin-my.datacentred.io-ca.crt
+    ssl_client_cert: /etc/ssl/certs/admin-my.datacentred.io-ca.crt
     ssl_ciphers: EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5
     ssl_verify_client: optional
     ssl_session_timeout: 10m
