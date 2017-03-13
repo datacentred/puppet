@@ -10,8 +10,9 @@ ruby:
 memcached:
   max_memory: '2048'
   item_size: '25m'
+  listen_ip: '0.0.0.0'
 
-web_ip: '67.207.70.0'
+web_ip: '138.68.164.200'
 
 sidekiq_default_workers: 7
 
