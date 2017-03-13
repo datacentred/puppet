@@ -78,7 +78,7 @@ class dc_profile::stronghold::node::web {
     group     => 'rails',
     option    => 'rails assets:precompile',
     cwd       => '/home/rails/stronghold',
-    rails_env => 'vagrant',
+    rails_env => $::environment,
   } ~>
 
   rsync::put { hiera(rsync_destination):
