@@ -9,6 +9,11 @@ stronghold::star_datacentred_io_pem: ENC[PKCS7,MIIlfQYJKoZIhvcNAQcDoIIlbjCCJWoCA
 dc_ssh::config:
   MaxAuthTries:
     value: '3'
+  AllowGroups:
+    value:
+      - 'root'
+  PermitRootLogin:
+    value: 'without-password'
 
 nginx::nginx_servers:
   'stronghold assets http redirect':
