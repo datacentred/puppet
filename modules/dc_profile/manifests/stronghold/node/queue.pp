@@ -40,18 +40,18 @@ class dc_profile::stronghold::node::queue {
   }
 
   firewall { '070 allow Redis':
-    proto    => tcp,
-    action   => 'accept',
-    dport    => 6379,
-    provider => ['iptables', 'ip6tables'],
-    source   => hiera(web_ip),
+    ensure => 'present',
+    proto  => tcp,
+    action => 'accept',
+    dport  => 6379,
+    source => hiera(web_ip),
   }
 
   firewall { '080 allow Memcached':
-    proto    => tcp,
-    action   => 'accept',
-    dport    => 11211,
-    provider => ['iptables', 'ip6tables'],
-    source   => hiera(web_ip),
+    ensure => 'present',
+    proto  => tcp,
+    action => 'accept',
+    dport  => 11211,
+    source => hiera(web_ip),
   }
 }

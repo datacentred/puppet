@@ -14,6 +14,7 @@ class dc_profile::stronghold::node::db {
   $web_ip       = hiera(web_ip);
 
   firewall { '030 allow MySQL web node':
+    ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 3306,
@@ -22,6 +23,7 @@ class dc_profile::stronghold::node::db {
   }
 
   firewall { '031 allow MySQL queue node':
+    ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 3306,
