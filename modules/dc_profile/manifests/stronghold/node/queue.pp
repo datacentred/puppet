@@ -7,7 +7,7 @@ class dc_profile::stronghold::node::queue {
   include ::redis
   include dc_profile::stronghold::firewall
 
-  $main_queue_options = "-e ${::environment} -c ${::sidekiq_default_workers} -q default -q mailers -g default"
+  $main_queue_options = "-e ${::environment} -c 7 -q default -q mailers -g default"
 
   dc_rails::application { 'stronghold':
     environment_variables => hiera(stronghold::environment_variables),
