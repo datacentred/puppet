@@ -32,6 +32,7 @@ nginx::nginx_servers:
     try_files:
       - '$uri $uri/ =404'
     listen_port: 443
+    ipv6_enable: true
     www_root: /var/www/html
     ssl: true
     ssl_cert: /etc/ssl/certs/STAR_datacentred_io.pem
