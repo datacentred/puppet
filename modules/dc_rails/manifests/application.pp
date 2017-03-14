@@ -69,12 +69,10 @@ define dc_rails::application(
     content => hiera(stronghold::ssh_config),
   } ->
 
-  file { "/home/${user}/.ssh/known_hosts":
-    ensure  => present,
-    owner   => $user,
-    group   => $user,
-    mode    => '0600',
-    content => hiera(github::known_host_entry),
+  sshkey { 'github.com':
+    ensure => 'present',
+    key    => hiera(github::known_host_entry),
+    type   => 'ssh-rsa',
   }
 
   file { "/var/log/${user}":

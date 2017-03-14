@@ -20,24 +20,11 @@ class dc_profile::stronghold::node::assets {
     mode   => '0755',
   }
 
-  file { '/root/.ssh':
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0700',
-  }
-
-  file { '/root/.ssh/authorized_keys':
-    ensure => 'file',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0700',
-  }
-
-  file_line { 'authorized_keys':
-    ensure => 'present',
-    line   => hiera(stronghold::authorized_key),
-    path   => '/root/.ssh/authorized_keys',
+  ssh_authorized_key { "root@my.${::domain}":
+    ensure => present,
+    user   => 'root',
+    type   => 'ssh-rsa',
+    key    => hiera(stronghold::authorized_key),
   }
 
   file { '/etc/ssl/certs/STAR_datacentred_io.pem':
