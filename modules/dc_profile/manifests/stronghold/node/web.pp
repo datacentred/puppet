@@ -66,12 +66,13 @@ class dc_profile::stronghold::node::web {
   } ~>
 
   ruby::bundle { "bundle exec rails assets:precompile ${name}":
-    command   => 'exec',
-    user      => 'rails',
-    group     => 'rails',
-    option    => 'rails assets:precompile',
-    cwd       => '/home/rails/stronghold',
-    rails_env => $::environment,
+    command     => 'exec',
+    user        => 'rails',
+    group       => 'rails',
+    option      => 'rails assets:precompile',
+    cwd         => '/home/rails/stronghold',
+    rails_env   => $::environment,
+    refreshonly => true,
   } ~>
 
   rsync::put { hiera(rsync_destination):
