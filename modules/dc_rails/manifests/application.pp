@@ -112,12 +112,13 @@ define dc_rails::application(
   } ~>
 
   ruby::bundle { "bundle install ${name}":
-    user    => $user,
-    group   => $user,
-    option  => '--deployment',
-    cwd     => "/home/${user}/${name}",
-    timeout => 600,
-    tries   => 3,
+    user        => $user,
+    group       => $user,
+    option      => '--deployment',
+    cwd         => "/home/${user}/${name}",
+    timeout     => 600,
+    tries       => 3,
+    refreshonly => true,
   } ~>
 
   ruby::bundle { "bundle exec rails db:create ${name}":
@@ -128,6 +129,7 @@ define dc_rails::application(
     cwd         => "/home/${user}/${name}",
     environment => "DB_PASSWORD=${db_password}",
     rails_env   => $::environment,
+    refreshonly => true,
   } ~>
 
   ruby::bundle { "bundle exec rails db:migrate ${name}":
@@ -138,5 +140,6 @@ define dc_rails::application(
     cwd         => "/home/${user}/${name}",
     environment => "DB_PASSWORD=${db_password}",
     rails_env   => $::environment,
+    refreshonly => true,
   }
 }
