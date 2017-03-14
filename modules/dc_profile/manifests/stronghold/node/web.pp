@@ -21,13 +21,6 @@ class dc_profile::stronghold::node::web {
     mode   => '0661',
   }
 
-  file { '/root/.ssh/known_hosts':
-    ensure => present,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0600',
-  }
-
   file { '/etc/ssl/certs/STAR_datacentred_io.pem':
     ensure  => file,
     owner   => 'root',
@@ -60,10 +53,10 @@ class dc_profile::stronghold::node::web {
     content => hiera(sirportly_htpasswd),
   }
 
-  file_line { 'assets private key root':
+  sshkey { "assets-cdn.${::domain}":
     ensure => 'present',
-    line   => hiera(assets::known_host_entry),
-    path   => '/root/.ssh/known_hosts',
+    key    => hiera(assets::known_host_entry),
+    type   => 'ecdsa-sha2-nistp256',
   } ->
 
   dc_rails::application { 'stronghold':
