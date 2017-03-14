@@ -84,6 +84,7 @@ nginx::nginx_servers:
     server_name:
       - "%{::fqdn}"
     listen_port: 443
+    ipv6_enable: true
     proxy: http://stronghold
     proxy_read_timeout: '90'
     proxy_connect_timeout: '90'
