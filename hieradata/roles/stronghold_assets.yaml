@@ -21,6 +21,7 @@ nginx::nginx_servers:
     server_name:
       - "%{::fqdn}"
     listen_port: 80
+    ipv6_enable: true
     ssl: false
     ssl_redirect: true
     use_default_location: false
