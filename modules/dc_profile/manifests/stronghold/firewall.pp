@@ -6,6 +6,7 @@ class dc_profile::stronghold::firewall {
   include ::firewall
 
   firewall { '000 accept all to lo interface':
+    ensure  => 'present',
     proto   => 'all',
     iniface => 'lo',
     action  => 'accept',
@@ -18,13 +19,28 @@ class dc_profile::stronghold::firewall {
     provider => 'ip6tables',
   }
 
+  firewall { '001 accept all icmp':
+    ensure => 'present',
+    proto  => 'icmp',
+    action => 'accept',
+  }
+
+  firewall { '001 accept all icmp (v6)':
+    ensure   => 'present',
+    proto    => 'ipv6-icmp',
+    action   => 'accept',
+    provider => 'ip6tables',
+  }
+
   firewall { '005 Allow inbound SSH':
+    ensure => 'present',
     dport  => 22,
     proto  => tcp,
     action => accept,
   }
 
   firewall { '005 Allow inbound SSH (v6)':
+    ensure   => 'present',
     dport    => 22,
     proto    => tcp,
     action   => accept,
@@ -38,6 +54,7 @@ class dc_profile::stronghold::firewall {
   }
 
   firewall { '020 accept related established rules (v6)':
+    ensure   => 'present',
     proto    => 'all',
     state    => ['RELATED', 'ESTABLISHED'],
     action   => 'accept',
@@ -45,11 +62,13 @@ class dc_profile::stronghold::firewall {
   }
 
   firewallchain { 'INPUT:filter:IPv4':
+    ensure => 'present',
     purge  => true,
     policy => drop,
   }
 
   firewallchain { 'INPUT:filter:IPv6':
+    ensure => 'present',
     purge  => true,
     policy => drop,
   }
