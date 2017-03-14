@@ -10,25 +10,43 @@ class dc_profile::stronghold::node::db {
   $db_password  = hiera(db_password);
   $queue_fqdn   = hiera(queue_fqdn);
   $web_fqdn     = hiera(web_fqdn);
-  $queue_ip     = hiera(queue_ip);
-  $web_ip       = hiera(web_ip);
+  $queue_ip_v4  = hiera(queue_ip_v4);
+  $queue_ip_v6  = hiera(queue_ip_v6);
+  $web_ip_v4    = hiera(web_ip_v4);
+  $web_ip_v6    = hiera(web_ip_v6);
 
   firewall { '030 allow MySQL web node':
+    ensure => 'present',
+    proto  => tcp,
+    action => 'accept',
+    dport  => 3306,
+    source => $web_ip_v4,
+  }
+
+  firewall { '030 allow MySQL web node (v6)':
     ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 3306,
-    source   => $web_ip,
-    provider => ['iptables', 'ip6tables'],
+    source   => $web_ip_v6,
+    provider => 'ip6tables',
   }
 
   firewall { '031 allow MySQL queue node':
+    ensure => 'present',
+    proto  => tcp,
+    action => 'accept',
+    dport  => 3306,
+    source => $queue_ip_v4,
+  }
+
+  firewall { '031 allow MySQL queue node (v6)':
     ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 3306,
-    source   => $queue_ip,
-    provider => ['iptables', 'ip6tables'],
+    source   => $queue_ip_v6,
+    provider => 'ip6tables',
   }
 
   mysql_user { "${db_user}@${queue_fqdn}":
