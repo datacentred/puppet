@@ -9,9 +9,10 @@ ruby:
 
 memcached::max_memory: '2048'
 memcached::max_item_size: '25m'
-memcached::listen_ip: '0.0.0.0'
+memcached::listen_ip: ''
 
-web_ip: '138.68.164.200'
+web_ip_v4: '138.68.164.200'
+web_ip_v6: '2a03:b0c0:1:a1::11a8:7001'
 
 redis::bind: 0.0.0.0
 redis::requirepass: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAMEwrUMuIfWqWs4QJKINQ+Z0H7cJSs8gDjaujFdyavppbCYXEpBP6Oi7p1On94gSIcEOE94bEzcy1mCSQ1AcRmkNlNxkd61JzD030h4SgP5K0/yIJu4H1voaYRpsQK6DqLdkrTAXWkwcxJqDT/o2exvyNjaASbbvTbQK/ufrVPScahDJL6SUY7zVcvZU8O6abDU0fxqZR89/4Zvqv8W/oZ8CAaS/BnVM/hkEa4ieDTDnxvuP680nULVrW1TJwIJY5MUA/wkYeHAFf7NkiMfkFpE+UnsS9+rhfZnAcrazbcnPRZrSX+yOH9uaVdTZhUMWiKhqDtye97CHmYUZOBDYJTTB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDeoecJMpKOC0hoInXE/MHmgFAqffuQyUuFrJRqDflvjj+tgBv1w6z1QGEyE7Hk+Jpwv7Sqs70Sf9zbdy2tbxLxGmO9n+gPuR36yGI9zOmDHa3n9Qb2Ds/YK4eaHGvIBfS2mA==]

@@ -97,19 +97,33 @@ class dc_profile::stronghold::node::web {
   }
 
   firewall { '040 allow HTTP':
+    ensure => 'present',
+    proto  => tcp,
+    action => 'accept',
+    dport  => 80,
+  }
+
+  firewall { '040 allow HTTP (v6)':
     ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 80,
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '050 allow HTTPS':
+    ensure => 'present',
+    proto  => tcp,
+    action => 'accept',
+    dport  => 443,
+  }
+
+  firewall { '050 allow HTTPS (v6)':
     ensure   => 'present',
     proto    => tcp,
     action   => 'accept',
     dport    => 443,
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   docker::image { 'datacentred/docker-openstack-client':
