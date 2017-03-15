@@ -19,7 +19,7 @@ define dc_rails::application(
   user { $user:
     ensure     => 'present',
     managehome => true,
-    groups     => ['sudo'],
+    groups     => ['sudo','docker'],
     system     => true,
   } ->
 
