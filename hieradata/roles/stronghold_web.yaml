@@ -116,7 +116,7 @@ nginx::nginx_servers:
       large_client_header_buffers: 4 16k
     add_header:
       'Strict-Transport-Security': 'max-age=31536000; includeSubdomains; preload'
-    http2: on
+    http2: 'on'
     error_pages:
       '404': /404.html
       '400': /403.html
