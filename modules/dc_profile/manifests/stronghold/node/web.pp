@@ -5,7 +5,6 @@
 class dc_profile::stronghold::node::web {
   include dc_profile::stronghold::firewall
   include ::nginx
-  include ::docker
 
   file { '/var/run/rails':
     ensure => 'directory',
