@@ -8,6 +8,7 @@ define dc_rails::application(
   $user                  = undef
 ){
   include dc_rails::ruby
+  include ::docker
 
   $db_password = $environment_variables['db_password']
 
