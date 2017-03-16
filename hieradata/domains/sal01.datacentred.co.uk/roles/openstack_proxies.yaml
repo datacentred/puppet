@@ -48,7 +48,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'httpchk'
         - 'tcplog'
         - 'forwardfor'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -66,7 +66,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'httpchk'
         - 'tcplog'
         - 'forwardfor'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -83,7 +83,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -99,7 +99,7 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -116,7 +116,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -133,7 +133,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       timeout client: '180s'
@@ -148,7 +148,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'leastconn'
+      balance: 'roundrobin'
     collect_exported: false
   nova-ec2:
     mode: 'http'
@@ -179,7 +179,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -196,7 +196,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'httpchk'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       rspadd:
         - 'Strict-Transport-Security:\ max-age=31536000'
         - 'X-Frame-Options:\ SAMEORIGIN'
@@ -231,7 +231,7 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       timeout client: '360s'
       timeout server: '360s'
@@ -249,7 +249,7 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcpka'
         - 'tcplog'
         - 'forwardfor'
-      balance: 'source'
+      balance: 'roundrobin'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
     collect_exported: false
@@ -265,7 +265,7 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'tcplog'
-      balance: 'source'
+      balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
