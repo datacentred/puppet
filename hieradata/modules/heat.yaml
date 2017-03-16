@@ -29,7 +29,7 @@ heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
 
-heat::auth_uri: "https://%{hiera('os_api_host')}:5000/"
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v3"
 heat::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 
 heat::keystone_user: 'heat'
