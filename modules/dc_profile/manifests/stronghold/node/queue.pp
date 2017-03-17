@@ -6,6 +6,7 @@ class dc_profile::stronghold::node::queue {
   include ::memcached
   include ::redis
   include dc_profile::stronghold::firewall
+  include dc_profile::stronghold::monitoring
 
   $main_queue_options = "-e ${::environment} -c 7 -q default -q mailers -g default"
 
