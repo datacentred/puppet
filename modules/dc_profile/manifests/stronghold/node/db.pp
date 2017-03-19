@@ -4,6 +4,7 @@
 #
 class dc_profile::stronghold::node::db {
   include dc_profile::stronghold::firewall
+  include dc_profile::stronghold::monitoring
   include ::mysql::server
 
   $db_user      = hiera(db_user);

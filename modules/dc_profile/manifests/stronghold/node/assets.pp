@@ -4,6 +4,7 @@
 #
 class dc_profile::stronghold::node::assets {
   include dc_profile::stronghold::firewall
+  include dc_profile::stronghold::monitoring
   include ::nginx
 
   file { '/var/www':

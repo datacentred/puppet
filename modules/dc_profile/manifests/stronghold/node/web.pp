@@ -4,6 +4,7 @@
 #
 class dc_profile::stronghold::node::web {
   include dc_profile::stronghold::firewall
+  include dc_profile::stronghold::monitoring
   include ::nginx
 
   file { '/var/run/rails':
