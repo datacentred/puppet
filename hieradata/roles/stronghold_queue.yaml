@@ -2,10 +2,7 @@
 classes:
   - '::dc_profile::stronghold::node::queue'
 
-ruby:
-  version: 2.3.1
-  gems_version: 2.5.1
-  rubygems_update: false
+stronghold::ruby_version: 2.3.1
 
 memcached::max_memory: '2048'
 memcached::max_item_size: '25m'

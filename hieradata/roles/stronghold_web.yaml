@@ -2,10 +2,7 @@
 classes:
   - '::dc_profile::stronghold::node::web'
 
-ruby:
-  version: 2.3.1
-  gems_version: 2.5.1
-  rubygems_update: false
+stronghold::ruby_version: 2.3.1
 
 assets_fqdn: "assets-cdn.%{::domain}"
 

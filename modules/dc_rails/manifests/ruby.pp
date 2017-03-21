@@ -3,8 +3,8 @@
 # Configure Ruby and related dev packages
 #
 class dc_rails::ruby {
-  include ::ruby
   include ::ruby::dev
+  include ::rbenv
 
   $deps = ['git-core',             'curl',            'zlib1g-dev',
           'libssl-dev',           'libreadline-dev', 'libyaml-dev',
@@ -12,4 +12,9 @@ class dc_rails::ruby {
           'libcurl4-openssl-dev', 'libffi-dev',      'build-essential']
 
   ensure_packages($deps)
+
+  rbenv::plugin { 'rbenv/ruby-build': }
+  rbenv::build  { hiera(stronghold::ruby_version):
+    global => true
+  }
 }
