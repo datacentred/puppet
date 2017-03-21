@@ -6,6 +6,7 @@ class dc_icinga2::services {
 
   include ::dc_icinga2::services::bmc
   include ::dc_icinga2::services::ceph
+  include ::dc_icinga2::services::canary_routers
   include ::dc_icinga2::services::checkroutes
   #include ::dc_icinga2::services::conntrack
   include ::dc_icinga2::services::dhcp

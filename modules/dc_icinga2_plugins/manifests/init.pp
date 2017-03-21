@@ -26,6 +26,7 @@ class dc_icinga2_plugins (
     'check_anti_affinity',
     'check_bmc',
     'check_bmc_dns',
+    'check_canary',
     'check_ceilometer',
     'check_ceilometer_update',
     'check_ceph_health',

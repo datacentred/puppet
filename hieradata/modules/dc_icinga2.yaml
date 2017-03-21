@@ -15,3 +15,10 @@ dc_icinga2::services::rabbitmq::password: "%{hiera('rabbitmq_monuser_password')}
 
 dc_icinga2::services::mongodb::username: "%{hiera('mongodb_admin_user')}"
 dc_icinga2::services::mongodb::password: "%{hiera('mongodb_admin_password')}"
+
+dc_icinga2::services::canary_routers::username: "%{hiera('monitoring_user')}"
+dc_icinga2::services::canary_routers::password: "%{hiera('monitoring_password')}"
+dc_icinga2::services::canary_routers::auth_url: 'https://compute.datacentred.io:5000/v3'
+dc_icinga2::services::canary_routers::proj_domain: 'Default'
+dc_icinga2::services::canary_routers::usr_domain: 'Default'
+dc_icinga2::services::canary_routers::proj_name: 'monitoring_tenancy'
