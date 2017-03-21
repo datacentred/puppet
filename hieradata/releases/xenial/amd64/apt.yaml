@@ -27,7 +27,7 @@ apt::sources:
       source: 'http://apt.datacentred.services/pubkey.gpg'
   dell_openmanage_mirror:
     location: "http://%{hiera('dell_openmanage_mirror_path')}"
-    release: 'trusty'
+    release: 'xenial'
     repos: 'openmanage'
     key:
       id: '42550ABD1E80D7C1BC0BAD851285491434D8786F'
