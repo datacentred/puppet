@@ -69,3 +69,4 @@ containers:
     image: 'registry.datacentred.services:5000/horizon:mitaka-d332a40'
 
 memcached::listen_ip: "%{::ipaddress}"
+ceilometer::api::enabled: false
