@@ -18,6 +18,14 @@ class dc_profile::puppet::puppet4_setup {
     system => true,
   } ->
 
+  # This seems to be owned by root:root by default now
+  file { '/etc/puppetlabs/puppet/ssl/private_keys':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'puppet',
+    mode   => '0750',
+  } ->
+
   # Update the private key from root:root 640 to something accessible by the puppet group
   file { "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem":
     ensure => file,
