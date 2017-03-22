@@ -24,7 +24,7 @@ class dc_profile::util::docs {
     members => [ 'localhost:8080' ],
   }
 
-  nginx::resource::vhost { $::fqdn:
+  nginx::resource::server { $::fqdn:
     proxy       => 'http://confluence',
     server_name => [ $::fqdn, 'ddms.datacentred.co.uk', 'http://confluence' ],
   }

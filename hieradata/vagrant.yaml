@@ -166,3 +166,6 @@ internal_sysmail_address: "sysmail@%{domain}"
 
 serial_console::serial_port:               "ttyS0"
 serial_console::baud_rate:                 "115200"
+
+# docs
+confluence_database_password: 'Laiv1eiJie'
