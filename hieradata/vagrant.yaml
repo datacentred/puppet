@@ -10,6 +10,7 @@ excludes:
   - '::dc_profile::openstack::keepalived'
   - '::dc_profile::openstack::proxyip'
   - '::dc_profile::util::hosts'
+  - '::newrelic::server::linux'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 
