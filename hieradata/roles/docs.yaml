@@ -5,3 +5,7 @@ postgresql::globals::encoding: 'UTF-8'
 postgresql::global::locale: 'en_US.UTF-8'
 postgresql::server::postgres_password: "%{hiera('confluence_postgresql_password')}"
 postgresql::server::listen_addresses: 'localhost'
+
+dc_confluence::dbuser: "%{hiera('confluence_docs_dbuser')}"
+dc_confluence::dbpassword: "%{hiera('confluence_docs_dbpassword')}"
+dc_confluence::dbname: "%{hiera('confluence_docs_dbname')}"
