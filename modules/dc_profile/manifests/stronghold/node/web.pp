@@ -84,7 +84,7 @@ class dc_profile::stronghold::node::web {
     description       => 'Stronghold\'s web process',
     type              => 'forking',
     environment_file  => '/etc/default/stronghold.env',
-    command           => "/usr/local/bin/bundle exec unicorn -D -E ${::environment} -c /home/rails/stronghold/config/unicorn.rb",
+    command           => "/usr/local/rbenv/shims/bundle exec unicorn -D -E ${::environment} -c /home/rails/stronghold/config/unicorn.rb",
     working_directory => '/home/rails/stronghold',
     pid_file          => '/var/run/rails/stronghold/unicorn.pid',
     unicorn           => true,

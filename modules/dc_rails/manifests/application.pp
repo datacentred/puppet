@@ -119,6 +119,7 @@ define dc_rails::application(
     cwd         => "/home/${user}/${name}",
     timeout     => 600,
     tries       => 3,
+    path        => '/usr/local/rbenv/shims/bundle',
     refreshonly => true,
   } ~>
 
