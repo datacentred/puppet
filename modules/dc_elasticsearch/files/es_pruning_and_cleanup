@@ -1,0 +1,4 @@
+#!/bin/bash
+
+/usr/local/bin/curator /usr/local/etc/es_tier_pruning.yaml &>> /var/log/es_pruning_cleanup.log
+/usr/local/bin/curator /usr/local/etc/es_cleanup.yaml &>> /var/log/es_pruning_cleanup.log
