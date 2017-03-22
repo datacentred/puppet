@@ -21,7 +21,7 @@ class dc_profile::puppet::puppet4_setup {
   # This seems to be owned by root:root by default now
   file { '/etc/puppetlabs/puppet/ssl/private_keys':
     ensure => directory,
-    owner  => 'root',
+    owner  => 'puppet',
     group  => 'puppet',
     mode   => '0750',
   } ->
