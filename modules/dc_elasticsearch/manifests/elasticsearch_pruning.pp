@@ -14,11 +14,20 @@ class dc_elasticsearch::elasticsearch_pruning (
     require  => Package['python-pip'],
   }
   # SSD tier cleanup
-  cron { 'elasticsearch_tier_pruning':
-    command => '/usr/local/bin/curator /usr/local/etc/es_tier_pruning.yaml',
+  cron { 'elasticsearch_pruning_and_cleanup':
+    command => '/usr/local/bin/es_pruning_and_cleanup',
     user    => 'root',
     hour    => 3,
     minute  => 0,
+    require => File['/usr/local/bin/es_pruning_and_cleanup'],
+  }
+
+  file { '/usr/local/bin/es_pruning_and_cleanup':
+    ensure  => file,
+    content => file('dc_elasticsearch/es_pruning_and_cleanup'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0554',
   }
 
   file { '/root/.curator/':
@@ -42,14 +51,6 @@ class dc_elasticsearch::elasticsearch_pruning (
     owner   => 'root',
     group   => 'root',
     mode    => '0640',
-  }
-
-  # Cleanup old indices
-  cron { 'elasticsearch_cleanup':
-    command => '/usr/local/bin/curator /usr/local/etc/es_cleanup.yaml',
-    user    => 'root',
-    hour    => 4,
-    minute  => 0,
   }
 
   file { '/usr/local/etc/es_cleanup.yaml':
