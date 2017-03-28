@@ -9,6 +9,7 @@ import fcntl
 import socket
 import struct
 import sys
+import os
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -19,6 +20,22 @@ SIOCGIFADDR = 0x8915
 SIOCGIFNETMASK = 0x891b
 SIOCGIFHWADDR = 0x8927
 
+def getipv6(ifname):
+    """Get the interface's ipv6 address"""
+
+    with open('/proc/net/if_inet6') as fil:
+        lines = fil.readlines()
+    for line in lines:
+        if ifname in line:
+            addressonly = line[:32]
+            formatted = ':'.join([addressonly[i:i+4] for i in range(0, len(addressonly), 4)])
+            return formatted
+
+def ipv6(addr):
+    """Cleaning up ipv6 addresses"""
+
+    clean = socket.inet_ntop(socket.AF_INET6, socket.inet_pton(socket.AF_INET6, addr.rstrip(os.linesep))) # pylint: disable=line-too-long
+    return clean
 
 def netdevice_ioctl(ioctl, ifname):
     """Returns a netdevice metric for a specific interface"""
@@ -43,6 +60,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--interface', required=True)
     parser.add_argument('-a', '--address')
+    parser.add_argument('-b', '--vsix')
     parser.add_argument('-n', '--netmask')
     parser.add_argument('-m', '--macaddr')
     args = parser.parse_args()
@@ -50,18 +68,24 @@ def main():
     address = netdevice_ioctl(SIOCGIFADDR, args.interface)
     netmask = netdevice_ioctl(SIOCGIFNETMASK, args.interface)
     macaddr = netdevice_ioctl(SIOCGIFHWADDR, args.interface)
+    vsixarg = ''
+    if args.vsix:
+        vsixarg = ipv6(args.vsix)
+    vsixlocal = ipv6(getipv6(args.interface))
 
     code = NAGIOS_OK
     if args.address and args.address != address:
         code = NAGIOS_WARNING
     if args.netmask and args.netmask != netmask:
         code = NAGIOS_WARNING
+    if vsixarg and vsixarg != vsixlocal:
+        code = NAGIOS_WARNING
     if args.macaddr and args.macaddr != macaddr:
         code = NAGIOS_WARNING
 
     status = ['OK', 'WARNING', 'CRITICAL'][code]
-    print '{}: address {}, netmask {}, hwaddr {}'.\
-          format(status, address, netmask, macaddr)
+    print '{}: address {}, netmask {}, ipv6 {}, hwaddr {}'.\
+          format(status, address, netmask, vsixlocal, macaddr)
 
     sys.exit(code)
 

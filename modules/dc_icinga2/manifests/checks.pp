@@ -401,6 +401,7 @@ class dc_icinga2::checks {
     arguments => {
       '-i' => '$interface_name$',
       '-a' => '$interface_address$',
+      '-b' => '$interface_vsix$',
       '-n' => '$interface_netmask$',
       '-m' => '$interface_macaddr$',
     },
