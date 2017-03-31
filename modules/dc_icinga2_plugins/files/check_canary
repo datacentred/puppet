@@ -1,0 +1,69 @@
+#!/usr/bin/python
+"""Checks if canary routers are present on the correct nodes."""
+from __future__ import print_function
+import argparse
+import sys
+from keystoneauth1 import session # pylint: disable=import-error
+from keystoneauth1.identity import v3 # pylint: disable=import-error
+import neutronclient.v2_0.client as network # pylint: disable=import-error
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """Main"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-u', '--user', help='User name', required=True)
+    parser.add_argument('-p', '--password', help='Password', required=True)
+    parser.add_argument('-a', '--authurl', help='Auth url', required=True)
+    parser.add_argument('-d', '--projdomain', help='Project domain', required=True)
+    parser.add_argument('-D', '--usrdomain', help='User domain', required=True)
+    parser.add_argument('-n', '--projectname', help='Project name', required=True)
+
+    args = parser.parse_args()
+
+    auth = v3.Password(user_domain_name=args.usrdomain,
+                       username=args.user,
+                       password=args.password,
+                       project_domain_name=args.projdomain,
+                       project_name=args.projectname,
+                       auth_url=args.authurl)
+
+    sess = session.Session(auth=auth)
+    neutron = network.Client(session=sess)
+
+    routers = {
+        '7a480884-c06c-49f5-958d-1c1aa4c54116' : 'osnet0',
+        '61d252f3-677a-46e4-b843-3bee5043808b' : 'osnet1',
+        '61df15a1-6e07-4bd2-9e89-ccafe9a78661' : 'osnet2',
+        '20d0285a-b203-4f93-ae28-849917f4ebbb' : 'osnet3',
+    }
+    counter = 0
+    for router, host in routers.items():
+        try:
+            agents = neutron.list_l3_agent_hosting_routers(router)
+        except network.exceptions.NotFound:
+            print(u'\u274c ', router, 'not found on', host)
+            continue
+
+        okay = True
+        for agent in agents['agents']:
+            ahost = agent['host']
+            astate = agent['ha_state']
+            okay = okay and (ahost == host and astate == 'active' or astate == 'standby')
+
+        if okay:
+            print(u'\u2713 Router {} is on {}'.format(router, host))
+            counter += 1
+        else:
+            print(u'\u274c Router {} is not on {}'.format(router, host))
+
+    if counter == len(routers):
+        sys.exit(NAGIOS_OK)
+    else:
+        sys.exit(NAGIOS_WARNING)
+
+if __name__ == "__main__":
+    main()

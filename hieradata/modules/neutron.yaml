@@ -98,3 +98,6 @@ neutron::policy::policies:
   neutron-create_firewall_rule-shared:
     key: 'create_firewall_rule:shared'
     value: 'rule:admin_only'
+  neutron-get_l3_routers:
+    key: 'get_l3-agents'
+    value: 'role:admin or role:monitoring'

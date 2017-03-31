@@ -701,4 +701,17 @@ class dc_icinga2::checks {
     ],
   }
 
+  icinga2::object::checkcommand { 'canary_routers':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/check_canary"',
+    ],
+    arguments => {
+      '-u' => '$canary_routers_username$',
+      '-p' => '$canary_routers_password$',
+      '-a' => '$canary_routers_auth_url$',
+      '-d' => '$canary_routers_proj_domain$',
+      '-D' => '$canary_routers_usr_domain$',
+      '-n' => '$canary_routers_proj_name$',
+    },
+  }
 }
