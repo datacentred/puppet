@@ -6,12 +6,23 @@ class dc_profile::openstack::neutron::agent_compute {
   include ::neutron
   include ::neutron::plugins::ml2
 
-  class { '::neutron::agents::ml2::ovs':
-    enable_tunneling     => true,
-    local_ip             => values(netip('ark-compute-integration', hiera(networks))),
-    tunnel_types         => [ 'gre' ],
-    arp_responder        => true,
-    prevent_arp_spoofing => false,
+  unless $::is_virtual {
+    class { '::neutron::agents::ml2::ovs':
+      enable_tunneling     => true,
+      local_ip             => values(netip('ark-compute-integration', hiera(networks))),
+      tunnel_types         => [ 'gre' ],
+      arp_responder        => true,
+      prevent_arp_spoofing => false,
+    }
+  }
+  else {
+    class { '::neutron::agents::ml2::ovs':
+      enable_tunneling     => true,
+      local_ip             => $::ipaddress_eth1,
+      tunnel_types         => [ 'gre' ],
+      arp_responder        => true,
+      prevent_arp_spoofing => false,
+    }
   }
 
   # This doesn't need to run on compute nodes where we don't use
