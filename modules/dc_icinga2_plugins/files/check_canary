@@ -45,7 +45,7 @@ def main():
         try:
             agents = neutron.list_l3_agent_hosting_routers(router)
         except network.exceptions.NotFound:
-            print(u'\u274c ', router, 'not found on', host)
+            print(router, 'not found on', host)
             continue
 
         okay = True
@@ -55,10 +55,10 @@ def main():
             okay = okay and (ahost == host and astate == 'active' or astate == 'standby')
 
         if okay:
-            print(u'\u2713 Router {} is on {}'.format(router, host))
+            print('Router {} is on {}'.format(router, host))
             counter += 1
         else:
-            print(u'\u274c Router {} is not on {}'.format(router, host))
+            print('Router {} is not on {}'.format(router, host))
 
     if counter == len(routers):
         sys.exit(NAGIOS_OK)
