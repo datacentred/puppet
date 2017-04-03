@@ -1,20 +1,40 @@
 ---
 containers:
   keystone:
-    image: 'keystone:mitaka-f194060'
+    image: 'keystone:mitaka-cf3b389'
     extra_params:
       - '--network=host'
-      - '--add-host=compute.datacentred.io:172.16.165.153'
+      - '--add-host=compute.datacentred.io:192.168.237.133'
+      - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
   glance:
-    image: 'glance:mitaka-f194060'
+    image: 'glance:mitaka-91d7999'
     volumes:
       - '/var/lib/glance'
     extra_params:
       - '--network=host'
-      - '--add-host=compute.datacentred.io:172.16.165.153'
+      - '--add-host=compute.datacentred.io:192.168.237.133'
+      - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
   cinder:
-    image: 'cinder:mitaka-f194060'
+    image: 'cinder:mitaka-0b857a6'
     extra_params:
       - '--network=host'
-      - '--add-host=compute.datacentred.io:172.16.165.153'
-
+      - '--add-host=compute.datacentred.io:192.168.237.133'
+      - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
+  nova:
+    image: 'nova:liberty-f686d93'
+    extra_params:
+      - '--network=host'
+      - '--add-host=compute.datacentred.io:192.168.237.133'
+      - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
+  neutron:
+    image: 'neutron:liberty-0ae683d'
+    extra_params:
+      - '--network=host'
+      - '--add-host=compute.datacentred.io:192.168.237.133'
+      - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
+  horizon:
+    image: 'horizon:mitaka-fd22a1a'
+    extra_params:
+      - '--network=host'
+      - '--add-host=compute.datacentred.io:192.168.237.133'
+      - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
