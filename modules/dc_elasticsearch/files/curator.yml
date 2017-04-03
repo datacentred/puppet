@@ -3,7 +3,9 @@
 # not a Python "NoneType"
 client:
   hosts:
-    - 127.0.0.1
+    - 'elasticsearch0.core.sal01.datacentred.co.uk'
+    - 'elasticsearch1.core.sal01.datacentred.co.uk'
+    - 'elasticsearch2.core.sal01.datacentred.co.uk'
   port: 9200
   url_prefix:
   use_ssl: False
@@ -12,7 +14,7 @@ client:
   client_key:
   ssl_no_validate: False
   http_auth:
-  timeout: 30
+  timeout: 180
   master_only: False
 
 logging:
