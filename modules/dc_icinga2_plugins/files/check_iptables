@@ -1,0 +1,100 @@
+#!/usr/bin/env python
+""" The script receives a rule and a list of routers. Checks if the routers
+    are present on the current node and if they do, it checks their iptables rules
+    to see if there is a match"""
+from __future__ import print_function
+from subprocess import check_output
+import argparse
+import sys
+import socket
+from keystoneauth1 import session # pylint: disable=import-error
+from keystoneauth1.identity import v3 # pylint: disable=import-error
+import neutronclient.v2_0.client as network # pylint: disable=import-error
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def findlocal(routeridlist, credentials, hostname):
+    """ Find the routers that are on this node from the list """
+
+    auth = v3.Password(user_domain_name=credentials['user_domain'],
+                       username=credentials['username'],
+                       password=credentials['password'],
+                       project_domain_name=credentials['project_domain'],
+                       project_name=credentials['project_name'],
+                       auth_url=credentials['URL'])
+
+    sess = session.Session(auth=auth)
+    neutron = network.Client(session=sess)
+    i = 0
+    localrouters = {}
+    while i < len(routeridlist):
+        agents = neutron.list_l3_agent_hosting_routers(routeridlist[i])
+        for agent in agents['agents']:
+            ahost = agent['host']
+            astate = agent['ha_state']
+            if ahost == hostname:
+                localrouters[routeridlist[i]] = astate
+        i += 1
+    return localrouters
+
+def checkforrule(routerstocheck, rule, hostname):
+    """ Check if the rule we are looking for is present on any of the selected local routers."""
+
+    results = []
+    for routerid, state in routerstocheck.items():
+
+        counter = 0
+        checktables = ['ip', 'netns', 'exec', 'qrouter-'+routerid, 'iptables-save', '-t', 'filter']
+        ruletable = check_output(checktables)
+        for items in ruletable:
+            if rule in items:
+                counter += 1
+        if counter < 1:
+            results.append(routerid + ' @ ' + hostname + ' missing the rule. - HA Status: ' + state)
+    return results
+
+def main():
+    """Main"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-u', '--user', help='User name', required=True)
+    parser.add_argument('-p', '--password', help='Password', required=True)
+    parser.add_argument('-a', '--authurl', help='Auth url', required=True)
+    parser.add_argument('-d', '--projdomain', help='Project domain', required=True)
+    parser.add_argument('-D', '--usrdomain', help='User domain', required=True)
+    parser.add_argument('-n', '--projectname', help='Project name', required=True)
+    parser.add_argument('-r', '--rule', help='Rule to search for', required=True)
+    parser.add_argument('-i', '--ids', help='IDs of routers to check separated by :', required=True)
+
+    args = parser.parse_args()
+
+    routers = args.ids.split(':')
+    localname = socket.gethostname()
+
+    credentials = {
+        'username' : args.user,
+        'password' : args.password,
+        'URL' : args.authurl,
+        'project_domain' : args.projdomain,
+        'user_domain' : args.usrdomain,
+        'project_name' : args.projectname
+    }
+
+    routerstocheck = findlocal(routers, credentials, localname)
+    if routerstocheck:
+        finalres = checkforrule(routerstocheck, args.rule, localname)
+        if finalres:
+            for line in finalres:
+                print(line)
+            sys.exit(NAGIOS_WARNING)
+        else:
+            print('No errors')
+            sys.exit(NAGIOS_OK)
+    else:
+        print('No routers present on this node')
+        sys.exit(NAGIOS_OK)
+
+if __name__ == "__main__":
+    main()
