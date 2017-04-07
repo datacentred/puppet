@@ -719,15 +719,16 @@ class dc_icinga2::checks {
   }
   icinga2::object::checkcommand { 'iptables_rule':
     command   => [
+      '"sudo"',
       '"/usr/local/lib/nagios/plugins/check_iptables"',
     ],
     arguments => {
-      '-u' => '$iptables_rule_username$',
-      '-p' => '$iptables_rule_password$',
-      '-a' => '$iptables_rule_auth_url$',
-      '-d' => '$iptables_rule_proj_domain$',
-      '-D' => '$iptables_rule_usr_domain$',
-      '-n' => '$iptables_rule_proj_name$',
+      #      '-u' => '$iptables_rule_username$',
+      #      '-p' => '$iptables_rule_password$',
+      #      '-a' => '$iptables_rule_auth_url$',
+      #      '-d' => '$iptables_rule_proj_domain$',
+      #      '-D' => '$iptables_rule_usr_domain$',
+      #      '-n' => '$iptables_rule_proj_name$',
       '-r' => '$iptables_rule_rule$',
       '-i' => '$iptables_rule_ids$',
     },

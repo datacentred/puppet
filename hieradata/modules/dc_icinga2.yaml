@@ -23,15 +23,16 @@ dc_icinga2::services::canary_routers::proj_domain: 'Default'
 dc_icinga2::services::canary_routers::usr_domain: 'Default'
 dc_icinga2::services::canary_routers::proj_name: 'monitoring_tenancy'
 
-dc_icinga2::services::iptables_rule::username: "%{hiera('monitoring_user')}"
-dc_icinga2::services::iptables_rule::password: "%{hiera('monitoring_password')}"
-dc_icinga2::services::iptables_rule::auth_url: 'https://compute.datacentred.io:5000/v3'
-dc_icinga2::services::iptables_rule::proj_domain: 'Default'
-dc_icinga2::services::iptables_rule::usr_domain: 'Default'
-dc_icinga2::services::iptables_rule::proj_name: 'datacentred'
+#dc_icinga2::services::iptables_rule::username: "%{hiera('monitoring_user')}"
+#dc_icinga2::services::iptables_rule::password: "%{hiera('monitoring_password')}"
+#dc_icinga2::services::iptables_rule::auth_url: 'https://compute.datacentred.io:5000/v3'
+#dc_icinga2::services::iptables_rule::proj_domain: 'Default'
+#dc_icinga2::services::iptables_rule::usr_domain: 'Default'
+#dc_icinga2::services::iptables_rule::proj_name: 'datacentred'
 dc_icinga2::services::iptables_rule::rule: 'neutron-vpn-agen-fwaas-defau'
-dc_icinga2::services::iptables_rule::ids: 'a9d8c13e-401b-4c94-9615-f9226632bc40:03269516-c774-4717-97af-ac96d86be035:1356b271-e745-4449-9c9f-1587cb525733:860964eb-62e9-4d57-a3ec-6a3ad3bb5d87:455aa03a-a2d6-4384-9f91-fb43a00ae61a:41cfdec8-5445-4cbe-8b21-cd9b03c86e63:4ba9f6d1-86e5-40e6-9dbb-63e823e08ee7:687780f1-d629-45cf-b18d-20236cd9d7d6'
+dc_icinga2::services::iptables_rule::ids: 'a9d8c13e-401b-4c94-9615-f9226632bc40 03269516-c774-4717-97af-ac96d86be035 1356b271-e745-4449-9c9f-1587cb525733 860964eb-62e9-4d57-a3ec-6a3ad3bb5d87 455aa03a-a2d6-4384-9f91-fb43a00ae61a 41cfdec8-5445-4cbe-8b21-cd9b03c86e63 4ba9f6d1-86e5-40e6-9dbb-63e823e08ee7 687780f1-d629-45cf-b18d-20236cd9d7d6'
 
 dc_icinga2::services::routing_table::routers_routes: 
   - '03269516-c774-4717-97af-ac96d86be035 185.43.218.128/25 185.98.150.0/23'
   - '4ba9f6d1-86e5-40e6-9dbb-63e823e08ee7 185.98.148.0/23 185.43.218.128/25'
+  
