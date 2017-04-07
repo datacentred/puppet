@@ -26,7 +26,7 @@ class dc_profile::openstack::neutron::agent_network {
     arp_responder        => true,
     prevent_arp_spoofing => false,
   }
-    
+
   # We want to disable GRO on the external interface
   # See: http://docs.openstack.org/havana/install-guide/install/apt/content/install-neutron.install-plug-in.ovs.html
   include ::ethtool
@@ -77,4 +77,10 @@ class dc_profile::openstack::neutron::agent_network {
     }
     default: {}
   }
+
+  package { 'keystoneauth1':
+    ensure   => present,
+    provider => 'pip'
+  }
+
 }
