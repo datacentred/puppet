@@ -7,7 +7,6 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::bmc
   include ::dc_icinga2::services::ceph
   include ::dc_icinga2::services::canary_routers
-  include ::dc_icinga2::services::checkroutes
   #include ::dc_icinga2::services::conntrack
   include ::dc_icinga2::services::dhcp
   include ::dc_icinga2::services::disk
@@ -37,6 +36,7 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::puppetserver
   include ::dc_icinga2::services::rabbitmq
   include ::dc_icinga2::services::raid
+  include ::dc_icinga2::services::routing_table
   include ::dc_icinga2::services::sas
   include ::dc_icinga2::services::sensors
   include ::dc_icinga2::services::smart

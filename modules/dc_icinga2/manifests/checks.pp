@@ -694,11 +694,14 @@ class dc_icinga2::checks {
     },
   }
 
-  icinga2::object::checkcommand { 'checkroutes':
-    command => [
+  icinga2::object::checkcommand { 'routing_table':
+    command   => [
       '"sudo"',
       '"/usr/local/lib/nagios/plugins/check_routes"',
     ],
+    arguments => {
+      '-r' => '$routing_table_routers_routes$',
+    },
   }
 
   icinga2::object::checkcommand { 'canary_routers':
