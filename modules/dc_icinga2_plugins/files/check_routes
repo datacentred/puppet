@@ -1,53 +1,80 @@
-#!/usr/bin/python
-"""Checks if certain routes are present on certain virtual routers."""
+#!/usr/bin/env python
+""" The script receives a list of routers and the corresponding routes.
+    Checks if the routers are running on the current node and if they do,
+    it checks their routing tables to see if there is a match """
 from __future__ import print_function
 from subprocess import check_output
+import argparse
 import sys
-import re
+import socket
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
 NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
 
+def findlocal(routers):
+    """ Find the routers that are on this node from the list """
+
+    namespaces = check_output(['ip', 'netns']).splitlines()
+    router_ids = [ns.split('-', 1)[1] for ns in namespaces if ns.startswith('qrouter')]
+    return [router for router in routers if router in router_ids]
+
+def checkforroute(routerstocheck, routes):
+    """ Check if the route we are looking for is present on any of the selected local routers."""
+
+    hostname = socket.gethostname()
+    results = []
+
+    for routerid in routerstocheck:
+
+        routingtable = check_output(['ip', 'netns', 'exec', 'qrouter-'+routerid, 'ip', 'route']).splitlines() # pylint: disable=line-too-long
+
+        # Try to guess if the router is a standby by the length of its routing table.
+        # I can't seem to be able to find a proper way to determine the HA state without
+        # using openstack commands or api. This is the best for now, even though it will
+        # dismiss routers missing all routes even if they are not standby.
+        if len(routingtable) < 2:
+            continue
+
+        # Perform a boolean intersection of required and installed routes
+        # Ignore this router if the intersection matches the required set
+        required_routes = set(routes[routerid])
+        present_routes = set([x.split()[0] for x in routingtable])
+        intersection = required_routes & present_routes
+        if intersection == required_routes:
+            continue
+
+        # Work out which routers are missing via a boolean difference
+        # between the required and actually installed sets and notify
+        difference = required_routes - intersection
+        for missing in difference:
+            results.append(routerid + ' @ ' + hostname + ' missing ' + missing)
+    return results
+
 def main():
     """Main"""
-    routerone = 'qrouter-03269516-c774-4717-97af-ac96d86be035'
-    routertwo = 'qrouter-4ba9f6d1-86e5-40e6-9dbb-63e823e08ee7'
 
-    checkcommand1 = ['ip', 'netns', 'exec', routerone, 'ip', 'route']
-    checkcommand2 = ['ip', 'netns', 'exec', routertwo, 'ip', 'route']
+    parser = argparse.ArgumentParser()
 
-    firstroutes = check_output(checkcommand1)
-    secondroutes = check_output(checkcommand2)
+    parser.add_argument('-r', nargs='*', action='append')
 
-    missinglist = []
+    args = parser.parse_args()
+    routesandids = {x[0]: x[1:] for x in args.r}
+    routerstocheck = findlocal(routesandids.keys())
 
-    lista = [
-        '185.43.218.128/25 dev qg-4f820813-87  scope link',
-        '185.98.150.0/23 dev qg-4f820813-87  scope link',
-    ]
-    listb = [
-        '185.43.218.128/25 dev qg-fa1846fb-d0  scope link',
-        '185.98.148.0/23 dev qg-fa1846fb-d0  scope link',
-    ]
-
-    uts = [x for x in lista if re.search(x, firstroutes) is None]
-    for route in uts:
-        missinglist.append(route + ' is missing from ' + routerone)
-
-    uts = [x for x in listb if re.search(x, secondroutes) is None]
-    for route in uts:
-        missinglist.append(route + ' is missing from ' + routertwo)
-
-    if not missinglist:
-        print('Everything is fine')
-        sys.exit(NAGIOS_OK)
+    if routerstocheck:
+        finalres = checkforroute(routerstocheck, routesandids)
+        if finalres:
+            for line in finalres:
+                print(line)
+            sys.exit(NAGIOS_WARNING)
+        else:
+            print('No errors or no active routers present')
+            sys.exit(NAGIOS_OK)
     else:
-        print('Some rules are missing')
-        for line in missinglist:
-            print(line)
-        sys.exit(NAGIOS_WARNING)
+        print('No routers present on this node')
+        sys.exit(NAGIOS_OK)
 
 if __name__ == "__main__":
     main()
