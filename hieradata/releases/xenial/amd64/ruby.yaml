@@ -1,0 +1,3 @@
+---
+# Packaged with 'ruby' package from Xenial onwards
+ruby::gems_version: 'absent'
