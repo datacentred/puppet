@@ -35,11 +35,11 @@ def main():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-r', '--rule', help='Rule to search for', required=True)
-    parser.add_argument('-i', nargs='*', help='IDs of routers to check', action='store')
+    parser.add_argument('-i', help='IDs of routers to check separated by :', action='store')
 
     args = parser.parse_args()
     localname = socket.gethostname()
-    routers = args.i
+    routers = args.i.split(':')
 
     routerstocheck = findlocal(routers)
     if routerstocheck:
