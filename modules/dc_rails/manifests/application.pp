@@ -5,7 +5,8 @@
 define dc_rails::application(
   $environment_variables = undef,
   $repository_url        = undef,
-  $user                  = undef
+  $user                  = undef,
+  $group                 = undef,
 ){
   include dc_rails::ruby
   include ::docker
@@ -93,7 +94,7 @@ define dc_rails::application(
   file { "/var/log/${user}/${name}/production.log":
     ensure => present,
     owner  => $user,
-    group  => 'root',
+    group  => $group,
     mode   => '0660'
   } ->
 
