@@ -22,10 +22,20 @@ module Puppet::Parser::Functions
         next
       end
 
-      # Generate a key to be inserted into icinga2::object::host::vars
-      key = "foreman_interfaces[\"#{interface['identifier']}\"]"
+      name = interface['identifier']
 
-      netmask = interface['subnet'] && interface['subnet']['mask'] || '255.255.255.255'
+      # Generate a key to be inserted into icinga2::object::host::vars
+      key = "foreman_interfaces[\"#{name}\"]"
+
+      netmask = interface['subnet'] && interface['subnet']['mask']
+
+      # Some hosts (e.g. VMs) don't have a subnet in foreman, therefore it doesn't
+      # know the netmask.  99% of the time a guess of 255.255.255.255 is good enough
+      # except on Digital Ocean, so default to what facter thinks
+      unless netmask
+        networking = lookupvar('networking')
+        netmask = networking['interfaces'][name]['netmask']
+      end
 
       output[key] = {
         'address' => interface['ip'],
