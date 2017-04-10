@@ -57,10 +57,10 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('-r', nargs='*', action='append')
+    parser.add_argument('-r', action='append')
 
     args = parser.parse_args()
-    routesandids = {x[0]: x[1:] for x in args.r}
+    routesandids = {x.split(':')[0]: x.split(':')[1:] for x in args.r}
     routerstocheck = findlocal(routesandids.keys())
 
     if routerstocheck:
