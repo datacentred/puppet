@@ -76,7 +76,7 @@ class dc_profile::stronghold::node::web {
   } ~>
 
   rsync::put { hiera(rsync_destination):
-    options => '-azve "ssh -o StrictHostKeyChecking=no -i /root/.ssh/assets"',
+    options => '-aze "ssh -o StrictHostKeyChecking=no -i /root/.ssh/assets"',
     source  => '/home/rails/stronghold/public/*',
   } ~>
 
