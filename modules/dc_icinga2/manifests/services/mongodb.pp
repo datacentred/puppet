@@ -80,8 +80,6 @@ class dc_icinga2::services::mongodb (
       'mongodb_username' => $username,
       'mongodb_password' => $password,
       'mongodb_action'   => 'memory',
-      'mongodb_warning'  => 20,
-      'mongodb_critical' => 48,
       'enable_pagerduty' => true,
     },
     zone          => 'host.name',
