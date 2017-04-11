@@ -18,9 +18,6 @@ class dc_riemann (
   $riemann_whitelist,
   $riemann_pagerduty_key,
   $riemann_pagerduty_blacklist,
-  $riemann_hipchat_auth_token,
-  $riemann_hipchat_room,
-  $riemann_hipchat_from,
   $riemann_slack_api_key,
   $riemann_slack_room,
   $riemann_slack_user,
@@ -70,10 +67,8 @@ class dc_riemann (
   }
 
   include dc_riemann::syslog_pagerduty_stream
-  include dc_riemann::syslog_hipchat_stream
   include dc_riemann::syslog_email_stream
   include dc_riemann::syslog_slack_stream
-  include dc_riemann::oslog_hipchat_stream
   include dc_riemann::oslog_email_stream
   include dc_riemann::oslog_slack_stream
 
