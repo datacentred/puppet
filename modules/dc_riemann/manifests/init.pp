@@ -29,7 +29,7 @@ class dc_riemann (
 
   class { 'riemann':
     # Specify the latest version, because the package default is old
-    version     => '0.2.5',
+    version     => '0.2.13',
     config_file => '/etc/riemann.config',
     require     => [ File['/etc/riemann.config'], Package['ruby-dev'] ],
   }
