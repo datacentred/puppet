@@ -63,6 +63,7 @@ class dc_profile::stronghold::node::web {
     environment_variables => hiera(stronghold::environment_variables),
     repository_url        => 'git@github-stronghold:datacentred/stronghold.git',
     user                  => 'rails',
+    group                 => 'docker',
   } ~>
 
   ruby::bundle { "bundle exec rails assets:precompile ${name}":
