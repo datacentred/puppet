@@ -9,12 +9,11 @@
 (def blacklist_pattern
   (str "^?(" (clojure.string/join "|" messages) ").*$"))
 
-(def pd (pagerduty "<%= scope.lookupvar('dc_riemann::riemann_pagerduty_key') %>"))
-
-(streams
- (by :host
-   (where (description (re-pattern blacklist_pattern))
-     (with {:state "failing" :service " : Riemann syslog keyword check"}
+(let [pd (pagerduty { :service-key "<%= scope.lookupvar('dc_riemann::riemann_pagerduty_key') %>"})]
+  (streams
+    (by :host
+     (where (description (re-pattern blacklist_pattern))
+       (with {:state "failing" :service " : Riemann syslog keyword check"}
         (throttle 1 43200
          #(info %)
-         (:trigger pd)))))) 
+         (:trigger pd)))))))
