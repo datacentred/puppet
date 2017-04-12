@@ -20,7 +20,7 @@ class dc_profile::stronghold::node::queue {
     description       => 'Stronghold\'s background queue processor',
     type              => 'simple',
     environment_file  => '/etc/default/stronghold.env',
-    command           => "/usr/local/bin/bundle exec sidekiq ${main_queue_options}",
+    command           => "/usr/local/rbenv/shims/bundle exec sidekiq ${main_queue_options}",
     working_directory => '/home/rails/stronghold',
   } ~>
 
@@ -28,7 +28,7 @@ class dc_profile::stronghold::node::queue {
     description       => 'Stronghold\'s background queue processor for slow jobs',
     type              => 'simple',
     environment_file  => '/etc/default/stronghold.env',
-    command           => "/usr/local/bin/bundle exec sidekiq --tag slow -e ${::environment} -c 1 -q slow",
+    command           => "/usr/local/rbenv/shims/bundle exec sidekiq --tag slow -e ${::environment} -c 1 -q slow",
     working_directory => '/home/rails/stronghold',
   } ~>
 
@@ -36,7 +36,7 @@ class dc_profile::stronghold::node::queue {
     description       => 'Stronghold\'s scheduling service',
     type              => 'simple',
     environment_file  => '/etc/default/stronghold.env',
-    command           => '/usr/local/bin/bundle exec clockwork clock.rb',
+    command           => '/usr/local/rbenv/shims/bundle exec clockwork clock.rb',
     working_directory => '/home/rails/stronghold',
   }
 
