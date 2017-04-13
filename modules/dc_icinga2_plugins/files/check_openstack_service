@@ -16,24 +16,41 @@ NAGIOS_CRITICAL = 2
 NAGIOS_UNKNOWN = 3
 
 def pgrep(string):
-    """Search proc for the first PID featuring the search string"""
+    """Search proc for the PIDs featuring the search string"""
 
     script_name = os.path.basename(__file__)
 
-    pids = [int(x) for x in os.listdir('/proc') if re.match(r'^\d+$', x)]
-    for pid in pids:
-        # Handle processes terminating
+    pids = [int(x) for x in os.listdir('/proc') if x.isdigit()]
+
+    def pid_filter(pid):
+        """Return only pids featuring the desired process string"""
         try:
             with open('/proc/{}/cmdline'.format(pid)) as cmd_file:
                 cmd = cmd_file.read()
         except IOError:
-            continue
+            return False
+        return string in cmd and script_name not in cmd
 
-        # Check we are not returning ourselves
-        if re.search(string, cmd) and not re.search(script_name, cmd):
-            return pid
+    return filter(pid_filter, pids)
 
-    return 0
+
+def get_root_pid(string):
+    """Return the first PID whose parent isn't the same executable"""
+
+    pids = pgrep(string)
+
+    def parent_pid_filter(pid):
+        """Return only PIDs whose parent isn't also in the list"""
+        try:
+            with open('/proc/{}/stat'.format(pid)) as stat_file:
+                stat = stat_file.read()
+        except IOError:
+            return False
+        return int(stat.split()[3]) not in pids
+
+    pids = filter(parent_pid_filter, pids)
+
+    return pids and pids[0] or 0
 
 
 def get_child_pid(ppid):
@@ -97,7 +114,7 @@ def main():
     parser.add_argument('-c', '--child', action='store_true')
     args = parser.parse_args()
 
-    pid = pgrep(args.process)
+    pid = get_root_pid(args.process)
     if not pid:
         print 'CRITICAL: service not running'
         sys.exit(NAGIOS_CRITICAL)
