@@ -1,0 +1,436 @@
+#!/usr/bin/python
+
+"""
+Check Smart Proxy, ensuring DNS/DHCP/PXE state matches Foreman's
+view of the world
+"""
+
+# pylint: disable=line-too-long,import-error
+
+import argparse
+import base64
+import httplib
+import json
+import os
+import pickle
+import socket
+import sys
+
+import dns.resolver
+import ipaddress
+import pypureomapi
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+class DotDict(dict):
+    """Extends a dictionary to be accessed in dotted notation"""
+
+    def __init__(self, values):
+        """Initialise with a hash of values"""
+        super(DotDict, self).__init__()
+        for key, value in values.items():
+            self.__setattr__(key, value)
+
+    def __setattr__(self, key, value):
+        """Set an attribute"""
+        if isinstance(value, dict):
+            value = DotDict(value)
+        dict.__setitem__(self, key, value)
+
+    def __getattr__(self, key):
+        """Get an attribute defaulting to None"""
+        try:
+            return dict.__getitem__(self, key)
+        except KeyError:
+            return None
+
+
+class Foreman(object):
+    """Simple wrapper around Foreman API calls"""
+
+    def __init__(self, **kwargs):
+        """Check and set required instance variables"""
+        required = frozenset(['host', 'port', 'key', 'cert', 'username', 'password'])
+        if required - frozenset(kwargs.keys()):
+            raise ValueError("Forman missing required parameters")
+        self.config = kwargs
+
+    def get(self, path):
+        """Perform a GET query against the API"""
+        connection = httplib.HTTPSConnection(
+            self.config['host'],
+            self.config['port'],
+            self.config['key'],
+            self.config['cert'])
+        auth = base64.b64encode(self.config['username'] + ':' + self.config['password'])
+        headers = {
+            'Accept-Encoding': 'application/json',
+            'Authorization': 'Basic ' + auth,
+        }
+        connection.request('GET', path, headers=headers)
+        response = connection.getresponse()
+        return json.loads(response.read())['results']
+
+    def hosts(self):
+        """Return a list of all hosts"""
+        return self.get('/api/hosts')
+
+    def hosts_interfaces(self, host_id):
+        """Return a list of interfaces for a host"""
+        return self.get('/api/hosts/{}/interfaces'.format(host_id))
+
+    def subnets(self):
+        """Return a list of all subnets"""
+        return self.get('/api/subnets')
+
+    def subnets_interfaces(self, subnet_id):
+        """Returns a list of interfaces on a subnet"""
+        return self.get('/api/subnets/{}/interfaces'.format(subnet_id))
+
+
+class DHCPHost(DotDict):
+    """Container for DHCP host data"""
+
+    def __init__(self, values):
+        """Constructor"""
+        super(DHCPHost, self).__init__(values)
+
+
+class DHCP(object):
+    """Simple wrapper around ISC DHCPD calls"""
+
+    # pylint: disable=too-few-public-methods
+
+    def __init__(self, **kwargs):
+        """Check and set required instance variables"""
+        required = frozenset(['username', 'key'])
+        if required - frozenset(kwargs.keys()):
+            raise ValueError("DHCP missing required parameters")
+        self.config = kwargs
+
+    def lookup(self, mac):
+        """Perform a MAC based DHCP lookup"""
+        omapi = pypureomapi.Omapi(
+            'localhost',
+            7911,
+            self.config['username'],
+            self.config['key'])
+
+        message = pypureomapi.OmapiMessage.open(b'host')
+        message.obj.append((b'hardware-address', pypureomapi.pack_mac(mac)))
+        response = omapi.query_server(message)
+        response = dict(response.obj)
+        params = {
+            'name': response['name'],
+            'mac': mac,
+            'ip': ipaddress.IPv4Address(response['ip-address'])
+        }
+        return DHCPHost(params)
+
+
+class Interface(DotDict):
+    """Container for interface data"""
+
+    def __init__(self, values):
+        """Constructor"""
+        super(Interface, self).__init__(values)
+
+
+class Subnet(DotDict):
+    """Container for subnet data"""
+
+    def __init__(self, values):
+        """Constructor"""
+        super(Subnet, self).__init__(values)
+
+    def __len__(self):
+        """Get the number of addresses between start and end"""
+        prefixes = ipaddress.summarize_address_range(self.start, self.end)
+        return reduce(lambda x, y: x + y.num_addresses, prefixes, 0)
+
+    def interfaces(self, foreman, interface_host_map):
+        """Get all interfaces in the subnet"""
+        interfaces = foreman.subnets_interfaces(self.id)
+        def map_interface(interface):
+            """Map raw Foreman interfaces into our representation"""
+            params = {}
+            if interface['id'] in interface_host_map:
+                params['host'] = interface_host_map[interface['id']]
+            if interface['name']:
+                params['name'] = interface['name']
+            if interface['identifier']:
+                params['identifier'] = interface['identifier']
+            if interface['ip']:
+                params['ip'] = ipaddress.IPv4Address(interface['ip'])
+            if interface['mac']:
+                params['mac'] = interface['mac']
+            return Interface(params)
+        return [map_interface(i) for i in interfaces]
+
+    @staticmethod
+    def get(foreman, alias):
+        """Get all subnets manged by this smart proxy"""
+        subnets = foreman.subnets()
+        # Filter out subnets not managed by myself
+        subnets = [x for x in subnets if x['dns'] and (alias in x['dns']['url'])]
+        def map_subnet(subnet):
+            """Map raw Foreman subnet data into our representation"""
+            network = ipaddress.IPv4Network((subnet['network'], subnet['mask']))
+            params = {
+                'id': subnet['id'],
+                'name': subnet['name'],
+                'network': network,
+                'start': subnet['from'] and ipaddress.IPv4Address(subnet['from']) or network.network_address,
+                'end': subnet['to'] and ipaddress.IPv4Address(subnet['to']) or network.broadcast_address,
+            }
+            return Subnet(params)
+        return [map_subnet(s) for s in subnets]
+
+
+class InterfaceHostMap(dict):
+    """Abstracts away interface to host mapping"""
+
+    def __init__(self, foreman):
+        """Initialise the mapping from a cache or Foreman"""
+        super(InterfaceHostMap, self).__init__()
+        # Performance enhancement for debug
+        cache = False
+        if cache and os.access('cache', os.F_OK):
+            with open('cache') as cache:
+                mapping = pickle.load(cache)
+                # pickle/json/whatever convert keys into strings, so map them back
+                mapping = {int(x): y for x, y in mapping.items()}
+                self.update(mapping)
+        else:
+            # Return a list of all hosts
+            hosts = foreman.hosts()
+            def map_host(host):
+                """Map from a Foreman host to a dictionary for interface ID to host names"""
+                interfaces = foreman.hosts_interfaces(host['id'])
+                return {interface['id']: host['name'] for interface in interfaces}
+            # Return a list of all hosts
+            hosts = [map_host(h) for h in foreman.hosts()]
+            # Reduce from a list of dicts into a single dict
+            mapping = reduce(lambda d, s: d.update(s) or d, hosts, {})
+            self.update(mapping)
+            if cache:
+                with open('cache', 'w') as cache:
+                    pickle.dump(mapping, cache)
+
+
+class Fmt(object):
+    """Class for formatting output"""
+
+    # Static output buffer
+    output = []
+
+    # Static exit code
+    code = NAGIOS_OK
+
+    @classmethod
+    def info(cls, message):
+        """Log an informational message"""
+        cls.output.append(message)
+
+    @classmethod
+    def warning(cls, message):
+        """Log a warning message"""
+        cls.output.append(u'[1;33m\u26a0[0m {}'.format(message))
+        cls.code = max(cls.code, NAGIOS_WARNING)
+
+    @classmethod
+    def error(cls, message):
+        """Log an error message"""
+        cls.output.append(u'[1;31m\u2717[0m {}'.format(message))
+        cls.code = max(cls.code, NAGIOS_CRITICAL)
+
+    @classmethod
+    def emit(cls):
+        """Echo out the buffered output and return the exit code"""
+        print ['Ok', 'Warning', 'Critical', 'Unknown'][cls.code]
+        for line in cls.output:
+            print line
+
+        return cls.code
+
+
+class Checker(object):
+    """Container for all the check logic"""
+
+    def __init__(self, args):
+        """Constructor"""
+        self.args = args
+
+        # Initialize the Foreman API
+        self.foreman = Foreman(
+            host=args.host,
+            port=args.port,
+            key=args.key,
+            cert=args.cert,
+            username=args.username,
+            password=args.password)
+
+        self.dhcp = DHCP(
+            username=args.omapi_username,
+            key=args.omapi_key)
+
+        # Load up a mapping from interface to host as the API doesn't
+        # give us this functionality
+        self.interface_host_map = InterfaceHostMap(self.foreman)
+
+    @staticmethod
+    def check_dns(interfaces, subnet):
+        """Checks DNS is synchronized with Foreman"""
+
+        for interface in interfaces:
+            # Check an interface assiciated with a subnet has an IP address
+            # Fixes:
+            # - Remove the subnet from the interface
+            if not interface.ip:
+                Fmt.warning('{} interface {} has no address assigned on subnet {}'.format(
+                    interface.host,
+                    interface.identifier,
+                    subnet.name))
+                continue
+
+            address = ipaddress.IPv4Address(interface.ip)
+
+            # Check the IP address for the interface is on the correct subnet
+            # Fixes:
+            # - Remove the subnet start the interface or update end the correct address
+            if address not in subnet.network:
+                Fmt.warning('{} interface {} address {} not in subnet {}'.format(
+                    interface.host,
+                    interface.identifier,
+                    address,
+                    subnet.network))
+                continue
+
+            try:
+                # Check DNS returns A records for the interface name
+                # Fixes:
+                # - Add the A record manually if missing
+                # - A host awaiting provisioning or a stale record that can be deleted
+                answers = dns.resolver.query(interface.name, 'A')
+            except dns.resolver.NoAnswer:
+                Fmt.error('{} has no A records'.format(interface.name))
+            except dns.resolver.NXDOMAIN:
+                Fmt.error('{} is not in a recognized domain'.format(interface.name))
+            else:
+                # Check DNS has a single A record for an interface
+                # Fixes:
+                # - Remove the erroneous A record
+                if len(answers) != 1:
+                    Fmt.error('{} has multiple A records {}'.format(
+                        interface.name,
+                        ', '.join(str(x) for x in answers)))
+
+                # Check DNS address matches Foreman
+                # Fixes:
+                # - Update the A record to match the active IP
+                # - Update Foreman to match the active IP
+                if interface.ip not in [ipaddress.IPv4Address(x) for x in answers]:
+                    Fmt.error('{} has the wrong address {}, expected {}'.format(
+                        interface.name,
+                        answers[0],
+                        interface.ip))
+
+            try:
+                # Check DNS returns a PTR record for the address
+                # Fixes:
+                # - Add the PTR record manually
+                answers = dns.resolver.query(address.reverse_pointer, 'PTR')
+            except dns.resolver.NXDOMAIN:
+                Fmt.error('{} has no PTR record'.format(address.reverse_pointer))
+
+
+    def check_dhcp(self, interfaces):
+        """Checks DHCP is synchronized with Foreman"""
+
+        interfaces = [x for x in interfaces if x.primary]
+        for interface in interfaces:
+            dhcp_host = self.dhcp.lookup(interface.mac)
+
+            if interface.name != dhcp_host.name:
+                Fmt.error('{} interface {} has the wrong DHCP name {}, expected {}'.format(
+                    interface.host,
+                    interface.identifier,
+                    dhcp_host.name,
+                    interface.name))
+
+            if interface.ip != dhcp_host.ip:
+                Fmt.error('{} interface {} has the wrong DHCP IP address {}, expected {}'.format(
+                    interface.host,
+                    interface.identifier,
+                    dhcp_host.ip,
+                    interface.ip))
+
+    @staticmethod
+    def check_pxe(interfaces):
+        """Checks PXE is synchonized with Foreman"""
+
+        interfaces = [x for x in interfaces if x.primary]
+        for interface in interfaces:
+            basename = '01-' + '-'.join(interface.mac.split(':'))
+            if not os.path.exists('/var/tftpboot/pxelinux.0/' + basename):
+                Fmt.error('{} interface {} has no PXE configuration'.format(
+                    interface.host,
+                    interface.identifier))
+
+    def check(self):
+        """Performs all tests against interfaces per subnet"""
+
+        for subnet in Subnet.get(self.foreman, self.args.alias):
+            interfaces = subnet.interfaces(self.foreman, self.interface_host_map)
+
+            utilisation = len(interfaces) * 100.0 / len(subnet)
+
+            Fmt.info('[1m{}[0m'.format(subnet.name))
+            Fmt.info('Subnet:     {} ({}-{})'.format(subnet.network, subnet.start, subnet.end))
+            Fmt.info('Interfaces: {}/{} ({:0.2f}%)'.format(len(interfaces), len(subnet), utilisation))
+
+            if utilisation > 90.0:
+                Fmt.error('Subnet utilisation over 90%')
+            elif utilisation > 80.0:
+                Fmt.warning('Subnet utilisation over 80%')
+
+            self.check_dns(interfaces, subnet)
+            self.check_dhcp(interfaces)
+            self.check_pxe(interfaces)
+
+            Fmt.info('')
+
+
+def main():
+    """Gather resources and perform checks"""
+
+    fqdn = socket.getfqdn()
+    key_path = '/etc/puppetlabs/puppet/ssl/private_keys/{}.pem'.format(fqdn)
+    cert_path = '/etc/puppetlabs/puppet/ssl/certs/{}.pem'.format(fqdn)
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-P', '--port', default='443')
+    parser.add_argument('-k', '--key', default=key_path)
+    parser.add_argument('-c', '--cert', default=cert_path)
+    parser.add_argument('-u', '--username', required=True)
+    parser.add_argument('-p', '--password', required=True)
+    parser.add_argument('-a', '--alias', default=fqdn)
+    parser.add_argument('-U', '--omapi-username', required=True)
+    parser.add_argument('-K', '--omapi-key', required=True)
+    args = parser.parse_args()
+
+    checker = Checker(args)
+    checker.check()
+
+    sys.exit(Fmt.emit())
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
