@@ -15,7 +15,7 @@ containers:
       - '--add-host=compute.datacentred.io:192.168.237.133'
       - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
   cinder:
-    image: 'cinder:mitaka-0b857a6'
+    image: 'cinder:mitaka-5452976'
     extra_params:
       - '--network=host'
       - '--add-host=compute.datacentred.io:192.168.237.133'
