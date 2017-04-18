@@ -17,6 +17,7 @@ classes:
   - '::dc_profile::perf::telegraf'
   - '::dc_profile::puppet::puppet4'
   - '::dc_profile::util::augeas'
+  - '::dc_profile::util::packages'
   - '::dc_profile::util::external_facts'
   - '::dc_profile::util::hosts'
   - '::dc_profile::util::kdump'
