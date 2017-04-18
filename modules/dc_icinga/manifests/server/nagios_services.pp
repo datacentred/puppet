@@ -256,13 +256,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Nova Cert',
   }
 
-  icinga::service { 'check_nova_ec2_api':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_server',
-    check_command       => 'check_nova_ec2_api',
-    service_description => 'Nova EC2 API',
-  }
-
   icinga::service { 'check_nova_os_api':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_server',
