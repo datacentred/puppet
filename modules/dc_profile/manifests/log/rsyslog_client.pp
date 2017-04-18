@@ -12,6 +12,6 @@
 #
 class dc_profile::log::rsyslog_client {
 
-  class { 'dc_rsyslog': }
+  class { 'rsyslog::client': }
 
 }
