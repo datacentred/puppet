@@ -35,4 +35,9 @@ dc_icinga2::services::iptables_rule::ids: 'a9d8c13e-401b-4c94-9615-f9226632bc40:
 dc_icinga2::services::routing_table::routers_routes: 
   - '03269516-c774-4717-97af-ac96d86be035:185.43.218.128/25:185.98.150.0/23'
   - '4ba9f6d1-86e5-40e6-9dbb-63e823e08ee7:185.98.148.0/23:185.43.218.128/25'
-  
+
+dc_icinga2::services::smart_proxy::host: 'foreman.datacentred.services'
+dc_icinga2::services::smart_proxy::username: 'view_api_user'
+dc_icinga2::services::smart_proxy::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAo2N7k0ERc9n+TyiX1qKtdJm1uooeAZ042vCMwTu2b3ZfkrDa0UHveGndqar0Wot9QcDFOrBJYmVHDXe/HNM0iuMO8rnrXQtpITeJ4FZwOParrq6Dn0I9StCOfHmPd3t2oUnKZ8h0J4+X3rfCqalHNXHdsoM1hLMlK+eHjwNG8PbAqdzSOUIy8PI5fLST5vF8KFF+N8SgOni6AzSNQiOcjPBOeJ6wR9csjfhe6w6hX1NstgTRvt1B9UNKUswVipJ48ukUxokKgVU0TtCagEkVaeui2eN9YfsQilAz6ILI5fpgbrUnFvY4Db14RFdQN96DmK6bM4lNmefMhqhH2f1PcTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBA4+tKqRZhFiIq1O0n2Db+fgBBAMSvY5O28OBbFH4EMybot]
+dc_icinga2::services::smart_proxy::omapi_username: "%{hiera('omapi_key')}"
+dc_icinga2::services::smart_proxy::omapi_key: "%{hiera('omapi_secret')}"

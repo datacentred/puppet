@@ -717,6 +717,7 @@ class dc_icinga2::checks {
       '-n' => '$canary_routers_proj_name$',
     },
   }
+
   icinga2::object::checkcommand { 'iptables_rule':
     command   => [
       '"sudo"',
@@ -731,6 +732,23 @@ class dc_icinga2::checks {
       #      '-n' => '$iptables_rule_proj_name$',
       '-r' => '$iptables_rule_rule$',
       '-i' => '$iptables_rule_ids$',
+    },
+  }
+
+  icinga2::object::checkcommand { 'smart_proxy':
+    command   => [
+      '"sudo"',
+      '"/usr/local/lib/nagios/plugins/check_smart_proxy"',
+    ],
+    arguments => {
+      '-H' => '$smart_proxy_host$',
+      '-P' => '$smart_proxy_port$',
+      '-k' => '$smart_proxy_key$',
+      '-c' => '$smart_proxy_cert$',
+      '-u' => '$smart_proxy_username$',
+      '-p' => '$smart_proxy_password$',
+      '-U' => '$smart_proxy_omapi_username$',
+      '-K' => '$smart_proxy_omapi_key$',
     },
   }
 }
