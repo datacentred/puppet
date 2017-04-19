@@ -65,6 +65,7 @@ class dc_icinga2_plugins (
     'check_raid',
     'check_routes',
     'check_sas_phy',
+    'check_smart_proxy',
     'check_tftp',
   ]
 
