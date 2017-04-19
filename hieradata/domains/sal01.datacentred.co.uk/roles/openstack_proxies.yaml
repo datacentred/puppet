@@ -150,22 +150,6 @@ dc_profile::openstack::haproxy::listeners:
         - 'tcplog'
       balance: 'roundrobin'
     collect_exported: false
-  nova-ec2:
-    mode: 'http'
-    bind:
-      ':8773':
-        - 'ssl'
-        - 'no-sslv3'
-        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
-        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
-    options:
-      option:
-        - 'tcpka'
-        - 'tcplog'
-      balance: 'source'
-      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
-      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
-    collect_exported: false
   cinder:
     mode: 'http'
     bind:
