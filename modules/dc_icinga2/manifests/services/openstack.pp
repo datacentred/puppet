@@ -74,7 +74,6 @@ class dc_icinga2::services::openstack (
     check_command => 'procs',
     vars          => {
       'procs_critical'   => '1:',
-      'procs_user'       => 'nova',
       'procs_argument'   => 'nova-novncproxy',
       'enable_pagerduty' => true,
     },
