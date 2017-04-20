@@ -1,0 +1,15 @@
+---
+rsyslog::purge_rsyslog_d: true
+rsyslog::package_status: 'latest'
+rsyslog::preserve_fqdn: true
+
+rsyslog::client::log_local: true
+rsyslog::client::log_remote: false 
+rsyslog::client::listen_localhost: true
+
+
+rsyslog::client::log_filters:
+  - expression: '$programname == "systemd"'
+    action: "/var/log/systemd.log\n&~"
+  - expression: '$programname == "haproxy"'
+    action: "/var/log/haproxy.log\n&~"

@@ -334,3 +334,6 @@
 [submodule "modules/rbenv"]
 	path = modules/rbenv
 	url = https://github.com/justindowning/puppet-rbenv.git
+[submodule "modules/rsyslog"]
+	path = modules/rsyslog
+	url = https://github.com/saz/puppet-rsyslog
