@@ -3,4 +3,3 @@ dc_dns::masters:
   - '10.10.192.250'
 
 dc_dhcp::zonemaster: '10.10.192.250'
-dc_foreman::service_checks::proxy_alias: 'ark.datacentred.services'

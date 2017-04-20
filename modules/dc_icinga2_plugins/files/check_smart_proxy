@@ -15,6 +15,7 @@ import os
 import pickle
 import socket
 import sys
+import urlparse
 
 import dns.resolver
 import ipaddress
@@ -172,11 +173,25 @@ class Subnet(DotDict):
         return [map_interface(i) for i in interfaces]
 
     @staticmethod
-    def get(foreman, alias):
+    def get(foreman):
         """Get all subnets manged by this smart proxy"""
         subnets = foreman.subnets()
         # Filter out subnets not managed by myself
-        subnets = [x for x in subnets if x['dns'] and (alias in x['dns']['url'])]
+        myip = socket.gethostbyname(socket.getfqdn())
+        def filter_subnet(subnet):
+            """A magnificently ugly hack"""
+            # No DNS proxy information, ignore
+            if not subnet['dns']:
+                return False
+            # Do a DNS lookup on the proxy hostname and compare with my IP address.
+            # Due to DNS doctoring of static NAT on SRX firewalls this will even
+            # work on non-RFC1918 DNS lookups just to blow your mind
+            hostname = urlparse.urlparse(subnet['dns']['url']).hostname
+            try:
+                return any(x for x in dns.resolver.query(hostname) if str(x) == myip)
+            except dns.resolver.NXDOMAIN:
+                return False
+        subnets = [x for x in subnets if filter_subnet(x)]
         def map_subnet(subnet):
             """Map raw Foreman subnet data into our representation"""
             network = ipaddress.IPv4Network((subnet['network'], subnet['mask']))
@@ -384,7 +399,7 @@ class Checker(object):
     def check(self):
         """Performs all tests against interfaces per subnet"""
 
-        for subnet in Subnet.get(self.foreman, self.args.alias):
+        for subnet in Subnet.get(self.foreman):
             interfaces = subnet.interfaces(self.foreman, self.interface_host_map)
 
             utilisation = len(interfaces) * 100.0 / len(subnet)
@@ -419,7 +434,6 @@ def main():
     parser.add_argument('-c', '--cert', default=cert_path)
     parser.add_argument('-u', '--username', required=True)
     parser.add_argument('-p', '--password', required=True)
-    parser.add_argument('-a', '--alias', default=fqdn)
     parser.add_argument('-U', '--omapi-username', required=True)
     parser.add_argument('-K', '--omapi-key', required=True)
     args = parser.parse_args()
