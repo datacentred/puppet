@@ -4,7 +4,6 @@ classes:
   - '::dc_profile::auth::admins'
   - '::dc_profile::auth::sudoers'
   - '::dc_profile::auth::tally'
-  - '::dc_profile::editors::vim'
   - '::dc_profile::hardware::edac'
   - '::dc_profile::hardware::serial'
   - '::dc_profile::log::logrotate'
