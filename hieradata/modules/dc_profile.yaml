@@ -4,3 +4,7 @@ dc_profile::auth::ldap::server::rootdn: "%{hiera('ldap_rootdn')}"
 dc_profile::auth::ldap::server::rootpw: "%{hiera('ldap_rootpw')}"
 #
 dc_profile::auth::radius::server::secret: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAid9BQL9JJ7yi9UV525lEZTmKBhgqKPc2q/MraGk4KeqXPMB2xVuKoIMYpOfHPpno+WuaPoaWyp1vDomLxikCH5bhEpaMN4fwuVr1y52aKNG7bIy/tRDsgzxrNt9hvL0dYJ34QcTN4m8g5tTkHYFGG5ahVh/ho0pHiisfbn4sj+MtBG0GD2AA37VZLldspFw2xVYv2NW9FDew30hj6zGsnIDNHlTP5WHVUbBZ4ofvudnyoIYOBSen1kBEE+/ETK+17L5FpqhBPNe6IEaFVv/1I9gchAoWzQxqQfK8UjAdJ33fHA4iQbbsHK+GZZPLBtdBox9ABoILRVweCSUDybUmLTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBB39LQuX6XIsirrmhx6FFngBBDPqRvOiw8XQFJ8tThNqGn]
+dc_profile::util::packages::base_packages:
+  - 'byobu'
+  - 'htop'
+  - 'vim'
