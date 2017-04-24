@@ -263,6 +263,19 @@ dc_profile::net::core_gateway::listeners:
             - 'set-header X-Forwarded-Proto https'
           reqadd:
             - 'Distribution-API-Version:\ registry/2.0'
+    beats:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':5044':
+                - 'ssl'
+                - 'no-sslv3'
+                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
+                - 'crt /etc/ssl/private/puppet.crt'
+                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
+                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
+                - 'verify required'
+        options: {}
 
 dc_profile::net::core_gateway::balancermembers:
     puppetca:
@@ -439,6 +452,16 @@ dc_profile::net::core_gateway::balancermembers:
         ipaddresses:
           - '10.30.192.213'
         options: 'check'
+    beats:
+        listening_service: 'beats'
+        ports: '5044'
+        server_names:
+            - 'logstash0.core.sal01.datacentred.co.uk'
+            - 'logstash1.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.137'
+            - '10.30.192.140'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
 
 # VIPs
 dc_profile::net::core_gateway::vips:
