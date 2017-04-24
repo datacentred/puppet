@@ -291,18 +291,6 @@ dc_profile::openstack::haproxy::balancermembers:
       - '10.10.160.162'
     ports: '6080'
     options: 'check inter 2000 rise 2 fall 5'
-  nova-ec2:
-    listening_service: 'nova-ec2'
-    server_names:
-      - 'oscontrol0'
-      - 'oscontrol1'
-      - 'oscontrol2'
-    ipaddresses:
-      - '10.10.160.113'
-      - '10.10.160.117'
-      - '10.10.160.162'
-    ports: '8773'
-    options: 'check inter 2000 rise 2 fall 5'
   keystone-auth:
     listening_service: 'keystone-auth'
     server_names:
