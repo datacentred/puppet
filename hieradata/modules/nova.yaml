@@ -1,7 +1,7 @@
 ---
 nova::ensure_package: '1:2015.1.4-0ubuntu2'
-nova::database_max_pool_size: '80'
-nova::database_max_overflow: '20'
+nova::database_max_pool_size: '200'
+nova::database_max_overflow: '60'
 
 nova::keystone::auth::auth_name: 'nova'
 nova::keystone::auth::password: "%{hiera('keystone_nova_password')}"
