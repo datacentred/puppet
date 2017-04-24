@@ -254,13 +254,13 @@ class Fmt(object):
     @classmethod
     def warning(cls, message):
         """Log a warning message"""
-        cls.output.append(u'[1;33m\u26a0[0m {}'.format(message))
+        cls.output.append(u'\u2690 {}'.format(message).encode('utf-8'))
         cls.code = max(cls.code, NAGIOS_WARNING)
 
     @classmethod
     def error(cls, message):
         """Log an error message"""
-        cls.output.append(u'[1;31m\u2717[0m {}'.format(message))
+        cls.output.append(u'\u2691 {}'.format(message).encode('utf-8'))
         cls.code = max(cls.code, NAGIOS_CRITICAL)
 
     @classmethod
@@ -404,7 +404,7 @@ class Checker(object):
 
             utilisation = len(interfaces) * 100.0 / len(subnet)
 
-            Fmt.info('[1m{}[0m'.format(subnet.name))
+            Fmt.info(subnet.name)
             Fmt.info('Subnet:     {} ({}-{})'.format(subnet.network, subnet.start, subnet.end))
             Fmt.info('Interfaces: {}/{} ({:0.2f}%)'.format(len(interfaces), len(subnet), utilisation))
 
