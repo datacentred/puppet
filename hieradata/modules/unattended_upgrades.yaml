@@ -1,0 +1,7 @@
+---
+unattended_upgrades::origins:
+ - '${distro_id}:${distro_codename}-security'
+unattended_upgrades::auto:
+  reboot: false
+unattended_upgrades::mail:
+  to: 'root'
