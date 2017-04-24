@@ -1,5 +1,6 @@
 classes:
-  - 'dc_profile::util::docs'
+  - '::dc_profile::util::docs'
+  - '::dc_profile::util::unattended_upgrades'
 
 postgresql::globals::encoding: 'UTF-8'
 postgresql::global::locale: 'en_US.UTF-8'
