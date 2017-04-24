@@ -67,6 +67,6 @@ containers:
   horizon:
     image: 'registry.datacentred.services:5000/horizon:mitaka-d332a40'
   nova:
-    image: 'registry.datacentred.services:5000/nova:liberty-42987e0'
+    image: 'registry.datacentred.services:5000/nova:liberty-18b0f1e'
 
 memcached::listen_ip: "%{::ipaddress}"
