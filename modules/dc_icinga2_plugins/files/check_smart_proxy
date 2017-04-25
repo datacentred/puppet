@@ -189,7 +189,7 @@ class Subnet(DotDict):
             hostname = urlparse.urlparse(subnet['dns']['url']).hostname
             try:
                 return any(x for x in dns.resolver.query(hostname) if str(x) == myip)
-            except dns.resolver.NXDOMAIN:
+            except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer):
                 return False
         subnets = [x for x in subnets if filter_subnet(x)]
         def map_subnet(subnet):
