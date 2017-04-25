@@ -18,7 +18,7 @@ class dc_postgresql::repmgr::slave::configure {
   } ->
 
   runonce { 'repmgr_initial_sync':
-    command => "repmgr -h ${_master} -U repmgr -d repmgr -D ${_data} -f ${_conf} standby clone",
+    command => "repmgr --force -h ${_master} -U repmgr -d repmgr -D ${_data} -f ${_conf} standby clone",
     user    => 'postgres',
   } ->
 
