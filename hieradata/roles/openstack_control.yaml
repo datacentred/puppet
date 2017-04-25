@@ -70,3 +70,4 @@ containers:
     image: 'registry.datacentred.services:5000/nova:liberty-18b0f1e'
 
 memcached::listen_ip: "%{::ipaddress}"
+ceilometer::api::enabled: false
