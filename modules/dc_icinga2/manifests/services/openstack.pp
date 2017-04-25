@@ -470,17 +470,6 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
-  icinga2::object::apply_service { 'openstack nova ec2':
-    import        => 'generic-service',
-    check_command => 'tcp',
-    vars          => {
-      'tcp_port'         => 8773,
-      'tcp_ssl'          => true,
-      'enable_pagerduty' => true,
-    },
-    assign_where  => 'host.vars.role == "openstack-endpoint"',
-  }
-
   icinga2::object::apply_service { 'openstack cinder':
     import        => 'generic-service',
     check_command => 'http',
