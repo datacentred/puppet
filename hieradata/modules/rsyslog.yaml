@@ -13,3 +13,9 @@ rsyslog::client::log_filters:
     action: "/var/log/systemd.log\n&~"
   - expression: '$programname == "haproxy"'
     action: "/var/log/haproxy.log\n&~"
+  - expression: '$programname == "nova" and (($msg contains "nova.api") or ($msg contains "nova.osapi_compute"))'
+    action: "/var/log/nova/nova-api.log\n&~"
+  - expression: '$programname == "nova" and ($msg contains "nova.metadata")'
+    action: "/var/log/nova/nova-metadata.log\n&~"
+  - expression: '$programname == "nova" and ($msg contains "nova.scheduler")'
+    action: "/var/log/nova/nova-scheduler.log\n&~"
