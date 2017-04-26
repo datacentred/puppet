@@ -43,9 +43,9 @@ class dc_interop (
   $dashboard_url,
   $identity_uri,
   $refcore_tests,
-  $region = sal01,
   $public_network_id,
   $floating_network_name,
+  $region = sal01,
   $client_home = '/var/lib/refstack-client'
 ) {
   $packages = [ 'python-keystoneclient', 'python-novaclient',
@@ -76,7 +76,7 @@ class dc_interop (
 
   file { 'tempest.conf':
     path    => "${client_home}/.tempest/etc/tempest.conf",
-    content => template('dc_interop/tempest.conf.erb'),
+    content => epp('dc_interop/tempest.conf.epp'),
     require => Exec['setup_tempest'],
   }
 
