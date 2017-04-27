@@ -750,5 +750,6 @@ class dc_icinga2::checks {
       '-U' => '$smart_proxy_omapi_username$',
       '-K' => '$smart_proxy_omapi_key$',
     },
+    timeout   => '300',
   }
 }
