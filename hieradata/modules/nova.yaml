@@ -1,5 +1,4 @@
 ---
-nova::ensure_package: '1:2015.1.4-0ubuntu2'
 nova::database_max_pool_size: '80'
 nova::database_max_overflow: '20'
 
