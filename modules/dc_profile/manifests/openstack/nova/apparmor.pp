@@ -10,6 +10,8 @@ class dc_profile::openstack::nova::apparmor {
     'apparmor',
   ]
 
+  Package['libvirt-bin'] ->
+
   file_line { 'libvirt-qemu-apparmor':
     path => '/etc/apparmor.d/abstractions/libvirt-qemu',
     line => '/var/lib/libvirt/qemu/*.sock rw,',
