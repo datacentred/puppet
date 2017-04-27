@@ -2,7 +2,7 @@
 apt::sources:
   cloudarchive_mirror:
     location: "http://%{hiera('cloudarchive_mirror_path')}"
-    release: 'trusty-updates/kilo'
+    release: 'trusty-updates/liberty'
     repos: 'main'
     key:
       id: '391A9AA2147192839E9DB0315EDB1B62EC4926EA'
