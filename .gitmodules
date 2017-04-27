@@ -124,12 +124,6 @@
 [submodule "modules/passwordless_ssh"]
 	path = modules/passwordless_ssh
 	url = https://github.com/datacentred/datacentred-passwordless_ssh
-[submodule "modules/glance"]
-	path = modules/glance
-	url = https://github.com/stackforge/puppet-glance.git
-[submodule "modules/cinder"]
-	path = modules/cinder
-	url = https://github.com/stackforge/puppet-cinder.git
 [submodule "modules/neutron"]
 	path = modules/neutron
 	url = https://github.com/stackforge/puppet-neutron.git
