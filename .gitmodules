@@ -184,9 +184,6 @@
 [submodule "modules/icinga2"]
 	path = modules/icinga2
 	url = https://github.com/datacentred/puppet-icinga2
-[submodule "modules/horizon"]
-	path = modules/horizon
-	url = https://github.com/datacentred/puppet-horizon
 [submodule "modules/ceph"]
 	path = modules/ceph
 	url = https://github.com/datacentred/puppet-ceph
