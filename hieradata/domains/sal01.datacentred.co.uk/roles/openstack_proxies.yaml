@@ -261,10 +261,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8774'
     options: 'check inter 2000 rise 2 fall 5'
   nova-metadata:
@@ -273,10 +275,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8775'
     options: 'check inter 2000 rise 2 fall 5'
   novncproxy:
@@ -285,10 +289,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '6080'
     options: 'check inter 2000 rise 2 fall 5'
   keystone-auth:
@@ -297,10 +303,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '5000'
     options: 'check inter 2000 rise 2 fall 5'
   keystone-admin:
@@ -309,10 +317,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '35357'
     options: 'check inter 2000 rise 2 fall 5'
   galera-0-master:
@@ -339,10 +349,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8777'
     options: 'check inter 2000 rise 2 fall 5'
   glance-registry:
@@ -351,10 +363,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '9191'
     options: 'check inter 2000 rise 2 fall 5'
   glance-api:
@@ -363,10 +377,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '9292'
     options: 'check inter 2000 rise 2 fall 5'
   heat:
@@ -375,10 +391,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8004'
     options: 'check inter 2000 rise 2 fall 5'
   heat-cfn:
@@ -387,10 +405,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8000'
     options: 'check inter 2000 rise 2 fall 5'
   horizon:
@@ -399,10 +419,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '80'
     options: 'check inter 2000 rise 2 fall 5'
   neutron:
@@ -411,10 +433,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '9696'
     options: 'check inter 2000 rise 2 fall 5'
   cinder:
@@ -423,9 +447,11 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8776'
     options: 'check inter 2000 rise 2 fall 5'
