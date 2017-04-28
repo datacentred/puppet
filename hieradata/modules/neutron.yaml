@@ -27,14 +27,12 @@ neutron::service_plugins:
  - 'vpnaas'
  - 'metering'
 neutron::verbose: true
-neutron::report_interval: '45'
 
 neutron::server::auth_uri: "https://%{hiera('os_api_host')}:5000/"
 neutron::server::identity_uri: "https://%{hiera('os_api_host')}:35357/"
 neutron::server::auth_password: "%{hiera('keystone_neutron_password')}"
 neutron::server::database_max_pool_size: '200'
 neutron::server::database_max_overflow: '60'
-neutron::server::agent_down_time: '100'
 
 neutron::db::database_connection: "mysql://neutron:%{hiera('neutron_db_pass')}@%{hiera('os_api_host')}/neutron"
 
