@@ -1,4 +1,4 @@
 ---
 wordpress::wp_owner: 'www-data'
 wordpress::wp_group: 'www-data'
-wordpress::version: '4.7.2'
+wordpress::version: '4.7.4'

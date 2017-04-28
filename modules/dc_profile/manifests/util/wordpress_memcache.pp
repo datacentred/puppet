@@ -15,13 +15,19 @@ class dc_profile::util::wordpress_memcache {
     group  => 'www-data',
   }
 
-  file { '/srv/www/datacentred.co.uk/wp-content':
+  file { '/srv/www/datacentred.co.uk/wordpress':
     ensure => 'directory',
     owner  => 'www-data',
     group  => 'www-data',
   }
 
-  file { '/srv/www/datacentred.co.uk/wp-content/object-cache.php':
+  file { '/srv/www/datacentred.co.uk/wordpress/wp-content':
+    ensure => 'directory',
+    owner  => 'www-data',
+    group  => 'www-data',
+  }
+
+  file { '/srv/www/datacentred.co.uk/wordpress/wp-content/object-cache.php':
     ensure => 'file',
     owner  => 'www-data',
     group  => 'www-data',
