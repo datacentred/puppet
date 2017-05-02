@@ -27,6 +27,7 @@ neutron::service_plugins:
  - 'vpnaas'
  - 'metering'
 neutron::verbose: false
+neutron::rpc_response_timeout: 960
 
 neutron::plugins::ml2::type_drivers:
  - 'gre'
