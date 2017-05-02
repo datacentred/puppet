@@ -70,6 +70,13 @@ class dc_profile::openstack::neutron::agent_network {
     group  => 'root'
   }
 
+  # Agent RPC optimisation
+  neutron_config {
+    'DEFAULT/executor_thread_pool_size':  value => '2048';
+    'DEFAULT/rpc_conn_pool_size':         value => '60';
+    'DEFAULT/rpc_response_timeout':       value => '960';
+  }
+
   # Workaround for the fact that we're using the Neutron VPN agent, which
   # handles L3 instead of the vanilla Neutron L3 agent.  The current
   # puppet-neutron module doesn't handle this properly.
