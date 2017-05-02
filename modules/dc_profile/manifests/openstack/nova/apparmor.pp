@@ -5,7 +5,7 @@
 class dc_profile::openstack::nova::apparmor {
 
   $interested_parties = [
-    'libvirt',
+    'libvirt-bin',
     'nova-compute',
     'apparmor',
   ]
