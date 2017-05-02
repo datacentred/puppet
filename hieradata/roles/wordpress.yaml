@@ -27,21 +27,25 @@ nginx::nginx_servers:
     try_files: 
       - '$uri'
       - '$uri/'
-      - 'index.php'
-      - 'index.php?$args'
+      - '/index.html'
+      - '/index.php?$query_string'
     index_files: 
       - 'index.php'
       - 'index.html'
       - 'index.htm'
     www_root: '/srv/www/datacentred.co.uk'
 
-wordpress::install_dir: '/srv/www/datacentred.co.uk'
-wordpress::password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAf53IZCpL4GFcmpIdOi2MGPtsrWZyJjd3iRd7lhrIeC7XcCHSEDBgxHZhorYU9FTmSSYxLpvkzc9NmDlMwqvoQnkL/bgSTH1Ui6k09PQawSp1CnK8SlfzkTdSqTCv5hzcGhQXiixoF2K6OltBdJnpFmKhGKxoKInwDIK18Ifw0VsY+5gjun4rqq4PEChdR3+o5cvhrjVtCeTGdFk2X96RTIODx65N+JDOd/oUvJ9s2Gs+naYAtgBnX5p1soby2jT7YM2ybXf1H4EratjG1Me31/Bgtbn/wvnB8xhaNYRONnSKE6oFLXQFLf7HBYVDCXiVuzdpME8f/ugpvrOhy3ThXDA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAsIbaPVcPB2SqkDPLXLffqgBCCrXU1E5KwMfd3wUbMJ1m3]
-wordpress::db_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAhDTuHVyhhCcRSZUzriDR33aoN3mHFOylPrFm5qa8w+Y8Iiv8WIvm8v+S8R/H4LAZoxfxZ/FflBezw0LO2y4hub1X1iAm/q/0wyu8S61QX0VtTTfFYMao+5k1LRR5SjHas6oM7/n10fOt1/waDqtaG3tgPvw2+kEF3QuWNTHnRIp8SaG1nxDn/FilLnim9QXI/+PM/LHzpg4bQugAivy8j9srywlw1m5qdFpS+UVZWNx+BAd3oV2wrNEroUKyTsBZ3LcsZ1Ec/plPpIDJTdtY0ENyRmrNAn8BN/zoRYnf4FuWfSfu6UBHeasx6f6y+xmQmlm9NalnCLNCR5w2shcxbzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCQ8DRF5W7iuTNxlSK2hCnMgBB4xJOylFhehJBD/X2OrFv/]
+wordpress::wp_table_prefix: 'wp_new_'
+wordpress::db_name: 'datac_wp'
+wordpress::db_user: 'datac_db'
+wordpress::install_dir: '/srv/www/datacentred.co.uk/wordpress/'
+wordpress::db_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAKKPTTeWNY9bTI1o1NBQtvUiOusYwGdXP1umA1VWqPfPlG/MyB6m/w6Ckpb5zAsvaqgvQ8vMkvBx5Dzl2AaVX/yMhfNcMMq075GEH/7ODjqSUcGRcVwsbpKEGV5LAXFMj3+NlzfCGHu6Ygz2TYVsvDiPM43uaqYTur6hol4udhgaAzF2g2qz7mZY/1NprSydcwPJfTAHFyJfip9W/FET7LMZnRT8hMTdUPRO4DswWtYRPhcU4M+K0Az45T3uUhLzNaPa/9ieejnGCDrMBIUzQ1lqYQIJ6FRw4VT2iZjkLSf+KiesdmjSzZ7/eEqHLzQlKZkaJ7nHYhn9lrA6uFoFM/DA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBAGJtnbIr97OMDCEoTOiz+ugBBi3wQOVeEGhsd7sU2oPAbE]
 
 php::globals::php_version: '7.0'
 php::manage_repos: true
 php::fpm: true
+php::fpm_user: 'www-data'
+php::fpm_group: 'www-data'
 php::fpm::pools:
   www:
     listen: '/var/run/php7-fpm.sock'
