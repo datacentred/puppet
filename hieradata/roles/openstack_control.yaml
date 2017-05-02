@@ -69,4 +69,4 @@ containers:
   nova:
     image: 'registry.datacentred.services:5000/nova:liberty-4b78bc9'
   neutron:
-    image: 'registry.datacentred.services:5000/neutron:liberty-caaf9a2'
+    image: 'registry.datacentred.services:5000/neutron:liberty-2cff2b5'
