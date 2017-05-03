@@ -3,5 +3,6 @@ classes:
   - '::dc_profile::ci::jenkins'
   - '::dc_docker::client'
   - '::dc_docker::rocker'
+  - '::dc_profile::util::unattended_upgrades'
 
 puppetdeploy::is_jenkins: true
