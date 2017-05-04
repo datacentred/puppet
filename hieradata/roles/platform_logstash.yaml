@@ -3,5 +3,6 @@ classes:
   - '::dc_profile::log::kibana'
   - '::dc_profile::log::logstash'
   - '::dc_profile::log::riemann'
+  - '::dc_profile::util::unattended_upgrades'
 
 dc_kibana::elasticsearch_host: 'logstash'
