@@ -134,3 +134,5 @@ telegraf::inputs:
 sysfs::settings:
   'module/nf_conntrack/parameters/hashsize':
     value: 1048576
+
+icinga2::ensure: 'held'
