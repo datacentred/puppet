@@ -211,3 +211,8 @@ apt::ppas:
     ensure: 'present'
   ppa:cz.nic-labs/knot-dns:
     ensure: 'present'
+
+apt::keys:
+  hp_mirror_key:
+    id: '57446EFDE098E5C934B69C7DC208ADDE26C2B797'
+    source: 'http://downloads.linux.hpe.com/SDR/hpePublicKey2048_key1.pub'
