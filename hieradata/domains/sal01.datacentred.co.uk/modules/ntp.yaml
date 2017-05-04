@@ -1,0 +1,5 @@
+ntp::servers:
+  - "ntp0.%{::domain}"
+  - "ntp1.%{::domain}"
+ntp::interfaces:
+  - '10.0.0.0/8'

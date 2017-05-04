@@ -1,9 +1,9 @@
 ---
 ntp::servers:
-  - "ntp0.%{::domain}"
-  - "ntp1.%{::domain}"
+  - '1.uk.pool.ntp.org'
+  - '2.uk.pool.ntp.org'
+  - '3.uk.pool.ntp.org'
+  - '4.uk.pool.ntp.org'
 ntp::autoupdate: false
 ntp::restrict:
   - '127.0.0.1'
-ntp::interfaces:
-  - '10.0.0.0/8'

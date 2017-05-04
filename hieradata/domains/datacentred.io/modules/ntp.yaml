@@ -1,7 +1,0 @@
----
-ntp::servers:
-  - '1.uk.pool.ntp.org'
-  - '2.uk.pool.ntp.org'
-ntp::autoupdate: false
-ntp::restrict:
-  - '127.0.0.1'
