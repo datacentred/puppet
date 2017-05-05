@@ -9,6 +9,7 @@ classes:
   - '::dc_profile::openstack::heat'
   - '::dc_profile::openstack::horizon'
   - '::dc_profile::log::rsyslog_client'
+  - '::dc_profile::openstack::docker::logging'
   - '::dc_docker::client'
   - '::sysctls'
 

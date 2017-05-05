@@ -19,3 +19,13 @@ rsyslog::client::log_filters:
     action: "/var/log/nova/nova-metadata.log\n&~"
   - expression: '$programname == "nova" and ($msg contains "nova.scheduler")'
     action: "/var/log/nova/nova-scheduler.log\n&~"
+  - expression: '$programname == "keystone"'
+    action: "/var/log/keystone/keystone.log\n&~"
+  - expression: '$programname == "horizon"'
+    action: "/var/log/horizon/horizon.log\n&~"
+  - expression: '$programname == "glance"'
+    action: "/var/log/glance/glance.log\n&~"
+  - expression: '$programname == "cinder"'
+    action: "/var/log/cinder/cinder.log\n&~"
+  - expression: '$programname == "neutron"'
+    action: "/var/log/neutron/neutron.log\n&~"
