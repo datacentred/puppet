@@ -1,3 +1,0 @@
----
-ceilometer::package_ensure: '2015.1.2-0ubuntu1.1~cloud0'
-ceilometer::agent::package_ensure: '2015.1.2-0ubuntu1.1~cloud0'
