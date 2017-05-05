@@ -272,3 +272,8 @@ dc_logstash::client::config:
       fields:
         shipper: 'log-courier'
         type: 'haproxy'
+    - paths:
+      - '/var/lib/neutron/ha_confs/*/neutron-keepalived-state-change.log'
+      fields:
+        shipper: 'log-courier'
+        type: 'neutron-state-change'
