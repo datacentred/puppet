@@ -11,7 +11,7 @@ class dc_profile::openstack::docker::logging {
 
   file { $_dirs:
     ensure => directory,
-    owner  => 'sysadmin',
+    owner  => 'syslog',
     group  => 'adm',
   }
 
