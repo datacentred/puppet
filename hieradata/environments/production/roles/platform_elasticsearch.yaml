@@ -2,11 +2,10 @@
 dc_elasticsearch::ssd_drives:
   - '/var/storage/ssd_01'
   - '/var/storage/ssd_02'
-dc_elasticsearch::hdd_drives:
-  - '/var/storage/hdd_01'
-  - '/var/storage/hdd_02'
-  - '/var/storage/hdd_03'
-  - '/var/storage/hdd_04'
+  - '/var/storage/ssd_03'
+  - '/var/storage/ssd_04'
+  - '/var/storage/ssd_05'
+  - '/var/storage/ssd_06'
 dc_elasticsearch::es_hash:
   bootstrap.memory_lock: true
   cloud.aws.s3.endpoint: 'storage.datacentred.io'
