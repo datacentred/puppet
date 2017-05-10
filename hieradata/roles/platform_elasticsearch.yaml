@@ -6,7 +6,7 @@ classes:
 
 sysctls::values:
     vm.swappiness:
-        value: '10'
+        value: '0'
 
 telegraf::inputs:
   elasticsearch:

@@ -12,6 +12,5 @@ class dc_elasticsearch::params (
   $ceph_access_point,
   $elasticsearch_data_dir,
   $total_retention,
-  $ssd_tier_retention,
   $backup_node = false,
 ) {}
