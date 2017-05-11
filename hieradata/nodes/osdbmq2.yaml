@@ -1,6 +1,7 @@
 ---
 classes:
   - '::dc_profile::openstack::backups::galera'
+  - '::dc_profile::util::unattended_upgrades'
 
 telegraf::inputs:
   rabbitmq:
