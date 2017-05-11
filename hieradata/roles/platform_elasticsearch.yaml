@@ -14,3 +14,7 @@ telegraf::inputs:
       - 'http://localhost:9200' 
     local: true
     cluster_health: true
+
+dc_ssh::config:
+  UsePrivilegeSeparation:
+    value: 'sandbox'

@@ -148,6 +148,8 @@ dc_ssh::config:
   AllowGroups:
     value:
       - 'root'
+  UsePrivilegeSeparation:
+    value: 'sandbox'
 
 # Confluence config
 #
