@@ -4,16 +4,8 @@
 #
 # === Parameters
 #
-class dc_logstash::client (
-  $config,
-) {
+class dc_logstash::client {
 
-  include ::dc_logstash::client::install
-  include ::dc_logstash::client::configure
-  include ::dc_logstash::client::service
-
-  Class['::dc_logstash::client::install'] ->
-  Class['::dc_logstash::client::configure'] ~>
-  Class['::dc_logstash::client::service']
+  include ::filebeat
 
 }
