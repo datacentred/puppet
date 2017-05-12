@@ -1,8 +1,8 @@
-# Class: dc_profile::util::wordpress_memcache
+# Class: dc_profile::util::wordpress::memcache
 #
 # Configure memcache for Wordpress
 #
-class dc_profile::util::wordpress_memcache {
+class dc_profile::util::wordpress::memcache {
   include ::memcached
 
   package { 'php-memcached':

@@ -1,0 +1,3 @@
+---
+letsencrypt::config:
+  email: 'devops@datacentred.co.uk'

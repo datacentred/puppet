@@ -11,6 +11,7 @@ excludes:
   - '::dc_profile::openstack::proxyip'
   - '::dc_profile::util::hosts'
   - '::newrelic::server::linux'
+  - '::dc_profile::util::wordpress::ssl'
 
 ceilometer_db_password: 'mowdasUsDyp5'
 

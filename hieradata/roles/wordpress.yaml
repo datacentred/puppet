@@ -1,6 +1,7 @@
 classes: 
   - '::dc_profile::util::wordpress'
-  - '::dc_profile::util::wordpress_memcache'
+  - '::dc_profile::util::wordpress::memcache'
+  - '::dc_profile::util::wordpress::ssl'
 
 nginx::nginx_locations:
   'datacentred':
