@@ -389,6 +389,8 @@ dc_ssh::config:
     value: 'no'
   Protocol:
     value: '2'
+  UsePrivilegeSeparation:
+    value: 'sandbox'
   AllowGroups:
     value:
       - 'sysadmin'
