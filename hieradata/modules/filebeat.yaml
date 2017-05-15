@@ -1,0 +1,197 @@
+---
+filebeat::outputs:
+  logstash:
+    hosts:
+      - "%{hiera('logstash_server')}:5044"
+    ssl:
+      enabled: true
+      certificate: "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
+      key: "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
+      certificate_authorities:
+        - '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+
+filebeat::prospectors:
+  apache:
+    paths:
+      - '/var/log/apache2/*access.log'
+    doc_type: 'apache'
+  apache_error:
+    paths:
+      - '/var/log/apache2/*error.log'
+    doc_type: 'error'
+  auth:
+    paths:
+      - '/var/log/auth.log'
+    doc_type: 'auth'
+  boot:
+    paths:
+      - '/var/log/boot.log'
+    doc_type: 'boot'
+  ceilometer:
+    paths:
+      - '/var/log/ceilometer/ceilometer-agent-central.log'
+      - '/var/log/ceilometer/ceilometer-agent-compute.log'
+      - '/var/log/ceilometer/ceilometer-agent-notification.log'
+      - '/var/log/ceilometer/ceilometer-api.log'
+      - '/var/log/ceilometer/ceilometer-collector.log'
+      - '/var/log/ceilometer/ceilometer-dbsync.log'
+      - '/var/log/ceilometer/ceilometer-expirer.log'
+      - '/var/log/apache2/ceilometer_wsgi_access.log'
+      - '/var/log/apache2/ceilometer_wsgi_error.log'
+    doc_type: 'ceilometer'
+  cron:
+    paths:
+      - '/var/log/cron.log'
+    doc_type: 'cron'
+  daemon:
+    paths:
+      - '/var/log/daemon.log'
+    doc_type: 'daemon'
+  dpkg:
+    paths:
+      - '/var/log/dpkg.log'
+    doc_type: 'dpkg'
+  foreman:
+    paths:
+      - '/var/log/foreman/production.log'
+    doc_type: 'foreman'
+  foreman_proxy:
+    paths:
+      - '/var/log/foreman-proxy/foreman-proxy.log'
+    doc_type: 'foreman_proxy'
+  haproxy:
+    paths:
+      - '/var/log/haproxy.log'
+    doc_type: 'haproxy'
+  heat:
+    paths:
+      - '/var/log/heat/heat-api-cfn.log'
+      - '/var/log/heat/heat-api.log'
+      - '/var/log/heat/heat-engine.log'
+      - '/var/log/heat/heat-manage.log'
+    doc_type: 'heat'
+  kernel:
+    paths:
+      - '/var/log/kern.log'
+    doc_type: 'kernel'
+  lastlog:
+    paths:
+      - '/var/log/kern.log'
+    doc_type: 'lastlog'
+  libvirt:
+    paths:
+      - '/var/log/libvirt/libvirtd.log'
+    doc_type: 'libvirt'
+  mail:
+    paths:
+      - '/var/log/mail.err'
+    doc_type: 'mail_error'
+  mongodb:
+    paths:
+      - '/var/log/mongodb/mongodb.log'
+    doc_type: 'mongodb'
+  mysql:
+    paths:
+      - '/var/log/mysql/error.log'
+      - '/var/log/mysql/mysql-slow.log'
+    doc_type: 'mysql'
+  neutron_dhcp:
+    paths:
+      - '/var/log/neutron/dhcp-agent.log'
+    doc_type: 'neutron_dhcp'
+  neutron_l3:
+    paths:
+      - '/var/log/neutron/vpn_agent.log'
+    doc_type: 'neutron_l3'
+  neutron_lbaas:
+    paths:
+      - '/var/log/neutron/lbaas-agent.log'
+    doc_type: 'neutron_lbaas'
+  neutron_metadata:
+    paths:
+      - '/var/log/neutron/metadata-agent.log'
+    doc_type: 'neutron_metadata'
+  neutron_metering:
+    paths:
+      - '/var/log/neutron/metering_agent.log'
+    doc_type: 'neutron_metering'
+  neutron_netns_cleanup:
+    paths:
+      - '/var/log/neutron/neutron-netns-cleanup.log'
+    doc_type: 'neutron_netns_cleanup'
+  neutron_openvswitch:
+    paths:
+      - '/var/log/neutron/openvswitch-agent.log'
+    doc_type: 'neutron_openvswitch'
+  neutron_server:
+    paths:
+      - '/var/log/neutron/server.log'
+      - '/var/log/neutron/neutron-server.log'
+    doc_type: 'neutron_server'
+  neutron_state_change:
+    paths:
+      - '/var/lib/neutron/ha_confs/*/neutron-keepalived-state-change.log'
+    doc_type: 'neutron_state_change'
+  nova_api:
+    paths:
+      - '/var/log/nova/nova-api.log'
+    doc_type: 'nova_api'
+  nova_cert:
+    paths:
+      - '/var/log/nova/nova-cert.log'
+    doc_type: 'nova_cert'
+  nova_compute:
+    paths:
+      - '/var/log/nova/nova-compute.log'
+    doc_type: 'nova_compute'
+  nova_conductor:
+    paths:
+      - '/var/log/nova/nova-conductor.log'
+    doc_type: 'nova_conductor'
+  nova_consoleauth:
+    paths:
+      - '/var/log/nova/nova-consoleauth.log'
+    doc_type: 'nova_consoleauth'
+  nova_manage:
+    paths:
+      - '/var/log/nova/nova-manage.log'
+    doc_type: 'nova_manage'
+  nova_scheduler:
+    paths:
+      - '/var/log/nova/nova-scheduler.log'
+    doc_type: 'nova_scheduler'
+  openvswitch_ovsvctl:
+    paths:
+      - '/var/log/openvswitch/ovs-ctl.log'
+    doc_type: 'openvswitch_ovsvctl'
+  openvswitch_ovsdbserver:
+    paths:
+      - '/var/log/openvswitch/ovs-server.log'
+    doc_type: 'openvswitch_ovsdbserver'
+  openvswitch_ovsvswitchd:
+    paths:
+      - '/var/log/openvswitch/ovs-vswitchd.log'
+    doc_type: 'openvswitch_ovsvswitchd'
+  postgres:
+    paths:
+      - '/var/log/postgresql/postgresql-9.*-main.log'
+    doc_type: 'postgres'
+  rabbitmq_log:
+    paths:
+      - "/var/log/rabbitmq/rabbit@%{::hostname}.log"
+    doc_type: 'rabbitmq_log'
+  rabbitmq_sasl_log:
+    paths:
+      - "/var/log/rabbitmq/rabbit@%{::hostname}-sasl.log"
+    doc_type: 'rabbitmq_sasl_log'
+  rabbitmq_state:
+    paths:
+      - '/var/log/rabbitmq/shutdown_err'
+      - '/var/log/rabbitmq/shutdown_log'
+      - '/var/log/rabbitmq/startup_err'
+      - '/var/log/rabbitmq/startup_log'
+    doc_type: 'rabbitmq_state'
+  syslog:
+    paths:
+      - '/var/log/syslog'
+    doc_type: 'syslog'
