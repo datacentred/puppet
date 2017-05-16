@@ -27,7 +27,7 @@ neutron::service_plugins:
  - 'vpnaas'
  - 'metering'
 neutron::verbose: false
-neutron::rpc_response_timeout: 960
+neutron::rpc_response_timeout: '960'
 
 neutron::plugins::ml2::type_drivers:
  - 'gre'
@@ -38,6 +38,8 @@ neutron::plugins::ml2::mechanism_drivers:
  - 'openvswitch'
 neutron::plugins::ml2::tunnel_id_ranges:
  - '1:65536'
+neutron::plugins::ml2::extension_drivers:
+ - 'port_security'
 
 neutron::agents::metadata::shared_secret: "%{hiera('neutron_metadata_secret')}"
 neutron::agents::metadata::auth_url: "https://%{hiera('os_api_host')}:35357/v2.0"
