@@ -31,11 +31,6 @@ class dc_riemann (
     require     => [ File['/etc/riemann.config'], Package['ruby-dev'] ],
   }
 
-  class { 'riemann::dash':
-    host    => $::ipaddress,
-    require => Class['riemann'],
-  }
-
   package { 'ruby-dev':
     ensure => 'installed',
   }
