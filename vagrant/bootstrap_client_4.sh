@@ -62,6 +62,10 @@ apply:
 EOF
 
 # Generate certificates and keys
+
+update-locale LANG=en_GB.UTF-8 LC_MESSAGES=POSIX
+locale-gen en_GB en_GB.UTF-8
+
 /opt/puppetlabs/bin/puppet agent --test
 
 ################################################################################

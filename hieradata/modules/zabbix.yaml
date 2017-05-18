@@ -1,0 +1,12 @@
+---
+zabbix::zabbix_url: 'monitoring.datacentred.net'
+zabbix::database_type: 'postgresql'
+zabbix::manage_vhost: false
+zabbix::manage_firewall: false
+zabbix::zabbix_version: '3.2'
+zabbix::zabbix_timezone: 'Europe/London'
+zabbix::proxy::zabbix_server_host: 'monitoring.datacentred.net'
+zabbix::proxy::database_type: 'postgresql'
+zabbix::proxy::zabbix_version: '3.2'
+zabbix::agent::server: '127.0.0.1'
+zabbix::agent::listenip: '127.0.0.1'
