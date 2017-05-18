@@ -1,0 +1,4 @@
+---
+classes:
+  -  '::dc_profile::net::vpn_endpoint'
+
