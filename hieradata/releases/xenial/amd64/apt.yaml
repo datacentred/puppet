@@ -67,6 +67,13 @@ apt::sources:
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
       source: 'https://apt.puppet.com/pubkey.gpg'
+  openvpn:
+    location: 'http://build.openvpn.net/debian/openvpn/release/2.4'
+    release: 'xenial'
+    repos: 'main'
+    key:
+      id: '30EBF4E73CCE63EEE124DD278E6DA8B4E158C569'
+      source: 'https://swupdate.openvpn.net/repos/repo-public.gpg'
 
 apt::ppas:
   ppa:devel-k/log-courier:
