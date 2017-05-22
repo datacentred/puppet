@@ -8,6 +8,7 @@ class dc_profile::util::wordpress {
   include ::nginx
   include ::apt
   include ::php
+  include ::letsencrypt
 
   file { '/srv/www/':
     ensure  => 'directory',
