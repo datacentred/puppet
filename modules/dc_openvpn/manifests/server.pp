@@ -21,6 +21,11 @@ class dc_openvpn::server (
   create_resources(firewall, $firewall['log'])
   create_resources(firewall, $firewall['drop'])
 
+  unless empty($routes) {
+    validate_hash($routes)
+    create_resources(network::route, $routes)
+  }
+
   create_resources(openvpn::server, $endpoint, $defaults)
 
 }
