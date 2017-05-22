@@ -60,14 +60,14 @@ containers:
   keystone:
     image: 'registry.datacentred.services:5000/keystone:mitaka-d332a40'
   glance:
-    image: 'registry.datacentred.services:5000/glance:mitaka-d344dbf'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/glance:cce7799'
     volumes:
       - '/var/lib/glance'
   cinder:
     image: 'registry.datacentred.services:5000/cinder:mitaka-5452976'
   horizon:
-    image: 'registry.datacentred.services:5000/horizon:mitaka-d332a40'
+    image: 'registry.datacentred.services:5000/horizon:mitaka-801da91'
   nova:
     image: 'registry.datacentred.services:5000/nova:liberty-4b78bc9'
   neutron:
-    image: 'registry.datacentred.services:5000/neutron:liberty-2cff2b5'
+    image: 'registry.datacentred.services:5000/neutron:liberty-801da91'

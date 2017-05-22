@@ -1,0 +1,110 @@
+---
+dc_openvpn::server::defaults:
+  local: "%{facts.ipaddress}"
+  country: 'GB'
+  province: 'Salford'
+  city: 'Salford'
+  organization: 'datacentred.co.uk'
+  email: 'devops@datacentred.co.uk'
+  ssl_key_size: '2048'
+  duplicate_cn: true
+  topology: 'subnet'
+  keepalive: '10 60'
+  proto: 'udp'
+  tls_server: true
+  tls_cipher: 'TLS-ECDHE-RSA-WITH-AES-128-GCM-SHA256:TLS-ECDHE-ECDSA-WITH-AES-128-GCM-SHA256:TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256'
+  cipher: 'AES-256-CBC'
+  custom_options:
+    auth: 'SHA512'
+    tls-version-min: '1.2'
+
+dc_openvpn::server::firewall:
+  base:
+    '000 INPUT allow related and established':
+      chain: 'INPUT'
+      state:
+        - 'RELATED'
+        - 'ESTABLISHED'
+      proto: 'all'
+      action: 'accept'
+    '000 OUTPUT allow related and established':
+      chain: 'OUTPUT'
+      state:
+        - 'RELATED'
+        - 'ESTABLISHED'
+      proto: 'all'
+      action: 'accept'
+    '001 accept all to lo interface':
+      chain: 'INPUT'
+      proto: 'all'
+      iniface: 'lo'
+      action: 'accept'
+    '002 accept all icmp requests':
+      chain: 'INPUT'
+      proto: 'icmp'
+      action: 'accept'
+  allow:    
+    '100 allow ssh access':
+      chain: 'INPUT'
+      dport:
+        - '22'
+      proto: 'tcp'
+      action: 'accept'
+    '101 allow vpn access':
+      chain: 'INPUT'
+      dport:
+        - '1194'
+      proto: 'udp'
+      action: 'accept'
+    '102 allow dns access':
+      chain: 'OUTPUT'
+      dport:
+        - '53'
+        - '10053'
+      proto: 'udp'
+      action: 'accept'
+      state:
+        - 'NEW'
+    '102 allow landrush dns access':
+      chain: 'INPUT'
+      sport:
+        - '10053'
+      proto: 'udp'
+      action: 'accept'
+    '103 allow http/https ':
+      chain: 'OUTPUT'
+      dport:
+        - '80'
+        - '443'
+      proto: 'tcp'
+      action: 'accept'
+      state:
+        - 'NEW'
+  log:    
+    '900 log dropped input chain':
+      chain: 'INPUT'
+      jump: 'LOG'
+      log_level: '6'
+      log_prefix: '[IPTABLES INPUT] dropped '
+      proto: 'all'
+      before: []
+    '900 log dropped forward chain':
+      chain: 'FORWARD'
+      jump: 'LOG'
+      log_level: '6'
+      log_prefix: '[IPTABLES FORWARD] dropped '
+      proto: 'all'
+      before: []
+    '900 log dropped output chain':
+      chain: 'OUTPUT'
+      jump: 'LOG'
+      log_level: '6'
+      log_prefix: '[IPTABLES OUTPUT] dropped '
+      proto: 'all'
+      before: []
+  drop:    
+    '910 deny all other input requests':
+      chain: 'INPUT'
+      action: 'drop'
+      proto: 'all'
+      before: []

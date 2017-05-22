@@ -1,0 +1,3 @@
+---
+excludes:
+  - '::dc_profile::hardware::bmc'
