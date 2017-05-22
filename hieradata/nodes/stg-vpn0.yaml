@@ -1,13 +1,20 @@
 ---
 dc_openvpn::endpoint:
   stg-vpn0:
-    route:
-      - '10.20.0.0 255.255.0.0'
-      - '10.25.0.0 255.255.0.0'
+    push:
+      - 'route 10.20.0.0 255.255.0.0'
+      - 'route 10.25.0.0 255.255.0.0'
     server: '10.253.4.0 255.255.255.0'
 
+dc_openvpn::public_interface: 'enp2s0'
+dc_openvpn::private_interface: 'enp4s0'
+
 dc_openvpn::routes:
-  '10.20.0.0/16':
-    gateway: '10.20.10.2'    
-  '10.25.0.0/16':
-    gateway: '10.20.10.2'    
+  "%{hiera('dc_openvpn::private_interface')}":
+    gateway:
+      - '10.20.10.2'
+    ipaddress:
+      - '10.20.0.0'
+      - '10.25.0.0'
+    netmask:
+      - '255.255.0.0'

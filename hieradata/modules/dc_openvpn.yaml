@@ -108,3 +108,7 @@ dc_openvpn::server::firewall:
       action: 'drop'
       proto: 'all'
       before: []
+
+sysctls::values:
+  net.ipv4.ip_forward:
+    value: '1'      
