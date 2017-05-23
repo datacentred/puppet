@@ -1,0 +1,10 @@
+---
+dc_openvpn::endpoint:
+  stg-vpn0:
+    push:
+      - 'route 10.35.128.0 255.255.0.0'
+    server: '10.253.6.0 255.255.255.0'
+
+dc_openvpn::public_interface: 'enp2s0'
+dc_openvpn::private_interface: 'enp4s0'
+
