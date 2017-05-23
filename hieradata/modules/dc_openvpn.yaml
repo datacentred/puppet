@@ -13,10 +13,10 @@ dc_openvpn::server::defaults:
   proto: 'udp'
   tls_server: true
   tls_cipher: 'TLS-ECDHE-RSA-WITH-AES-128-GCM-SHA256:TLS-ECDHE-ECDSA-WITH-AES-128-GCM-SHA256:TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384:TLS-DHE-RSA-WITH-AES-256-CBC-SHA256'
-  cipher: 'AES-256-CBC'
-  custom_options:
-    auth: 'SHA512'
-    tls-version-min: '1.2'
+#  cipher: 'AES-256-CBC' # Disabled due to 2.3 issues
+#  custom_options:
+#    auth: 'SHA512'
+#    tls-version-min: '1.2'
 
 dc_openvpn::server::firewall:
   base:
