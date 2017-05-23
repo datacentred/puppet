@@ -64,7 +64,7 @@ apt::sources:
       id: 'AE0AF310E2EA96B6B6F4BD726F8600B9563278F6'
       source: 'http://deb.theforeman.org/foreman.asc'
   galera:
-    location: 'http://mirror.aarnet.edu.au/pub/MariaDB/repo/5.5/ubuntu'
+    location: 'http://lon1.mirrors.digitalocean.com/mariadb/repo/5.5/ubuntu'
     release: 'trusty'
     repos: 'main'
     key:
