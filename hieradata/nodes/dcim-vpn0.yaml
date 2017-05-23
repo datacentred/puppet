@@ -1,6 +1,6 @@
 ---
 dc_openvpn::endpoint:
-  stg-vpn0:
+  dcim-vpn0:
     push:
       - 'route 10.35.128.0 255.255.0.0'
     server: '10.253.6.0 255.255.255.0'
