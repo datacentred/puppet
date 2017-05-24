@@ -4,8 +4,8 @@ classes:
   - '::dc_profile::util::wordpress::ssl'
 
 nginx::nginx_locations:
-  'datacentred':
-    server: 'datacentred'
+  'datacentred-ssl':
+    server: 'datacentred-ssl'
     location: '~* \.php$'
     fastcgi: 'unix:/var/run/php7-fpm.sock'
     www_root: '/srv/www/datacentred.co.uk'
