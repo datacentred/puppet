@@ -31,3 +31,4 @@ ovs\|\d+\|vsctl\|ERR\|.*
 ovs\|\d+\|bridge\|ERR\|.*
 ^.*Could not find token: .*
 No endpoints found for service energy
+^.*Unable to discover resources: The resource could not be found.*
