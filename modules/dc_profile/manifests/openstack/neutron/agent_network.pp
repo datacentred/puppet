@@ -76,6 +76,14 @@ class dc_profile::openstack::neutron::agent_network {
     'DEFAULT/rpc_conn_pool_size':         value => '60';
   }
 
+  # Workaround for the lack of any way of specifying the global default for maxconn
+  file_line { 'cfg.py':
+    path   => '/usr/lib/python2.7/dist-packages/neutron_lbaas/services/loadbalancer/drivers/haproxy/cfg.py',
+    after  => '\'user nobody\'\,',
+    line   => '        \'maxconn 1000000\',',
+    notify => Service['neutron-lbaas-agent'],
+  }
+
   # Workaround for the fact that we're using the Neutron VPN agent, which
   # handles L3 instead of the vanilla Neutron L3 agent.  The current
   # puppet-neutron module doesn't handle this properly.
