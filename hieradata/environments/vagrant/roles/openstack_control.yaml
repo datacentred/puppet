@@ -21,19 +21,19 @@ containers:
       - '--add-host=compute.datacentred.io:192.168.237.133'
       - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
   nova:
-    image: 'nova:liberty-f686d93'
+    image: 'nova:6d55b1d'
     extra_params:
       - '--network=host'
       - '--add-host=compute.datacentred.io:192.168.237.133'
       - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
   neutron:
-    image: 'neutron:liberty-0ae683d'
+    image: 'neutron:cce7799'
     extra_params:
       - '--network=host'
       - '--add-host=compute.datacentred.io:192.168.237.133'
       - '--add-host=osdbmq0.vagrant.test:192.168.237.132'
   horizon:
-    image: 'horizon:mitaka-fd22a1a'
+    image: 'horizon:6d55b1d'
     extra_params:
       - '--network=host'
       - '--add-host=compute.datacentred.io:192.168.237.133'
