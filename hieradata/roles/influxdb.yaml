@@ -2,6 +2,8 @@
 classes:
  - 'dc_profile::perf::influxdb'
 
+# Repo is managed by the InfluxDB module
+telegraf::manage_repo: false
 telegraf::inputs:
   influxdb:
     urls:
