@@ -2,7 +2,7 @@
 dc_openvpn::endpoint:
   dcim-vpn0:
     push:
-      - 'route 10.35.128.0 255.255.0.0'
+      - 'route 10.35.0.0 255.255.0.0'
     server: '10.253.6.0 255.255.255.0'
 
 dc_openvpn::public_interface: 'enp2s0'
