@@ -1,5 +1,5 @@
 ---
-influxdb::server::version: '1.2.0-1'
+influxdb::server::version: '1.2.4-1'
 influxdb::server::hostname: '%{::fqdn}'
 influxdb::server::data_dir: '/srv/influxdb/data'
 influxdb::server::wal_dir: '/srv/influxdb/wal'
