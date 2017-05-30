@@ -1,4 +1,13 @@
 ---
+heat::package_ensure: '1:5.0.3-0ubuntu1~cloud0'
+
+heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v3"
+heat::identity_uri: "https://%{hiera('os_api_host')}:35357/"
+
+heat::keystone_user: 'heat'
+heat::keystone_password: "%{hiera('keystone_heat_password')}"
+
+heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
 heat::keystone::auth::auth_name: 'heat'
 heat::keystone::auth::password: "%{hiera('keystone_heat_password')}"
 heat::keystone::auth::email: "%{hiera('internal_sysmail_address')}"
@@ -28,14 +37,6 @@ heat::rabbit_port: "%{hiera('osdbmq_rabbitmq_port')}"
 heat::rabbit_userid: "%{hiera('osdbmq_rabbitmq_user')}"
 heat::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 heat::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
-
-heat::auth_uri: "https://%{hiera('os_api_host')}:5000/v3"
-heat::identity_uri: "https://%{hiera('os_api_host')}:35357/"
-
-heat::keystone_user: 'heat'
-heat::keystone_password: "%{hiera('keystone_heat_password')}"
-
-heat::database_connection: "mysql://%{hiera('heat_db_user')}:%{hiera('heat_db_pass')}@%{hiera('os_api_host')}/%{hiera('heat_db')}"
 
 heat::api::enabled: true
 heat::api::api_cfn::enabled: false
