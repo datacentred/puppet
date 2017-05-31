@@ -68,6 +68,6 @@ containers:
   horizon:
     image: 'registry.datacentred.services:5000/horizon:mitaka-801da91'
   nova:
-    image: 'registry.datacentred.services:5000/nova:liberty-4b78bc9'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6d55b1d'
   neutron:
     image: 'registry.datacentred.services:5000/neutron:liberty-801da91'
