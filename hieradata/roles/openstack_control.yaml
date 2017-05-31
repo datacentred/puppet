@@ -58,7 +58,7 @@ apache::mpm_module: 'event'
 #
 containers:
   keystone:
-    image: 'registry.datacentred.services:5000/keystone:mitaka-d332a40'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/keystone:6d55b1d'
   glance:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/glance:cce7799'
     volumes:
