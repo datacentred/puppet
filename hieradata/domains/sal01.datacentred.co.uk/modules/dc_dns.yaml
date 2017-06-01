@@ -28,6 +28,8 @@ dc_dns::static::records:
     rdata: '178.62.81.198'
   'docs.datacentred.io/A':
     rdata: '185.43.218.237'
+  'netbox.datacentred.io/A':
+    rdata: '138.68.158.159'
   'status.datacentred.io/CNAME':
     rdata: 'domain.status.io'
   "icinga.%{::domain}/CNAME":
