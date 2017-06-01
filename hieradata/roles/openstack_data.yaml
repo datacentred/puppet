@@ -54,6 +54,14 @@ databases:
     user: "%{hiera('nova_db_user')}"
     password: "%{hiera('nova_db_pass')}"
     host: '%'
+  "%{hiera('nova_api_db')}":
+    user: "%{hiera('nova_db_user')}"
+    password: "%{hiera('nova_db_pass')}"
+    host: '%'
+  "%{hiera('aodh_db')}":
+    user: "%{hiera('aodh_db_user')}"
+    password: "%{hiera('aodh_db_pass')}"
+    host: '%'
 
 dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_user: "%{hiera('osdbmq_galera_backup_user')}"
 dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_pw: "%{hiera('osdbmq_galera_backup_pw')}"
