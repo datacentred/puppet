@@ -595,7 +595,7 @@ class dc_icinga::server::nagios_services {
   icinga::service { 'check_mongo_memory':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_mongodb',
-    check_command       => 'check_mongodb_dc!memory!27017!20!28',
+    check_command       => 'check_mongodb_dc!memory!27017!24!28',
     service_description => 'MongoDB Memory Usage',
   }
 
