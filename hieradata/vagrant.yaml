@@ -75,6 +75,10 @@ nova_admin_user:     'nova'
 nova_osapi_port :    '8774'
 nova::glance_api_servers: 'https://compute.datacentred.io:9292'
 
+# nova_api
+#
+nova_api_db:         'nova_api'
+
 # glance
 #
 glance_db:       'glance'
@@ -114,6 +118,12 @@ heat_db_pass: 'yeOv7wrixVer'
 
 heat_domain_admin: 'heat_domain_admin'
 heat_domain_password: '5QUIWduOZv1u'
+
+# aodh
+#
+aodh_db: 'aodh'
+aodh_db_user: 'aodh'
+aodh_db_pass: 'uNg943dewJx6'
 
 # ceph
 ceph_admin_key: 'a5e4c417-a30f-44a1-bf07-d0356ca58968'

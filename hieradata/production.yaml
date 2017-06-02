@@ -72,6 +72,10 @@ nova_admin_tenant:   'services'
 nova_admin_user:     'nova'
 nova_osapi_port :    '8774'
 
+# nova_api
+#
+nova_api_db:         'nova_api'
+
 # glance
 #
 glance_db:       'glance'
@@ -104,6 +108,12 @@ heat_db_pass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAAC
 
 heat_domain_admin: 'heat_domain_admin'
 heat_domain_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAAWFfjOVqzU5hgDX6e376rko+vMru4ICS8WVuW84ZMksQgv2fqigqwbJ973pudH8Vy7D3ZUKXMhQfmAUKklSvpYsrbsl3e6nEtOhvgDIktF2cB6XUDTRbo2DhgFcUGdTR+ZBWLuRvZV3E4YylYFU0fsfjmQaVi1tVg/Tg8ZOy70Fx205giz9Y61irWQ3bn504XFWmd/5GOnvyeOADw+dvYKiYEoBSEfrxcYgETQhMdEm6CnCjGQoNZ3VYO//Es+Av4hGm6K84YaBFytDOufnYM7rhtMgxw5aGzwt/cpzceibHjJlQdDaLfawGs7/p64UdjcLgnWi6YCmq6tu9rBNWhTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBV9UtYpwCaBqvuHzy8NKkTgBBjxjX6NIgRNu66KZ/tpJ6+]
+
+# aodh
+#
+aodh_db: 'aodh'
+aodh_db_user: 'aodh'
+aodh_db_pass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAIlrATY7aUTltZa9miJLCHWFPanE/cnBHA/w+zhU4ErMX0YX87mBjMz62sdeNtBuv9l9yi5kEOzq9wK8urFTKTmr6ZBlwkZOPk272dhcOQcVAkwq4MBkU2l5ZioXfJFgNprCOPPQD1VvnySEQDZvAaRcpeOW6IkrVeBiedJetpSZq1k++IdY4V+4vp1vUYMVeztIHMO6ZhHXiYX2AfBAc+lZFcBHLqqRhzYZzJTCQo2BcLQh5RWcCHaZmuaVNeI70ox+Cq8xOGtEyZC+5/Y7jJYcdCi7jey6kwyWJeKWUmYjHagvmKiDwMXWNhc80pDzlQ0+cDwhM51JiO/5FncQgVzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD+j+E9bN2HO47ONXKPtji0gBAwsN4IXhnpzxhF03uLRw2N]
 
 # monitoring
 #
