@@ -11,6 +11,11 @@ class dc_docker::client {
 
   $_pcertpath = '/etc/puppetlabs/puppet/ssl'
 
+  group { 'docker':
+    ensure => present,
+    system => true,
+  }
+
   File {
     owner => 'root',
     group => 'root',

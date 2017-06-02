@@ -6,6 +6,3 @@ dc_docker::registry::tenantid: '1d2ea4460b514f459a9d9ed4a155fab3'
 dc_docker::registry::container: 'registry'
 dc_docker::registry::rootdirectory: '/registry'
 
-telegraf::inputs:
-  docker:
-    endpoint: "unix:///var/run/docker.sock"
