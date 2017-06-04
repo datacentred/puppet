@@ -45,10 +45,9 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'httpchk get /healthcheck'
+        - 'httpchk'
         - 'tcplog'
         - 'forwardfor'
-      http-check: 'expect status 200'
       balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
@@ -64,10 +63,9 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'httpchk get /healthcheck'
+        - 'httpchk'
         - 'tcplog'
         - 'forwardfor'
-      http-check: 'expect status 200'
       balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
@@ -83,9 +81,8 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'httpchk get /healthcheck'
+        - 'httpchk'
         - 'tcplog'
-      http-check: 'expect status 200'
       balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
@@ -101,9 +98,7 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'httpchk get /healthcheck'
         - 'tcplog'
-      http-check: 'expect status 200'
       balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
@@ -136,9 +131,8 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'httpchk get /healthcheck'
+        - 'httpchk'
         - 'tcplog'
-      http-check: 'expect status 200'
       balance: 'roundrobin'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
@@ -152,9 +146,8 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'httpchk get /healthcheck'
+        - 'httpchk'
         - 'tcplog'
-      http-check: 'expect status 200'
       balance: 'roundrobin'
     collect_exported: false
   cinder:
