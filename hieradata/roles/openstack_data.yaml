@@ -17,6 +17,8 @@ rabbitmq::ssl_fail_if_no_peer_cert: true
 rabbitmq::management_ssl: false
 rabbitmq::erlang_cookie: ENC[PKCS7,MIIBiQYJKoZIhvcNAQcDoIIBejCCAXYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAoIoYoyYPz0rf9wCxBzQ3kRpWam2y7WTvN7X53utx9cTxQgDfSpfVPD/87xB2gGhF27iVG6xh4U0WcQPXM33akSIArQDCTnG7lGaMFX2b+iMNk3LbaXNNqbqZ2fqVXsmjg4nv6OmaxB5WOOLn5TMc9a5msVmh5Q/T/1N/yCiIb23BzJevCvtuo8XVgDNd7D43tRMohJd0YRGM9xx5/gmdYGdEnhR9Uxs06zlcgviFGq0HIHdI7hTsTzWaHcFBRIx+yKeqYgG3St9v9o/whyYkJYLvBUihLJ/9SpKAPAU9/0Jk83eqgYaaVfPATpiCg9M7olPr+TbYuD9NAz/DiXs+KTBMBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBCCrXi2n9ZAHSVQHWZqVAVogCB6TCjDdTxmNNHNiWjLQtfmG9XpLC3B81WgjArlkaELxQ==]
 rabbitmq::file_limit: 65536
+rabbitmq::server::node_ip_address: '0.0.0.0'
+rabbitmq::node_ip_address: '0.0.0.0'
 galera::galera_servers:
  - osdbmq0.%{::domain}
  - osdbmq1.%{::domain}
@@ -66,4 +68,4 @@ databases:
 dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_user: "%{hiera('osdbmq_galera_backup_user')}"
 dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_pw: "%{hiera('osdbmq_galera_backup_pw')}"
 
-memcached::listen_ip: "%{::ipaddress}"
+memcached::listen_ip: 0.0.0.0

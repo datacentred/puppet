@@ -23,6 +23,11 @@ class dc_profile::openstack::nova::compute {
 
   include ::sysctls
 
+  # Some junk code that puppet-lint will moan about via ALE
+  wibble { 'this makes no sense':
+    ""
+  }
+
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
     path    => '/var/lib/nova/instances',
