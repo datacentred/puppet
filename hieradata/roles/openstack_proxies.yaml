@@ -4,7 +4,7 @@ classes:
   - '::dc_profile::openstack::proxyip'
   - '::dc_profile::openstack::keepalived'
 
-haproxy::package_ensure: '1.5.14-1ubuntu0.15.10.1~ubuntu14.04.1'
+haproxy::package_ensure: '1.7.5-2ppa1~trusty'
 haproxy::global_options:
         tune.bufsize: 32000
         log: '127.0.0.1 local0'
