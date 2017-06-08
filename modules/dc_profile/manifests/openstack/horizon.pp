@@ -1,15 +1,4 @@
-# Class: dc_profile::openstack::horizon
-#
-# Class to deploy the OpenStack dashboard in a
-# Docker container
-#
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
+# == Class: dc_profile::openstack::horizon
 #
 class dc_profile::openstack::horizon {
 
@@ -18,5 +7,8 @@ class dc_profile::openstack::horizon {
   dc_docker::run { 'horizon':
     * => $containers['horizon']
   }
+
+  ensure_packages([ 'openstack-dashboard','openstack-dashboard-ubuntu-theme',
+                    'python-django-horizon'], { ensure => absent })
 
 }
