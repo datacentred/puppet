@@ -71,3 +71,11 @@ containers:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6d55b1d'
   neutron:
     image: 'registry.datacentred.services:5000/neutron:liberty-801da91'
+
+telegraf::inputs:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+
+telegraf_groups:
+  - 'puppet'
+  - 'docker'
