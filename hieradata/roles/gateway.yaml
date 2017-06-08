@@ -24,3 +24,5 @@ haproxy::defaults_options:
   maxconn: '8000'
 haproxy::global_options:
   tune.ssl.default-dh-param: '2048'
+
+haproxy::package_ensure: '1.7.5-2ppa1~trusty'

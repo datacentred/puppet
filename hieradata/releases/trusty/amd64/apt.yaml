@@ -211,6 +211,8 @@ apt::ppas:
     ensure: 'present'
   ppa:cz.nic-labs/knot-dns:
     ensure: 'present'
+  ppa:vbernat/haproxy-1.7:
+    ensure: 'present'
 
 apt::keys:
   hp_mirror_key:
