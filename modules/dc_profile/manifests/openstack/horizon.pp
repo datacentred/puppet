@@ -9,6 +9,6 @@ class dc_profile::openstack::horizon {
   }
 
   ensure_packages([ 'openstack-dashboard','openstack-dashboard-ubuntu-theme',
-                    'python-django-horizon'], { ensure => absent })
+                    'python-django-horizon'], { ensure => purged })
 
 }

@@ -12,6 +12,6 @@ class dc_profile::openstack::keystone {
     * => $containers['keystone']
   }
 
-  ensure_packages(['python-keystone'], { ensure => absent })
+  ensure_packages(['python-keystone'], { ensure => purged })
 
 }

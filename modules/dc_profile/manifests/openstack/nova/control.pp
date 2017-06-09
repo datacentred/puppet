@@ -21,6 +21,6 @@ class dc_profile::openstack::nova::control {
   }
 
   ensure_packages([ 'nova-api','nova-cert','nova-common','nova-conductor',
-                    'nova-novncproxy', 'nova-scheduler'], { ensure => absent })
+                    'nova-novncproxy', 'nova-scheduler'], { ensure => purged })
 
 }
