@@ -12,9 +12,6 @@ class dc_profile::openstack::glance {
     * => $containers['glance']
   }
 
-  cron { [ 'glance-cache-cleaner', 'glance-cache-pruner' ]:
-    ensure =>  absent,
-    user   => 'glance',
-  }
+  ensure_packages([ 'glance-api','glance-common','glance-registry'], { ensure => absent })
 
 }

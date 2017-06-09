@@ -1,12 +1,4 @@
-# Class: dc_profile::openstack::neutron::server
-#
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
+# == Class: dc_profile::openstack::neutron::server
 #
 class dc_profile::openstack::neutron::server {
 
@@ -17,5 +9,8 @@ class dc_profile::openstack::neutron::server {
   dc_docker::run { 'neutron':
     * => $containers['neutron']
   }
+
+
+  ensure_packages([ 'neutron-common','neutron-plugin-ml2','neutron-server'], { ensure => absent })
 
 }
