@@ -6,3 +6,8 @@ classes:
   - '::dc_profile::util::unattended_upgrades'
 
 dc_kibana::elasticsearch_host: 'logstash'
+
+logstash::version: '1:5.4.1-1'
+logstash::restart_on_change: false
+logstash::startup_options:
+  'LS_GROUP': 'puppet'

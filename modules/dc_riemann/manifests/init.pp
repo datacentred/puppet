@@ -28,31 +28,29 @@ class dc_riemann (
     # Specify the latest version, because the package default is old
     version     => '0.2.13',
     config_file => '/etc/riemann.config',
-    require     => [ File['/etc/riemann.config'], Package['ruby-dev'] ],
+    require     => Package['ruby-dev'],
   }
 
   package { 'ruby-dev':
     ensure => 'installed',
   }
 
-  file { '/etc/riemann.config':
+  file { '/etc/riemann/riemann.config':
     ensure  => file,
     content => template('dc_riemann/riemann.config.erb'),
   }
 
-  file { '/etc/riemann.conf.d':
+  file { '/etc/riemann/conf.d/':
     ensure => directory,
-    purge  => true,
-    owner  => 'riemann',
-    group  => 'riemann',
+    owner   => 'riemann',
+    group   => 'riemann',
   }
 
-  file { '/etc/riemann.conf.d/riemann.whitelist':
-    ensure => file,
-    owner  => 'riemann',
-    group  => 'riemann',
-    source => 'puppet:///modules/dc_riemann/riemann.whitelist',
-    notify => Service['riemann'],
+  file { '/etc/riemann/conf.d/riemann.whitelist':
+    ensure  => file,
+    owner   => 'riemann',
+    group   => 'riemann',
+    source  => 'puppet:///modules/dc_riemann/riemann.whitelist',
   }
 
   logrotate::rule { 'riemann':
@@ -66,6 +64,8 @@ class dc_riemann (
   include dc_riemann::syslog_slack_stream
   include dc_riemann::oslog_email_stream
   include dc_riemann::oslog_slack_stream
+
+  File['/etc/riemann/conf.d/'] -> File['/etc/riemann/conf.d/riemann.whitelist'] ~> File['/etc/riemann/riemann.config'] ~> Service['riemann']
 
 }
 

@@ -10,7 +10,6 @@ class dc_logstash::server::config::output_elasticsearch {
 
   logstash::configfile { 'output_elasticsearch':
     content => template('dc_logstash/server/output_elasticsearch.erb'),
-    order   => '20',
   }
 
 }

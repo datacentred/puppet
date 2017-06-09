@@ -13,29 +13,7 @@
 class dc_profile::log::kibana {
   include ::apache
   include ::apache::mod::status
-
-  class { 'kibana4':
-    plugins => {
-      'elastic/sense'                    => {
-        'ensure'          => 'present',
-        'plugin_dest_dir' => 'sense',
-      },
-      'elastic/timelion'                 => {
-        'ensure'          => 'present',
-        'plugin_dest_dir' => 'timelion',
-      },
-      'elasticsearch/marvel'             => {
-        'ensure'          => 'present',
-        'plugin_dest_dir' => 'marvel',
-      },
-      'oxalide/kibana_metric_vis_colors' => {
-        'plugin_dest_dir' => 'marvel',
-        'ensure'          => 'present',
-        'url'             => 'https://github.com/Oxalide/kibana_metric_vis_colors/archive/master.zip'
-      }
-    }
-  }
-
+  include ::kibana
 
   #Apache vhost config, proxies http requests to kibana server instance
   apache::vhost{ 'kibana':

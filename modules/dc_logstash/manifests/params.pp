@@ -14,13 +14,11 @@ class dc_logstash::params {
   # Generic options
   $grok_patterns_dir = '/etc/logstash/patterns/grok'
 
-  # Log Courier options
-  $logcourier_plugin_version = '1.9.0'
-  $logcourier_port = '55516'
+  $beats_port = '5504'
 
-  $logcourier_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
-  $logcourier_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
-  $logcourier_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
+  $beats_key = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem"
+  $beats_cert = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
+  $beats_cacert = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
 
   # Riemann options
   $riemann_plugin_version = '2.0.5'
