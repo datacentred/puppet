@@ -346,3 +346,6 @@
 [submodule "modules/zabbix"]
 	path = modules/zabbix
 	url = https://github.com/datacentred/puppet-zabbix.git
+[submodule "modules/unifi"]
+	path = modules/unifi
+	url = https://github.com/jmkeyes/puppet-unifi.git
