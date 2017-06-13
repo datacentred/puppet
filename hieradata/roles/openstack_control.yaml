@@ -71,6 +71,8 @@ containers:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6d55b1d'
   neutron:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/neutron:42792f0'
+  telemetry:
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:979b581'
 
 telegraf::inputs:
   docker:
