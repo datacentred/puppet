@@ -95,6 +95,10 @@ filebeat::prospectors:
       - '/var/log/mysql/error.log'
       - '/var/log/mysql/mysql-slow.log'
     doc_type: 'mysql'
+  network_monitoring_satellite:
+    paths:
+      - '/var/log/network/*/*.log'
+    doc_type: 'network_logs'
   neutron_dhcp:
     paths:
       - '/var/log/neutron/dhcp-agent.log'

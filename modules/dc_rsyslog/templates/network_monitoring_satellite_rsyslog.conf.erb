@@ -1,0 +1,146 @@
+# An "In-Memory Queue" is created for remote logging.
+$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') -%>    # where to place spool files
+$ActionQueueFileName queue      # unique name prefix for spool files
+$ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+<% if scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>
+$ActionQueueTimeoutEnqueue <%= scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>   # time to wait before discarding on full spool
+<% end -%>
+$ActionQueueType LinkedList     # run asynchronously
+$ActionResumeRetryCount -1      # infinety retries if host is down
+<% if scope.lookupvar('rsyslog::client::log_templates') and ! scope.lookupvar('rsyslog::client::log_templates').empty?-%>
+
+# Define custom logging templates
+<% scope.lookupvar('rsyslog::client::log_templates').flatten.compact.each do |log_template| -%>
+$template <%= log_template['name'] %>,"<%= log_template['template'] %>"
+<% end -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::log_filters') -%>
+
+# Define custom if/then log conditions
+<% scope.lookupvar('rsyslog::client::log_filters').each do |log_filter| -%>
+if <%= log_filter['expression'] %> then <%= log_filter['action'] %>
+<% end -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::actionfiletemplate_cust') and scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
+
+# Setting custom action file formatting
+$template <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>, <%= scope.lookupvar('rsyslog::client::actionfiletemplate_cust') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
+
+# Using specified format for default logging format:
+$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>
+<% else -%>
+
+<% if scope.lookupvar('rsyslog::client::high_precision_timestamps') == false -%>
+# Use default format
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+<% else -%>
+# Use high precision timestamp format.
+$ActionFileDefaultTemplate RSYSLOG_FileFormat
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::client::listen_localhost') -%>
+# Provides UDP syslog reception
+$ModLoad imudp
+$UDPServerAddress 127.0.0.1
+$UDPServerRun 514
+<% else -%>
+$ModLoad imudp
+$UDPServerAddress * 
+$UDPServerRun 514
+<% end -%>
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::client::ssl') -%>
+# Setup SSL connection.
+# CA/Cert
+$DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
+<% if scope.lookupvar('rsyslog::client::ssl_cert') -%>
+$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::client::ssl_cert') %>
+$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::client::ssl_key') %>
+<% end -%>
+
+# Connection settings.
+$DefaultNetstreamDriver gtls
+$ActionSendStreamDriverMode 1
+$ActionSendStreamDriverAuthMode <%= scope.lookupvar('rsyslog::client::ssl_auth_mode') %>
+<% if @ssl_permitted_peer -%>
+$ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::client::ssl_permitted_peer') %>
+<% end -%>
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
+# Load RELP module.
+$ModLoad omrelp
+<% end -%>
+
+# Logging locally.
+
+# Log auth messages locally
+auth,authpriv.*                 /var/log/auth.log
+# First some standard log files.  Log by facility.
+#
+*.*;auth,authpriv.none         -/var/log/syslog
+cron.*                          /var/log/cron.log
+daemon.*                       -/var/log/daemon.log
+kern.*                         -/var/log/kern.log
+#lpr.*                          -/var/log/lpr.log
+mail.*                         -/var/log/mail.log
+user.*                         -/var/log/user.log
+
+#
+# Logging for the mail system.  Split it up so that
+# it is easy to write scripts to parse these files.
+#
+mail.info                      -/var/log/mail.info
+mail.warn                      -/var/log/mail.warn
+mail.err                        /var/log/mail.err
+
+#
+# Logging for INN news system.
+#
+news.crit                       /var/log/news/news.crit
+news.err                        /var/log/news/news.err
+news.notice                     -/var/log/news/news.notice
+
+#
+# Some "catch-all" log files.
+#
+*.=debug;\
+       auth,authpriv.none;\
+       news.none;mail.none     -/var/log/debug
+*.=info;*.=notice;*.=warn;\
+       auth,authpriv.none;\
+       cron,daemon.none;\
+       mail,news.none          -/var/log/messages
+
+#
+# I like to have messages displayed on the console, but only on a virtual
+# console I usually leave idle.
+#
+#daemon,mail.*;\
+#       news.=crit;news.=err;news.=notice;\
+#       *.=debug;*.=info;\
+#       *.=notice;*.=warn       /dev/tty8
+
+# The named pipe /dev/xconsole is for the `xconsole' utility.  To use it,
+# you must invoke `xconsole' with the `-file' option:
+#
+#    $ xconsole -file /dev/xconsole [...]
+#
+# NOTE: adjust the list below, or you'll go crazy if you have a reasonably
+#      busy site..
+#
+daemon.*;mail.*;\
+        news.err;\
+        *.=debug;*.=info;\
+        *.=notice;*.=warn       |/dev/xconsole
+*.emerg       :omusrmsg:*
+
+# Save news errors of level crit and higher in a special file.
+uucp,news.crit                 -/var/log/spooler
+
+# Save boot messages also to boot.log
+local7.*                       -/var/log/boot.log
