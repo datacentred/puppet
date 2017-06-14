@@ -5,6 +5,6 @@ dc_openvpn::endpoint:
       - 'route 10.35.0.0 255.255.0.0'
     server: '10.253.6.0 255.255.255.0'
 
-dc_openvpn::public_interface: 'enp2s0'
-dc_openvpn::private_interface: 'enp4s0'
+dc_openvpn::public_interface: 'enp1s0'
+dc_openvpn::private_interface: 'enp2s0'
 
