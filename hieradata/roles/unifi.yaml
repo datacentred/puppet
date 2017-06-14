@@ -1,4 +1,33 @@
 ---
 classes: 
   - '::unifi'
+  - '::dc_profile::net::unifi'
 
+dc_profile::net::unifi::fwrules:
+  base:
+    '001 accept lo':
+      proto: 'all'
+      iniface: 'lo'
+      action: 'accept'
+    '002 allow ssh access':
+      proto: 'tcp'
+      dport: '22'
+      action: 'accept'
+    '003 allow unifi ports':
+      proto: 'tcp'
+      dport: ['8080', '8443', '8880', '8843', '3478']
+      action: 'accept'
+    '004 allow unifi udp':
+      proto: 'udp'
+      dport: '3478'
+      action: 'accept'
+    '025 INPUT allow related':
+      proto: 'all'
+      ctstate:
+        - 'RELATED'
+        - 'ESTABLISHED'
+      action: 'accept'
+    '999 deny all other input requests':
+      source: '0.0.0.0/0'
+      proto: 'all'
+      action: 'drop'
