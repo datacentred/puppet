@@ -366,10 +366,12 @@ dc_profile::openstack::haproxy::balancermembers:
       - 'oscontrol0'
       - 'oscontrol1'
       - 'oscontrol2'
+      - 'oscontrol3'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
       - '10.10.160.162'
+      - '10.10.160.84'
     ports: '8777'
     options: 'check inter 2000 rise 2 fall 5'
   glance-registry:
