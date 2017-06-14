@@ -20,6 +20,7 @@ class dc_zabbix::proxy (
           resources { 'firewall': purge => true }
       }
       create_resources(firewall, $firewall_rules['base'])
+      create_resources(firewall, $firewall_rules['proxy'])
     }
 
 }

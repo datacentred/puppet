@@ -25,6 +25,9 @@ class dc_zabbix::params {
     },
     'server' => {
       '004 allow zabbix'                    => { chain => 'INPUT', proto  => 'tcp', dport                        => [ '10051', '443', '80' ], action => 'accept' },
+    },
+    'proxy' => {
+      '005 allow rsyslog'                   => { chain => 'INPUT', proto  => 'udp', dport                        => [ '514' ], action => 'accept' },
     }
   }
 }
