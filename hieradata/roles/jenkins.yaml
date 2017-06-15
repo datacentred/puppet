@@ -6,3 +6,11 @@ classes:
   - '::dc_profile::util::unattended_upgrades'
 
 puppetdeploy::is_jenkins: true
+
+telegraf::inputs:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+
+telegraf_groups:
+  - 'puppet'
+  - 'docker'

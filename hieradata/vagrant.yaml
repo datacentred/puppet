@@ -183,3 +183,6 @@ serial_console::baud_rate:                 "115200"
 
 # docs
 confluence_database_password: 'Laiv1eiJie'
+
+telegraf_groups: 
+  - 'puppet'

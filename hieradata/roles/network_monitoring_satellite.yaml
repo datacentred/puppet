@@ -4,3 +4,15 @@ classes:
 
 apache::mpm_module: 'prefork'
 firewall::purge: true
+
+rsyslog::client::listen_localhost: false
+rsyslog::client::custom_config: 'dc_rsyslog/network_monitoring_satellite_rsyslog.conf.erb'
+
+rsyslog::client::log_templates:
+  - name: 'arkngPerHostLog'
+    template: '/var/log/network/ark-ng/%HOSTNAME%.log'
+
+rsyslog::client::log_filters:
+  - expression: '$fromhost-ip startswith "10.40.32."'
+    action: "-?arkngPerHostLog\n&~"
+

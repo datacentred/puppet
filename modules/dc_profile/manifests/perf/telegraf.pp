@@ -5,9 +5,11 @@ class dc_profile::perf::telegraf {
 
   include ::telegraf
 
+  $grouplist = lookup('telegraf_groups', Array[String], 'unique')
+
   user { 'telegraf':
     ensure  => present,
-    groups  => 'puppet',
+    groups  => $grouplist,
     require => Package['telegraf'],
   }
 

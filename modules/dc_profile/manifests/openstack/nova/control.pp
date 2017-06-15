@@ -20,4 +20,7 @@ class dc_profile::openstack::nova::control {
     * => $containers['nova']
   }
 
+  ensure_packages([ 'nova-api','nova-cert','nova-common','nova-conductor',
+                    'nova-novncproxy', 'nova-scheduler'], { ensure => absent })
+
 }

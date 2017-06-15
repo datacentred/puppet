@@ -346,3 +346,9 @@
 [submodule "modules/kibana"]
 	path = modules/kibana
 	url = https://github.com/elastic/puppet-kibana
+[submodule "modules/unifi"]
+	path = modules/unifi
+	url = https://github.com/jmkeyes/puppet-unifi.git
+[submodule "modules/fail2ban"]
+	path = modules/fail2ban
+	url = https://github.com/dhoppe/puppet-fail2ban.git

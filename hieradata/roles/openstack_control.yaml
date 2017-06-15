@@ -68,6 +68,18 @@ containers:
   horizon:
     image: 'registry.datacentred.services:5000/horizon:mitaka-801da91'
   nova:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6d55b1d'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6e05bf3'
   neutron:
-    image: 'registry.datacentred.services:5000/neutron:liberty-801da91'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/neutron:42792f0'
+  telemetry:
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:979b581'
+  heat:
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:dd82cef'
+
+telegraf::inputs:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+
+telegraf_groups:
+  - 'puppet'
+  - 'docker'
