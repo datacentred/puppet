@@ -6,6 +6,7 @@ class dc_profile::openstack::heat {
 
   dc_docker::run { 'heat':
     * => $containers['heat']
+  }
 
   service { [ 'heat-api', 'heat-api-cfn', 'heat-engine' ]:
     ensure =>  stopped,
