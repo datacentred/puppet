@@ -21,6 +21,9 @@ ceph::conf:
     rgw keystone admin token: 'b87a49b7-7297-43f7-8a95-7ca26f0516ff'
     rgw keystone accepted roles: '_member_,admin'
     rgw relaxed s3 bucket names: 'true'
+    rgw print prohibited content length: 'true'
+    rgw swift account in url: 'true'
+
 
 ceph::keys:
   /etc/ceph/ceph.client.admin.keyring:
