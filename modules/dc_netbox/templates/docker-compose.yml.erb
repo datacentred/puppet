@@ -1,0 +1,41 @@
+version: '2'
+services:
+    netbox:
+        build: .
+        image: digitalocean/netbox:v2.0.2
+        depends_on:
+        - postgres
+        volumes:
+        - netbox-nginx-config:/etc/netbox-nginx/
+        - netbox-static-files:/opt/netbox/netbox/static
+        environment:
+          SUPERUSER_NAME: admin
+          SUPERUSER_EMAIL: <%= @mail %>
+          SUPERUSER_PASSWORD: <%= @password %>
+          ALLOWED_HOSTS: localhost
+          DB_NAME: netbox
+          DB_USER: netbox
+          DB_PASSWORD: <%= @db_password %>
+          DB_HOST: postgres
+          SECRET_KEY: <%= @secretkey %>
+    nginx:
+        image: nginx:1.11-alpine
+        command: nginx -g 'daemon off;' -c /etc/netbox-nginx/nginx.conf
+        depends_on:
+        - netbox
+        ports:
+        - 80:80
+        volumes:
+        - netbox-static-files:/opt/netbox/netbox/static
+        - netbox-nginx-config:/etc/netbox-nginx/
+    postgres:
+        image: postgres:9.6-alpine
+        environment:
+            POSTGRES_USER: netbox
+            POSTGRES_PASSWORD: <%= @db_password %>
+            POSTGRES_DB: netbox
+volumes:
+    netbox-static-files:
+        driver: local
+    netbox-nginx-config:
+        driver: local
