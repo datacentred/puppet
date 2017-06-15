@@ -1,0 +1,11 @@
+input {
+  beats {
+    port => <%= @port %>
+    ssl => true
+    ssl_certificate => "<%= @cert %>"
+    ssl_key => "<%= @key %>"
+    ssl_verify_mode => 'force_peer'
+    ssl_certificate_authorities => "<%= @cacert %>" 
+    tls_min_version => "1.2"
+  }
+}

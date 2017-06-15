@@ -10,7 +10,6 @@ class dc_logstash::server::config::filter_grok_haproxy {
 
   logstash::configfile { 'filter_grok_haproxy':
     source => 'puppet:///modules/dc_logstash/filter_grok_haproxy',
-    order  => '10',
   }
 
 }

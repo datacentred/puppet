@@ -4,30 +4,23 @@
 #
 class dc_logstash::server (
   $grok_patterns_dir = $dc_logstash::params::grok_patterns_dir,
-  $logcourier_plugin_version = $dc_logstash::params::logcourier_plugin_version,
-  $logcourier_port = $dc_logstash::params::logcourier_port,
-  $logcourier_key = $dc_logstash::params::logcourier_key,
-  $logcourier_cert = $dc_logstash::params::logcourier_cert,
-  $logcourier_cacert = $dc_logstash::params::logcourier_cacert,
+  $beats_plugin_version = $dc_logstash::params::beats_plugin_version,
+  $beats_port = $dc_logstash::params::beats_port,
+  $beats_key = $dc_logstash::params::beats_key,
+  $beats_cert = $dc_logstash::params::beats_cert,
+  $beats_cacert = $dc_logstash::params::beats_cacert,
   $syslog_port = $dc_logstash::params::syslog_port,
   $elasticsearch_hosts = $dc_logstash::params::elasticsearch_hosts,
   $riemann_plugin_version = $dc_logstash::params::riemann_plugin_version,
 ) inherits dc_logstash::params {
 
+  include ::java
+
   class { '::logstash':
     ensure            => 'present',
-    restart_on_change => false,
-    version           => '1:2.3.4-1',
   }
 
-  # Patch the module's init script in order for us to be able to read Puppet's
-  # SSL certs.
-  exec { 'logstash patch upstart':
-    command => '/bin/sed -ie "s/LS_GROUP=logstash/LS_GROUP=puppet/" /etc/init.d/logstash',
-    onlyif  => '/bin/grep "LS_GROUP=logstash" /etc/init.d/logstash',
-    require => Package['logstash'],
-    notify  => Service['logstash'],
-  }
+  Class['java'] -> Class['logstash']
 
   # Stop logstash web from starting
   file { '/etc/init/logstash-web.conf':
@@ -54,12 +47,12 @@ class dc_logstash::server (
     require => Class['::logstash'],
   }
 
-  # Install the server side log-courier and riemann components
-  include ::dc_logstash::server::courier
+  # Install the server side beats and riemann components
+  include ::dc_logstash::server::beats
   include ::dc_logstash::server::riemann
 
   # Add config files
-  include ::dc_logstash::server::config::input_log_courier
+  include ::dc_logstash::server::config::input_beats
   include ::dc_logstash::server::config::input_syslog
   include ::dc_logstash::server::config::filter_grok_apache
   include ::dc_logstash::server::config::filter_grok_apache_err

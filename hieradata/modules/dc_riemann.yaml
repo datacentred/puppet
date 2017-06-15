@@ -1,6 +1,6 @@
 dc_riemann::riemann_from_email_address: "riemann@%{::domain}"
 dc_riemann::sysmail_address: "%{hiera('internal_sysmail_address')}"
-dc_riemann::riemann_config_dir: '/etc/riemann.conf.d'
+dc_riemann::riemann_config_dir: '/etc/riemann/conf.d'
 dc_riemann::riemann_whitelist: "%{hiera('dc_riemann::riemann_config_dir')}/riemann.whitelist"
 dc_riemann::riemann_pagerduty_key: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAkv2qnQ0IkRtUMWqmKGChQBWHxtsYSQ2cKovkSwb6c9oPIZH15hJH4xGwv5yY/IAk2/ErMgqs5woFPQche8rs54vDoOEDAu+10f81/GaHQidnFdgcrFRB6ByYSDK42G+E59OM9anJfdb3KZ+FOmYi6P1nmNkUW8JlP8+6nlYDCXN7i4CtUQen5/1jtwBYGq8ncIKO0eiEhZ5U0rrLbk2wIN5jBwdbK9ZsVdGM3sYoN8EodPegH4iIAbNMjbj5Kv0vkAyJSBuEeAkhfDhOPk7ilkkd+jbn4gV01k5deSdTy7hjHXkET0l4UYQgZywykcL+RgsZIvDLlDHu+BnbGwi/TDBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDl/LYKg/UJXYfq+xhXQxoAgDARoVvJrNka2bAjzDfFmile052li1pnoTqJU5Rjf+AU/9zJG3CVCkfaR9AvxqrycvE=]
 dc_riemann::riemann_pagerduty_blacklist: "%{hiera('dc_riemann::riemann_config_dir')}/riemann.blacklist"

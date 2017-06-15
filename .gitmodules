@@ -160,9 +160,6 @@
 [submodule "modules/tempest"]
 	path = modules/tempest
 	url = https://github.com/stackforge/puppet-tempest
-[submodule "modules/kibana4"]
-	path = modules/kibana4
-	url = https://github.com/lesaux/puppet-kibana4.git
 [submodule "modules/keystone"]
 	path = modules/keystone
 	url = https://github.com/openstack/puppet-keystone.git
@@ -346,6 +343,9 @@
 [submodule "modules/zabbix"]
 	path = modules/zabbix
 	url = https://github.com/datacentred/puppet-zabbix.git
+[submodule "modules/kibana"]
+	path = modules/kibana
+	url = https://github.com/elastic/puppet-kibana
 [submodule "modules/unifi"]
 	path = modules/unifi
 	url = https://github.com/jmkeyes/puppet-unifi.git

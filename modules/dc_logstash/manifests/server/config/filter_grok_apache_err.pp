@@ -10,7 +10,6 @@ class dc_logstash::server::config::filter_grok_apache_err {
 
   logstash::configfile { 'filter_grok_apache_err':
     content => template('dc_logstash/server/filter_grok_apache_error.erb'),
-    order   => '10',
   }
 
 }
