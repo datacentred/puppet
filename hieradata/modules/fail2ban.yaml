@@ -2,3 +2,7 @@
 fail2ban::config_file_template: "fail2ban/%{::lsbdistcodename}/etc/fail2ban/jail.conf.erb"
 fail2ban::whitelist: 
   - ''
+fail2ban::maxretry: '3'
+fail2ban::findtime: '800'
+fail2ban::ssh_retry: '3'
+fail2ban::sshdos_retry: '3'
