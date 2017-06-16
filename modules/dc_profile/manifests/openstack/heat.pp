@@ -8,8 +8,6 @@ class dc_profile::openstack::heat {
     * => $containers['heat']
   }
 
-  service { [ 'heat-api', 'heat-api-cfn', 'heat-engine' ]:
-    ensure =>  stopped,
-  }
+  ensure_packages([ 'heat-api','heat-api','heat-common', 'heat-engine'], { ensure => purged })
 
 }

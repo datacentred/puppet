@@ -12,6 +12,6 @@ class dc_profile::openstack::cinder {
     * => $containers['cinder']
   }
 
-  ensure_packages([ 'cinder-api','cinder-common','cinder-scheduler'], { ensure => absent })
+  ensure_packages([ 'cinder-api','cinder-common','cinder-scheduler'], { ensure => purged })
 
 }

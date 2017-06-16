@@ -10,4 +10,8 @@ class dc_profile::openstack::ceilometer::control {
     * => $containers['telemetry']
   }
 
+  ensure_packages([ 'ceilometer-agent-central', 'ceilometer-agent-notification',
+                    'ceilometer-api', 'ceilometer-common', 'ceilometer-collector',
+                    'ceilometer-alarm-evaluator', 'ceilometer-alarm-notifier'],
+                    { ensure => purged })
 }

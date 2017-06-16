@@ -11,6 +11,6 @@ class dc_profile::openstack::neutron::server {
   }
 
 
-  ensure_packages([ 'neutron-common','neutron-plugin-ml2','neutron-server'], { ensure => absent })
+  ensure_packages([ 'neutron-common','neutron-plugin-ml2','neutron-server'], { ensure => purged })
 
 }
