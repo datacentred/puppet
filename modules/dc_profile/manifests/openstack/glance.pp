@@ -12,6 +12,4 @@ class dc_profile::openstack::glance {
     * => $containers['glance']
   }
 
-  ensure_packages([ 'glance-api','glance-common','glance-registry'], { ensure => purged })
-
 }

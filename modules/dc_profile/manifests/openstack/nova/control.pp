@@ -2,14 +2,6 @@
 #
 # OpenStack Nova control components profile class
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
 class dc_profile::openstack::nova::control {
 
   include ::dc_icinga::hostgroup_nova_server
@@ -19,8 +11,5 @@ class dc_profile::openstack::nova::control {
   dc_docker::run { 'nova':
     * => $containers['nova']
   }
-
-  ensure_packages([ 'nova-api','nova-cert','nova-common','nova-conductor',
-                    'nova-novncproxy', 'nova-scheduler'], { ensure => purged })
 
 }

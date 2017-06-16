@@ -8,7 +8,4 @@ class dc_profile::openstack::horizon {
     * => $containers['horizon']
   }
 
-  ensure_packages([ 'openstack-dashboard','openstack-dashboard-ubuntu-theme',
-                    'python-django-horizon'], { ensure => purged })
-
 }
