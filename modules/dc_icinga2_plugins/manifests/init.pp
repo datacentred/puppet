@@ -45,7 +45,6 @@ class dc_icinga2_plugins (
     'check_ip_pool',
     'check_iptables',
     'check_keystone',
-    'check_log_courier',
     'check_memory_edac',
     'check_mongodb',
     'check_mtu',
