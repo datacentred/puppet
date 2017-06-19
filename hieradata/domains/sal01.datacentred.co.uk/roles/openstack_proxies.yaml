@@ -237,22 +237,6 @@ dc_profile::openstack::haproxy::listeners:
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
     collect_exported: false
-  heat-cfn:
-    mode: 'http'
-    bind:
-      ':8000':
-        - 'ssl'
-        - 'no-sslv3'
-        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
-        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
-    options:
-      option:
-        - 'tcpka'
-        - 'tcplog'
-      balance: 'roundrobin'
-      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
-      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
-    collect_exported: false
   aodh:
     mode: 'http'
     bind:
@@ -415,20 +399,6 @@ dc_profile::openstack::haproxy::balancermembers:
       - '10.10.160.162'
       - '10.10.160.84'
     ports: '8004'
-    options: 'check inter 2000 rise 2 fall 5'
-  heat-cfn:
-    listening_service: 'heat-cfn'
-    server_names:
-      - 'oscontrol0'
-      - 'oscontrol1'
-      - 'oscontrol2'
-      - 'oscontrol3'
-    ipaddresses:
-      - '10.10.160.113'
-      - '10.10.160.117'
-      - '10.10.160.162'
-      - '10.10.160.84'
-    ports: '8000'
     options: 'check inter 2000 rise 2 fall 5'
   horizon:
     listening_service: 'horizon'

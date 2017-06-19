@@ -245,11 +245,11 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack_control"',
   }
 
-  icinga2::object::apply_service { 'ceilometer central agent':
+  icinga2::object::apply_service { 'ceilometer wsgi':
     import        => 'generic-service',
     check_command => 'openstack-service',
     vars          => {
-      'openstack_service_process' => 'ceilometer-agent-central',
+      'openstack_service_process' => 'ceilometer_wsgi',
       'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
@@ -519,17 +519,6 @@ class dc_icinga2::services::openstack (
     check_command => 'http',
     vars          => {
       'http_port'        => 8004,
-      'http_ssl'         => true,
-      'enable_pagerduty' => true,
-    },
-    assign_where  => 'host.vars.role == "openstack-endpoint"',
-  }
-
-  icinga2::object::apply_service { 'openstack cloud formation':
-    import        => 'generic-service',
-    check_command => 'http',
-    vars          => {
-      'http_port'        => 8000,
       'http_ssl'         => true,
       'enable_pagerduty' => true,
     },

@@ -522,13 +522,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Ceilometer Notification Agent',
   }
 
-  icinga::service { 'check_ceilometer_central_proc':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_server',
-    check_command       => 'check_nrpe_1arg!check_ceilometer_central_proc',
-    service_description => 'Ceilometer Central Agent',
-  }
-
   icinga::service { 'check_ceilometer_collector_proc':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_nova_server',
