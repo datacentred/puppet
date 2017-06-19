@@ -6,6 +6,7 @@ rsyslog::preserve_fqdn: true
 rsyslog::client::log_local: true
 rsyslog::client::log_remote: false 
 rsyslog::client::listen_localhost: true
+rsyslog::client::high_precision_timestamps: true
 
 
 rsyslog::client::log_filters:
