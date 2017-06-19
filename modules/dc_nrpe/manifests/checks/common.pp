@@ -42,12 +42,6 @@ class dc_nrpe::checks::common (
     sudo   => true,
   }
 
-  dc_nrpe::check { 'check_log_courier':
-    path   => '/usr/local/bin/check_log_courier',
-    source => 'puppet:///modules/dc_nrpe/check_log_courier.py',
-    sudo   => true,
-  }
-
   dc_nrpe::check { 'check_memory':
     path => '/usr/lib/nagios/plugins/check_memory',
     args => '-w 1000000000: -c 500000000:',
