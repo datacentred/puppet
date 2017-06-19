@@ -319,16 +319,6 @@ class dc_icinga2::checks {
     },
   }
 
-  icinga2::object::checkcommand { 'log-courier':
-    command   => [
-      '"/usr/local/lib/nagios/plugins/check_log_courier"',
-    ],
-    arguments => {
-      '-w' => '$log_courier_backlog_warning$',
-      '-c' => '$log_courier_backlog_critical$',
-    },
-  }
-
   icinga2::object::checkcommand { 'memory-edac':
     command   => [
       '"/usr/local/lib/nagios/plugins/check_memory_edac"',

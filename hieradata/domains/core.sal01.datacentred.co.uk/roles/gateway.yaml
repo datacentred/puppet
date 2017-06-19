@@ -199,19 +199,6 @@ dc_profile::net::core_gateway::listeners:
                 - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify required'
         options: {}
-    log-courier:
-        collect_exported: false
-        mode: 'tcp'
-        bind:
-            ':55516':
-                - 'ssl'
-                - 'no-sslv3'
-                - 'ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS'
-                - 'crt /etc/ssl/private/puppet.crt'
-                - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
-                - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
-                - 'verify required'
-        options: {}
     influxdb:
         collect_exported: false
         mode: 'tcp'
@@ -348,16 +335,6 @@ dc_profile::net::core_gateway::balancermembers:
             - '10.30.192.119'
             - '10.30.192.121'
         options: 'send-proxy check'
-    log-courier:
-        listening_service: 'log-courier'
-        ports: '55516'
-        server_names:
-            - 'logstash0.core.sal01.datacentred.co.uk'
-            - 'logstash1.core.sal01.datacentred.co.uk'
-        ipaddresses:
-            - '10.30.192.137'
-            - '10.30.192.140'
-        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
     kibana:
         listening_service: 'kibana'
         ports: '80'
