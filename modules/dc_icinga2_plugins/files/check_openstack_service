@@ -112,6 +112,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-p', '--process', required=True)
     parser.add_argument('-c', '--child', action='store_true')
+    parser.add_argument('-A', '--no-amqp', action='store_true')
     args = parser.parse_args()
 
     pid = get_root_pid(args.process)
@@ -127,7 +128,7 @@ def main():
 
     sockets = get_sockets(pid)
 
-    if not has_remote_connection(sockets, 5672):
+    if not (args.no_amqp or has_remote_connection(sockets, 5672)):
         print 'CRITICAL: service has no AMQP connection'
         sys.exit(NAGIOS_CRITICAL)
 

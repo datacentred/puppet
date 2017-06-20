@@ -211,6 +211,9 @@ class dc_icinga2::checks {
       '-c' => {
         'set_if' => '$openstack_service_child$',
       },
+      '-A' => {
+        'set_if' => '$openstack_service_no_amqp$',
+      },
     },
   }
 
