@@ -445,10 +445,6 @@ class dc_icinga::server::config {
     description => 'Beaver',
   }
 
-  icinga::hostgroup { 'dc_hostgroup_log_courier':
-    description => 'Log Courier',
-  }
-
   include dc_icinga::server::nagios_services
   include dc_icinga::server::nagios_commands
 

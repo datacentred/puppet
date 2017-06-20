@@ -211,6 +211,9 @@ class dc_icinga2::checks {
       '-c' => {
         'set_if' => '$openstack_service_child$',
       },
+      '-A' => {
+        'set_if' => '$openstack_service_no_amqp$',
+      },
     },
   }
 
@@ -316,16 +319,6 @@ class dc_icinga2::checks {
       '-d' => '$disk_latency_device$',
       '-w' => '$disk_latency_warning$',
       '-c' => '$disk_latency_critical$',
-    },
-  }
-
-  icinga2::object::checkcommand { 'log-courier':
-    command   => [
-      '"/usr/local/lib/nagios/plugins/check_log_courier"',
-    ],
-    arguments => {
-      '-w' => '$log_courier_backlog_warning$',
-      '-c' => '$log_courier_backlog_critical$',
     },
   }
 

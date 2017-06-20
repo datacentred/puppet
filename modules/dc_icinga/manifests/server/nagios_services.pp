@@ -494,13 +494,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Elasticsearch',
   }
 
-  icinga::service { 'check_log_courier':
-    use                 => 'dc_service_secondary',
-    hostgroup_name      => 'dc_hostgroup_generic',
-    check_command       => 'check_nrpe_1arg!check_log_courier',
-    service_description => 'Log Courier Status',
-  }
-
   icinga::service { 'check_elasticsearch_cluster_health':
     use                 => 'dc_service_slowcheck',
     hostgroup_name      => 'dc_hostgroup_elasticsearch',
@@ -520,13 +513,6 @@ class dc_icinga::server::nagios_services {
     hostgroup_name      => 'dc_hostgroup_nova_server',
     check_command       => 'check_nrpe_1arg!check_ceilometer_notification_proc',
     service_description => 'Ceilometer Notification Agent',
-  }
-
-  icinga::service { 'check_ceilometer_central_proc':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_nova_server',
-    check_command       => 'check_nrpe_1arg!check_ceilometer_central_proc',
-    service_description => 'Ceilometer Central Agent',
   }
 
   icinga::service { 'check_ceilometer_collector_proc':

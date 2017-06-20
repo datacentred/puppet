@@ -205,8 +205,6 @@ apt::sources:
       source: 'https://packages.elastic.co/GPG-KEY-elasticsearch'
 
 apt::ppas:
-  ppa:devel-k/log-courier:
-    ensure: 'present'
   ppa:mrazavi/openvas:
     ensure: 'present'
   ppa:cz.nic-labs/knot-dns:
