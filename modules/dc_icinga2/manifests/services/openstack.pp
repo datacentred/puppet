@@ -250,6 +250,7 @@ class dc_icinga2::services::openstack (
     check_command => 'openstack-service',
     vars          => {
       'openstack_service_process' => 'ceilometer_wsgi',
+      'openstack_service_no_amqp' => true,
       'enable_pagerduty'          => true,
     },
     zone          => 'host.name',
