@@ -8,7 +8,6 @@ rsyslog::client::log_remote: false
 rsyslog::client::listen_localhost: true
 rsyslog::client::high_precision_timestamps: true
 
-
 rsyslog::client::log_filters:
   - expression: '$programname == "systemd"'
     action: "/var/log/systemd.log\n&~"
@@ -30,3 +29,7 @@ rsyslog::client::log_filters:
     action: "/var/log/cinder/cinder.log\n&~"
   - expression: '$programname == "neutron"'
     action: "/var/log/neutron/neutron.log\n&~"
+  - expression: '$programname == "telemetry"'
+    action: "/var/log/ceilometer/ceilometer.log\n&~"
+  - expression: '$programname == "heat"'
+    action: "/var/log/heat/heat.log\n&~"
