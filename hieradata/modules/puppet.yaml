@@ -9,3 +9,5 @@ puppet::conf_merge: true
 puppet::conf:
   main:
     show_diff: 'true'
+
+puppet::service_type: 'daemon'

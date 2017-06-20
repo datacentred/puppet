@@ -11,4 +11,7 @@ class dc_profile::puppet::puppet4 {
     stage => 'setup',
   }
 
+  cron { 'puppet-agent':
+    ensure => absent,
+  }
 }
