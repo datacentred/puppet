@@ -3,10 +3,8 @@
 
 class dc_netbox::packages {
 
-  package { $dc_netbox::requirements:
-    ensure => 'installed',
-  }
-
   include ::python
+
+  ensure_packages($dc_netbox::requirements)
 
 }
