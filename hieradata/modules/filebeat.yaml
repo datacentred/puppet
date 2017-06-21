@@ -29,15 +29,7 @@ filebeat::prospectors:
     doc_type: 'boot'
   ceilometer:
     paths:
-      - '/var/log/ceilometer/ceilometer-agent-central.log'
-      - '/var/log/ceilometer/ceilometer-agent-compute.log'
-      - '/var/log/ceilometer/ceilometer-agent-notification.log'
-      - '/var/log/ceilometer/ceilometer-api.log'
-      - '/var/log/ceilometer/ceilometer-collector.log'
-      - '/var/log/ceilometer/ceilometer-dbsync.log'
-      - '/var/log/ceilometer/ceilometer-expirer.log'
-      - '/var/log/apache2/ceilometer_wsgi_access.log'
-      - '/var/log/apache2/ceilometer_wsgi_error.log'
+      - '/var/log/ceilometer/ceilometer.log'
     doc_type: 'ceilometer'
   cron:
     paths:
@@ -65,10 +57,7 @@ filebeat::prospectors:
     doc_type: 'haproxy'
   heat:
     paths:
-      - '/var/log/heat/heat-api-cfn.log'
-      - '/var/log/heat/heat-api.log'
-      - '/var/log/heat/heat-engine.log'
-      - '/var/log/heat/heat-manage.log'
+      - '/var/log/heat/heat.log'
     doc_type: 'heat'
   kernel:
     paths:
