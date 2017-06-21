@@ -6,9 +6,10 @@ BMC check will test reachability.
 
 # pylint: disable=import-error
 
-import dns.resolver
+import os
 import socket
 import sys
+import dns.resolver
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -18,6 +19,11 @@ NAGIOS_UNKNOWN = 3
 
 def main():
     """Perform a DNS lookup of the BMC FQDN"""
+
+    # Special flowers with no IPMI need to be ignored
+    if not os.access('/dev/ipmi0', os.F_OK):
+        print 'OK: No BMC detected'
+        sys.exit(NAGIOS_OK)
 
     # Calculate the BMC name from the fqdn
     fqdn = socket.getfqdn()
