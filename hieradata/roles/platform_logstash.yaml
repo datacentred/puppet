@@ -5,9 +5,15 @@ classes:
   - '::dc_profile::log::riemann'
   - '::dc_profile::util::unattended_upgrades'
 
-dc_kibana::elasticsearch_host: 'logstash'
 
 logstash::version: '1:5.4.1-1'
 logstash::restart_on_change: false
 logstash::startup_options:
   'LS_GROUP': 'puppet'
+
+kibana::ensure: '5.4.1'  
+kibana::config:
+  xpack.security.enabled: false
+  xpack.watcher.enabled: false
+  elasticsearch.url: "http://elasticsearch:9200"
+  elasticsearch.preserveHost: false
