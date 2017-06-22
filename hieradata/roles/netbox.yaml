@@ -40,6 +40,8 @@ postgresql::globals::version: '9.6'
 postgresql::globals::manage_package_repo: true
 postgresql::server::locale: 'en_GB.UTF-8'
 
-python::pip: latest
 python::version: system
+python::dev: present
+python::pip: present
 python::gunicorn: latest
+python:::virtualenv: absent
