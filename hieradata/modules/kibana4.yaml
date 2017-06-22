@@ -1,3 +1,0 @@
----
-kibana4::elasticsearch_url:     "http://logstash.%{::domain}:9200"
-kibana4::package_repo_version:  '4.5' 
