@@ -37,7 +37,7 @@ class dc_logstash::server (
   file { $grok_patterns_dir:
     ensure  => directory,
     owner   => 'root',
-    group   => 'root',
+    group   => 'logstash',
     mode    => '0755',
     recurse => true,
     source  => 'puppet:///modules/dc_logstash/grok',
