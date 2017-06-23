@@ -53,6 +53,7 @@ class dc_logstash::server (
   include ::dc_logstash::server::config::input_syslog
   include ::dc_logstash::server::config::filter_grok_apache
   include ::dc_logstash::server::config::filter_grok_apache_err
+  include ::dc_logstash::server::config::filter_grok_fail2ban
   include ::dc_logstash::server::config::filter_grok_haproxy
   include ::dc_logstash::server::config::filter_grok_libvirt
   include ::dc_logstash::server::config::filter_grok_mongodb
