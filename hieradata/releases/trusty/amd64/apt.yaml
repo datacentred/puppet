@@ -7,41 +7,13 @@ apt::sources:
     key:
       id: '391A9AA2147192839E9DB0315EDB1B62EC4926EA'
       server: 'keyserver.ubuntu.com'
-  #datacentred_backports:
-  #  location: "http://%{hiera('datacentred_path')}"
-  #  release: 'trusty'
-  #  repos: 'universe'
-  #  key:
-  #    id: '05FD11DA0455013EF36F0DFF655907C455AC5D6A'
-  #    source: "http://%{hiera('datacentred_path')}/repo.gpg.key"
-  ubuntu_ddebs:
-    location: 'http://ddebs.ubuntu.com'
+  datacentred:
+    location: 'http://apt.datacentred.services/ubuntu'
     release: 'trusty'
-    repos: 'main restricted universe multiverse'
+    repos: 'main'
     key:
-      id: 'F2EDC64DC5AEE1F6B9C621F0C8CAB6595FDFF622'
-      server: 'keyserver.ubuntu.com'
-  ubuntu_updates_ddebs:
-    location: 'http://ddebs.ubuntu.com'
-    release: 'trusty-updates'
-    repos: 'main restricted universe multiverse'
-    key:
-      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
-      server: 'keyserver.ubuntu.com'
-  ubuntu_security_ddebs:
-    location: 'http://ddebs.ubuntu.com'
-    release: 'trusty-security'
-    repos: 'main restricted universe multiverse'
-    key:
-      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
-      server: 'keyserver.ubuntu.com'
-  ubuntu_proposed_ddebs:
-    location: 'http://ddebs.ubuntu.com'
-    release: 'trusty-proposed'
-    repos: 'main restricted universe multiverse'
-    key:
-      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
-      server: 'keyserver.ubuntu.com'
+      id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
+      source: 'http://apt.datacentred.services/pubkey.gpg'
   dell_openmanage_mirror:
     location: "http://%{hiera('dell_openmanage_mirror_path')}"
     release: 'trusty'
@@ -84,8 +56,8 @@ apt::sources:
     key:
       id: '150FDE3F7787E7D11EF4E12A9B7D32F2D50582E6'
       source: 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key'
-  logstash_mirror:
-    location: "https://%{hiera('apt_source_logstash')}"
+  elasticco_mirror:
+    location: "https://%{hiera('elasticco_mirror_path')}"
     release: 'stable'
     repos: 'main'
     key:
@@ -182,6 +154,34 @@ apt::sources:
     location: "http://%{hiera('ubuntu_mirror_path')}"
     release: 'trusty-updates'
     repos: 'main restricted universe multiverse'
+  ubuntu_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: 'F2EDC64DC5AEE1F6B9C621F0C8CAB6595FDFF622'
+      server: 'keyserver.ubuntu.com'
+  ubuntu_updates_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty-updates'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
+  ubuntu_security_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty-security'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
+  ubuntu_proposed_ddebs:
+    location: 'http://ddebs.ubuntu.com'
+    release: 'trusty-proposed'
+    repos: 'main restricted universe multiverse'
+    key:
+      id: '2512191FEF8729D6E5AF414DECDCAD72428D7C01'
+      server: 'keyserver.ubuntu.com'
   virtualbox_mirror:
     location: "http://%{hiera('virtualbox_mirror_path')}"
     release: 'trusty'
@@ -189,20 +189,6 @@ apt::sources:
     key:
       id: '7B0FAB3A13B907435925D9C954422A4B98AB5139'
       source: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'
-  datacentred:
-    location: 'http://apt.datacentred.services/ubuntu'
-    release: 'trusty'
-    repos: 'main'
-    key:
-      id: '5D9B34518BF78CEE8FFAA74F7B0F91C9346A8F4E'
-      source: 'http://apt.datacentred.services/pubkey.gpg'
-  kibana:
-    location: "https://%{hiera('apt_source_kibana')}"
-    release: 'stable'
-    repos: 'main'
-    key:
-      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
-      source: 'https://packages.elastic.co/GPG-KEY-elasticsearch'
 
 apt::ppas:
   ppa:mrazavi/openvas:
