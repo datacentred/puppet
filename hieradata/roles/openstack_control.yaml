@@ -72,7 +72,7 @@ containers:
   neutron:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/neutron:42792f0'
   telemetry:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:979b581'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:f46760a'
   heat:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:dd82cef'
 
