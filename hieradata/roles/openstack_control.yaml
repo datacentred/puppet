@@ -13,15 +13,6 @@ classes:
   - '::dc_docker::client'
   - '::sysctls'
 
-apt::sources:
-  cloudarchive_mirror:
-    location: "http://%{hiera('cloudarchive_mirror_path')}"
-    release: 'trusty-updates/kilo'
-    repos: 'main'
-    key:
-      id: '391A9AA2147192839E9DB0315EDB1B62EC4926EA'
-      server: 'keyserver.ubuntu.com'
-
 # Increase number of file handles
 #
 sysctls::values:
@@ -81,7 +72,7 @@ containers:
   neutron:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/neutron:42792f0'
   telemetry:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:72ec036'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:979b581'
   heat:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:dd82cef'
 

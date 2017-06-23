@@ -23,7 +23,6 @@ ceilometer::rabbit_password: "%{hiera('osdbmq_rabbitmq_pw')}"
 ceilometer::rabbit_virtual_host: "%{hiera('osdbmq_rabbitmq_vhost')}"
 
 ceilometer::db::database_connection: "mongodb://ceilometer:%{hiera('ceilometer_db_password')}@osmongodb0.%{::domain},osmongodb1.%{::domain},osmongodb2.%{::domain}/ceilometer?replicaSet=ceilometer"
-ceilometer::db::sync_db: false
 
 ceilometer::api::keystone_auth_uri: "https://%{hiera('os_api_host')}:5000/v2.0"
 ceilometer::api::keystone_identity_uri: "https://%{hiera('os_api_host')}:35357/"
