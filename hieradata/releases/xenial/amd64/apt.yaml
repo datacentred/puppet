@@ -32,6 +32,13 @@ apt::sources:
     key:
       id: '42550ABD1E80D7C1BC0BAD851285491434D8786F'
       source: 'http://pool.sks-keyservers.net:11371/pks/lookup?op=get&search=0x1285491434D8786F'
+  elasticco_mirror:
+    location: "https://%{hiera('elasticco_mirror_path')}"
+    release: 'stable'
+    repos: 'main'
+    key:
+      id: '46095ACC8548582C1A2699A9D27D666CD88E42B4'
+      source: 'https://packages.elastic.co/GPG-KEY-elasticsearch'
   hpsupport_mirror:
     location: "http://%{hiera('hpsupport_mirror_path')}"
     release: 'xenial/current'
@@ -39,6 +46,13 @@ apt::sources:
     key:
       id: '882F7199B20F94BD7E3E690EFADD8D64B1275EA3'
       source: 'https://downloads.linux.hpe.com/SDR/hpPublicKey2048_key1.pub'
+  openvpn:
+    location: 'http://build.openvpn.net/debian/openvpn/release/2.4'
+    release: 'xenial'
+    repos: 'main'
+    key:
+      id: '30EBF4E73CCE63EEE124DD278E6DA8B4E158C569'
+      source: 'https://swupdate.openvpn.net/repos/repo-public.gpg'
   postgres_mirror:
     location: "http://%{hiera('postgres_mirror_path')}"
     release: 'xenial-pgdg'
@@ -53,13 +67,6 @@ apt::sources:
     key:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
       source: 'https://apt.puppet.com/pubkey.gpg'
-  openvpn:
-    location: 'http://build.openvpn.net/debian/openvpn/release/2.4'
-    release: 'xenial'
-    repos: 'main'
-    key:
-      id: '30EBF4E73CCE63EEE124DD278E6DA8B4E158C569'
-      source: 'https://swupdate.openvpn.net/repos/repo-public.gpg'
 
 apt::ppas:
   ppa:devel-k/log-courier:

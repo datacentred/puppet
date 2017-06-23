@@ -1,4 +1,5 @@
 ---
+filebeat::manage_repo: false
 filebeat::outputs:
   logstash:
     hosts:
