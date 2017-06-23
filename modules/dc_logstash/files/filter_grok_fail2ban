@@ -5,7 +5,7 @@ filter {
       break_on_match => true
       match => [
       	"message", "%{FAIL2BAN_BAN_OLD}", 
-	"message", "%{FAIL2BAN_BAN_NEW}",
+	"message", "%{FAIL2BAN_BAN_NEW}"
 	]
       add_tag => [ "ip_ban" ]
       named_captures_only => true
@@ -15,7 +15,7 @@ filter {
       break_on_match => true
       match => [ 
 	"message", "%{FAIL2BAN_UNBAN_OLD}", 
-	"message", "%{FAIL2BAN_UNBAN_NEW}",
+	"message", "%{FAIL2BAN_UNBAN_NEW}"
 	]
       add_tag => [ "ip_unban" ]
       named_captures_only => true
@@ -27,8 +27,15 @@ filter {
       add_tag => [ "ip_already_banned" ]
       named_captures_only => true
     }
+    geoip {
+      source => "clientip"
+      target => "geoip"
+      database => "/var/lib/GeoIP/GeoLite2-City.mmdb"
+      fields => ["country_name", "region_name", "city_name", "location"]
+    }
 
     mutate {
       remove_tag => ["_grokparsefailure"]
     }
+  }
 }
