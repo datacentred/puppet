@@ -43,6 +43,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/dpkg.log'
     doc_type: 'dpkg'
+  fail2ban:
+    paths:
+      - '/var/log/fail2ban.log'
+    doc_type: 'fail2ban'
   foreman:
     paths:
       - '/var/log/foreman/production.log'
@@ -63,6 +67,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/kern.log'
     doc_type: 'kernel'
+  keystone:
+    paths:
+      - '/var/log/keystone/keystone.log'
+    doc_type: 'keystone'
   lastlog:
     paths:
       - '/var/log/kern.log'
