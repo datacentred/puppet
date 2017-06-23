@@ -43,3 +43,5 @@ postgresql::server::locale: 'en_GB.UTF-8'
 python::pip: latest
 python::version: system
 python::gunicorn: latest
+python::dev: present
+python::virtualenv: absent

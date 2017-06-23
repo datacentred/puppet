@@ -28,13 +28,5 @@ class dc_netbox::params {
   $ssl_cert            = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem"
   $ssl_cacert          = '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
   $ssl_crl             = '/etc/puppetlabs/puppet/ssl/crl.pem'
-  $requirements        = [
-    'python2.7',
-    'libxml2-dev',
-    'libxslt1-dev',
-    'libffi-dev',
-    'graphviz',
-    'libssl-dev',
-    'zlib1g-dev',
-    'supervisor', ]
+  $requirements        = ['supervisor', 'libffi-dev', 'libssl-dev']
 }

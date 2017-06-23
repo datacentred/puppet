@@ -7,4 +7,6 @@ class dc_netbox::packages {
 
   ensure_packages($dc_netbox::requirements)
 
+  Package['libffi-dev'] -> Class['python']
+
 }
