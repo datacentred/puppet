@@ -3,23 +3,26 @@
 # - 10x 4TB HDD Slots 1-10
 # - 2x 120GB SSD Slots 11-12
 ceph::disks:
-  Slot 01/Slot 11:
-    fstype: 'xfs'
-  Slot 02/Slot 11:
-    fstype: 'xfs'
-  Slot 03/Slot 11:
-    fstype: 'xfs'
-  Slot 04/Slot 11:
-    fstype: 'xfs'
-  Slot 05/Slot 11:
-    fstype: 'xfs'
-  Slot 06/Slot 12:
-    fstype: 'xfs'
-  Slot 07/Slot 12:
-    fstype: 'xfs'
-  Slot 08/Slot 12:
-    fstype: 'xfs'
-  Slot 09/Slot 12:
-    fstype: 'xfs'
-  Slot 10/Slot 12:
-    fstype: 'xfs'
+  defaults:
+    params:
+      fs-type: 'xfs'
+  Slot 01:
+    journal: 'Slot 11'
+  Slot 02:
+    journal: 'Slot 11'
+  Slot 03:
+    journal: 'Slot 11'
+  Slot 04:
+    journal: 'Slot 11'
+  Slot 05:
+    journal: 'Slot 11'
+  Slot 06:
+    journal: 'Slot 12'
+  Slot 07:
+    journal: 'Slot 12'
+  Slot 08:
+    journal: 'Slot 12'
+  Slot 09:
+    journal: 'Slot 12'
+  Slot 10:
+    journal: 'Slot 12'

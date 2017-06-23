@@ -20,20 +20,14 @@ ceph::keys:
     user: 'client.bootstrap-osd'
     key: "%{hiera('ceph_key_bootstrap_osd')}"
     caps_mon: 'allow profile bootstrap-osd'
+  /var/lib/ceph/bootstrap-rgw/ceph.keyring:
+    user: 'client.bootstrap-rgw'
+    key: "%{hiera('ceph_key_bootstrap_rgw')}"
+    caps_mon: 'allow profile bootstrap-rgw'
   /var/lib/ceph/bootstrap-mds/ceph.keyring:
     user: 'client.bootstrap-mds'
     key: "%{hiera('ceph_key_bootstrap_mds')}"
     caps_mon: 'allow profile bootstrap-mds'
-  /etc/ceph/ceph.client.radosgw.ceph-rgw-0.keyring:
-    user: 'client.radosgw.ceph-rgw-0'
-    key: "%{hiera('ceph_key_client_radosgw_ceph-rgw-0')}"
-    caps_mon: 'allow rwx'
-    caps_osd: 'allow rwx'
-  /etc/ceph/ceph.client.radosgw.ceph-rgw-1.keyring:
-    user: 'client.radosgw.ceph-rgw-1'
-    key: "%{hiera('ceph_key_client_radosgw_ceph-rgw-1')}"
-    caps_mon: 'allow rwx'
-    caps_osd: 'allow rwx'
   /etc/ceph/ceph.client.cinder.keyring:
     user: 'client.cinder'
     key: "%{hiera('ceph_key_client_cinder')}"

@@ -3,43 +3,46 @@
 # - 20x 1TB Slots 1-20
 # - 4x 256GB SSD Slots 21-24
 ceph::disks:
-  DISK00/DISK20:
-    fstype: 'xfs'
-  DISK01/DISK20:
-    fstype: 'xfs'
-  DISK02/DISK20:
-    fstype: 'xfs'
-  DISK03/DISK20:
-    fstype: 'xfs'
-  DISK04/DISK20:
-    fstype: 'xfs'
-  DISK05/DISK21:
-    fstype: 'xfs'
-  DISK06/DISK21:
-    fstype: 'xfs'
-  DISK07/DISK21:
-    fstype: 'xfs'
-  DISK08/DISK21:
-    fstype: 'xfs'
-  DISK09/DISK21:
-    fstype: 'xfs'
-  DISK10/DISK22:
-    fstype: 'xfs'
-  DISK11/DISK22:
-    fstype: 'xfs'
-  DISK12/DISK22:
-    fstype: 'xfs'
-  DISK13/DISK22:
-    fstype: 'xfs'
-  DISK14/DISK22:
-    fstype: 'xfs'
-  DISK15/DISK23:
-    fstype: 'xfs'
-  DISK16/DISK23:
-    fstype: 'xfs'
-  DISK17/DISK23:
-    fstype: 'xfs'
-  DISK18/DISK23:
-    fstype: 'xfs'
-  DISK19/DISK23:
-    fstype: 'xfs'
+  defaults:
+    params:
+      fs-type: 'xfs'
+  DISK00:
+    journal: 'DISK20'
+  DISK01:
+    journal: 'DISK20'
+  DISK02:
+    journal: 'DISK20'
+  DISK03:
+    journal: 'DISK20'
+  DISK04:
+    journal: 'DISK20'
+  DISK05:
+    journal: 'DISK21'
+  DISK06:
+    journal: 'DISK21'
+  DISK07:
+    journal: 'DISK21'
+  DISK08:
+    journal: 'DISK21'
+  DISK09:
+    journal: 'DISK21'
+  DISK10:
+    journal: 'DISK22'
+  DISK11:
+    journal: 'DISK22'
+  DISK12:
+    journal: 'DISK22'
+  DISK13:
+    journal: 'DISK22'
+  DISK14:
+    journal: 'DISK22'
+  DISK15:
+    journal: 'DISK23'
+  DISK16:
+    journal: 'DISK23'
+  DISK17:
+    journal: 'DISK23'
+  DISK18:
+    journal: 'DISK23'
+  DISK19:
+    journal: 'DISK23'
