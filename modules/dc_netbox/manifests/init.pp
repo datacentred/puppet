@@ -40,6 +40,7 @@ class dc_netbox (
   include ::dc_netbox::manage
   include ::dc_netbox::apache
   include ::dc_netbox::firewall
+  include ::dc_netbox::backup
 
   Class['::dc_netbox::params'] ->
   Class['::dc_netbox::packages'] ->
@@ -47,6 +48,6 @@ class dc_netbox (
   Class['::dc_netbox::install'] ->
   Class['::dc_netbox::apache'] ->
   Class['::dc_netbox::manage'] ->
-  Class['::dc_netbox::firewall']
-
+  Class['::dc_netbox::firewall'] ->
+  Class['::dc_netbox::backup']
 }
