@@ -3,15 +3,13 @@ classes:
   - '::dc_profile::ceph::radosgw'
 
 ceph::rgw: true
-ceph::rgw_id: "radosgw.%{hostname}"
 
 ceph::conf:
   global:
     rgw region: 'uk'
     rgw zone: 'uk-sal01'
-  client.radosgw.%{hostname}:
+  client.rgw.%{hostname}:
     host: "%{hostname}"
-    keyring: "/etc/ceph/ceph.client.radosgw.%{hostname}.keyring"
     rgw enable ops log: 'true'
     rgw enable usage log: 'true'
     rgw thread pool size: '4096'
@@ -29,6 +27,9 @@ ceph::keys:
   /etc/ceph/ceph.client.admin.keyring:
     user: 'client.admin'
     key: "%{hiera('ceph_key_client_admin')}"
+  /var/lib/ceph/bootstrap-rgw/ceph.keyring:
+    user: 'client.bootstrap-rgw'
+    key: "%{hiera('ceph_key_bootstrap_rgw')}"
 
 apache::default_vhost: false
 apache::log_formats:

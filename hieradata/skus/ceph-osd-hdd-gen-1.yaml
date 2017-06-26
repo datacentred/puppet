@@ -3,13 +3,16 @@
 # - 5x 4TB HDD host 1-5
 # - 1x 120GB SSD host 6
 ceph::disks:
-  1:0:0:0/6:0:0:0:
-    fstype: 'xfs'
-  2:0:0:0/6:0:0:0:
-    fstype: 'xfs'
-  3:0:0:0/6:0:0:0:
-    fstype: 'xfs'
-  4:0:0:0/6:0:0:0:
-    fstype: 'xfs'
-  5:0:0:0/6:0:0:0:
-    fstype: 'xfs'
+  defaults:
+    params:
+      fs-type: 'xfs'
+  1:0:0:0:
+    journal: '6:0:0:0'
+  2:0:0:0:
+    journal: '6:0:0:0'
+  3:0:0:0:
+    journal: '6:0:0:0'
+  4:0:0:0:
+    journal: '6:0:0:0'
+  5:0:0:0:
+    journal: '6:0:0:0'
