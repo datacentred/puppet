@@ -4,19 +4,19 @@ filter {
       patterns_dir => ["/etc/logstash/patterns/grok"]
       break_on_match => true
       match => [
-      	"message", "%{FAIL2BAN_BAN_OLD}", 
-	"message", "%{FAIL2BAN_BAN_NEW}"
-	]
+        "message", "%{FAIL2BAN_BAN_OLD}",
+        "message", "%{FAIL2BAN_BAN_NEW}"
+        ]
       add_tag => [ "ip_ban" ]
       named_captures_only => true
     }
     grok {
       patterns_dir => ["/etc/logstash/patterns/grok"]
       break_on_match => true
-      match => [ 
-	"message", "%{FAIL2BAN_UNBAN_OLD}", 
-	"message", "%{FAIL2BAN_UNBAN_NEW}"
-	]
+      match => [
+        "message", "%{FAIL2BAN_UNBAN_OLD}",
+        "message", "%{FAIL2BAN_UNBAN_NEW}"
+        ]
       add_tag => [ "ip_unban" ]
       named_captures_only => true
     }
@@ -25,6 +25,23 @@ filter {
       break_on_match => true
       match => [ "message", "%{FAIL2BAN_ALREADYBAN_OLD}" ]
       add_tag => [ "ip_already_banned" ]
+      named_captures_only => true
+    }
+    grok {
+      patterns_dir => ["/etc/logstash/patterns/grok"]
+      break_on_match => true
+      match => [ "message", "%{FAIL2BAN_FOUND_NEW}" ]
+      add_tag => [ "ip_found" ]
+      named_captures_only => true
+    }
+    grok {
+      patterns_dir => ["/etc/logstash/patterns/grok"]
+      break_on_match => true
+      match => [
+        "message", "%{FAIL2BAN_ERROR_OLD}",
+        "message", "%{FAIL2BAN_ERROR_NEW}"
+        ]
+      add_tag => [ "fail2ban_error" ]
       named_captures_only => true
     }
     geoip {
