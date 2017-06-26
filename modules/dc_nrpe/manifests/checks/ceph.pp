@@ -27,7 +27,6 @@ class dc_nrpe::checks::ceph (
   dc_nrpe::check { 'check_ceph_rgw':
     path   => '/usr/local/bin/check_ceph_rgw',
     source => 'puppet:///modules/dc_nrpe/check_ceph_rgw',
-    args   => "-i radosgw.${::hostname}",
   }
 
 }
