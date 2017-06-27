@@ -8,6 +8,15 @@
 # Which allows checks to applied to particular block devices of a host
 # if they meet the right criteria
 
+def pretty_size(s)
+  c = 0
+  while s > 1000
+    s /= 1000
+    c += 1
+  end
+  "#{s}#{' KMGTPEZY'[c]}B"
+end
+
 module Puppet::Parser::Functions
   newfunction(:icinga2_blockdevices, :type => :rvalue) do |args|
 
@@ -24,10 +33,15 @@ module Puppet::Parser::Functions
       # Generate a key to be inserted into icinga2::object::host::vars
       key = "blockdevices[\"#{device_clean}\"]"
 
+      # Figure out the device size to add more context
+      size = lookupvar("blockdevice_#{device}_size")
+
       # Buffer the result
       output[key] = {
         'path' => '/dev/' + device_clean,
         'model' => lookupvar("blockdevice_#{device}_model"),
+        'size' => size,
+        'pretty_size' => pretty_size(size),
       }
 
     end
