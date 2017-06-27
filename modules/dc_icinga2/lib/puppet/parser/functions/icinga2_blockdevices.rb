@@ -26,7 +26,8 @@ module Puppet::Parser::Functions
 
       # Buffer the result
       output[key] = {
-        'path' => '/dev/' + device_clean
+        'path' => '/dev/' + device_clean,
+        'model' => lookupvar("blockdevice_#{device}_model"),
       }
 
     end
