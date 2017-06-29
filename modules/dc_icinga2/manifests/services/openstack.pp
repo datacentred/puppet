@@ -495,10 +495,10 @@ class dc_icinga2::services::openstack (
 
   icinga2::object::apply_service { 'openstack novnc proxy':
     import        => 'generic-service',
-    check_command => 'http',
+    check_command => 'tcp',
     vars          => {
-      'http_port'        => 6080,
-      'http_ssl'         => true,
+      'tcp_port'         => 6080,
+      'tcp_ssl'          => true,
       'enable_pagerduty' => true,
     },
     assign_where  => 'host.vars.role == "openstack-endpoint"',
