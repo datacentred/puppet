@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf8
 """
 Polls the nova API to detect instances where servers are in violation of
 nova-scheduler anti-affinity hints.
@@ -78,6 +79,9 @@ def print_anti_affinity_violations(volations):
     # Setup the table output
     table = prettytable.PrettyTable(['Server Group', 'Hypervisor', 'Server'])
     table.align = 'l'
+    table.vertical_char = u'│'
+    table.horizontal_char = u'─'
+    table.junction_char = u'┼'
 
     # Iterate through server groups, hypervisors violating anti-affinity
     # rules and the servers hosted on them.  Keep track of whether we have
