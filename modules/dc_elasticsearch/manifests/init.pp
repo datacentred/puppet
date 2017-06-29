@@ -38,7 +38,7 @@ class dc_elasticsearch (
   $half_ram_bytes = ($half_ram * 1024 * 1024)
 
   $config_hash = {
-    'MAX_LOCKED_MEMORY' => $half_ram_bytes,
+    'MAX_LOCKED_MEMORY' => 'unlimited',
   }
 
   $jvm_options = [
