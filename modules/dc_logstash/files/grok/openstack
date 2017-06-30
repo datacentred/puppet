@@ -16,7 +16,11 @@ RAW_TRACE (?:^[^0-9].*$|^$)
 
 REQ_LIST (\[(?:(req-%{UUID:request_id_list}|%{UUID:request_id_list}|%{BASE16NUM}|None|-|%{SPACE}))+\])?
 
+REQ_ID (\[(?:(req-%{UUID:request_id}|%{UUID:request_id}|%{BASE16NUM}|None|-|%{SPACE}))+\])?
+
 ID (\[(?:(instance: %{UUID:openstack_instance_id}))+\])?
+
+HTTPMETHOD (GET|OPTIONS|POST|HEAD|TRACE|DELETE)
 
 
 # Nova resource usage
