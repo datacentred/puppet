@@ -105,10 +105,6 @@ filebeat::prospectors:
     paths:
       - '/var/log/network/*/*.log'
     doc_type: 'network_logs'
-  neutron_server:
-    paths:
-      - '/var/log/neutron/neutron.log'
-    doc_type: 'neutron_server'
   neutron_dhcp:
     paths:
       - '/var/log/neutron/dhcp-agent.log'
@@ -139,8 +135,7 @@ filebeat::prospectors:
     doc_type: 'neutron_openvswitch'
   neutron_server:
     paths:
-      - '/var/log/neutron/server.log'
-      - '/var/log/neutron/neutron-server.log'
+      - '/var/log/neutron/neutron.log'
     doc_type: 'neutron_server'
   neutron_state_change:
     paths:
