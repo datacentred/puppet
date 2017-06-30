@@ -32,6 +32,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/ceilometer/ceilometer.log'
     doc_type: 'ceilometer'
+  cinder:
+    paths:
+      - '/var/log/cinder/cinder.log'
+    doc_type: 'cinder'
   cron:
     paths:
       - '/var/log/cron.log'
@@ -56,6 +60,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/foreman-proxy/foreman-proxy.log'
     doc_type: 'foreman_proxy'
+  glance:
+    paths:
+      - '/var/log/glance/glance.log'
+    doc_type: 'glance'
   haproxy:
     paths:
       - '/var/log/haproxy.log'
@@ -97,6 +105,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/network/*/*.log'
     doc_type: 'network_logs'
+  neutron_server:
+    paths:
+      - '/var/log/neutron/neutron.log'
+    doc_type: 'neutron_server'
   neutron_dhcp:
     paths:
       - '/var/log/neutron/dhcp-agent.log'
