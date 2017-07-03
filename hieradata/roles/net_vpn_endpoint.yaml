@@ -2,3 +2,6 @@
 classes:
   -  '::dc_profile::net::vpn_endpoint'
 
+sysctls::values:
+  net.ipv4.ip_forward:
+    value: '1'

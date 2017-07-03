@@ -1,0 +1,17 @@
+---
+dc_openvpn::endpoint:
+  ark-vpn0:
+    push:
+      - 'DNS 10.10.192.250'
+      - 'DNS 10.10.192.251'
+      - 'dhcp-option DOMAIN sal01.datacentred.co.uk'
+      - 'route 10.10.0.0 255.255.0.0'
+    server: '10.253.2.0 255.255.255.0'
+
+dc_openvpn::public_interface: 'enp1s0'
+dc_openvpn::private_interface: 'enp2s0'
+
+network::mroutes_hash:
+  "%{hiera('dc_openvpn::private_interface')}":
+    routes:
+      10.10.0.0/16: "%{hiera('dc_openvpn::private_interface')}" 

@@ -14,17 +14,10 @@ class dc_openvpn::server (
   $endpoint = hiera_hash('dc_openvpn::endpoint')
   validate_hash($endpoint)
 
-  $routes   = hiera_hash('dc_openvpn::routes', {})
-
   create_resources(firewall, $firewall['base'])
   create_resources(firewall, $firewall['allow'])
   create_resources(firewall, $firewall['log'])
   create_resources(firewall, $firewall['drop'])
-
-  unless empty($routes) {
-    validate_hash($routes)
-    create_resources(network::route, $routes)
-  }
 
   create_resources(openvpn::server, $endpoint, $defaults)
 
