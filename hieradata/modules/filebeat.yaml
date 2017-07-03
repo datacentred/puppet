@@ -48,6 +48,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/dpkg.log'
     doc_type: 'dpkg'
+  duplicity:
+    paths:
+      - '/var/log/duplicity/*log'
+    doc_type: 'duplicity'
   fail2ban:
     paths:
       - '/var/log/fail2ban.log'
