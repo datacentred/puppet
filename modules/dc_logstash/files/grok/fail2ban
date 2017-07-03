@@ -1,8 +1,11 @@
-FAIL2BAN_BAN_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: %{LOGLEVEL:level} \[%{NOTSPACE:service}\] Ban %{IPV4:clientip}
-FAIL2BAN_UNBAN_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: %{LOGLEVEL:level} \[%{NOTSPACE:service}\] Unban %{IPV4:clientip}
-FAIL2BAN_ALREADYBAN_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: %{LOGLEVEL:level} \[%{NOTSPACE:service}\] %{IPV4:clientip} already banned
+FAIL2BAN_BAN_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: %{LOGLEVEL:level} \[%{NOTSPACE:jail}\] Ban %{IPV4:clientip}
+FAIL2BAN_UNBAN_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: %{LOGLEVEL:level} \[%{NOTSPACE:jail}\] Unban %{IPV4:clientip}
+FAIL2BAN_ALREADYBAN_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: %{LOGLEVEL:level} \[%{NOTSPACE:jail}\] %{IPV4:clientip} already banned
 FAIL2BAN_ERROR_OLD %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria}: ERROR %{GREEDYDATA:message}
-FAIL2BAN_BAN_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:service}\] Ban %{IPV4:clientip}
-FAIL2BAN_UNBAN_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:service}\] Unban %{IPV4:clientip}
-FAIL2BAN_FOUND_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:service}\] Found %{IPV4:clientip}
+FAIL2BAN_OTHER %{TIMESTAMP_ISO8601:timestamp} %{JAVACLASS:criteria} %{GREEDYDATA:message}
+FAIL2BAN_BAN_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:jail}\] Ban %{IPV4:clientip}
+FAIL2BAN_UNBAN_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:jail}\] Unban %{IPV4:clientip}
+FAIL2BAN_FOUND_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:jail}\] Found %{IPV4:clientip}
+FAIL2BAN_ALREADYBAN_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} *\[%{NOTSPACE:jail}\] %{IPV4:clientip} already banned
 FAIL2BAN_ERROR_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: ERROR %{GREEDYDATA:message}
+FAIL2BAN_OTHER_NEW %{TIMESTAMP_ISO8601:timestamp},%{INT} fail2ban.%{WORD:fail2ban_action} *\[%{INT:fail2ban_pid}\]: %{LOGLEVEL:level} %{GREEDYDATA:message}
