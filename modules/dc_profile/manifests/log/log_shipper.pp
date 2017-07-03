@@ -16,8 +16,4 @@ class dc_profile::log::log_shipper {
 
   include ::dc_logstash::client
 
-  service { 'log-courier':
-    ensure =>  stopped,
-  }
-
 }
