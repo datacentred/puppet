@@ -68,10 +68,6 @@ apt::sources:
       id: '6F6B15509CF8E59E6E469F327F438280EF8D349F'
       source: 'https://apt.puppet.com/pubkey.gpg'
 
-apt::ppas:
-  ppa:devel-k/log-courier:
-    ensure: 'present'
-
 apt::keys:
   hp_mirror_key:
     id: '57446EFDE098E5C934B69C7DC208ADDE26C2B797' 
