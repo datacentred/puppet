@@ -5,6 +5,7 @@ classes:
   - '::dc_profile::auth::sudoers'
   - '::dc_profile::auth::tally'
   - '::dc_profile::hardware::edac'
+  - '::dc_profile::hardware::irqbalance'
   - '::dc_profile::hardware::serial'
   - '::dc_profile::log::logrotate'
   - '::dc_profile::mon::icinga2'
