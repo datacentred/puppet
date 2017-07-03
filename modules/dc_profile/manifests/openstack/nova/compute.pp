@@ -23,6 +23,8 @@ class dc_profile::openstack::nova::compute {
 
   include ::sysctls
 
+  ensure_packages(['qemu-kvm'])
+
   # Make sure the Nova instance / image cache has the right permissions set
   file { 'nova_instance_cache':
     path    => '/var/lib/nova/instances',
@@ -59,6 +61,15 @@ class dc_profile::openstack::nova::compute {
     require => File['/var/lib/nova/.ssh/config'],
   }
 
-  ensure_packages(['qemu-kvm'])
+  # Default limit on number of open FDs is too low
+  # for VMs with multiple Ceph-backed disks attached
+  file { '/etc/init/libvirt-bin.override':
+    ensure  => present,
+    user    => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => 'limit nofile 65535 65535',
+    notify  => Service['libvirt-bin'],
+  }
 
 }
