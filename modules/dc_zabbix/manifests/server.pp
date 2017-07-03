@@ -45,7 +45,19 @@ class dc_zabbix::server (
 
     if $firewall_enabled {
       if hiera('firewall::purge') {
-          resources { 'firewall': purge => true }
+        firewallchain { 'INPUT:filter:IPv4':
+          purge  => true,
+          ignore => [
+            # ignore the fail2ban jump rule
+            '-j f2b',
+          ],
+        }
+        firewallchain { 'FORWARD:filter:IPv4':
+          purge => true,
+        }
+        firewallchain { 'OUTPUT:filter:IPv4':
+          purge => true,
+        }
       }
       create_resources(firewall, $firewall_rules['base'])
       create_resources(firewall, $firewall_rules['server'])

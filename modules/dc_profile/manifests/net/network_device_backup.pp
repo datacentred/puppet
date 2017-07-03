@@ -13,7 +13,7 @@
 class dc_profile::net::network_device_backup {
 
     include ::firewall
-    
+
     firewall { '000 accept all to lo interface':
         proto   => 'all',
         iniface => 'lo',
@@ -51,6 +51,10 @@ class dc_profile::net::network_device_backup {
     } ->
     firewallchain { 'INPUT:filter:IPv4':
         purge  => true,
+        ignore => [
+            # ignore the fail2ban jump rule
+            '-j f2b',
+        ],
         policy => drop,
     }
 
@@ -75,7 +79,7 @@ class dc_profile::net::network_device_backup {
     ssh_authorized_key { 'junos@datacentred.co.uk':
         user    => 'junos',
         type    => 'ssh-rsa',
-        key     => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC0aA1ffZhxKHL90e+fuk+3iOM+kdxpOwGVM6g7giyDHJAc82vGOPyL97trw4izIg6a6neDIFtJBJmlWi42qZEImj5pO0s9/cr34HBoux8ZaIj2rAFZpyW/FqayshDePsLa75OSX92JJr4aTMCyjpRn8hIm0jGlRyj8yQqrTnVfj3I88MYfMmjZ7HHpQqWIu4omBpQ9jCnD+1Yl/xbcvtFMfXiuPJAKNqYDMikOhDbDGaAGaqa3ymbRNfen7yfSz8OgmKl6hRX80GL71Q5oGDWGTa2cRrXa9pyjknvB8LOh8JWr1KH9+fSQ2O4uop+r5GLjAYEwJKd30m85oF6p9MUd',
+        key     => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQC0aA1ffZhxKHL90e+fuk+3iOM+kdxpOwGVM6g7giyDHJAc82vGOPyL97trw4izIg6a6neDIFtJBJmlWi42qZEImj5pO0s9/cr34HBoux8ZaIj2rAFZpyW/FqayshDePsLa75OSX92JJr4aTMCyjpRn8hIm0jGlRyj8yQqrTnVfj3I88MYfMmjZ7HHpQqWIu4omBpQ9jCnD+1Yl/xbcvtFMfXiuPJAKNqYDMikOhDbDGaAGaqa3ymbRNfen7yfSz8OgmKl6hRX80GL71Q5oGDWGTa2cRrXa9pyjknvB8LOh8JWr1KH9+fSQ2O4uop+r5GLjAYEwJKd30m85oF6p9MUd', # lint:ignore:140chars
         require => User['Junos Backup User'],
     }
 
