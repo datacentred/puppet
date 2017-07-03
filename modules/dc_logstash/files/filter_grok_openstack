@@ -1,15 +1,15 @@
 filter {
-  if [type] == "nova" {
+  if [type] == "nova_api" {
     grok {
       break_on_match => true
       match => [
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{ID} %{GREEDYDATA:openstack_instance_action}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{RESOURCE_DISK_RAM:Free_disk_ram}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{RESOURCE_CPU:Free_vcpus}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{WORD} %{NOTSPACE:openstack_image_id} %{NOTSPACE} %{NOTSPACE:openstack_image_location} %{GREEDYDATA:image_message}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{NOVA_INSTANCE_REQUEST:nova_api_request} %{NOTSPACE} %{NOTSPACE} %{INT:nova_response_code} %{NOTSPACE} %{INT} %{NOTSPACE} %{NUMBER:nova_response_time}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{QUOTEDSTRING:nova_api_request} %{NOTSPACE} %{INT:nova_response_code} %{NOTSPACE} %{INT} %{NOTSPACE} %{NUMBER:nova_response_time}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{BASE_FILE} %{PATH:openstack_basefile_path}"
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{ID} %{GREEDYDATA:openstack_instance_action}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{RESOURCE_DISK_RAM:Free_disk_ram}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{RESOURCE_CPU:Free_vcpus}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{WORD} %{NOTSPACE:openstack_image_id} %{NOTSPACE} %{NOTSPACE:openstack_image_location} %{GREEDYDATA:image_message}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{NOVA_INSTANCE_REQUEST:nova_api_request} %{NOTSPACE} %{NOTSPACE} %{INT:nova_response_code} %{NOTSPACE} %{INT} %{NOTSPACE} %{NUMBER:nova_response_time}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{QUOTEDSTRING:nova_api_request} %{NOTSPACE} %{INT:nova_response_code} %{NOTSPACE} %{INT} %{NOTSPACE} %{NUMBER:nova_response_time}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{BASE_FILE} %{PATH:openstack_basefile_path}"
       ]
       add_tag => "openstack_logs"
       add_tag => "nova"
@@ -20,23 +20,23 @@ filter {
     grok {
       break_on_match => true
       match => [
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA} %{IP:IP}",
-        #"message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GLANCE_IMAGE_MESSAGE:glance_image_message}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GLANCE_IMAGE_MESSAGE:glance_image_message} %{UUID:glance_image_id}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:glance_api_request} %{INT:glance_response_code} %{INT} %{NUMBER:glance_response_time}"
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA} %{IP:IP}",
+        #"message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GLANCE_IMAGE_MESSAGE:glance_image_message}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GLANCE_IMAGE_MESSAGE:glance_image_message} %{UUID:glance_image_id}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:glance_api_request} %{INT:glance_response_code} %{INT} %{NUMBER:glance_response_time}"
       ]
       add_tag => "openstack_logs"
       add_tag => "glance"
     }
   }
 
-  if [type] == "neutron" {
+  if [type] == "neutron_server" {
     grok {
       break_on_match => true
       match => [
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{DATA} %{UUID:neutron_segment_id} %{WORD} %{WORD} %{WORD:neutron_network_type} %{WORD} %{WORD} %{UUID:neutron_network_id}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:neutron_api_request} %{INT:neutron_response_code} %{INT} %{NUMBER:neutron_response_time}",
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{NEUTRON_ACCEPT_MESSAGE:neutron_accept_message}"
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{DATA} %{UUID:neutron_segment_id} %{WORD} %{WORD} %{WORD:neutron_network_type} %{WORD} %{WORD} %{UUID:neutron_network_id}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:neutron_api_request} %{INT:neutron_response_code} %{INT} %{NUMBER:neutron_response_time}",
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{NEUTRON_ACCEPT_MESSAGE:neutron_accept_message}"
       ]
       add_tag => "openstack_logs"
       add_tag => "neutron"
@@ -47,7 +47,7 @@ filter {
     grok {
       break_on_match => true
       match => [
-        "message", " %{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:keystone_api_request} %{INT:keystone_response_code} %{INT} %{NUMBER:keystone_response_time}"
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:keystone_api_request} %{INT:keystone_response_code} %{INT} %{NUMBER:keystone_response_time}"
       ]
       add_tag => "openstack_logs"
       add_tag => "keystone"
@@ -58,13 +58,13 @@ filter {
   if [type] == "cinder" {
     if [message] =~ /(?i)"GET|"POST|"DELETE|GET|POST|DELETE/ {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:cinder_api_request} %{INT:cinder_response_code} %{INT} %{NUMBER:cinder_response_time}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:cinder_api_request} %{INT:cinder_response_code} %{INT} %{NUMBER:cinder_response_time}"]
         add_tag => "openstack_logs"
         add_tag => "cinder"
       }
     } else {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:cinder_message}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:cinder_message}"]
         add_tag => "openstack_logs"
         add_tag => "cinder"
       }
@@ -74,13 +74,13 @@ filter {
   if [type] == "heat" {
     if [message] =~ /(?i)"GET|"POST|"DELETE|GET|POST|DELETE/ {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:heat_api_request} %{INT:heat_response_code} %{INT} %{NUMBER:heat_response_time}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{IP:IP} %{GREEDYDATA} %{QUOTEDSTRING:heat_api_request} %{INT:heat_response_code} %{INT} %{NUMBER:heat_response_time}"]
         add_tag => "openstack_logs"
         add_tag => "heat"
       }
     } else {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:heat_message}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:heat_message}"]
         add_tag => "openstack_logs"
         add_tag => "heat"
       }
@@ -94,7 +94,7 @@ filter {
   if ([message] =~"Quota exceeded for resources") {
     grok {
       match => [
-        "message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:resource_failed}"
+        "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:resource_failed}"
       ]
       add_tag => "openstack_logs"
       add_tag => "resource_quota"
@@ -105,19 +105,19 @@ filter {
   if "_grokparsefailure" in [tags] {
     if ([message] =~"Traceback") {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:openstack_trace}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:openstack_trace}"]
         add_tag => "openstack_trace"
         remove_tag => "_grokparsefailure"
       }  
     } else if ([message] =~ /(?i)Loaded extension/) {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:openstack_extension}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:openstack_extension}"]
         add_tag => "extension_loaded"
         remove_tag => "_grokparsefailure"
       }  
     } else {
       grok {
-        match => ["message", "%{HOSTNAME:openstack_hostname} %{TIMESTAMP_ISO8601:timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:openstack_message}"]
+        match => ["message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{TIMESTAMP_ISO8601:int_timestamp} %{POSINT:openstack_pid} %{OPENSTACK_LOGLEVEL:openstack_loglevel} %{OPENSTACK_PROG:openstack_program}%{REQ_LIST} %{GREEDYDATA:openstack_message}"]
         add_tag => "openstack_logs"
         add_tag => "unmatched_event"
         remove_tag => "_grokparsefailure"

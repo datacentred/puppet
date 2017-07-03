@@ -4,6 +4,7 @@ filter {
         drop {}
     }
     grok {
+      match => [ "message", "%{TIMESTAMP_ISO8601:syslog_timestamp} %{HOSTNAME:host} %{WORD:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" ]
       match => [ "message", "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}" ]
       match => [ "message", "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname}  %{YEAR}[/-]%{MONTHNUM}[/-]%{MONTHDAY} %{TIME} %{POSINT:syslog_pid} %{WORD:severity} %{GREEDYDATA:syslog_message}"]
       match => [ "message", "<%{POSINT:syslog_pri}>%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{YEAR}[/-]%{MONTHNUM}[/-]%{MONTHDAY}  %{TIME} %{POSINT:syslog_pid} %{WORD:severity} %{GREEDYDATA:syslog_message}"]
@@ -15,8 +16,10 @@ filter {
     }
     syslog_pri { }
     date {
-      match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+      match => [ "timestamp", "ISO8601" ]
+      remove_field => [ "timestamp" ]
     }
+
   }
   if [syslog_program] == "puppet-agent" {
     mutate {
