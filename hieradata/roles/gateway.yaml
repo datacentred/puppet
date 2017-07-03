@@ -25,4 +25,4 @@ haproxy::defaults_options:
 haproxy::global_options:
   tune.ssl.default-dh-param: '2048'
 
-haproxy::package_ensure: '1.7.5-2ppa1~trusty'
+haproxy::package_ensure: '1.7.7-1ppa1~trusty'
