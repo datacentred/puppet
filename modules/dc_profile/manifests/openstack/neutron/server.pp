@@ -10,7 +10,14 @@ class dc_profile::openstack::neutron::server {
     * => $containers['neutron']
   }
 
-
-  ensure_packages([ 'neutron-common','neutron-plugin-ml2','neutron-server'], { ensure => purged })
+  logrotate::rule { 'neutron':
+    path          => '/var/log/neutron/*.log',
+    rotate        => 7,
+    rotate_every  => 'day',
+    compress      => true,
+    delaycompress => true,
+    missingok     => true,
+    ifempty       => false,
+  }
 
 }
