@@ -23,7 +23,10 @@ filter {
     grok {
       patterns_dir => ["/etc/logstash/patterns/grok"]
       break_on_match => true
-      match => [ "message", "%{FAIL2BAN_ALREADYBAN_OLD}" ]
+      match => [
+        "message", "%{FAIL2BAN_ALREADYBAN_OLD}",
+        "message", "%{FAIL2BAN_ALREADYBAN_NEW}"
+      ]
       add_tag => [ "ip_already_banned" ]
       named_captures_only => true
     }
@@ -42,6 +45,16 @@ filter {
         "message", "%{FAIL2BAN_ERROR_NEW}"
         ]
       add_tag => [ "fail2ban_error" ]
+      named_captures_only => true
+    }
+    grok {
+      patterns_dir => ["/etc/logstash/patterns/grok"]
+      break_on_match => true
+      match => [
+        "message", "%{FAIL2BAN_OTHER_OLD}",
+        "message", "%{FAIL2BAN_OTHER_NEW}"
+        ]
+      add_tag => [ "fail2ban_misc" ]
       named_captures_only => true
     }
     geoip {
