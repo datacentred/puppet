@@ -1,0 +1,101 @@
+#!/usr/bin/python
+"""
+Qemu Resource Limit Checker
+
+Anecdotally as ceph scales, and the number of volumes scale then so do the number
+of sockets required.  The default limit of 1024 only allows 3 volumes before VMs
+are likely to die in flames.  This is an early warning system to return qemu PIDs
+which are close to exhausting thier file limit.
+"""
+
+from __future__ import print_function
+import os
+import re
+import subprocess
+import sys
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+
+def pgrep(name):
+    """Return a list of PIDs matching the name"""
+
+    try:
+        output = subprocess.check_output(['/usr/bin/pgrep', name])
+    except subprocess.CalledProcessError:
+        print('UNKNOWN: unable to execute pgrep')
+        sys.exit(NAGIOS_UNKNOWN)
+
+    # Take care with the trailling new-line
+    return map(int, output.split("\n")[:-1])
+
+
+def limits(pid):
+    """Return a dictionary of process limits for the PID"""
+
+    with open('/proc/{}/limits'.format(pid)) as file_desc:
+        # Discard trailling newline and headers
+        lines = file_desc.read().split("\n")[1:-1]
+
+    def parse(line):
+        """Split based on multiple white space, returns the name and integer
+           soft limit"""
+        fields = re.split(r'\s{2,}', line)
+        try:
+            value = int(fields[1])
+        except ValueError:
+            value = -1
+        return fields[0], value
+
+    return dict(map(parse, lines))
+
+
+def nofiles(pid):
+    """Get the number of open file descriptors for the PID"""
+
+    return len(os.listdir('/proc/{}/fd'.format(pid)))
+
+
+def main():
+    """Gather all qemu processes, check to see if number of open files
+       is near to the process soft limit"""
+
+    processes = pgrep('qemu')
+
+    warnings = []
+    criticals = []
+
+    for pid in processes:
+        lim = limits(pid)
+        nof = nofiles(pid)
+
+        warn = lim['Max open files'] * 80 / 100
+        crit = lim['Max open files'] * 90 / 100
+
+        if nof > crit:
+            criticals.append((pid, nof, lim['Max open files']))
+        elif nof > warn:
+            warnings.append((pid, nof, lim['Max open files']))
+
+    code = NAGIOS_OK
+    if criticals:
+        code = NAGIOS_CRITICAL
+    elif warnings:
+        code = NAGIOS_WARNING
+
+    status = ['OK', 'WARNING', 'CRITICAL', 'UNKNOWN'][code]
+    print('{}: criticals={} warnings={}'.format(
+        status,
+        ','.join(':'.join(map(str, x)) for x in criticals),
+        ','.join(':'.join(map(str, x)) for x in warnings)))
+
+    return code
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:
