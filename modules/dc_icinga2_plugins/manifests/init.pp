@@ -55,6 +55,7 @@ class dc_icinga2_plugins (
     'check_openstack_service',
     'check_pgsql_replication',
     'check_psu',
+    'check_qemu_rlimit',
     'check_rabbitmq_aliveness',
     'check_rabbitmq_objects',
     'check_rabbitmq_overview',
