@@ -64,6 +64,10 @@ class dc_profile::stronghold::firewall {
   firewallchain { 'INPUT:filter:IPv4':
     ensure => 'present',
     purge  => true,
+    ignore => [
+      # ignore the fail2ban jump rule
+      '-j f2b',
+    ],
     policy => drop,
   }
 
