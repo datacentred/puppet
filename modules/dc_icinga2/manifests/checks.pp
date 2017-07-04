@@ -217,6 +217,13 @@ class dc_icinga2::checks {
     },
   }
 
+  icinga2::object::checkcommand { 'qemu-rlimits':
+    command => [
+      '"sudo"',
+      '"/usr/local/lib/nagios/plugins/check_qemu_rlimit"',
+    ],
+  }
+
   icinga2::object::checkcommand { 'sas-phy':
     command => [
       '"/usr/local/lib/nagios/plugins/check_sas_phy"',

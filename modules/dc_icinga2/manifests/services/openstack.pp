@@ -566,5 +566,12 @@ class dc_icinga2::services::openstack (
     assign_where  => 'host.vars.role == "openstack-endpoint"',
   }
 
+  icinga2::object::apply_service { 'qemu rlmits':
+    import        => 'openstack-service',
+    check_command => 'qemu-rlimits',
+    zone          => 'host.name',
+    assign_where  => 'host.vars.role == "openstack_compute"',
+  }
+
 }
 
