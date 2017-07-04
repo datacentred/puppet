@@ -12,4 +12,14 @@ class dc_profile::openstack::nova::control {
     * => $containers['nova']
   }
 
+  logrotate::rule { 'nova':
+    path          => '/var/log/nova/*.log',
+    rotate        => 7,
+    rotate_every  => 'day',
+    compress      => true,
+    delaycompress => true,
+    missingok     => true,
+    ifempty       => false,
+  }
+
 }

@@ -8,4 +8,14 @@ class dc_profile::openstack::heat {
     * => $containers['heat']
   }
 
+  logrotate::rule { 'heat':
+    path          => '/var/log/heat/*.log',
+    rotate        => 7,
+    rotate_every  => 'day',
+    compress      => true,
+    delaycompress => true,
+    missingok     => true,
+    ifempty       => false,
+  }
+
 }
