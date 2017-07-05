@@ -134,4 +134,10 @@ class dc_zabbix::server (
       ],
       before            => Class['::zabbix'],
     }
+
+    user { 'zabbix':
+      ensure  => present,
+      groups  => [puppet],
+      require => Package['zabbix-server-pgsql'],
+    }
 }

@@ -23,4 +23,9 @@ class dc_zabbix::proxy (
       create_resources(firewall, $firewall_rules['proxy'])
     }
 
+    user { 'zabbix':
+      ensure  => present,
+      groups  => [puppet],
+      require => Package['zabbix-proxy-pgsql'],
+    }
 }
