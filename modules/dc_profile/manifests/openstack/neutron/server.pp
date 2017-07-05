@@ -10,14 +10,6 @@ class dc_profile::openstack::neutron::server {
     * => $containers['neutron']
   }
 
-  logrotate::rule { 'neutron':
-    path          => '/var/log/neutron/*.log',
-    rotate        => 7,
-    rotate_every  => 'day',
-    compress      => true,
-    delaycompress => true,
-    missingok     => true,
-    ifempty       => false,
-  }
+  dc_docker::logrotate { 'neutron': }
 
 }

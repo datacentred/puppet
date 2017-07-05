@@ -10,14 +10,6 @@ class dc_profile::openstack::ceilometer::control {
     * => $containers['telemetry']
   }
 
-  logrotate::rule { 'ceilometer':
-    path          => '/var/log/ceilometer/*.log',
-    rotate        => 7,
-    rotate_every  => 'day',
-    compress      => true,
-    delaycompress => true,
-    missingok     => true,
-    ifempty       => false,
-  }
+  dc_docker::logrotate { 'ceilometer': }
 
 }

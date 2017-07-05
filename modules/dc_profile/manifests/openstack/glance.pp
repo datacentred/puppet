@@ -12,14 +12,6 @@ class dc_profile::openstack::glance {
     * => $containers['glance']
   }
 
-  logrotate::rule { 'glance':
-    path          => '/var/log/glance/*.log',
-    rotate        => 7,
-    rotate_every  => 'day',
-    compress      => true,
-    delaycompress => true,
-    missingok     => true,
-    ifempty       => false,
-  }
+  dc_docker::logrotate { 'glance': }
 
 }
