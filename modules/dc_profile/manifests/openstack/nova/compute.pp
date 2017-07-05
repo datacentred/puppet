@@ -65,7 +65,7 @@ class dc_profile::openstack::nova::compute {
   # for VMs with multiple Ceph-backed disks attached
   file { '/etc/init/libvirt-bin.override':
     ensure  => present,
-    user    => 'root',
+    owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => 'limit nofile 65535 65535',
