@@ -12,14 +12,6 @@ class dc_profile::openstack::cinder {
     * => $containers['cinder']
   }
 
-  logrotate::rule { 'cinder':
-    path          => '/var/log/cinder/*.log',
-    rotate        => 7,
-    rotate_every  => 'day',
-    compress      => true,
-    delaycompress => true,
-    missingok     => true,
-    ifempty       => false,
-  }
+  dc_docker::logrotate { 'cinder': }
 
 }

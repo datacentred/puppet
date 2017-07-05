@@ -12,14 +12,6 @@ class dc_profile::openstack::keystone {
     * => $containers['keystone']
   }
 
-  logrotate::rule { 'keystone':
-    path          => '/var/log/keystone/*.log',
-    rotate        => 7,
-    rotate_every  => 'day',
-    compress      => true,
-    delaycompress => true,
-    missingok     => true,
-    ifempty       => false,
-  }
+  dc_docker::logrotate { 'keystone': }
 
 }
