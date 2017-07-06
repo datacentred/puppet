@@ -8,6 +8,12 @@ dc_netbox::admin_pass: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQI
 dc_netbox::db_pass: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAHnb6drQf8boVk7uxMhpt5oJuQr/+rURsqOm2CWQOjwHqtHbBjHtyXNLRlqX2liQJg1bLfqggKSnNZWSnNFp3I+h6EHFVxuqv/LVipcXzaWsSh9XgGkNSDi28k/pdGiWRFFe8Xd5fm0AW20bLQncoy/GqKAAZqSQKneD/WrKGOvPTDNs01TI4cwPCYdsIPOUJYCXCf/Se8jYYJrGFmYHzNl19ZjFLiWX3wnS9qn+bAIb+Bn2FDAdK7iZfXbWEbdd7g27Wmh6Oc+yUxGuTTJXeNwg6tZBRoISyabZM/B3Og9gOK5mC6njXkU/1Xty2eezDXw+hmD1dcupljjnqG0hRHjBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDZHYeKTLU6sEJOmw2dCKH4gDAKHjp3legWCQGW7Bqs+BJODMtOV14/k7Z7iS6DAaSvl3Ucb+cyi/eDl5h/m1D+vg0=]
 dc_netbox::secretkey: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEALpIMJvMeQ2umudLIuOiHDVZUyf7cfZaeYv/PPwQJhBYcc1YVfb7j5VoIOb+Ur1PNmJ8slU8RgWaWxFfrpm04XCSWJl1y09lem/x9F39zSV5BfjxTO+C3rYXehxv3CNs1ul+3kwERnNtC4lAX5uMkOMypHr7NWQqCd7+mcQQbNZ/VqTD8YtkP6dAdEhlVrhH8leq3GnImcz5H4/tl+OyfvQr8VWDWqUDfYzu8jOHU07yAGZfpsh8mwqgNJuol0r0FtSUjIeWEuXbmI1cl9zqj9NNu+eUSGNslSPU1SBUh+SsjJNPeUeMRCzZe8T1SXphnq+DsD/uJuW91KL3xg7p4bzB8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBcKZ4T+xAW92kakuxGZW3ogFCpdv6WGKUMS+CuvrtS5N3muWMh0zdJ0PXUQn/xZzcbxNlhKepylZgaQR6397vRPQ8URPighEuuSVn/EE0V6ynSZ51QrkOL19BafYMgGpiGrQ==]
 
+dc_netbox::backup::config:
+  "%{::fqdn}_netbox":
+    backup_content: 'netbox'
+    source_dir: '/var/backups'
+    pre_command: "/usr/bin/sudo -u postgres /usr/bin/pg_dump netbox | bzcat -zc > /var/backups/netbox-`date +%Y%m%d-%H%M%S`.sql.bz2"
+
 dc_netbox::firewall::firewall:
   base:
     '000 INPUT allow related':
