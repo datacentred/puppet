@@ -59,6 +59,7 @@ class dc_logstash::server (
   include ::dc_logstash::server::config::filter_grok_mongodb
   include ::dc_logstash::server::config::filter_grok_mysql_err
   include ::dc_logstash::server::config::filter_grok_native_syslog
+  include ::dc_logstash::server::config::filter_grok_nginx
   include ::dc_logstash::server::config::filter_grok_openstack
   include ::dc_logstash::server::config::filter_grok_syslog
   include ::dc_logstash::server::config::output_elasticsearch
