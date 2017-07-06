@@ -96,6 +96,10 @@ filebeat::prospectors:
     paths:
       - '/var/log/mail.err'
     doc_type: 'mail_error'
+  memcached:
+    paths:
+      - '/var/log/memcached.log'
+    doc_type: 'memcached'
   mongodb:
     paths:
       - '/var/log/mongodb/mongodb.log'
@@ -145,6 +149,10 @@ filebeat::prospectors:
     paths:
       - '/var/lib/neutron/ha_confs/*/neutron-keepalived-state-change.log'
     doc_type: 'neutron_state_change'
+  nginx:
+    paths:
+      - '/var/log/nginx/*.log'
+    doc_type: 'nginx'
   nova_api:
     paths:
       - '/var/log/nova/nova-api.log'
@@ -204,6 +212,22 @@ filebeat::prospectors:
       - '/var/log/rabbitmq/startup_err'
       - '/var/log/rabbitmq/startup_log'
     doc_type: 'rabbitmq_state'
+  redis:
+    paths:
+      - '/var/log/redis/redis.log'
+    doc_type: 'redis'
+  stronghold_rails:
+    paths:
+      - '/var/log/rails/stronghold/production.log'
+    doc_type: 'stronghold_rails'
+  stronghold_rack_attack:
+    paths:
+      - '/var/log/rails/stronghold/rack_attack.log'
+    doc_type: 'stronghold_rack_attack'
+  stronghold_unicorn:
+    paths:
+      - '/var/log/rails/stronghold/unicorn.stderr.log'
+    doc_type: 'stronghold_unicorn'
   syslog:
     paths:
       - '/var/log/syslog'
