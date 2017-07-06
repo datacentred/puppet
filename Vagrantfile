@@ -30,9 +30,6 @@ UBUNTU_LBOXES = {
               }
 }
 
-# Ensure everyone is running a consistent vagrant version
-Vagrant.require_version '~> 1.8.0'
-
 Vagrant.configure('2') do |config|
   if ENV['VAGRANT_DEFAULT_PROVIDER'] == 'libvirt'
     config.vm.box_download_checksum_type = 'sha256'
