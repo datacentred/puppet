@@ -13,7 +13,14 @@ class dc_zabbix::proxy (
     include ::zabbix::proxy
     include ::zabbix::agent
 
-    ensure_packages('iptables-persistent')
+    $packages = [
+      'iptables-persistent',
+      'php7.0-snmp',
+      'php7.0-cli',
+      'snmp-mibs-downloader',
+    ]
+
+    ensure_packages($packages)
 
     if $firewall_enabled {
       if hiera('firewall::purge') {
@@ -25,7 +32,37 @@ class dc_zabbix::proxy (
 
     user { 'zabbix':
       ensure  => present,
-      groups  => [puppet],
+      groups  => ['puppet'],
       require => Package['zabbix-proxy-pgsql'],
     }
+
+    file { '/usr/share/mibs/ietf/SNMPv2-PDU':
+      ensure => absent,
+    }
+
+    file { '/usr/share/mibs/ietf/IPATM-IPMC-MIB':
+      ensure => absent,
+    }
+
+    file { '/usr/share/mibs/iana/IANA-IPPM-METRICS-REGISTRY-MIB':
+      ensure => absent,
+    }
+
+    file { '/etc/snmp/snmp.conf':
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+      source => 'puppet:///modules/dc_zabbix/snmp.conf',
+    }
+
+    file { '/usr/lib/zabbix/externalscripts/jnxBgpM2Peer':
+      ensure  => file,
+      require => Package['zabbix-proxy-pgsql'],
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      source  => 'puppet:///modules/dc_zabbix/jnxBgpM2Peer',
+    }
+
 }
