@@ -12,7 +12,7 @@ dc_netbox::backup::config:
   "%{::fqdn}_netbox":
     backup_content: 'netbox'
     source_dir: '/var/backups'
-    pre_command: "/usr/bin/sudo -u postgres /usr/bin/pg_dump netbox | bzcat -zc > /var/backups/netbox-`date +%Y%m%d-%H%M%S`.sql.bz2"
+    pre_command: '/usr/bin/sudo -u postgres /usr/bin/pg_dump netbox | bzcat -zc > /var/backups/netbox-$(date +\%F)-$(date +\%T).sql.bz2'
 
 dc_netbox::firewall::firewall:
   base:
