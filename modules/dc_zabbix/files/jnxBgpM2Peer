@@ -1,0 +1,78 @@
+#!/usr/bin/env php
+<?php
+
+if ($argc != 5) {
+  exit(1);
+}
+
+$host = $argv[1];
+$sec_name = $argv[2];
+$sec_level = 'authPriv';
+$auth_protocol = 'SHA';
+$auth_passphrase = $argv[3];
+$priv_protocol = 'AES';
+$priv_passphrase = $argv[4];
+
+$data = snmp3_real_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, '1.3.6.1.4.1.2636.5.1.1.2.1.1.1.11');
+$pidata = snmp3_real_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, '1.3.6.1.4.1.2636.5.1.1.2.1.1.1.14');
+$atdata = snmp3_real_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, '1.3.6.1.4.1.2636.5.1.1.2.1.1.1.10');
+$idx = 0;
+$ndat = array();
+
+echo "{\n";
+echo "\t\"data\":[\n";
+
+foreach($data as $k => $v) {
+        $ip = '';
+        $k = preg_replace('/^SNMPv2-SMI::enterprises.2636.5.1.1.2.1.1.1.11./','',$k);
+        if(preg_match('/^Hex-STRING/',$v)) {
+                $v = preg_replace('/^Hex-STRING: /','',$v);
+                $hex = preg_split('/\s/',$v);
+                if(count($hex) > 7) {
+                        $ix = 0;
+                        foreach($hex as $p) {
+                                if($p != '') {
+                                if($ix == 2) {
+                                        $ip .= ':';
+                                        $ix = 0;
+                                }
+                                $ip .= $p;
+                                $ix++;
+                                }
+                        }
+                        $ip = preg_replace('/:[0]+([1-9a-zA-Z]+)/',':$1',$ip);
+                        $ip = preg_replace('/([1-9a-zA-Z]):0000:([1-9a-zA-Z])/','$1:0:$2',$ip);
+                        $ip = preg_replace('/[0]{4}/','',$ip);
+                        $ip = preg_replace('/[:]{3,}/','::',$ip);
+                }
+                else {
+                        $ix = 0;
+                        foreach($hex as $p) {
+                                if($p != '') {
+                                $ip .= hexdec($p);
+                                if($ix < 3) {
+                                        $ip .= '.';
+                                }
+                                }
+                                $ix++;
+                        }
+                }
+        }
+        else {
+                $bits = preg_split('/\./',$k);
+                $bl = count($bits);
+                $ip = $bits[$bl-4].'.'.$bits[$bl-3].'.'.$bits[$bl-2].'.'.$bits[$bl-1];
+        }
+        echo "\t\t{\n";
+        echo "\t\t\"{#PEERINDEX}\": \"".$k."\",\n";
+        echo "\t\t\"{#PEERVALUE}\": \"".strtolower($ip)."\",\n";
+        echo "\t\t\"{#PEERSI}\": \"".preg_replace('/^Gauge32: /','',$pidata['SNMPv2-SMI::enterprises.2636.5.1.1.2.1.1.1.14.'.$k])."\",\n";
+        echo "\t\t\"{#PEERAT}\": \"".preg_replace('/^INTEGER: /','',$atdata['SNMPv2-SMI::enterprises.2636.5.1.1.2.1.1.1.10.'.$k])."\"\n";
+        echo "\t\t}".($idx >= (count($data)-1) ? "" : ",")."\n";
+        $idx++;
+}
+
+echo "\t]\n";
+echo "}\n";
+
+?>
