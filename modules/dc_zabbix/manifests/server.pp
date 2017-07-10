@@ -24,6 +24,7 @@ class dc_zabbix::server (
 {
 
     include ::apache
+    include ::puppetcrl_sync
     include ::firewall
     include ::zabbix
     include ::zabbix::agent
@@ -39,6 +40,8 @@ class dc_zabbix::server (
       'php',
       'libapache2-mod-php',
       'php-xml',
+      'pdagent',
+      'pdagent-integrations',
     ]
 
     ensure_packages($packages)
@@ -130,14 +133,40 @@ class dc_zabbix::server (
         php_value date.timezone ${apache_php_date_time}",
       rewrites          => [
         {
-          rewrite_rule => ['^$ /index.php [L]'] }
+          'rewrite_rule' => ['^$ /index.php [L]'],
+        },
       ],
       before            => Class['::zabbix'],
     }
 
     user { 'zabbix':
       ensure  => present,
-      groups  => [puppet],
+      groups  => ['puppet'],
       require => Package['zabbix-server-pgsql'],
+    }
+
+    apt::source { 'pagerduty':
+      comment  => 'Mirror for PagerDuty packages',
+      location => 'https://packages.pagerduty.com/pdagent',
+      release  => 'deb/',
+      repos    => '',
+      key      => {
+        'id'     => '34241874978E85F344483D714037B2209E65C6CB',
+        'source' => 'http://packages.pagerduty.com/GPG-KEY-pagerduty',
+      },
+    }
+
+    file { '/etc/zabbix/alertscripts':
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      require => Package['zabbix-server-pgsql'],
+    }
+
+    file { '/etc/zabbix/alertscripts/pd-zabbix':
+      ensure  => 'link',
+      target  => '/usr/share/pdagent-integrations/bin/pd-zabbix',
+      require => Package['pdagent-integrations'],
     }
 }
