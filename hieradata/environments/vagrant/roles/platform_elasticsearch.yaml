@@ -21,4 +21,3 @@ dc_elasticsearch::es_hash:
   thread_pool.search.queue_size: 100
   thread_pool.search.size: 20
   xpack.security.enabled: false
-  xpack.watcher.enabled: false

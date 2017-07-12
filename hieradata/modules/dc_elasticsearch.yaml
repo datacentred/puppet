@@ -1,6 +1,6 @@
 ---
 #elasticsearch snapshot
-dc_elasticsearch::params::elasticsearch_version: '5.4.0'
+dc_elasticsearch::params::elasticsearch_version: '5.4.3'
 dc_elasticsearch::params::backup_name: 'datacentredceph'
 dc_elasticsearch::params::backup_bucket: 'datacentred-logstash-snapshots'
 dc_elasticsearch::params::logstash_server: 'logstash'
