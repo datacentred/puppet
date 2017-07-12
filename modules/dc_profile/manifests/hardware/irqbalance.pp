@@ -5,16 +5,18 @@
 #
 class dc_profile::hardware::irqbalance {
 
-  service { 'irqbalance':
-    ensure    => running,
-    hasstatus => true,
-    enable    => true,
-  }
+  unless $::is_virtual {
+    service { 'irqbalance':
+      ensure    => running,
+      hasstatus => true,
+      enable    => true,
+    }
 
-  file_line { 'irqbalance':
-    path   => '/etc/default/irqbalance',
-    line   => 'OPTIONS="--hintpolicy=ignore"',
-    notify => Service['irqbalance'],
+    file_line { 'irqbalance':
+      path   => '/etc/default/irqbalance',
+      line   => 'OPTIONS="--hintpolicy=ignore"',
+      notify => Service['irqbalance'],
+    }
   }
 
 }
