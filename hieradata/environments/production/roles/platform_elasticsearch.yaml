@@ -21,8 +21,4 @@ dc_elasticsearch::es_hash:
     - "%{::ipaddress}"
   node.master: true
   node.data: true
-  thread_pool.index.queue_size: 200
-  thread_pool.index.size: 4
-  thread_pool.search.queue_size: '100'
-  thread_pool.search.size: 20
   xpack.security.enabled: false
