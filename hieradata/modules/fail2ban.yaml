@@ -2,7 +2,7 @@
 fail2ban::config_file_template: "fail2ban/%{::lsbdistcodename}/etc/fail2ban/jail.conf.erb"
 fail2ban::failconf_path: "fail2ban/%{::lsbdistcodename}/etc/fail2ban/fail2ban.conf.erb"
 fail2ban::whitelist: 
-  - ''
+  - '185.43.216.241/32'
 fail2ban::maxretry: '3'
 fail2ban::findtime: '800'
 fail2ban::ssh_retry: '3'
