@@ -72,4 +72,4 @@ xtrabackup::mysql_user: "%{hiera('osdbmq_galera_backup_user')}"
 xtrabackup::mysql_pass: "%{hiera('osdbmq_galera_backup_pw')}"
 xtrabackup::backup_dir: "%{hiera('osdbmq_galera_backup_dir')}"
 xtrabackup::manage_repo: false
-xtrabackup::xtrabackup_options: '--compress --throttle=10'
+xtrabackup::xtrabackup_options: '--throttle=10'
