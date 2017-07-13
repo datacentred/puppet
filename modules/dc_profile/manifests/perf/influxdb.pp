@@ -5,7 +5,7 @@
 class dc_profile::perf::influxdb {
   include ::influxdb::server
 
-  ensure_packages('curl')
+  ensure_packages(['curl', 'srvadmin-storageservices'])
 
   $data_dir = '/srv/influxdb'
 
