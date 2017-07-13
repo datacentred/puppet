@@ -352,3 +352,6 @@
 [submodule "modules/python"]
 	path = modules/python
 	url = https://github.com/stankevich/puppet-python.git
+[submodule "modules/xtrabackup"]
+	path = modules/xtrabackup
+	url = https://github.com/johnlawerance/xtrabackup
