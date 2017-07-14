@@ -11,9 +11,4 @@ class dc_profile::puppet::puppet4 {
     stage => 'setup',
   }
 
-  service { 'mcollective':
-    ensure  => stopped,
-    require => Class['puppet'],
-  }
-
 }
