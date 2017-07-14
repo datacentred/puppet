@@ -3,6 +3,7 @@ classes:
   - '::dc_elasticsearch'
   - '::dc_elasticsearch::elasticsearch_backup_destination'
   - '::dc_profile::util::unattended_upgrades'
+  - '::dc_profile::mon::monit'
 
 sysctls::values:
     vm.swappiness:

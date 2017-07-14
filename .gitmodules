@@ -355,3 +355,6 @@
 [submodule "modules/xtrabackup"]
 	path = modules/xtrabackup
 	url = https://github.com/johnlawerance/xtrabackup
+[submodule "modules/monit"]
+	path = modules/monit
+	url = https://github.com/echoes-tech/puppet-monit
