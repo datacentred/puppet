@@ -1,0 +1,13 @@
+galera::override_options:
+  mysqld:
+    datadir: '/srv/mysql'
+    max_connections: '8000'
+    log_slow_queries: '/var/log/mysql/mysql-slow.log'
+    long_query_time: '10'
+    innodb-buffer-pool-size: '4096M'
+    innodb-log-buffer-size: '128M'
+    max-heap-table-size: '32M'
+    tmp-table-size: '32M'
+    thread-cache-size: '50'
+    open-files-limit: '65535'
+    table-open-cache: '10240'
