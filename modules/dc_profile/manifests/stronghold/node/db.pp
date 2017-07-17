@@ -6,6 +6,7 @@ class dc_profile::stronghold::node::db {
   include dc_profile::stronghold::firewall
   include dc_profile::stronghold::monitoring
   include ::mysql::server
+  include ::mysql::server::backup
 
   $db_user      = hiera(db_user);
   $db_password  = hiera(db_password);
