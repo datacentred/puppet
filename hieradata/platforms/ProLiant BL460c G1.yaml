@@ -1,2 +1,5 @@
 ---
+excludes:
+  - '::dc_profile::hardware::irqbalance'
+
 dc_nrpe::checks::bmc::std_fw_version: '2.25'
