@@ -8,3 +8,7 @@ dc_openvpn::endpoint:
 dc_openvpn::public_interface: 'enp1s0'
 dc_openvpn::private_interface: 'enp2s0'
 
+network::mroutes_hash:
+  "%{hiera('dc_openvpn::private_interface')}":
+    routes:
+      10.35.128.0/24: '10.10.10.5' 
