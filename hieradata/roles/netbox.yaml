@@ -10,9 +10,9 @@ dc_netbox::secretkey: ENC[PKCS7,MIIBuQYJKoZIhvcNAQcDoIIBqjCCAaYCAQAxggEhMIIBHQIB
 
 dc_netbox::backup::config:
   "%{::fqdn}_netbox":
-    backup_content: 'netbox'
+    backup_content: 'netbox_backup'
     source_dir: '/var/backups'
-    pre_command: '/usr/bin/sudo -u postgres /usr/bin/pg_dump netbox | bzcat -zc > /var/backups/netbox-$(date +\%F)-$(date +\%T).sql.bz2'
+    pre_command: "/opt/netbox/netbox-backup.sh 2>&1 | /usr/bin/logger -t netbox-backup -p syslog.notice"
 
 dc_netbox::firewall::firewall:
   base:

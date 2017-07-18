@@ -74,8 +74,8 @@ class dc_netbox::install {
     content => template($dc_netbox::gunicorn_template),
   }
 
-  file { $dc_netbox::db_backup_sh:
-    content => template($dc_netbox::db_backup_template),
+  file { $dc_netbox::netbox_backup_sh:
+    content => template($dc_netbox::netbox_backup_template),
     mode    => '0755',
   }
 }
