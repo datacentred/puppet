@@ -20,3 +20,8 @@ mongodb::replset::sets:
             - "osmongodb2.%{::domain}:27017"
 
 dc_profile::openstack::duplicity_mongodb::ceilometer_db_password: "%{hiera('ceilometer_db_password')}"
+
+telegraf::inputs:
+  mongodb:
+    servers: ["mongodb://%{hiera('mongodb_monitor_user')}:%{hiera('mongodb_monitor_password')}@127.0.0.1:27017"]
+    gather_perdb_stats: false
