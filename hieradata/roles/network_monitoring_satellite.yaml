@@ -11,8 +11,16 @@ rsyslog::client::custom_config: 'dc_rsyslog/network_monitoring_satellite_rsyslog
 rsyslog::client::log_templates:
   - name: 'arkngPerHostLog'
     template: '/var/log/network/ark-ng/%HOSTNAME%.log'
+  - name: 'arkPerHostLog'
+    template: '/var/log/network/ark/%HOSTNAME%.log'
+  - name: 'corePerHostLog'
+    template: '/var/log/network/core/%HOSTNAME%.log'
 
 rsyslog::client::log_filters:
   - expression: '$fromhost-ip startswith "10.40.32."'
     action: "-?arkngPerHostLog\n&~"
+  - expression: '$fromhost-ip startswith "10.10.32."'
+    action: "-?arkPerHostLog\n&~"
+  - expression: '$fromhost-ip startswith "10.30.32."'
+    action: "-?corePerHostLog\n&~"
 
