@@ -6,8 +6,8 @@ class dc_profile::openstack::ceilometer::control {
 
   $containers = hiera('containers')
 
-  dc_docker::run { 'telemetry':
-    * => $containers['telemetry']
+  dc_docker::run { 'ceilometer':
+    * => $containers['ceilometer']
   }
 
   dc_docker::logrotate { 'ceilometer': }
