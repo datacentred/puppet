@@ -51,8 +51,7 @@ def main():
         okay = True
         for agent in agents['agents']:
             ahost = agent['host']
-            astate = agent['ha_state']
-            okay = okay and (ahost == host and astate == 'active' or astate == 'standby')
+            okay = okay and ahost == host
 
         if okay:
             print('Router {} is on {}'.format(router, host))
