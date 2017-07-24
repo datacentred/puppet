@@ -169,4 +169,5 @@ class dc_zabbix::server (
       target  => '/usr/share/pdagent-integrations/bin/pd-zabbix',
       require => Package['pdagent-integrations'],
     }
+
 }

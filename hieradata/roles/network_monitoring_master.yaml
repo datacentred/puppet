@@ -4,3 +4,4 @@ classes:
 
 apache::mpm_module: 'prefork'
 firewall::purge: true
+

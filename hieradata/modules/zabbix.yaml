@@ -5,6 +5,11 @@ zabbix::manage_vhost: false
 zabbix::manage_firewall: false
 zabbix::zabbix_version: '3.2'
 zabbix::zabbix_timezone: 'Europe/London'
+zabbix::cachesize: '80M'
+zabbix::startpingers: '5'
+zabbix::historycachesize: '80M'
+zabbix::trendcachesize: '40M'
+zabbix::valuecachesize: '80M'
 zabbix::proxy::zabbix_server_host: 'monitoring.datacentred.net'
 zabbix::proxy::database_type: 'postgresql'
 zabbix::proxy::zabbix_version: '3.2'
@@ -13,6 +18,10 @@ zabbix::proxy::tlscafile: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
 zabbix::proxy::tlscertfile: "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
 zabbix::proxy::tlskeyfile: "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
 zabbix::proxy::tlscrlfile: '/etc/puppetlabs/puppet/ssl/crl.pem'
+zabbix::proxy::cachesize: '80M'
+zabbix::proxy::startpingers: '10'
+zabbix::proxy::startdiscoverers: '10'
+zabbix::proxy::startpollers: '15'
 zabbix::agent::server: '127.0.0.1'
 zabbix::agent::listenip: '127.0.0.1'
 zabbix::server::tlscafile: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
