@@ -46,13 +46,6 @@ class dc_icinga::server::nagios_services {
     service_description => 'Logstash ES',
   }
 
-  icinga::service { 'check_keystone':
-    use                 => 'dc_service_generic',
-    hostgroup_name      => 'dc_hostgroup_keystone',
-    check_command       => 'check_keystone_dc',
-    service_description => 'Keystone',
-  }
-
   icinga::service { 'check_ssh':
     use                 => 'dc_service_generic',
     hostgroup_name      => 'dc_hostgroup_generic',

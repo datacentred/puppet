@@ -76,10 +76,6 @@ class dc_icinga::server::nagios_commands (
     command_line => '/usr/lib/nagios/plugins/check_tftp -H $HOSTADDRESS$ -p nagios_test_file',
   }
 
-  icinga::command { 'check_keystone_dc':
-    command_line => "/usr/lib/nagios/plugins/check_keystone --auth_url http://\$HOSTADDRESS\$:5000/v2.0 --username icinga --password ${keystone_icinga_password} --tenant icinga"
-  }
-
   icinga::command { 'check_nova_os_api':
     command_line => "/usr/lib/nagios/plugins/check_http -H \$HOSTADDRESS$ -p 8774"
   }
