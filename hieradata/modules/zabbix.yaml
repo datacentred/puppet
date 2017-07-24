@@ -19,3 +19,7 @@ zabbix::server::tlscafile: '/etc/puppetlabs/puppet/ssl/certs/ca.pem'
 zabbix::server::tlscertfile: "/etc/puppetlabs/puppet/ssl/certs/%{::fqdn}.pem"
 zabbix::server::tlskeyfile: "/etc/puppetlabs/puppet/ssl/private_keys/%{::fqdn}.pem"
 zabbix::server::tlscrlfile: '/etc/puppetlabs/puppet/ssl/crl.pem'
+zabbix::server::cachesize: '8M'
+zabbix::server::historycachesize: '8M'
+zabbix::server::trendcachesize: '4M'
+zabbix::server::valuecachesize: '8M'
