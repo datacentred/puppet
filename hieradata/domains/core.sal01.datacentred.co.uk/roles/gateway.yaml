@@ -51,6 +51,16 @@ dc_profile::net::core_gateway::frontends:
                 - 'jenkins if { hdr_beg(host) -i jenkins }'
             http-request:
                 - 'set-header X-Forwarded-Proto https'
+            capture:
+                - 'request header Host len 40'
+                - 'request header X-Forwarded-For len 50'
+                - 'request header Accept-Language len 50'
+                - 'request header Referer len 200'
+                - 'request header User-Agent len 200'
+                - 'response header Content-Type len 30'
+                - 'response header Content-Encoding len 10'
+                - 'response header Cache-Control len 200'
+                - 'response header Last-Modified len 200'
     https:
         mode: 'http'
         bind:
@@ -82,6 +92,16 @@ dc_profile::net::core_gateway::frontends:
                 - 'grafana if { hdr_beg(host) -i grafana }'
             http-request:
                 - 'set-header X-Forwarded-Proto https'
+            capture:
+                - 'request header Host len 40'
+                - 'request header X-Forwarded-For len 50'
+                - 'request header Accept-Language len 50'
+                - 'request header Referer len 200'
+                - 'request header User-Agent len 200'
+                - 'response header Content-Type len 30'
+                - 'response header Content-Encoding len 10'
+                - 'response header Cache-Control len 200'
+                - 'response header Last-Modified len 200'
 
 # Backend configuration
 

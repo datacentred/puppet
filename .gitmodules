@@ -94,9 +94,6 @@
 [submodule "modules/ruby"]
 	path = modules/ruby
 	url = https://github.com/puppetlabs/puppetlabs-ruby.git
-[submodule "modules/haproxy"]
-	path = modules/haproxy
-	url = https://github.com/datacentred/puppetlabs-haproxy.git
 [submodule "modules/keepalived"]
 	path = modules/keepalived
 	url = https://github.com/arioch/puppet-keepalived
@@ -355,3 +352,6 @@
 [submodule "modules/xtrabackup"]
 	path = modules/xtrabackup
 	url = https://github.com/johnlawerance/xtrabackup
+[submodule "modules/haproxy"]
+	path = modules/haproxy
+	url = https://github.com/puppetlabs/puppetlabs-haproxy
