@@ -18,7 +18,7 @@ class dc_nrpe::checks::neutron (
 
   dc_nrpe::check { 'check_neutron_server':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -u neutron -a /usr/bin/neutron-server',
+    args => '-c 1: -a /usr/bin/neutron-server',
   }
 
 }
