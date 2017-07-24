@@ -6,13 +6,25 @@ classes:
   - '::dc_profile::util::unattended_upgrades'
 
 
-logstash::version: '1:5.4.1-1'
+logstash::version: '1:5.5.0-1'
 logstash::restart_on_change: false
 logstash::startup_options:
   'LS_GROUP': 'puppet'
+logstash::jvm_options:
+  - '-Dfile.encoding=UTF-8'
+  - '-Djava.awt.headless=true'
+  - '-XX:+DisableExplicitGC'
+  - '-XX:+HeapDumpOnOutOfMemoryError'
+  - '-XX:+UseCMSInitiatingOccupancyOnly'
+  - '-XX:+UseConcMarkSweepGC'
+  - '-XX:+UseParNewGC'
+  - '-XX:CMSInitiatingOccupancyFraction=75'
+  - '-Xms2g'
+  - '-Xmx4g'
 
 kibana::ensure: '5.4.1'  
 kibana::config:
+  xpack.watcher.enabled: false
   xpack.security.enabled: false
   elasticsearch.url: "http://elasticsearch:9200"
   elasticsearch.preserveHost: false

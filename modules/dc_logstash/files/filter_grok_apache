@@ -2,10 +2,17 @@ filter {
     if [type] == "apache" {
         grok {
             match => [ "message", "%{COMBINEDAPACHELOG}" ]
-            match => [ "message", '"%{IP:request_ip}"%{SPACE}-%{SPACE}-%{SPACE}\[%{HAPROXYDATE}\]%{SPACE}%{QS:request}%{SPACE}%{NUMBER:http_resp_code:integer}%{DATA}%{QS}%{SPACE}%{QS:request_client}%{SPACE}%{GREEDYDATA:called_by}' ]
+            match => [ "message", '"%{IP:clientip}"%{SPACE}-%{SPACE}-%{SPACE}\[%{HAPROXYDATE}\]%{SPACE}%{QS:request}%{SPACE}%{NUMBER:response:integer}%{DATA}%{QS}%{SPACE}%{QS:request_client}%{SPACE}%{GREEDYDATA:called_by}' ]
         }
         date {
-            match => [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
+            match => [ "timestamp" , "dd/MMM/YYYY:HH:mm:ss Z", "ISO8601" ]
+            remove_field => [ "timestamp" ]
+        }
+        geoip {
+            source => "clientip"
+            target => "geoip"
+            database => "/var/lib/GeoIP/GeoLite2-City.mmdb"
+            fields => ["country_name", "region_name", "city_name", "location"]
         }
     }
 }

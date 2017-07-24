@@ -57,13 +57,16 @@ filter {
       add_tag => [ "fail2ban_misc" ]
       named_captures_only => true
     }
+    date {
+      match => [ "f2b_timestamp" , "YYYY-MM-dd HH:mm:ss", "ISO8601" ]
+      remove_field => [ "f2b_timestamp" ]
+    }
     geoip {
       source => "clientip"
       target => "geoip"
       database => "/var/lib/GeoIP/GeoLite2-City.mmdb"
       fields => ["country_name", "region_name", "city_name", "location"]
     }
-
     mutate {
       remove_tag => ["_grokparsefailure"]
     }
