@@ -21,7 +21,7 @@ class dc_nrpe::checks::nova_server {
 
   dc_nrpe::check { 'check_nova_scheduler':
     path => '/usr/lib/nagios/plugins/check_procs',
-    args => '-c 1: -u nova -a nova-scheduler',
+    args => '-c 1: -a nova-scheduler',
   }
 
   dc_nrpe::check { 'check_nova_consoleauth':
