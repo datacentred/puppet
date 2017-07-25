@@ -2,8 +2,8 @@
 dc_openvpn::endpoint:
   ark-vpn0:
     push:
-      - 'DNS 10.10.192.250'
-      - 'DNS 10.10.192.251'
+      - 'dhcp-option DNS 10.10.192.250'
+      - 'dhcp-option DNS 10.10.192.251'
       - 'dhcp-option DOMAIN sal01.datacentred.co.uk'
       - 'route 10.10.0.0 255.255.0.0'
     server: '10.253.2.0 255.255.255.0'
