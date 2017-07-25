@@ -3,13 +3,6 @@ classes:
   - '::dc_profile::util::wordpress::memcache'
   - '::dc_profile::util::wordpress::ssl'
 
-nginx::nginx_locations:
-  'datacentred-ssl':
-    server: 'datacentred-ssl'
-    location: '~* \.php$'
-    fastcgi: 'unix:/var/run/php7-fpm.sock'
-    www_root: '/srv/www/datacentred.co.uk'
-
 nginx::nginx_servers:
   'datacentred-http-redirect':
     server_name:
@@ -59,16 +52,25 @@ nginx::nginx_servers:
       - 'www.datacentred.com'
       - 'www.datacentred.org'
       - 'www.datacentred.org.uk'
-    try_files:
-      - '$uri'
-      - '$uri/'
-      - '/index.html'
-      - '/index.php?$query_string'
-    index_files:
-      - 'index.php'
-      - 'index.html'
-      - 'index.htm'
-    www_root: '/srv/www/datacentred.co.uk'
+    use_default_location: false
+    locations:
+      fastcgi_location:
+        location: '~* \.php$'
+        www_root: '/srv/www/datacentred.co.uk'
+        fastcgi: 'unix:/var/run/php7-fpm.sock'
+        fastcgi_params: '/etc/nginx/fastcgi_params'
+      directory_location:
+        location: '/'
+        www_root: '/srv/www/datacentred.co.uk'
+        index_files:
+          - 'index.php'
+          - 'index.html'
+          - 'index.htm'
+        try_files:
+          - '$uri'
+          - '$uri/'
+          - '/index.html'
+          - '/index.php?$query_string'
 
 wordpress::wp_table_prefix: 'wp_new_'
 wordpress::db_name: 'datac_wp'
