@@ -18,6 +18,7 @@ class dc_zabbix::proxy (
       'php7.0-snmp',
       'php7.0-cli',
       'snmp-mibs-downloader',
+      'snmp',
     ]
 
     ensure_packages($packages)
@@ -49,11 +50,12 @@ class dc_zabbix::proxy (
     }
 
     file { '/etc/snmp/snmp.conf':
-      ensure => file,
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
-      source => 'puppet:///modules/dc_zabbix/snmp.conf',
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/dc_zabbix/snmp.conf',
+      require => Package['snmp'],
     }
 
     file { '/usr/lib/zabbix/externalscripts/jnxBgpM2Peer':
