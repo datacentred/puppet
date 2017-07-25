@@ -2,9 +2,6 @@
 class dc_bmc::dell::racadm {
 
   $idrac_packages = [
-    #'srvadmin-all',
-    'srvadmin-idrac',
-    'srvadmin-idrac7',
     'srvadmin-idracadm7',
     'srvadmin-omilcore',
     'srvadmin-deng',
