@@ -1,6 +1,4 @@
 ---
-excludes:
- - '::dc_profile::mon::icinga2'
 classes:
   - '::dc_profile::net::dc_netbox'
 
