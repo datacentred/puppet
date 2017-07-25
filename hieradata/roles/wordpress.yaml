@@ -4,26 +4,7 @@ classes:
   - '::dc_profile::util::wordpress::ssl'
 
 nginx::nginx_servers:
-  'datacentred-http-redirect':
-    server_name:
-      - 'datacentred.co.uk'
-      - 'datacentred.io'
-      - 'datacentred.net'
-      - 'datacentred.com'
-      - 'datacentred.org'
-      - 'datacentred.org.uk'
-      - 'www.datacentred.co.uk'
-      - 'www.datacentred.io'
-      - 'www.datacentred.net'
-      - 'www.datacentred.com'
-      - 'www.datacentred.org'
-      - 'www.datacentred.org.uk'
-    listen_port: '80'
-    ssl: false
-    ssl_redirect: true
-    use_default_location: false
-    ipv6_enable: false
-  'datacentred-ssl':
+  datacentred-ssl:
     ssl: true
     ssl_cert: '/etc/letsencrypt/live/www.datacentred.co.uk/fullchain.pem'
     ssl_key: '/etc/letsencrypt/live/www.datacentred.co.uk/privkey.pem' 
@@ -33,6 +14,7 @@ nginx::nginx_servers:
     ssl_stapling: true
     ssl_stapling_verify: true
     ssl_dhparam: '/etc/ssl/private/dhparam2048.pem'
+    ssl_redirect: true
     server_cfg_ssl_prepend:
       ssl_session_cache: shared:SSL:10m
       ssl_ecdh_curve: secp384r1
