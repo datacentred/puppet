@@ -346,12 +346,12 @@
 [submodule "modules/fail2ban"]
 	path = modules/fail2ban
 	url = https://github.com/datacentred/puppet-fail2ban.git
-[submodule "modules/python"]
-	path = modules/python
-	url = https://github.com/stankevich/puppet-python.git
 [submodule "modules/xtrabackup"]
 	path = modules/xtrabackup
 	url = https://github.com/johnlawerance/xtrabackup
 [submodule "modules/haproxy"]
 	path = modules/haproxy
 	url = https://github.com/puppetlabs/puppetlabs-haproxy
+[submodule "modules/python"]
+	path = modules/python
+	url = https://github.com/datacentred/puppet-python
