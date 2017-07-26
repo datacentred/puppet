@@ -24,6 +24,7 @@ class dc_icinga2::host (
     'primary_interface' => icinga2_foreman_primary_interface(),
     'productname'       => $::productname,
     'role'              => $::role,
+    'ntp'               => $::ntp['servers'][0],
   }
 
   $_vars_mountpoints = icinga2_mountpoints()
