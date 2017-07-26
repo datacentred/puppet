@@ -8,13 +8,12 @@ class dc_icinga2::services::ntp {
     import        => 'generic-service',
     check_command => 'ntp_time',
     vars          => {
-      'ntp_address'  => '"ntp0." + host.vars.domain',
+      'ntp_address'  => 'host.vars.ntp',
       'ntp_warning'  => 0.1,
       'ntp_critical' => 0.5,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',
-    ignore_where  => 'host.vars.is_virtual || host.vars.productname == "OpenStack Nova"',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
 
