@@ -67,7 +67,7 @@ containers:
   cinder:
     image: 'registry.datacentred.services:5000/cinder:mitaka-5452976'
   horizon:
-    image: 'registry.datacentred.services:5000/horizon:mitaka-801da91'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/horizon:ba9e3b1'
   nova:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6e05bf3'
   neutron:
