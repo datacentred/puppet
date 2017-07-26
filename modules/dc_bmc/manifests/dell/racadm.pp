@@ -2,6 +2,7 @@
 class dc_bmc::dell::racadm {
 
   $idrac_packages = [
+    'libargtable2-0',
     'srvadmin-idracadm7',
     'srvadmin-omilcore',
     'srvadmin-deng',
