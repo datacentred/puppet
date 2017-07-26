@@ -6,6 +6,7 @@ classes:
   - '::dc_profile::openstack::neutron::server'
   - '::dc_profile::openstack::nova::control'
   - '::dc_profile::openstack::ceilometer::control'
+  - '::dc_profile::openstack::aodh'
   - '::dc_profile::openstack::heat'
   - '::dc_profile::openstack::horizon'
   - '::dc_profile::log::rsyslog_client'
@@ -71,8 +72,10 @@ containers:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6e05bf3'
   neutron:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/neutron:42792f0'
-  telemetry:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/telemetry:f46760a'
+  ceilometer:
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/ceilometer:57dc6a5'
+  aodh:
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/aodh:59f8f5b'
   heat:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:dd82cef'
 
