@@ -10,7 +10,7 @@ class dc_icinga2::services::telegraf {
     vars          => {
       'procs_warning'  => '1',
       'procs_critical' => '1:',
-      'procs_argument' => 'telegraf',
+      'procs_command'  => 'telegraf',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',
