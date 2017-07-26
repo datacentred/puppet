@@ -88,20 +88,6 @@ dc_openvpn::server::firewall:
       log_prefix: '[IPTABLES INPUT] dropped '
       proto: 'all'
       before: []
-    '900 log dropped forward chain':
-      chain: 'FORWARD'
-      jump: 'LOG'
-      log_level: '6'
-      log_prefix: '[IPTABLES FORWARD] dropped '
-      proto: 'all'
-      before: []
-    '900 log dropped output chain':
-      chain: 'OUTPUT'
-      jump: 'LOG'
-      log_level: '6'
-      log_prefix: '[IPTABLES OUTPUT] dropped '
-      proto: 'all'
-      before: []
   drop:    
     '910 deny all other input requests':
       chain: 'INPUT'
