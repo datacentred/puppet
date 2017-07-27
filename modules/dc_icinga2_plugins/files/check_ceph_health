@@ -52,7 +52,7 @@ def main():
         for summary in health['summary']:
             print '{}: {}'.format(summary['severity'], summary['summary'])
 
-    return code
+    sys.exit(code)
 
 
 if __name__ == '__main__':
