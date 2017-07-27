@@ -11,12 +11,12 @@ class dc_icinga2::services::pgsql_replication (
     check_command => 'pgsql_replication',
     vars          => {
       'pgsql_replication_password' => $password,
-      'pgsql_replication_warning'  => 65536,
-      'pgsql_replication_critical' => 1048510,
+      'pgsql_replication_warning'  => 10485100,
+      'pgsql_replication_critical' => 104851000,
     },
     zone          => 'host.name',
     assign_where  => 'match("postgresql_*", host.vars.role)',
     target        => '/etc/icinga2/zones.d/global-templates/services.conf',
   }
-    
+
 }
