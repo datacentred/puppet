@@ -10,6 +10,8 @@ class dc_profile::openstack::backups::galera {
 
   include ::xtrabackup
 
+  ensure_packages('pv')
+
   dc_backup::dc_duplicity_job { "${::fqdn}_galera":
     source_dir     => $_backup_dir,
     backup_content => 'galera',
@@ -46,7 +48,7 @@ class dc_profile::openstack::backups::galera {
 
   file { '/usr/local/sbin/galera_dump_for_duplicity.sh':
     ensure  => file,
-    content => "#!/bin/bash\n/usr/bin/mysqldump -u ${_backup_user} -p${_backup_pw} --opt --all-databases | bzcat -zc > /var/local/backup/galera-`date +%Y%m%d-%H%M%S`.sql.bz2", # lint:ignore:140chars
+    content => "#!/bin/bash\n/usr/bin/mysqldump -u ${_backup_user} -p${_backup_pw} --opt --all-databases | pv -q -L 10m | bzcat -zc > /var/local/backup/galera-`date +%Y%m%d-%H%M%S`.sql.bz2", # lint:ignore:140chars
     mode    => '0700',
   }
 
