@@ -170,4 +170,12 @@ class dc_zabbix::server (
       require => Package['pdagent-integrations'],
     }
 
+    file { '/srv/postgresql':
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      before => Class['postgresql::server'],
+    }
+
 }
