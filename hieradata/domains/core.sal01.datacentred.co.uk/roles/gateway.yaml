@@ -90,6 +90,7 @@ dc_profile::net::core_gateway::frontends:
                 - 'stats if { hdr_beg(host) -i stats }'
                 - 'dms if { hdr_beg(host) -i dms }'
                 - 'grafana if { hdr_beg(host) -i grafana }'
+                - 'zabbixweb if { hdr_beg(host) -i zabbix }'
             http-request:
                 - 'set-header X-Forwarded-Proto https'
             capture:
@@ -167,6 +168,10 @@ dc_profile::net::core_gateway::backends:
         options:
             mode: 'http'
     grafana:
+        collect_exported: false
+        options:
+            mode: 'http'
+    zabbixweb:
         collect_exported: false
         options:
             mode: 'http'
@@ -282,6 +287,12 @@ dc_profile::net::core_gateway::listeners:
                 - 'crl-file /etc/puppetlabs/puppet/ssl/crl.pem'
                 - 'ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem'
                 - 'verify required'
+        options: {}
+    zabbix:
+        collect_exported: false
+        mode: 'tcp'
+        bind:
+            ':10051': []
         options: {}
 
 dc_profile::net::core_gateway::balancermembers:
@@ -459,6 +470,22 @@ dc_profile::net::core_gateway::balancermembers:
             - '10.30.192.137'
             - '10.30.192.140'
         options: 'check'
+    zabbix:
+        listening_service: 'zabbix'
+        ports: '10051'
+        server_names:
+            - 'netmon0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.153'
+        options: 'check'
+    zabbixweb:
+        listening_service: 'zabbixweb'
+        ports: '443'
+        server_names:
+            - 'netmon0.core.sal01.datacentred.co.uk'
+        ipaddresses:
+            - '10.30.192.153'
+        options: 'ssl ca-file /etc/puppetlabs/puppet/ssl/certs/ca.pem crt /etc/ssl/private/puppet.crt check check-ssl'
 
 # VIPs
 dc_profile::net::core_gateway::vips:
