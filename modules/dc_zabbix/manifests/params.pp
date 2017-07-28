@@ -16,18 +16,57 @@ class dc_zabbix::params {
   $firewall_enabled = true
 
   $firewall_rules = {
-    'base'                                  => {
-      '000 INPUT allow related'             => { chain => 'INPUT', state  => [ 'RELATED', 'ESTABLISHED' ], proto => 'all', action                    => 'accept' },
-      '001 accept lo'                       => { chain => 'INPUT', proto  => 'all', iniface                      => 'lo', action                     => 'accept' },
-      '002 accept all icmp'                 => { chain => 'INPUT', proto  => 'icmp', action                      => 'accept' },
-      '003 allow ssh access'                => { chain => 'INPUT', proto  => 'tcp', dport                        => '22', action                     => 'accept' },
-      '999 deny all other input requests'   => { chain => 'INPUT', proto  => 'all', action                       => 'drop' }
+    'base'                                => {
+      '000 INPUT allow related'           => {
+        'chain'  => 'INPUT',
+        'state'  => [ 'RELATED', 'ESTABLISHED' ],
+        'proto'  => 'all',
+        'action' => 'accept'
+      },
+      '001 accept lo'                     => {
+        'chain'   => 'INPUT',
+        'proto'   => 'all',
+        'iniface' => 'lo',
+        'action'  => 'accept'
+      },
+      '002 accept all icmp'               => {
+        'chain'  => 'INPUT',
+        'proto'  => 'icmp',
+        'action' => 'accept'
+      },
+      '003 allow ssh access'              => {
+        'chain'  => 'INPUT',
+        'proto'  => 'tcp',
+        'dport'  => '22',
+        'action' => 'accept'
+      },
+      '004 allow nrpe'                    => {
+        'chain'  => 'INPUT',
+        'proto'  => 'tcp',
+        'dport'  => '5666',
+        'action' => 'accept'
+      },
+      '999 deny all other input requests' => {
+        'chain'  => 'INPUT',
+        'proto'  => 'all',
+        'action' => 'drop'
+      },
     },
     'server' => {
-      '004 allow zabbix'                    => { chain => 'INPUT', proto  => 'tcp', dport                        => [ '10051', '443', '80' ], action => 'accept' },
+      '004 allow zabbix' => {
+        'chain'  => 'INPUT',
+        'proto'  => 'tcp',
+        'dport'  => [ '10051', '443', '80' ],
+        'action' => 'accept'
+      },
     },
     'proxy' => {
-      '005 allow rsyslog'                   => { chain => 'INPUT', proto  => 'udp', dport                        => [ '514' ], action => 'accept' },
-    }
+      '005 allow rsyslog' => {
+        'chain'  => 'INPUT',
+        'proto'  => 'udp',
+        'dport'  => '514',
+        'action' => 'accept'
+      },
+    },
   }
 }
