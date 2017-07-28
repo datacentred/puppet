@@ -1,5 +1,5 @@
 :hierarchy:
-    - "nodes/%{::hostname}"
+    - "nodes/%{::fqdn}"
     - "skus/%{sku}"
     - "platforms/%{productname}"
     - "%{virtual}/architectures/%{architecture}"

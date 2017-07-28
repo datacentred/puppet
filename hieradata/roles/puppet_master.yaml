@@ -30,7 +30,7 @@ puppet::hiera: |
     :pkcs7_public_key: /etc/puppetlabs/puppet/keys/public_key.pkcs7.pem
   :merge_behavior: deeper
   :hierarchy:
-    - "nodes/%%{}{hostname}"
+    - "nodes/%%{}{fqdn}"
     - "skus/%%{}{sku}"
     - "platforms/%%{}{productname}"
     - "%%{}{virtual}/architectures/%%{}{architecture}"
