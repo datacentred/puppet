@@ -3,6 +3,7 @@ dc_openvpn::endpoint:
   core-vpn0:
     push:
       - 'dhcp-option DNS 10.30.192.250'
+      - 'dhcp-option DNS 10.30.192.251'
       - 'dhcp-option DOMAIN core.sal01.datacentred.co.uk'
       - 'route 10.30.0.0 255.255.0.0'
     server: '10.253.5.0 255.255.255.0'
