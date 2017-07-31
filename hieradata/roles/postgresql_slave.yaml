@@ -1,6 +1,7 @@
 ---
 classes:
   - '::dc_profile::db::postgresql_slave'
+  - '::dc_profile::util::unattended_upgrades'
 
 dc_postgresql::config_entries:
   hot_standby:

@@ -1,7 +1,0 @@
----
-dc_nrpe::checks::net_interfaces::exclude: '^eth\d'
-mysql::server::root_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAY0lcRtbjTsVleeyY3A9+19twR1H0qssVAu6wOirOHFR7cecurouvT+pqPyWQiLthRHnkWoLS2d0rKzs9o5pC1DokXnYIlcFEcwEoGr5v1/3vPq/1q0rPNI6Bbn4Ps4vL/3q7Q3oAKW2dojEg8fPD7GXXxEtLfuxF5ItCXTpuktH8bTrnozZ6Ws8C9132h8/7P8iOvPW4W2/NUNt2Gk4BBlPzZNXr/TekItkLFMUtnBF5Ajjz9VkejR0ya/poSQQaZ4RTNAP00HENj83v9hZ7LE7h2mP04fG7HGqMM8512VmyxL090gLbHzBzTw+bb8lLMAR9TKTq+iPjqMW3wjxbuTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBtpymFeze96Sb4LGs3filRgBA4cF8Ioi2eeCyJLO3puOG3]
-databases:
-  "%{hiera('phpipam::db_name')}":
-    user:     "%{hiera('phpipam::db_user')}"
-    password: "%{hiera('phpipam::db_pass')}"

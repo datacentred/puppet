@@ -3,6 +3,7 @@ classes:
   - '::dc_profile::net::dns_slave'
   - '::dc_profile::net::dnsbackup'
   - '::dc_profile::net::duplicity_dns'
+  - '::dc_profile::util::unattended_upgrades'
 
 ntp::servers:
   - '0.uk.pool.ntp.org'

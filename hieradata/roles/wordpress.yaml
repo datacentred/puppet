@@ -2,6 +2,7 @@ classes:
   - '::dc_profile::util::wordpress'
   - '::dc_profile::util::wordpress::memcache'
   - '::dc_profile::util::wordpress::ssl'
+  - '::dc_profile::util::unattended_upgrades'
 
 nginx::nginx_servers:
   datacentred-ssl:
