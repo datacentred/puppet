@@ -4,7 +4,7 @@ classes:
   - '::dc_profile::openstack::proxyip'
   - '::dc_profile::openstack::keepalived'
 
-haproxy::package_ensure: '1.7.7-1ppa1~trusty'
+haproxy::package_ensure: '1.7.8-1ppa1~trusty'
 haproxy::global_options:
         tune.bufsize: 32000
         log: '127.0.0.1 local0'
@@ -20,3 +20,9 @@ telegraf::inputs:
   haproxy:
     servers:
       - "/var/lib/haproxy/stats"
+
+filebeat::prospectors:
+  haproxy:
+    paths:
+      - '/var/log/haproxy.log'
+    doc_type: 'haproxy'

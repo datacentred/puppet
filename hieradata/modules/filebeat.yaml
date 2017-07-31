@@ -1,5 +1,6 @@
 ---
 filebeat::manage_repo: false
+filebeat::prospectors_merge: true
 filebeat::outputs:
   logstash:
     hosts:
@@ -68,10 +69,6 @@ filebeat::prospectors:
     paths:
       - '/var/log/glance/glance.log'
     doc_type: 'glance'
-  haproxy:
-    paths:
-      - '/var/log/haproxy.log'
-    doc_type: 'haproxy'
   heat:
     paths:
       - '/var/log/heat/heat.log'

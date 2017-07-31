@@ -28,3 +28,9 @@ haproxy::global_options:
   maxconn: 10000
 
 haproxy::package_ensure: '1.7.8-1ppa1~trusty'
+
+filebeat::prospectors:
+  haproxy:
+    paths:
+      - '/var/log/haproxy.log'
+    doc_type: 'haproxy'
