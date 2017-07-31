@@ -18,3 +18,9 @@ haproxy::defaults_options:
   maxconn: '8000'
 
 dc_nrpe::checks::net_interfaces::exclude: 'p1p2'
+
+filebeat::prospectors:
+  haproxy:
+    paths:
+      - '/var/log/haproxy.log'
+    doc_type: 'haproxy'
