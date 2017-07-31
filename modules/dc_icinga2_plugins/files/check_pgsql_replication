@@ -9,7 +9,6 @@ http://git.zionetrix.net/check_pg_streaming_replication
 
 import argparse
 import os
-import re
 import subprocess
 import sys
 
@@ -58,25 +57,22 @@ def psql_exec_remote(command, host, port, password):
     return stdout.rstrip()
 
 
-def get_primary_connection_info(filename):
+def get_primary_connection_info(args, filename):
     """Extract primary connection data as a dictionary"""
 
-    with open(filename, 'r') as config_file:
-        config_lines = config_file.read().split("\n")
+    with open(filename, 'r') as config:
+        lines = config.readlines()
 
-    for line in config_lines:
-        # We expect the configuration to look like
-        # primary_conninfo = 'key1=value1 key2=value2'
-        matches = re.match(r'primary_conninfo\s*=\s*\'([^\']+)\'', line)
-        if matches:
-            # Extract all text: ['key1', 'value1', 'key2', 'value2']
-            config_array = re.findall(r'[\w]+', matches.group(1))
-            # Extract all keys and values, zip into an array of tuples and
-            # finally cast into a dictionary
-            config = dict(zip(config_array[0::2], config_array[1::2]))
-            break
+    # We expect the configuration to look like
+    # primary_conninfo = 'key1=value1 key2=value2'
+    conninfo = next(x for x in lines if x.startswith('primary_conninfo'))
+    conninfo = conninfo.split('\'')[1]
 
-    return config
+    # Extract all text: ['key1=value1', 'key2=value2']
+    # Add the config items to the cli arguments
+    for item in conninfo.split(' '):
+        key, val = item.split('=')
+        setattr(args, key, val)
 
 
 def get_position(xlog):
@@ -86,39 +82,46 @@ def get_position(xlog):
     return int(log, 16) * 0x100000000 + int(offt, 16)
 
 
-def check_standby(args, config):
+def check_standby_generic(args, curr, last):
+    """Generic checker to compare against thresholds and alert"""
+
+    delta = curr - last
+    if delta > args.critical:
+        return NAGIOS_CRITICAL
+    if delta > args.warning:
+        return NAGIOS_WARNING
+    return NAGIOS_OK
+
+
+def check_standby(args):
     """Checks XLOGs are up to date with the master and have been replayed"""
 
     # Get local statistics
-    last_xlog_receive = psql_exec('SELECT pg_last_xlog_receive_location();')
-    last_xlog_replay = psql_exec('SELECT pg_last_xlog_replay_location();')
+    xlog_receive = psql_exec('SELECT pg_last_xlog_receive_location();')
+    xlog_replay = psql_exec('SELECT pg_last_xlog_replay_location();')
 
     # Get master statistics
-    cur_xlog = psql_exec_remote('SELECT pg_current_xlog_location();',
-                                config['host'], config['port'],
-                                args.password)
+    xlog_current = psql_exec_remote('SELECT pg_current_xlog_location();',
+                                    args.host, args.port,
+                                    args.password)
 
-    if cur_xlog != last_xlog_receive:
-        curr = get_position(cur_xlog)
-        last = get_position(last_xlog_receive)
-        diff = curr - last
+    current = get_position(xlog_current)
+    receive = get_position(xlog_receive)
+    replay = get_position(xlog_replay)
 
-        if diff > args.critical:
-            print 'CRITICAL: replication lag ({} vs {})'.\
-                  format(cur_xlog, last_xlog_receive)
-            sys.exit(NAGIOS_CRITICAL)
-        if diff > args.warning:
-            print 'WARNING: replication lag ({} vs {})'.\
-                  format(cur_xlog, last_xlog_receive)
-            sys.exit(NAGIOS_CRITICAL)
+    receive_lag = current - receive
+    replay_lag = current - replay
 
-    if last_xlog_receive != last_xlog_replay:
-        print 'WARNING: replay lag ({} vs {})'.\
-              format(last_xlog_receive, last_xlog_replay)
-        sys.exit(NAGIOS_WARNING)
+    code = NAGIOS_OK
+    code = max(code, check_standby_generic(args, current, receive))
+    code = max(code, check_standby_generic(args, current, replay))
 
-    print 'OK: standby server up to date'
-    sys.exit(NAGIOS_OK)
+    status = ['OK', 'WARNING', 'CRITICAL'][code]
+    print ('{0}: current={1} receive={2} replay={3} | '
+           'receive={4};{6};{7} replay={5};{6};{7}').\
+          format(status, xlog_current, xlog_receive, xlog_replay,
+                 receive_lag, replay_lag, args.warning, args.critical)
+    sys.exit(code)
 
 
 def check_master():
@@ -156,8 +159,8 @@ def main():
     recovery_config = '{}/recovery.conf'.format(VARDIR)
 
     if os.access(recovery_config, os.F_OK):
-        config = get_primary_connection_info(recovery_config)
-        check_standby(args, config)
+        get_primary_connection_info(args, recovery_config)
+        check_standby(args)
     else:
         check_master()
 
