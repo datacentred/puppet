@@ -1,0 +1,3 @@
+---
+zabbix::zabbix_url: 'zabbix.datacentred.services'
+zabbix::proxy::zabbix_server_host: 'zabbix.datacentred.services'
