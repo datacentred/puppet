@@ -1,1 +1,9 @@
-elasticsearch::manage_repo: false
+---
+elasticsearch::manage_repo: true
+elasticsearch::repo_version: '5.x'
+elasticsearch::package_pin: true
+elasticsearch::version: '5.4.3'
+elasticsearch::java_install: true
+elasticsearch::restart_on_change: false
+elasticsearch::init_defaults:
+  MAX_LOCKED_MEMORY: 'unlimited'

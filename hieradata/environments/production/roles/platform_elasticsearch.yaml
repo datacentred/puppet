@@ -1,24 +1,35 @@
 ---
-dc_elasticsearch::ssd_drives:
-  - '/var/storage/ssd_01'
-  - '/var/storage/ssd_02'
-  - '/var/storage/ssd_03'
-  - '/var/storage/ssd_04'
-  - '/var/storage/ssd_05'
-  - '/var/storage/ssd_06'
-dc_elasticsearch::es_hash:
-  bootstrap.memory_lock: true
-  cloud.aws.s3.endpoint: 'storage.datacentred.io'
-  cluster.name: 'logstash_platform_services'
-  discovery.zen.minimum_master_nodes: 2
-  discovery.zen.ping.unicast.hosts:
-    - "elasticsearch0.%{::domain}"
-    - "elasticsearch1.%{::domain}"
-    - "elasticsearch2.%{::domain}"
-  indices.memory.index_buffer_size: '50%'
-  network.host:
-    - '_local_'
-    - "%{::ipaddress}"
-  node.master: true
-  node.data: true
-  xpack.security.enabled: false
+dc_elasticsearch::instances:
+  ssd:
+    datadir:
+      - '/var/storage/ssd_01'
+      - '/var/storage/ssd_02'
+      - '/var/storage/ssd_03'
+      - '/var/storage/ssd_04'
+      - '/var/storage/ssd_05'
+      - '/var/storage/ssd_06'
+    config:
+      bootstrap.memory_lock: true
+      cloud.aws.s3.endpoint: 'storage.datacentred.io'
+      cluster.name: 'logstash_platform_services'
+      discovery.zen.minimum_master_nodes: 2
+      discovery.zen.ping.unicast.hosts:
+        - "elasticsearch0.%{::domain}"
+        - "elasticsearch1.%{::domain}"
+        - "elasticsearch2.%{::domain}"
+      indices.memory.index_buffer_size: '50%'
+      network.host:
+        - '_local_'
+        - "%{::ipaddress}"
+      node.master: true
+      node.data: true
+      xpack.security.enabled: false
+      node.attr.storage_type: 'ssd'
+
+dc_elasticsearch::plugins:
+  repository-s3:
+    instances:
+      - 'ssd'
+  x-pack:
+    instances:
+      - 'ssd'
