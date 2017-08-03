@@ -1,0 +1,3 @@
+---
+zabbix::zabbix_url: "%{::fqdn}" 
+zabbix::proxy::zabbix_server_host: "zabbix-server.%{::domain}"

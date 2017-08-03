@@ -6,3 +6,5 @@ apache::mpm_module: 'prefork'
 firewall::purge: true
 postgresql::globals::datadir: '/srv/postgresql/data'
 postgresql::globals::needs_initdb: true
+postgresql::globals::encoding: 'UTF-8'
+postgresql::globals::locale: 'en_GB.UTF-8'

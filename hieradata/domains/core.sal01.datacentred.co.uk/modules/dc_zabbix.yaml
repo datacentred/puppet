@@ -1,0 +1,2 @@
+---
+dc_zabbix::server::zabbix_url: 'zabbix.datacentred.services'
