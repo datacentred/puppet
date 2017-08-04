@@ -3,6 +3,7 @@ dc_openvpn::endpoint:
   core-vpn0:
     push:
       - 'dhcp-option DNS 10.30.192.250'
+      - 'dhcp-option DNS 10.30.192.251'
       - 'dhcp-option DOMAIN core.sal01.datacentred.co.uk'
       - 'route 10.30.0.0 255.255.0.0'
     server: '10.253.5.0 255.255.255.0'
@@ -13,4 +14,4 @@ dc_openvpn::private_interface: 'enp2s0'
 network::mroutes_hash:
   "%{hiera('dc_openvpn::private_interface')}":
     routes:
-      10.30.0.0/16: "%{hiera('dc_openvpn::private_interface')}" 
+      10.30.0.0/16: "10.30.10.2" 
