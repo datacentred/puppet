@@ -1,0 +1,100 @@
+#!/usr/bin/python
+"""
+A simple script to perform an elastic search backup
+And more importantly CLEAN UP AFTER ITSELF
+"""
+
+import argparse
+import datetime
+import httplib
+import json
+import sys
+
+
+HEADERS = {
+    'Content-Type': 'application/json',
+}
+
+
+def http_success(status):
+    """Did the request work?"""
+
+    return status >= 200 and status < 300
+
+
+def snapshot_encode(date):
+    """Format a date into our interal (American - MAX!!) format"""
+
+    return '{}_{}_{}'.format(date.month, date.day, date.year)
+
+
+def snapshot_decode(snapshot):
+    """Decode the date from a snapshot"""
+
+    fields = [int(x) for x in snapshot.split('_', 2)]
+    return datetime.date(fields[2], fields[0], fields[1])
+
+
+def backup(args):
+    """Create a snapshot tagged with todays date"""
+
+    name = snapshot_encode(datetime.date.today())
+    connection = httplib.HTTPConnection(args.host, args.port)
+    connection.request('PUT', '/_snapshot/{}/{}'.format(args.repo, name), headers=HEADERS)
+    response = connection.getresponse()
+    if not http_success(response.status):
+        print 'Snapshot create failed: {} {}'.format(response.status, response.reason)
+        sys.exit(1)
+
+
+def cleanup(args):
+    """Clean up snapshots older than the keep time"""
+
+    # Work out the cut off point
+    today = datetime.date.today()
+    keep = today - datetime.timedelta(args.keep)
+
+    # Grab a list of all existing snapshots
+    connection = httplib.HTTPConnection(args.host, args.port)
+    connection.request('GET', '/_snapshot/{}/_all'.format(args.repo), headers=HEADERS)
+    response = connection.getresponse()
+    if not http_success(response.status):
+        print 'Snapshot list failed: {} {}'.format(response.status, response.reason)
+        sys.exit(1)
+
+    snapshots = json.loads(response.read())['snapshots']
+    for snapshot in snapshots:
+        # Get the name and decode into a date...
+        name = snapshot['snapshot']
+        date = snapshot_decode(name)
+
+        # ...ignoring if it's still fresh...
+        if date >= keep:
+            continue
+
+        # ...or deleting otherwise
+        connection.request('DELETE', '/_snapshot/{}/{}'.format(args.repo, name), headers=HEADERS)
+        response = connection.getresponse()
+        if not http_success(response.status):
+            print 'Snapshot delete failed: {} {}'.format(response.status, response.reason)
+            sys.exit(1)
+
+
+def main():
+    """Perform a cron o'clock backup"""
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-H', '--host', required=True)
+    parser.add_argument('-p', '--port', required=True, type=int)
+    parser.add_argument('-r', '--repo', required=True)
+    parser.add_argument('-k', '--keep', required=True, type=int)
+    args = parser.parse_args()
+
+    backup(args)
+    cleanup(args)
+
+
+if __name__ == '__main__':
+    main()
+
+# vi: ts=4 et:

@@ -1,8 +1,8 @@
 ---
 classes:
   - '::dc_elasticsearch'
-  - '::dc_elasticsearch::elasticsearch_backup_destination'
   - '::dc_profile::util::unattended_upgrades'
+  - '::dc_icinga::hostgroup_elasticsearch'
 
 sysctls::values:
     vm.swappiness:

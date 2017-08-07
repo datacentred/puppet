@@ -1,6 +1,5 @@
 ---
 excludes:
-  - '::dc_elasticsearch::elasticsearch_backup_destination'
   - '::dc_icinga::hostgroup_neutron_node'
   - '::dc_profile::auth::rootpw'
   - '::dc_profile::log::log_shipper'
