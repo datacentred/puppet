@@ -15,12 +15,22 @@ rsyslog::client::log_templates:
     template: '/var/log/network/ark/%HOSTNAME%.log'
   - name: 'corePerHostLog'
     template: '/var/log/network/core/%HOSTNAME%.log'
+  - name: 'dcimPerHostLog'
+    template: '/var/log/network/dcim/%HOSTNAME%.log'
+  - name: 'stagePerHostLog'
+    template: '/var/log/network/stage/%HOSTNAME%.log'
+
+
 
 rsyslog::client::log_filters:
-  - expression: '$fromhost-ip startswith "10.40.32."'
-    action: "-?arkngPerHostLog\n&~"
   - expression: '$fromhost-ip startswith "10.10.32."'
     action: "-?arkPerHostLog\n&~"
+  - expression: '$fromhost-ip startswith "10.20.32."'
+    action: "-?stagePerHostLog\n&~"
   - expression: '$fromhost-ip startswith "10.30.32."'
     action: "-?corePerHostLog\n&~"
-
+  - expression: '$fromhost-ip startswith "10.35.32."'
+    action: "-?dcimPerHostLog\n&~"
+  - expression: '$fromhost-ip startswith "10.40.32."'
+    action: "-?arkngPerHostLog\n&~"
+ 
