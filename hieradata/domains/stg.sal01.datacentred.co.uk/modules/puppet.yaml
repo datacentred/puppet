@@ -1,0 +1,4 @@
+---
+puppet::conf:
+  agent:
+    server: 'puppet.datacentred.services'
