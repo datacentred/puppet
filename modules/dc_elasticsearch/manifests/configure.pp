@@ -14,7 +14,7 @@ class dc_elasticsearch::configure {
   }
 
   # Work out what 1/2rd of the host RAM is so it can be reserved for the elasticsearch instance
-  $_half_ram_bytes = $::facts['memory']['system']['available_bytes'] >> 1
+  $_half_ram_bytes = $::facts['memory']['system']['total_bytes'] >> 1
 
   class { '::elasticsearch':
     jvm_options => [
