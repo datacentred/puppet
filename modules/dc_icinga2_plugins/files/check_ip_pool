@@ -82,10 +82,8 @@ def main():
     code = NAGIOS_OK
     if percentage_used >= args.warn:
         code = NAGIOS_WARNING
-    elif percentage_used >= args.critical:
+    if percentage_used >= args.critical:
         code = NAGIOS_CRITICAL
-    else:
-        code = NAGIOS_OK
 
     print '{0}: {1}% of IP pool used, '\
             '{2} out of {5} addresses in use | '\
