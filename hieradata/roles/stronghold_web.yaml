@@ -129,6 +129,7 @@ nginx::nginx_servers:
       '502': /maintenance.html
       '503': /500.html
       '504': /500.html
+    gzip_types: 'text/css text/plain text/xml text/js text/javascript application/xml application/javascript application/x-javascript application/xml+rss text/javascript application/json text/x-json image/x-icon'
 
 nginx::nginx_locations:
   '/ext/':
