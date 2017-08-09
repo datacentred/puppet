@@ -210,3 +210,9 @@ nginx::nginx_locations:
     server: stronghold web https
     www_root: /home/rails/stronghold/public
     internal: true
+
+filebeat::prospectors:
+  stronghold_rails:
+    paths:
+      - '/var/log/rails/stronghold/openstack_requests.log'
+    doc_type: 'stronghold_openstack_requests'
