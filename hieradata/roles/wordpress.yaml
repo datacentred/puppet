@@ -4,6 +4,31 @@ classes:
   - '::dc_profile::util::wordpress::ssl'
   - '::dc_profile::util::unattended_upgrades'
 
+nginx::config::gzip: 'on'
+nginx::config::gzip_proxied: 'any'
+nginx::config::gzip_vary: 'on'
+nginx::config::gzip_comp_level: '5'
+nginx::config::gzip_types:
+  - 'application/javascript'
+  - 'application/json'
+  - 'application/rss+xml'
+  - 'application/vnd.ms-fontobject'
+  - 'application/x-font-ttf'
+  - 'application/x-javascript'
+  - 'application/xhtml+xml'
+  - 'application/xml'
+  - 'application/xml+rss'
+  - 'font/eot'
+  - 'font/opentype'
+  - 'font/otf'
+  - 'font/ttf'
+  - 'image/svg+xml'
+  - 'text/css'
+  - 'text/html'
+  - 'text/javascript'
+  - 'text/plain'
+  - 'text/xml'
+
 nginx::nginx_servers:
   datacentred-ssl:
     ssl: true
