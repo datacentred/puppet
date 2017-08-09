@@ -4,11 +4,11 @@ classes:
   - '::dc_profile::util::wordpress::ssl'
   - '::dc_profile::util::unattended_upgrades'
 
-nginx::config::gzip: 'on'
-nginx::config::gzip_proxied: 'any'
-nginx::config::gzip_vary: 'on'
-nginx::config::gzip_comp_level: '5'
-nginx::config::gzip_types:
+nginx::gzip: 'on'
+nginx::gzip_proxied: 'any'
+nginx::gzip_vary: 'on'
+nginx::gzip_comp_level: '5'
+nginx::gzip_types:
   - 'application/javascript'
   - 'application/json'
   - 'application/rss+xml'
