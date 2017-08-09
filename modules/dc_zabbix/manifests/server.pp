@@ -170,6 +170,15 @@ class dc_zabbix::server (
       require => Package['pdagent-integrations'],
     }
 
+    file { '/etc/zabbix/alertscripts/slack.sh':
+      ensure  => present,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => template('dc_zabbix/slack.sh.erb'),
+      require => File['/etc/zabbix/alertscripts'],
+    }
+
     file { '/srv/postgresql':
       ensure => 'directory',
       owner  => 'root',
