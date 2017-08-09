@@ -26,11 +26,11 @@ class dc_elasticsearch::snapshot {
 
     # Define the job to create/delete snapshots
     file { '/usr/local/bin/elasticsearch_snapshot':
-      ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0744',
-      content => 'puppet:///modules/dc_elasticsearch/elasticsearch_snapshot',
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0744',
+      source => 'puppet:///modules/dc_elasticsearch/elasticsearch_snapshot',
     }
 
     cron { 'elasticsearch_snapshot':
