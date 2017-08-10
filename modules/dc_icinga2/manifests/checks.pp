@@ -716,6 +716,10 @@ class dc_icinga2::checks {
       '-D' => '$canary_routers_usr_domain$',
       '-n' => '$canary_routers_proj_name$',
     },
+    vars      => {
+      'canary_routers_proj_domain' => 'default',
+      'canary_routers_usr_domain'  => 'default',
+    },
   }
 
   icinga2::object::checkcommand { 'iptables_rule':
