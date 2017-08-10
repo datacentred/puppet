@@ -16,15 +16,13 @@ dc_icinga2::services::rabbitmq::password: "%{hiera('rabbitmq_monuser_password')}
 dc_icinga2::services::mongodb::username: "%{hiera('mongodb_admin_user')}"
 dc_icinga2::services::mongodb::password: "%{hiera('mongodb_admin_password')}"
 
-dc_icinga2::services::canary_routers::username: "%{hiera('monitoring_user')}"
-dc_icinga2::services::canary_routers::password: "%{hiera('monitoring_password')}"
+dc_icinga2::services::canary_routers::username: "%{hiera('keystone_icinga_user')}"
+dc_icinga2::services::canary_routers::password: "%{hiera('keystone_icinga_password')}"
 dc_icinga2::services::canary_routers::auth_url: 'https://compute.datacentred.io:5000/v3'
-dc_icinga2::services::canary_routers::proj_domain: 'Default'
-dc_icinga2::services::canary_routers::usr_domain: 'Default'
 dc_icinga2::services::canary_routers::proj_name: 'monitoring_tenancy'
 
-#dc_icinga2::services::iptables_rule::username: "%{hiera('monitoring_user')}"
-#dc_icinga2::services::iptables_rule::password: "%{hiera('monitoring_password')}"
+#dc_icinga2::services::iptables_rule::username: "%{hiera('keystone_icinga_user')}"
+#dc_icinga2::services::iptables_rule::password: "%{hiera('keystone_icinga_password')}"
 #dc_icinga2::services::iptables_rule::auth_url: 'https://compute.datacentred.io:5000/v3'
 #dc_icinga2::services::iptables_rule::proj_domain: 'Default'
 #dc_icinga2::services::iptables_rule::usr_domain: 'Default'
