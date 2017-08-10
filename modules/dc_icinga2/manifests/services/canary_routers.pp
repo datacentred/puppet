@@ -6,8 +6,6 @@ class dc_icinga2::services::canary_routers (
   $username,
   $password,
   $auth_url,
-  $proj_domain,
-  $usr_domain,
   $proj_name,
 ) {
   icinga2::object::apply_service { 'canary routers':
