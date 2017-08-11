@@ -67,7 +67,11 @@ stronghold::environment_variables:
   strongbox_passphrase: ENC[PKCS7,MIIBmQYJKoZIhvcNAQcDoIIBijCCAYYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAgerehtRjS/wxJMW4c7N69T3w66dhD1KiNN6sXc3Uo9gYSSUiJrvEwaNjux4j/zDjQNVfxo5YXRVxfzYQOFLLLnv2EcE/zPQpHrLCflT+m8CYmX5c4q6BH8UjdSoTf+3ySqlDnejhvVD3kQ/qkT3mYhYTLR1Xx9gW78qRU7Fwv0qUXnOEoOOPykXFpBQ4XxAwYzDixuTNzMBvqFtUr1TZ2OhDR4qxDiaiOGRMX0SfBKMFFuL0DXBLUkZHTDlUW59+a9hUO/GV2ekNLGekByu3dEckxSVeFTtGHI+EeD3PIf29lhEwk8MS9hkF0NtWlGcMB5b/vLCbsc+B7wUMCy/DwjBcBgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBc6VvWY9QK+gdRbRzooxNGgDBQlcoqAsAc/P0/Jr8GR4D1LlwI/eRtSysWK6JlmEBPbyDavCGlMsVblxwTxaaOwA0=]
 
 filebeat::prospectors:
-  stronghold_rails:
+  stronghold_openstack_requests:
     paths:
       - '/var/log/rails/stronghold/openstack_requests.log'
     doc_type: 'stronghold_openstack_requests'
+  stronghold_rails:
+    paths:
+      - '/var/log/rails/stronghold/production.log'
+    doc_type: 'stronghold_rails'

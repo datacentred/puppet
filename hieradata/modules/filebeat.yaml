@@ -213,18 +213,6 @@ filebeat::prospectors:
     paths:
       - '/var/log/redis/redis.log'
     doc_type: 'redis'
-  stronghold_rails:
-    paths:
-      - '/var/log/rails/stronghold/production.log'
-    doc_type: 'stronghold_rails'
-  stronghold_rack_attack:
-    paths:
-      - '/var/log/rails/stronghold/rack_attack.log'
-    doc_type: 'stronghold_rack_attack'
-  stronghold_unicorn:
-    paths:
-      - '/var/log/rails/stronghold/unicorn.stderr.log'
-    doc_type: 'stronghold_unicorn'
   syslog:
     paths:
       - '/var/log/syslog'

@@ -1,13 +1,13 @@
 filter {
   if [type] == "stronghold_openstack_requests" {
     grok {
-      match => [
+      match => {
         "message" => [
           "I, \[%{TIMESTAMP_ISO8601:timestamp} #%{INT:process_id}\]  INFO -- : \[OpenStack\] HTTP %{INT:status_code} %{WORD:status_description} - %{GREEDYDATA:openstack_request_id}",
           "I, \[%{TIMESTAMP_ISO8601:timestamp} #%{INT:process_id}\]  INFO -- : \[OpenStack\] %{WORD:http_verb} %{GREEDYDATA:request_string} => %{GREEDYDATA:payload}",
           "I, \[%{TIMESTAMP_ISO8601:timestamp} #%{INT:process_id}\]  INFO -- : \[OpenStack\] %{WORD:http_verb} %{GREEDYDATA:request_string}"
         ]
-      ]
+      }
     }
     date {
       match => [ "timestamp", "ISO8601" ]
