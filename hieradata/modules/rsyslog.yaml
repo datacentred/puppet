@@ -33,5 +33,5 @@ rsyslog::client::log_filters:
     action: "/var/log/ceilometer/ceilometer.log\n&~"
   - expression: '$programname == "heat"'
     action: "/var/log/heat/heat.log\n&~"
-  - expression: '$programname contains "fail2ban"'
+  - expression: '$programname == "fail2ban.actions"'
     action: "/var/log/fail2ban.log\n&~"
