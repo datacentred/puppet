@@ -16,7 +16,6 @@
 
 (streams
  (by :service
-  (where (or (state "4")(state "3")(state "2")(state "1")(state "0"))
-   (where (description (re-pattern whitelist_pattern))
-    (throttle 5 3600
-      (slack account api-key user room))))))
+  (where (description (re-pattern whitelist_pattern))
+   (throttle 5 3600
+    (slack account api-key user room))))))
