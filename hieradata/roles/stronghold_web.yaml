@@ -213,7 +213,7 @@ nginx::nginx_locations:
     internal: true
 
 filebeat::prospectors:
-  stronghold_rails:
+  stronghold_openstack_requests:
     paths:
       - '/var/log/rails/stronghold/openstack_requests.log'
     doc_type: 'stronghold_openstack_requests'
