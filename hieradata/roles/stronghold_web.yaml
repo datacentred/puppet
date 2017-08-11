@@ -217,3 +217,15 @@ filebeat::prospectors:
     paths:
       - '/var/log/rails/stronghold/openstack_requests.log'
     doc_type: 'stronghold_openstack_requests'
+  stronghold_rack_attack:
+    paths:
+      - '/var/log/rails/stronghold/rack_attack.log'
+    doc_type: 'stronghold_rack_attack'
+  stronghold_rails:
+    paths:
+      - '/var/log/rails/stronghold/production.log'
+    doc_type: 'stronghold_rails'
+  stronghold_unicorn:
+    paths:
+      - '/var/log/rails/stronghold/unicorn.stderr.log'
+    doc_type: 'stronghold_unicorn'
