@@ -63,6 +63,7 @@ class dc_logstash::server (
   include ::dc_logstash::server::config::filter_grok_openstack
   include ::dc_logstash::server::config::filter_grok_stronghold_openstack
   include ::dc_logstash::server::config::filter_grok_syslog
+  include ::dc_logstash::server::config::filter_grok_telegraf
   include ::dc_logstash::server::config::output_elasticsearch
   include ::dc_logstash::server::config::output_riemann
 
