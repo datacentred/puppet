@@ -5,6 +5,13 @@ classes:
 
 neutron::debug: true
 
+# turn on notifications
+neutron::config::server_config:
+    DEFAULT/notification_driver:
+        value: 'messagingv2'
+# with 'stable/newton' onwards use this instead:
+#neutron::notification_driver: 'messagingv2'
+
 sudo::configs:
   neutron:
     content: |

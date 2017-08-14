@@ -65,7 +65,10 @@ neutron::agents::vpnaas::vpn_device_driver: 'neutron_vpnaas.services.vpn.device_
 
 neutron::agents::vpnaas::enabled: true
 neutron::agents::lbaas::enabled: true
+
 neutron::agents::metering::enabled: true
+# use a driver that does something instead of the default "Noop" one.
+neutron::agents::metering::driver: 'neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver'
 
 neutron::services::fwaas::enabled: true
 neutron::services::fwaas::driver: 'neutron_fwaas.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver'
