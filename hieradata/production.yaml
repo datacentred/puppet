@@ -74,7 +74,9 @@ nova_osapi_port :    '8774'
 
 # nova_api
 #
-nova_api_db:         'nova_api'
+nova_api_db:        'nova_api'
+nova_api_db_user:   'nova_api'
+nova_api_db_pass:   ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEARRJFdvGvWM86bVitxBY3uDbdF+Sc1A8USLtIiErZnlfI0bowhwLuaTYkXD4CWnG0afK7a+O9r45fSfP090zubCM+dI1tbXLHA8MuqgmLsYw8f9aI0LMCZURLtJI2dF2Y33OafrEaR+jGLLw1/aPZNeaAGeGAO1cvHL7sKOyfZ/S8X9b0WfOtThVnhaEVHhrdbHlfdckQpTYC8uAUYGEtAGIiegOCtE4OWebVf7w2s8mR08s8MCHifxINoAYE8uERDXi4FBu1fU84DytbkpKXD0rCM6CvsOts58r8S5O1PHDbeWPto5o7wduaiVDwk7J8xpiNU9nHQQKTQbw9e5nFkjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBOnYG5QWztrcrdt5jx99WLgBBzIi8kxkpRikTFccnBfPNU]
 
 # glance
 #

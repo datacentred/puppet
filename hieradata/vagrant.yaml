@@ -34,7 +34,7 @@ rabbitmq::environment_variables:
     RABBITMQ_MNESIA_BASE: '/srv/rabbitmq'
     RABBITMQ_MNESIA_DIR: "/srv/rabbitmq/%{::hostname}"
 rabbitmq::wipe_db_on_cookie_change: true
-rabbitmq::node_ip_address: "%{::ipaddress_eth1}"
+rabbitmq::node_ip_address: '0.0.0.0'
 
 mysql::server::monitor::mysql_monitor_hostname: '127.0.0.1'
 mysql_monitor_pw: 'ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAEg5XSlA1+a0NSvVSm9dJXierZLBGmy5kMIURDqtK71NRFVNvQ82qdcxXJdfeaLhAgwX9Wso6WC/+sYSTCuMs7Tw/yuJyBG3nutYOfoeOrcy57sgx/WN2NSNqbufa8sUrK5Ap/6CuInHBQGSd5OkykGWIvHVf5UzGhBv0oSiUb4+1SLSg17HKxAEiZh+3xGUZseVEsSJSfyozZyAf84w12+od1/gAa3cpuuP2ThoKpsbrq+kh4zEVtG4RnfXC4qNbEsJ6Qmgu5d60V8BuP51Jr/nAIrdvGVzxJX9mb0EYbdo7R923cmI4UWBDsd9Op6mb3FREnloFM6q0t66YwODfLTA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDbZGsjJJaHiJCirmltOksdgBB3etAq5YauxMREetPkxVn9]'
@@ -76,7 +76,9 @@ nova::glance_api_servers: 'https://compute.datacentred.io:9292'
 
 # nova_api
 #
-nova_api_db:         'nova_api'
+nova_api_db:        'nova_api'
+nova_api_db_user:   'nova_api'
+nova_api_db_pass:   'ClajDitBapt9'
 
 # glance
 #
