@@ -217,3 +217,7 @@ filebeat::prospectors:
     paths:
       - '/var/log/syslog'
     doc_type: 'syslog'
+  telegraf:
+    paths:
+      - '/var/log/telegraf/telegraf.log'
+    doc_type: 'telegraf'

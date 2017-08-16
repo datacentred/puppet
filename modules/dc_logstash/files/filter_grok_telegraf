@@ -1,0 +1,7 @@
+filter {
+    if [type] == "telegraf" {
+        grok {
+            match => [ "message", '%{TIMESTAMP_ISO8601:timestamp} %{HOSTNAME:host} %{WORD:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:message}' ]
+	}
+    }
+}
