@@ -24,7 +24,8 @@ def backup(client, repo):
 
     date = datetime.date.today()
     name = '{:02}_{:02}_{}'.format(date.month, date.day, date.year)
-    client.snapshot.create(repo, name, master_timeout=SECONDS_IN_A_DAY, wait_for_completion=True)
+    timeout = str(SECONDS_IN_A_DAY) + 's'
+    client.snapshot.create(repo, name, master_timeout=timeout, wait_for_completion=True)
 
 
 def keep_snapshot(snapshot, threshold):
@@ -51,10 +52,11 @@ def cleanup(client, repo, keep):
     for snapshot in delete:
         # Get the name and decode into a date...
         name = snapshot['snapshot']
+        timeout = str(SECONDS_IN_A_DAY) + 's'
 
         # nuke it from orbit
         LOG.info('Deleting snapshot %s state %s', name, snapshot['state'])
-        client.snapshot.delete(repo, name, master_timeout=SECONDS_IN_A_DAY)
+        client.snapshot.delete(repo, name, master_timeout=timeout)
 
 
 def main():
@@ -77,7 +79,9 @@ def main():
     logging.getLogger().addHandler(handler)
     logging.getLogger().setLevel(logging.INFO)
 
-    client = elasticsearch.Elasticsearch([args.host + ':' + str(args.port)])
+    client = elasticsearch.Elasticsearch(
+        [args.host + ':' + str(args.port)],
+        timeout=SECONDS_IN_A_DAY)
 
     backup(client, args.repo)
     cleanup(client, args.repo, args.keep)
