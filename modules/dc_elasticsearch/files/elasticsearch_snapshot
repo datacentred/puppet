@@ -4,106 +4,67 @@ A simple script to perform an elastic search backup
 And more importantly CLEAN UP AFTER ITSELF
 """
 
+# pylint: disable=import-error
+
 import argparse
 import datetime
-import httplib
 import logging
-import json
-import sys
+import time
 
+import elasticsearch.client as elasticsearch
 
 LOG = logging.getLogger(__name__)
 
-HEADERS = {
-    'Content-Type': 'application/json',
-}
+MILLISECONDS_IN_A_DAY = 86400000
+SECONDS_IN_A_DAY = 86400
 
 
-def http_success(status):
-    """Did the request work?"""
-
-    return status >= 200 and status < 300
-
-
-def snapshot_encode(date):
-    """Format a date into our interal (American - MAX!!) format"""
-
-    return '{:02}_{:02}_{}'.format(date.month, date.day, date.year)
-
-
-def snapshot_decode(snapshot):
-    """Decode the date from a snapshot"""
-
-    fields = [int(x) for x in snapshot.split('_', 2)]
-    return datetime.date(fields[2], fields[0], fields[1])
-
-
-def backup(args):
+def backup(client, repo):
     """Create a snapshot tagged with todays date"""
 
-    name = snapshot_encode(datetime.date.today())
-    LOG.info('Creating snapshot %s', name)
-    connection = httplib.HTTPConnection(args.host, args.port)
-    connection.request('PUT', '/_snapshot/{}/{}'.format(args.repo, name), headers=HEADERS)
-    response = connection.getresponse()
-    if not http_success(response.status):
-        LOG.error('Snapshot create failed: %d %s', response.status, response.reason)
-        sys.exit(1)
+    date = datetime.date.today()
+    name = '{:02}_{:02}_{}'.format(date.month, date.day, date.year)
+    client.snapshot.create(repo, name, master_timeout=SECONDS_IN_A_DAY, wait_for_completion=True)
 
 
-def keep_snapshot(snapshot, date):
+def keep_snapshot(snapshot, threshold):
     """Whether to keep a snapshot or not"""
 
-    return snapshot_decode(snapshot['snapshot']) >= date
+    return snapshot['start_time_in_millis'] > threshold
 
 
-def cleanup(args):
+def cleanup(client, repo, keep):
     """Clean up snapshots older than the keep time"""
 
     # Work out the cut off point
-    today = datetime.date.today()
-    date = today - datetime.timedelta(args.keep)
+    threshold = int(time.time() * 1000) - (keep * MILLISECONDS_IN_A_DAY)
 
     # Grab a list of all existing snapshots
-    connection = httplib.HTTPConnection(args.host, args.port)
-    connection.request('GET', '/_snapshot/{}/_all'.format(args.repo), headers=HEADERS)
-    response = connection.getresponse()
-    if not http_success(response.status):
-        print 'Snapshot list failed: {} {}'.format(response.status, response.reason)
-        sys.exit(1)
-
-    snapshots = json.loads(response.read())['snapshots']
+    snapshots = client.snapshot.get(repo, '_all')['snapshots']
     LOG.info('Found %d snapshots', len(snapshots))
 
-    retain = [snapshot for snapshot in snapshots if keep_snapshot(snapshot, date)]
+    retain = [snapshot for snapshot in snapshots if keep_snapshot(snapshot, threshold)]
     for snapshot in retain:
         LOG.info('Keeping snapshot %s state %s', snapshot['snapshot'], snapshot['state'])
 
-    delete = [snapshot for snapshot in snapshots if not keep_snapshot(snapshot, date)]
+    delete = [snapshot for snapshot in snapshots if not keep_snapshot(snapshot, threshold)]
     for snapshot in delete:
         # Get the name and decode into a date...
         name = snapshot['snapshot']
-        date = snapshot_decode(name)
 
+        # nuke it from orbit
         LOG.info('Deleting snapshot %s state %s', name, snapshot['state'])
-
-        # ... and nuke it from orbit
-        connection = httplib.HTTPConnection(args.host, args.port)
-        connection.request('DELETE', '/_snapshot/{}/{}'.format(args.repo, name), headers=HEADERS)
-        response = connection.getresponse()
-        if not http_success(response.status):
-            LOG.error('Snapshot delete failed: %d %s', response.status, response.reason)
-            sys.exit(1)
+        client.snapshot.delete(repo, name, master_timeout=SECONDS_IN_A_DAY)
 
 
 def main():
     """Perform a cron o'clock backup"""
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-H', '--host', required=True)
-    parser.add_argument('-p', '--port', required=True, type=int)
+    parser.add_argument('-H', '--host', type=str, default='localhost')
+    parser.add_argument('-p', '--port', type=int, default=9200)
     parser.add_argument('-r', '--repo', required=True)
-    parser.add_argument('-k', '--keep', required=True, type=int)
+    parser.add_argument('-k', '--keep', type=int, default=30)
     args = parser.parse_args()
 
     formater = logging.Formatter(
@@ -116,8 +77,10 @@ def main():
     logging.getLogger().addHandler(handler)
     logging.getLogger().setLevel(logging.INFO)
 
-    backup(args)
-    cleanup(args)
+    client = elasticsearch.Elasticsearch([args.host + ':' + str(args.port)])
+
+    backup(client, args.repo)
+    cleanup(client, args.repo, args.keep)
 
 
 if __name__ == '__main__':
