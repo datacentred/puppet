@@ -9,22 +9,15 @@ class dc_icinga2_plugins::params {
     'python-keystoneclient',
     'python-novaclient',
     'python-pip',
+    'python-dnspython',
+    'nagios-plugin-check-scsi-smart',
+    'python-tftpy',
   ]
-
-  case $::operatingsystem {
-    'Ubuntu', 'Debian': {
-      $packages = concat($basepackages, 'python-dnspython', 'nagios-plugin-check-scsi-smart', 'python-tftpy')
-    }
-    'RedHat', 'CentOS': {
-      $packages = concat($basepackages, 'python-dns')
-    }
-    default: {
-      notify { 'Cannot determine packages - unsupported operating system!': }
-    }
-  }
 
   $pip_packages = [
     'ipaddress',
+    'keystoneauth1',
+    'heatclient',
   ]
 
 }
