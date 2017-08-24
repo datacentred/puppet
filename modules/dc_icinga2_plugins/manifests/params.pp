@@ -16,8 +16,6 @@ class dc_icinga2_plugins::params {
 
   $pip_packages = [
     'ipaddress',
-    'keystoneauth1',
-    'python-heatclient',
   ]
 
 }
