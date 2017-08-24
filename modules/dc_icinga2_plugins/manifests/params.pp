@@ -2,7 +2,7 @@
 #
 class dc_icinga2_plugins::params {
 
-  $basepackages = [
+  $packages = [
     'python-ceilometerclient',
     'python-cinderclient',
     'python-glanceclient',
