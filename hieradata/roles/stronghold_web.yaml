@@ -4,8 +4,8 @@ classes:
 
 ruby:
   version: 2.3.1
-  gems_version: 2.5.1
-  rubygems_update: false
+  gems_version: 2.6.13
+  rubygems_update: true
 
 assets_fqdn: "assets-cdn.%{::domain}"
 
