@@ -2,6 +2,9 @@
 classes:
   - '::dc_profile::ceph::osd'
 
+dc_icinga2_plugins::modules:
+  - '::dc_icinga2_plugins::modules::ceph_osd'
+
 ceph::osd: true
 
 ceph::conf:
