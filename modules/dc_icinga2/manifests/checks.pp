@@ -756,4 +756,24 @@ class dc_icinga2::checks {
     },
     timeout   => '300',
   }
+  icinga2::object::checkcommand { 'heat':
+    command   => [
+      '"/usr/local/lib/nagios/plugins/heat"',
+    ],
+    arguments => {
+      '-u' => '$heat_username$',
+      '-p' => '$heat_password$',
+      '-a' => '$heat_auth_url$',
+      '-d' => '$heat_proj_domain$',
+      '-D' => '$heat_usr_domain$',
+      '-n' => '$heat_proj_name$',
+      '-H' => '$heat_hostname$',
+      '-N' => '$heat_no_engines$'
+    },
+    vars      => {
+      'heat_proj_domain' => 'default',
+      'heat_usr_domain'  => 'default',
+      'heat_no_engines'  => '2',
+    },
+  }
 }

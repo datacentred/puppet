@@ -13,6 +13,8 @@ class dc_icinga2::services {
   include ::dc_icinga2::services::dns
   include ::dc_icinga2::services::elasticsearch
   include ::dc_icinga2::services::haproxy
+  include ::dc_icinga2::services::heat_api_proc
+  include ::dc_icinga2::services::heat_engine_proc
   include ::dc_icinga2::services::icingaweb2
   include ::dc_icinga2::services::interface
   include ::dc_icinga2::services::iptables_rule

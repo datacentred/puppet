@@ -1,0 +1,51 @@
+#!/usr/bin/python
+"""Checks if the heat-api answers."""
+from __future__ import print_function
+import argparse
+import sys
+from keystoneauth1 import session # pylint: disable=import-error
+from keystoneauth1.identity import v3 # pylint: disable=import-error
+from heatclient import client, exc # pylint: disable=import-error
+
+NAGIOS_OK = 0
+NAGIOS_WARNING = 1
+NAGIOS_CRITICAL = 2
+NAGIOS_UNKNOWN = 3
+
+def main():
+    """Main"""
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-u', '--user', help='User name', required=True)
+    parser.add_argument('-p', '--password', help='Password', required=True)
+    parser.add_argument('-a', '--authurl', help='Auth url', required=True)
+    parser.add_argument('-d', '--projdomain', help='Project domain', required=True)
+    parser.add_argument('-D', '--usrdomain', help='User domain', required=True)
+    parser.add_argument('-n', '--projectname', help='Project name', required=True)
+    parser.add_argument('-H', '--host', help='Heat hostname', required=True)
+    parser.add_argument('-N', '--number_eng', help='Number of engines', required=True)
+
+    args = parser.parse_args()
+    auth = v3.Password(user_domain_name=args.usrdomain,
+                       username=args.user,
+                       password=args.password,
+                       project_domain_name=args.projdomain,
+                       project_name=args.projectname,
+                       auth_url=args.authurl)
+
+    sess = session.Session(auth=auth)
+    heat = client.Client('1', session=sess)
+    try:
+        services = heat.services.list()
+    except exc.HTTPException as err:
+        print("There was an error trying to query the api", err)
+        sys.exit(NAGIOS_UNKNOWN)
+    enginesup = [service.host for service in services if service.status == "up" and service.host == args.host] # pylint: disable=line-too-long
+    if len(enginesup) < int(args.number_eng):
+        print("There are fewer than", args.number_eng, "engines up on", args.host)
+        sys.exit(NAGIOS_WARNING)
+    else:
+        print("OK")
+        sys.exit(NAGIOS_OK)
+
+if __name__ == "__main__":
+    main()
