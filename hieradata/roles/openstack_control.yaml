@@ -14,6 +14,9 @@ classes:
   - '::dc_docker::client'
   - '::sysctls'
 
+dc_icinga2_plugins::modules:
+  - '::dc_icinga2_plugins::modules::openstack_control'
+
 # Increase number of file handles
 #
 sysctls::values:

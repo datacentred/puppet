@@ -28,6 +28,9 @@ classes:
   - '::dc_resolvconf'
   - '::dc_sysfs'
 
+dc_icinga2_plugins::modules:
+  - '::dc_icinga2_plugins::modules::common'
+
 # ntp servers
 #
 localtimeservers:
