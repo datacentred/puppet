@@ -758,7 +758,7 @@ class dc_icinga2::checks {
   }
   icinga2::object::checkcommand { 'heat':
     command   => [
-      '"/usr/local/lib/nagios/plugins/heat"',
+      '"/usr/local/lib/nagios/plugins/check_heat"',
     ],
     arguments => {
       '-u' => '$heat_username$',
