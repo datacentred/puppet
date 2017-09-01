@@ -2,6 +2,9 @@
 classes:
   - '::dc_profile::ceph::mon'
 
+dc_icinga2_plugins::modules:
+  - '::dc_icinga2_plugins::modules::ceph_mon'
+
 ceph::mon: true
 
 ceph::conf:

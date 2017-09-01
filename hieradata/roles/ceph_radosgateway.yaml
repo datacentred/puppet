@@ -2,6 +2,9 @@
 classes:
   - '::dc_profile::ceph::radosgw'
 
+dc_icinga2_plugins::modules:
+  - '::dc_icinga2_plugins::modules::ceph_rgw'
+
 ceph::rgw: true
 
 ceph::conf:
