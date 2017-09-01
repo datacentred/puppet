@@ -13,6 +13,9 @@ define dc_icinga2_plugins::module (
   # Install all plugins in the list
   $plugins.each |$plugin| {
     file { "/usr/local/lib/nagios/plugins/${plugin}":
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
       content => file("dc_icinga2_plugins/${plugin}"),
     }
   }

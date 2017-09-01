@@ -576,14 +576,14 @@ class dc_icinga2::services::openstack (
   icinga2::object::apply_service { 'heat':
     import        => 'openstack-service',
     check_command => 'heat',
-    display_name  => 'heat ' + host.vars.fqdn,
+    display_name  => '"heat " + host.vars.fqdn',
     vars          => {
       'enable_pagerduty' => true,
       'heat_username'    => $username,
       'heat_password'    => $password,
       'heat_auth_url'    => $keystone_auth_url,
       'heat_proj_name'   => $tenant,
-      'heat_hostname'    => host.vars.hostname,
+      'heat_hostname'    => 'host.vars.hostname',
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.role == "openstack_control"',
