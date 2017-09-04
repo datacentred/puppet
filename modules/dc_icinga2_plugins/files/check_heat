@@ -6,6 +6,7 @@ import sys
 from keystoneauth1 import session # pylint: disable=import-error
 from keystoneauth1.identity import v3 # pylint: disable=import-error
 from heatclient import client, exc # pylint: disable=import-error
+import requests.packages.urllib3 # pylint: disable=import-error
 
 NAGIOS_OK = 0
 NAGIOS_WARNING = 1
@@ -23,6 +24,8 @@ def main():
     parser.add_argument('-n', '--projectname', help='Project name', required=True)
     parser.add_argument('-H', '--host', help='Heat hostname', required=True)
     parser.add_argument('-N', '--number_eng', help='Number of engines', required=True)
+
+    requests.packages.urllib3.disable_warnings()
 
     args = parser.parse_args()
     auth = v3.Password(user_domain_name=args.usrdomain,
