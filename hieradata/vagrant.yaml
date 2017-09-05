@@ -58,6 +58,8 @@ keystone_cinder_password: 'gleshat9Ots5'
 keystone_ceilometer_password: 'udbedkicsOv6'
 keystone_heat_password: 'Frethyuvtop6'
 
+memcached::listen_ip: '0.0.0.0'
+
 # keystone
 #
 keystone_db:          'keystone'

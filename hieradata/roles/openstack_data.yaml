@@ -66,8 +66,6 @@ databases:
 dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_user: "%{hiera('osdbmq_galera_backup_user')}"
 dc_profile::openstack::duplicity_galera::osdbmq_galera_backup_pw: "%{hiera('osdbmq_galera_backup_pw')}"
 
-memcached::listen_ip: "%{::ipaddress}"
-
 xtrabackup::mysql_user: "%{hiera('osdbmq_galera_backup_user')}"
 xtrabackup::mysql_pass: "%{hiera('osdbmq_galera_backup_pw')}"
 xtrabackup::backup_dir: "%{hiera('osdbmq_galera_backup_dir')}"
