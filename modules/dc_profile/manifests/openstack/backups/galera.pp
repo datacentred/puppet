@@ -30,24 +30,9 @@ class dc_profile::openstack::backups::galera {
     require    => Mysql_user["${_backup_user}@localhost"],
   }
 
-  cron { "${::fqdn}_galera_dump_for_duplicity":
-    command  => '/usr/local/sbin/galera_dump_for_duplicity.sh',
-    user     => 'root',
-    month    => '*',
-    monthday => '*',
-    hour     => '0',
-    minute   => '0',
-  }
-
   file { $_backup_dir:
     ensure => directory,
     mode   => '0700',
-  }
-
-  file { '/usr/local/sbin/galera_dump_for_duplicity.sh':
-    ensure  => file,
-    content => "#!/bin/bash\n/usr/bin/mysqldump -u ${_backup_user} -p${_backup_pw} --opt --all-databases | bzcat -zc > /var/local/backup/galera-`date +%Y%m%d-%H%M%S`.sql.bz2", # lint:ignore:140chars
-    mode    => '0700',
   }
 
   tidy { 'galera_dumps':

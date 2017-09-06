@@ -73,3 +73,4 @@ xtrabackup::mysql_pass: "%{hiera('osdbmq_galera_backup_pw')}"
 xtrabackup::backup_dir: "%{hiera('osdbmq_galera_backup_dir')}"
 xtrabackup::manage_repo: false
 xtrabackup::use_innobackupx: true
+xtrabackup::backup_retention: '7'
