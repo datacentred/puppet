@@ -2,7 +2,10 @@
 #
 # Checks disk utilisation
 #
-class dc_icinga2::services::disk {
+class dc_icinga2::services::disk (
+  $disk_wfree = '20',
+  $disk_cfree = '10',
+) {
 
   icinga2::object::apply_service_for { 'file system':
     key           => 'mountpoint',
@@ -15,6 +18,8 @@ class dc_icinga2::services::disk {
       'disk_partitions'  => 'mountpoint',
       'enable_pagerduty' => true,
       'instance'         => 'mountpoint',
+      'disk_wfree'       => $disk_wfree,
+      'disk_cfree'       => $disk_cfree,
     },
     zone          => 'host.name',
     assign_where  => 'host.vars.operatingsystem',
