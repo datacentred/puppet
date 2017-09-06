@@ -90,4 +90,13 @@ class dc_profile::openstack::neutron::agent_network {
   # puppet-neutron module doesn't handle this properly.
   Neutron_l3_agent_config<||> ~> Service['neutron-vpnaas-service']
 
+  # FIXME: Ensure this is absent once the root cause of the memory
+  # leak in neutron-vpn-agent has been discovered
+  cron { 'neutron-vpn-agent':
+    command => '/usr/sbin/service neutron-vpn-agent restart >/dev/null 2>&1',
+    user    => 'root',
+    hour    => '*/3',
+    minute  => '0',
+  }
+
 }
