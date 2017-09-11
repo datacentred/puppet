@@ -2,15 +2,6 @@
 #
 # Installs and configures openvas scanner
 #
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
 class dc_openvas::config {
 
   include dc_openvas
@@ -32,6 +23,14 @@ class dc_openvas::config {
     group  => 'root',
     source => 'puppet:///modules/dc_openvas/gsad_log.conf',
     notify => Service['openvas-gsa'],
+  }
+
+  file { '/etc/openvas/openvasmd_log.conf':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    source => 'puppet:///modules/dc_openvas/openvasmd_log.conf',
+    notify => Service['openvas-manager'],
   }
 
   file { '/usr/local/bin/create_task.sh':
