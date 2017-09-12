@@ -80,7 +80,7 @@ containers:
   aodh:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/aodh:59f8f5b'
   heat:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:dd82cef'
+    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:b4a65af'
 
 telegraf::inputs:
   docker:
