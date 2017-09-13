@@ -46,9 +46,9 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
         - 'forwardfor'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -64,9 +64,9 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
         - 'forwardfor'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -82,8 +82,8 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -98,8 +98,8 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -115,8 +115,8 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -132,8 +132,8 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       timeout client: '180s'
@@ -147,8 +147,8 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
     collect_exported: false
   cinder:
     mode: 'http'
@@ -162,8 +162,8 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -179,8 +179,8 @@ dc_profile::openstack::haproxy::listeners:
       option:
         - 'tcpka'
         - 'httpchk'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       rspadd:
         - 'Strict-Transport-Security:\ max-age=31536000'
         - 'X-Frame-Options:\ SAMEORIGIN'
@@ -198,8 +198,8 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'tcplog'
       balance: 'source'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
@@ -214,8 +214,8 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'tcplog'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       timeout client: '360s'
       timeout server: '360s'
@@ -231,9 +231,9 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'tcplog'
         - 'forwardfor'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
     collect_exported: false
@@ -248,9 +248,9 @@ dc_profile::openstack::haproxy::listeners:
     options:
       option:
         - 'tcpka'
-        - 'tcplog'
         - 'forwardfor'
       balance: 'roundrobin'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
     collect_exported: false
