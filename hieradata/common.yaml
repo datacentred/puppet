@@ -126,11 +126,7 @@ admins:
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZIV98YFCbCTwB5VKahUsT0pmWuhp/posTRWaX98DNXRgdeLb0LoaINmZK1EtVWZFj9I7TRif3KOiZ2yvLmCiHaGYT5bQTfbaUbZ0fHEyNWymLHJ2tyjVyS9iTFqUBNieOs0WPmI+IIdEYpGIgUOF6xTfzh7fHGgSjfol5uwfWpG1VoWK11MtWQeYkQj4dSpnGJkeFrRZlIWrWZtOKxusr87Khxi7Vs8O4C+lOuFhjG8cTwpQ4OlWtVTPKnQ3zysrFYJhidqWskNrl7jnFr0LByhS2pI3Q6pVzLgVWHqqlVP+fJf+PTkR62jYnrwSeKMBZR1CaVodtokKk82ir8+Ot'
     email: 'matt.illingworth@datacentred.co.uk'
   joel:
-    uid: '1008'
-    gid: 'sysadmin'
-    pass: '$6$ABCDhb6Q$5o558.B0iN41j3plVON6W/g/6ZuJ.KCAMG3U7IhOm2PwMLrz1G2UMtw2cmKIu4RKi4GhCsVJ4iADr/BfaRi250'
-    sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAACAQC7TgX6jkY8De1sH8OrMvLwjtZLQvBKDStwZ90+7UfGXQJyJhbDb+XhVIdEIhqIG3T7BdImtAabsH2HON+AuZZ+tTxHknvywAhwKjCtu7Rg+lXnQsSUmlq/6O5YlbOc4NZKRgUIIgWlS20lSm4ceaqMKtF2EpB7YV+0NzAvkIoj5Rbrhxe5mVby8X3rwF1mOVg4SK57J/jk49KMRJ8DBG5OapQV1tK0RhrC06dNlcBjCarHjQoFhvKYO+2O3uINgbOGeV6z1dFJm1HyC/a9kcgi4iFaC9esc9QsXwGNGD/J/v5bkLdlzGG5vMfX17EkDPi7gjeMJueOLQiZbfrxtE5yUO4r4h7YpvIxjtBHxRqfViJtvNMmPE/oVn5K61LqXgiT28O1stueyf1H0GGFTkSta0+QFYgD/tOb1JaO3pwziX+QIJfCVboMcUAX35s4lf15Mt/KeJgZCeaL0O+CgEUSEZhisUZjWit9LCmFUShPK80Xndxf/S8A0DTebi6XwaYDowsJeyyPDSE5bv1Gp7Vqwb2+1+WKRMODOI7ysaP386SusHDcLKPmeJxDC5Cxfn8HEEsG68aYtzDCfxZQlsbM8j4oOixRTrkoBlcHslboLvK42dROCX1AzszC3sMvAlDk/F+gNRPbGi0+4HBKCNXgXu6oPvL1og3yrQJDWZClZw=='
-    email: 'joel.merrick@datacentred.co.uk'
+    ensure: absent
   mariusz:
     uid: '1009'
     gid: 'sysadmin'
@@ -192,7 +188,6 @@ ldap_groups:
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matti,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=peter,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=bart,ou=People,dc=datacentred,dc=co,dc=uk'
@@ -206,7 +201,6 @@ ldap_groups:
       member:
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=nick,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
   # Developers able to view and run jobs
   'cn=jenkins-development,ou=Groups,dc=datacentred,dc=co,dc=uk':
     tag: group_of_names
@@ -219,7 +213,6 @@ ldap_groups:
         - 'cn=simon,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=sean,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=matti,ou=People,dc=datacentred,dc=co,dc=uk'
-        - 'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=peter,ou=People,dc=datacentred,dc=co,dc=uk'
         - 'cn=bart,ou=People,dc=datacentred,dc=co,dc=uk'
@@ -290,21 +283,7 @@ ldap_users:
       ou:
         - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
   'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk':
-    tag: user
-    attributes:
-      uid: joel
-      givenName: Joel
-      sn: Merrick
-      mail: "joel.merrick@datacentred.co.uk"
-      userPassword: "{CRYPT}$6$ABCDhb6Q$5o558.B0iN41j3plVON6W/g/6ZuJ.KCAMG3U7IhOm2PwMLrz1G2UMtw2cmKIu4RKi4GhCsVJ4iADr/BfaRi250"
-      radiusReplyItem: APC-Service-Type = 1
-      objectClass:
-        - person
-        - inetOrgPerson
-        - user
-        - radiusprofile
-      ou:
-        - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
+    ensure: absent
   'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk':
     tag: user
     attributes:
