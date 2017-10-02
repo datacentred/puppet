@@ -125,8 +125,6 @@ admins:
     pass: '$6$x0wqQF8y$k53PpDt0AKq0iHTJETmz4o2HlA4aSc/4dTuBthYjip0OHc8SO3TOAFio3Ejm3fdVAgJl.611ksgur4rrXLtnR/'
     sshkey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDZIV98YFCbCTwB5VKahUsT0pmWuhp/posTRWaX98DNXRgdeLb0LoaINmZK1EtVWZFj9I7TRif3KOiZ2yvLmCiHaGYT5bQTfbaUbZ0fHEyNWymLHJ2tyjVyS9iTFqUBNieOs0WPmI+IIdEYpGIgUOF6xTfzh7fHGgSjfol5uwfWpG1VoWK11MtWQeYkQj4dSpnGJkeFrRZlIWrWZtOKxusr87Khxi7Vs8O4C+lOuFhjG8cTwpQ4OlWtVTPKnQ3zysrFYJhidqWskNrl7jnFr0LByhS2pI3Q6pVzLgVWHqqlVP+fJf+PTkR62jYnrwSeKMBZR1CaVodtokKk82ir8+Ot'
     email: 'matt.illingworth@datacentred.co.uk'
-  joel:
-    ensure: absent
   mariusz:
     uid: '1009'
     gid: 'sysadmin'
@@ -282,8 +280,6 @@ ldap_users:
         - radiusprofile
       ou:
         - cn=iLO Admins,ou=Groups,dc=datacentred,dc=co,dc=uk
-  'cn=joel,ou=People,dc=datacentred,dc=co,dc=uk':
-    ensure: absent
   'cn=mariusz,ou=People,dc=datacentred,dc=co,dc=uk':
     tag: user
     attributes:
