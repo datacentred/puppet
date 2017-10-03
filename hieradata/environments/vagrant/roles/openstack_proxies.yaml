@@ -293,7 +293,7 @@ dc_profile::openstack::haproxy::balancermembers:
     server_names:
       - 'osdbmq0'
     ipaddresses:
-      - '172.16.165.144'
+      - "osdbmq0.%{::domain}"
     ports: '3306'
     options: 'check inter 2000 rise 2 fall 5'
   ceilometer:
