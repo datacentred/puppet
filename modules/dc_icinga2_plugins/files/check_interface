@@ -24,7 +24,11 @@ def netdevice_ioctl(ioctl, ifname):
     """Returns a netdevice metric for a specific interface"""
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    data = fcntl.ioctl(sock.fileno(), ioctl, struct.pack('256s', ifname[:15]))
+    try:
+        data = fcntl.ioctl(sock.fileno(), ioctl, struct.pack('256s', ifname[:15]))
+    except IOError:
+        print 'CRITICAL: interface link is down'
+        sys.exit(NAGIOS_CRITICAL)
     if ioctl == SIOCGIFADDR:
         # name[16], family[2], port[2], inaddr[4]
         return socket.inet_ntoa(data[20:24])
