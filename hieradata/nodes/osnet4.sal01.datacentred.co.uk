@@ -1,0 +1,17 @@
+---
+# Stop all the agents
+neutron::agents::dhcp::enabled: false
+neutron::agents::vpnaas::enabled: false
+neutron::agents::metering::enabled: false
+neutron::services::fwaas::enabled: false
+neutron::agents::metadata::enabled: false
+neutron::agents::ml2::ovs::enabled: false
+
+# Config for LBaaSv2
+# NOTE: The `enabled` parameter is no longer used.
+neutron::agents::lbaas::enable_v1: false
+neutron::agents::lbaas::enable_v2: true
+
+neutron::agents::lbaas::interface_driver: 'neutron.agent.linux.interface.OVSInterfaceDriver'
+neutron::agents::lbaas::device_driver: 'neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver'
+neutron::agents::lbaas::user_group: 'haproxy'

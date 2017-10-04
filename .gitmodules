@@ -121,9 +121,6 @@
 [submodule "modules/passwordless_ssh"]
 	path = modules/passwordless_ssh
 	url = https://github.com/datacentred/datacentred-passwordless_ssh
-[submodule "modules/neutron"]
-	path = modules/neutron
-	url = https://github.com/stackforge/puppet-neutron.git
 [submodule "modules/elasticsearch"]
 	path = modules/elasticsearch
 	url = https://github.com/elasticsearch/puppet-elasticsearch.git
@@ -355,3 +352,6 @@
 [submodule "modules/xtrabackup"]
 	path = modules/xtrabackup
 	url = https://github.com/datacentred/xtrabackup
+[submodule "modules/neutron"]
+	path = modules/neutron
+	url = https://github.com/datacentred/puppet-neutron
