@@ -23,6 +23,8 @@ class dc_profile::openstack::haproxy {
 
   create_resources(haproxy::listen, hiera_hash('dc_profile::openstack::haproxy::listeners'))
   create_resources(haproxy::balancermember, hiera_hash('dc_profile::openstack::haproxy::balancermembers'))
+  create_resources(haproxy::frontend, hiera_hash('dc_profile::openstack::haproxy::frontends'))
+  create_resources(haproxy::backend, hiera_hash('dc_profile::openstack::haproxy::backends'))
 
   # Ensure HAProxy is restarted whenever SSL certificates are changed
   Class['dc_ssl::haproxy'] ~> Haproxy::Listen <||>
