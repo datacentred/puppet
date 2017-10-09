@@ -6,7 +6,7 @@ class dc_profile::openstack::nova::control {
 
   include ::dc_icinga::hostgroup_nova_server
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'nova':
     * => $containers['nova']

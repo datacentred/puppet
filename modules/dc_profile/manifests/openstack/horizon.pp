@@ -2,7 +2,7 @@
 #
 class dc_profile::openstack::horizon {
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'horizon':
     * => $containers['horizon']

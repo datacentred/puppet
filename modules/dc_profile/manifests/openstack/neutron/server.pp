@@ -4,7 +4,7 @@ class dc_profile::openstack::neutron::server {
 
   include ::dc_icinga::hostgroup_neutron_server
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'neutron':
     * => $containers['neutron']

@@ -4,7 +4,7 @@
 #
 class dc_profile::openstack::ceilometer::control {
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'ceilometer':
     * => $containers['ceilometer']

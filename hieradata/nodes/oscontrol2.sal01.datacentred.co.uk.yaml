@@ -1,22 +1,4 @@
 ---
 containers:
-  keystone:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/keystone:6d55b1d'
-  glance:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/glance:cce7799'
-    volumes:
-      - '/var/lib/glance'
-  cinder:
-    image: 'registry.datacentred.services:5000/cinder:mitaka-5452976'
-  horizon:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/horizon:ba9e3b1'
-  nova:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/nova:6e05bf3'
   neutron:
     image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/neutron:7bc6fcc'
-  ceilometer:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/ceilometer:57dc6a5'
-  aodh:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/aodh:59f8f5b'
-  heat:
-    image: 'registry.datacentred.services:5000/sal01.datacentred.co.uk/heat:b7ee3b8'

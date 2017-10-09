@@ -2,7 +2,7 @@
 #
 class dc_profile::openstack::heat {
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'heat':
     * => $containers['heat']

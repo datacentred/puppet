@@ -6,7 +6,7 @@ class dc_profile::openstack::keystone {
 
   include ::dc_icinga::hostgroup_keystone
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'keystone':
     * => $containers['keystone']

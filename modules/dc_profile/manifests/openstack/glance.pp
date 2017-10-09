@@ -6,7 +6,7 @@ class dc_profile::openstack::glance {
 
   include ::dc_icinga::hostgroup_glance
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'glance':
     * => $containers['glance']

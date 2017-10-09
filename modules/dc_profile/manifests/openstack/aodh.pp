@@ -4,7 +4,7 @@
 #
 class dc_profile::openstack::aodh {
 
-  $containers = hiera('containers')
+  $containers = hiera_hash('containers')
 
   dc_docker::run { 'aodh':
     * => $containers['aodh']
