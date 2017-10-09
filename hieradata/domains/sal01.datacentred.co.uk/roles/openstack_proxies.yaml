@@ -103,23 +103,6 @@ dc_profile::openstack::haproxy::listeners:
       reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
       rspadd: 'Strict-Transport-Security:\ max-age=31536000'
     collect_exported: false
-  neutron:
-    mode: 'http'
-    bind:
-      ':9696':
-        - 'ssl'
-        - 'no-sslv3'
-        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
-        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
-    options:
-      option:
-        - 'tcpka'
-        - 'httpchk'
-      balance: 'roundrobin'
-      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
-      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
-      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
-    collect_exported: false
   nova-api:
     mode: 'http'
     bind:
@@ -394,15 +377,21 @@ dc_profile::openstack::haproxy::balancermembers:
       - '10.10.160.162'
     ports: '80'
     options: 'check inter 2000 rise 2 fall 5'
-  neutron:
-    listening_service: 'neutron'
+  neutron-lbaasv1:
+    listening_service: 'neutron-lbaasv1-backend'
     server_names:
       - 'oscontrol0'
       - 'oscontrol1'
-      - 'oscontrol2'
     ipaddresses:
       - '10.10.160.113'
       - '10.10.160.117'
+    ports: '9696'
+    options: 'check inter 2000 rise 2 fall 5'
+  neutron-lbaasv2:
+    listening_service: 'neutron-lbaasv2-backend'
+    server_names:
+      - 'oscontrol2'
+    ipaddresses:
       - '10.10.160.162'
     ports: '9696'
     options: 'check inter 2000 rise 2 fall 5'
@@ -430,3 +419,36 @@ dc_profile::openstack::haproxy::balancermembers:
       - '10.10.160.162'
     ports: '8042'
     options: 'check inter 2000 rise 2 fall 5'
+
+dc_profile::openstack::haproxy::frontends:
+  neutron-frontend:
+    mode: 'http'
+    bind:
+      ':9696':
+        - 'ssl'
+        - 'no-sslv3'
+        - 'crt /etc/ssl/certs/STAR_datacentred_io.pem'
+        - 'ciphers EECDH+CHACHA20:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5'
+    options:
+      option:
+        - 'tcpka'
+      log-format: '[%t]\ Request\ from\ %ci:%cp\ to\ %si:%sp\ (%b@%s):\ %hr\ %r\ [%ST],\ %ts\ Tc=%Tc/Tq=%Tq/Tr=%Tr/Tt=%Tt/Tw=%Tw,\ bytes\ uploaded:\ %U'
+      reqadd: 'X-Forwarded-Proto:\ https if { ssl_fc }'
+      rspadd: 'Strict-Transport-Security:\ max-age=31536000'
+      acl:
+        - 'lbaasv2-path path_dir lbaas'
+        - 'ext-path path_dir extensions'
+      use_backend:
+        - 'neutron-lbaasv2-backend if lbaasv2-path'
+        - 'neutron-lbaasv2-backend if ext-path'
+      default_backend: 'neutron-lbaasv1-backend'
+
+dc_profile::openstack::haproxy::backends:
+  neutron-lbaasv1-backend:
+    options:
+      mode: 'http'
+    collect_exported: false
+  neutron-lbaasv2-backend:
+    options:
+      mode: 'http'
+    collect_exported: false
